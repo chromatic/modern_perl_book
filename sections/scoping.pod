@@ -1,0 +1,29 @@
+=head3 Scope
+
+lexical scope
+    - my
+    - most important scoping
+    - not in symbol table; resolved at compile time
+    - allows closures (whether you intend them or not)
+
+dynamic scope
+    - local/our
+    - relies on global variables
+    - visible from outside namespace/lexical scope
+    - our subtly broken
+
+state scoping
+    - state
+    - lexical scoping but retains value after initialized
+    - interaction with closures?
+
+implicit lexicalization
+    - my $_
+    - what is the scope of C< for my $i ( ... ) >?
+    - which constructs localize $_ and which do not?
+
+necessary localization
+    - $/, $", other globals
+    - $!, $@
+    - sometimes $_
+    - an exception: $| (? - I think so)

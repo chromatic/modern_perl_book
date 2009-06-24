@@ -1,0 +1,31 @@
+=head2 The CPAN
+
+Explaining the CPAN
+Explaining how to use it?
+
+Where do I cover features of Perl that make it useful without explaining them?
+
+Modularity:
+    - packages
+    - modules
+    - objects
+
+Community standards:
+    - installability
+    - testing
+    - documentation standards
+    - CPAN accoutrements:
+        - CPAN testers
+        - RT accounts
+        - ratings
+        - history and documentation
+    - dependencies
+    - rough standards on licensing
+
+Usability:
+    - nearly configuration-free running
+    - CPAN client included in core
+    - strong core culture of use and recommendation
+
+Broad applicability:
+    - 7258 uploaders/66400 modules/17268 distributions

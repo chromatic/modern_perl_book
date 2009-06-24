@@ -1,0 +1,24 @@
+=head3 Implicit Ideas
+
+Z<implicit_ideas>
+
+Like many spoken languages, Perl provides shortcuts to use where conciseness is
+appropriate.  One such implicit idea is the notion of L<context>, where both
+the compiler and a programmer reading the code can understand the expected
+number of results or the type of an operation from existing information without
+adding explicit additional information to disambiguate.
+
+The best example of such features is the default variable, C<$_>.  It's most
+notable in its I<absence>: many of Perl's built in operations perform their
+work on the contents of C<$_> in the absence of an explicit other variable.
+You can still use C<$_> as the variable, but it's unnecessary.
+
+For example, the C<chomp> operator removes any trailing newline sequence from
+the given string:
+
+    my $uncle = "Bob\n";
+    say "'$uncle'";
+    chomp $uncle;
+    say "'$uncle'";
+
+Without an explicit variable, C<chomp> removes the trailing newline sequence from C<$_>.  Thus, these two lines of code are equivalent:

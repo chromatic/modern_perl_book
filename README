@@ -1,0 +1,36 @@
+What is Modern Perl?
+--------------------
+
+Perl is a popular, powerful, and widely used programming language.  Over its
+twenty year lifespan, it's powered millions of systems worldwide, moving
+trillions of dollars.  More importantly, it's helped countless people get their
+work done effectively.
+
+The Perl community has a reputation for clever solutions -- and a reputation
+for institutional knowledge that isn't always clear to novices and neophytes.
+Modern Perl, written with this knowledge, can be very clean, very maintainable,
+and even more powerful than you imagine.
+
+That knowledge should be available to everyone.  This book will teach you how
+to program Perl, but it will also teach you how to *think* about Perl, so that
+you can use it to your full advantage.
+
+http://www.modernperlbooks.com/mt/2009/01/why-modern-perl.html
+
+
+Contributing to Modern Perl
+---------------------------
+
+For now, this draft work is licensed under a Creative Commons
+Attribution-Noncommercial-No Derivative Works 3.0 United States License.  For
+more details, see:
+
+    http://creativecommons.org/licenses/by-nc-nd/3.0/us/
+
+Please feel free to point people to this repository.  Suggestions and
+contributions are welcome.  Please do not redistribute with modifications.
+
+This book will be available under a less restrictive license when it comes out
+in print from Onyx Neon Press:
+
+    http://www.onyxneon.com/

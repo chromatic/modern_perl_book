@@ -1,0 +1,395 @@
+=head1 Modern Perl
+
+The justification for the book -- or, how to think about Perl to make learning
+and understanding it easier.
+
+=head2 The Perl Philosophy
+
+Fundamental features of the language and its design.
+
+=over
+
+=item context
+
+L<context_philosophy>
+
+=item expressivity
+
+=item implicit ideas
+
+L<implicit_ideas>
+
+=item perldoc
+
+L<perldoc>
+
+=back
+
+=head2 The CPAN
+
+Evolution happens outside the core I<on purpose>.
+
+=head2 The Perl Community
+
+How and where to find other people to learn and to share.
+
+=head2 The Language Itself
+
+A basic explanation for elements of the language itself.
+
+=head3 Syntactic Elements
+
+An explanation of the individual syntactic elements which make up the language.
+
+=head3 Names
+
+L<names>
+
+Mostly identifiers.  How they work, what's valid, and what's not.
+
+=head3 Values
+
+L<values>
+
+Strings, numbers, everything without a sigil.
+
+=head3 Operators
+
+This has to be more than just a list of operators (and how do you explain the
+difference between perlop and perlfunc?).
+
+=head3 Control Flow
+
+Loops, jumps, and labels.  Defer calling functions?  Exceptions??
+
+=head3 Variables
+
+How did I miss this one?  Probably don't want to get into references yet.
+Should mention magic global variables.
+
+=head3 Barewords
+
+There are several types.  Do special tokens such as BEGIN, INIT, and
+__END_/__DATA__ count?
+
+=head3 Functions
+
+Anything invocable.  Again, probably don't want to get into references.
+
+=head3 Objects and Methods
+
+How do you discuss these without discussing references?
+
+=head2 Data Types
+
+Containers; Perl's built-in data types.
+
+=head3 Scalars
+
+Should be simple, provided that the reference part stays put.  Should mention
+numerification/stringification, magical auto-increment.
+
+=head3 Arrays
+
+Make it clear that arrays and lists are very different things.  Discuss
+distinction between indexes and length?  Avoid $# altogether?  (Don't have to
+be comprehensive, just clear.)
+
+C<$var1, $var2, $var3> -- why arrays are useful
+
+=head3 Hashes
+
+Insertion order is appropriate.  So is stringification.
+
+The "variable variable name" problem.
+
+=head3 References
+
+Stringification and magical increment/decrement don't work.  Brace
+disambiguation is ugly, but usually suffices.
+
+=head2 Operators
+
+The types of things you find in C<perldoc -f>.
+
+=head3 Context
+
+This is perhaps the most important insight into Perl on its own as a language,
+so it belongs in a position where everyone will read it.  It might need its own
+short chapter.
+
+=head3 Operator Types
+
+Not sure what exactly this will be; perhaps infix, prefix, and built-in
+functions.
+
+=head3 Coercion
+
+Here's why there's a specific operators chapter.  Working effectively with Perl
+means taking advantage of operators to enforce stringy, numeric, etc contexts
+on dynamic values.
+
+=head2 Functions
+
+=head3 Parameters
+
+Positional, named, reference.  Most people use positional; mention the others.
+
+=head3 Context
+
+Not sure this belongs here, but having brought it up in the context of
+operators, it might be appropriate.  Certainly return context is interesting.
+
+=head3 Scope
+
+May be more appropriate conceptually before discussing parameter handling, but
+seems to flow better here.  Difference between global and lexical.
+
+=head3 Anonymous Functions
+
+Must come after references and functions.  Mention typeglobs?  The name doesn't
+matter to Perl.  Any CV is invokable.
+
+=head3 Closures
+
+Combines scopes, lexicals, and functions.  This is the time to talk about
+binding and closing over.  Delayed computation.  Encapsulation.  Abstraction.
+
+=head2 Regular Expressions (*)
+
+This won't be a fun chapter, but it's a necessary chapter.  What's the minimal
+I can write to be effective?
+
+=head3 Basic Matching
+
+Literals, quantifiers, metacharacters, alternations, character classes.
+
+=head3 Regexp Flags
+
+/e, /x, /s, /m
+
+=head3 Compiled and Composed Regexes
+
+C<qr//>
+
+=head3 Named Captures
+
+Describe Perl 5.10 features; mention older syntax in passing.
+
+=head3 Assertions and Extended Regexes
+
+Briefly describe lookbehind and lookahead.  Leave it at that level of detail.
+Mention the limitations of regular expressions?  New section?
+
+=head2 Useful Operators
+
+Things you use all the time but might bite you.
+
+=head3 IO
+
+print, say, open, readline
+
+=head3 Array Ops
+
+push, pop, shift, unshift, splice
+
+=head3 List Ops
+
+map, grep, for
+
+slicing
+
+Ranges?
+
+sort
+
+List::Util
+
+=head3 Hash Operations
+
+keys, values, each (watch the iterator problem)
+
+=head3 Packages and Modules
+
+A separate chapter?
+
+use
+require
+import()
+
+=head2 Objects
+
+Perhaps start with syntactic elements and then show Mouse?  Vice versa?  Must
+cover packages and modules first, at least.
+
+=head3 Packages
+
+Maybe need an encapsulation and modules chapter -- BEGIN and import() plus
+exporting.  What's the best way to export?
+
+=head3 Blessed References
+
+Very bare-bones object stuff.  Should mention constructors.
+
+=head3 Inheritance
+
+Really not a fan.
+
+=head3 Other Forms of Code Reuse
+
+Mixins, roles.
+
+=head3 Mouse
+
+Note that this is the single place in which I want to describe something other
+than the default language behavior.  Hoist this up earlier?
+
+=head3 Reflection
+
+C<isa()> and C<can()>
+
+=head2 Style
+
+This may need to merge with idioms.  It also might get cut down too.  There's a
+lot to say in here.  I don't want to repeat Perl Best Practices, but I do want
+to show off some of the power of the language when used appropriately.  Cutting
+this up between Idioms and Beautiful Features may work best.
+
+=head3 Testing
+
+Might explain this much earlier, right after syntactic features, so that people
+can use it to explore on their own (and the text can use it to show off
+examples).
+
+=head2 Making the Most of Perl / Writing Real Programs
+
+Things you must use to get the most out of Perl.  Context would appear here,
+but it's so fundamental to understanding the language that it has to come much
+earlier.
+
+=head3 Perldoc and POD
+
+Documentation and using the documentation.
+
+=head3 CPAN
+
+Probably deserves its own chapter.
+
+=head3 C<strict> and C<warnings> modes, C<use 5.010>
+
+Probably will have introduced these earlier.
+
+=head3 Lexical Pragmas
+
+Swap this with the previous?  Depends on flow of narrative.
+
+=head3 Code Generation
+
+Don't want to get too far afield into C<Devel::Declare> and don't want to push
+C<AUTOLOAD> too heavily, but C<BEGIN>-time manipulations are very, very
+powerful.
+
+=head3 Taint Mode
+
+General security?
+
+Exceptions?
+
+=head3 Attributes
+
+This is getting esoteric, and there are grotty bits of Attribute::Handlers I
+don't want to explain.  However, they're useful.
+
+=head2 Idioms
+
+A handful of common idioms often found in well-written Perl programs.
+
+=head3 Dispatch Table
+
+"I know what action I want to take based on input I get."
+
+=head3 Iteration
+
+The difference between C<for> and C<while>.
+
+=head3 C<map>-based Transformations
+
+Thinking in lists.
+
+=head3 Or-Else/Dor-Else
+
+The orcish maneuver.
+
+=head3 Early Exit Guard with Postfix Conditional
+
+return if...
+return unless...
+
+=head2 What to Avoid
+
+Here are features of Perl I wish would go away.  I can't say "The internals",
+can I?  Explain how it's so painful you wish it weren't there or how it's
+almost impossible to get right.
+
+=head3 Dative Syntax
+
+Barewords plus parsing sugar = avoid.
+
+=head3 Method/Sub Equivalence
+
+The best you can do is treat them differently.
+
+=head3 Tie
+
+You may run into this.  You shouldn't have to.
+
+=head3 Prototypes
+
+They don't work the way you think they do.
+
+=head3 Typeglobs and Reflection
+
+Use Mouse instead.
+
+=head2 Avoid When Possible
+
+Features that don't work quite right but you can't quite avoid.
+
+=head3 Reference Syntax
+
+Don't double $$, collapse multiple arrows, use braces copiously.
+
+=head3 Barewords
+
+You can almost always avoid them.
+
+=head3 Global Variables
+
+You only need to know a few; localize the rest.
+
+=head3 Missing Defaults
+
+No C<strict>, C<warnings> by default.  Sigh.  What else?
+
+=head3 Blessed Hashes
+
+Covered in OO; mention here.
+
+=head3 C<isa()> and C<can()>
+
+Maybe covered in OO?
+
+=head3 C<AUTOLOAD>
+
+In general, you can avoid this.
+
+=head3 C<UNIVERSAL>
+
+In conjunction with attributes....
+
+=head2 What's Missing
+
+Core Modules
+Date/Time
+Cookbooky Stuff
+Build.PL/Module::Build ?

@@ -1,0 +1,8 @@
+=head3 Anonymous Functions
+
+function references
+anonymous functions
+autopromotion of blocks into anonymous functions
+    - grep/map/sort
+        - sort is a weird example though, because it can take a name
+    - Test::Exception

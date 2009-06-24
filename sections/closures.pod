@@ -1,0 +1,15 @@
+=head3 Closures
+
+Named closures
+    - variable will not stay shared
+Anonymous closures
+
+Delayed computation with closures
+    - iterators
+    - thunks
+
+Encapsulation with closures
+    - closure/object equivalence (? too advanced ?)
+
+Abstraction with closures
+    - I have no idea what this means anymore

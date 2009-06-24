@@ -1,0 +1,130 @@
+=head3 Context
+
+Z<context_philosopy>
+
+Like spoken languages, Perl has the notion of X<context>.  The meaning of an
+idea depends on its surroundings.  This may sound strange and foreign in a
+programming language -- surely predictability is more important than
+expressivity sometimes -- but you're already proficient with how Perl uses
+context.  At least, you understand it in written English.
+
+Context in Perl means that certain operators have different behavior if you
+want zero, one, or many things from them.  That is to say, it's possible (and
+likely) that Perl code will do something different if you say "Fetch me zero
+results; I don't care about any results" than if you say "Fetch me one result"
+or "Fetch me many results."
+
+Likewise, certain contexts make it clear that you expect a numeric value, or a
+value that's either true or false.
+
+Context can be tricky if you try to write or read Perl code as a series of
+single expressions standing apart from from their environment.  You may find
+yourself slapping your forehead after a long debugging session only to find
+that your assumptions about context were incorrect.
+
+However, if you're cognizant of contexts, you'll find that they often make your
+code clearer, more concise, and more flexible.
+
+=head4 Void, Scalar, and List Context
+
+One of the axes of context governs I<how many> items you expect.  To express
+this context, evaluate an expression as an rvalue and see what you do with the
+results.
+
+Suppose you have a function called C<some_expensive_operation()> which performs
+an expensive calculation and can produce many, many results.  If you call the
+function on its own and never do anything with its return value, this is X<void
+context>:
+
+    some_expensive_operation();
+
+Calling the function and assign its return value to a single element evaluates
+the function in X<scalar context>:
+
+    my $single_result = some_expensive_operation();
+
+Assigning the results of calling the function to an array or a list, or using
+it in a list evaluates the function in X<list context>:
+
+    my @all_results        = some_expensive_operation();
+    my ($single_element)   = some_expensive_operation();
+    process_list_of_results( some_expensive_operation() );
+
+The second line of the previous example may look confusing; the parentheses
+there give a hint to the compiler that although there's only a scalar, this
+assignment should occur in list context.  It's equivalent to assigning to a
+scalar and a temporary array, and then throwing away the array:
+
+    my ($single_element, @rest) = some_expensive_operation();
+
+Evaluating a function or expression in list context apart from assignment can
+occasionally produce confusion.  Remember that argument lists and lists
+themselves -- especially lists used in hash initializers -- propogate list
+context to the expressions they contain.  Thus both of these calls to
+C<some_expensive_operation()> are in list context, even if it's not immediately
+obvious:
+
+    process_list_of_results( some_expensive_operation() );
+
+    my %results =
+    (
+        cheap_operation     => $cheap_operation_results,
+        expensive_operation => some_expensive_operation(), # OOPS!
+    );
+
+The latter example probably will not do what you expect, at least if you expect
+it to return a single item.  See the L<scalar_operator> operator for the
+solution.
+
+One easy way to think of the amount type of context is to compare it to
+subject-verb number agreement in English.  You already know how to do this,
+even if you don't remember English classes.  If you can spot the error in the
+sentence "Perl are a fun language", you've trained your mind to spot similar
+types of errors.
+
+=head4 Numeric, String, and Boolean Context
+
+Another type of context determines how Perl understands a piece of data -- not
+I<how many> pieces of data you want, but what the data means.  You've probably
+already noticed that Perl's flexible about figuring out if you have a number or
+a string and converting between the two as you want them.  The type contexts
+help explain how it does so.
+
+Suppose you want to compare the contents of two strings.  The C<eq> operator
+tells you if the strings contain the same information:
+
+    say "Catastrophic crypto fail!" if $alice eq $bob;
+
+You may have had a baffling experience where you I<know> that the strings are
+different, but they still compare the same:
+
+    my $alice = 'alice';
+    say "Catastrophic crypto fail!" if $alice == 'Bob';  # OOPS
+
+In exchange for not having to declare (or at least track) explicitly what
+I<type> of data a variable contains or a function produces, Perl offers
+specific type contexts that tell the compiler how to treat a given value at a
+specific time.  That is, the C<eq> operator treats its operands as strings by
+enforcing X<string context> on them.  The C<==> operator enforces numeric
+context.
+
+Perl will do its best to convert from strings to numbers and back depending on
+the operators you use; it's important to use the proper operators for the type
+of context you want.
+
+There's also a X<boolean context> which occurs when you use a value in a
+conditional statement -- in the previous examples, the results of the C<eq> and
+C<==> operators were in this boolean context.
+
+In rare circumstances, you may need to force an explicit context where no
+appropriately typed operator exists.  To force a numeric context, add zero to a
+variable.  To force a string context, concatenate a variable with the null
+string.  To force a boolean context, double the negation operator:
+
+    my $numeric_x =  0 + $x;  # forces numeric context
+    my $stringy_x = '' . $x;  # forces string  context
+    my $boolean_x =    !!$x;  # forces boolean context
+
+In general, type contexts are less difficult to understand and see than the
+amount contexts.  Once you realize they exist, you'll rarely make mistakes with
+them.

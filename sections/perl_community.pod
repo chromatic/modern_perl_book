@@ -1,0 +1,23 @@
+=head2 The Perl Community
+
+perl.org
+    - lists
+        - beginners
+    - project pages
+    - hosting
+    - dev.perl.org
+
+cpan.org
+    - see the CPAN section
+
+perlmonks.org
+    - a community of Perl programmers, centered around answering questions
+
+use.perl.org
+perlsphere.net
+planet.perl.org
+perlbuzz.com
+
+development
+    - rt.perl.org
+    - p5p mailing list

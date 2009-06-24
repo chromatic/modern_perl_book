@@ -1,0 +1,65 @@
+=head3 Perldoc
+
+Z<perldoc>
+
+One of Perl's most useful and least appreciated features is the C<perldoc>
+utility.  This program is part of every full Perl 5 installation.  It displays
+the documentation of every Perl module installed on the system -- whether a
+core module or one installed from the CPAN -- as well as thousands of pages of
+Perl's copious core documentation.
+
+=begin notetip
+
+If you prefer an online version, U<http://perldoc.perl.org/> hosts recent versions of the Perl documentation.
+
+=end notetip
+
+The default behavior of C<perldoc> is to display the documentation for a named
+module or a specific section of the core documentation:
+
+    $ B<perldoc Modern::Perl>
+    $ B<perldoc perlfaq>
+
+The first command-line example extracts documentation written for the
+C<Modern::Perl> module and displays it in a form appropriate for your screen.
+Per long-held community guidelines, CPAN modules tend to have documentation
+organized among similar lines, with a description of the module, sample uses,
+then more detailed explanations of how to use the code in your own projects.
+While the amount of documentation varies by author, the form of the
+documentation is remarkably consistent.
+
+The second command-line example displays a pure documentation file, the table
+of contents to the Frequently Asked Questions about Perl documents.  Browsing
+this file will help you understand what Perl is capable of and how to solve
+common problems in Perl.
+
+=begin notetip
+
+Similarly, C<perldoc perltoc> will display the table of contents for I<all> of
+the Perl documentation.  Browse that file too.
+
+=end notetip
+
+The C<perldoc> utility has many more abilities (see C<perldoc perldoc>).  Two
+of the most useful are the C<-q> and the C<-f> flags.  The C<-q> flag takes a
+keyword or keywords and searches only the Perl FAQ, displaying all results.
+Thus C<perldoc -q sort> returns three questions: I<How do I sort an array by
+(anything)?>, I<How do I sort a hash (optionally by value instead of key)?>,
+and I<How can I always keep my hash sorted?>.
+
+The C<-f> flag displays the core documentation for a built-in Perl function.
+C<perldoc -f sort> explains the behavior of the C<sort> operator.  If you don't
+know the name of the function you want, use C<perldoc perlfunc> to see a list
+of functions.
+
+=begin notetip
+
+C<perldoc perlop> and C<perldoc perlsyn> document Perl's symbolic operators and
+syntactic constructs; C<perldoc perldiag> explains what Perl's warning messages
+mean.
+
+=end notetip
+
+Perl's built-in documentation system is L<POD>, and you can and should use that
+to document your own code, so that C<perldoc> works with it as well as it does
+the core documentation.
