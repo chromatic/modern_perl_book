@@ -8,10 +8,16 @@ the compiler and a programmer reading the code can understand the expected
 number of results or the type of an operation from existing information without
 adding explicit additional information to disambiguate.
 
-The best example of such features is the default variable, C<$_>.  It's most
-notable in its I<absence>: many of Perl's built in operations perform their
-work on the contents of C<$_> in the absence of an explicit other variable.
-You can still use C<$_> as the variable, but it's unnecessary.
+=head4 The Default Scalar Variable
+
+X<default scalar variable>
+X<variables; $_>
+X<$_>
+
+The best example of such features is the default scalar variable, C<$_>.  It's
+most notable in its I<absence>: many of Perl's built in operations perform
+their work on the contents of C<$_> in the absence of an explicit other
+variable.  You can still use C<$_> as the variable, but it's unnecessary.
 
 For example, the C<chomp> operator removes any trailing newline sequence from
 the given string:
@@ -21,4 +27,168 @@ the given string:
     chomp $uncle;
     say "'$uncle'";
 
-Without an explicit variable, C<chomp> removes the trailing newline sequence from C<$_>.  Thus, these two lines of code are equivalent:
+Without an explicit variable, C<chomp> removes the trailing newline sequence
+from C<$_>.  Thus, if C<$_> contains the string C<Jim\n>, these two lines of
+code are equivalent:
+
+    chomp $_;
+    chomp;
+
+Similarly, the C<say> and C<print> builtins operate on C<$_> in the absence of
+other arguments:
+
+    print;  # prints $_
+    say;    # prints $_ with a trailing newline
+
+=begin notetip
+
+If you use the three-argument form of C<open> and C<say>, where the first
+argument is a filehandle to which to print, you cannot omit C<$_>; Perl will
+interpret this as the two-argument form of both functions.
+
+=end notetip
+
+Perl's regular expression facilities can also operate on C<$_>, performing
+matches, substitutions, and transliterations:
+
+    $_ = 'My name is Paquito';
+    say if /My name is/;
+
+    s/Paquito/Paquita/;
+
+    tr/A-Z/a-z/;
+    say;
+
+=for author
+
+Check how many other string functions this includes?
+
+=end for
+
+Many (most?) of Perl's scalar operators work on the default scalar variable if you do not provide an alternative.
+
+Perl's looping constructs also set C<$_>.  For example, iterating over a list
+with C<for>:
+
+    say "#B<$_>" for 1 .. 10;
+
+    for (1 .. 10)
+    {
+        say "#B<$_>";
+    }
+
+... or C<while>:
+
+    while (<STDIN>)
+    {
+        chomp;
+        say scalar reverse;
+    }
+
+... or transforming a list through the use of C<map>:
+
+    my @squares = map { B<$_> * B<$_> } 1 .. 10;
+    say for @squares;
+
+=begin notetip
+
+Note that C<sort> does not set C<$_>, as it must process the elements of its
+list two at a time.
+
+=end notetip
+
+Be careful, however.  If you call subroutine within code that uses C<$_>
+whether implicitly or explicitly, they may overwrite the value of C<$_>.
+Similarly, if you write a subroutine which uses C<$_>, you may clobber a caller
+subroutine's use of C<$_>.  Perl 5.10 allows you to declare C<$_> as a lexical
+variable with C<my> to prevent this clobbering behavior.
+
+    while (<STDIN>)
+    {
+        chomp;
+
+        # BAD EXAMPLE
+        my $munged = calculate_value( $_ );
+        say "Original: $_";
+        say "Munged  : $munged";
+    }
+
+In the previous code snippet, if C<calculate_value()> or any other subroutine
+it happened to call changed C<$_>, it would remain changed throughout the
+C<while> loop.  Adding a C<my> declaration would prevent that behavior:
+
+    while (my $_ = <STDIN>)
+    {
+        ...
+    }
+
+Of course, using a named lexical there might be just as clear.
+
+=for author
+
+Talk about aliasing and modification in place?  That's not part of using C<$_>,
+however -- more about iteration.
+
+=end for
+
+=head4 The Default Array Variables
+
+X<default array variables>
+X<variables; @_>
+X<@_>
+
+Another default variable is available inside Perl subroutines; this is C<@_>.
+Perl passes arguments to subroutines in this array.  Array-manipulations
+operations performed inside subroutines affect this array by default.  Thus,
+these two snippets of code are equivalent:
+
+    sub foo
+    {
+        my $arg = shift;
+        ...
+    }
+
+    sub foo_explicit
+    {
+        my $arg = shift @_;
+        ...
+    }
+
+I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
+subroutine.
+
+Other array functions such as C<unshift>, C<push>, C<splice>, and C<pop>
+operate on C<@_>.
+
+X<variables; @ARGV>
+X<@ARGV>
+
+Outside of a subroutine, the default array variable is C<@ARGV>.  This array
+represents all command-line arguments to the program.  The same array functions
+which use C<@_> implicitly use C<@ARGV> implicitly in this circumstance.
+Beware that you cannot use C<@_> when you mean C<@ARGV>.
+
+X<null filehandle>
+
+Perl uses C<@ARGV> implicitly in one special case where it does not use C<@_>.
+If you read from the null filehandle C<< <> >>, it will treat every element in
+C<@ARGV> as the I<name> of a file to open and to read.  (If C<@ARGV> is empty,
+Perl will read from standard input.)  Thus you can write a program called
+F<reverse_lines.pl>:
+
+    while (<>)
+    {
+        chomp;
+        say scalar reverse;
+    }
+
+If you run it with a list of files:
+
+    $ B<perl reverse_lines.pl encrypted/*.txt>
+
+... the result will be one long stream of output.  If you run it without a list
+of files, you can provide your own standard input by piping in from another
+program or typing directly.
+
+This can be useful for writing short filter programs in Perl, but it is
+behavior to avoid in larger programs.
