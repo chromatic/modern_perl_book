@@ -9,19 +9,21 @@ Fundamental features of the language and its design.
 
 =over
 
+=item expressivity
+
+L<expressivity> *
+
 =item context
 
-L<context_philosophy>
-
-=item expressivity
+L<context_philosophy> *
 
 =item implicit ideas
 
-L<implicit_ideas>
+L<implicit_ideas> *
 
 =item perldoc
 
-L<perldoc>
+L<perldoc> *
 
 =back
 
