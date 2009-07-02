@@ -10,7 +10,8 @@ Perl's copious core documentation.
 
 =begin notetip
 
-If you prefer an online version, U<http://perldoc.perl.org/> hosts recent versions of the Perl documentation.
+If you prefer an online version, U<http://perldoc.perl.org/> hosts recent
+versions of the Perl documentation.
 
 =end notetip
 
@@ -62,4 +63,19 @@ mean.
 
 Perl's built-in documentation system is L<POD>, and you can and should use that
 to document your own code, so that C<perldoc> works with it as well as it does
-the core documentation.
+the core documentation.  C<perldoc perlpod> describes how POD works.  Perl
+modules tend to follow a community standard for documentation structure.  In
+particular, documentation tends to follow the same pattern; almost any Perl
+module from the CPAN can serve as a template for organizing your documentation.
+
+The C<perldoc> utility will display the POD in any Perl module you create and
+install for your project.  POD tools -- such as C<podchecker> -- will work on
+your POD.  Other tools available from the CPAN, including C<Pod::Web>, will
+also work with your documentation.
+
+C<perldoc> has other uses.  With the C<-l> command-line flag, it displays the
+I<path> to the documentation file rather than the contents of the
+documentation.N<Be aware that a module may have a separate F<.pod> file in
+addition to its F<.pm> file.>  With the C<-m> flag, it displays the entire
+I<contents> of the module, code and all, without processing any POD
+instructions.
