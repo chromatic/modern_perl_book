@@ -1,0 +1,232 @@
+=head3 Control Flow
+
+Z<control_flow>
+
+Perl's control flow is conceptually similar to other procedural languages;
+program execution starts at the beginning and continues to the end:
+
+=begin programlisting
+
+    say 'At start'
+    say 'In middle'
+    say 'At end'
+
+=end programlisting
+
+This is true in the absence of specific X<control flow directives>.  These
+directives change the flow of execution -- what happens next -- depending on
+the values of arbitrarily complex expressions.
+
+X<if>
+X<control flow directives; if>
+
+The C<if> directive evaluates a conditional expression and performs the
+associated action only when the conditional expression evaluates to a true
+value:
+
+=begin programlisting
+
+    say 'Hello, Bob!' if $name eq 'Bob';
+
+=end programlisting
+
+Along with the postfix form, there is a block form, useful to group multiple
+expressions into a single unit:
+
+=begin programlisting
+
+    if ($name eq 'Bob')
+    {
+        say 'Hello, Bob!';
+        found_bob();
+    }
+
+=end programlisting
+
+Note that the postfix form does not require parentheses around its condition,
+while the block form does.  The conditional expressions may be more complex:
+
+=begin programlisting
+
+    if ($name eq 'Bob' && not greeted_bob())
+    {
+        say 'Hello, Bob!';
+        found_bob();
+    }
+
+=end programlisting
+
+... though in this case, parenthesization of the expression in postfix form may
+add clarityN<It may also argue against using the postfix form.>:
+
+=begin programlisting
+
+    greet_bob() if ($name eq 'Bob' && not greeted_bob());
+
+=end programlisting
+
+=begin notetip
+
+You may not omit the curly braces in block form under any circumstances; use
+the postfix conditional form instead.
+
+=end notetip
+
+X<unless>
+X<control flow directives; unless>
+
+The C<unless> directive is a negated form of C<if>.  Perl will perform the
+requested action when the conditional expression evaluates to I<false>:
+
+=begin programlisting
+
+    say "You're no Bob!" unless $name eq 'Bob';
+
+=end programlisting
+
+Like C<if>, C<unless> also has a block form, but this is rarer in practice than
+the postfix form:
+
+=begin programlisting
+
+    unless (is_leap_year() and is_full_moon())
+    {
+        frolic();
+        gambol();
+    }
+
+=end programlisting
+
+C<unless> works very well for postfix conditionals, especially parameter
+validation in subroutines:
+
+=begin programlisting
+
+    sub frolic
+    {
+        return unless @_;
+
+        for my $chant (@_)
+        {
+            ...
+        }
+    }
+
+=end programlisting
+
+C<unless> can be difficult to read with multiple conditions; this is one reason
+it appears rarely in its block form.
+
+X<else>
+X<control flow directives; else>
+
+The block forms of C<if> and C<unless> both work with the C<else> directive.
+This follows the first block and delimits code to run when the conditional
+expression does not evaluate to true (for C<if>) or false (for C<unless>):
+
+=begin programlisting
+
+    if ($name eq 'Bob')
+    {
+        say 'Hi, Bob!';
+        greet_user();
+    }
+    else
+    {
+        say "I don't know you.";
+        shun_user();
+    }
+
+=end programlisting
+
+With C<else> blocks, you can rewrite C<if> and C<unless> conditionals in terms
+of each other:
+
+=begin programlisting
+
+    B<unless> ($name eq 'Bob')
+    {
+        say "I don't know you.";
+        shun_user();
+    }
+    else
+    {
+        say 'Hi, Bob!';
+        greet_user();
+    }
+
+=end programlisting
+
+If you read the previous example out loud, you may notice the awkward
+pseudocode phrasing: "Unless this name is Bob, do this.  Otherwise, do
+something else."  The implied double negative can be confusing.
+
+For clarity, you may also rewrite conditional expressions to use different
+operators:
+
+=begin programlisting
+
+    if ($name B<ne> 'Bob')
+    {
+        say "I don't know you.";
+        shun_user();
+    }
+    else
+    {
+        say 'Hi, Bob!';
+        greet_user();
+    }
+
+=end programlisting
+
+Again, the double negative implied by the presence of the C<else> block argues
+for the first example again.
+
+X<elsif>
+X<control flow directives; elsif>
+
+If you need to check more than one condition, the C<elsif> directive can follow
+the C<if> block form.  An C<else> block may follow.  You may use as many
+C<elsif> blocks as you like; you may not change the order in which the block
+types appear:
+
+=begin programlisting
+
+    if ($name eq 'Bob')
+    {
+        say 'Hi, Bob!';
+        greet_user();
+    }
+    elsif ($name eq 'Jim')
+    {
+        say 'Hi, Jim!';
+        greet_user();
+    }
+    else
+    {
+        say "I don't know you.";
+        shun_user();
+    }
+
+=end programlisting
+
+You may also use the C<elsif> block with an C<unless> chain, but the resulting
+code may be unclear.
+
+=for author
+
+given/when
+ternary conditional
+
+short circuiting
+labels
+
+loops
+for
+do
+while
+
+tailcalls
+a word about context
+
+=end for
