@@ -17,6 +17,8 @@ This is true in the absence of specific X<control flow directives>.  These
 directives change the flow of execution -- what happens next -- depending on
 the values of arbitrarily complex expressions.
 
+=head4 Branching Directives
+
 X<if>
 X<control flow directives; if>
 
@@ -216,17 +218,301 @@ code may be unclear.
 =for author
 
 given/when
-ternary conditional
 
-short circuiting
+=end for
+
+X<ternary conditional>
+X<control flow directives; ternary conditional>
+
+The I<ternary conditional> operator offers an alternate approach to control
+flow.  It evaluates a conditional expression and evaluates to one of two
+different results:
+
+=begin programlisting
+
+    my $time_suffix = after_noon($time) ? 'morning' : 'afternoon';
+
+=end programlisting
+
+The conditional expression precedes the question mark character (C<?>); the
+colon character (C<:>) separates the alternatives.  You can use arbitrarily
+complex expressions, if you parenthesize them .  Similarly, the alternatives
+can be arbitrarily complex expressions, or even other ternary conditional
+expressions.  Readability often argues against this strategy.
+
+X<short circuiting behavior>
+X<short circuiting>
+
+Perl performs a type of behavior known as I<short-circuiting> when it
+encounters complex expressions -- expressions composed of multiple evaluated
+expressions.  If Perl can determine that a complex expression would succeed or
+fail as a whole without evaluating every subexpression, it will not evaluate
+subsequent subexpressions.  This is most obvious with an example:
+
+=begin programlisting
+
+    say "Both true!" if ok(1, 'first subexpression')
+                     && ok(1, 'second subexpression' );
+
+=end programlisting
+
+=begin notetip
+
+Remember that the return value of C<ok()> is the boolean value obtained by
+evaluating the first argument.
+
+-end notetip
+
+This example prints:
+
+=begin screen
+
+    ok 1 - first subexpression
+    ok 2 - first subexpression
+    Both true!
+
+=end screen
+
+When the first subexpression -- the first call to C<ok> -- evaluates to true,
+Perl must evaluate the second subexpression.  When the first subexpression
+evaluates to false, the entire expression cannot succeed:
+
+=begin programlisting
+
+    say "Both true!" if ok(0, 'first subexpression')
+                     && ok(1, 'second subexpression' );
+
+=end programlisting
+
+This example prints:
+
+=begin screen
+
+    not ok 1 - first subexpression
+    Both true!
+
+=end screen
+
+Even though the second subexpression would obviously succeed, Perl never evaluates it.
+
+The logic is similar for a complex conditional expression where either
+subexpression must be true for the conditional as a whole to succeed:
+
+=begin programlisting
+
+    say "Either true!" if ok(1, 'first subexpression')
+                       || ok(1, 'second subexpression' );
+
+=end programlisting
+
+This example prints:
+
+=begin screen
+
+    ok 1 - first subexpression
+    Either true!
+
+=end screen
+
+Again, with the success of the first subexpression, Perl can skip evaluation of
+the second subexpression.  If the first subexpression were false, the result
+evaluating the second subexpression would dictate the result of evaluating the
+entire expression.
+
+=head4 Looping Directives
+
+Perl also provides several directives devoted to looping and iteration.
+
+C<foreach>
+C<for>
+C<looping directives; for>
+C<looping directives; foreach>
+
+The I<foreach> style loop evaluates an expression and executes a statement or
+block until the expression evaluates to a false value:
+
+=begin programlisting
+
+    foreach (1 .. 10)
+    {
+        say "$_ * $_ = ", $_ * $_;
+    }
+
+=end programlisting
+
+This example uses the C<range> operator to produce a list of integers from one
+to ten inclusive.  The C<foreach> directive loops over them, setting the topic
+variable (C<$_>) to each in turn.  Perl executes the block for each integer,
+printing the squares of the integers.
+
+=begin notetip
+
+Though this is a I<foreach>-style loop, Perl treats the keywords C<foreach> and
+C<for> interchangeably.  As the type of the loop governs its behavior, there
+are no drawbacks to using the shorter C<for> keyword.
+
+=end notetip
+
+Like C<if> and C<unless>, there is a postfix form of this loop:
+
+=begin programlisting
+
+    say "$_ * $_ = ", $_ * $_ for 1 .. 10;
+
+=end programlisting
+
+Similar suggestions apply for clarity and complexity.
+
+You may provide a variable to which to assign the values of the expression in
+place of the topic variable:
+
+=begin programlisting
+
+    for my $i (1 .. 10)
+    {
+        say "$i * $i = ", $i * $i;
+    }
+
+=end programlisting
+
+Note that Perl will not set the topic variable C(<$_>) to the iterated values
+in this case.  Note also that the scope of the variable C<$i> is only valid
+I<within> the loop.  If you have declared a lexical C<$i> in an outer scope,
+that value will remain outside the loop:
+
+=begin programlisting
+
+    my $i = 'cow';
+
+    for my $i (1 .. 10)
+    {
+        say "$i * $i = ", $i * $i;
+    }
+
+    is( $i, 'cow', 'Lexical variable not overwritten in outer scope' );
+
+=end programlisting
+
+=for author
+
+Should explain aliasing in more detail here.
+
+=end for
+
+X<iteration aliasing>
+X<aliasing>
+X<aliasing; foreach>
+X<aliasing; iteration>
+
+This aliasing occurs even if you do not redeclare the iteration variable as a
+lexical:
+
+=begin programlisting
+
+    my $i = 'horse';
+
+    for $i (1 .. 10)
+    {
+        say "$i * $i = ", $i * $i;
+    }
+
+    is( $i, 'horse', 'Lexical variable still not overwritten in outer scope' );
+
+=end programlisting
+
+=for author
+
+Need to discuss boolean and iteration context within the iteration control
+section of this construct.  It'd be nice to have a better description than
+"iteration control section" as well.
+
+=end for
+
+
+X<for loop>
+
+The I<for-style loop> allows the programmer to manage the iteration conditions
+manually:
+
+=begin programlisting
+
+    for (my $i = 0; $i <= 10; ++$i)
+    {
+        say "$i * $i = ", $i * $i;
+    }
+
+=end programlisting
+
+Note that you must assign to an iteration variable manually; there is no
+default assignment to the topic variable.  This implies that there is no
+implicit aliasing behavior either.  Though the scope of any declared lexical
+variable is to the body of the block, a variable not declared explicitly in the
+iteration control section of this construct will overwrite its contents:
+
+=begin programlisting
+
+    my $i = 'pig';
+
+    for ($i = 0; $i <= 10; ++$i)
+    {
+        say "$i * $i = ", $i * $i;
+    }
+
+    isnt( $i, 'pig', '$i overwritten with a number' );
+
+=end programlisting
+
+When possible, prefer the C<foreach> style loop to the C<for> loop.
+
+=for author
+
 labels
-
-loops
-for
 do
 while
+until
 
-tailcalls
 a word about context
 
 =end for
+
+=head4 Tailcalls
+
+X<tailcalls>
+X<goto>
+X<optimization; tailcalls>
+
+A common optimization in certain programming language is optimizing tailcalls.
+A tailcall occurs when the last expression within a subroutine is a call to
+another subroutine -- the return value of the outer subroutine is the return
+value of the inner subroutine:
+
+=begin programlisting
+
+    sub log_and_greet_person
+    {
+        my $name = shift;
+        log( "Greeting $name" );
+
+        return greet_person( $name );
+    }
+
+=end programlisting
+
+In this circumstance, returning from C<greet_person()> directly to the caller
+of C<log_and_greet_person()> is more efficient than returning to
+C<log_and_greet_person()> and immediately returning I<from>
+C<log_and_greet_person()>.  Returning directly from C<greet_person()> to the
+caller of C<log_and_greet_person()> is a tailcall optimization.
+
+Unfortuately, Perl 5 cannot perform this optimization automatically.
+
+Fortunately, you can perform it manually.
+
+=begin notetip
+
+Why would you want to do this?  Heavily recursive code, especially mutually
+recursive code, can quickly consume a lot of memory.  Reducing the memory
+needed for internal bookkeeping of control flow can make otherwise expensive
+algorithms tractable.
+
+=end notetip
