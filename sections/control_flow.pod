@@ -393,16 +393,52 @@ that value will remain outside the loop:
 
 =end programlisting
 
-=for author
-
-Should explain aliasing in more detail here.
-
-=end for
-
 X<iteration aliasing>
 X<aliasing>
 X<aliasing; foreach>
 X<aliasing; iteration>
+
+This type of iteration performs I<aliasing> of the iterator variable to the
+values in the iteration.  Thus you can modify modifiable values during
+iteration:
+
+=begin programlisting
+
+    my @nums = 1 .. 10;
+
+    $_ ^ 2 for @nums;
+
+    is( $nums[0],   1, '1 * 1 is 1' );
+    is( $nums[1],   2, '2 * 2 is 4' );
+
+    ...
+
+    is( $nums[9], 100, '10 * 10 is 100' );
+
+=end programlisting
+
+This aliasing also works with the block style foreach loop:
+
+=begin programlisting
+
+    for my $num (@nums)
+    {
+        $num ^= 2;
+    }
+
+=end programlisting
+
+... as well as iteration with the topic variable:
+
+
+=begin programlisting
+
+    for (@nums)
+    {
+        $_ *= 2;
+    }
+
+=end programlisting
 
 This aliasing occurs even if you do not redeclare the iteration variable as a
 lexical:
@@ -420,6 +456,48 @@ lexical:
 
 =end programlisting
 
+X<iterator scoping>
+X<scope; iterator>
+
+Iterator scoping with the topic variable provides one common source of
+confusion.  In this case, C<some_function()> modifies C<$_> on purpose.  If
+C<some_function()> called other code which modified C<$_> without explicitly
+localizing it, the iterated value in C<@values> would change.  Debugging this
+can be troublesome:
+
+=begin programlisting
+
+    for (@values)
+    {
+        some_function();
+    }
+
+    sub some_function
+    {
+        s/foo/bar/;
+    }
+
+=end programlisting
+
+To avoid this situation, you may lexicalize the topic variable with C<my $_>:
+
+=begin programlisting
+
+    sub some_function_called_later
+    {
+        # was $_ = shift;
+        B<my> $_ = shift;
+
+        s/foo/bar/;
+        s/baz/quux/;
+
+        return $_;
+    }
+
+=end programlisting
+
+It's often better practice to use a named iteration variable however.
+
 =for author
 
 Need to discuss boolean and iteration context within the iteration control
@@ -427,7 +505,6 @@ section of this construct.  It'd be nice to have a better description than
 "iteration control section" as well.
 
 =end for
-
 
 X<for loop>
 
@@ -464,13 +541,190 @@ iteration control section of this construct will overwrite its contents:
 
 When possible, prefer the C<foreach> style loop to the C<for> loop.
 
+X<while loop>
+X<loops; while>
+
+The I<while> loop continues until the loop conditional expression evaluates to
+a false value.  An infinite loop is:
+
+=begin programlisting
+
+    while (1) { ... }
+
+=end programlisting
+
+This is different the iteration of a foreach-style loop, as this code is also
+an infinite loop:
+
+=begin programlisting
+
+    while (@values)
+    {
+        say $values[0];
+    }
+
+=end programlisting
+
+X<destructive update>
+
+The closest equivalent of a C<while> loop to C<foreach> iteration is this
+example.  Beware that it performs a I<destructive update> of the C<@values>
+array; it modifies the array with each loop iteration:
+
+=begin programlisting
+
+    while (my $value = shift @values)
+    {
+        say $value;
+    }
+
+=end programlisting
+
+X<until loop>
+X<loops; until>
+
+The I<until> loop performs the opposite test as the C<while> loop.  Iteration
+continues while the loop conditional expression evaluates to false:
+
+=begin programlisting
+
+    until ($finished_running)
+    {
+        ...
+    }
+
+=end programlisting
+
+Both C<while> and C<until> have postfix forms.
+
+The canonical use of the C<while> loop is iterating over input from a
+filehandle:
+
+=begin programlisting
+
+    open my $fh, '<', $file
+        or die "Cannot read from '$file': $!\n";
+
+    while (<$fh>)
+    {
+        ...
+    }
+
+=end programlisting
+
+Perl 5 interprets this C<while> loop as if you had written:
+
+=begin programlisting
+
+    while (defined($_ = <$fh>))
+    {
+        ...
+    }
+
+=end programlisting
+
+Otherwise, any line read from the filehandle which evaluated to false in a
+scalar context -- a blank line, for example, or a line which contained only the
+character C<0> -- would end the loop.  The C<readline> operator returns an
+undefined value only when it has finished reading lines from the file.
+
+=begin notetip
+
+One common mistake is to forget to remove the line-ending characters from each
+line; use the C<chomp> keyword to do so.
+
+=end notetip
+
+X<nested loops>
+X<loops; nested>
+
+You may nest loops:
+
+=begin programlisting
+
+    for my $suit (@suits)
+    {
+        for my $values (@card_values)
+        {
+            ...
+        }
+    }
+
+=end programlisting
+
+In this case, explicitly declaring named variables is essential to
+maintainability; the potential for confusion as to the scoping of iterator
+variables is too great otherwise -- especially if one loop uses the topic
+variable as its iteration variable.
+
+X<loop control>
+X<next>
+X<break>
+X<last>
+X<labels>
+
+Sometimes you need to break out of a loop before you have exhausted the
+iteration condition.  You may use Perl 5's standard control flow -- exceptions
+and C<return>.  You may also use I<loop control statements>.
+
+The I<next> statement restarts the next iteration of the loop.  Use it when
+you've done all you need to in the current iteration.  Thus to loop over lines
+in a file but skip everything that looks like a comment -- that starts with the
+comment character C<#> -- you might write:
+
+=begin programlisting
+
+    while (<$fh>)
+    {
+        next if /\A#/;
+        ...
+    }
+
+=end programlisting
+
+The I<last> statement ends the loop iteration immediately.  Thus to finish
+processing a file once you've seen the ending delimiter, you might write:
+
+=begin programlisting
+
+    while (<$fh>)
+    {
+        next if /\A#/;
+        last if /\A__END__/
+        ...
+    }
+
+=end programlisting
+
+X<labels>
+X<loops; labels>
+
+Nested loops can make the use of these loop control statements ambiguous.  In
+those cases, a I<loop label> can disambiguate:
+
+=begin programlisting
+
+    OUTER:
+    while (<$fh>)
+    {
+        chomp;
+
+        INNER:
+        for my $prefix (@prefixes)
+        {
+            next OUTER unless $prefix;
+            say "$prefix: $_";
+        }
+    }
+
+=end programlisting
+
+There are often better options than complex nested loops, however; consider
+extracting the inner loop into its own function for clarity.
+
 =for author
 
-labels
 do
-while
-until
-
 a word about context
 
 =end for
