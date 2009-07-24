@@ -2,8 +2,9 @@
 
 Z<control_flow>
 
-Perl's control flow is conceptually similar to other procedural languages;
-program execution starts at the beginning and continues to the end:
+Perl's control flow is similar to that of other procedural programming
+languages; program execution starts at the beginning (the first line of the
+file executed) and continues to the end:
 
 =begin programlisting
 
@@ -215,11 +216,7 @@ types appear:
 You may also use the C<elsif> block with an C<unless> chain, but the resulting
 code may be unclear.
 
-=for author
-
-given/when
-
-=end for
+=head4 The Ternary Conditional Operators
 
 X<ternary conditional>
 X<control flow directives; ternary conditional>
@@ -261,7 +258,7 @@ subsequent subexpressions.  This is most obvious with an example:
 Remember that the return value of C<ok()> is the boolean value obtained by
 evaluating the first argument.
 
--end notetip
+=end notetip
 
 This example prints:
 
@@ -318,6 +315,35 @@ Again, with the success of the first subexpression, Perl can skip evaluation of
 the second subexpression.  If the first subexpression were false, the result
 evaluating the second subexpression would dictate the result of evaluating the
 entire expression.
+
+=head4 Context for Conditional Directives
+
+X<context; conditional>
+
+The conditional directives -- C<if>, C<unless>, and the ternary conditional
+operator -- all evaluate an expression in boolean context.  (See L<context>.)
+While comparison operators such as C<eq>, C<==>, C<ne>, and C<!=> all produce
+boolean results when evaluated, Perl coerces the results of other expressions
+-- including variables and values -- into boolean forms.
+
+Thus these operators provide a boolean context.  Empty hashes and arrays
+evaluate to false.  Scalars containing C<undef>, the values 0 and 0.0, and the
+empty string evaluate to false.  Everything else is true, in the absence of
+deeper magic.
+
+=for author
+
+Review the rules on truthiness of scalars again.
+
+=end for
+
+=begin notetip
+
+The C<Want> module available from the CPAN allows you to detect boolean context
+within your own subroutines.  The core C<overload> module allows you to specify
+what your own data types produce when evaluated in a boolean context.
+
+=end notetip
 
 =head4 Looping Directives
 
@@ -393,6 +419,8 @@ that value will remain outside the loop:
 
 =end programlisting
 
+=head4 Iteration and Aliasing
+
 X<iteration aliasing>
 X<aliasing>
 X<aliasing; foreach>
@@ -456,6 +484,8 @@ lexical:
 
 =end programlisting
 
+=head4 Iteration and Scoping
+
 X<iterator scoping>
 X<scope; iterator>
 
@@ -498,17 +528,11 @@ To avoid this situation, you may lexicalize the topic variable with C<my $_>:
 
 It's often better practice to use a named iteration variable however.
 
-=for author
-
-Need to discuss boolean and iteration context within the iteration control
-section of this construct.  It'd be nice to have a better description than
-"iteration control section" as well.
-
-=end for
+=head4 The C-Style For Loop
 
 X<for loop>
 
-The I<for-style loop> allows the programmer to manage the iteration conditions
+The I<for-style loop> allows the programmer to manage iteration conditions
 manually:
 
 =begin programlisting
@@ -539,13 +563,57 @@ iteration control section of this construct will overwrite its contents:
 
 =end programlisting
 
+This loop has three subexpressions in its looping construct; all three are
+optional.  The first subexpression is an initialization section.  It executes
+once, before the first execution of the loop body.  The second subexpression is
+the conditional comparison subexpression.  Perl evaluates this subexpression
+before each iteration of the loop body.  When the subexpression evaluates to a
+true value, the loop iteration proceeds.  When the subexpression evaluates to a
+false value, the loop iteration stops.  The final subexpression executes after
+each iteration of the loop body.
+
+This may be more obvious with an example:
+
+=begin programlisting
+
+    # declared outside to avoid declaration in conditional
+    my $i;
+
+    for (
+        # loop initialization subexpression
+        say 'Initializing' and $i = 0;
+
+        # conditional comparison subexpression
+        say "Iteration: $i" and $i < 10;
+
+        # iteration ending subexpression
+        say 'Incrementing $i' and $i++
+    )
+    {
+        say "$i * $i = ", $i * $i;
+    }
+
+=end programlisting
+
+=begin notetip
+
+Note the lack of a trailing semicolon at the iteration ending subexpression as
+well as the use of the low-precedence C<and>; this syntax is surprisingly
+finicky.
+
+=end notetip
+
 When possible, prefer the C<foreach> style loop to the C<for> loop.
+
+=head4 While and Until
 
 X<while loop>
 X<loops; while>
 
-The I<while> loop continues until the loop conditional expression evaluates to
-a false value.  An infinite loop is:
+Iteration also evaluates the iteration condition in a boolean context.  This is
+most obvious when using a I<while> loop; this style of loop continues until the
+loop conditional expression evaluates to a boolean false value.  An infinite
+loop is:
 
 =begin programlisting
 
@@ -635,6 +703,57 @@ line; use the C<chomp> keyword to do so.
 
 =end notetip
 
+C<while> and C<until> have postfix forms as well.  An infinite loop in Perl 5
+is:
+
+=begin programlisting
+
+    1 while 1;
+
+=end programlisting
+
+Any single expression is suitable for a postfix C<while> or C<until>, such as
+the classic "Hello, world!" example from 8-bit computers of the early 1980s:
+
+=begin programlisting
+
+    print "Hello, world!  " while 1;
+
+=end programlisting
+
+A simple event loop for a GUI program or network server may be:
+
+=begin programlisting
+
+    $server->dispatch_results() until $should_shutdown;
+
+=end programlisting
+
+X<do; looping>
+X<looping; do>
+
+For more complex expressions, use a C<do> block:
+
+=begin programlisting
+
+    do
+    {
+        say 'What is your name?';
+        my $name = <>;
+        chomp $name;
+        say "Hello, $name!" if $name;
+    } until (eof);
+
+=end programlisting
+
+Perl considers the C<do> block itself a single expression, but it can contain
+several expressions on its own.  Unlike the C<while> loop's block form, the
+C<do> block with a postfix C<while> or C<until> will execute its body at least
+once.  This characteristic can be useful, but this construct is less common
+than the other loop forms.
+
+=head4 Loops within Loops
+
 X<nested loops>
 X<loops; nested>
 
@@ -656,6 +775,34 @@ In this case, explicitly declaring named variables is essential to
 maintainability; the potential for confusion as to the scoping of iterator
 variables is too great otherwise -- especially if one loop uses the topic
 variable as its iteration variable.
+
+A common mistake with nesting C<foreach> and C<while> loops is that it is easy
+to exhaust a filehandle with a C<while> loop:
+
+=begin programlisting
+
+    open my $fh, '<', $some_file
+        or die "Cannot read '$some_file': $!\n";
+
+    for my $prefix (@prefixes)
+    {
+        # DO NOT USE; likely buggy code
+        while (<$fh>)
+        {
+            say $prefix, $_;
+        }
+    }
+
+=end programlisting
+
+Opening the filehandle outside of the C<for> loop leaves the file position
+unchanged between each completion of the C<while> loop.  You may re-open the
+file inside the C<for> loop (simple to understand, but not always a good use of
+system resources), slurp the entire file into memory (which may not work if the
+file is large), or C<seek> the filehandle back to the beginning of the file for
+each iteration (often the best solution).
+
+=head4 Loop Control
 
 X<loop control>
 X<next>
@@ -722,12 +869,130 @@ those cases, a I<loop label> can disambiguate:
 There are often better options than complex nested loops, however; consider
 extracting the inner loop into its own function for clarity.
 
-=for author
+=head4 Given/When
 
-do
-a word about context
+X<given>
 
-=end for
+The C<given> construct is a feature new to Perl 5.10.  It assigns the value of
+an expression to the topic variable and introduces a block:
+
+=begin programlisting
+
+    given ($name)
+    {
+        ...
+    }
+
+=end programlisting
+
+Unlike C<for>, it does not iterate over an aggregate; it evaluates its value in
+scalar context.
+
+Assignment to the topic variable always occurs:
+
+=begin programlisting
+
+    given (my $username = find_user())
+    {
+        is( $username, $_, 'topic assignment happens automatically' );
+    }
+
+=end programlisting
+
+C<given> also lexicalizes the topic variable to prevent accidental
+modification:
+
+=begin programlisting
+
+    given ('mouse')
+    {
+        say;
+        mouse_to_man( $_ );
+        say;
+    }
+
+    sub mouse_to_man
+    {
+        $_ = shift;
+        s/mouse/man/;
+    }
+
+=end programlisting
+
+X<when>
+
+By itself, this feature may seem less than useful.  In combination with
+C<when>, it is very useful.  C<given> topicalizes a value.  Within the
+associated block, multiple C<when> statements match the topic against
+expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper, Scissors game:
+
+=begin programlisting
+
+    my @options = ( \&rock, \&paper, \&scissors );
+
+    do
+    {
+        say "Rock, Paper, Scissors!  Pick one: ";
+        chomp( my $user = <STDIN> );
+        my $computer_match = $options[ rand @options ];
+        $computer_match->( lc( $user ) );
+    } until (eof);
+
+    sub rock
+    {
+        print "I chose rock.  ";
+
+        given (shift)
+        {
+            when (/paper/)    { say 'You win!' };
+            when (/rock/)     { say 'We tie!'  };
+            when (/scissors/) { say 'I win!'   };
+            default           { say 'I don't understand your move' };
+        }
+    }
+
+    sub paper
+    {
+        print "I chose paper.  ";
+
+        given (shift)
+        {
+            when (/paper/)    { say 'We tie!'  };
+            when (/rock/)     { say 'I win!'   };
+            when (/scissors/) { say 'You win!' };
+            default           { say 'I don't understand your move' };
+        }
+    }
+
+    sub scissors
+    {
+        print "I chose scissors.  ";
+
+        given (shift)
+        {
+            when (/paper/)    { say 'I win!'   };
+            when (/rock/)     { say 'You win!' };
+            when (/scissors/) { say 'We tie!'  };
+            default           { say 'I don't understand your move' };
+        }
+    }
+
+=end programlisting
+
+Perl executes the C<default> rule when none of the other conditions match.
+
+=begin notetip
+
+The CPAN module C<MooseX::MultiMethods> demonstrates another technique which
+reduces this code further.
+
+=end notetip
+
+The C<when> construct is even more powerful; it can match against many other
+types of expressions including scalars, aggregates, references, arbitrary
+comparison expressions, and even code references.  The "Smart matching in
+detail" section of the I<perlsyn> perldoc provides a useful table of all
+possible match types.  See the L<smart match> section for more details.
 
 =head4 Tailcalls
 
@@ -770,3 +1035,10 @@ needed for internal bookkeeping of control flow can make otherwise expensive
 algorithms tractable.
 
 =end notetip
+
+=for author
+
+Check Ruslan Zakirov's tailcall module for maturity and applicability here; it
+won't be core, but it may be worth mentioning.
+
+=end for
