@@ -1,0 +1,9 @@
+=head1 The Perl Philosophy
+
+L<expressivity>
+
+L<context_philosophy>
+
+L<implicit_ideas>
+
+L<perldoc>

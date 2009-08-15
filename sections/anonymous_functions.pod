@@ -1,5 +1,7 @@
 =head3 Anonymous Functions
 
+Z<anonymous_functions>
+
 function references
 anonymous functions
 autopromotion of blocks into anonymous functions

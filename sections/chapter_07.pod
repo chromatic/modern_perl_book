@@ -1,0 +1,7 @@
+=head1 Functions
+
+L<scoping>
+
+L<anonymous_functions>
+
+L<closures>

@@ -1,6 +1,6 @@
 =head3 Context
 
-Z<context_philosopy>
+Z<context_philosophy>
 
 Like spoken languages, Perl has the notion of X<context>.  The meaning of an
 idea depends on its surroundings.  This may sound strange and foreign in a

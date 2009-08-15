@@ -1,5 +1,7 @@
 =head3 Closures
 
+Z<closures>
+
 Named closures
     - variable will not stay shared
 Anonymous closures

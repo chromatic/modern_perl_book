@@ -1,5 +1,7 @@
 =head3 Scope
 
+Z<scoping>
+
 lexical scope
     - my
     - most important scoping
