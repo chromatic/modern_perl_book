@@ -119,3 +119,13 @@ little code does this in practice, however.
 
 =end notetip
 
+X<Perl::Critic::Policy::Dynamic::NoIndirect; CPAN modules>
+X<Perl::Critic::Policy::Dynamic::NoIndirect>
+X<Perl::Critic; CPAN modules>
+X<Perl::Critic>
+X<indirect; CPAN modules>
+X<indirect>
+
+To identify indirect calls in your code, use the CPAN module
+C<Perl::Critic::Policy::Dynamic::NoIndirect> (a plugin for C<Perl::Critic>).
+Toforbid their use at compile time, use the CPAN module C<indirect>.
