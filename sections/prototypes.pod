@@ -64,7 +64,7 @@ Thus C<mypush> might be:
     sub mypush (\@@)
     {
         my ($array, @rest) = @_;
-        push @$array, $rest;
+        push @$array, @rest;
     }
 
 =end programlisting

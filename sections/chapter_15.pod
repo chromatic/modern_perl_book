@@ -1,3 +1,5 @@
 =head1 What to Avoid
 
+L<indirect_objects>
+
 L<prototypes>
