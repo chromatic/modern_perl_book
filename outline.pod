@@ -221,7 +221,7 @@ import()
 
 =head2 Objects
 
-Perhaps start with syntactic elements and then show Mouse?  Vice versa?  Must
+Perhaps start with syntactic elements and then show Moose?  Vice versa?  Must
 cover packages and modules first, at least.
 
 =head3 Packages
@@ -241,10 +241,14 @@ Really not a fan.
 
 Mixins, roles.
 
-=head3 Mouse
+=head3 Moose
 
-Note that this is the single place in which I want to describe something other
-than the default language behavior.  Hoist this up earlier?
+The bare bones: classes, attributes, methods.
+
+Note that this is the single place in the book in which I want to describe
+something other than the default language behavior.  Hoist this up earlier?
+
+Maybe MooseX::Declare?  Leave that for the (hypothetical) Moose book?
 
 =head3 Reflection
 
@@ -351,7 +355,7 @@ They don't work the way you think they do.
 
 =head3 Typeglobs and Reflection
 
-Use Mouse instead.
+Use Moose instead.
 
 =head2 Avoid When Possible
 
