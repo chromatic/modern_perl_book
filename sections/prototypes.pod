@@ -223,3 +223,12 @@ You can use this API without the prototype.  It's slightly less attractive:
 A sparing use of subroutine prototypes to remove the need for the C<sub>
 keyword is reasonable.  Few other uses of prototypes are compelling enough to
 overcome their drawbacks.
+
+
+Ben Tilly:
+
+There is an omission in your list of good reasons to use prototypes.
+
+A final good reason to use prototypes is in a comparison sub. If you pass sort a subroutine with ($$) as a prototype then it passes the arguments in @_ rather than setting $a and $b in the package that sort was called from. If you're setting up a sort in a different package than you're calling sort in, this can be a lifesaver.
+
+This may seem like an obscure boundary case, but I've personally found it to be the most common reason why I've used prototypes at $work.
