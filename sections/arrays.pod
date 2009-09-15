@@ -87,29 +87,202 @@ array from the end instead of the start.  The final element of an array is
 available from the index C<-1>.  The penultimate element of the array is
 available at index C<-2> and so on.
 
-Perl 5 arrays are mutable; they do not have a fixed size.  They can extend or
-contract as necessary.
+You can assign to individual positions in an array directly by index:
+
+=begin programlisting
+
+    my @cats;
+    $cat[0] = 'Daisy';
+    $cat[1] = 'Petunia';
+    $cat[2] = 'Tuxedo';
+    $cat[3] = 'Jack';
+    $cat[4] = 'Brad';
+
+=end programlisting
+
+Note that the array declaration did not require a size, nor is there an error
+assigning to subsequent indices.  Perl 5 arrays are mutable; they do not have a
+static size.  They can extend or contract as necessary.
+
+Assignment in multiple lines can be tedious.  You can initialize an array from
+a list in one step:
+
+=begin programlisting
+
+    my @cats = ( 'Daisy', 'Petunia', 'Tuxedo', 'Jack', 'Brad' );
+
+=end programlisting
+
+=begin notetip
+
+Remember that the parentheses I<do not> create a list.  Without parentheses,
+this would assign C<Daisy> as the first and only element of the array, due to
+operator precedence.
+
+=end notetip
+
+Any expression which produces a list in list context can assign to an array:
+
+=begin programlisting
+
+    my @cats     = get_cat_list();
+    my @timeinfo = localtime();
+    my @nums     = 1 .. 10;
+
+=end programlisting
+
+Assigning to a scalar element of an array enforces scalar context, while
+assigning to the array as a whole enforces list context.
+
+X<array slice>
+X<slices; array>
+
+You can also access elements of an array in list context with a construct known
+as an I<array slice>.
+
+=begin programlisting
+
+    my @youngest_cats = @cats[-1, -2];
+    my @oldest_cats   = @cats[0 .. 2];
+    my @selected_cats = @cats[ @indexes ];
+
+=end programlisting
+
+You can assign to an array slice as well:
+
+=begin programlisting
+
+    @users[ @replace_indices ] = @replace_users;
+
+=end programlisting
+
+A slice can contain zero or more elements -- including one:
+
+=begin programlisting
+
+    # single-element array slice; function call in I<list> context
+    @cats[-1] = get_more_cats();
+    $cats[-1] = get_more_cats();
+
+=end programlisting
+
+Be aware that the only syntactic difference between an array slice of one
+element and the scalar access of an array element is the leading sigil.  The
+semantic difference is greater: an array slice always enforces list context.
+
+=begin notetip
+
+This behavior is one reason why Perl 6 uses invariant sigils.
+
+=end notetip
+
+Managing array indices can be a hassle.  Because Perl 5 can expand or contract
+arrays as necessary, the language also provides several operations to treat
+arrays as stacks, queues, and the like.
+
+X<push>
+X<pop>
+
+The C<push> and C<pop> operators add and remove elements from the tail of the
+array, respectively.
+
+=begin programlisting
+
+    my @meals;
+
+    # what is there to eat?
+    push @meals, qw( hamburgers pizza lasagna salad );
+
+    # forget the salad...
+    pop @meals;
+
+=end programlisting
+
+You may C<push> as many elements as you like onto an array.  Its second
+argument is a list of values.  You may only C<pop> one argument at a time.
+C<push> returns the updated number of elements in the array.  C<pop> returns
+the removed element.
+
+Similarly, C<unshift> and C<shift> add elements to and remove an element from
+the start of an array:
+
+=begin programlisting
+
+    # expand our culinary horizons
+    unshift @meals, qw( tofu curry spanakopita taquitos );
+
+    # rethink that whole soy idea
+    shift @meals;
+
+=end programlisting
+
+C<unshift> prepends a list of zero or more elements to the start of the array
+and returns the new number of elements in the array.  C<shift> removes and
+returns the first element of the array.
+
+=begin notetip
+
+Few programs use the return values of C<push> and C<unshift>.
+
+=end notetip
+
+Arrays often contain elements to process in a loop; see L<looping_directives>
+for more detail about Perl 5 control flow and array processing.
+
+X<list context; arrays>
+
+In list context, arrays flatten into lists.  If you pass multiple arrays to a
+normal Perl 5 subroutine, they will become a single list:
+
+=begin programlisting
+
+    my @cats = qw( Daisy Petunia Tuxedo Brad Jack );
+    my @dogs = qw( Rodney Lucky );
+
+    take_pets_to_vet( @cats, @dogs );
+
+    sub take_pets_to_vet
+    {
+        # do not use!
+        my (@cats, @dogs) = @_;
+        ...
+    }
+
+=end programlisting
+
+In other words, C<@_> will contain seven elements, not two.
+
+As well, list assignment to arrays is I<greedy>.  An array will consume as many
+elements from this type of assignment as possible.  After the assignment,
+C<@cats> will contain I<every> argument passed to the subroutine.  C<@dogs>
+will be empty.
+
+This flattening behavior sometimes confuses novices intending to create nested
+arrays in Perl 5:
+
+=begin programlisting
+
+    # creates a single array, not an array of arrays
+    my @array_of_arrays = ( 1 .. 10, ( 11 .. 20, ( 21 .. 30 ) ) );
+
+=end programlisting
+
+While some people may initially expect this code to produce an array where the
+first ten elements are the numbers one through ten and the eleventh element is
+an array containing the numbers eleven through 20 and an array containing the
+numbers twenty-one through thirty, this actually produces an array containing
+the numbers one through 30, inclusive.  Remember that parentheses do not
+I<create> lists in these circumstances -- they only group expressions.
+
+The solution to this flattening behavior is the same for passing arrays to
+subroutines and for creating nested arrays; see L<references> for more details.
 
 =for author
 
-assignment
-    - list
-    - scalar
-    - context
-
-iteration
-
-flattening
-
 interpolation
 
-arrays as vectors, stacks, queues, and the like
-
-    - array slices
-
 common array operators
-
-nested arrays
-    mention of anonymous arrays
+    - splice
+    - undef
 
 =end for

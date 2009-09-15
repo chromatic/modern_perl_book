@@ -347,6 +347,8 @@ what your own data types produce when evaluated in a boolean context.
 
 =head4 Looping Directives
 
+Z<looping_directives>
+
 Perl also provides several directives devoted to looping and iteration.
 
 C<foreach>
