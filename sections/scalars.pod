@@ -1,0 +1,123 @@
+=head3 Scalars
+
+Z<scalars>
+
+X<scalar>
+
+One of Perl 5's fundamental data types is the scalar.  This represents a
+single, discrete value.  That value may be a string, an integer, a floating
+point value, an object, or a reference -- but it is always a single value.
+
+As you might expect from the name, scalar values have a close relationship with
+scalar L<context>.  Assigning the result of a function call to a scalar
+variable enforces scalar context on the function call.
+
+Scalars may be lexical or global variables.
+
+Scalar names appearing explicitly in source code must conform to the L<names>
+guidelines.
+
+When accessing variables in Perl 5, the leading dollar-sign (C<$>) L<sigil>
+indicates that the value is a scalar value.  If you have three variables named
+C<$user>, C<@user>, and C<%user> as well as a subroutine named C<user()>, the
+sigil can differentiate between all three.
+
+=begin notetip
+
+This is not I<universally> true; the scalar sigil applied to an operation on an
+aggregate variable determines the type of value accessed through that
+operation; see L<arrays> and L<hashes> for more.
+
+=end notetip
+
+Perl 5 scalars do not have static typing; a scalar variable can contain any
+type of scalar value without special conversions or casts.  Thus this code is
+all legal:
+
+=begin programlisting
+
+    my $value;
+    $value = 123.456;
+    $value = 77;
+    $value = "I am Chuck's big toe.";
+    $value = Store::IceCream->new();
+
+=end programlisting
+
+Even though this is I<legal>, it can be confusing to readers of the code.
+
+As mentioned in L<context>, Perl 5 performs conversions when accessing the
+value of a scalar in specific contexts.  You may treat the contents of a scalar
+as a string, even if you didn't explicitly assign it a string:
+
+=begin programlisting
+
+    my $zip_code        = 97006;
+    my $city_state_zip  = 'Beaverton, Oregon' . ' ' . $zip_code;
+
+=end programlisting
+
+You may also perform mathematical operations on strings:
+
+=begin programlisting
+
+    my $call_sign = 'KB7MIU';
+    my $next_sign = $call_sign++;
+
+    # also fine as
+    $next_sign    = ++$call_sign;
+
+    # but I<does not work> as:
+    $next_sign    = $call_sign + 1;
+
+=end programlisting
+
+X<increment; string>
+
+=begin notetip
+
+Note that this magical string increment behavior does not have a corresponding
+magical decrement behavior.  You can't get the previous string value by writing
+C<$call_sign-->.
+
+=end notetip
+
+Magical string increment turns C<a> into C<b> and C<z> into C<aa>, respecting
+character set and case.  Note that C<ZZ9> becomes C<ZZ0> and C<ZZ09> becomes
+C<ZZ10>, however -- numbers wrap around but do not carry to alphabetic
+components.
+
+X<stringification>
+X<numification>
+
+=for author
+
+Mention this here or move it elsewhere?
+
+=end for
+
+Perl 5 stringifies L<references> evaluated in scalar string context and
+numifies references evaluated in scalar numeric context.
+
+X<Scalar::Util>
+X<dualvars>
+X<dualvar; Scalar::Util>
+
+Perl 5 scalars have a unique property in that they can contain numeric parts as
+well as string parts.  Perl 5 can store both a numeric value and a string value
+in the internal data structure which represents scalars.  The core
+C<Scalar::Util> module's C<dualvar()> function allows you to store these values
+explicitly.
+
+X<looks_like_number>
+X<looks_like_number;Scalar::Util>
+
+Similarly, the C<looks_like_number()> function returns true if the scalar value provided is something Perl 5 would interpret as a number.
+
+=for author
+
+scalars and truth; boolean context
+undef
+the C<scalar()> function ?
+
+=end for
