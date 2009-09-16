@@ -134,6 +134,29 @@ Any expression which produces a list in list context can assign to an array:
 Assigning to a scalar element of an array enforces scalar context, while
 assigning to the array as a whole enforces list context.
 
+If you access an element of an array which does not exist, you will receive the
+C<undef> value.  If you store to an element of an array beyond its current
+length, the intervening values will contain the C<undef> value.
+
+To clear an array, assign an empty list:
+
+=begin programlisting
+
+    my @dates = ( 1969, 2001, 2010, 2051, 1787 );
+    ...
+    @dates    = ();
+
+=end programlisting
+
+=begin notetip
+
+As freshly-declared arrays start out empty, C<my @items = ();> is a longer
+version of C<my @items>.  Prefer the latter.
+
+=end notetip
+
+
+
 X<array slice>
 X<slices; array>
 
@@ -226,6 +249,14 @@ Few programs use the return values of C<push> and C<unshift>.
 
 =end notetip
 
+X<splice> C<splice> is another important -- if less frequently used -- array
+operator.  It removes and replaces elements from an array given an offset, a
+length of a list slice, and replacements.  Both replacing and removing are
+optional; you may omit either behavior.  The C<perlfunc> description of
+C<splice> demonstrates its equivalences with C<push>, C<pop>, C<shift>, and
+C<unshift>.  Note that the other operators are shorter and simpler to read and
+understand.
+
 Arrays often contain elements to process in a loop; see L<looping_directives>
 for more detail about Perl 5 control flow and array processing.
 
@@ -277,12 +308,40 @@ I<create> lists in these circumstances -- they only group expressions.
 The solution to this flattening behavior is the same for passing arrays to
 subroutines and for creating nested arrays; see L<references> for more details.
 
+X<array interpolation>
+X<interpolation; arrays>
+X<$">
+X<$LIST_SEPARATOR>
+
+Arrays interpolate in double quoted strings as a list of the stringification of
+each item separated by the current value of the magic global C<$">.  The
+default value of this variable is a single space.  Its F<English.pm> mnemonic
+is C<$LIST_SEPARATOR>.  Thus:
+
+=begin programlisting
+
+    my @alphabet = 'a' .. 'z';
+    say "[@alphabet]";
+    B<[a b c d e f g h i j k l m n o p q r s t u v w x y z]>
+
+=end programlisting
+
+Temporarily localizing and assigning another value to C<$"> for debugging
+purposes is very handyN<Due credit goes to Mark-Jason Dominus for demonstrating
+this example several years ago>:
+
+=begin programlisting
+
+    # what's in this array again?
+    {
+        local $" = ')(';
+        say "(@some_values)";
+    }
+
+=end programlisting
+
 =for author
 
-interpolation
-
-common array operators
-    - splice
-    - undef
+Check stringification of array elements during interpolation.
 
 =end for
