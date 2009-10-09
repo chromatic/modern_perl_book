@@ -92,11 +92,11 @@ You can assign to individual positions in an array directly by index:
 =begin programlisting
 
     my @cats;
-    $cat[0] = 'Daisy';
-    $cat[1] = 'Petunia';
-    $cat[2] = 'Tuxedo';
-    $cat[3] = 'Jack';
-    $cat[4] = 'Brad';
+    $cats[0] = 'Daisy';
+    $cats[1] = 'Petunia';
+    $cats[2] = 'Tuxedo';
+    $cats[3] = 'Jack';
+    $cats[4] = 'Brad';
 
 =end programlisting
 
