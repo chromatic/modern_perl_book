@@ -1,0 +1,70 @@
+<!--
+
+h1 { font-family: sans-serif; }
+h2 { font-family: sans-serif; }
+h3 { font-family: sans-serif; }
+h4 { font-family: sans-serif; }
+h5 { font-family: sans-serif; }
+
+table { font-size: 12px; font-family: sans-serif; }
+
+th { background: #CCCCCC; text-align: left;}
+
+code {color: #000099; font-family: courier, monospaced;}
+
+.url { color: #000099; }
+.footnote { color: #333333; }
+
+div.author
+{
+	background: #ffaaaa;
+	border-style: solid;
+	border-width: thin;
+	padding: 2px;
+	width: 25%;
+}
+
+div.editor
+{
+	background: #aaaaff;
+	border-style: solid;
+	border-width: thin;
+	padding: 2px;
+	width: 25%;
+}
+
+div.hack > p:first-child
+{
+	font-style: italic;
+	font-weight: bold;
+	width: 50%;
+	margin-left: 5%;
+}
+
+div.note
+{
+	border-width: thin;
+	border-style: solid;
+}
+
+div.caution
+{
+	border-width: thin;
+	border-style: solid;
+	background: #ff6666;
+}
+
+div.production
+{
+	background: #000000;
+	color: #ffffff;
+	text-align: center;
+}
+
+.code_command
+{
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+-->

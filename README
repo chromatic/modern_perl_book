@@ -18,6 +18,38 @@ you can use it to your full advantage.
 http://www.modernperlbooks.com/mt/2009/01/why-modern-perl.html
 
 
+Building this Book
+------------------
+
+You need a modern version of Perl installed.  I recommend Perl 5.10.1, but
+anything newer than 5.8.6 should work.
+
+You should also have Pod::PseudoPod installed with its dependencies.
+
+From the top level directory of a checkout, build the individual chapters with:
+
+    $ perl build/tools/build_chapters.pl
+
+The chapter sources are in the sections/ directory.  Each chapter has a
+corresponding chapter_nn.pod file.  Each file contains multiple POD links which
+refer to other files in the sections/ directory.  Each of those files contains
+a PseudoPOD Z<> anchor.
+
+The build_chapters.pl program weaves these sections into chapters and writes
+them to POD files in build/chapters.
+
+(This process makes it easy to rearrange sections within and between chapters
+without generating huge textual diffs.)
+
+To build HTML from these woven chapters:
+
+    $ perl build/tools/build_html.pl
+
+This will produce nicely-formatted HTML in the build/html/ directory.  If
+anything looks wrong, it's a mistake on my part (or a CSS problem) and patches
+are very welcome.
+
+
 Contributing to Modern Perl
 ---------------------------
 
