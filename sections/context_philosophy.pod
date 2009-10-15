@@ -2,7 +2,9 @@
 
 Z<context_philosophy>
 
-Like spoken languages, Perl has the notion of X<context>.  The meaning of an
+X<context>
+
+Like spoken languages, Perl has the notion of I<context>.  The meaning of an
 idea depends on its surroundings.  This may sound strange and foreign in a
 programming language -- surely predictability is more important than
 expressivity sometimes -- but you're already proficient with how Perl uses
@@ -34,17 +36,17 @@ results.
 Suppose you have a function called C<some_expensive_operation()> which performs
 an expensive calculation and can produce many, many results.  If you call the
 function on its own and never do anything with its return value, this is X<void
-context>:
+context>I<void context>:
 
     some_expensive_operation();
 
 Calling the function and assign its return value to a single element evaluates
-the function in X<scalar context>:
+the function in X<scalar context>I<scalar_context>:
 
     my $single_result = some_expensive_operation();
 
 Assigning the results of calling the function to an array or a list, or using
-it in a list evaluates the function in X<list context>:
+it in a list evaluates the function in X<list context>I<list_context>:
 
     my @all_results        = some_expensive_operation();
     my ($single_element)   = some_expensive_operation();
@@ -105,16 +107,16 @@ In exchange for not having to declare (or at least track) explicitly what
 I<type> of data a variable contains or a function produces, Perl offers
 specific type contexts that tell the compiler how to treat a given value at a
 specific time.  That is, the C<eq> operator treats its operands as strings by
-enforcing X<string context> on them.  The C<==> operator enforces numeric
-context.
+enforcing X<string context>I<string_context> on them.  The C<==> operator
+enforces numeric context.
 
 Perl will do its best to convert from strings to numbers and back depending on
 the operators you use; it's important to use the proper operators for the type
 of context you want.
 
-There's also a X<boolean context> which occurs when you use a value in a
-conditional statement -- in the previous examples, the results of the C<eq> and
-C<==> operators were in this boolean context.
+There's also a X<boolean context>I<boolean context> which occurs when you use a
+value in a conditional statement -- in the previous examples, the results of
+the C<eq> and C<==> operators were in this boolean context.
 
 In rare circumstances, you may need to force an explicit context where no
 appropriately typed operator exists.  To force a numeric context, add zero to a

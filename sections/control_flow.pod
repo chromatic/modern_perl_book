@@ -14,7 +14,9 @@ file executed) and continues to the end:
 
 =end programlisting
 
-This is true in the absence of specific X<control flow directives>.  These
+X<control flow directives>
+
+This is true in the absence of specific I<control flow directives>.  These
 directives change the flow of execution -- what happens next -- depending on
 the values of arbitrarily complex expressions.
 

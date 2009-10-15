@@ -2,7 +2,10 @@
 
 Z<names>
 
-Perl X<names> or X<identifiers> follow simple rules.  A variable name, a
+X<names>
+X<identifiers>
+
+Perl I<names> (or I<identifiers>) follow simple rules.  A variable name, a
 function name, a package name, a class name, and a filehandle name must all
 start with a letter or an underscore.  They may optionally include any
 combination of letters, numbers, and underscores.  These are all valid Perl
@@ -28,7 +31,9 @@ When the C<utf8> pragma is in effect, you may use any valid UTF-8 characters in
 identifiers, provided that they still start with a letter or underscore and
 optionally contain one or more alphanumeric or underscore characters.
 
-The rules are different for X<symbolic lookups>, however.  These rules only
+X<symbolic lookups>
+
+The rules are different for I<symbolic lookups>, however.  These rules only
 apply to literal names found in source code.  Perl's dynamic nature makes it
 possible to refer to entities with names generated at runtime or provided as
 input to a program.  This is more difficult than the straightforward approach,
@@ -39,10 +44,13 @@ these grammatic rules.  This can produce confusing code, however.
 
 =head4 Variable Names and Sigils
 
-X<Variable names> always have a leading sigil which suggests the type of the
-variable.  X<Scalar variables> have a leading dollar sign (C<$>) character.
-X<Array variables> have a leading at sign (C<@>) character.  X<Hash variables>
-have a leading percent sign (C<%>) character:
+X<Variable names>
+
+I<Variable names> always have a leading sigil which suggests the type of the
+variable.  X<scalar variables>I<Scalar variables> have a leading dollar sign
+(C<$>) character.  X<array variables>I<Array variables> have a leading at sign
+(C<@>) character.  X<hash variables>I<Hash variables> have a leading percent
+sign (C<%>) character:
 
     my $scalar;
     my @array;
@@ -56,7 +64,9 @@ types:
 
 Perl won't get confused, but the person reading the code will.
 
-Perl 5 uses X<variant sigils>, where the sigil on a variable may change
+X<variant sigils>
+
+Perl 5 uses I<variant sigils>, where the sigil on a variable may change
 depending on what you do with it.  For example, to access a (scalar) element of
 an array or a hash, the sigil changes to the dollar sign (C<$>) character:
 
@@ -83,9 +93,9 @@ through curly brackets.
 
 Occasionally you may need to refer to functions or variables in a separate
 namespace.  Often you will need to refer to a class by its X<fully-qualified
-name>.  These names are collections of package names joined by double colons
-(C<::>).  That is, C<My::Fine::Package> refers to a logical collection of
-variables and functions.
+name>I<fully-qualified name>.  These names are collections of package names
+joined by double colons (C<::>).  That is, C<My::Fine::Package> refers to a
+logical collection of variables and functions.
 
 While the standard naming rules apply to package names, by convention
 user-defined packages all start with uppercase letters.  The Perl core reserves
