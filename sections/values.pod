@@ -2,4 +2,199 @@
 
 Z<values>
 
+X<variables>
+X<variables>
 
+Computer programs contain I<variables>: containers which hold I<values>.
+Values are the actual data the programs manipulate.  While it's easy to explain
+what that data might be -- your aunt's name and address, the distance between
+your office and a golf course on the moon, or the weight of all cookies you've
+eaten this year -- the rules regarding that data are often strict.  Writing an
+effective program often means understanding the best (or simplest or fastest or
+most compact or easiest) way of representing that data for the particular
+manipulations your program must perform on that data.
+
+Thus effective Perl programs depend on the accurate representation and
+manipulation of values.
+
+While the structure of a program depends heavily on the means by which you
+model your data with appropriate variables, these variables would be
+meaningless if they couldn't accurately contain the data itself -- the values.
+
+=head4 Strings
+
+X<strings>
+
+One primary value in Perl 5 is the I<string>.  A string is a piece of data with
+no particular formatting, no particular contents, and no semantic meaning
+beyond the fact that it's a string.  It could be your name.  It could be the
+contents of an image file read from your hard drive.  It could be the Perl
+program itself.
+
+A string has no meaning to the program until you give it meaning.  The
+emboldened lines in this example are strings:
+
+=begin programlisting
+
+    my $name    = B<'Donner Odinson, Bringer of Despair'>;
+    my $address = B<"Room 539, Bilskirnir, Valhalla">;
+
+=end programlisting
+
+A string is a fixed amount of data delineated by some quoting form.  This
+example shows single quotes and double quotes.
+
+X<strings; single-quoted>
+
+Characters in a I<single-quoted string> represent themselves literally, with
+one exception.  You may embed a single quote inside a single-quoted string by escaping the quote with a leading backlash:
+
+=begin programlisting
+
+    my $reminder = 'DonB<\'>t forget to escape the single quote!';
+
+=end programlisting
+
+X<strings; double-quoted>
+
+A I<double-quoted string> has more complex (and often, more useful) behavior.
+You may escape control and non-printable characters in the string.
+
+=begin programlisting
+
+    my $newline  = "B<\n>";
+    my $tab      = "B<\t>";
+    my $carriage = "B<\r>";
+
+=end programlisting
+
+=begin notetip
+
+You may also embed the characters themselves directly into the string -- a
+string declaration may cross lines and run as long as you want, but it's often
+more maintainable to use the escapes.  Whitespace can be difficult to read
+precisely in a text editor.
+
+=end notetip
+
+=for author
+
+Should I include a table of escapes here?  It's the same as in regexes.
+
+=end for
+
+X<interpolation>
+X<strings; interpolation>
+
+You may also I<interpolate> the value of a scalar variable or the values of an
+array within a double-quoted string directly:
+
+=begin programlisting
+
+    my $factoid = "Did you know that B<$name> lives at B<$address>?";
+
+=end programlisting
+
+You may include a literal double-quote inside a double-quoted string by
+escaping it with a leading backslash:
+
+=begin programlisting
+
+    my $quote = "\"Ouch,\", he cried.  \"That I<hurt>!\"";
+
+=end programlisting
+
+X<quoting operators>
+X<q>
+X<operators; q>
+X<qq>
+X<operators; qq>
+
+If you find that hideously ugly, you may use an alternate I<quoting operator>.
+The C<q> operator performs single quoting, while the C<qq> operator performs
+double quoting.  In each case, you may choose your own delimiter for the
+string.  The character immediately following the operator determines the
+beginning and end of the string.  If the character is the opening character of
+a balanced pair, the closing character will be the final delimiter.  Otherwise,
+the character itself will be both the starting and ending delimiter.
+
+=begin programlisting
+
+    my $quote    = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
+    my $reminder = B<q|>Don't forget to escape the single quote!B<|>;
+
+=end programlisting
+
+X<heredocs>
+X<strings; heredocs>
+
+Even though you can declare a complex string with a series of embedded escape
+characters, sometime's it's easier to declare a multi-line string on multiple
+lines.  The I<heredoc> syntax lets you assign one or more lines of a string
+with a different syntax:
+
+=begin programlisting
+
+    my $blurb =<<'END_BLURB';
+
+    He looked up.  "Time is never on our side, my child.  Do you see the irony?
+    All they know is change.  Change is the constant on which they all can
+    agree.  Whereas we, born out of time to remain perfect and perfectly
+    self-aware, can only suffer change if we pursue it.  It is against our
+    nature.  We rebel against that change.  Shall we consider them greater
+    for it?"
+    END_BLURB
+
+=end programlisting
+
+The C<< <<'END_BLURB' >> syntax has three several parts.  The double
+angle-brackets introduce the heredoc.  The quotes are optional and determine
+whether the heredoc obeys single-quoted or double-quoted behavior with regard
+to variable and escape character interpolation.  The C<END_BLURB> itself is an
+arbitrary identifier which the Perl 5 parser uses as the ending delimiter.
+
+Be careful; regardless of the indentation of the heredoc declaration, the
+ending delimiter must begin in the first column of the program.
+
+=begin notetip
+
+If the identifier begins with spaces, those spaces must be present exactly in
+the ending delimiter.
+
+=end notetip
+
+=for author
+
+Write these:
+
+numbers
+
+    integers
+    floats
+    scientific notation
+
+undef
+empty list (rvalue)
+
+=end for
+
+=for author
+
+Really ought to discuss Unicode and representations here, but I don't know
+enough to write with CONFIDENCE.
+
+others?
+
+lists
+
+barewords (see elsewhere)
+
+operators
+
+functions
+
+regular expressions
+
+references
+
+=end for

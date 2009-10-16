@@ -31,6 +31,8 @@ L<perldoc> *
 
 Evolution happens outside the core I<on purpose>.
 
+L<cpan> x
+
 =head2 The Perl Community
 
 How and where to find other people to learn and to share.
@@ -45,13 +47,13 @@ An explanation of the individual syntactic elements which make up the language.
 
 =head3 Names
 
-L<names>
+L<names> *
 
 Mostly identifiers.  How they work, what's valid, and what's not.
 
 =head3 Values
 
-L<values>
+L<values> x
 
 Strings, numbers, everything without a sigil.
 
