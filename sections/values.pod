@@ -163,20 +163,122 @@ the ending delimiter.
 
 =end notetip
 
-=for author
+=head4 Numbers
 
-Write these:
+X<numbers>
+X<integers>
+X<floating-point values>
 
-numbers
+Perl also supports numbers, whether integers or floating-point values.  They
+support scientific notation as well as binary, octal, and hexidecimal
+representations:
 
-    integers
-    floats
-    scientific notation
+=begin programlisting
 
-undef
-empty list (rvalue)
+    my $integer   = 42;
+    my $float     = 0.007;
+    my $sci_float = 1.02e14;
+    my $binary    = B<0b>101010;
+    my $octal     = B<0>52;
+    my $hex       = B<0x>20;
 
-=end for
+=end programlisting
+
+The emboldened characters are the numeric prefixes for binary, octal, and hex
+notation respectively.  Be aware that the leading zero always indicates octal
+mode; this can occasionally produce unanticipated confusion.
+
+X<numbers; undercore separator>
+X<underscore>
+
+For dealing with large numbers, you may use the underscore character (C<_>) to
+separate thousands.  Compare the readability advantage:
+
+=begin programlisting
+
+    my $us_billion = 1000000000;
+    my $us_billion = 1B<_>000B<_>000B<_>000;
+
+=end programlisting
+
+=begin notetip
+
+Even though you can represent floating-point values explicitly in Perl 5 with
+perfect accuracy, Perl 5 stores them internally in a binary format.  Comparing
+floating-point values is sometimes imprecise in specific ways; consult
+C<perldoc perlnumber> for more details.
+
+=end notetip
+
+You may not use commas to separate thousands in numeric literals; the parser
+will interpret the commas as comma operators.  You I<can> use underscores in
+other places within the number, however.  The parser will treat them as
+invisible characters.  Your readers may not.  These are equivalent:
+
+=begin programlisting
+
+    my $billion = 1000000000;
+    my $billion = 1_000_000_000;
+    my $billion = 10_0_00_00_0_0_0;
+
+=end programlisting
+
+Consider the most readable alternative, however.
+
+X<Scalar::Util>
+X<looks_like_number>
+X<Scalar::Util; looks_like_number>
+
+Occasionally it's useful to determine whether Perl 5 will consider something
+that looks like a number as a number.  The core module C<Scalar::Util> contains
+a function named C<looks_like_number> which returns true Perl will consider the
+given argument numeric.
+
+X<Regexp::Common>
+
+The C<Regexp::Common> module from the CPAN provides several well-tested regular
+expressions to determine the I<type> (whole number, integer, floating-point
+value) of a numeric value.
+
+=head4 Undef
+
+X<undef>
+
+Perl 5 has a value which represents an unassigned/undefined/unknown value:
+C<undef>.  Declared but undefined scalar variables contain C<undef>:
+
+
+=begin programlisting
+
+    my $name = undef;   # unnecessary assignment
+    my $rank;           # also contains undef
+
+=end programlisting
+
+C<undef> evaluates to false in boolean context.  Be aware that an array
+containing a single element which is itself C<undef> evaluates to true in a
+boolean context.  Interpolating C<undef> into a string -- or evaluating it in a
+string context -- produces an C<uninitialized value> warning, if you have
+C<warnings> enabled.
+
+=head4 The Empty List
+
+X<empty list>
+X<()>
+
+When used on the right-hand side of an assignment, the C<()> construct
+represents an empty list.  When evaluated in scalar context, this evaluates to
+C<undef>.  In list context, it represents an empty list.
+
+When used on the left-hand side of an assignment, it enforces list context.
+Thus to count the number of elements returned from an expression in list
+context without using a temporary variable, you may write the idiomatic:
+
+=begin programlisting
+
+    my $count = B<()> = get_all_clown_hats();
+
+=end programlisting
 
 =for author
 
