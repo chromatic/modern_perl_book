@@ -1,0 +1,154 @@
+Z<method_sub_equivalence>
+
+Perl 5's object system is deliberately minimal.  As L<objects> explains, it
+provides a very thin layer over existing Perl features.  This is nowhere more
+obvious in the equivalence of Perl 5 subroutines and Perl 5 methods.
+
+Because a class is a package, Perl itself makes no strong distinction between a
+subroutine stored in a package and a method stored in a package.  The same
+keyword, C<sub>, expresses both.  Documentation and the convention of treating
+the first parameter as C<$self> can imply intent to readers of the code, but
+Perl itself will treat any subroutine of the appropriate name it can find in an
+appropriate package as a method if you try to call it as a method.
+
+Likewise, you can invoke a method as if it were a function -- fully-qualified,
+exported, or as a reference -- if you pass in your own invocant manually.
+
+Both have their problems; avoid them.
+
+=head4 Caller-side
+
+Suppose you have a class which contains several methods:
+
+=begin programlisting
+
+    package Order;
+
+    use List::Util 'sum';
+
+    ...
+
+    sub calculate_price
+    {
+        my $self = shift;
+        return sum( 0, $self->get_items() );
+    }
+
+=end programlisting
+
+=begin notetip
+
+Note the use of C<sum()> from C<List::Util> to add the values of a list.
+
+=end notetip
+
+If you have an C<Order> object C<$o>, the following invocations of this method
+I<may> seem equivalent:
+
+=begin programlisting
+
+    my $price = $o->calculate_price();
+
+    # broken; do not use
+    my $price = Order::calculate_price( $o );
+
+=end programlisting
+
+Though in this simple case, they produce the same output, the latter violates
+the encapsulation of objects in subtle ways.  It avoids method lookup
+altogether.
+
+X<methods; calling as functions (avoid)>
+
+If C<$o> were I<not> an C<Order> object directly, but a subclass of C<Order> or
+an allomorph of C<Order> (see L<roles>) which overrode C<calculate_price()>,
+the method-as-a-function call would call the I<wrong> method.  As well, if the
+internal implementation of C<calculate_price()> were to change, such that
+C<Order> inherits it from an ancestor class or defines it lazily with
+C<AUTOLOAD()>, the behavior might break in odd and difficult to debug ways.
+
+X<methods; calling with references>
+X<UNIVERSAL; can()>
+X<can()>
+
+Perl has one circumstance where this behavior may seem necessary.  If you force
+method resolution without performing dispatch, how do you invoke the resulting
+method reference?
+
+=begin programlisting
+
+    my $meth_ref = $o->can( 'apply_discount' );
+
+=end programlisting
+
+There are two possibilities.  The first is to discard the return value of the
+C<can()> method:
+
+=begin programlisting
+
+    $o->apply_discount() if $o->can( 'apply_discount' );
+
+=end programlisting
+
+The second is to use the reference itself with method invocation syntax:
+
+=begin programlisting
+
+    if (my $meth_ref = $o->can( 'apply_discount' ))
+    {
+        $o->$meth_ref();
+    }
+
+=end programlisting
+
+When C<$meth_ref> contains a subroutine reference, Perl will invoke that
+reference with C<$o> as the invocant.  This works even under strictures, as it
+does when invoking a method with a scalar containing its name:
+
+=begin programlisting
+
+    my $name = 'apply_discount';
+    $o->$name();
+
+=end programlisting
+
+There is one small drawback in invoking a method by reference; if the structure
+of the program has changed in between storing the reference and invoking the
+reference, the reference may no longer refer to the current most appropriate
+method.  Put another way, if the C<Order> class has changed such that
+C<Order::apply_discount> is no longer the right method to call, the reference
+in C<$meth_ref> will not have updated.
+
+If you use this form of invocation, limit the scope of the references.
+
+=head4 Callee-side
+
+X<methods; callable as functions (avoid)>
+X<functions; callable as methods (avoid)>
+
+Because Perl 5 makes no distinction between subroutines and methods at the
+point of declaration and because it's I<possible> (however inadvisable) to
+invoke a given subroutine as a subroutine or a method, it's possible to write a
+subroutine callable as either.
+
+The core C<CGI> module is a prime offender with this technique.  Its functions
+manually inspect C<@_> to determine whether the first argument is a likely
+invocant.  If so, they perform particular manipulations to make sure that any
+object state the subroutine needs to access is available.  If the first
+argument is not a likely invocant, the subroutine must consult global data
+elsewhere.
+
+As with all heuristics, there are corner cases.  It's difficult to predict
+exactly which invocants are potentially valid for a given method, especially
+when considering that users can create their own subclasses.  As well, the
+documentation burden is greater -- the explanation of a combined procedural and
+object interface must reflect the dichotomy of the code -- and the potential
+for misuse is greater.
+
+What happens when one part of the project uses the procedural interface and
+another uses the object interface?
+
+Providing separate procedural and object interfaces to a library may be
+justifiable.  Some designs make some techniques more useful than others.
+Conflating the two into a single API will create a maintenance burden.  Avoid
+it.
