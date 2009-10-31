@@ -1,0 +1,39 @@
+Z<testing>
+
+=for author
+
+start with Test::More
+    - Test::Simple is too simple now
+
+basic assertions
+    - ok or not okay
+    - as many of these as possible
+    - small granularity
+
+running tests
+    - prove
+    - Test::Harness
+
+comparisions:
+    - is
+    - isa/can
+    - is_deeply()
+        - maybe look to something else for this
+
+test organization
+    - .t files
+    - group by usage
+    - test granularity suggestions
+    - plan management
+    - idempotency
+
+pluggable test modules
+    - Test::Exception
+    - Test::Database (forgot the exact name)
+    - ... what else?
+
+further organization
+    - refer to Test::Class series on MPB
+
+=end for
+

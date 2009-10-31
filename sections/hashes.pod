@@ -1,0 +1,43 @@
+Z<hashes>
+
+=for author
+
+declaring and assigning
+    - individual keys and values
+    - in bulk
+    - clearing
+
+keys and quoting
+    - autoquoting fat arror
+    - hash subscript autoquoting
+        - keywords
+        - unary plus
+        - function calls
+
+key stringification
+
+keys/values
+
+each
+    - single iterator per hash
+    - reset with keys
+
+slices
+
+empty hash
+    - truth value
+    - list context
+    - scalar context ?
+
+uses of hashes ?
+    - named parameters
+    - sets
+        - @hash{@slice} = undef;
+    - caches
+        - orcish maneuver
+    - identity hash
+
+tied hashes?
+    - Tie::IxHash
+
+=end for

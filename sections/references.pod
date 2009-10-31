@@ -1,0 +1,42 @@
+Z<references>
+
+=for author
+
+scalar references
+    - creating
+    - dereferencing
+    - limitations
+
+array references
+    - creating
+        - from a named array
+        - anonymous array
+    - accessing scalars
+    - accessing the entire array
+    - array slices
+
+hash references
+    - creating
+        - from a named hash
+        - anonymous hash
+    - accessing scalar values
+    - accessing the entire hash
+    - hash slices
+
+subroutine references
+    - creating
+        - from a named subroutine
+        - from an anonymous subroutine
+    - invoking
+        - directly
+        - with arguments
+        - as methods
+
+filehandle references
+    - creating
+    - using
+    - caveats
+        - IO::Handle
+
+=end for
+

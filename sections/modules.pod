@@ -1,0 +1,22 @@
+Z<modules>
+
+=for author
+
+differences between packages and modules
+    - packaging
+    - installability
+    - automated testing
+    - dependencies tracked
+
+why reuse the CPAN infrastructure?
+    - good tools
+    - automation
+    - reporting
+    - dependency tracking
+    - consistent installation paths
+
+local CPAN repository?
+    - too advanced?  Nice to discuss, if there's space
+
+=end for
+

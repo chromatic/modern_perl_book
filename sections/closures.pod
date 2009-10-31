@@ -2,9 +2,13 @@
 
 Z<closures>
 
+=for author
+
 Named closures
     - variable will not stay shared
+
 Anonymous closures
+    - scoping
 
 Delayed computation with closures
     - iterators
@@ -14,4 +18,7 @@ Encapsulation with closures
     - closure/object equivalence (? too advanced ?)
 
 Abstraction with closures
-    - I have no idea what this means anymore
+    - partial application
+    - need a good example
+
+=end for

@@ -1,0 +1,42 @@
+Z<functions>
+
+=for author
+
+declaration
+
+invocation
+    - passing parameters
+        - list context
+        - flattening
+
+receiving arguments
+    - shift
+    - direct assignment
+    - aliasing
+    - slurpy array
+    - slurpy hash
+    - Params::Validate
+
+namespacing
+
+importing
+
+exporting
+
+reporting errors from
+    - caller
+    - Carp
+
+advanced:
+    - recursion
+    - lexicals
+    - tail calls:
+        - Sub::Tail::Call
+        - manual (blargh)
+
+avoid:
+    - prototypes (mostly)
+    - old-style invocations (do, &)
+    - missing parentheses
+
+=end for

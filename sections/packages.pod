@@ -1,0 +1,34 @@
+Z<packages>
+
+=for author
+
+declaring a package
+    - attributes of a package
+        - name
+        - version
+        - exports?
+
+namespace concerns
+    - nested namespaces
+    - open namespaces
+    - symbol access in namespaces
+
+file concerns
+    - @INC
+    - mapping package names to files
+    - case sensitivity
+
+exporting
+    - Exporter
+    - import()
+    - BEGIN
+    - circular imports
+
+package design
+    - API design
+    - parsimony of symbols/exports
+    - re-entrancy/thread safety
+    - global concerns
+
+=end for
+

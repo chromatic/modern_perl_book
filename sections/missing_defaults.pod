@@ -1,0 +1,25 @@
+Z<missing_defaults>
+
+=for author
+
+strict
+    - refs
+    - subs
+    - vars
+
+warnings
+    - use of undef value
+    - use of wrong operator
+    - deprecation
+
+utf8
+    - maybe....
+
+autodie
+    - stop checking return calls
+
+IO::Handle/whatever
+    - lexical filehandle objects
+
+=end for
+

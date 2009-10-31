@@ -1,0 +1,33 @@
+Z<blessed_references>
+
+=for author
+
+warning about legacy projects
+    - must be somewhat careful here
+
+bare-bones objects
+    - package
+    - reference
+    - blessing
+
+using bless
+    - with hashes
+    - with arrays
+    - with scalars
+    - with subroutines
+
+instance data
+    - with various data types
+
+method lookup
+    - @ISA, base, parent
+    - AUTOLOAD implications
+
+strategies for not going crazy
+    - use Moose, Any::Moose
+    - provide accessors
+        - closure accessor generation
+    - fragile subclassing problem
+    - Class::Accessor
+
+=end for

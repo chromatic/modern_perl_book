@@ -1,0 +1,21 @@
+Z<barewords>
+
+=for author
+
+good uses of bare words
+    - hash keys (usually)
+    - built-in operators (I know it doesn't count, but...)
+    - well-defined interfaces with prototyped subs
+    - constants (sometimes)
+    - special subroutines (BEGIN, DESTROY, AUTOLOAD....)
+    - package names (when distinguished)
+
+poor uses of bare words
+    - filehandles
+    - method names
+    - subroutines in general
+    - hash assignment pairs
+    - sort subroutines
+
+=end for
+
