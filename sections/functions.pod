@@ -1,20 +1,269 @@
 Z<functions>
 
+X<function>
+X<subroutine>
+
+A I<function> (or I<subroutine>, though less often) in Perl is a discrete,
+encapsulated unit of behavior.  It may or may not have a name.  It may or may
+not take parameters.  It may or may not return arguments.  It represents a type
+of control flow, where the execution of the program proceeds to another point
+in the source code.
+
+Functions are a prime mechanism for abstraction and encapsulation in Perl 5;
+many of the other mechanisms for abstraction, encapsulation, and re-use build
+on the concepts of the function.
+
+X<subroutines; declaration>
+
+Use the C<sub> keyword to declare a function:
+
+=begin programlisting
+
+    B<sub> greet_me  { ... }
+
+=end programlisting
+
+Now C<greet_me()> is available for invocation anywhere else within the
+program (with appropriate namespacing or exporting caveats).
+
+=begin notetip
+
+You do not have to declare Perl 5 functions before you use them, except in the
+special case where they modify I<how> the parser parses them.  See
+L<attributes>.
+
+=end notetip
+
+Invoking a subroutine is similar; mention its name and pass a list of
+arguments:
+
+=begin programlisting
+
+    greet_me( 'Jack', 'Brad' );
+    greet_me( 'Snowy' );
+    greet_me();
+
+=end programlisting
+
+=begin notetip
+
+You can I<often> omit parameter-grouping parentheses if your program runs
+correctly with the C<strict> pragma enabled, but they provide clarity to the
+parser and, more importantly, the reader -- so it's often wise to include them.
+
+=end notetip
+
+You can, of course, pass multiple I<types> of arguments to a function:
+
+=begin programlisting
+
+    greet_me( $name );
+    greet_me( @authors );
+    greet_me( %editors );
+
+=end programlisting
+
+... though see the L<references> section for more details.
+
 =for author
 
-declaration
+X<parameters>
+X<functions; parameters>
+X<@_>
+X<parameter flattening>
 
-invocation
-    - passing parameters
-        - list context
-        - flattening
+Inside the subroutine, all parameters come in a single array, C<@_>.  If C<$_>
+corresponds to the English word I<it>, C<@_> corresponds to the word I<them>.
+Perl takes care of I<flattening> all incoming parameters into a single list for
+you, but the subroutine itself must unpack all parameters into any variables it
+wishes to use or operate on C<@_> directly:
+
+=begin programlisting
+
+    sub greet_one
+    {
+        B<my ($name) = @_>;
+        say "Hello, $name!";
+    }
+
+    sub greet_all
+    {
+        say "Hello, B<$_!" for @_>;
+    }
+
+=end programlisting
+
+C<@_> behaves as does any other array in Perl.  You may refer to individual
+elements by index:
+
+=begin programlisting
+
+    sub greet_one_indexed
+    {
+        B<my $name = $_[0]>;
+        say "Hello, $name!";
+
+        # or, less clear
+        say "Hello, $_[0]!";
+    }
+
+=end programlisting
+
+You may also C<shift>, C<unshift>, C<push>, and C<pop> C<@_>; inside a
+function, these operators operate on C<@_> in the same way that they operate on
+C<@ARGV> outside of any function:
+
+=begin programlisting
+
+    sub greet_one_shift
+    {
+        B<my $name = shift>;
+        say "Hello, $name!";
+    }
+
+=end programlisting
+
+=begin notetip
+
+It may seem clearer initially to write C<shift @_>, but the C<shift> assignment
+idiom is so pervasive in Perl 5 culture that it's important to learn the
+shorthand version anyway.
+
+=end notetip
+
+Do take care that assigning a scalar parameter from C<@_> requires C<shift>,
+indexed access to C<@_>, or lvalue list context parentheses.  Otherwise, Perl 5
+will happily evaluate C<@_> in scalar context for you and assign the number of
+parameters passed:
+
+=begin programlisting
+
+    sub bad_greet_one
+    {
+        B<my $name = @_>;  # buggy
+        say "Hello, $name; you're looking quite numeric today!"
+    }
+
+=end programlisting
+
+On the caller side, all arguments get flattened into a single list.  Thus
+passing a hash produces a list of key/value pairs:
+
+=begin programlisting
+
+    sub show_pets
+    {
+        my %pets = @_;
+        while (my ($name, $type) = each %pets)
+        {
+            say "$name is a $type";
+        }
+    }
+
+    my %pet_names_and_types = (
+        Lucky   = > 'dog',
+        Rodney  = > 'dog',
+        Tuxedo  = > 'cat',
+        Petunia = > 'cat',
+    );
+
+    show_pets( %pet_names_and_types );
+
+=end programlisting
+
+The C<show_pets()> function works because the C<%pet_names_and_types> hash
+flattens into the list C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat',
+'Petunia', 'cat'>.  The assignment within C<show_pets()> works effectively as
+the assignment to C<%pet_names_and_types> does.
+
+This is often useful, but there are limitations to understand.  If you wish to
+make a C<show_pets_of_type()> function, where one parameter is the I<type> of
+pet to display, you must pass that type as the I<first> parameter (or use
+C<pop> to remove it from the end of C<@_>):
+
+=begin programlisting
+
+    sub show_pets_by_type
+    {
+        B<my ($type, %pets) = @_>;
+
+        while (my ($name, $species) = each %pets)
+        {
+            B<next unless $species eq $type;>
+            say "$name is a $species";
+        }
+    }
+
+    my %pet_names_and_types = (
+        Lucky   = > 'dog',
+        Rodney  = > 'dog',
+        Tuxedo  = > 'cat',
+        Petunia = > 'cat',
+    );
+
+    show_pets_by_type( 'dog',   %pet_names_and_types );
+    show_pets_by_type( 'cat',   %pet_names_and_types );
+    show_pets_by_type( 'moose', %pet_names_and_types );
+
+=end programlisting
+
+X<parameter slurping>
+
+As with any lvalue assignment to an aggregate, assigning to C<%pets> within the
+function I<slurps> all of the remaining values from C<@_>.  If the C<$type>
+parameter came at the end of C<@_>, Perl would attempt to assign an odd number
+of elements to the hash and would produce a warning.  You I<could> work around
+that:
+
+=begin programlisting
+
+    sub show_pets_by_type
+    {
+        B<my $type = pop;>
+        B<my %pets = @_;>
+
+        ...
+    }
+
+=end programlisting
+
+... but clarity might suffer.  The same principle applies when assigning to an
+array as a parameter, of course.  See L<references> for ways to avoid
+flattening and slurping when passing aggregate parameters.
+
+X<parameter aliasing>
+X<functions; aliasing parameters>
+
+One remanining feature of C<@_> can be surprising (though useful): it contains
+aliases to the passed-in parameters, at least until you unpack C<@_> into its
+own variables.  This behavior is easiest to demonstrate with an example:
+
+=begin programlisting
+
+    sub modify_name
+    {
+        $_[0] = reverse $_[0];
+    }
+
+    my $name = 'Orange';
+    modify_name( $name );
+    say $name;
+
+    # prints C<egnarO>
+
+=end programlisting
+
+If you modify an element of C<@_> directly, you modify the original parameter
+directly.  Be cautious with this.
+
+=begin notetip
+
+See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
+modules on the CPAN for declarative parameter handling.
+
+=end notetip
 
 receiving arguments
-    - shift
-    - direct assignment
-    - aliasing
-    - slurpy array
-    - slurpy hash
     - Params::Validate
 
 namespacing
@@ -32,6 +281,7 @@ advanced:
     - lexicals
     - tail calls:
         - Sub::Tail::Call
+        - Sub::Tail::Recur
         - manual (blargh)
 
 avoid:
