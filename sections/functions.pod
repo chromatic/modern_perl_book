@@ -215,8 +215,9 @@ passing a hash produces a list of key/value pairs:
 
 The C<show_pets()> function works because the C<%pet_names_and_types> hash
 flattens into the list C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat',
-'Petunia', 'cat'>.  The assignment within C<show_pets()> works effectively as
-the assignment to C<%pet_names_and_types> does.
+'Petunia', 'cat'>. The hash assignment inside the function C<show_pets()> 
+works essentially as the more explicit assignment to C<%pet_names_and_types>
+does.
 
 This is often useful, but there are limitations to understand.  If you wish to
 make a C<show_pets_of_type()> function, where one parameter is the I<type> of
@@ -231,8 +232,8 @@ C<pop> to remove it from the end of C<@_>):
 
         while (my ($name, $species) = each %pets)
         {
-            B<next unless $species eq $type;>
-            say "$name is a $species";
+            B<next unless $species eq $type;>   ## Isn't using 'unless' frowned upon?
+            say "$name is a $species";          ## according to PBP? (jeremiah)
         }
     }
 
@@ -314,7 +315,7 @@ modules on the CPAN for declarative parameter handling.
 Defensive programming often benefits from checking types and values of
 arguments for appropriateness before performing further processing.  By
 default, Perl 5 provides few built-in mechanisms for doing so (in some cases,
-L<prototypes> can I<help>, but that's not their primary purpose).  You can
+L<prototypes> can I<help>, but that's not their primary purpose). You can
 check that the I<number> of parameters passed to a function is correct by
 evaluating C<@_> in scalar context:
 
@@ -373,8 +374,9 @@ names:
 
 Functions in namespaces are I<visible> outside of those namespaces in the sense
 that you can refer to them directly, but they are only callable by their short
-names from within the namespace, unless you have somehow made them available to
-the current namespace by a process called importing and exporting.
+names from within the namespace in which they are declared, unless you have
+somehow made them available to the current namespace through the processes of
+importing and exporting.
 
 =head3 Importing
 
@@ -428,7 +430,7 @@ has compiled the entire statement.
 =for review
 
 Discuss unimporting?  In my experience, it's not nearly as well supported as
-importing.
+importing. (I agree with you, I rarely (okay, never) use it.) (jeremiah)
 
 =end for
 
@@ -437,6 +439,8 @@ importing.
 =for review
 
 Does this belong instead in the Modules chapter?
+
++1 (jeremiah)
 
 =end for
 
