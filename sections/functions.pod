@@ -13,7 +13,10 @@ Functions are a prime mechanism for abstraction and encapsulation in Perl 5;
 many of the other mechanisms for abstraction, encapsulation, and re-use build
 on the concepts of the function.
 
+=head2 Declaring Functions
+
 X<subroutines; declaration>
+X<functions; declaration>
 
 Use the C<sub> keyword to declare a function:
 
@@ -33,6 +36,11 @@ special case where they modify I<how> the parser parses them.  See
 L<attributes>.
 
 =end notetip
+
+=head2 Invoking Functions
+
+X<subroutines; invoking>
+X<functions; invoking>
 
 Invoking a subroutine is similar; mention its name and pass a list of
 arguments:
@@ -65,7 +73,7 @@ You can, of course, pass multiple I<types> of arguments to a function:
 
 ... though see the L<references> section for more details.
 
-=for author
+=head2 Function Parameters
 
 X<parameters>
 X<functions; parameters>
@@ -109,9 +117,9 @@ elements by index:
 
 =end programlisting
 
-You may also C<shift>, C<unshift>, C<push>, and C<pop> C<@_>; inside a
-function, these operators operate on C<@_> in the same way that they operate on
-C<@ARGV> outside of any function:
+You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and list slices
+on C<@_>. Inside a function, the C<shift> and C<pop> operators operate on C<@_>
+in the same way that they operate on C<@ARGV> outside of any function:
 
 =begin programlisting
 
@@ -145,6 +153,40 @@ parameters passed:
     }
 
 =end programlisting
+
+With more than one parameter, list assignment is often clearer than multiple
+lines of C<shift>.  Compare:
+
+=begin programlisting
+
+    sub calculate_value
+    {
+        # multiple shifts
+        my $left_value  = shift;
+        my $operation   = shift;
+        my $right_value = shift;
+        ...
+    }
+
+=end programlisting
+
+... to:
+
+=begin programlisting
+
+    sub calculate_value
+    {
+        B<my ($left_value, $operation, $right_value) = @_;>
+        ...
+    }
+
+=end programlisting
+
+While occasionally it's necessary to extract a few parameters from C<@_> and
+pass the rest on to another function, it's often clearest to use C<shift> to
+access a single parameter and list assignment to access multiple parameters.
+
+=head3 Flattening
 
 On the caller side, all arguments get flattened into a single list.  Thus
 passing a hash produces a list of key/value pairs:
@@ -207,6 +249,8 @@ C<pop> to remove it from the end of C<@_>):
 
 =end programlisting
 
+=head3 Slurping
+
 X<parameter slurping>
 
 As with any lvalue assignment to an aggregate, assigning to C<%pets> within the
@@ -230,6 +274,8 @@ that:
 ... but clarity might suffer.  The same principle applies when assigning to an
 array as a parameter, of course.  See L<references> for ways to avoid
 flattening and slurping when passing aggregate parameters.
+
+=head3 Aliasing
 
 X<parameter aliasing>
 X<functions; aliasing parameters>
@@ -263,30 +309,261 @@ modules on the CPAN for declarative parameter handling.
 
 =end notetip
 
-receiving arguments
-    - Params::Validate
+=head3 Validating
 
-namespacing
+Defensive programming often benefits from checking types and values of
+arguments for appropriateness before performing further processing.  By
+default, Perl 5 provides few built-in mechanisms for doing so (in some cases,
+L<prototypes> can I<help>, but that's not their primary purpose).  You can
+check that the I<number> of parameters passed to a function is correct by
+evaluating C<@_> in scalar context:
 
-importing
+=begin programlisting
 
-exporting
+    sub add_numbers
+    {
+        croak "Expected two numbers, but received: " . @_
+            unless @_ == 2;
 
-reporting errors from
-    - caller
-    - Carp
+        ...
+    }
 
-advanced:
-    - recursion
-    - lexicals
-    - tail calls:
+=end programlisting
+
+Type checking is more difficult, because of Perl's operator-oriented type
+conversions (see L<context>).  In cases where you need more strictness,
+consider the CPAN module C<Params::Validate>.
+
+=head2 Namespaces
+
+Every function lives in a namespace.  Functions in an undeclared namespace --
+that is, functions not declared after an explicit C<package ...> statement --
+live in the C<main> namespace.  You may specify a function's namespace outside
+of the current package at the point of declaration:
+
+=begin programlisting
+
+    sub B<Extensions::Math::>add {
+        ...
+    }
+
+=end programlisting
+
+Any prefix on the function's name which follows the package naming format
+creates the subroutine and inserts it into that package.  It does not enter the
+current package.  Because Perl 5 packages are open for modification at any
+point, you may do this even if the namespace does not yet exist, or if you have
+already declared functions in that namespace.
+
+You may only declare one function of the same name per namespace; Perl 5 will
+give a warning about subroutine redefinition if you redefine a function which
+already exists in a namespace.  If you're certain you want to I<replace> the
+existing function, you may disable this warning with C<no warnings 'redefine'>.
+
+You may call functions in other namespaces by using their fully-qualified
+names:
+
+=begin programlisting
+
+    package main;
+
+    Extensions::Math::add( $scalar, $vector );
+
+=end programlisting
+
+Functions in namespaces are I<visible> outside of those namespaces in the sense
+that you can refer to them directly, but they are only callable by their short
+names from within the namespace, unless you have somehow made them available to
+the current namespace by a process called importing and exporting.
+
+=head3 Importing
+
+X<functions; importing>
+
+When loading a module with the C<use> keyword (see L<modules>), Perl
+automatically calls a method named C<import()> on the provided package name.
+Modules with procedural interfaces can provide their own C<import()> which
+makes some or all defined functions available in the calling package's
+namespace.
+
+You don't have to know this to I<import> functions into your namespace.  When
+loading a module with the C<use> keyword, any arguments after the name of the
+module get passed to the module's C<import()> method.  Thus:
+
+=begin programlisting
+
+    use strict;
+
+=end programlisting
+
+... loads the F<strict.pm> module, calls C<< strict->import() >>, and passes no arguments to the method, while:
+
+=begin programlisting
+
+    use strict 'refs';
+    use warnings qw( subs vars );
+
+=end programlisting
+
+... loads the F<warning.pm> module, calls C<< warnings->import( 'refs' ) >>, then calls C<< warnings->import( 'subs', vars' ) >>.
+
+You may call a module's C<import()> method directly.  The previous code example
+is equivalent to:
+
+=begin programlisting
+
+    BEGIN
+    {
+        require strict;
+        strict->import( 'refs' );
+        strict->import( qw( subs vars ) );
+    }
+
+=end programlisting
+
+Be aware that the C<use> keyword adds an implicit C<BEGIN> block around these
+statements so that the C<import()> call happens I<immediately> after the parser
+has compiled the entire statement.
+
+=for review
+
+Discuss unimporting?  In my experience, it's not nearly as well supported as
+importing.
+
+=end for
+
+=head3 Exporting
+
+=for review
+
+Does this belong instead in the Modules chapter?
+
+=end for
+
+X<functions; exporting>
+
+The core C<Exporter> module allows you to accomplish this I<exporting> behavior
+without having to understand the details of Perl 5's namespaces and symbol
+tables.
+
+=begin programlisting
+
+    package Extensions::Math;
+
+    B<use Exporter 'import';>
+    B<our @EXPORT_OK = qw( add subtract multiply divide );>
+
+=end programlisting
+
+Begin by C<use>ing the C<Exporter> module, giving it the single parameter
+C<import>.  This tells C<Exporter> to make an C<import()> function available.
+The C<@EXPORT_OK> package global is an array which contains a list of functions
+to export only when the invoking package requests them.  That is, if someone
+writes:
+
+=begin programlisting
+
+    use Extensions::Math 'add';
+
+=end programlisting
+
+... then the function C<Extensions::Math::add()> will be available as C<add()>
+in the current namespace, but C<Extensions::Math::divide()> and the others will
+only be invokable by their fully-qualified names.
+
+=begin notetip
+
+The CPAN module C<Sub::Exporter> is significantly more powerful in many ways
+than C<Exporter>.  You may prefer its interface.  Be aware that C<Exporter> can
+export symbols other than functions; C<Sub::Exporter> only exports functions.
+
+=end notetip
+
+=head2 Reporting Errors
+
+X<caller>
+
+Within a subroutine, you can get information about the context of the call with
+the C<caller> operator.  With no arguments, it returns a three-element list
+containing the name of the calling package, the name of the file containing the
+call, and the line number of the package on which the call occurred:
+
+
+=begin programlisting
+
+    package main;
+
+    main();
+
+    sub main
+    {
+        show_call_information();
+    }
+
+    sub show_call_information
+    {
+        my ($package, $file, $line) = caller();
+        say "Called from $package in $file at $line";
+    }
+
+=end programlisting
+
+You may pass a single integer argument to C<caller()>.  If you do, the return
+values will represent the call that number of calls up the call chain.  You get
+more information, including the name of the subroutine, the calling context,
+and more.
+
+=begin programlisting
+
+    sub show_call_information
+    {
+        my ($package, $file, $lineB<, $func>) = caller(B<1>);
+        say "Called B<$func> from $package in $file at $line";
+    }
+
+=end programlisting
+
+This can be useful.  The standard C<Carp> module uses it to great effect for
+reporting errors and throwing warnings in functions.  You may see C<croak()>
+used to throw exceptions in place of C<die> in library code.  C<croak()> throws
+an exception and reports a stack trace from the perspective of a caller.  The
+C<cluck()> function gives a warning from the perspective of a caller.
+
+This behavior is most useful when validating parameters or preconditions of a
+function, when you want to indicate that the calling code is wrong somehow:
+
+=begin programlisting
+
+    use Carp 'croak';
+
+    sub add_two_numbers
+    {
+        croak 'add_two_numbers() takes two and only two arguments'
+            unless @_ == 2;
+
+        ...
+    }
+
+=end programlisting
+
+=head2 Advanced Functions
+
+=head3 Recursion
+
+=head3 Lexicals
+
+=head3 Tail Calls
         - Sub::Tail::Call
         - Sub::Tail::Recur
         - manual (blargh)
 
-avoid:
+=head2 Avoid
     - prototypes (mostly)
     - old-style invocations (do, &)
     - missing parentheses
+
+=for author
+
+Add C<wantarray()> and Want.pm information?
 
 =end for

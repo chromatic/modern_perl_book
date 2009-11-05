@@ -1,5 +1,7 @@
 =head1 Functions
 
+L<functions>
+
 L<scoping>
 
 L<anonymous_functions>
