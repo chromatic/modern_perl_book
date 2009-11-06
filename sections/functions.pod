@@ -548,19 +548,311 @@ function, when you want to indicate that the calling code is wrong somehow:
 
 =head2 Advanced Functions
 
+Functions may seem simple, but you can do much, much more with them.
+L<closures> and L<anonymous_functions> show some of these tricks.  There are
+more.
+
+=begin notetip
+
+I<Higher Order Perl>, by Mark Jason Dominus, is well worth your time studying.
+See U<http://hop.perl.plover.com/> for ordering information and the free
+version online.
+
+=end notetip
+
 =head3 Recursion
+
+X<recursion>
+X<call frame>
+X<functions; call frame>
+
+Every call to a function in Perl creates a new I<call frame>.  This is an
+internal data structure which represents the call itself: in effect, incoming
+parameters, the point to which to return, and all of the control of the program
+leading up to the point of the call.  As well, it captures the lexical
+environment of the specific and current invocation of the function.  This means
+that a function can I<recur>; it can call itself.
+
+Recursion is a deceptively simple concept, but it can seem daunting if you
+haven't encountered it before.  Consider a case where you want to find an
+element in a sorted array.  You I<could> iterate through every element of the
+array individually, looking for the target, but on average, you'll have to look
+at half of the elements of the array at once.
+
+Another approach is to divide the array in half.  Pick the element at the
+midpoint, compare, then see if you have to divide the lower half or the upper
+half and continue.  You can write this algorithm with a loop yourself, or you
+could let Perl manage all of the state and tracking necessary with a recursive
+algorithm.  That might look something like:
+
+=begin programlisting
+
+    use Modern::Perl;
+
+    use Test::More tests => 8;
+
+    my @elements = ( 1, 5, 6, 19, 48, 77, 997, 1025, 7777, 8192, 9999 );
+
+    ok   elem_exists(     1, @elements ), 'found first element in array';
+    ok   elem_exists(  9999, @elements ), 'found last element in array';
+    ok ! elem_exists(   998, @elements ), 'did not find element not in array';
+    ok ! elem_exists(    -1, @elements ), 'did not find element not in array';
+    ok ! elem_exists( 10000, @elements ), 'did not find element not in array';
+
+    ok   elem_exists(    77, @elements ), 'found midpoint element';
+    ok   elem_exists(    48, @elements ), 'found end of lower half element';
+    ok   elem_exists(   997, @elements ), 'found start of upper half element';
+
+    sub elem_exists
+    {
+        my ($item, @array) = @_;
+
+        # break recursion if there are no elements to search
+        return unless @array;
+
+        # bias down, if there are an odd number of elements
+        my $midpoint = int( (@array / 2) - 0.5 );
+        my $miditem  = $array[ $midpoint ];
+
+        # return true if the current element is the target
+        return 1 if $item  == $miditem;
+
+        # return false if the current element is the only element
+        return   if @array == 1;
+
+        # split the array down and recurse
+        return B<elem_exists>( $item, @array[0 .. $midpoint] )
+            if $item < $miditem;
+
+        # split the array up and recurse
+        return B<elem_exists>( $item, @array[$midpoint + 1 .. $#array] );
+    }
+
+=end programlisting
+
+This isn't necessarily the best algorithm for searching a sorted list, but it
+demonstrates recursion.  Again, you I<can> write this code in a procedural way;
+but some algorithms are much clearer recursively.
 
 =head3 Lexicals
 
-=head3 Tail Calls
-        - Sub::Tail::Call
-        - Sub::Tail::Recur
-        - manual (blargh)
+Every new invocation of a function creates its own I<instance> of a lexical
+scope.  In the case of the recursive example, even though the declaration of
+C<elem_exists(>) creates a single scope for the lexicals C<$item>, C<@array>,
+C<$midpoint>, and C<$miditem>, every I<call> to C<elem_exists()>, even
+recursively, has separate storage for the values of those lexical variables.
+You can demonstrate that by adding debugging code to the function:
 
-=head2 Avoid
-    - prototypes (mostly)
-    - old-style invocations (do, &)
-    - missing parentheses
+=begin programlisting
+
+    B<use Carp 'cluck';>
+
+    sub elem_exists
+    {
+        my ($item, @array) = @_;
+
+        B<cluck "[$item] (@array)";>
+
+        # other code follows
+        ...
+    }
+
+=end programlisting
+
+The output demonstrates that not only can C<elem_exists()> call itself safely,
+but the lexical variables do not interfere with each other.
+
+=head3 Tail Calls
+
+X<recursion; guard conditions>
+
+One I<drawback> of recursion is that you must get your return conditions
+correct, lest your function call itself an infinite number of times.  This is
+why the C<elem_exists()> function has several C<return> statements.
+
+Perl offers a helpful warning when it detects what might be runaway recursion,
+the C<Deep recursion on subroutine> message.  The limit is 100 recursive calls,
+which can be too few in certain circumstances but too many in others.
+
+X<functions; tail call elimination>
+
+Because each call to a function requires a new call frame, as well as space for
+the call to store its own lexical values, highly-recursive code can use more
+memory than iterative code.  A feature called I<tail call elimination> can
+help.
+
+=begin notetip
+
+To be more specific, tail call elimination may be most obvious when writing
+recursive code, but it can be useful in any case of a tail call.
+
+=end notetip
+
+X<tail calls>
+X<functions; tail calls>
+
+A I<tail call> is a call to a function which directly returns that function's
+results.  That is, the lines:
+
+=begin programlisting
+
+        # split the array down and recurse
+        return elem_exists( $item, @array[0 .. $midpoint] )
+            if $item < $miditem;
+
+        # split the array up and recurse
+        return elem_exists( $item, @array[$midpoint + 1 .. $#array] );
+
+=end programlisting
+
+... which return the results of the recursive C<elem_exists()> calls directly,
+are candidates for tail call elimination.  This elimination avoids returning to
+the current call and then returning to the parent call.  Instead, it returns to
+the parent call directly.
+
+Perl 5 supports manual tail call elimination, but two recent CPAN modules
+provide a much better syntax (and even better performance).  Yuval Kogman's
+C<Sub::Call::Tail> and C<Sub::Call::Recur> are worth exploring if you find
+yourself with highly recursive code or code that could benefit from tail call
+elimination.  C<Sub::Call::Tail> is appropriate for tail calls of non-recursive
+code:
+
+=begin programlisting
+
+    use Sub::Call::Tail;
+
+    sub log_and_dispatch
+    {
+        my ($dispatcher, $request) = @_;
+        warn "Dispatching with $dispatcher\n";
+
+        return dispatch( $dispatcher, $request );
+    }
+
+=end programlisting
+
+In this example, you can replace the C<return> with the new C<tail> keyword
+with no functional changes (yet more clarity and improved performance):
+
+=begin programlisting
+
+        B<tail> dispatch( $dispatcher, $request );
+
+=end programlisting
+
+=for editor
+
+Sadly, S::C::R 0.0.4 caused infinite loops for me on Perl 5.10.0; I'm not sure
+if this is Yuval's bug or mine.  I asked him.
+
+=end for
+
+Similarly, C<Sub::Call::Recur> is appropriate for recursive calls.  Replace the C<return elem_exists> code with:
+
+=begin programlisting
+
+        # split the array down and recurse
+        B<recur>( $item, @array[0 .. $midpoint] )
+            if $item < $miditem;
+
+        # split the array up and recurse
+        B<recur>( $item, @array[$midpoint + 1 .. $#array] );
+
+=end programlisting
+
+X<goto>
+X<functions; goto>
+
+If you really I<must> perform your own manual tail call elimination, a special
+form of the C<goto> keyword exists.  Unlike the form which can often lead to
+spaghetti code, the C<goto> function form replaces the current subroutine call
+with a call to another subroutine.  You may use a subroutine by name or by
+reference.  You must always set C<@_> yourself manually, if you want to pass
+different arguments:
+
+=begin programlisting
+
+        # split the array down and recurse
+        if ($item < $miditem)
+        {
+            @_ = ($item, @array[0 .. $midpoint]);
+            B<goto &elem_exists;>
+        }
+
+        # split the array up and recurse
+        else
+        {
+            @_ = ($item, @array[$midpoint + 1 .. $#array] );
+            B<goto &elem_exists;>
+        }
+
+=end programlisting
+
+The comparative cleanliness of the CPAN versions should be obvious.
+
+=head2 Pitfalls and Misfeatures
+
+X<functions; pitfalls>
+X<functions; misfeatures>
+
+Not all features of Perl 5 functions are always helpful.  In particular,
+L<prototypes> rarely do what you mean.  They have their uses, but you can avoid
+them outside of a few cases.
+
+=for editor
+
+Check the timeline, but I'm pretty sure about this.
+
+=end for
+
+X<functions; Perl 4>
+X<functions; Perl 1>
+
+As well, Perl 5 still supports old-style invocations of functions, carried over
+from older versions of Perl.  While you may now invoke Perl functions by name,
+previous versions of Perl required you to invoke them with a leading ampersand
+(C<&>) character.  Perl 1 required you to use the C<do> keyword as well:
+
+=begin programlisting
+
+    # Perl 4 style; avoid
+    my $result = &calculate_result( 52 );
+
+    # Perl 1 style; really truly avoid
+    my $result = do &calculate_result( 42 );
+
+=end programlisting
+
+While they're visually noisy, with vestigial syntax, the leading ampersand form
+performs other behavior which can occasionally surprise you.  First, it
+disables prototype checking (but prototypes are a pitfall often best avoided).
+Second, if you do not pass arguments explicitly, it I<implicitly> passes the
+contents of C<@_> unmodified.  Both can lead to surprising behavior.
+
+A final pitfall comes from leaving the parentheses off of function calls.  The
+Perl 5 parser uses several heuristics to resolve ambiguity of barewords and the
+number of parameters passed to a function, but occasionally those heuristics
+guess wrong.  While it's often wise to remove extraneous parentheses, compare
+the readability of these two lines of code:
+
+=begin programlisting
+
+    ok( elem_exists( 1, @elements ), 'found first element in array' );
+
+    # warning; contains a subtle bug
+    ok elem_exists 1, @elements, 'found first element in array';
+
+=end programlisting
+
+The subtle bug in the second form is that the call to C<elem_exists()> will
+gobble up the test description intended as the second argument to C<ok()>.
+Because C<elem_exists()> uses a slurpy second parameter, this may go unnoticed
+until Perl produces warnings about comparing a non-number (the test
+description, which it cannot convert into a number) with the element in the
+array.
+
+This is admittedly an extreme case, but it is a case where proper
+parenthesization can clarify code and make subtle bugs obvious to the reader.
 
 =for author
 
