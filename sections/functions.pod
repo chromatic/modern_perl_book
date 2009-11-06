@@ -215,9 +215,8 @@ passing a hash produces a list of key/value pairs:
 
 The C<show_pets()> function works because the C<%pet_names_and_types> hash
 flattens into the list C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat',
-'Petunia', 'cat'>. The hash assignment inside the function C<show_pets()> 
-works essentially as the more explicit assignment to C<%pet_names_and_types>
-does.
+'Petunia', 'cat'>. The hash assignment inside the function C<show_pets()> works
+essentially as the more explicit assignment to C<%pet_names_and_types> does.
 
 This is often useful, but there are limitations to understand.  If you wish to
 make a C<show_pets_of_type()> function, where one parameter is the I<type> of
@@ -232,8 +231,8 @@ C<pop> to remove it from the end of C<@_>):
 
         while (my ($name, $species) = each %pets)
         {
-            B<next unless $species eq $type;>   ## Isn't using 'unless' frowned upon?
-            say "$name is a $species";          ## according to PBP? (jeremiah)
+            B<next unless $species eq $type;>
+            say "$name is a $species";
         }
     }
 
@@ -374,7 +373,7 @@ names:
 
 Functions in namespaces are I<visible> outside of those namespaces in the sense
 that you can refer to them directly, but they are only callable by their short
-names from within the namespace in which they are declared, unless you have
+names from within the namespace in which they are declared--unless you have
 somehow made them available to the current namespace through the processes of
 importing and exporting.
 
