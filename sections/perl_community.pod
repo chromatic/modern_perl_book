@@ -2,24 +2,111 @@
 
 Z<perl_community>
 
-perl.org
-    - lists
-        - beginners
-    - project pages
-    - hosting
-    - dev.perl.org
+One of the goals of Perl 5.000 was to encourage Perl development outside the
+core of the language itself.  Where there were several forks of Perl 4 to talk
+to various relational databases (sybperl to connect to Sybase, oraperl to talk
+to Oracle, et cetera), Larry wanted people to be able to customize their own
+dialects of Perl locally, without forking the language into thousands of
+incompatible pidgins.
 
-cpan.org
-    - see the CPAN section
+Encouraging customization -- while ensuring some degree of compatibility -- in
+a culture that already supports sharing of knowledge and code is a great way to
+build a community.
 
-perlmonks.org
-    - a community of Perl programmers, centered around answering questions
+You don't have to join an "official" Perl community (as if such a thing
+existed), but the Perl community exists in many forms in many places.  Consider
+taking advantage of the knowledge and experience to help you solve your
+problems and make the Perl ecosystem a little better.
 
-use.perl.org
-perlsphere.net
-planet.perl.org
-perlbuzz.com
+=head3 Community Sites
 
-development
-    - rt.perl.org
-    - p5p mailing list
+X<perl.org>
+X<websites; perl.org>
+
+The main domain for Perl is U<http://www.perl.org/>.  This site hosts many
+forums for communication as well as web sites dedicated to improving the world
+of Perl.  Many of the best mailing lists have their hosting on perl.org.  See
+U<lists.perl.org> for a list.  In particular, the Perl beginners mailing list
+is a friendly place to ask novice questions and get accurate and helpful
+answers from friendly people.  See U<http://beginners.perl.org/>.
+
+perl.org also provides hosting for several important projects in the Perl
+world.  One of the most important is U<http://dev.perl.org/>, a central site
+for core development of Perl 5, Perl 6, and even Perl 1.
+
+X<cpan.org>
+X<websites; cpan.org>
+
+The CPAN's central location is U<http://www.cpan.org/>.  Though
+U<http://search.cpan.org/> is likely a more popular starting location, the
+central software distribution hub of reusable, free Perl code is an essential
+part of the Perl community.  See L<CPAN> for more.
+
+X<PAUSE>
+X<CPAN; PAUSE>
+
+Note that PAUSE, the service CPAN authors and maintainers use to manage their
+distributions, is part of C<perl.org>.
+
+X<PerlMonks>
+
+=for author
+
+Should change the tense of "to celebrate" when appropriate.
+
+=end for
+
+PerlMonks, at U<http://perlmonks.org/>, is a venerable community site devoted
+to questions and answers and other discussions about Perl programming.  It will
+celebrate its tenth anniversary in December 2009, making it one of the oldest
+web communities dedicated to any programming language.
+
+Several community sites offer news and commentary.  The oldest is
+U<http://use.perl.org/>; it has offered custom journals for many years.
+Several well-known Perl hackers write there.
+
+Other sites aggregate the Perl-related musings of Perl hackers, including
+U<http://perlsphere.net/>, U<http://planet.perl.org/>, and
+U<http://ironman.enlightenedperl.org/>.  The latter is part of an initiative
+from the Enlightened Perl Organization (http://enlightenedperl.org/>) to
+increase the amount of and improve the quality of Perl publishing on the web.
+
+Perl Buzz (U<perlbuzz.com>) collects and republishes some of the most
+interesting and useful Perl news on a regular basis.
+
+=head3 Development Sites
+
+Best Practical Consulting (U<http://bestpractical.com/>) maintains an
+installation of their popular request tracking system, RT, for CPAN authors as
+well as Perl 5 and Perl 6 development.  Every CPAN distribution has its own RT
+queue, linked from C<search.cpan.org> and available on U<http://rt.cpan.org/>.
+Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
+
+The corehackers project helps identify useful changes to Perl 5 and helps to
+mentor new developers into fixing bugs and adding features.  Its wiki is
+available at U<http://corehackers.perl.org/>.
+
+The Perl 5 Porters mailing list is the central point for Perl 5 development
+discussion.  See U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
+
+The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all
+things Perl 5.  See U<http://www.perlfoundation.org/perl5>.
+
+=head3 Events
+
+X<YAPC>
+
+There are plenty of events in the physical world as well.  The Perl community
+holds a lot of conferences, workshops, and seminars.  In particular, the
+community-held YAPC -- Yet Another Perl Conference -- is a successful, local,
+low-cost conference model held on multiple continents.  See
+U<http://yapc.org/>.
+
+The Perl Foundation wiki lists other events at
+U<http://www.perlfoundation.org/perl5/index.cgi?perl_events>.
+
+X<Perl Mongers>
+
+There are also hundreds of local Perl Mongers groups which get together
+frequently for technical talks and social interaction.  See
+U<http://www.pm.org/>.
