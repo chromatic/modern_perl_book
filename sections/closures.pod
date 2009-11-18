@@ -44,7 +44,7 @@ That's not surprising; it's barely interesting.  I<Of course> the
 C<get_filename()> function can see the C<$filename> lexical.  That's how scope
 works!
 
-Closures get much more interesting when the close over transient lexical
+Closures get much more interesting when they close over transient lexical
 environments.  Suppose you want to iterate over a list of items without
 managing the iterator yourself.  You can create a function which returns a
 function that, when invoked, will return the next item in the iteration:
@@ -119,7 +119,8 @@ confusing to you, imagine the implementation.>.
 
 =begin sidebar
 
-The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone who uses it and breaks your code gets to support your code.
+The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone
+who uses it and breaks your code gets to support your code.
 
 =end sidebar
 

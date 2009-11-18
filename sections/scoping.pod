@@ -177,8 +177,8 @@ Which other constructs localize $_ and which do not?
 
 =end for
 
-Finally, lexical scoping allows closures (see L<closures>).  Beware creating
-closures accidentally.
+Finally, lexical scoping facilitates closures (see L<closures>).  Beware
+creating closures accidentally.
 
 =for author
 
@@ -327,9 +327,10 @@ You may also use an incoming parameter to set the initial value of the C<state> 
 =end programlisting
 
 Even though a simple reading of the code may suggest that the output should be
-C<2>, C<4>, and C<6>, the output is actually C<2>, C<3>, and C<4>.  This
-behavior is as intended and documented, though its implementation can lead to
-surprising results:
+C<2>, C<4>, and C<6>, the output is actually C<2>, C<3>, and C<4>. The first
+call to the sub C<counter> sets the C<$count> variable.  Subsequent calls will
+not change its value.  This behavior is as intended and documented, though its
+implementation can lead to surprising results:
 
 =begin programlisting
 
