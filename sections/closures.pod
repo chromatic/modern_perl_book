@@ -2,22 +2,227 @@
 
 Z<closures>
 
+You've seen how functions work (L<functions>).  You understand how scope works
+(L<scoping>).  You know that every time control flow enters a function, that
+function gets a new environment representing that invocation's lexical scope.
+You can work with subroutine references (L<references>) and anonymous functions
+(L<anonymous_functions>).
+
+You know everything you need to know to understand closures.
+
+=begin notetip
+
+Mark Jason Dominus's I<Higher Order Perl> is well worth your time to study.  He
+expands on the topics presented here in clever, powerful, and useful ways.
+
+=end notetip
+
+=head4 Creating Closures
+
+X<closure>
+X<functions; closures>
+
+A I<closure> is a function that closes over an outer lexical environment.
+You've probably already created and used closures without realizing it:
+
+=begin programlisting
+
+    {
+        package Invisible::Closure;
+
+        my $filename = shift @ARGV;
+
+        sub get_filename
+        {
+            return $filename;
+        }
+    }
+
+=end programlisting
+
+That's not surprising; it's barely interesting.  I<Of course> the
+C<get_filename()> function can see the C<$filename> lexical.  That's how scope
+works!
+
+Closures get much more interesting when the close over transient lexical
+environments.  Suppose you want to iterate over a list of items without
+managing the iterator yourself.  You can create a function which returns a
+function that, when invoked, will return the next item in the iteration:
+
+=begin programlisting
+
+    sub make_iterator
+    {
+        my @items = @_;
+        my $count = 0;
+
+        return sub
+        {
+            return if $count == @items;
+            return $items[ $count++ ];
+        }
+    }
+
+    my $cousins = make_iterator(qw( Rick Alex Kaycee Eric Corey ));
+
+    say $cousins->() for 1 .. 5;
+
+=end programlisting
+
+A function returning a function is neither new nor surprising, but the behavior
+of the returned anonymous function may be.  Even though C<make_iterator()> has
+returned, the anonymous function still refers to the lexical variables
+C<@items> and C<$count>.  Their values persist.  The anonymous function, stored
+in C<$cousins>, has closed over these values in the lexical environment of its
+creation.  It's a closure.
+
+It's easy to demonstrate that the lexical environment is independent between
+calls to C<make_iterator()>:
+
+=begin programlisting
+
+    my $cousins = make_iterator(qw( Rick Alex Kaycee Eric Corey ));
+    my $aunts   = make_iterator(qw( Carole Phyllis Wendy ));
+
+    say $cousins->();
+    say $aunts->();
+    say $cousins->();
+    say $aunts->();
+
+=end programlisting
+
+Because every invocation of C<make_iterator()> creates a separate lexical
+environment for its lexicals, the anonymous sub it creates and returns closes
+over a unique lexical environment.
+
+Because those lexicals are neither returned directly nor by reference from
+C<make_iterator()>, Perl code cannot access the lexicals directly.  They're
+encapsulated as effectively as any lexical encapsulation.  Multiple closures
+can close over the same lexical variables; this is an idiom used occasionally
+to provide better encapsulation of what would otherwise be a global variable:
+
+=begin programlisting
+
+    {
+        my $private_variable;
+
+        sub set_private { $private_variable = shift }
+        sub get_private { $private_variable }
+    }
+
+=end programlisting
+
+... but be aware that you cannot I<nest> named functions, because functions
+have package global scope and any shared lexical variables will go unshared
+when the outer function destroys its first lexical environmentN<If that's
+confusing to you, imagine the implementation.>.
+
+=begin notetip
+
+The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone who uses it and breaks your code gets to support your code.
+
+=end notetip
+
+=head4 Uses of Closures
+
+The previous example showed how closures can make effective iterators.  This is
+interesting when iterating over a fixed-sized list, but it's more interesting
+when iterating over a list of items too expensive to refer to directly, either
+because it represents data which costs a lot to compute all at once or it's too
+large to fit into memory directly.
+
+Consider a function to create the Fibonacci series as you need them.  Instead
+of recalculating them recursively, use a cache and lazily create the elements
+you need:
+
+=begin programlisting
+
+    sub gen_fib
+    {
+        my @fibs = (0, 1, 1);
+
+        return sub
+        {
+            my $item = shift;
+
+            if ($item >= @fibs)
+            {
+                for my $calc ((@fibs - 1) .. $item)
+                {
+                    $fibs[$calc] = $fibs[$calc - 2] + $fibs[$calc - 1];
+                }
+            }
+            return $fibs[$item];
+        }
+    }
+
+=end programlisting
+
+Every call to the function returned by C<gen_fib()> takes one argument, the
+I<n>th element of the Fibonacci series.  The function generates all preceding
+values in the series as necessary, caching them, and returning the requested
+element.  It delays computation until absolutely necessary.
+
+There may seem like little benefit to this approach, but consider that the
+behavior of initializing an array as a cache, calculating a new element, and
+returning a requested element is general enough to extract into its own
+function.  The only necessary and custom behavior is how to calculate new
+elements.
+
+In other words, you can extract a function, C<generate_caching_closure()>, and
+rewrite C<gen_fib()> in terms of that function:
+
+=begin programlisting
+
+    sub gen_caching_closure
+    {
+        my ($calc_element, @cache) = @_;
+
+        return sub
+        {
+            my $item = shift;
+
+            $calc_element->($item, \@cache) unless $item < @cache;
+
+            return $cache[$item];
+        };
+    }
+
+
+    sub gen_fib
+    {
+        my @fibs = (0, 1, 1);
+
+        return gen_caching_closure(
+            sub
+            {
+                my ($item, $fibs) = @_;
+
+                for my $calc ((@$fibs - 1) .. $item)
+                {
+                    $fibs->[$calc] = $fibs->[$calc - 2] + $fibs->[$calc - 1];
+                }
+            },
+            @fibs
+        );
+    }
+
+=end programlisting
+
+The program behaves the same way as it did before, but the use of higher order
+functions and closures allows the separation of the cache initialization
+behavior from the calculation of the next number in the Fibonacci series in an
+effective way.
+
+Of course, you have to be familiar with and comfortable using higher order
+functions and closures to benefit from this approach, but it can be useful.  In
+particular, customizing the behavior of code--in this case,
+C<gen_caching_closure()>--by passing in a higher order function allows
+tremendous flexibility and abstraction.
+
 =for author
 
-Named closures
-    - variable will not stay shared
-
-Anonymous closures
-    - scoping
-
-Delayed computation with closures
-    - iterators
-    - thunks
-
-Encapsulation with closures
-    - closure/object equivalence (? too advanced ?)
-
-Abstraction with closures
+Perhaps abstraction with closures?
     - partial application
     - need a good example
 
