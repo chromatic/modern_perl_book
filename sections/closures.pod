@@ -10,12 +10,12 @@ You can work with subroutine references (L<references>) and anonymous functions
 
 You know everything you need to know to understand closures.
 
-=begin notetip
+=begin sidebar
 
 Mark Jason Dominus's I<Higher Order Perl> is well worth your time to study.  He
 expands on the topics presented here in clever, powerful, and useful ways.
 
-=end notetip
+=end sidebar
 
 =head4 Creating Closures
 
@@ -117,11 +117,11 @@ have package global scope and any shared lexical variables will go unshared
 when the outer function destroys its first lexical environmentN<If that's
 confusing to you, imagine the implementation.>.
 
-=begin notetip
+=begin sidebar
 
 The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone who uses it and breaks your code gets to support your code.
 
-=end notetip
+=end sidebar
 
 =head4 Uses of Closures
 

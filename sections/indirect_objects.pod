@@ -111,13 +111,13 @@ consider loading the core C<IO::Handle> module which allows you to perform IO
 operations by calling methods on filehandle objects (such as lexical
 filehandles).
 
-=begin notetip
+=begin sidebar
 
 For supreme paranoia, you may disamgibuate class method calls further by
 appending C<::> to the end of class names, such as C<< CGI::->new() >>.  Very
 little code does this in practice, however.
 
-=end notetip
+=end sidebar
 
 X<Perl::Critic::Policy::Dynamic::NoIndirect; CPAN modules>
 X<Perl::Critic::Policy::Dynamic::NoIndirect>

@@ -20,7 +20,7 @@ CPAN, or Comprehensive Perl Archive Network, is an uploading and mirroring
 system for redistributable, reusable Perl code.  It's one of -- if not I<the>
 largest -- archives of libraries of code in the world.
 
-=begin notetip
+=begin sidebar
 
 In the four months between the outline and first draft of this chapter, the
 CPAN I<added> 500 registered uploaders and 7215 indexed modules in 1561
@@ -29,7 +29,7 @@ distributions.
     - 7258 uploaders/66400 modules/17268 distributions
     - 7758 uploaders/73615 modules/18829 distributions
 
-=end notetip
+=end sidebar
 
 Several features make the CPAN powerful: almost all of them community
 conventions that have grown up around the system.  Remember, at its heart it's
@@ -106,7 +106,7 @@ Need fact-checking; what's the new configuration system?
 
 =end for
 
-=begin notetip
+=begin sidebar
 
 Even though the CPAN client is a core module for the Perl 5 distribution, you
 may also have to install standard development tools such as a C<make> utility
@@ -115,7 +115,7 @@ Strawberry and Chocolate Perl include such utilities for Windows users.  Mac OS
 X users need their developer tools installed; Unix and Unix-like users, consult
 your local system administrator.
 
-=end notetip
+=end sidebar
 
 For all of this configuration, you gain access to over 73,000 individual Perl
 modules in almost 19,000 distributions.  These modules cover everything from

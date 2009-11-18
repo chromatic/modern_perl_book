@@ -113,13 +113,13 @@ a list in one step:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 Remember that the parentheses I<do not> create a list.  Without parentheses,
 this would assign C<Daisy> as the first and only element of the array, due to
 operator precedence.
 
-=end notetip
+=end sidebar
 
 Any expression which produces a list in list context can assign to an array:
 
@@ -148,12 +148,12 @@ To clear an array, assign an empty list:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 As freshly-declared arrays start out empty, C<my @items = ();> is a longer
 version of C<my @items>.  Prefer the latter.
 
-=end notetip
+=end sidebar
 
 
 
@@ -193,11 +193,11 @@ Be aware that the only syntactic difference between an array slice of one
 element and the scalar access of an array element is the leading sigil.  The
 semantic difference is greater: an array slice always enforces list context.
 
-=begin notetip
+=begin sidebar
 
 This behavior is one reason why Perl 6 uses invariant sigils.
 
-=end notetip
+=end sidebar
 
 Managing array indices can be a hassle.  Because Perl 5 can expand or contract
 arrays as necessary, the language also provides several operations to treat
@@ -243,11 +243,11 @@ C<unshift> prepends a list of zero or more elements to the start of the array
 and returns the new number of elements in the array.  C<shift> removes and
 returns the first element of the array.
 
-=begin notetip
+=begin sidebar
 
 Few programs use the return values of C<push> and C<unshift>.
 
-=end notetip
+=end sidebar
 
 X<splice> C<splice> is another important -- if less frequently used -- array
 operator.  It removes and replaces elements from an array given an offset, a

@@ -36,11 +36,11 @@ Suppose you have a class which contains several methods:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 Note the use of C<sum()> from C<List::Util> to add the values of a list.
 
-=end notetip
+=end sidebar
 
 If you have an C<Order> object C<$o>, the following invocations of this method
 I<may> seem equivalent:

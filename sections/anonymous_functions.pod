@@ -80,14 +80,14 @@ Thus, you may rewrite C<%dispatch> as:
 ... but the decision to do so depends more on maintainability concerns, safety,
 and your team's coding style than any language feature.
 
-=begin notetip
+=begin sidebar
 
 One benefit of the indirection of the dispatch table is that it provides some
 protection against unrestricted user input calling functions elsewhere without
 verification.  Only those operations explicitly available in C<%dispatch> are
 available.
 
-=end notetip
+=end sidebar
 
 You may also create anonymous functions on the spot when passing them as
 function parameters:
@@ -242,13 +242,13 @@ argument.  This code is equivalent to:
 
 ... but is slightly easier to read.
 
-=begin notetip
+=begin sidebar
 
 Note the I<lack> of a comma following the final curly brace of the implicit
 anonymous function in the implicit version.  This is occasionally a confusing
 wart on otherwise helpful syntax.
 
-=end notetip
+=end sidebar
 
 The implementation of both functions does not care which mechanism you use to
 pass subroutine references.  You can pass named functions by reference as well:

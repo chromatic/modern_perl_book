@@ -184,14 +184,14 @@ brackets:
     my $vowels    = qr/[aeiou]/;
     my $maybe_cat = qr/c${vowels}t/;
 
-=begin notetip
+=begin sidebar
 
 The curly braces around the name of the scalar variable C<$vowels> is a hint to
 the parser to disambiguate the name.  Without that, Perl would interpret the
 variable name as C<$vowelst>, which causes a compile-time error about an
 unknown variable.
 
-=end notetip
+=end sidebar
 
 If the characters in your character set form a contiguous range, you can use
 the hyphen character (C<->) as a shortcut to express that range.
@@ -209,13 +209,13 @@ characters":
 
     my $not_a_vowel = qr/[^aeiou]/;
 
-=begin notetip
+=begin sidebar
 
 As you might expect, use a caret anywhere but this position to make it a member
 of the character class.  A dash in a negated character class must I<follow> the
 negating carat.
 
-=end notetip
+=end sidebar
 
 =head3 Greediness
 
@@ -270,12 +270,12 @@ between a word character (C<\w>) and a non-word character C(<\W>):
 
     my $seven_down = qr/\bl${letters_only}{2}m\b/;
 
-=begin notetip
+=begin sidebar
 
 Like Perl, there's more than one way to write a regular expression.  Consider
 choosing the most expressive and maintainable one.
 
-=end notetip
+=end sidebar
 
 Sometimes you can't anchor a regular expression.  In those cases, you can turn
 a greedy quantifier into a parsimonious quantifier by appending the C<?>
@@ -320,12 +320,12 @@ to extract an address or an American telephone number from a string:
     my $local_number = qr/\d{3}-?\d{4}/;
     my $phone_number = qr/$area_code\s?$local_number/;
 
-=begin notetip
+=begin sidebar
 
 The parentheses in C<$area_code> need preceding backslashes to escape them for
 reasons which will become obvious in a moment.
 
-=end notetip
+=end sidebar
 
 X<captures>
 X<named captures>
@@ -383,14 +383,14 @@ composing regexs from smaller regexs is much easier, as they're less
 sensitive to changes in position or the presence or absence of capturing in
 individual atoms.
 
-=begin notetip
+=begin sidebar
 
 Name collisions are still possible with named captures, though that's less
 frequent than number collisions with anonymous captures.  Consider avoiding the
 use of captures of any kind in regex fragments; save it for top-level regexs
 themselves.
 
-=end notetip
+=end sidebar
 
 =head3 Grouping and Alternation
 
@@ -451,13 +451,13 @@ The C<(?:)> sequence is like capturing parentheses, except that it doesn't
 capture.  It only performs grouping.  Thus it doesn't interfere with counting
 for positional captures.
 
-=begin notetip
+=begin sidebar
 
 If you print a compiled regular expression, you'll see that its stringification
 includes an enclosing non-capturing group; C<qr/rice|beans/> stringifies as
 C<(?-xism:rice|beans)>.
 
-=end notetip
+=end sidebar
 
 Note also that you can have more than two alternatives in a pattern.
 

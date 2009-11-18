@@ -29,13 +29,13 @@ Use the C<sub> keyword to declare a function:
 Now C<greet_me()> is available for invocation anywhere else within the
 program (with appropriate namespacing or exporting caveats).
 
-=begin notetip
+=begin sidebar
 
 You do not have to declare Perl 5 functions before you use them, except in the
 special case where they modify I<how> the parser parses them.  See
 L<attributes>.
 
-=end notetip
+=end sidebar
 
 =head2 Invoking Functions
 
@@ -53,13 +53,13 @@ arguments:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 You can I<often> omit parameter-grouping parentheses if your program runs
 correctly with the C<strict> pragma enabled, but they provide clarity to the
 parser and, more importantly, the reader -- so it's often wise to include them.
 
-=end notetip
+=end sidebar
 
 You can, of course, pass multiple I<types> of arguments to a function:
 
@@ -131,13 +131,13 @@ in the same way that they operate on C<@ARGV> outside of any function:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 It may seem clearer initially to write C<shift @_>, but the C<shift> assignment
 idiom is so pervasive in Perl 5 culture that it's important to learn the
 shorthand version anyway.
 
-=end notetip
+=end sidebar
 
 Do take care that assigning a scalar parameter from C<@_> requires C<shift>,
 indexed access to C<@_>, or lvalue list context parentheses.  Otherwise, Perl 5
@@ -302,12 +302,12 @@ own variables.  This behavior is easiest to demonstrate with an example:
 If you modify an element of C<@_> directly, you modify the original parameter
 directly.  Be cautious with this.
 
-=begin notetip
+=begin sidebar
 
 See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
 modules on the CPAN for declarative parameter handling.
 
-=end notetip
+=end sidebar
 
 =head3 Validating
 
@@ -474,13 +474,13 @@ writes:
 in the current namespace, but C<Extensions::Math::divide()> and the others will
 only be invokable by their fully-qualified names.
 
-=begin notetip
+=begin sidebar
 
 The CPAN module C<Sub::Exporter> is significantly more powerful in many ways
 than C<Exporter>.  You may prefer its interface.  Be aware that C<Exporter> can
 export symbols other than functions; C<Sub::Exporter> only exports functions.
 
-=end notetip
+=end sidebar
 
 =head2 Reporting Errors
 
@@ -555,13 +555,13 @@ Functions may seem simple, but you can do much, much more with them.
 L<closures> and L<anonymous_functions> show some of these tricks.  There are
 more.
 
-=begin notetip
+=begin sidebar
 
 I<Higher Order Perl>, by Mark Jason Dominus, is well worth your time studying.
 See U<http://hop.perl.plover.com/> for ordering information and the free
 version online.
 
-=end notetip
+=end sidebar
 
 =head3 Recursion
 
@@ -684,12 +684,12 @@ the call to store its own lexical values, highly-recursive code can use more
 memory than iterative code.  A feature called I<tail call elimination> can
 help.
 
-=begin notetip
+=begin sidebar
 
 To be more specific, tail call elimination may be most obvious when writing
 recursive code, but it can be useful in any case of a tail call.
 
-=end notetip
+=end sidebar
 
 X<tail calls>
 X<functions; tail calls>

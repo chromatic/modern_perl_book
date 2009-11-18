@@ -70,12 +70,12 @@ add clarityN<It may also argue against using the postfix form.>:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 You may not omit the curly braces in block form under any circumstances; use
 the postfix conditional form instead.
 
-=end notetip
+=end sidebar
 
 X<unless>
 X<control flow directives; unless>
@@ -255,12 +255,12 @@ subsequent subexpressions.  This is most obvious with an example:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 Remember that the return value of C<ok()> is the boolean value obtained by
 evaluating the first argument.
 
-=end notetip
+=end sidebar
 
 This example prints:
 
@@ -339,13 +339,13 @@ Review the rules on truthiness of scalars again.
 
 =end for
 
-=begin notetip
+=begin sidebar
 
 The C<Want> module available from the CPAN allows you to detect boolean context
 within your own subroutines.  The core C<overload> module allows you to specify
 what your own data types produce when evaluated in a boolean context.
 
-=end notetip
+=end sidebar
 
 =head4 Looping Directives
 
@@ -375,13 +375,13 @@ to ten inclusive.  The C<foreach> directive loops over them, setting the topic
 variable (C<$_>) to each in turn.  Perl executes the block for each integer,
 printing the squares of the integers.
 
-=begin notetip
+=begin sidebar
 
 Though this is a I<foreach>-style loop, Perl treats the keywords C<foreach> and
 C<for> interchangeably.  As the type of the loop governs its behavior, there
 are no drawbacks to using the shorter C<for> keyword.
 
-=end notetip
+=end sidebar
 
 Like C<if> and C<unless>, there is a postfix form of this loop:
 
@@ -599,13 +599,13 @@ This may be more obvious with an example:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 Note the lack of a trailing semicolon at the iteration ending subexpression as
 well as the use of the low-precedence C<and>; this syntax is surprisingly
 finicky.
 
-=end notetip
+=end sidebar
 
 When possible, prefer the C<foreach> style loop to the C<for> loop.
 
@@ -700,12 +700,12 @@ scalar context -- a blank line, for example, or a line which contained only the
 character C<0> -- would end the loop.  The C<readline> operator returns an
 undefined value only when it has finished reading lines from the file.
 
-=begin notetip
+=begin sidebar
 
 One common mistake is to forget to remove the line-ending characters from each
 line; use the C<chomp> keyword to do so.
 
-=end notetip
+=end sidebar
 
 C<while> and C<until> have postfix forms as well.  An infinite loop in Perl 5
 is:
@@ -985,12 +985,12 @@ expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper, 
 
 Perl executes the C<default> rule when none of the other conditions match.
 
-=begin notetip
+=begin sidebar
 
 The CPAN module C<MooseX::MultiMethods> demonstrates another technique which
 reduces this code further.
 
-=end notetip
+=end sidebar
 
 The C<when> construct is even more powerful; it can match against many other
 types of expressions including scalars, aggregates, references, arbitrary
@@ -1031,14 +1031,14 @@ Unfortuately, Perl 5 cannot perform this optimization automatically.
 
 Fortunately, you can perform it manually.
 
-=begin notetip
+=begin sidebar
 
 Why would you want to do this?  Heavily recursive code, especially mutually
 recursive code, can quickly consume a lot of memory.  Reducing the memory
 needed for internal bookkeeping of control flow can make otherwise expensive
 algorithms tractable.
 
-=end notetip
+=end sidebar
 
 =for author
 

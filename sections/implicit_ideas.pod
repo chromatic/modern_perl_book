@@ -40,13 +40,13 @@ other arguments:
     print;  # prints $_
     say;    # prints $_ with a trailing newline
 
-=begin notetip
+=begin sidebar
 
 If you use the three-argument form of C<open> and C<say>, where the first
 argument is a filehandle to which to print, you cannot omit C<$_>; Perl will
 interpret this as the two-argument form of both functions.
 
-=end notetip
+=end sidebar
 
 Perl's regular expression facilities can also operate on C<$_>, performing
 matches, substitutions, and transliterations:
@@ -90,12 +90,12 @@ with C<for>:
     my @squares = map { B<$_> * B<$_> } 1 .. 10;
     say for @squares;
 
-=begin notetip
+=begin sidebar
 
 Note that C<sort> does not set C<$_>, as it must process the elements of its
 list two at a time.
 
-=end notetip
+=end sidebar
 
 Be careful, however.  If you call subroutine within code that uses C<$_>
 whether implicitly or explicitly, they may overwrite the value of C<$_>.

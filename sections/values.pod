@@ -68,14 +68,14 @@ You may escape control and non-printable characters in the string.
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 You may also embed the characters themselves directly into the string -- a
 string declaration may cross lines and run as long as you want, but it's often
 more maintainable to use the escapes.  Whitespace can be difficult to read
 precisely in a text editor.
 
-=end notetip
+=end sidebar
 
 =for author
 
@@ -156,12 +156,12 @@ arbitrary identifier which the Perl 5 parser uses as the ending delimiter.
 Be careful; regardless of the indentation of the heredoc declaration, the
 ending delimiter must begin in the first column of the program.
 
-=begin notetip
+=begin sidebar
 
 If the identifier begins with spaces, those spaces must be present exactly in
 the ending delimiter.
 
-=end notetip
+=end sidebar
 
 =head4 Numbers
 
@@ -201,14 +201,14 @@ separate thousands.  Compare the readability advantage:
 
 =end programlisting
 
-=begin notetip
+=begin sidebar
 
 Even though you can represent floating-point values explicitly in Perl 5 with
 perfect accuracy, Perl 5 stores them internally in a binary format.  Comparing
 floating-point values is sometimes imprecise in specific ways; consult
 C<perldoc perlnumber> for more details.
 
-=end notetip
+=end sidebar
 
 You may not use commas to separate thousands in numeric literals; the parser
 will interpret the commas as comma operators.  You I<can> use underscores in

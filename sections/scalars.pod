@@ -22,13 +22,13 @@ indicates that the value is a scalar value.  If you have three variables named
 C<$user>, C<@user>, and C<%user> as well as a subroutine named C<user()>, the
 sigil can differentiate between all three.
 
-=begin notetip
+=begin sidebar
 
 This is not I<universally> true; the scalar sigil applied to an operation on an
 aggregate variable determines the type of value accessed through that
 operation; see L<arrays> and L<hashes> for more.
 
-=end notetip
+=end sidebar
 
 Perl 5 scalars do not have static typing; a scalar variable can contain any
 type of scalar value without special conversions or casts.  Thus this code is
@@ -74,13 +74,13 @@ You may also perform mathematical operations on strings:
 
 X<increment; string>
 
-=begin notetip
+=begin sidebar
 
 Note that this magical string increment behavior does not have a corresponding
 magical decrement behavior.  You can't get the previous string value by writing
 C<$call_sign-->.
 
-=end notetip
+=end sidebar
 
 Magical string increment turns C<a> into C<b> and C<z> into C<aa>, respecting
 character set and case.  Note that C<ZZ9> becomes C<ZZ0> and C<ZZ09> becomes

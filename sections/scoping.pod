@@ -122,13 +122,13 @@ lexical variable with the same name and type in a single lexical scope produces
 a warning message, shadowing a lexical in a nested scope does not; this is a
 feature of lexical shadowing.
 
-=begin notetip
+=begin sidebar
 
 Lexical shadowing can happen by accident, but if you limit the scope of
 variables and limit the nesting of scopes, you lessen your risk.  These are
 good design principles anyway.
 
-=end notetip
+=end sidebar
 
 Note that there are subtleties to this syntax.  For example, a lexical variable
 used as the iterator variable of a C<for> loop has a scope I<within> the loop
@@ -247,12 +247,12 @@ special variables within C<perldoc perlvar>, for example.
 Note, however, that you can only C<local>ize global and package global
 variables.  You cannot C<local>ize lexical variables.
 
-=begin notetip
+=begin sidebar
 
 You I<can> localize subroutines and methods, but that's deep magic you should
 avoid wherever possible.
 
-=end notetip
+=end sidebar
 
 X<$/>
 X<special variables; $/>

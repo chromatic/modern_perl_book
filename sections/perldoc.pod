@@ -8,12 +8,12 @@ the documentation of every Perl module installed on the system -- whether a
 core module or one installed from the CPAN -- as well as thousands of pages of
 Perl's copious core documentation.
 
-=begin notetip
+=begin sidebar
 
 If you prefer an online version, U<http://perldoc.perl.org/> hosts recent
 versions of the Perl documentation.
 
-=end notetip
+=end sidebar
 
 The default behavior of C<perldoc> is to display the documentation for a named
 module or a specific section of the core documentation:
@@ -34,12 +34,12 @@ of contents to the Frequently Asked Questions about Perl documents.  Browsing
 this file will help you understand what Perl is capable of and how to solve
 common problems in Perl.
 
-=begin notetip
+=begin sidebar
 
 Similarly, C<perldoc perltoc> will display the table of contents for I<all> of
 the Perl documentation.  Browse that file too.
 
-=end notetip
+=end sidebar
 
 The C<perldoc> utility has many more abilities (see C<perldoc perldoc>).  Two
 of the most useful are the C<-q> and the C<-f> flags.  The C<-q> flag takes a
@@ -53,13 +53,13 @@ C<perldoc -f sort> explains the behavior of the C<sort> operator.  If you don't
 know the name of the function you want, use C<perldoc perlfunc> to see a list
 of functions.
 
-=begin notetip
+=begin sidebar
 
 C<perldoc perlop> and C<perldoc perlsyn> document Perl's symbolic operators and
 syntactic constructs; C<perldoc perldiag> explains what Perl's warning messages
 mean.
 
-=end notetip
+=end sidebar
 
 Perl's built-in documentation system is L<POD>, and you can and should use that
 to document your own code, so that C<perldoc> works with it as well as it does

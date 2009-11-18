@@ -27,12 +27,12 @@ Perl will give a prototype mismatch warning if not.  The converse is not true:
 you may omit the prototype from a forward declaration and include it for the
 full declaration.
 
-=begin notetip
+=begin sidebar
 
 There's little reason to omit the prototype from a forward declaration except
 for the desire to write too-clever code.
 
-=end notetip
+=end sidebar
 
 The original intent of prototypes was to allow users to define their own
 subroutines which behaved like (certain) built-in operators.  For example,
@@ -200,11 +200,11 @@ passed as the first argument to C<throws_ok()>.  This is a quirk of the Perl 5
 parser.  Adding the comma causes a syntax error.  The parser expects
 whitespace, not the comma operator.
 
-=begin notetip
+=begin sidebar
 
 The "no commas here" rule is a drawback of the prototype syntax.
 
-=end notetip
+=end sidebar
 
 You can use this API without the prototype.  It's slightly less attractive:
 
