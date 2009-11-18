@@ -2,9 +2,299 @@
 
 Z<anonymous_functions>
 
-function references
-anonymous functions
-autopromotion of blocks into anonymous functions
-    - grep/map/sort
-        - sort is a weird example though, because it can take a name
-    - Test::Exception
+X<anonymous function>
+X<functions; anonymous>
+
+An anonymous function is a function without a name.  It behaves like a named
+function--you can invoke it, pass arguments to it, return values from it, copy
+references to it--do anything you can do to a named function with it.  The
+difference is that it has no name.  You always deal with anonymous functions by
+reference (see L<references> and L<function_references>).
+
+=head4 Declaring Anonymous Functions
+
+You may never declare an anonymous function on its own; you must construct it
+and assign it to a variable or pass it as an argument to a function, either
+explicitly or implicitly.  Explicit creation uses the C<sub> keyword with no
+name:
+
+=begin programlisting
+
+    my $anon_sub = sub { ... };
+
+=end programlisting
+
+X<dispatch table>
+
+A common Perl 5 idiom known as a I<dispatch table> uses hashes to associate
+input with behavior:
+
+=begin programlisting
+
+    my %dispatch =
+    (
+        plus     => sub { $_[0] + $_[1] },
+        minus    => sub { $_[0] - $_[1] },
+        times    => sub { $_[0] * $_[1] },
+        goesinto => sub { $_[0] / $_[1] },
+        raisedto => sub { $_[0] ^ $_[1] },
+    );
+
+    sub dispatch
+    {
+        my ($left, $op, $right) = @_;
+
+        die "Unknown operation!"
+            unless exists $dispatch{ $op };
+
+        return $dispatch{ $op }->( $left, $right );
+    }
+
+=end programlisting
+
+The C<dispatch()> function takes arguments of the form C<(2, times, 2)> and
+returns the result of evaluating the operation.
+
+You may use anonymous functions in place of subroutine references; as far as
+Perl itself cares, they are equivalent.  Nothing I<necessitates> the use of
+anonymous functions to perform these mathematical operations, but for functions
+this short, there's little drawback to writing them this way.
+
+Thus, you may rewrite C<%dispatch> as:
+
+=begin programlisting
+
+    my %dispatch =
+    (
+        plus     => \&add_two_numbers,
+        minus    => \&subtract_two_numbers,
+        # ... and so on
+    );
+
+    sub add_two_numbers      { $_[0] + $_[1] }
+
+    sub subtract_two_numbers { $_[0] - $_[1] }
+
+=end programlisting
+
+... but the decision to do so depends more on maintainability concerns, safety,
+and your team's coding style than any language feature.
+
+=begin notetip
+
+A benefit of indirection through the dispatch table is that it provides some
+protection against calling functions that lack verification. Only those 
+operations explicitly available in C<%dispatch> are available.
+
+=end notetip
+
+You may also create anonymous functions on the spot when passing them as
+function parameters:
+
+=begin programlisting
+
+    sub invoke_anon_function
+    {
+        my $func = shift;
+        return $func->( @_ );
+    }
+
+    sub named_func
+    {
+        say 'I am a named function!';
+    }
+
+    invoke_anon_function( \&named_func );
+    invoke_anon_function( sub { say 'I am an anonymous function' } );
+
+=end programlisting
+
+=head4 Anonymous Function Names
+
+X<anonymous functions; names>
+
+There is one instance in which you can identify the difference between a
+reference to a named function and an anonymous function--anonymous functions do
+not (normally) have names.  This may sound subtle and silly and obvious, but
+introspection available in the Perl debugger and in the C<caller> builtin show 
+the difference:
+
+=begin programlisting
+
+    package ShowCaller;
+
+    use Modern::Perl;
+
+    sub show_caller
+    {
+        my ($package, $filename, $line, $sub) = caller(1);
+        say "Called from $sub in $package at $filename : $line";
+    }
+
+    sub main
+    {
+        my $anon_sub = sub { show_caller() };
+        show_caller();
+        $anon_sub->();
+    }
+
+    main();
+
+=end programlisting
+
+The result may be surprising:
+
+    Called from ShowCaller::B<main> in ShowCaller at anoncaller.pl : 20
+    Called from ShowCaller::B<__ANON__> in ShowCaller at anoncaller.pl : 17
+
+The C<__ANON__> in the second line of output demonstrates that the anonymous
+function has no name that Perl can identify.  Even though this can be difficult
+to debug, there are ways around this anonymity.
+
+The CPAN module C<Sub::Identify> provides a handful of functions useful to
+inspect the names of functions, given function references.  C<sub_name()> is
+the most immediately obvious in relation to C<caller>:
+
+=begin programlisting
+
+    use Sub::Identify 'sub_name';
+
+    sub main
+    {
+        say sub_name( \&main );
+        say sub_name( sub {} );
+    }
+
+    main();
+
+=end programlisting
+
+As you might imagine, the lack of identifying information complicates debugging
+anonymous functions.  The CPAN module C<Sub::Name> can help.  Its C<subname()>
+function allows you to give them names:
+
+=begin programlisting
+
+    use Sub::Name;
+    use Sub::Identify 'sub_name';
+
+    my $anon  = sub {};
+    say sub_name( $anon );
+
+    my $named = subname( 'pseudo-anonymous', $anon );
+    say sub_name( $named );
+    say sub_name( $anon );
+
+    say sub_name( sub {} );
+
+=end programlisting
+
+This program produces:
+
+    __ANON__
+    pseudo-anonymous
+    pseudo-anonymous
+    __ANON__
+
+As the references section suggests (L<references>), changes to a referenced
+function affect the referent.  That is, calling C<subname> on C<$anon> and
+returning into C<$named> modifies the underlying function.  Both references
+point to the same place.
+
+=head4 Implicit Anonymous Functions
+
+X<anonymous functions; implicit>
+
+All of these anonymous function declarations have been explicit.  Perl 5 allows
+implicit anonymous functions through the use of prototypes (see L<prototypes>).
+Though this feature exists nominally to enable programmers to write their own
+syntax such as that for C<map> and C<eval>, an interesting example is the use
+of I<delayed> functions that don't look like functions.  Consider the CPAN
+module C<Test::Exception>:
+
+=begin programlisting
+
+    use Test::More tests => 2;
+    use Test::Exception;
+
+    throws_ok { die "I croak!" }
+         qr/I croak/, 'die() should throw an exception';
+
+    lives_ok  { 1 + 1 }
+        'simple addition should not';
+
+=end programlisting
+
+Both C<lives_ok()> and C<throws_ok()> take an anonymous function as their first
+argument.  This code is equivalent to:
+
+
+=begin programlisting
+
+    throws_ok( B<sub { die "I croak!" },>
+         qr/I croak/, 'die() should throw an exception' );
+
+    lives_ok( B<sub { 1 + 1 },>
+        'simple addition should not' );
+
+=end programlisting
+
+... but is slightly easier to read.
+
+=begin notetip
+
+Note the I<lack> of a comma following the final curly brace of the implicit
+anonymous function in the implicit version.  This is occasionally a confusing
+wart on otherwise helpful syntax. # Indeed. Is there a reason why it's not there? (jeremiah)
+
+=end notetip
+
+The implementation of both functions does not care which mechanism you use to
+pass subroutine references.  You can pass named functions by reference as well:
+
+=begin programlisting
+
+    B<sub croak { die 'I croak!' }>
+
+    B<sub add   { 1 + 1 }>
+
+    throws_ok B<\&croak>,
+         qr/I croak/, 'die() should throw an exception';
+
+    lives_ok  B<\&add>,
+        'simple addition should not';
+
+=end programlisting
+
+... but you may I<not> pass them as scalar references:
+
+=begin programlisting
+
+    sub croak { die 'I croak!' }
+
+    sub add   { 1 + 1 }
+
+    B<my $croak = \&croak;>
+    B<my $add   = \&add;>
+
+    throws_ok B<$croak>,
+         qr/I croak/, 'die() should throw an exception';
+
+    lives_ok  B<$add>,
+        'simple addition should not';
+
+=end programlisting
+
+... because the prototype changes the way the Perl 5 parser interprets this
+code.  It cannot determine with 100% clarity I<what> C<$croak> and C<$add> will
+contain when it evaluates the C<throws_ok()> or C<lives_ok()> calls, so it
+produces an error:
+
+    Type of arg 1 to Test::Exception::throws_ok must be block or sub {}
+    (not private variable) at testex.pl line 13,
+    near "'die() should throw an exception';"
+
+As discussed in L<prototypes>, this feature is occasionally useful despite its
+drawbacks.  The syntactic clarity available by promoting bare blocks to
+anonymous functions can be helpful, but use it sparingly and document the API
+with care.

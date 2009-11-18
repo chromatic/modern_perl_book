@@ -1,31 +1,357 @@
 =head3 Scope
 
-Z<scoping>
+Z<scope>
 
-lexical scope
-    - my
-    - most important scoping
-    - not in symbol table; resolved at compile time
-    - allows closures (whether you intend them or not)
+X<scope>
+X<encapsulation>
 
-dynamic scope
-    - local/our
-    - relies on global variables
-    - visible from outside namespace/lexical scope
-    - our subtly broken
+I<Scope> in Perl refers to the lifespan and visibility of symbols.  Everything
+with a name in Perl (a variable, a function) has a scope.  Outside of that
+scope, you may or may not be able to refer to the symbol.  Scoping is important
+because it helps to enforce I<encapsulation>--keeping related concepts together
+and preventing them from leaking out.
 
-state scoping
-    - state
-    - lexical scoping but retains value after initialized
-    - interaction with closures?
+=head4 Lexical Scope
 
-implicit lexicalization
-    - my $_
-    - what is the scope of C< for my $i ( ... ) >?
-    - which constructs localize $_ and which do not?
+X<lexical scope>
+X<scope; lexical>
 
-necessary localization
-    - $/, $", other globals
-    - $!, $@
-    - sometimes $_
-    - an exception: $| (? - I think so)
+The most common form of scoping in modern Perl is lexical scoping.  The Perl
+compiler resolves this scope during compilation.  This is the scope that you
+can understand as you read a program.
+
+=for author
+
+A I<quoting> block might be qq{} or s{}{}; need to figure out how that all
+works.
+
+=end for
+
+To create a new lexical scope, create a block delimited by curly braces.  This
+block can be a bare block, the block of a loop construct, the block of a C<sub>
+declaration, an C<eval> block, or any other non-quoting block:
+
+=begin programlisting
+
+    # outer lexical scope
+    {
+        package My::Class;
+
+        # inner lexical scope
+        sub awesome_method
+        {
+            # further inner lexical scope
+            do {
+                ...
+            } while (@_);
+
+            # sibling inner lexical scope
+            for (@_)
+            {
+                ...
+            }
+        }
+    }
+
+=end programlisting
+
+X<variables; lexical>
+
+Lexical scope governs the visibility of variables declared with C<my>; these
+are I<lexical> variables.  A lexical variable declared in one scope is visible
+in that scope and scopes nested within that scope but is invisible to sibling
+or outer scopes.  Thus, in the code:
+
+=begin programlisting
+
+    # outer lexical scope
+    {
+        package My::Class;
+
+        my $outer;
+
+        sub awesome_method
+        {
+            my $inner;
+
+            do {
+                my $do_scope;
+                ...
+            } while (@_);
+
+            # sibling inner lexical scope
+            for (@_)
+            {
+                my $for_scope;
+                ...
+            }
+        }
+    }
+
+=end programlisting
+
+... C<$outer> is visible in all four scopes.  C<$inner> is visible in the
+method, the C<do> block, and the C<for> loop.  C<$do_scope> and C<$for_scope>
+are both only visible in one scope each, the C<do> block and the C<for> loop,
+respectively.
+
+X<lexical shadowing>
+X<scope; lexical shadowing>
+
+Because lexical scopes provide their own visibility, declaring a lexical in an
+inner scope with the same name as a lexical in an outer scope I<shadows> or
+hides the outer lexical:
+
+=begin programlisting
+
+    {
+        my $name = 'Jacob';
+
+        {
+            my $name = 'Edward';
+            say $name;
+        }
+
+        say $name;
+    }
+
+=end programlisting
+
+This program prints C<Edward> and then C<Jacob>.  Even though redeclaring a
+lexical variable with the same name and type in a single lexical scope produces
+a warning message, shadowing a lexical in a nested scope does not; this is a
+feature of lexical shadowing.
+
+=begin notetip
+
+Lexical shadowing can happen by accident, but if you limit the scope of
+variables and limit the nesting of scopes, you lessen your risk.  These are
+good design principles anyway.
+
+=end notetip
+
+Note that there are subtleties to this syntax.  For example, a lexical variable
+used as the iterator variable of a C<for> loop has a scope I<within> the loop
+block.  It is not visible outside the block:
+
+=begin programlisting
+
+    my $cat = 'Bradley';
+
+    for my $cat (qw( Jack Daisy Petunia Tuxedo ))
+    {
+        say "Iterator cat is $cat";
+    }
+
+    say "Static cat is $cat";
+
+=end programlisting
+
+X<lexical topic>
+X<topic; lexical>
+
+Similarly, the C<given> construct creates a I<lexical topic> (akin to C<my $_>)
+within its block:
+
+=begin programlisting
+
+    $_ = 'outside';
+
+    given ('inner')
+    {
+        say;
+        $_ = 'whomped inner';
+    }
+
+    say;
+
+=end programlisting
+
+... despite assignment to C<$_> inside the block.  You may explicitly
+lexicalize the topic yourself, though this is more useful when considering
+dynamic scope.
+
+=for author
+
+Which other constructs localize $_ and which do not?
+
+=end for
+
+Finally, lexical scoping facilitates closures (see L<closures>).  Beware creating
+closures accidentally.
+
+=for author
+
+Discuss destruction at end of scope unless refcount...?
+
+=end for
+
+=head4 Dynamic Scope
+
+X<dynamic scope>
+X<scope; dynamic>
+
+Dynamic scope resembles lexical scope in the visibility rules, but instead of
+looking outward in compile-time scopes, lookup happens along the current
+calling context.  That's a lot to absorb.  An example makes it easier to
+understand.
+
+=begin programlisting
+
+    {
+        use vars '$scope';
+
+        sub inner
+        {
+            say $scope;
+        }
+
+        sub main
+        {
+            say $scope;
+            local $scope = 'main() scope';
+            middle();
+        }
+
+        sub middle
+        {
+            say $scope;
+            inner();
+        }
+
+        $scope = 'outer scope';
+        main();
+        say $scope;
+    }
+
+
+=end programlisting
+
+The program begins by declaring a package global variable, C<$scope>, as well
+as three functions.  It ends by assigning to C<$scope> and calling C<main()>.
+
+X<local>
+
+Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,
+then C<local>izes the variable.  This changes the visibility of the symbol
+within the current lexical scope I<as well as> in any functions called from the
+current lexical scope.  Thus, C<$scope> contains C<in main> within the body of
+both C<middle()> and C<inner()>.  After C<main()> returns--at the point of
+exiting the block containing the C<local>ization of C<$scope>, Perl restores
+the original value of the variable.  The final C<say> prints C<outer scope>
+once again.
+
+This can be tricky and subtle, but it can also be useful--changing the value of
+special variables within C<perldoc perlvar>, for example.
+
+Note, however, that you can only C<local>ize global and package global
+variables.  You cannot C<local>ize lexical variables.
+
+=begin notetip
+
+You I<can> localize subroutines and methods, but that's deep magic you should
+avoid wherever possible.
+
+=end notetip
+
+X<$/>
+X<special variables; $/>
+X<$!>
+X<special variables; $!>
+X<$@>
+X<special variables; $@>
+X<$|>
+X<special variables; $|>
+
+It's common to C<local>ize several special variables.  For example, C<$/>, the
+input record separator, governs how much data a C<readline> operation will read
+from a filehandle.  C<$!>, the system error variable, contains the error number
+of the most recent system call.  C<$@>, the Perl C<eval> error variable,
+contains any error from the most recent C<eval> operation.  C<$|>, the
+autoflush variable, governs whether Perl will flush the currently C<select>ed
+filehandle after every write operation.
+
+These are all special global variables; C<local>izing them in the narrowest
+possible scope will avoid the action at a distance problem of modifying global
+variables used other places in your code.
+
+=for author
+
+Discuss C<vars> and C<our>?  C<our> has its flaws.  Discuss package globals
+here or in packages/modules section?
+
+=end for
+
+=head4 State Scope
+
+X<state>
+X<scope; state>
+
+A final type of scope is new in Perl 5.10.  This is the scope of the C<state>
+keyword.  State scope resembles lexical scope in that it declares a lexical
+variable, but the value of that variable gets initialized I<once>, and then
+persists.  Again, an example is the clearest way to understand:
+
+=begin programlisting
+
+    sub counter
+    {
+      B<state> $count = 1;
+      return $count++;
+    }
+
+    say counter();
+    say counter();
+    say counter();
+
+=end programlisting
+
+On the first call to state, C<$count> has never been initialized, so Perl
+completes the assignment.  The program prints C<1>, C<2>, and C<3>.  If you
+change C<state> to C<my>, the program will print C<1>, C<1>, and C<1>.
+
+You may also use an incoming parameter to set the initial value of the C<state> variable:
+
+=begin programlisting
+
+    sub counter
+    {
+        state $count = shift;
+        return $count++;
+    }
+
+    say counter(B<2>);
+    say counter(B<4>);
+    say counter(B<6>);
+
+=end programlisting
+
+Even though a simple reading of the code may suggest that the output should be
+C<2>, C<4>, and C<6>, the output is actually C<2>, C<3>, and C<4>. The first call 
+to the sub 'counter' sets the $count variable and it resists any attempts to 
+change its value. This behavior is as intended and documented, though its 
+implementation can lead to surprising results:
+
+=Begin programlisting
+
+    sub counter
+    {
+        state $count = shift;
+        say 'Second arg is: ', shift;
+        return $count++;
+    }
+
+    say counter(2, 'two');
+    say counter(4, 'four');
+    say counter(6, 'six');
+
+=end programlisting
+
+The counter for this program prints C<2>, C<3>, and C<4> as expected, but the
+values of the intended second arguments to the C<counter()> calls are C<two>,
+C<4>, and C<6>--not because the integers are the second arguments passed, but
+because the C<shift> of the first argument only happens in the first call to
+C<counter()>.
+
+C<state> can be useful for establishing a default value or preparing a cache,
+but be cautious that you understand its initialization behavior if you use it.
