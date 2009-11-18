@@ -82,10 +82,9 @@ and your team's coding style than any language feature.
 
 =begin notetip
 
-One benefit of the indirection of the dispatch table is that it provides some
-protection against unrestricted user input calling functions elsewhere without
-verification.  Only those operations explicitly available in C<%dispatch> are
-available.
+A benefit of indirection through the dispatch table is that it provides some
+protection against calling functions that lack verification. Only those 
+operations explicitly available in C<%dispatch> are available.
 
 =end notetip
 
@@ -117,8 +116,8 @@ X<anonymous functions; names>
 There is one instance in which you can identify the difference between a
 reference to a named function and an anonymous function--anonymous functions do
 not (normally) have names.  This may sound subtle and silly and obvious, but
-introspection such as is available in the Perl debugger and in the C<caller>
-builtin show the difference:
+introspection available in the Perl debugger and in the C<caller> builtin show 
+the difference:
 
 =begin programlisting
 
@@ -246,7 +245,7 @@ argument.  This code is equivalent to:
 
 Note the I<lack> of a comma following the final curly brace of the implicit
 anonymous function in the implicit version.  This is occasionally a confusing
-wart on otherwise helpful syntax.
+wart on otherwise helpful syntax. # Indeed. Is there a reason why it's not there? (jeremiah)
 
 =end notetip
 
