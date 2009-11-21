@@ -1,11 +1,104 @@
 Z<hashes>
 
+X<hashes>
+X<hash>
+
+A I<hash> is a first-class Perl data structure which associates string keys
+with scalar values.  You might have encountered them as I<tables>,
+I<associative arrays>, I<dictionaries>, or I<maps> in other programming
+languages.  In the same way that the name of a variable corresponds with a
+storage location, a key in a hash refers to a value.
+
+A well-respected, if hoary, analogy is to think of a hash like you would a
+telephone book: use your friend's name to look up her number.
+
+Hashes have a couple of important properties.  First, they can store one scalar
+per unique key.  Second, they do not normally promise any specific ordering.  A
+hash is a big container full of key/value pairs.
+
+=head4 Declaring Hashes
+
+X<hashes; declaring>
+
+A hash has the C<%> sigil.  Declare a lexical hash with:
+
+=begin programlisting
+
+    my %favorite_flavors;
+
+=end programlisting
+
+A hash starts out empty, with no keys or values.  In boolean context, a hash
+returns false if it's empty (contains no keys or values) and true otherwise.
+
+You can assign and access individual elements of a hash:
+
+=begin programlisting
+
+    my %favorite_flavors;
+    $favorite_flavors{Gabi}    = 'Mint chocolate chip';
+    $favorite_flavors{Annette} = 'French vanilla';
+
+=end programlisting
+
+Notice that hashes use the scalar sigil C<$> when accessing individual elements
+and they use curly braces C<{ }> for indexing.
+
+You may assign a list of keys and values to a hash at once:
+
+=begin programlisting
+
+    my %favorite_flavors = (
+        'Gabi',    'Mint chocolate chip',
+        'Annette', 'French vanilla',
+    );
+
+=end programlisting
+
+X<fat comma>
+
+If you assign an odd number of elements to the hash, you will receive a warning
+that the results are not what you anticipated.  It's often more obvious to use
+the I<fat comma> operator to associate values with keys, as it makes the
+required pairing more visible:
+
+=begin programlisting
+
+    my %favorite_flavors = (
+        Gabi    B<< => >> 'Mint chocolate chip',
+        Annette B<< => >> 'French vanilla',
+    );
+
+=end programlisting
+
+The fat comma operator acts like the regular comma and additionally quotes the
+previous bareword.
+
 =for author
 
-declaring and assigning
-    - individual keys and values
-    - in bulk
-    - clearing
+There's a subtlety to the quoting rules; get into that here?
+
+=end for
+
+=begin notetip
+
+Be aware that hash assignment occurs in list context; if you call a function
+within this assignment, you may have to use C<scalar()> to disambiguate its
+context.
+
+=end notetip
+
+To empty a hash, either leave the outermost scope of its lexical declaration or
+assign an empty listN<Unary C<undef> also works, but it's somewhat more rare.>:
+
+=begin programlisting
+
+    %favorite_flavors = ();
+
+=end programlisting
+
+
+=for author
 
 keys and quoting
     - autoquoting fat arror
