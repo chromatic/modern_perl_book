@@ -71,14 +71,33 @@ required pairing more visible:
 
 =end programlisting
 
-The fat comma operator acts like the regular comma and additionally quotes the
-previous bareword.
+The fat comma operator acts like the regular comma, but it also causes the Perl
+parser to treat the previous bareword as if it were a quoted word.  That is, if
+you have a function with the same name as a hash key, the fat comma will not call the function:
 
-=for author
+=begin programlisting
 
-There's a subtlety to the quoting rules; get into that here?
+    sub name { 'Victor' }
 
-=end for
+    my %address =
+    (
+        name => '1123 Fib Place',
+    );
+
+=end programlisting
+
+The key of the hash will be C<name> and not C<Victor>.  If you intend to call
+the function to get the key, disambiguate your intent by making the call
+explicit:
+
+=begin programlisting
+
+    my %address =
+    (
+        B<name()> => '1123 Fib Place',
+    );
+
+=end programlisting
 
 =begin notetip
 
@@ -97,17 +116,152 @@ assign an empty listN<Unary C<undef> also works, but it's somewhat more rare.>:
 
 =end programlisting
 
+=head4 Accessing Hash Values
+
+X<hashes; accessing values>
+X<hashes; values>
+
+Because a hash is an aggregate, you can access individual values with an
+indexing operation.  Use a key as an index (a I<keyed access> operation) to
+retrieve a value from a hash:
+
+=begin programlisting
+
+    my $address = $addresses{$name};
+
+=end programlisting
+
+In this example, C<$name> contains a string which is also a key of the hash.
+Note that, as with accessing an individual element of an array, the hash's
+sigil has changed from C<%> to C<$> to indicate that the keyed access is for a
+scalar value.
 
 =for author
 
-keys and quoting
-    - autoquoting fat arror
-    - hash subscript autoquoting
-        - keywords
-        - unary plus
-        - function calls
+Check if they are, in fact, the same rules.
 
-key stringification
+=end for
+
+You may also use string literals as hash keys.  Perl quotes barewords
+automatically according to the same rules as fat commas:
+
+=begin programlisting
+
+    # autoquoted
+    my $address = $addresses{Victor};
+
+    # needs quoting; not a valid bareword
+    my $address = $addresses{B<'>Sue-LinnB<'>};
+
+    # function call needs disambiguation
+    my $address = $addresses{get_nameB<()>};
+
+=end programlisting
+
+You might find it clearer always to quote string literal hash keys, but the
+autoquoting behavior is so well established in Perl 5 culture that it's better
+to reserve the quotes for extraordinary circumstances, where they stand out and
+broadcast that you're doing something different.
+
+Be aware that even Perl 5 keywords get the autoquoting treatment:
+
+=begin programlisting
+
+    my %addresses =
+    (
+        Vincent => '1123 Fib Place',
+        Utako   => 'Cantor Hotel, Room 1',
+    );
+
+    sub get_address_from_name
+    {
+        return $addresses{B<+>shift};
+    }
+
+=end programlisting
+
+The unary plus is a Perl 5 idiom used to turn what would be a bareword
+(C<shift>) subject to autoquoting rules into an expression.  As this implies,
+you can use an arbitrary expression--not only a function call--as the key of a
+hash:
+
+=begin programlisting
+
+    # don't actually I<do> this though
+    my $address = $addresses{reverse 'tnecniV'};
+
+    # interpolation is fine
+    my $address = $addresses{"$first_name $last_name"};
+
+    # so are method calls
+    my $address = $addresses{ $user->name() };
+
+=end programlisting
+
+Anything that evaluates to a string is an acceptable hash key.  Of course, hash
+keys can only be strings.  Thus if you use an object as a hash key, you'll get
+the stringified version of that object instead of the object itself:
+
+=begin programlisting
+
+    for my $isbn (@isbns)
+    {
+        my $book = Book->fetch_by_isbn( $isbn );
+
+        # unlikely to do what you want
+        $books{$book} = $book->price;
+    }
+
+=end programlisting
+
+=begin sidebar
+
+The CPAN module (which one?) lets you use arbitrary scalars as hash keys; it
+stores them non-destructively.
+
+=end sidebar
+
+X<exists>
+X<operators; exists>
+X<hashes; exists>
+
+You don't always know when a hash key exists, however.  The C<exists> operator
+returns a boolean value to indicate whether the given hash contains a key of
+that string:
+
+=begin programlisting
+
+    my %addresses =
+    (
+        Vincent => '1123 Fib Place',
+        Utako   => 'Cantor Hotel, Room 1',
+    );
+
+    say "Have Vincent's address" if exists $addresses{Vincent};
+    say "Have Warnie's address"  if exists $addresses{Warnie};
+
+=end programlisting
+
+Using C<exists> instead of checking the hash key directly avoids two problems.
+First, it does not check the boolean nature of the hash I<value>; a hash key
+may exist with a value even if that value evaluates to a boolean false.
+Second, with nested data structures, it avoids autovivifying
+(L<autovivification>) the value.
+
+=head4 Accessing Hash Keys and Values
+
+X<hashes; keys>
+X<hashes; values>
+X<operators; values>
+X<operators; keys>
+
+X<values>
+X<keys>
+
+X<each>
+X<operators; each>
+
+=for author
 
 keys/values
 
