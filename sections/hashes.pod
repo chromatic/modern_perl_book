@@ -242,7 +242,7 @@ that string:
 
 =end programlisting
 
-Using C<exists> instead of checking the hash key directly avoids two problems.
+Using C<exists> instead of accessing the hash key directly avoids two problems.
 First, it does not check the boolean nature of the hash I<value>; a hash key
 may exist with a value even if that value evaluates to a boolean false.
 Second, with nested data structures, it avoids autovivifying
@@ -250,31 +250,199 @@ Second, with nested data structures, it avoids autovivifying
 
 =head4 Accessing Hash Keys and Values
 
+X<keys>
 X<hashes; keys>
-X<hashes; values>
-X<operators; values>
 X<operators; keys>
 
+Hashes are aggregate variables, but they behave slightly differently from
+arrays.  In particular, you can iterate over the keys of a hash, the values, of
+a hash, or pairs of keys and values.  The C<keys> operator returns a list of
+keys of the hash:
+
+=begin programlisting
+
+    for my $addressee (keys %addresses)
+    {
+        say "Found an address for $addressee!";
+    }
+
+=end programlisting
+
 X<values>
-X<keys>
+X<hashes; values>
+X<operators; values>
+
+Similarly, the C<values> operator returns a list of values of the hash:
+
+=begin programlisting
+
+    for my $address (values %addresses)
+    {
+        say "Someone lives at $address";
+    }
+
+=end programlisting
 
 X<each>
+X<hashes; each>
 X<operators; each>
 
+The C<each> operator returns a list of two-element lists of the key and the
+value:
+
+=begin programlisting
+
+    while (my ($addressee, $address) = each %addresses)
+    {
+        say "$addressee lives at $address";
+    }
+
+=end programlisting
+
+=begin sidebar
+
+The C<while> loop is important to the C<each> example, as you cannot declare
+multiple lexical loop iterator variables in a C<for> loop.
+
+=end sidebar
+
+Unlike arrays, there is no obvious ordering to the list of keys or values.  The
+ordering depends on the internal implementation of the hash, which can depend
+both on the particular version of Perl you are using, the size of the hash, and
+a random factor.  With that caveat in mind, the order of items in a hash is the
+same for C<keys>, C<values>, and C<each>.  Modifying the hash may change the
+order, but you can rely on that order if the hash remains the same.
+
+Beware that each hash has only a single iterator for the C<each> operator.  You
+cannot reliably iterate over a hash with C<each> more than once; if you begin a
+new iteration while another is in progress, the former will end prematurely and
+the latter will begin partway through the hash.
+
+You can reset a hash's iterator with the use of C<keys> or C<values> in void
+context:
+
+=begin programlisting
+
+    # reset hash iterator
+    keys %addresses;
+
+    while (my ($addressee, $address) = each %addresses)
+    {
+        ...
+    }
+
+=end programlisting
+
+You should also ensure that you do not call any function which may itself try
+to iterate over the hash with C<each>.
+
+=begin sidebar
+
+Does C<each> sound like too much trouble?  This is a well-known caveat, but it
+doesn't come up as often as you might expect.  Be cautious, but use C<each>
+when you need it.
+
+=end sidebar
+
+=head4 Hash Slices
+
+X<hash slices>
+X<hashes; slicing>
+X<slices; hash>
+
+Also like arrays, you may access a list of elements of a hash in one operation.
+A I<hash slice> is a list of keys or values of a hash.  The simplest
+explanation is initialization of multiple elements of a hash used as an
+unordered set:
+
+=begin programlisting
+
+    my %cats;
+    @cats{qw( Jack Brad Mars Grumpy )} = (1) x 4;
+
+=end programlisting
+
+This is equivalent to the initialization:
+
+=begin programlisting
+
+    my %cats = map { $_ => 1 } qw( Jack Brad Mars Grumpy );
+
+=end programlisting
+
+... except that the hash slice initialization does not replace the existing
+keys of the hash.
+
+Similarly you may retrieve multiple values from a hash with a slice:
+
+=begin programlisting
+
+    my @buyer_addresses = @addresses{ @buyers };
+
+=end programlisting
+
+Note that, as with array slices, the sigil of the hash changes to indicate a
+list context.  You can still tell that C<%addresses> is a hash by the use of
+the curly braces to indicate keyed access.
+
+Hash slices make it easy to merge two hashes:
+
+=begin programlisting
+
+    my %addresses        = ( ... );
+    my %canada_addresses = ( ... );
+
+    @addresses{ keys %canada_addresses } = values %canada_addresses;
+
+=end programlisting
+
+This is equivalent to looping over the contents of C<%canada_addresses>
+manually, but is much shorter.
+
+=begin sidebar
+
+Of course, the choice between the two approaches depends on your merge
+strategy.  What if the same key occurs in both hashes?  The hash slice approach
+always overwrites existing key/value pairs in C<%addresses>.
+
+=end sidebar
+
+=head4 The Empty Hash
+
+An empty hash contains no keys or values.  It evaluates to false in a boolean
+context.  A hash which contains at least one key/value pair evaluates to true
+in a boolean context even if all of the keys or all of the values or both would
+themselves evaluate to false in a boolean context.
+
+=begin programlisting
+
+    use Test::More 'no_plan';
+
+    my %empty;
+    nok( %empty, 'empty hash should evaluate to false' );
+
+    my %false_key = ( 0 => 'true value' );
+    ok( %false_key, 'hash containing false key should evalute to true' );
+
+    my %false_value = ( 'true key' => 0 );
+    ok( %false_value, 'hash containing false value should evaluate to true' );
+
+    ...
+
+=end programlisting
+
+In scalar context, a hash evaluates to a string which represents the number of
+hash buckets used out of the number of hash buckets allocated.  This is rarely
+useful, as it represents internal details about hashes that are almost always
+meaningless to Perl programs.  You can safely ignore it.
+
+In list context, a hash evaluates to a list of key/value pairs similar to what
+you receive from the C<each> operator.  However, you I<cannot> iterate over
+this list the same way you can iterate over the list produced by C<each>,
+because there is no internal hash iteration provided when evaluating a hash in
+list contextN<The loop will loop forever, unless the hash is empty.>.
+
 =for author
-
-keys/values
-
-each
-    - single iterator per hash
-    - reset with keys
-
-slices
-
-empty hash
-    - truth value
-    - list context
-    - scalar context ?
 
 uses of hashes ?
     - named parameters
@@ -286,5 +454,7 @@ uses of hashes ?
 
 tied hashes?
     - Tie::IxHash
+
+Locking hashes
 
 =end for
