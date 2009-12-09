@@ -231,7 +231,7 @@ List::Util
 
 keys, values, each (watch the iterator problem)
 
-=head3 Packages and Modules
+=head3 Packages * and Modules
 
 A separate chapter?
 
