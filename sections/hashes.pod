@@ -442,19 +442,168 @@ this list the same way you can iterate over the list produced by C<each>,
 because there is no internal hash iteration provided when evaluating a hash in
 list contextN<The loop will loop forever, unless the hash is empty.>.
 
-=for author
+=head4 Hash Idioms
 
-uses of hashes ?
-    - named parameters
-    - sets
-        - @hash{@slice} = undef;
-    - caches
-        - orcish maneuver
-    - identity hash
+X<hashes; finding uniques>
 
-tied hashes?
-    - Tie::IxHash
+Hashes have several uses.  They're good for finding unique elements of lists or
+arrays:
 
-Locking hashes
+=begin programlisting
 
-=end for
+    my %uniq;
+    undef @uniq{ @items };
+    my @uniques = keys %uniq;
+
+=end programlisting
+
+The use of the C<undef> operator with the hash slice sets the values of the
+hash to C<undef>.  It's a very cheap way, both in terms of lines of code and
+performance, to use only the keys of a hash for storage.
+
+X<hashes; counting items>
+
+Hashes are also useful for counting elements, such as a list of IP addresses in
+a logfile:
+
+=begin programlisting
+
+    my %ip_addresses;
+
+    while (my $line = <$logfile>)
+    {
+        my ($ip, $resource) = analyze_line( $line );
+        $ip_addresses{$ip}++;
+        ...
+    }
+
+=end programlisting
+
+The initial value of a hash value is C<undef>.  The postincrement operator
+(C<++>) treats that as zero.  This in-place modification of the value
+increments an existing value for that key.  If no value exists for that key, it
+creates a value (C<undef>) and immediately increments it to one.
+
+X<hashes; caching>
+X<hashes; orcish maneuver>
+X<orcish maneuver>
+
+A variant of this strategy works very well for caching, where you might want to
+store the result of an expensive calculation with little overhead to store or
+fetch:
+
+=begin programlisting
+
+    {
+        my %user_cache;
+
+        sub fetch_user
+        {
+            my $id = shift;
+            $user_cache{$id} ||= create_user($id);
+            return $user_cache{$id};
+        }
+    }
+
+=end programlisting
+
+This I<orcish maneuver>N<Or-cache, if you like puns.> returns the value from
+the hash, if it exists.  Otherwise, it calculates the value, caches it, and
+then returns it.  Beware that the boolean-or assignment operator (C<||=>)
+operates on boolean values; if your cached value evaluates to false in a
+boolean context, use the defined-or assignment operator (C<//=>) instead:
+
+=begin programlisting
+
+        sub fetch_user
+        {
+            my $id = shift;
+            $user_cache{$id} B<//=> create_user($id);
+            return $user_cache{$id};
+        }
+
+=end programlisting
+
+This lazy orcish maneuver tests for the definedness of the cached value, not
+the boolean truth.  The defined-or assignment operator is new in Perl 5.10.
+
+X<hashes; named parameters>
+
+Hashes can also serve many purposes named parameters passed to functions.  If
+your function takes several arguments, you can use a slurpy hash (see
+L<parameter slurping>) to gather key/value pairs into a single hash:
+
+=begin programlisting
+
+    sub make_sundae
+    {
+        my %parameters = @_;
+        ...
+    }
+
+    make_sundae( flavor => 'Lemon Burst', topping => 'cookie bits' );
+
+=end programlisting
+
+You can even set default parameters with this approach:
+
+=begin programlisting
+
+    sub make_sundae
+    {
+        my %parameters = @_;
+        B<$parameters{flavor}    = 'Vanilla';>
+        B<$parameters{topping}   = 'fudge';>
+        B<$parameters{sprinkles} = 100;>
+        ...
+    }
+
+=end programlisting
+
+... or include them in the initial declaration and assignment itself:
+
+=begin programlisting
+
+    sub make_sundae
+    {
+        my %parameters =
+        B<(>
+            B<<flavor => 'Vanilla',>>
+            B<<topping => 'fudge',>>
+            B<<sprinkles => 100,>>
+            @
+        );
+        ...
+    }
+
+=end programlisting
+
+... as subsequent declarations of the same key with a different value will
+overwrite the previous values.
+
+=head4 Locking Hashes
+
+X<hashes; locked>
+X<hashes; locking>
+X<locked hashes>
+
+One drawback of hashes is that their keys are barewords which offer little typo
+protection (especially compared to the function and variable name protection
+offered by the C<strict> pragma).  The core module C<Hash::Util> provides
+mechanisms to restrict the modification of a hash or the keys allowed in the
+hash.
+
+To prevent someone from accidentally adding a hash key you did not intent
+(presumably with a typo or with data from untrusted input), use the
+C<lock_keys()> function to restrict the hash to its current set of keys.  Any
+attempt to add a key/value pair to the hash where the key is not in the allowed
+set of keys will raise an exception.
+
+Of course, anyone who needs to do so can always use the C<unlock_keys()>
+function to remove the protection, so do not rely on this as a security measure
+against misuse from other programmers.
+
+Similarly you can lock or unlock the existing value for a given key in the hash
+(C<lock_value()> and C<unlock_value()>) and make or unmake the entire hash
+read-only with C<lock_hash()> and C<unlock_hash()>.
+

@@ -251,6 +251,7 @@ C<pop> to remove it from the end of C<@_>):
 
 =head3 Slurping
 
+Z<parameter slurping>
 X<parameter slurping>
 
 As with any lvalue assignment to an aggregate, assigning to C<%pets> within the

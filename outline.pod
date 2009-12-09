@@ -109,7 +109,7 @@ be comprehensive, just clear.)
 
 C<$var1, $var2, $var3> -- why arrays are useful
 
-=head3 Hashes
+=head3 Hashes *
 
 Insertion order is appropriate.  So is stringification.
 
