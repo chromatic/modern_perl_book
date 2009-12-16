@@ -1,4 +1,15 @@
+=head3 Modules
+
 Z<modules>
+
+X<module>
+
+A I<module> is a package contained in its own file and loadable with C<use> or
+C<require>.  A module must be valid Perl 5 code.  It must end with an
+expression which evaluates to a true value so that the Perl 5 parser knows it
+has loaded and compiled the module successfully.
+
+There are no other requirements, only strong conventions.
 
 Packages correspond to files on disk in that when you load a module with C<use>
 or C<require>'s bareword form, Perl splits the package name on double-colons
@@ -40,21 +51,175 @@ directory in C<@INC>.
 
 There is I<no> technical requirement that the file at that location contain any
 C<package> declaration, let alone a C<package> declaration matching the name of
-the file.  Maintenance concerns highly recommend that you do so, however.
+the file.  Maintenance concerns highly recommend that convention, however.
 
 =end sidebar
 
-=for author
+=head4 Using and Importing
 
-Remove some ugly from the next paragraph.
+X<use>
+X<keywords; use>
+X<import()>
 
-=end for
+When you load a module with the C<use> keyword, Perl loads it from disk, then
+calls its C<import()> method, passing any arguments you provided to the C<use>
+keyword.  This occurs at compilation time:
 
-Beware that some filesystems ignore case.  You may save a file as
-F<StrangeMonkey.pm> and load it successfully with C<use Strangemonkey;>, but
-the typo will cause problems when calling C<import()> or checking the version
-of the module and it may prevent your code from working on other platforms or
-on filesystems which preserve the case of file and directory names.
+=begin programlisting
+
+    use strict;                  # calls strict->import()
+    use CGI ':standard';         # calls CGI->import( ':standard' )
+    use feature qw( say switch ) # calls feature->import( qw( say switch ) )
+
+=end programlisting
+
+You do not have to provide an C<import()> method, and you may use it to do
+anything you wish, but the standard API expectation is that it takes a list of
+arguments of symbols (usually functions) to make available in the calling
+namespace.  This is not a strong requirement; pragmas such as C<strict> use any arguments to change their behavior instead of exporting symbols.
+
+X<no>
+X<unimporting>
+
+The C<no> keyword calls a module's C<unimport()> method, if it exists, passing
+any arguments.  While it's possible to remove exported symbols, it's more
+common to disable specific features of pragmas and other modules which
+introduce new behaviors through C<import()>:
+
+=begin programlisting
+
+    use strict;
+
+    # no symbolic references, variable declaration required, no barewords
+    ...
+
+    {
+        no strict 'refs';
+
+        # symbolic references allowed
+        # variable declaration still required; barewords prohibited
+    }
+
+=end programlisting
+
+Like C<use> and C<import()>, C<no> calls C<unimport()> during compilation time.
+Effectively:
+
+=begin programlisting
+
+    use Module::Name qw( list of arguments );
+
+    # ... is the same as:
+
+    BEGIN
+    {
+        require 'Module/Name.pm';
+        Module::Name->import( qw( list of arguments ) );
+    }
+
+    # ... and:
+
+    no Module::Name qw( list of arguments );
+
+    # ... is the same as:
+
+    BEGIN
+    {
+        Module::Name->unimport( qw( list of arguments ) );
+    }
+
+=end programlisting
+
+You may call C<import()> and C<unimport()> directly yourself if you have need,
+though it makes little sense to unimport from a pragma directly as they often
+have compilation-time effects.
+
+=begin sidebar
+
+If C<import()> or C<unimport()> does not exist in the module, Perl will not
+give an error message.  They are truly optional.
+
+=end sidebar
+
+X<modules; case-sensitivity>
+X<importing; case-sensitivity>
+X<namespaces; case-sensitivity>
+X<case-sensitivity>
+
+Perl 5 is case-sensitive, even if the underlying filesystem is not.  In other
+words, while Perl knows the difference between C<strict> and C<Strict>, your
+combination of operating system and file system may not.  If you were to write
+C<use Strict;>, a case-sensitive filesystem would not find F<strict.pm>.  A
+case-insensitive filesystem would find F<Strict.pm>.  However, when Perl tries
+to call C<< Strict->import() >> on the loaded module, nothing will happen
+because the package name is C<strict>.
+
+=head4 Exporting
+
+X<exporting>
+
+A module can make certain global symbols available to other packages through a
+process known as I<exporting>.  This is the flip side of passing arguments to
+C<import()> through a C<use> statement.
+
+The standard way of exporting subroutines or variables to other modules is
+through the core module C<Exporter>.  C<Exporter> relies on the presence of
+package global variables--C<@EXPORT_OK> in particular--which contain a list of
+symbols to export when requested.
+
+Consider a C<StrangeMonkey::Utilities> module which provides several standalone
+functions usable throughout the system:
+
+=begin programlisting
+
+    package StrangeMonkey::Utilities;
+
+    use Exporter 'import';
+
+    our @EXPORT_OK = qw( round_number translate screech );
+
+    ...
+
+    1;
+
+=end programlisting
+
+Anyone now can use this module and, optionally, import any or all of the three
+exported functions.  You may also export variables:
+
+=begin programlisting
+
+    push @EXPORT_OK, qw( $spider $saki $squirrel );
+
+=end programlisting
+
+=begin sidebar
+
+The CPAN module C<Sub::Exporter> provides a nicer interface to export symbols
+without using package globals.  It also offers more powerful options.
+
+=end sidebar
+
+You I<can> export symbols by default by listing them in C<@EXPORT> instead of
+C<@EXPORT_OK>:
+
+=begin programlisting
+
+    our @EXPORT_OK = qw( monkey_dance monkey_sleep );
+
+=end programlisting
+
+... so that any C<use StrangeMonkey::Utilities;> will import both functions.
+Be aware that specifying symbols to import will I<not> import default symbols.
+As well, you can load a module without importing any symbols by providing an
+explicit empty list:
+
+=begin programlisting
+
+    # make the module available, but import() nothing
+    use StrangeMonkey::Utilities ();
+
+=end programlisting
 
 =for author
 
@@ -63,12 +228,6 @@ differences between packages and modules
     - installability
     - automated testing
     - dependencies tracked
-
-exporting
-    - Exporter
-    - import()
-    - BEGIN
-    - circular imports
 
 package design
     - API design
