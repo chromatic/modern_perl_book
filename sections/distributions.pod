@@ -1,0 +1,57 @@
+=head3 Distributions
+
+Z<distributions>
+
+X<distribution>
+
+A I<distribution> is a collection of one or more modules (L<module>) which
+forms a single redistributable, testable, and installable unit.  Think of it as
+a module with additional packaging and metadata.
+
+=head4 Attributes of a Distribution
+
+=for author
+
+META.yml
+Build.PL/Makefile.PL
+tarball
+MANIFEST
+F<lib/>
+F<blib/>
+version number/dependency tracking
+F<t/>
+
+=end for
+
+=head4 CPAN Tools for Managing Distributions
+
+=for author
+
+Module::Build
+ExtUtils::MakeMaker
+Test::More
+CPAN.pm
+Test::Reporter
+Mini::CPAN
+
+=end for
+
+=for author
+
+package design
+    - API design
+    - parsimony of symbols/exports
+    - re-entrancy/thread safety
+    - global concerns
+
+why reuse the CPAN infrastructure?
+    - good tools
+    - automation
+    - reporting
+    - dependency tracking
+    - consistent installation paths
+
+local CPAN repository?
+    - too advanced?  Nice to discuss, if there's space
+
+=end for
