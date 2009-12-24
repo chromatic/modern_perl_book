@@ -221,28 +221,33 @@ explicit empty list:
 
 =end programlisting
 
-=for author
+=head4 Organizing Code with Modules
 
-differences between packages and modules
-    - packaging
-    - installability
-    - automated testing
-    - dependencies tracked
+Perl 5 does not require you to use modules.  It does not require you to use
+packages and namespaces.  You may put all of your code in a single F<.pl> file
+(or in multiple F<.pl> files you C<do> or C<require> as necessary).  You have
+the flexibility to manage your code in the most appropriate way, given your
+development style, the formality and risk and reward of the project, your
+experience, and your comfort with Perl 5 deployment.
 
-package design
-    - API design
-    - parsimony of symbols/exports
-    - re-entrancy/thread safety
-    - global concerns
+Yet a good rule of thumb from experienced Perl 5 programmers is that a project
+with more than a couple of hundred lines of code receives multiple benefits
+from the process of creating modules.
 
-why reuse the CPAN infrastructure?
-    - good tools
-    - automation
-    - reporting
-    - dependency tracking
-    - consistent installation paths
+=over 4
 
-local CPAN repository?
-    - too advanced?  Nice to discuss, if there's space
+=item * Modules help to enforce a logical separation between distinct entities in the system.
 
-=end for
+=item * Modules provide an API boundary, whether procedural or OO.
+
+=item * Modules suggest a natural organization of source code.
+
+=item * The Perl 5 ecosystem has many tools devoted to creating, maintaining, organizing, and deploying modules and distributions.
+
+=item * Modules provide a mechanism of code reuse.
+
+=back
+
+Even if you do not use an object-oriented approach, modeling every distinct
+entity in your system (or every distinct responsibility) with its own module
+keeps related code together and separate code apart.
