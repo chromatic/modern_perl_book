@@ -153,7 +153,10 @@ external interface.
 
 =end sidebar
 
-=head3 Inheritance and Method Lookup
+=head3 Method Lookup and Inheritance
+
+X<method dispatch>
+X<objects; methods>
 
 Besides instance data, the other part of objects is method dispatch.  Given an
 object (a blessed reference), a method call of the form:
@@ -174,17 +177,136 @@ If the C<Player> class inherits from another class, Perl looks in the parent
 class (and so on and so on) until it finds a C<number> method.  If one exists,
 Perl calls it with C<$joel> as an invocant.
 
+X<@ISA>
+X<variables; @ISA>
+
+In the absence of Moose's metamodel, classes store information about the
+parents from which they inherit in a package global variable named C<@ISA>.
+The method dispatcher looks in a class's C<@ISA> to find the names of parent
+classes in which to search for the appropriate method.  Thus, an
+C<InjuredPlayer> class might contain C<Player> in its C<@ISA>.  You could write
+this relationship as:
+
+=begin programlisting
+
+    package InjuredPlayer;
+
+    @InjuredPlayer::ISA = 'Player';
+
+=end programlisting
+
+X<parent>
+X<pragmas; parent>
+
+... and many existing Perl 5 projects do this.  It's easier and simpler to use
+the C<parent> pragma instead:
+
+=begin programlisting
+
+    package InjuredPlayer;
+
+    use parent 'Player';
+
+=end programlisting
+
+X<base>
+X<pragmas; base>
+
+=begin sidebar
+
+You may also see the C<base> pragma.  Perl 5.10 added C<parent> to supersede
+C<base>; prefer C<base> in new code where you cannot use Moose.
+
+=end sidebar
+
+X<multiple inheritance>
+X<objects; inheritance>
+
+You may inherit from multiple parent classes:
+
+=begin programlisting
+
+    package InjuredPlayer;
+
+    use parent qw( Player Hospital::Patient );
+
+=end programlisting
+
+Perl 5 has traditionally preferred a depth-first search of parents when
+resolving method dispatch.  That is to say, if C<InjuredPlayer> inherits from
+both C<Player> and C<Hospital::Patient>, a method call on an C<InjuredPlayer>
+instance would look first in C<InjuredPlayer>, then C<Player>, then any of
+C<Player>'s parents before looking in C<Hospital::Patient>.
+
+X<mro>
+X<pragmas; mro>
+
+Perl 5.10 added a pragma called C<mro> which allows you to use a different
+method resolution scheme called C3.  While the specific details can get complex
+in the case of complex multiple inheritance hierarchies, the important
+difference is that method resolution will visit all children of a parent before
+visiting the parent.
+
+While other, better techniques often allow you to avoid multiple inheritance
+(sich as L<roles> and Moose method modifiers), the C<mro> pragma can help avoid
+surprising behavior with method dispatch.  Enable it in your class with:
+
+=begin programlisting
+
+    package InjuredPlayer;
+
+    use mro 'c3';
+
+=end programlisting
+
 =for author
 
-method lookup
-    - @ISA, base, parent
-    - AUTOLOAD implications
+Of course, this may be too much detail anyway, and C<mro> uses lexical scoping, and... oh goodness, please just use Moose already.
 
-strategies for not going crazy
-    - use Moose, Any::Moose
-    - provide accessors
-        - closure accessor generation
-    - fragile subclassing problem
-    - Class::Accessor
+=end for
+
+=head4 AUTOLOAD
+
+X<AUTOLOAD>
+X<objects; AUTOLOAD>
+X<methods; AUTOLOAD>
+
+If there is no applicable method in the invocant's class or any of its
+superclasses, Perl 5 will next look for an C<AUTOLOAD> function in every class
+following the method resolution order.  If it finds one, it will invoke that to
+provide or decline the method creation.
+
+As you might expect, this can get quite complex in the face of multiple
+inheritance and multiple potential C<AUTOLOAD> targets.
+
+=head4 Strategies for Coping with Blessed References
+
+Avoid C<AUTOLOAD> where possible.  If you I<must> use it, use forward
+declarations of your subs (L<forward_declaration>) to help Perl know which
+C<AUTOLOAD> will provide the method implementation.
+
+Use accessor methods rather than accessing instance data directly through the
+reference.  This applies even within the bodies of methods within the class
+itself.  Generating these yourself can be tedious; consider at least using a
+module such as C<Class::Accessor> to alleviate the boilerplate.
+
+Expect that someone, somewhere will eventually need to subclass (or delegate to
+or reimplement the interface of) your classes.  Make it easier for them by not
+assuming details of the internals of your code, by using the two-argument form
+of C<bless>, and by breaking your classes into the smallest responsible units
+of code.
+
+Do not mix functions and methods in the same class.
+
+Use a single F<.pm> file for each class, unless the class is a small,
+self-contained helper only used from a single place.
+
+Consider using Moose and C<Any::Moose> instead of bare-bones Perl 5 OO; they
+can interact with vanilla classes and objects with ease, the alleviate almost
+all of the tedium, and they provide more and better features.
+
+=for author
+
+SUPER?  The SUPER problem?
 
 =end for
