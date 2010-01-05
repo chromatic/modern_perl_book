@@ -1,23 +1,180 @@
+=head3 Blessed References
+
 Z<blessed_references>
 
+Perl 5's object system is deliberately minimal.  Three simple rules combine to
+form the simple--though effective--basic object system:
+
+=over 4
+
+=item * A class is a package.
+
+=item * A method is a subroutine.
+
+=item * A (blessed) reference is an object.
+
+=back
+
+X<bless>
+X<operators; bless>
+
+Only the third rule introduces something not yet explained.  The C<bless>
+keyword associates the name of a class with a reference, such that any method
+invocation performed on that reference uses the associated class for
+resolution.  That sounds more complicated than it is.
+
+=begin sidebar
+
+Though these rules explain Perl 5's underlying object system, they are somewhat
+more minimal in practice than may be practical, especially for larger projects.
+In particular, they offer few facilities for metaprogramming (using APIs to
+manipulate the program itself).
+
+Moose (L<moose>) is a better choice for serious, modern Perl programs larger
+than a couple of hundred lines, but you will likely encounter bare-bones Perl 5
+OO in existing code.  You may even have to write your own.
+
+=end sidebar
+
+X<constructor>
+X<OO; constructor>
+
+X<class method>
+X<methods; class>
+
+The default Perl 5 object constructor is a method which creates and blesses a
+reference.  By convention, constructors have the name C<new()>, but this is not
+a requirement.  By convention, constructors are also I<class methods>; in Perl
+5 terms, this means that their invocants are strings containing the name of the
+class:
+
+=begin programlisting
+
+    sub new
+    {
+        my $class = shift;
+        bless {}, $class;
+    }
+
+=end programlisting
+
+C<bless> takes two arguments, the reference to which to associate the name of a
+class and the name of a class.  The class name does not have to exist, and you
+may use C<bless> outside of a constructor or a class--though abstraction
+recommends the use of the method.
+
+This constructor receives the class name as a parameter, rather than
+hard-coding a particular class name.  This is by design; reusing this method
+through inheritance (or delegation or exporting) is possible precisely because
+of this parametric behavior.
+
+The most common type of reference to bless is a hash reference, but you can
+bless any type of reference:
+
+=begin programlisting
+
+    my $array_obj  = bless [], $class;
+    my $scalar_obj = bless \$scalar, $class;
+    my $sub_obj    = bless \&some_sub, $class;
+
+=end programlisting
+
+X<instance data>
+X<OO; instance data>
+
+The type of reference blessed makes no difference when invoking methods on the
+object.  It only governs how the object stores I<instance data>--the object's
+own information.
+
+Where classes built with Moose define their own object attributes
+declaratively, Perl 5's default OO is more lax.  An class representing
+basketball players which stores jersey number and position might use a
+constructor like:
+
+=begin programlisting
+
+    package Player;
+
+    sub new
+    {
+        my ($class, %attrs) = @_;
+
+        bless \%attrs, $class;
+    }
+
+=end programlisting
+
+... and create players with:
+
+=begin programlisting
+
+    my $joel = Player->new(
+        number   => 10,
+        position => 'center',
+    );
+
+    my $jerryd = Player->new(
+        number   => 4,
+        position => 'guard',
+    );
+
+=end programlisting
+
+Within the body of the class, methods can access hash elements directly:
+
+=begin programlisting
+
+    sub format
+    {
+        my $self = shift;
+        return '#' . $self->{number} . ' plays ' . $self->{position};
+    }
+
+=end programlisting
+
+Admittedly, so can any code outside of the class.  This is an encapsulation
+violation, so it's safer to provide accessor methods:
+
+=begin programlisting
+
+    sub number   { return shift->{number}   }
+    sub position { return shift->{position} }
+
+=end programlisting
+
+... though you can see how this boilerplate code makes Moose much more
+attractive.
+
+=begin sidebar
+
+Accessing instance data directly makes polymorphism and genericity much more
+difficult; objects must conform to the same internal structure, rather than an
+external interface.
+
+=end sidebar
+
+=head3 Inheritance and Method Lookup
+
+Besides instance data, the other part of objects is method dispatch.  Given an
+object (a blessed reference), a method call of the form:
+
+=begin programlisting
+
+    my $number = $joel->number();
+
+=end programlisting
+
+... looks up the name of the class associated with the blessed reference
+C<$joel>.  In this case, the class is C<Player>.  Next, Perl looks for a
+function named C<number> in the C<Player> package.
+
+Inheritance--method inheritance--happens now.
+
+If the C<Player> class inherits from another class, Perl looks in the parent
+class (and so on and so on) until it finds a C<number> method.  If one exists,
+Perl calls it with C<$joel> as an invocant.
+
 =for author
-
-warning about legacy projects
-    - must be somewhat careful here
-
-bare-bones objects
-    - package
-    - reference
-    - blessing
-
-using bless
-    - with hashes
-    - with arrays
-    - with scalars
-    - with subroutines
-
-instance data
-    - with various data types
 
 method lookup
     - @ISA, base, parent
