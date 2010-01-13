@@ -401,9 +401,9 @@ You can almost always avoid them.
 
 You only need to know a few; localize the rest.
 
-=head3 Missing Defaults
+=head3 Missing Defaults *
 
-No C<strict>, C<warnings> by default.  Sigh.  What else?
+No C<strict>, C<warnings> by default.  Also C<autodie> and C<IO::Handle>.
 
 =head3 Blessed Hashes
 
