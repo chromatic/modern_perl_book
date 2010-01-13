@@ -1,0 +1,35 @@
+Z<universal>
+
+=begin programlisting
+
+the UNIVERSAL package
+
+parent of all other packages/objects
+
+implicit methods
+    - VERSION
+    - import()
+    - unimport()
+
+useful methods
+    - can
+        - use for methods
+        - coderef returned
+        - also usable on packages
+    - isa
+        - inheritance only
+    - DOES()
+        - roles/allomorphism
+        - falls back on inheritance
+
+When to override?
+    - AUTOLOAD/can()
+    - roles/DOES
+    - mock objects/isa()
+
+Enhancements
+    - UNIVERSAL::ref (good for overloading ref())
+    - UNIVERSAL::can (help catch abuses of can() as function)
+    - UNIVERSAL::isa (help catch abuses of isa() as function)
+
+=end programlisting

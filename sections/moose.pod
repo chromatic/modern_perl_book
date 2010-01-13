@@ -1,0 +1,47 @@
+Z<moose>
+
+=for author
+
+installation (wish I didn't have to, but....)
+
+differences between Moose and core OO
+    - MOP (avoid too much detail)
+    - defaults (more handled for you)
+    - slightly better syntax
+
+OO basics
+    - classes
+        - declaring
+        - using
+    - objects
+        - creating
+        - managing
+    - attributes
+        - creating
+        - accessing
+    - methods
+        - declaring
+        - using
+    - polymorphism
+        - understanding
+        - exploiting
+
+Advanced OO
+    - single responsibility
+    - DRY
+    - Liskov
+    - encapsulation
+    - immutability
+    - roles
+        - declaring
+        - using
+    - inheritance
+        - necessary evil
+    - method modifiers
+        - maybe?
+
+syntax
+    - MooseX::Declare
+    - much improved
+
+=end for

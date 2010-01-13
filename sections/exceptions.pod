@@ -1,0 +1,42 @@
+Z<exceptions>
+
+=for author
+
+explaining exceptions
+    - alternate control flow
+    - propagates outward through calling scope (dynamic scope)
+    - not resumable
+    - signals an exceptional condition that needs special handling
+
+eval BLOCK
+    - introduces a new scope
+    - handles all exceptions caught in that dynamic scope
+
+built-in exceptions
+    - emulate with autodie
+    - mostly (runtime) syntax errors
+    - sometimes indicate bad or unexpected data
+        - method call on non-invocant
+
+die
+    - you've seen this with open(...) or die...
+    - die STRING
+    - die OBJECT
+
+$@
+    - gotcha: scope cleanup may unset $@
+    - localize
+
+Try::Tiny
+    - improved correctness
+    - slightly better syntax
+    - improved correctness
+
+Exception::Class
+    - a hierarchy of exceptions
+    - easy to combine with Try::Tiny
+    - smart match for selection
+    - more information; better options
+    - sadly underused
+
+=end for

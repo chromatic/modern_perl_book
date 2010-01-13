@@ -1,0 +1,39 @@
+Z<coercion>
+
+=for author
+
+explanation
+    - treating one data type as another
+
+booleanification
+    - what's boolean true and false?
+
+stringification
+    - default approach
+
+numification
+    - what looks like a number
+    - Scalar::Util::looks_like_number()
+
+referenceification
+    - need a better description
+    - disallowed by strict 'refs'
+
+possible:
+    - globs and their slots
+    - though that's pretty advanced
+
+caching
+    - SV behavior
+
+DualVars (?)
+
+recognizing operator type contexts
+    - stringy ops
+    - numeric ops
+    - boolean operations
+    - perlop (logical, stringwise, numeric)
+
+
+=end for
+

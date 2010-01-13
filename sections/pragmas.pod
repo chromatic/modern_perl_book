@@ -1,0 +1,34 @@
+Z<pragmas>
+
+=for author
+
+L<modules>.
+
+callout to lexical scoping
+    - static, compile-time effects
+    - visibility just like that of C<my> declarations
+
+using pragmas
+    - C<strict> is a good example, C<integer>, C<utf8>
+    - C<use>
+    - C<no>
+    - no simple rule of thumb on what I<makes> a pragma
+    - loose convention, somewhat enforced by naming
+    - generally it's the static scope....
+
+useful pragmas
+    - strict
+    - warnings
+    - utf8
+    - autodie
+    - mro
+    - perl5i
+    - constant
+    - vars
+
+writing lexically scoped pragmas
+    - too advanced?
+    - see perlpragma
+    - good uses
+
+=end for
