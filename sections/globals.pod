@@ -1,0 +1,22 @@
+=head3 Global Variables
+
+Z<global_variables>
+
+=for author
+
+useful global variables
+    - $/
+    - $.
+    - @ARGV
+    - $!
+    - $"
+    - %+
+    - $@
+    - $0
+    - $$
+
+localization strategies
+English module
+alternatives
+
+=end for

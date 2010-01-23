@@ -1,0 +1,32 @@
+=head3 AUTOLOAD
+
+Z<autoload>
+
+=for author
+
+Method dispatch
+    - only function dispatch within the same package
+
+necessary features
+    - $AUTOLOAD pseudo-global
+    - remove package name
+
+options
+    - handle directly
+    - generate code
+    - install into symbol table
+    - goto &$sub idiom
+
+potential traps
+    - DESTROY
+    - can()
+    - inherited methods and AUTOLOAD
+        - that gets a bit tricky
+        - warning message
+    - speed/complexity issues
+
+alternatives
+    - Moose
+    - autosplit (not that useful)
+
+=end for

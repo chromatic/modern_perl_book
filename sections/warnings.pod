@@ -1,0 +1,13 @@
+=head3 Handling Warnings
+
+Z<handling_warnings>
+
+=for author
+
+$^W
+no warnings
+selective warnings to disable
+    - uninitialized
+    - recursion
+
+=end for

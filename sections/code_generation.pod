@@ -1,0 +1,35 @@
+=head3 Code Generation
+
+Z<code_generation>
+
+=for author
+
+eval STRING
+    - building up code
+    - drawbacks
+        - quoting
+        - complexity
+        - some speed concerns; more memory concerns
+
+parameterization with closures
+    - the strict 'refs' trap
+    - installation into the symbol table
+    - accessors/mutators
+    - something better than Moose?
+
+necessity of C<BEGIN>
+    - use of C<subs> pragma
+    - introspection and utility of C<can>
+    - exportability
+
+AUTOLOAD (separate section?)
+
+Devel::Declare
+    - way beyond the scope of this book
+    - how much to mention?
+    - show examples of use
+        - signatures
+        - MooseX::Declare
+        - MooseX::MultiMethods
+
+=end for

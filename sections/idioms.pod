@@ -1,0 +1,44 @@
+=head2 Idioms
+
+Z<idioms>
+
+=for author
+
+$self
+
+named parameters
+    - =>
+    - slurpy hash
+
+Schwartzian transform
+    - complex sorting
+
+localization
+    - $/
+    - $"
+
+make modules testable
+    - caller()
+
+handling main()
+    - avoid inadvertent closures
+
+use of state
+    - avoid lexical and postfix if
+
+postfix checks for parameter validation
+
+tailcall
+    - goto &$ref
+
+unary (and other) coercions
+    - 0+
+    - !!
+    - ~~
+    - '0 but ...'
+    - unary minus
+
+assign and substitute
+    - (my $foo = $bar) =~ /.../
+
+=end for
