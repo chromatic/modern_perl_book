@@ -1,4 +1,158 @@
+=head2 Object Oriented Perl 5
+
 Z<moose>
+
+Perl 5 has an object system, though it's minimal.  It's very flexible--you can
+build almost any other object system you want on top of it--but it provides
+little assistance for performing the most common tasks simply and easily.
+
+X<moose>
+
+Moose is a more complete object system for Perl 5.  It builds on the existing
+Perl 5 system but provides simpler defaults, better integration, and advanced
+features from several other languages, including Smalltalk, Common Lisp, and
+Perl 6.  It's still worth learning the default Perl 5 object system, if only to
+write very simple programs where Moose is inappropriate or to maintain legacy
+code, but Moose is currently the best way to write object-oriented code in Perl
+5 today.
+
+X<object orientation>
+X<object oriented programming>
+X<OO>
+X<OOP>
+X<objects>
+X<classes>
+
+I<Object orientation>, or I<object oriented programming>, is a way of managing
+programs by categorizing their components into discrete, unique entities.
+These are I<objects>.  In Moose terms, each object is an instance of a
+I<class>, which serves as a template to describe any data the object contains
+as well as its specific behaviors.
+
+This is all well and good and accurate, but theoretical.  In practice, object
+orientation is a way of classifying data and behaviors which operate on that
+data.
+
+=head3 Classes
+
+X<classes>
+X<package>
+
+A Moose class uses a package as its name; this provides a namespace which
+identifies the class uniquely and provides a place to store specific behaviors.
+Declare a class with:
+
+=begin programlisting
+
+    {
+        package Cat;
+
+        use Moose;
+    }
+
+=end programlisting
+
+=for author
+
+Classes can be anonymous, but that is an advanced feature.  See C<perldoc
+Moose::Meta::Class>.
+
+=end for
+
+=for author
+
+Handwavy.
+
+=end for
+
+X<instance>
+X<OO; instances>
+
+This C<Cat> class doesn't do anything, but Moose does all of the work of
+defining the class and making it work with the rest of Moose.  With all of this
+done, you can create objects (or I<instances> of the C<Cat> class):
+
+=begin programlisting
+
+    my $brad = Cat->new();
+    my $jack = Cat->new();
+
+=end programlisting
+
+The arrow syntax should look familiar; it's the same idea as dereferencing a
+reference.  In this case, it performs a method call.
+
+=head3 Methods
+
+X<method>
+X<invocant>
+X<dispatch>
+X<method dispatch>
+
+A I<method> is a function associated with a class.  It resembles a
+fully-qualified function call in a superficial sense, but it differs in two
+important ways.  First, a method call always has an I<invocant>.  Second, a
+method call always involves a I<dispatch> strategy.  In the case of creating
+the two C<Cat> objects, the name of the class (C<Cat>) is the invocant:
+
+=begin programlisting
+
+    my $fuzzy = B<Cat>->new();
+
+=end programlisting
+
+The dispatch strategy describes how the object system decides I<which> method
+to call.  This may seem obvious now, but object systems get much more powerful
+(and somewhat more complex) when dispatch is less obvious.
+
+A method in Moose (and Perl 5) is a function associated with a class which
+expects its invocant as the first argument.  For example, the C<Cat> class
+could have a C<meow()> method:
+
+=begin programlisting
+
+    {
+        package Cat;
+
+        use Moose;
+
+        B<sub meow>
+        B<{>
+            B<my $self = shift;>
+            B<say 'Meow!';>
+        B<}>
+    }
+
+=end programlisting
+
+Now all C<Cat> instances can wake you up in the morning because they haven't
+eaten yet:
+
+=begin programlisting
+
+    my $alarm = Cat->new();
+    $alarm->meow();
+    $alarm->meow();
+    $alarm->meow();
+
+=end programlisting
+
+X<class method>
+X<methods; class>
+
+By convention, invocants in Perl methods are lexical variables named C<$self>,
+but this is merely pervasive convention.  You may have noticed that C<$self>
+goes unused in this implementation of C<meow()>, so the actual invocant itself
+is irrelevant once dispatch has found this method.  That's correct.  Like
+C<new()> (itself a method), you may invoke C<meow()> with the name of the class
+as an invocant.  This is a I<class method>:
+
+=begin programlisting
+
+    Cat->meow() for 1 .. 3;
+
+=end programlisting
+
 
 =for author
 
@@ -10,18 +164,11 @@ differences between Moose and core OO
     - slightly better syntax
 
 OO basics
-    - classes
-        - declaring
-        - using
     - objects
-        - creating
         - managing
     - attributes
         - creating
         - accessing
-    - methods
-        - declaring
-        - using
     - polymorphism
         - understanding
         - exploiting
