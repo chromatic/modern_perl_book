@@ -143,9 +143,9 @@ X<methods; class>
 By convention, invocants in Perl methods are lexical variables named C<$self>,
 but this is merely pervasive convention.  You may have noticed that C<$self>
 goes unused in this implementation of C<meow()>, so the actual invocant itself
-is irrelevant once dispatch has found this method.  That's correct.  Like
-C<new()> (itself a method), you may invoke C<meow()> with the name of the class
-as an invocant.  This is a I<class method>:
+is irrelevant once dispatch has found this method.  Like C<new()> (itself a
+method), you may invoke C<meow()> with the name of the class as an invocant.
+This is a I<class method>:
 
 =begin programlisting
 
@@ -153,6 +153,278 @@ as an invocant.  This is a I<class method>:
 
 =end programlisting
 
+The default constructor (C<new()>) is also a class method.
+
+=head3 Attributes
+
+X<attributes (objects)>
+X<objects; attributes>
+X<instance data>
+X<state>
+X<objects; state>
+
+Every object in Perl 5 is unique.  That's not obvious from the features
+discussed so far, which demonstrate no I<apparent> advantages from using
+objects and their methods instead of class methods.  Fortunately, objects can
+contain I<attributes>, or private data associated with each object.  You may
+also hear this described as I<instance data> or I<state>.
+
+X<attributes; typed>
+X<attributes; ro>
+X<attributes; read only>
+
+To define object attributes, describe them as part of the class:
+
+=begin programlisting
+
+    {
+        package Cat;
+
+        use Moose;
+
+        B<< has 'name', is => 'ro', isa => 'Str'; >>
+    }
+
+=end programlisting
+
+In English, that line of code means "C<Cat> objects have a C<name> attribute.
+It's readable but not writeable, and it's a string."  That single line of code
+creates an accessor method (C<name()>) and allows you to pass a C<name>
+parameter to the constructor:
+
+=begin programlisting
+
+    use Cat;
+
+    for my $name (qw( Tuxie Petunia Daisy ))
+    {
+        my $cat = Cat->new( name => $name );
+        say "Created a cat for ", $cat->name();
+    }
+
+=end programlisting
+
+X<attributes; untyped>
+
+Attributes do not I<need> to have types, in which case Moose will skip all of
+the verification and validation for you:
+
+=begin programlisting
+
+    {
+        package Cat;
+
+        use Moose;
+
+        has 'name', is => 'ro', isa => 'Str';
+        B<< has 'age',  is => 'ro';>>
+    }
+
+    my $invalid = Cat->new( name => 'bizarre', age => 'purple' );
+
+=end programlisting
+
+This can be more flexible, but it can also lead to strange errors if someone
+tries to provide invalid data for an attribute.
+
+X<attributes; rw>
+X<attributes; read-write>
+
+If you mark an attribute as readable I<and> writable (with C<< is => rw >>),
+Moose will create a mutator method you can use to change the value of that
+attribute:
+
+=begin programlisting
+
+    {
+        package Cat;
+
+        use Moose;
+
+        has 'name', is => 'ro', isa => 'Str';
+        has 'age',  is => 'ro', isa => 'Int';
+        B<< has 'diet', is => 'rw'; >>
+    }
+
+    my $fat = Cat->new( name => 'Fatty', age => 8, diet => 'Sea Treats' );
+    say $fat->name(), ' eats ', $fat->diet();
+
+    B<< $fat->diet( 'Low Sodium Kitty Lo Mein' ); >>
+    say $fat->name(), ' now eats ', $fat->diet();
+
+=end programlisting
+
+Trying to use a C<ro> accessor as a mutator will throw an exception:
+
+=begin screen
+
+Cannot assign a value to a read-only accessor at ....
+
+=end screen
+
+=begin sidebar
+
+When should you use C<ro> and when C<rw>?  It's a matter of design,
+convenience, and purity.  One school of thought suggests making all instance
+data C<ro> and passing all relevant data into the constructor.  In the C<Cat>
+example, C<age()> might still be an accessor, but the constructor could take
+the I<year> of the cat's birth and calculate the age itself based on the
+current year, rather than relying on someone to update the age of all cats
+manually.
+
+This approach helps to consolidate any and all validation code in the same
+place and helps to ensure that all created objects have valid data.  These are
+design goals worth considering, though Moose does not enforce any particular
+philosophy in this area.
+
+=end sidebar
+
+Now that individual objects can have their own instance data, the value of
+object orientation may be more obvious.  An object is a bookmark of a sort for
+the data it contains as well as the behavior appropriate to that data.  Think
+of an object as a collection of named data and behaviors.  A class is the
+description of the data and behaviors that instances of that class possess.
+
+=head3 Encapsulation
+
+X<encapsulation>
+
+Moose allows you to declare I<which> attributes class instances possess as well
+as how to treat those attributes.  The examples shown so far do not describe
+I<how> to store those instances.  This information is available if you really
+need it, but the declarative approach can actually improve your programs.  In
+this way, Moose recommends the use of I<encapsulation>, or hiding the internal
+details of an object from external uses of that object.
+
+Consider a change to the age of a C<Cat>; instead of requesting that directly
+from the constructor, calculate the age of a C<Cat> based on the year of its
+birth:
+
+=begin programlisting
+
+    package Cat;
+
+    use Moose;
+
+    has 'name',        is => 'ro', isa => 'Str';
+    has 'diet',        is => 'rw';
+    B<< has 'birth_year',  is => 'ro', isa => 'Int'; >>
+
+    B<sub age>
+    B<{>
+        B<my $self = shift;>
+        B<my $year = (localtime)[5] + 1900;>
+
+        B<return $year - $self->birth_year();>
+    B<}>
+
+=end programlisting
+
+While the syntax for I<creating> C<Cat> objects has changed, the syntax for
+I<using> C<Cat> objects has not.  The C<age()> method does the same thing it
+has always done, at least as far as all code outside of the C<Cat> class
+understands.  I<How> it does that has changed, but that is a detail internal to
+the C<Cat> class--encapsulated within that class itself.
+
+=begin sidebar
+
+The old syntax for I<creating> C<Cat> objects could remain in place; customize
+the generated C<Cat> constructor to allow passing an C<age> parameter and
+calculate C<birth_year> appropriately from that.  See C<perldoc
+Moose::Manual::Attributes>.
+
+=end sidebar
+
+X<attributes; default values>
+
+This new approach to calculating C<Cat> ages has another advantage; you can use
+I<default attribute values> to reduce the code necessary to create a C<Cat>
+object:
+
+=begin programlisting
+
+    package Cat;
+
+    use Moose;
+
+    has 'name',        is => 'ro', isa => 'Str';
+    has 'diet',        is => 'rw', isa => 'Str';
+    B<< has 'birth_year',  is => 'ro', isa => 'Int', >>
+                       B<< default => (localtime)[5] + 1900; >>
+
+=end programlisting
+
+The C<default> keyword on an attribute takes a single scalar value to use as
+the default value for that attribute when constructing a new object.  If the
+constructor does not receive an appropriate value for that attribute, the
+object gets that default value instead.  Now you can create a kitten:
+
+=begin programlisting
+
+    my $kitten = Cat->new( name => 'Bitey' );
+
+=end programlisting
+
+... and that kitten will have an age of C<0> until next year.
+
+=head4 Polymorphism
+
+A program which deals with one type of data and one type of behavior on that
+data benefits little from the use of objects.  A well-designed object-oriented
+program should be capable of managing the details of many types of data and
+many types of behavior for those types of data.  If designing classes helps
+encapsulate specific details of objects into a single place (and, if done well,
+this happens), then a curious thing happens for the rest of the program: it has
+the opportunity to become I<less> specific.
+
+In other words, moving the specifics of the details of what the program knows
+about individual C<Cat>s (the attributes) and what the program knows that
+C<Cat>s can do (the methods) into the C<Cat> class means that code that deals
+with C<Cat> instances doesn't have to worry about those details in as much
+detail as the C<Cat> class itself does.
+
+This is clearer with an example.  Consider this function, which takes an object
+and describes it:
+
+=begin programlisting
+
+    sub show_vital_stats
+    {
+        my $object = shift;
+
+        say 'My name is ', $object->name();
+        say 'I am ',       $object->age();
+        say 'I eat ',      $object->diet();
+    }
+
+=end programlisting
+
+X<polymorphism>
+
+It's obvious (in context) that you can pass a C<Cat> object to this function
+and get sane results.  It's less obvious that you can pass other types of
+objects and get sane results.  This is an important object orientation property
+called I<polymorphism>, where you can substitute an object of one class for an
+object of another class if they provide the same external interface in the same
+way.
+
+X<genericity>
+
+That is, any object of any class which provides the C<name()>, C<age()>, and
+C<diet()> accessors will work with this function.  The function is sufficiently
+generic that any object which respects this interface is a valid parameter.
+
+=begin sidebar
+
+X<duck typing>
+
+Some languages and environments require a formal relationship between two
+classes before allowing a program to substitute instances of one class for
+another.  Perl 5 provides ways to enforce these checks, but it does not require
+them.  Its default ad-hoc system lets you treat any two instances with methods
+of the same name as equivalent enough.  Some people call this I<duck typing>.
+
+=end sidebar
 
 =for author
 
@@ -164,20 +436,13 @@ differences between Moose and core OO
     - slightly better syntax
 
 OO basics
-    - objects
-        - managing
-    - attributes
-        - creating
-        - accessing
     - polymorphism
-        - understanding
         - exploiting
 
 Advanced OO
     - single responsibility
     - DRY
     - Liskov
-    - encapsulation
     - immutability
     - roles
         - declaring
