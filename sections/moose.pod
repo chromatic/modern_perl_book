@@ -426,7 +426,182 @@ of the same name as equivalent enough.  Some people call this I<duck typing>.
 
 =end sidebar
 
+The benefit of the genericity in C<show_vital_stats()> is that the I<type> of
+the object passed in doesn't matter, nor does its I<implementation>.  All that
+matters is that it supports three methods, C<name()>, C<age()>, and C<diet()>
+which take no arguments and each return something which can concatenate in a
+string context.  Thus you may have a hundred different classes in your code,
+none of which have any obvious relationshp between each other, but if they
+conform to this expectation of behavior, they will work with this method.
+
+This is an improvement over writing specific functions to extract and display
+this information for even a fraction of those hundred classes.  Not only does
+this genericity require you to write and to maintain less code, but using a
+well-defined interface as the mechanism to access this information means that
+any or all of those hundred classes can calculate that information any way they
+like.  The details of those calculations is where it matters most: in the
+bodies of the methods in the classes themselves.
+
+Of course, the mere existence of a method called C<name()> or C<age()> does not
+by itself imply the behavior of that object.  A C<Dog> object may have an
+C<age()> which is an accessor and tells you that C<$rodney> is 8 but C<$lucky>
+is 3.  A C<Cheese> object may have an C<age()> method that lets you determine
+how long to stow C<$cheddar> so that it becomes sharp; in other words, C<age()>
+may be an accessor in one class but not in another:
+
+=begin programlisting
+
+    # how old is the cat?
+    my $years = $zeppie->age();
+
+    # store the cheese in the warehouse for six months
+    $cheese->age();
+
+=end programlisting
+
+Sometimes it's useful to know I<what> an object does.  In other words, you need to understand its type.
+
+=head3 Roles
+
+Z<roles>
+
+A I<role> is a named collection of behavior and state.  A class is like a role,
+with one important difference.  You can instantiate a class, but not a role.
+The difference is important; while a class is primarily a mechanism for
+organizing behaviors and state into a template for objects, a role is primarily
+a mechanism for organizing behaviors and state into a named collection.
+
+In short, a role is something a class does.
+
+The difference between some sort of C<Animal>--with a C<name()>, an C<age()>,
+and a preferred C<diet()>--and C<Cheese>--which can C<age()> in storage--may be
+that the C<Animal> performs a C<LivingBeing> role, while the C<Cheese> performs
+a C<Storable> role.
+
+While you I<could> check that every object passed into C<show_vital_stats()> is
+an instance of C<Animal>, you lose some genericity that way.  Instead, you
+could check that the object I<performs> the C<LivingBeing> role.
+
+The difference between those two is more apparent with an example.  First,
+define the C<LivingBeing> role:
+
+=begin programlisting
+
+    {
+        package LivingBeing;
+
+        use Moose::Role;
+
+        requires qw( name age diet );
+    }
+
+=end programlisting
+
+In other words, anything which performs this rule must supply the C<name()>,
+C<age()>, and C<diet()> methods.  This does not happen automatically; the
+C<Cat> class must explicitly mark that it performs the role:
+
+=begin programlisting
+
+    package Cat;
+
+    use Moose;
+
+    has 'name',        is => 'ro', isa => 'Str';
+    has 'diet',        is => 'rw', isa => 'Str';
+    has 'birth_year',  is => 'ro', isa => 'Int',
+                       default => (localtime)[5] + 1900;
+
+    B<with 'LivingBeing';>
+
+=end programlisting
+
+=begin sidebar
+
+The C<with> keyword used to apply roles to a class must occur I<after>
+attribute declaration so that composition can identify any generated accessor
+methods.
+
+=end sidebar
+
+X<roles; composition>
+
+That single line has two functions.  First, it tells Moose to note that the
+class (and instances of the class) perform this role.  Second, it composes the
+role into the class.  This process checks that the class I<somehow> performs
+all of the required methods and provides all of the required attributes and
+ensures that no collisions are present.
+
+The C<Cat> class provides C<name()> and C<diet()> methods as accessors to named
+attributes.  It also declares its own C<age()> method.
+
+Now all C<Cat> instances will return true when queried if they provide the
+C<LivingBeing> role and C<Cheese> objects should not:
+
+=begin programlisting
+
+    say 'Alive!' if $fluffy->does('LivingBeing');
+    say 'Moldy!' if $cheese->does('LivingBeing');
+
+=end programlisting
+
+This design approach may seem like extra bookkeeping, but it separates the
+capabilities of classes and objects from the implementation of those classes
+and objects.  The special behavior of the C<Cat> class, where it stores the
+birth year of the animal and calculates the age directly, could itself be a
+role:
+
+=begin programlisting
+
+    {
+        package CalculateAgeFromBirthYear;
+
+        has 'birth_year', is => 'ro', isa => 'Int',
+                          default => (localtime)[5] + 1900;
+
+        sub age
+        {
+            my $self = shift;
+            my $year = (localtime)[5] + 1900;
+
+            return $year - $self->birth_year();
+        }
+    }
+
+=end programlisting
+
+Moving this code out of the C<Cat> class into a separate role makes it
+available to other classes which want to perform the
+C<CalculateAgeFromBirthYear> role.  Now C<Cat> can perform both roles:
+
+=begin programlisting
+
+    package Cat;
+
+    use Moose;
+
+    has 'name', is => 'ro', isa => 'Str';
+    has 'diet', is => 'rw';
+
+    B<with 'LivingBeing', 'CalculateAgeFromBirthYear';>
+
+=end programlisting
+
+The implementation of the C<age()> method supplied by the
+C<CalculateAgeFromBirthYear> satisfies the requirement of the C<LivingBeing>
+role, and the composition succeeds.  Note that checking that objects perform
+the C<LivingBeing> role remains unchanged, regardless of I<how> objects perform
+this role or the source of attribute or method definitions.  A class could
+choose to provide its own C<age()> method or obtain it from another role; that
+doesn't matter.  All that matters is that it contains one.
+
 =for author
+
+More OO
+    - inheritance
+        - necessary evil
+    - method modifiers
+        - maybe?
 
 installation (wish I didn't have to, but....)
 
@@ -434,23 +609,6 @@ differences between Moose and core OO
     - MOP (avoid too much detail)
     - defaults (more handled for you)
     - slightly better syntax
-
-OO basics
-    - polymorphism
-        - exploiting
-
-Advanced OO
-    - single responsibility
-    - DRY
-    - Liskov
-    - immutability
-    - roles
-        - declaring
-        - using
-    - inheritance
-        - necessary evil
-    - method modifiers
-        - maybe?
 
 syntax
     - MooseX::Declare
