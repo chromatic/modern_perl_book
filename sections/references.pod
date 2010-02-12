@@ -1,19 +1,219 @@
+=head3 References
+
 Z<references>
+
+Perl usually does what you expect, even if what you expect is subtle.  Consider
+what happens when you pass values to functions:
+
+=begin programlisting
+
+    sub reverse_greeting
+    {
+        my $name = reverse shift;
+        return "Hello, $name!";
+    }
+
+    my $name = 'Chuck';
+    say reverse_greeting( $name );
+    say $name;
+
+=end programlisting
+
+You probably expect that, outside of the function, C<$name> contains C<Chuck>,
+even though the value passed into the function gets reversed into C<kcuhC>--and
+you're right.  That's exactly what happens.  The contents of the string get
+duplicated into two separate scalars.  Modifying one has no effect on the
+other.
+
+This is incredibly useful in many cases.  If you had to make explicit copies of
+every value before you did anything to them which could possibly cause changes,
+you'd go crazy writing lots of extra code.
+
+Of course, it's useful to be able to modify a value in place sometimes as well.
+If you have a hash full of data that you want to pass to a function to update
+or to delete a key/value pair, creating and returning a new hash for each
+change could be troublesome (to say nothing of inefficient).
+
+X<reference>
+
+Perl 5 provides a mechanism by which you can refer to a value without making a
+copy of that value.  Any changes made to that I<reference> will update the
+value in place, such that I<all> references to that value will see the new
+value.
+
+=head4 Scalar References
+
+X<references; operator>
+X<operators; reference>
+X<operators; \>
+X<reference operator>
+
+X<references; scalar>
+X<scalar references>
+
+The reference operator is the backslash (C<\>).  In scalar context, it creates
+a scalar which is a reference.  In list context, it creates a list of
+references.  Thus you can take a reference to C<$name> from the previous
+example:
+
+=begin programlisting
+
+    my $name     = 'Larry';
+    my $name_ref = B<\>$name;
+
+=end programlisting
+
+A reference is a first-class, built-in scalar data type in Perl 5.  It's not a
+string, an array, or a hash.  It's a scalar which refers to another first-class
+data type.
+
+X<dereference>
+X<dereferencing>
+X<references; dereferencing>
+
+To access the value to which a reference refers, you must I<dereference> the
+reference.  Dereferencing requires you to add an extra sigil for each level of
+dereferencing.  For complex references, you may require a curly-brace block to
+disambiguate portions of the expression.  For simple references, you do not:
+
+=begin programlisting
+
+    sub reverse_in_place
+    {
+        my $name_ref = shift;
+        reverse B<$$name>;
+    }
+
+    my $name = 'Blabby';
+    reverse_in_place( B<\>$name );
+    say $name;
+
+=end programlisting
+
+The double scalar sigil dereferences a scalar reference.
+
+=begin sidebar
+
+This example isn't useful in the obvious case; why not have the function return
+the modified value directly?  Yet scalar references are especially useful when
+processing I<large> scalars; copying the contents of those scalars can use a
+lot of time and memory.
+
+=end sidebar
+
+The brace form also works, though it's relatively messy in comparison:
+
+=begin programlisting
+
+    sub reverse_in_place
+    {
+        my $name_ref = shift;
+        reverse B<${ $name }>;
+    }
+
+=end programlisting
+
+If you forget to dereference a scalar reference and try to print it, you will
+see something like C<SCALAR(0x93339e8)> instead of the value.  The hexadecimal
+vale in the parentheses represents the memory address of the scalar (but don't
+expect to do anything useful with that; references are not like pointers--you
+cannot perform math operations on them).
+
+=head4 Array References
+
+X<array references>
+X<references; arrays>
+
+You can also create references to arrays, or I<array references>.  This is
+useful for several reasons:
+
+=over 4
+
+=item * To pass and return arrays from subroutines without flattening
+
+=item * To use multi-dimensional data structures
+
+=item * To avoid unnecessary copying of arrays
+
+=item * To use anonymous data structures
+
+=back
+
+X<array references; creating>
+
+Those may all seem esoteric, but they're each valuable in different situations.
+To take a reference to a declared array, use the reference operator:
+
+=begin programlisting
+
+    my @cards     = qw( K Q J 10 9 8 7 6 5 4 3 2 A );
+    my $cards_ref = \@cards;
+
+=end programlisting
+
+Now C<$cards_ref> contains a reference to the array.  Any modifications made
+through C<$cards_ref> will modify C<@cards> as well.
+
+X<array references; dereferencing>
+
+You may access the entire array as a whole with the C<@> sigil, whether to
+flatten the array into a list or count the number of elements it contains:
+
+=begin programlisting
+
+    my $card_count = B<@$cards_ref>;
+    my @card_copy  = B<@$cards_ref>;
+
+=end programlisting
+
+X<references; dereferencing arrow>
+X<< -> >>
+X<< operators; -> >>
+X<operators; deferencing arrow>
+
+You may also access individual elements by using the dereferencing arrow:
+
+=begin programlisting
+
+    my $first_card = B<< $cards_ref->[0]  >>;
+    my $last_card  = B<< $cards_ref->[-1] >>;
+
+=end programlisting
+
+The arrow is necessary to distinguish between a scalar named C<$cards_ref> and
+an array named C<@cards_ref> from which you wish to access a single element.
+
+You can also access an array slice, but for that you must use the curly-brace
+dereferencing syntax:
+
+=begin programlisting
+
+    my @high_cards = B<@{ $cards_ref }>[0 .. 2, -1];
+
+=end programlisting
+
+Strictly speaking, the curly braces are unnecessary in this case, but their
+presence along with the whitespace makes the expression easier to read.
+
+X<references; anonymous arrays>
+X<anonymous arrays>
+X<arrays; anonymous>
+
+You may also create anonymous arrays without taking a reference to a named
+array first.  Surround a list of values or expressions with square brackets:
+
+=begin programlisting
+
+    my $suits_ref = [qw( Monkeys Robots Dinosaurs Cheese )];
+
+=end programlisting
+
+All of the other array reference syntax and operations work the same.
 
 =for author
 
-scalar references
-    - creating
-    - dereferencing
-    - limitations
-
 array references
-    - creating
-        - from a named array
-        - anonymous array
-    - accessing scalars
-    - accessing the entire array
-    - array slices
+    - uses
 
 hash references
     - creating
@@ -38,5 +238,6 @@ filehandle references
     - caveats
         - IO::Handle
 
-=end for
+Lifecycle; reference count.
 
+=end for
