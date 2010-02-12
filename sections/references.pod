@@ -169,7 +169,7 @@ flatten the array into a list or count the number of elements it contains:
 X<references; dereferencing arrow>
 X<< -> >>
 X<< operators; -> >>
-X<operators; deferencing arrow>
+X<operators; dereferencing arrow>
 
 You may also access individual elements by using the dereferencing arrow:
 

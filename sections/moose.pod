@@ -431,7 +431,7 @@ the object passed in doesn't matter, nor does its I<implementation>.  All that
 matters is that it supports three methods, C<name()>, C<age()>, and C<diet()>
 which take no arguments and each return something which can concatenate in a
 string context.  Thus you may have a hundred different classes in your code,
-none of which have any obvious relationshp between each other, but if they
+none of which have any obvious relationship between each other, but if they
 conform to this expectation of behavior, they will work with this method.
 
 This is an improvement over writing specific functions to extract and display

@@ -537,7 +537,7 @@ I<zero-width negative look-ahead assertion>:
     my $safe_feline = qr/cat(?!astrophe)/;
 
 This construct, C<(?!...)>, matches the phrase C<cat> only if the phrase
-C<atastrophe> does not immediately follow.
+C<astrophe> does not immediately follow.
 
 X<regex assertions; zero-width positive look-ahead>
 X<zero-width positive look-ahead assertion>

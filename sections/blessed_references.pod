@@ -248,7 +248,7 @@ difference is that method resolution will visit all children of a parent before
 visiting the parent.
 
 While other, better techniques often allow you to avoid multiple inheritance
-(sich as L<roles> and Moose method modifiers), the C<mro> pragma can help avoid
+(such as L<roles> and Moose method modifiers), the C<mro> pragma can help avoid
 surprising behavior with method dispatch.  Enable it in your class with:
 
 =begin programlisting

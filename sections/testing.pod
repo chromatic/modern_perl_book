@@ -14,7 +14,7 @@ running tests
     - prove
     - Test::Harness
 
-comparisions:
+comparisons:
     - is
     - isa/can
     - is_deeply()

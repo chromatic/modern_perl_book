@@ -113,7 +113,7 @@ filehandles).
 
 =begin sidebar
 
-For supreme paranoia, you may disamgibuate class method calls further by
+For supreme paranoia, you may disambiguate class method calls further by
 appending C<::> to the end of class names, such as C<< CGI::->new() >>.  Very
 little code does this in practice, however.
 
@@ -128,4 +128,4 @@ X<indirect>
 
 To identify indirect calls in your code, use the CPAN module
 C<Perl::Critic::Policy::Dynamic::NoIndirect> (a plugin for C<Perl::Critic>).
-Toforbid their use at compile time, use the CPAN module C<indirect>.
+To forbid their use at compile time, use the CPAN module C<indirect>.
