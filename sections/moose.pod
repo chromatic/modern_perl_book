@@ -443,7 +443,7 @@ like.  The details of those calculations is where it matters most: in the
 bodies of the methods in the classes themselves.
 
 Of course, the mere existence of a method called C<name()> or C<age()> does not
-by itself imply the behavior of that object.  A C<Dog> object may have an
+by itself imply the behavior of that object.  A C<Cat> object may have an
 C<age()> which is an accessor and tells you that C<$rodney> is 8 but C<$lucky>
 is 3.  A C<Cheese> object may have an C<age()> method that lets you determine
 how long to stow C<$cheddar> so that it becomes sharp; in other words, C<age()>
