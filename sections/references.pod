@@ -347,19 +347,88 @@ an anonymous hash.
 
 =end sidebar
 
+=head4 Function References
+
+X<function references>
+X<references; functions>
+X<subroutine references>
+X<references; subroutines>
+X<functions; first-class>
+X<first-class functions>
+
+Perl 5 supports I<first-class functions>; you may use them as if they were any
+other data type.  You do so by the use of I<function references>.
+
+As with other data types, you may create a function reference by using the
+reference operator on the name of a function:
+
+=begin programlisting
+
+    sub bake_cake { say 'Baking a wonderful cake!' };
+
+    my $cake_ref = B<\&>bake_cake;
+
+=end programlisting
+
+X<function sigil>
+X<sigils; &>
+
+Note that you must use the I<function sigil> (C<&>) with the name of the
+subroutine.  If you leave this off, you will take a reference to whatever the
+subroutine itself returns.
+
+You may also create an anonymous function:
+
+=begin programlisting
+
+    my $pie_ref = B<sub { say 'Making a delicious pie!' }>;
+
+=end programlisting
+
+The use of the C<sub> keyword I<without> a name compiles the function as
+normal, but does not install it in the current namespace.  The only way to
+access this function is through the reference.  (This is the basis of Perl 5
+L<closures>.)
+
+You may invoke the function reference with the dereferencing arrow:
+
+=begin programlisting
+
+    $cake_ref->();
+    $pie_ref->();
+
+=end programlisting
+
+Think of the empty parentheses as performing an invocation dereferencing
+operation in the same way that square brackets perform an indexed lookup and
+curly brackets perform a hash lookup.  You may pass arguments to the function
+within the parentheses:
+
+=begin programlisting
+
+    $bake_something_ref->( 'cupcakes ');
+
+=end programlisting
+
+You may also use function references as methods with objects (L<moose>); this
+is most useful when you've already performed a method lookup:
+
+=begin programlisting
+
+    my $clean = $robot_maid->can( 'cleanup' );
+    $robot_maid->$clean( $kitchen );
+
+=end programlisting
+
+=begin sidebar
+
+You may see an alternate invocation syntax for function references which uses
+the function sigil (C<&>) instead of the dereferencing arrow.  Avoid this
+syntax; it has implications for implicit argument passing.
+
+=end sidebar
+
 =for author
-
-array references
-    - uses
-
-subroutine references
-    - creating
-        - from a named subroutine
-        - from an anonymous subroutine
-    - invoking
-        - directly
-        - with arguments
-        - as methods
 
 filehandle references
     - creating
