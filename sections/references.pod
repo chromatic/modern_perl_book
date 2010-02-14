@@ -183,6 +183,19 @@ You may also access individual elements by using the dereferencing arrow:
 The arrow is necessary to distinguish between a scalar named C<$cards_ref> and
 an array named C<@cards_ref> from which you wish to access a single element.
 
+=begin sidebar
+
+An alternate syntax is available, where you prepend another scalar sigil to the
+array reference.  This is shorter, but somewhat less readable:
+
+=begin programlisting
+
+    my $first_card = B<$$cards_ref[0]>;
+
+=end programlisting
+
+=end sidebar
+
 You can also access an array slice, but for that you must use the curly-brace
 dereferencing syntax:
 
@@ -208,29 +221,214 @@ array first.  Surround a list of values or expressions with square brackets:
 
 =end programlisting
 
-All of the other array reference syntax and operations work the same.
+All of the other array reference syntax and operations work the same.  Do note,
+however, that anonymous array references I<always> create a new reference,
+while taking a reference to a named array always refers to the I<same> array
+with regard to scoping.  That is to say:
+
+=begin programlisting
+
+    my @meals      = qw( waffles sandwiches pizza );
+    my $sunday_ref = \@meals;
+    my $monday_ref = \@meals;
+
+    push @meals, 'ice cream sundae';
+
+=end programlisting
+
+... both C<$sunday_ref> and C<$monday_ref> now contain a dessert, while:
+
+=begin programlisting
+
+    my @meals      = qw( waffles sandwiches pizza );
+    my $sunday_ref = [@meals];
+    my $monday_ref = [@meals];
+
+    push @meals, 'berry pie';
+
+=end programlisting
+
+... neither C<$sunday_ref> nor C<$monday_ref> contains a dessert.
 
 =for author
 
-array references
-    - uses
+Link to nested data structures?
 
-hash references
-    - creating
-        - from a named hash
-        - anonymous hash
-    - accessing scalar values
-    - accessing the entire hash
-    - hash slices
+=end for
 
-subroutine references
-    - creating
-        - from a named subroutine
-        - from an anonymous subroutine
-    - invoking
-        - directly
-        - with arguments
-        - as methods
+=head4 Hash References
+
+X<hash references>
+X<references; hashes>
+
+To create a I<hash reference>, use the reference operator on a named hash:
+
+=begin programlisting
+
+    my %colors = (
+        black  => 'negro',
+        blue   => 'azul',
+        gold   => 'dorado',
+        red    => 'rojo',
+        yellow => 'amarillo',
+        purple => 'morado',
+    );
+
+    my $colors_ref = B<\%>colors;
+
+=end programlisting
+
+Access the keys or values of the hash by prepending the reference with the hash
+sigil C<%>:
+
+=begin programlisting
+
+    my @english_colors = keys   B<%$colors_ref>;
+    my @spanish_colors = values B<%$colors_ref>;
+
+=end programlisting
+
+You may access individual values of the hash (to store, delete, check the
+existence of, or retrieve) by using the dereferencing arrow:
+
+=begin programlisting
+
+    sub translate_to_spanish
+    {
+        my $color = shift;
+        return B<$colors_ref->{$color}>;
+    }
+
+=end programlisting
+
+=begin sidebar
+
+As with array references, you may eschew the dereferencing arrow for a
+prepended scalar sigil: C<$$colors_ref{$dolor}>, though the arrow is often
+clearer.
+
+=end sidebar
+
+You may also use hash slices by reference:
+
+=begin programlisting
+
+    my @colors = qw( red blue green );
+    my @colores = B<@{ $colors_ref }{@colors}>;
+
+=end programlisting
+
+Note the use of curly brackets to denote a hash indexing operation and the use
+of the array sigil to denote a list operation on the reference.  There is no
+alternate syntax for this form.
+
+You may create anonymous hashes in place with curly braces:
+
+=begin programlisting
+
+    my $food_ref = B<{>
+        'birthday cake' => 'la torta de cumpleaños',
+        candy           => 'la dulces',
+        cupcake         => 'panquecitos',
+        'ice cream'     => 'el helado',
+    B<}>;
+
+=end programlisting
+
+As with anonymous arrays, anonymous hashes create a new anonymous hash on every
+execution.
+
+=begin sidebar
+
+A common novice mistake is to assign an anonymous hash to a standard hash.  If
+you have warnings enabled, you'll receive a warning about an odd number of
+elements in the hash.  Use parentheses for a named hash and curly brackets for
+an anonymous hash.
+
+=end sidebar
+
+=head4 Function References
+
+X<function references>
+X<references; functions>
+X<subroutine references>
+X<references; subroutines>
+X<functions; first-class>
+X<first-class functions>
+
+Perl 5 supports I<first-class functions>; you may use them as if they were any
+other data type.  You do so by the use of I<function references>.
+
+As with other data types, you may create a function reference by using the
+reference operator on the name of a function:
+
+=begin programlisting
+
+    sub bake_cake { say 'Baking a wonderful cake!' };
+
+    my $cake_ref = B<\&>bake_cake;
+
+=end programlisting
+
+X<function sigil>
+X<sigils; &>
+
+Note that you must use the I<function sigil> (C<&>) with the name of the
+subroutine.  If you leave this off, you will take a reference to whatever the
+subroutine itself returns.
+
+You may also create an anonymous function:
+
+=begin programlisting
+
+    my $pie_ref = B<sub { say 'Making a delicious pie!' }>;
+
+=end programlisting
+
+The use of the C<sub> keyword I<without> a name compiles the function as
+normal, but does not install it in the current namespace.  The only way to
+access this function is through the reference.  (This is the basis of Perl 5
+L<closures>.)
+
+You may invoke the function reference with the dereferencing arrow:
+
+=begin programlisting
+
+    $cake_ref->();
+    $pie_ref->();
+
+=end programlisting
+
+Think of the empty parentheses as performing an invocation dereferencing
+operation in the same way that square brackets perform an indexed lookup and
+curly brackets perform a hash lookup.  You may pass arguments to the function
+within the parentheses:
+
+=begin programlisting
+
+    $bake_something_ref->( 'cupcakes ');
+
+=end programlisting
+
+You may also use function references as methods with objects (L<moose>); this
+is most useful when you've already performed a method lookup:
+
+=begin programlisting
+
+    my $clean = $robot_maid->can( 'cleanup' );
+    $robot_maid->$clean( $kitchen );
+
+=end programlisting
+
+=begin sidebar
+
+You may see an alternate invocation syntax for function references which uses
+the function sigil (C<&>) instead of the dereferencing arrow.  Avoid this
+syntax; it has implications for implicit argument passing.
+
+=end sidebar
+
+=for author
 
 filehandle references
     - creating
