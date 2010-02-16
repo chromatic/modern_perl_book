@@ -428,14 +428,105 @@ syntax; it has implications for implicit argument passing.
 
 =end sidebar
 
-=for author
+=head4 Filehandle References
 
-filehandle references
-    - creating
-    - using
-    - caveats
-        - IO::Handle
+X<filehandle references>
+X<references; filehandles>
 
-Lifecycle; reference count.
+Filehandles are references as well--at least, internally speaking.  When you
+use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal with
+filehandle references.  Stringifying this filehandle produces something of the
+form C<GLOB(0x8bda880)>.
 
-=end for
+Internally, these filehandles have special magic attached; they're objects of
+the class C<IO::Handle>.  When you load that module, you can call methods on
+filehandles:
+
+=begin programlisting
+
+    use IO::Handle;
+    use autodie;
+
+    open my $out_fh, '>', 'output_file.txt';
+    $out_fh->say( 'Have some text!' );
+
+=end programlisting
+
+You may see old code which takes references to typeglobs, such as:
+
+=begin programlisting
+
+    my $fh = do {
+        local *FH;
+        open FH, "> $file" or die "Can't write to '$file': $!\n";
+        B<\*FH>;
+    };
+
+=end programlisting
+
+This idiom predates lexical filehandles, introduced as part of Perl 5.6.0 in
+March 2000.  You may still use the reference operator on typeglobs to take
+references to package-global filehandles, but use lexical filehandles instead
+when possible.
+
+=begin sidebar
+
+There's no good alternative to using the older form if you need a reference to
+C<STDIN>, C<STDOUT>, C<STDERR>, or C<DATA> -- but these represent global data
+anyhow.
+
+=end sidebar
+
+Besides the benefit of using lexical scope instead of package or global scope,
+lexical filehandles allow you to manage the lifespan of filehandles.  This is a
+nice feature of how Perl 5 manages memory and scopes.
+
+=head4 Reference Counts
+
+Z<reference_counts>
+
+X<lexicals; lifecycle>
+
+How does Perl know when it can safely release the memory for a variable and
+when it needs to keep it around?  How does Perl know when it's safe to close
+the file opened in this inner scope:
+
+=begin programlisting
+
+    use autodie;
+    use IO::Handle;
+
+    sub show_off_scope
+    {
+        say 'file not open';
+
+        {
+            open my $fh, '>', 'inner_scope.txt';
+            $fh->say( 'file open here' );
+        }
+
+        say 'file closed here';
+    }
+
+=end programlisting
+
+X<reference counting>
+X<references; counts>
+
+Perl 5 uses a memory management technique known as I<reference counting>.
+Every value in the program has an attached counter.  Every time you or Perl
+takes a reference to this value, Perl increases the counter.  Every time you or
+Perl cause a reference to this value to go away, Perl decreases the counter.
+When the counter reaches zero, Perl can safely recycle that value.
+
+Within the inner block in the example, there's one C<$fh>.  (Multiple lines in
+the source code refer to it, but there's only one I<reference> to it; C<$fh>
+itself.)  C<$fh> is only in scope in the block and does not get assigned to
+anyting outside of the block, so when the block ends, its reference count
+reaches zero.  The recycling of C<$fh> calls an implicit C<close()> method on
+the filehandle, and so the file gets closed.
+
+You don't have to understand the details of how all of this works.  You only
+need to understand that your actions in taking references and passing them
+around affect how Perl manages memory.  (Though see L<circular_references> for
+one caveat.)
