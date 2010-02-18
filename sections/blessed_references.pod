@@ -274,7 +274,7 @@ X<methods; AUTOLOAD>
 If there is no applicable method in the invocant's class or any of its
 superclasses, Perl 5 will next look for an C<AUTOLOAD> function in every class
 following the method resolution order.  If it finds one, it will invoke that to
-provide or decline the method creation.
+provide or decline the method creation.  See L<autoload> for more details.
 
 As you might expect, this can get quite complex in the face of multiple
 inheritance and multiple potential C<AUTOLOAD> targets.
