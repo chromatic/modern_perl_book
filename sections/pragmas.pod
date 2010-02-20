@@ -1,34 +1,137 @@
+=head3 Pragmas
+
 Z<pragmas>
+
+Perl 5's extension mechanism is modules (L<modules>).  Usually modules provide
+functions to call or define classes (L<moose>).  Some modules instead influence
+the behavior of the language itself, whether enabling or disabling errors or
+warnings or changing how code acts within a particular scope.
+
+X<pragma>
+X<modules; pragmas>
+
+A module which influences the behavior of the compiler is a I<pragma>.  By
+convention, pragmas have lower-case names to differentiate them from other
+modules.  You've heard of some before: C<strict> and C<warnings>, for example.
+
+X<pragmas; scope>
+
+A pragma works by exporting specific behavior or information into the enclosing
+static scope.  That is, the scope of a pragma is the same as the scope of a
+lexical variable.  (In a way, you can think of lexical variable declaration as
+a sort of pragma with funny syntaxN<Global variable declaration I<can> use the
+C<vars> pragma.>.)  This may be easiest to understand with an example:
+
+=begin programlisting
+
+    {
+        # $lexical is B<not> visible; strict is B<not> in effect
+        {
+            # $lexical B<is> visible; strict B<is> in effect
+            use strict;
+            my $lexical = 'available here';
+            ...
+        }
+    }
+
+=end programlisting
+
+=begin sidebar
+
+This applies to well-behaved pragmas, of course.  A sufficiently motivated Perl
+guru could implement a pragma which ignores scoping, but that would be
+unneighborly.
+
+=end sidebar
+
+Just as lexical declarations affect inner scopes, so do pragmas maintain their
+effects on inner scopes by default:
+
+=begin programlisting
+
+    # file scope
+    use strict;
+
+    {
+        # inner scope, but strict still in effect
+        my $inner = 'another lexical';
+        ...
+    }
+
+=end programlisting
+
+X<pragmas; enabling>
+X<pragmas; customizing>
+
+As you can see, enabling a pragma looks like using a module.  As with modules,
+you may specify the desired version number of the pragmaN<... though Perl 5
+currently allows you to load versions of the pragma with equal or higher
+version numbers.>, and you may pass a list of arguments to the pragma to
+control its behavior at a finer level:
+
+=begin programlisting
+
+    # require variable declaration; prohibit bareword function names
+    use strict qw( subs vars );
+
+=end programlisting
+
+X<pragmas; disabling>
+
+Within a scope you may disable all or part of a pragma with the C<no> keyword:
+
+=begin programlisting
+
+    use strict;
+
+    {
+        # get ready to manipulate the symbol table
+        no strict 'refs';
+        ...
+    }
+
+=end programlisting
+
+X<pragmas; useful>
+
+You may find several pragmas useful.  In the core:
+
+=over 4
+
+=item * the C<strict> pragma enables compiler checking of symbolic references,
+the use of barewords, and the declaration of variables
+
+=item * the C<warnings> pramga enables optional warnings for deprecated,
+unintended, and awkward behaviors that are not I<necessarily> errors but may
+produce unwanted behaviors
+
+=item * the C<utf8> pragma enables the use of the UTF-8 encoding of source code
+
+=item * the C<autodie> pragma (new in 5.10.1) enables automatic error checking
+of system calls and keywords, reducing the need for manual error checking
+
+=item * the C<constant> pragma allows you to create compile-time constant
+values (though see C<Readonly> from the CPAN for an alternative)
+
+=item * the C<vars> pragma allows you to declare package global variables, such
+as C<$VERSION> or those for exporting (L<exporting>) and manual OO
+(L<blessed_references>)
+
+=back
+
+Several useful pragmas exist on the CPAN as well.  Two worth exploring in
+detail are C<autobox>, which enables object-like behavior for Perl 5's core
+types (scalars, references, arrays, and hashes) and C<perl5i>, which combines
+and enables many experimental language extensions into a coherent whole.  These
+two pragmas may not belong yet in your production code without extensive
+testing and thoughtful consideration, but they demonstrate the power and
+utility of pragmas.
 
 =for author
 
-L<modules>.
-
-callout to lexical scoping
-    - static, compile-time effects
-    - visibility just like that of C<my> declarations
-
-using pragmas
-    - C<strict> is a good example, C<integer>, C<utf8>
-    - C<use>
-    - C<no>
-    - no simple rule of thumb on what I<makes> a pragma
-    - loose convention, somewhat enforced by naming
-    - generally it's the static scope....
-
-useful pragmas
-    - strict
-    - warnings
-    - utf8
-    - autodie
-    - mro
-    - perl5i
-    - constant
-    - vars
-
-writing lexically scoped pragmas
-    - too advanced?
-    - see perlpragma
-    - good uses
+Is this ending worthwhile?  What a downer.
 
 =end for
+
+The C<perldoc perlpragma> documentation goes into more detail about how to
+write your own pragmas.  This is a feature introduced with Perl 5.10.

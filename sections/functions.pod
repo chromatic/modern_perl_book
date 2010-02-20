@@ -445,6 +445,7 @@ Does this belong instead in the Modules chapter?
 =end for
 
 X<functions; exporting>
+Z<exporting>
 
 The core C<Exporter> module allows you to accomplish this I<exporting> behavior
 without having to understand the details of Perl 5's namespaces and symbol
