@@ -430,6 +430,8 @@ syntax; it has implications for implicit argument passing.
 
 =head4 Filehandle References
 
+Z<lexical_filehandles>
+
 X<filehandle references>
 X<references; filehandles>
 
