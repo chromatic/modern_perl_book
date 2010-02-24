@@ -188,6 +188,8 @@ Discuss destruction at end of scope unless refcount...?
 
 =head4 Dynamic Scope
 
+Z<dynamic_scope>
+
 X<dynamic scope>
 X<scope; dynamic>
 

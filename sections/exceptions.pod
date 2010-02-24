@@ -1,36 +1,201 @@
+=head3 Exceptions
+
 Z<exceptions>
 
+If everything always went exactly as intended, programming would be much
+simpler.  Yet files you expect to exist don't.  Sometimes you run out of disk
+space.  Your network connection vanishes.  The database stops accepting new
+data.
+
+Exceptional cases happen, and robust software must handle those exceptional
+conditions.  If you can recover, great!  If you can't... well, sometimes the
+best you can do is retry or at least log all of the relevant information for
+further debugging.  Perl 5's mechanism for handling exceptional conditions is
+through the use of I<exceptions>: a dynamically-scoped form of control flow
+that lets you handle errors in the most appropriate place.
+
+=head4 Throwing Exceptions
+
+Z<throwing_exceptions>
+
+Use C<die> to throw an exception.  Consider the case where you need to open a
+file for logging.  If you cannot open the file, something has gone wrong:
+
+=begin programlisting
+
+    sub open_log_file
+    {
+        my $name = shift;
+        open my $fh, '>>', $name
+            B<or die "Can't open logging file '$name': $!";
+        return $fh;
+    }
+
+=end programlisting
+
+X<die>
+X<keywords; die>
+X<exceptions; throwing>
+X<exceptions; die>
+X<$@>
+X<global variables; $@>
+X<exceptions; $@>
+
+If the C<open()> call fails, Perl will execute the C<die> command.  This
+immediately exits the current function I<without returning anything>.  Instead,
+it sets the global variable C<$@> to the argument provided to C<die>.  If the
+calling function does not explicitly handle this exception, it will return to
+its caller, and so on, until something handles the exception or the program
+exits with an error message.
+
+=begin sidebar
+
+This dynamic scoping of exception throwing and handling is the same as the
+dynamic scoping of C<local> symbols (L<dynamic_scope>).
+
+=end sidebar
+
+=head4 Catching Exceptions
+
+Z<catching_exceptions>
+
+X<exceptions; catching>
+X<keywords; eval>
+X<keywords; eval BLOCK>
+X<eval>
+X<eval; BLOCK>
+
+Uncaught exceptions eventually terminate the program.  Sometimes this is
+useful; a system administration program run from cron might throw an exception
+when the error logs have filled; this could page an administrator that
+something has gone wrong.  Yet many other exceptions should not be fatal; good
+programs can recover from them, or at least exit more cleanly.
+
+To catch an exception, use the BLOCK form of the C<eval> operator:
+
+=begin programlisting
+
+    # log file may not open
+    my $fh = eval { open_log_file( 'monkeytown.log' ) };
+
+=end programlisting
+
+As with all blocks, the BLOCK argument to C<eval> introduces a new scope.  If
+the file open succeeds, C<$fh> will contain the filehandle.  If it fails,
+C<$fh> will remain undefined, and Perl will move on to the next statement in
+the program.
+
+Note that if C<open_log_file()> called other functions which called other
+functions, and if one of those functions threw its own exception, this C<eval>
+could catch it, if nothing else did.  There is no requirement that your
+exception handlers catch only those exceptions you expect.
+
+To check which exception you've caught (or if you've caught an exception at
+all), check the value of C<$@>:
+
+=begin programlisting
+
+    # log file may not open
+    my $fh = eval { open_log_file( 'monkeytown.log' ) };
+
+    # caught exception
+    B<if ($@) { ... }>
+
+=end programlisting
+
+Of course, C<$@> is a I<global> variable.  For optimal safety, you should
+C<local>ize its value before you attempt to catch an exception:
+
+=begin programlisting
+
+    B<local $@;>
+
+    # log file may not open
+    my $fh = eval { open_log_file( 'monkeytown.log' ) };
+
+    # caught exception
+    if ($@) { ... }
+
+=end programlisting
+
+X<exceptions; rethrowing>
+
+You may check the string value of C<$@> against expected exceptions to see if
+you can handle the exception or if you should rethrow it:
+
+=begin programlisting
+
+    if (my $exception = $@)
+    {
+        die $exception unless $exception =~ /^Can't open logging file/;
+        $fh = log_to_syslog();
+    }
+
+=end programlisting
+
+=begin sidebar
+
+Copying C<$@> to C<$exception> avoids the possibility of subsequent code
+clobbering the global variable C<$@>.  It's safer to use this technique; you
+never know what else has used C<eval> BLOCK elsewhere and reset $@.
+
+=end sidebar
+
+Rethrow by passing C<$@> to C<die()> again.
+
+X<die; object>
+X<exceptions; exception objects>
+
+You may find the idea of using regular expressions against the value of C<$@>
+distasteful; you can also use an I<object> with C<die>N<You can use any
+arbitrary reference, but in practice it's usually strings and occasionally
+objects.>.
+
+The CPAN distribution C<Exception::Class> provides a good example of using
+objects as exceptions.  Consider using it in your own systems.
+
+=head4 Exception Caveats
+
+Using C<$@> correctly can be tricky; the global nature of the variable leaves
+it open to several subtle flaws:
+
+=over 4
+
+=item * UnC<local>ized uses further down the dynamic scope may reset its value
+
+=item * The destruction of any objects at scope exit from exception throwing may call C<eval> and change its value
+
+=item * It may contain an object which overrides its boolean value to return false
+
+=item * A signal handler (especially the C<DIE> signal handler) may change its value when you do not expect it
+
+=back
+
+Writing a perfectly safe and sane exception handler is difficult.  Fortunately,
+the C<Try::Tiny> distribution from the CPAN is short, easy to install, easy to
+understand, and very easy to use:
+
+=begin programlisting
+
+    use Try::Tiny;
+
+    my $fh = try   { open_log_file( 'monkeytown.log' ) }
+             catch { ... };
+
+=end programlisting
+
+The module handles all of the strange issues for you and allows you to
+concentrate on what you want to do, not handling every edge case appropriately.
+
+=head4 Built-in Exceptions
+
 =for author
-
-explaining exceptions
-    - alternate control flow
-    - propagates outward through calling scope (dynamic scope)
-    - not resumable
-    - signals an exceptional condition that needs special handling
-
-eval BLOCK
-    - introduces a new scope
-    - handles all exceptions caught in that dynamic scope
 
 built-in exceptions
     - emulate with autodie
     - mostly (runtime) syntax errors
     - sometimes indicate bad or unexpected data
         - method call on non-invocant
-
-die
-    - you've seen this with open(...) or die...
-    - die STRING
-    - die OBJECT
-
-$@
-    - gotcha: scope cleanup may unset $@
-    - localize
-
-Try::Tiny
-    - improved correctness
-    - slightly better syntax
-    - improved correctness
 
 Exception::Class
     - a hierarchy of exceptions
