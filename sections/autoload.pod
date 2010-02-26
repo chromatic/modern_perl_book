@@ -230,6 +230,8 @@ C<caller()>.
 
 =head4 Drawbacks of C<AUTOLOAD>
 
+Z<autoload_drawbacks>
+
 X<AUTOLOAD; drawbacks>
 X<UNIVERSAL::can>
 X<can()>

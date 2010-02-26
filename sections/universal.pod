@@ -1,35 +1,178 @@
+=head3 The UNIVERSAL Package
+
 Z<universal>
+
+X<UNIVERSAL>
+
+Perl 5 provides a special package which is the ancestor of all other packages
+in a very object-oriented way.  The C<UNIVERSAL> package provides a few methods
+available for all other classes and objects.
+
+=head4 The C<isa()> Method
+
+X<UNIVERSAL::isa>
+X<isa()>
+
+The C<isa()> method takes a string containing the name of a class or the name
+of a built-in type.  You can call it as a class method or an instance method on
+an object.  It returns true if the class or object is or derives from the named
+class, or if the object itself is a blessed reference to the given type.
+
+In other words, given an object C<$pepper>, a hash reference blessed into the
+C<Monkey> class (which inherits from the C<Mammal>) class:
 
 =begin programlisting
 
-the UNIVERSAL package
+    say $pepper->isa( 'Monkey'  );  # prints 1
+    say $pepper->isa( 'Mammal'  );  # prints 1
+    say $pepper->isa( 'HASH'    );  # prints 1
+    say Monkey->isa(  'Mammal'  );  # prints 1
 
-parent of all other packages/objects
-
-implicit methods
-    - VERSION
-    - import()
-    - unimport()
-
-useful methods
-    - can
-        - use for methods
-        - coderef returned
-        - also usable on packages
-    - isa
-        - inheritance only
-    - DOES()
-        - roles/allomorphism
-        - falls back on inheritance
-
-When to override?
-    - AUTOLOAD/can()
-    - roles/DOES
-    - mock objects/isa()
-
-Enhancements
-    - UNIVERSAL::ref (good for overloading ref())
-    - UNIVERSAL::can (help catch abuses of can() as function)
-    - UNIVERSAL::isa (help catch abuses of isa() as function)
+    say $pepper->isa( 'Dolphin' );  # prints 0
+    say $pepper->isa( 'ARRAY'   );  # prints 0
+    say Monkey->isa(  'HASH'    );  # prints 0
 
 =end programlisting
+
+X<SCALAR>
+X<ARRAY>
+X<HASH>
+X<REGEX>
+X<IO>
+X<CODE>
+
+Built-in types are C<SCALAR>, C<ARRAY>, C<HASH>, C<REGEX>, C<IO>, and C<CODE>.
+
+You can override C<isa()> in your own classes.  This can be useful when working
+with mock objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN,
+for example) or with code that does not use roles (L<roles>).
+
+=head4 The C<can()> Method
+
+X<UNIVERSAL::can>
+X<can()>
+
+The C<can()> method takes the string containing the name of a method (though
+see L<method_sub_equivalence> for a disclaimer).  It returns a reference to the
+function which implements that method, if it exits.  Otherwise, it returns
+false.  You may call this on a class, an object, or the name of a package.  In
+the latter case, it returns a reference to a function, not a method.
+
+In other words, given a class named C<SpiderMonkey> with a method named
+C<screech>, you can get a reference to the method with:
+
+=begin programlisting
+
+    if (my $meth = SpiderMonkey->can( 'screech' )) { ... }
+
+    if (my $meth = $sm->can( 'screech' )
+    {
+        $sm->$meth();
+    }
+
+=end programlisting
+
+Given a plugin-style architecture, you can test to see if a given package
+implements a specific function in a similar way:
+
+=begin programlisting
+
+    # a useful CPAN module
+    use UNIVERSAL::require;
+
+    die $@ unless $module->require();
+
+    if (my $register = $module->can( 'register' )
+    {
+        $register->();
+    }
+
+=end programlisting
+
+You can (and should) override C<can()> in your own code if you use
+C<AUTOLOAD()>.  See L<autoload_drawbacks> for a longer explanation.
+
+=begin sidebar
+
+There is I<one> known case where calling C<UNIVERSAL::can()> as a function and
+not a method is not incorrect: to determine whether a class exists in Perl 5.
+If C<UNIVERSAL::can( $classname, 'can' )> returns true, someone somewhere has
+defined a class of the name C<$classname>.  Alternately, you can use C<Moose>
+and its introspection to determine this.
+
+=end sidebar
+
+=head The C<VERSION()> Method
+
+X<UNIVERSAL::VERSION>
+X<VERSION()>
+
+The C<VERSION()> method is available to all packages, classes, and objects.  It
+returns the value of the C<$VERSION> variable for the appropriate package or
+class.  It takes an optional parameter, a version number.  If you provide this
+version number, the method will throw an exception if the queried C<$VERSION>
+is not equal to or greater than the parameter.
+
+Given a C<HowlerMonkey> module of version C<1.23>:
+
+=begin programlisting
+
+    say HowlerMonkey->VERSION();    # prints 1.23
+    say $hm->VERSION();             # prints 1.23
+    say $hm->VERSION( 0.0  );       # prints 1.23
+    say $hm->VERSION( 1.23 );       # prints 1.23
+    say $hm->VERSION( 2.0  );       # throws exception
+
+=end programlisting
+
+You can override C<VERSION()> in your own code, but there's little reason to do
+so.
+
+=head The C<DOES()> Method
+
+X<UNIVERSAL::DOES>
+X<DOES()>
+
+The C<DOES()> method is new in Perl 5.10.0.  It exists to support the use of
+roles (L<roles>) in programs.  You can call it on a class or an object; pass
+the name of a role, and the method will return true if the appropriate class
+somehow performs that role.  (The class may do so through inheritance, through
+delegation, through composition, through role application, or any other
+mechanism.)
+
+The default implementation of C<DOES()> falls back to C<isa()>, because
+inheritance is one mechanism by which a class may perform a role.  Thus, given
+a C<Cappuchin>:
+
+=begin programlisting
+
+    say Cappuchin->DOES( 'Monkey'       );  # prints 1
+    say $cappy->DOES(    'Monkey'       );  # prints 1
+    say Cappuchin->DOES( 'Invertebrate' );  # prints 0
+
+=end programlisting
+
+You can (and should) override C<DOES()> in your own code if you manually
+provide a role or other allomorphic behavior.  Alternately, use C<Moose> and
+don't worry about the details.
+
+=head4 Extending UNIVERSAL
+
+It's tempting to store other methods in UNIVERSAL to make it available to all
+other classes and objects in Perl 5.  Try to avoid this temptation; this global
+behavior can have subtle side effects because it is unconstrained.
+
+With that said, occasional abuse of C<UNIVERSAL> for I<debugging> purposes and
+to fix improper default behavior may be excusable.  For example, Joshua ben
+Jore's C<UNIVERSAL::ref> distribution makes the nearly-useless C<ref()>
+operator usable.  The C<UNIVERSAL::can> and C<UNIVERSAL::isa> distributions can
+help you find and eliminate old idioms which prevent good uses of polymorphism
+(though see C<Perl::Critic> for a different approach with other advantages).
+
+As mentioned earlier, C<UNIVERSAL::require> adds useful behavior to help load
+modules and classes at runtime--though using a distribution such as
+C<Module::Pluggable> is safer and more useful and less invasive.
+
+Outside of very carefully controlled code and very specific, very pragmatic
+situations, there's no reason to put code in UNIVERSAL directly.  There are
+almost always much better design alternatives.
