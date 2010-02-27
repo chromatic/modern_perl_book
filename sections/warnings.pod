@@ -2,12 +2,127 @@
 
 Z<handling_warnings>
 
+Perl 5 produces optional warnings for many confusing, unclear, and ambiguous
+situations.  For the most part, you should always enable the C<warnings> pragma
+unconditionally.  Even so, certain circumstances dictate the prudent catching
+or disabling of specific warnings.
+
+=head4 Enabling and Disabling Warnings
+
+X<-w>
+X<command-line arguments; -w>
+
+One important characteristic of modern PerlN<Both in Perl 5 and in Perl 6.> is
+the concept of lexical encapsulation.  Warnings are no different.  You may see
+older code which uses the C<-w> command line flag.  This flag enables warnings
+throughout the program, even if other code has not specifically attempted to
+suppress warnings.  If you have the wherewithal to eliminate warnings and
+potential warnings throughout the entire codebase, this is useful.
+
+It's more useful to use the warnings pragma, however.  The presence of C<use
+warnings;> or an equivalentN<Such as C<use Modern::Perl;> in code indicates
+that the authors intended that normal operation of the code should not produce
+warnings.
+
+=begin sidebar
+
+X<-W>
+X<command-line arguments; -W>
+X<-X>
+X<command-line arguments; -X>
+
+The C<-W> flag enables warnings throughout the program unilaterally, regardless
+of lexical enabling or disabling through the C<warnings> pragma.  The C<-X>
+flag I<disables> warnings throughout the program unilaterally.
+
+=end sidebar
+
+X<$^W>
+X<global variables; $^W>
+
+All of C<-w>, C<-W>, and C<-X> affect the value of the global variable C<$^W>.
+Code written before the C<warnings> pragma (Perl 5.6.0 in spring 2000) may
+C<local>ize C<$^W> to suppress certain warnings within a given scope.  New code
+should avoid the variable and use the pragma instead.
+
+=head4 Disabling Warning Categories
+
+To disable selective warnings within a scope, use C<no warnings;> with an
+argument list.  C<perldoc perllexwarn> lists all of the warnings categories
+your version of Perl 5 understands with the C<warnings> pragma.  Most of them
+represent truly interesting conditions in which Perl may find your program.  A
+few may be unhelpful in specific conditions.
+
+For example, the C<recursion> warning will occur if Perl detects that a
+function has called itself more than a hundred times.  If you are confident in
+your ability to write recursion-ending conditions, you may disable this warning
+within the scope of the recursion.  (Alternately, see L<tail_calls>.)
+
+If you're generating code (L<code_generation>) or locally redefining symbols,
+you may wish to disable the C<redefine> warnings.
+
+Some experienced Perl hackers disable the C<uninitialized> value warnings in
+string-processing code which concatenates values from many sources.  Careful
+initialization of variables can avoid the need to disable the warning, but
+local style and conciseness can argue the other way.
+
+=head4 Making Warnings Fatal
+
+Z<fatal_warnings>
+X<warnings; fatal>
+
+If your project considers warnings as onerous as errors, you can make them
+fatal within specific scopes.  To promote I<all> warnings into exceptions:
+
+=begin programlisting
+
+    use warnings FATAL => 'all';
+
+=end programlisting
+
+You may also make only certain categories of warnings fatal, such as the use of
+deprecated constructs:
+
+=begin programlisting
+
+    use warnings FATAL => 'deprecated';
+
+=end programlisting
+
+=head4 Catching Warnings
+
+X<signal handlers; __WARN__>
+X<__WARN__>
+X<$SIG{__WARN__}>
+X<warnings; catching>
+
+Promoting warnings into exceptions and catching may seem easy, but there's an
+easier way.  The C<%SIG> variable holds handlers for all sorts of signals your
+operating system might throw.  It also includes two slots for signal handlers
+for Perl 5 exceptions and warnings.  To catch a warning, install an anonymous
+function into C<$SIG{__WARN__}>:
+
+=begin programlisting
+
+    {
+        my $warning;
+        local $SIG{__WARN__} = sub { $warning .= shift };
+
+        # do something risky
+        say "Caught warning:\n$warning" if $warning;
+    }
+
+=end programlisting
+
+Within the warning handler, the first argument is the message of the warning.
+Admittedly, this technique is less useful than disabling warnings
+lexically--but it can come to good use in test modules such as
+C<Test::Warnings> from the CPAN, where the actual text of the warning is
+important.
+
 =for author
 
-$^W
-no warnings
-selective warnings to disable
-    - uninitialized
-    - recursion
+Add section on creating new lexical warnings?
 
 =end for
+

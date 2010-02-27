@@ -669,6 +669,7 @@ but the lexical variables do not interfere with each other.
 
 =head3 Tail Calls
 
+Z<tail_calls>
 X<recursion; guard conditions>
 
 One I<drawback> of recursion is that you must get your return conditions
