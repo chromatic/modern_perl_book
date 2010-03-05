@@ -75,6 +75,8 @@ You can, of course, pass multiple I<types> of arguments to a function:
 
 =head2 Function Parameters
 
+Z<function_parameters>
+
 X<parameters>
 X<functions; parameters>
 X<@_>

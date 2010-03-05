@@ -61,6 +61,8 @@ X<use>
 X<keywords; use>
 X<import()>
 
+Z<import>
+
 When you load a module with the C<use> keyword, Perl loads it from disk, then
 calls its C<import()> method, passing any arguments you provided to the C<use>
 keyword.  This occurs at compilation time:
