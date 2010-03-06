@@ -228,34 +228,274 @@ Schwartzian transform is also useful because you can perform those expensive
 operations once (in the rightmost C<map>), compare them repeatedly from a
 de-facto cache in the C<sort>, and then remove them in the leftmost C<map>.
 
-=for author
+=head3 Easy File Slurping
 
-localization
-    - $/
-    - $"
+Z<easy_file_slurping>
 
-make modules testable
-    - caller()
+X<local; $/>
+X<globals; $/>
 
-handling main()
-    - avoid inadvertent closures
+Perl 5's magic global variables are, tragically, truly global in many cases.
+It's all too easy to clobber their values elsewhere, unless you use C<local>
+everywhere.  Yet this requirement has allowed the creation of several
+interesting idioms.  For example, you can slurp files into a scalar in a single
+expression:
 
-use of state
-    - avoid lexical and postfix if
+=begin programlisting
 
-postfix checks for parameter validation
+    my $file = do { local $/ = <$fh> };
 
-tailcall
-    - goto &$ref
+=end programlisting
 
-unary (and other) coercions
-    - 0+
-    - !!
-    - ~~
-    - '0 but ...'
-    - unary minus
+C<$/> is the input record separator.  C<local>izing it sets its value to
+C<undef>, pending assignment.  That C<local>ization takes place I<before> the
+assignment.  As the value of the separator is undefined, Perl happily reads the
+entire contents of the filehandle in one swoop and assigns that value to C<$/>.
+Because a C<do> BLOCK evaluates to the value of the last expression evaluated
+within the block, this evaluates to the value of the assignment, or the
+contents of the file.  Even though C<$/> immediately reverts to its previous
+state at the end of the block, C<$file> now contains the contents of the file.
 
-assign and substitute
-    - (my $foo = $bar) =~ /.../
+This can be useful (and, admittedly, maddening for people unfamiliar with this
+particular combination of Perl 5 features) if you don't have C<Perl::Slurp>
+installed from the CPAN.
 
-=end for
+=head3 Controlled Execution
+
+Z<controlled_execution>
+
+The effective difference between a program and a module is in its intended use.
+Users invoke programs directly, while programs load modules after execution has
+already begun.  The technical difference between a program and a module is
+whether it's meaningful to invoke the entity directly.
+
+You may encounter this when you wish to use Perl's testing tools (L<testing>)
+to test functions in a standalone program or when you wish to make a module
+users can run directly.  All you need to do is to discover I<how> Perl began to
+execute a piece of code.  For this, use C<caller>.
+
+X<caller>
+X<operators; caller>
+X<call frame>
+
+C<caller>'s single optional argument is the number of call frames which to
+report.  (A I<call frame> is the bookkeeping information which represents a
+function call.)  You can get information about the current call frame with
+C<caller(0)>.  To allow a module to run correctly as a program I<or> a module,
+write an appropriate C<main()> function and add a single line to the start of
+the module:
+
+=begin programlisting
+
+    main() unless caller(0);
+
+=end programlisting
+
+If there's I<no> caller for the module, someone invoked it directly as a
+program (with C<perl path/to/Module.pm> instead of C<use Module;>).
+
+=begin sidebar
+
+Checking the eighth element of the list returned from C<caller> in list context
+may be more accurate in most cases, but it's rare.  This value is true if the call frame represents C<use> or C<require> and undef otherwise.
+
+=end sidebar
+
+=head3 Handling Main
+
+Perl requires no special syntax for creating closures (L<closures>); you can
+close over a lexical variable inadvertently.  This is I<rarely> a problem in
+practice, apart from specific concerns in mod_perl situations... and C<main()>
+functions.
+
+Many programs commonly set up several file-scoped lexical variables before
+handing off processing to other functions.  It's tempting to use these
+variables directly, rather than passing values to and returning values from
+functions, especially as programs grow to provide more features.  Worse yet,
+these programs may come to rely on subtleties of what happens when during Perl
+5's compilation process; a variable you I<thought> would be initialized to a
+specific value may not get initialized until much later.
+
+There is a simple solution.  Wrap the main code of your program in a simple
+function, C<main()>.  Encapsulate all of the variables you don't need as true
+globals.  Then add a single line to the beginning of your program, after you've
+used all of the modules and pragmas you need:
+
+=begin programlisting
+
+    #!/usr/bin/perl
+
+    use Modern::Perl;
+    use autodie;
+
+    ...
+
+    B<main( @ARGS );>
+
+=end programlisting
+
+Calling C<main()> I<before> performing anything else in the program forces you
+to be explicit about initialization and order of compilation.  It also helps to
+remind you to encapsulate the behavior of your program into functions and
+modules.  (It works nicely with files which can be programs and
+libraries--L<controlled_execution>.)
+
+=head3 Postfix Parameter Validation
+
+Z<postfix_parameter_validation>
+
+Even if you don't use a CPAN module such as C<Params::Validate> or
+C<MooseX::Params::Validate> to verify that the parameters your functions
+receive are correct, you can still benefit from occasional checks for
+correctness.  Though some people suggest to avoid the use of the C<unless>
+control flow modifier (Damian Conway's I<Perl Best Practices> is an oft-cited
+reference), it's an easy and readable way to assert your expectations at the
+beginning of a function.
+
+Suppose your function takes two arguments, no more and no less, and you need to
+verify this because too many people use your code incorrect.  You I<could>
+write:
+
+=begin programlisting
+
+    use Carp;
+
+    sub groom_monkeys
+    {
+        if (@_ != 2)
+        {
+            croak 'Monkey grooming requires two monkeys!';
+        }
+    }
+
+=end programlisting
+
+... but from a linguistic perspective, the consequences are more important than
+the check and deserve to be at the I<start> of the expression:
+
+=begin programlisting
+
+    croak 'Monkey grooming requires two monkeys!' if @_ != 2;
+
+=end programlisting
+
+... which, depending on your preference for reading postfix conditions, you can
+simplify to:
+
+=begin programlisting
+
+    croak 'Monkey grooming requires two monkeys!' unless @_ == 2;
+
+=end programlisting
+
+This is easier to read if you focus on the text of the message ("You need to
+pass two parameters!") and the test (C<@_> should contain two items).  It's
+almost a single row in a truth table.
+
+=head3 Regex En Passant
+
+Z<regex_en_passant>
+
+X<regex; modification>
+X<regex; substitution>
+
+Many Perl 5 idioms rely on the language design where expressions evaluate to
+values.  This is most obvious with an example:
+
+=begin programlisting
+
+    say my $ext_num = my $extension = 42;
+
+=end programlisting
+
+It's bad form to write code like that, but it demonstrates the point: you can
+use the value of one expression in another expression.  This isn't a new idea;
+you've likely used the return value of a function in a list or as an argument
+to another function before.  You may not have realized its implications.
+
+X<regex; capture>
+
+Suppose you have a whole name and you want to extract the first name.  This is
+easy to do with a regular expression:
+
+=begin programlisting
+
+    my ($first_name) = $name =~ /($first_name_rx)/;
+
+=end programlisting
+
+... where C<$first_name_rx> is a precompiled regular expression.  In list
+context, a successful regex match returns a list of all captures, and Perl
+assigns the first one to C<$first_name>.  That's straightforward.
+
+Now imagine if you want to modify the name, perhaps removing all non-word
+characters to create a useful username for a system account.  You can write:
+
+=begin programlisting
+
+    (my $normalized_name = $name) =~ tr/A-Za-z//dc;
+
+=end programlisting
+
+Unlike the previous example, this one reads right to left.  First, assign the
+value of C<$name> to C<$normalized_name>.  Then, perform the transliteration on
+C<$normalized_name>N<The parentheses here affect the precedence so that the
+assignment happens first.>.  That is to say, the assignment expression
+evaluates to the I<variable> C<$normalized_name>.  This technique works on all
+sorts of in-place modification operators:
+
+=begin programlisting
+
+    my $age = 14;
+    (my $next_age = $age)++;
+
+    say "Next year I will be $next_age";
+
+=end programlisting
+
+=head3 Unary Coercions
+
+Z<unary_coercions>
+
+X<coercion>
+X<types>
+
+Perl 5's type system often does the right thing, at least if you choose the
+correct operators.  To concatenate strings, use the string concatenation
+operator, and Perl will treat both scalars as strings.  To add two numbers, use
+the addition operator and Perl will treat both scalars as numeric.
+
+Sometimes you have to give Perl a hint about what you mean.  Several I<unary
+coercions> exist, by which you can use and abuse Perl 5 operators to force the
+evaluation of a value a specific way.
+
+X<unary conversions; numeric>
+To ensure that Perl treats a value as numeric, add zero:
+
+=begin programlisting
+
+    my $numeric_value = 0 + $value;
+
+=end programlisting
+
+X<unary conversions; boolean>
+To ensure that Perl treats a value as boolean, double negate it:
+
+=begin programlisting
+
+    my $boolean_value = !! $value;
+
+=end programlisting
+
+X<unary conversions; string>
+To ensure that Perl treats a value as a string, concatenate it with the empty
+string:
+
+=begin programlisting
+
+    my $string_value = '' . $value;
+
+=end programlisting
+
+Though the need for these coercions is vanishingly rare, you should understand
+these idioms if you encounter them.
