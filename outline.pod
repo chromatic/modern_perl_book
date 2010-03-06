@@ -385,6 +385,10 @@ They don't work the way you think they do.
 
 Use Moose instead.
 
+=head3 Postfix/State
+
+postfix if and lexicals
+
 =head2 Avoid When Possible
 
 Features that don't work quite right but you can't quite avoid.
