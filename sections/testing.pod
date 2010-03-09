@@ -1,18 +1,158 @@
+=head3 Testing
+
 Z<testing>
 
+X<testing>
+X<tests>
+
+I<Testing> is the process of writing and running automated verifications that
+your software performs as intended, in whole or in parts.  At its heart, this
+is an automation of a process you've performed countless times already: write a
+little bit of code, run it, and see if it works.  The difference is in the
+I<automation>.  Perl 5 provides great tools in the core to help you begin to
+write good and useful automated tests, and the CPAN has far more.
+
+=head4 C<Test::More>
+
+X<Test::More>
+X<ok()>
+X<testing; ok()>
+
+Perl testing begins with the core module C<Test::More>.  Almost everything you
+need to understand is in its C<ok()> function.  C<ok()> takes two parameters, a
+boolean value and a string describing the purpose of the test:
+
+=begin programlisting
+
+    ok(   1, 'the number one should be true'         );
+    ok(   0, '... and the number zero should not'    );
+    ok(  '', 'the empty string should be false'      );
+    ok( '!', '... and a non-empty string should not' );
+
+=end programlisting
+
+Ultimately, any condition you can test for in your program should become a
+binary value.  Does the code do what I intended it to do?  A complex program
+may have thousands of these individual conditions.  In general, the smaller the
+granularity the better.  The purpose of writing individual assertions is to
+isolate individual features to understand what doesn't work as you intended and
+what ceases to work after you make changes in the future.
+
+X<testing; plan>
+X<test plan>
+X<Test::More; plan()>
+
+This snippet isn't a complete test script, however.  C<Test::More> and related
+modules need a couple of other features, including a I<test plan>, which
+represents the number of individual tests you plan to run:
+
+=begin programlisting
+
+    use Test::More tests => 4;
+
+    ok(   1, 'the number one should be true'         );
+    ok(   0, '... and the number zero should not'    );
+    ok(  '', 'the empty string should be false'      );
+    ok( '!', '... and a non-empty string should not' );
+
+=end programlisting
+
+The C<tests> argument to C<Test::More> sets the test plan for the program.
+This gives the test an additional assertion.  If fewer than four tests run,
+something went wrong.  If more than four tests run, something went wrong.  That
+assertion is unlikely to be useful in this simple scenario, but it I<can> catch
+bugs in code that seems too simple to have errors.
+
+=begin sidebar
+
+You don't have to provide C<< tests => ... >> as an C<import()> argument.  At
+the end of your test program, call the function C<done_testing()> to get the
+benefit of verifying that the entire program completed without having to count
+the number of tests run.
+
+=end sidebar
+
+=head4 Running Tests
+
+The resulting program is now a full-fledged Perl 5 program.  You can run it on
+its own and review the results yourself:
+
+=begin screen
+
+    1..4
+
+    ok 1 - the number one should be true
+    not ok 2 - ... and the number zero should not
+    #   Failed test '... and the number zero should not'
+    #   at truth_values.t line 4.
+    not ok 3 - the empty string should be false
+    #   Failed test 'the empty string should be false'
+    #   at truth_values.t line 5.
+    ok 4 - ... and a non-empty string should not
+    # Looks like you failed 2 tests of 4.
+
+=end screen
+
+This output should match your expectations.  In particular, note that the
+failed tests provide diagnostic messages about what failed and where.  This is
+a tremendous aid to debugging.
+
+X<Test::Harness>
+X<prove>
+X<testing; prove>
+X<testing; running tests>
+
+Even so, the output of a file with more than a handful of individual tests
+(especially if there are multiple failures) can be daunting.  It's more
+important to understand what, if anything, failed.  The core module
+C<Test::Harness> does the hard work of interpreting this output and displaying
+only the most pertinent information.  It also provides a program called
+C<prove> which takes the hard work out of the process:
+
+=begin programlisting
+
+    $ B<prove truth_values.t>
+    truth_values.t .. 1/4
+    #   Failed test '... and the number zero should not'
+    #   at truth_values.t line 4.
+
+    #   Failed test 'the empty string should be false'
+    #   at truth_values.t line 5.
+    # Looks like you failed 2 tests of 4.
+    truth_values.t .. Dubious, test returned 2 (wstat 512, 0x200)
+    Failed 2/4 subtests
+
+    Test Summary Report
+    -------------------
+    truth_values.t (Wstat: 512 Tests: 4 Failed: 2)
+      Failed tests:  2-3
+
+=end programlisting
+
+That's a lot of output to display what is already obvious: the second and third
+tests fail because zero and the empty string evaluate to false.  It's easy to
+fix that failure by inverting the sense of the condition with the use of
+boolean conversion (L<boolean_conversion>):
+
+=begin programlisting
+
+    ok(   B<!> 0, '... and the number zero should not'  );
+    ok(  B<!> '', 'the empty string should be false'    );
+
+=end programlisting
+
+With those two changes, C<prove> now produces much friendlier and simpler
+output:
+
+=begin screen
+
+    $ B<prove truth_values.t>
+    truth_values.t .. ok
+    All tests successful.
+
+=end screen
+
 =for author
-
-start with Test::More
-    - Test::Simple is too simple now
-
-basic assertions
-    - ok or not okay
-    - as many of these as possible
-    - small granularity
-
-running tests
-    - prove
-    - Test::Harness
 
 comparisions:
     - is
@@ -36,4 +176,3 @@ further organization
     - refer to Test::Class series on MPB
 
 =end for
-
