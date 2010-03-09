@@ -1,32 +1,158 @@
+=head3 Coercion
+
 Z<coercion>
+
+X<coercion>
+
+Unlike other languages, where a variable can hold only a particular type of
+value (a string, perhaps, or a floating-point number), Perl relies on the
+context of operators to determine how to interpret values (L<value_contexts>).
+If you treat a number as a string, Perl will do its best to convert that number
+into a string (and vice versa).  This process is I<coercion>.
+
+X<DWIM>
+
+Perl's design attempts to do what you mean, though understanding what you
+should expect requires you to understand a few rules of coercions.
+
+=head4 Boolean Coercion
+
+X<coercion; boolean>
+
+Boolean coercion occurs when you test the truth of a value, such as in a C<if>
+or C<while> condition.  Numeric 0 is false.  The undefined value is false.  The
+empty string is false, and so is the string C<'0'>.  The strings C<'0.0'> and
+C<'0e'> are I<true>, however.
 
 =for author
 
-explanation
-    - treating one data type as another
+Does booleanification prefer string or numeric?
 
-booleanification
-    - what's boolean true and false?
+=end for
 
-stringification
-    - default approach
+All other values are true, including the idiomatic string C<'0 but true'>.  It
+does begin with a zero, but the string booleanifies to a true value due to the
+remainder of the string.
 
-numification
-    - what looks like a number
-    - Scalar::Util::looks_like_number()
+=head4 String Coercion
 
-referenceification
-    - need a better description
-    - disallowed by strict 'refs'
+X<coercion; string>
 
-possible:
-    - globs and their slots
-    - though that's pretty advanced
+String coercion occurs when using string operators such as comparisons (C<eq>
+and C<cmp>, for example), concatenation, C<split>, C<substr>, and regular
+expressions.  It also occurs when using a value as a hash key.  The undefined
+value stringifies to an empty string, but it produces a "use of uninitialized
+value" warning.  Numbers stringify to strings containing their values.  That
+is, the value C<10> stringifies to the string C<10>, such that you can split a
+number into individual digits with C<split>:
 
-caching
-    - SV behavior
+=begin programlisting
 
-DualVars (?)
+    my @digits = split '', 1234567890;
+
+=end programlisting
+
+=head4 Numeric Coercion
+
+X<coercion; numeric>
+
+Numeric coercion occurs when using numeric comparison operators (such as C<==>
+and C<< <=> >>), when performing mathematic operations, and when using a value
+as an index into an array.  The undefined value numifies to zero, though it
+produces a "Use of uninitialized value" warning.  Strings which do not begin
+with numeric portions also numify to zero, and they produce an "Argument isn't
+numeric" warning.  Strings which begin with characters allowed in numeric
+literals numify to those values.
+
+The core module C<Scalar::Util> contains a C<looks_like_number()> function
+which uses the same parsing rules as the Perl 5 grammar to extract a number
+from a string.
+
+Note that the strings C<Inf> and C<Infinity> represent the infinite value and
+behave as numbers, in the sense that numifying them does not produce the
+"Argument isn't numeric" warning.
+
+=head4 Reference Coercion
+
+X<coercion; reference>
+X<autovivification>
+
+=for author
+
+Is this a useful discussion?
+
+=end for
+
+In certain circumstances, treating a value as a reference turns that value
+I<into> a reference.  This process of autovivification (L<autovivification>)
+can be useful for nested data structures.  It occurs when you use a
+dereferencing operation on a non-reference:
+
+=begin programlisting
+
+    my %users;
+
+    $users{Bradley}{id} = 228;
+    $users{Jack}{id}    = 229;
+
+=end programlisting
+
+Although the hash never contained values for C<Bradley> and C<Jack>, Perl 5
+helpfully created hash references for those values, then assigned them each a
+key/value pair keyed on C<id>.
+
+=head4 Cached Coercions
+
+X<coercion; cached>
+
+Perl 5's internal storage mechanism for values allows each value to have a
+stringification and a numificationN<This is a simplification, but the gory
+details are truly gory.>.  Stringifying a numeric value does not replace the
+numeric value with a string.  Instead, it I<attaches> a stringified value to
+the value in addition to the numeric value.  The same sort of operation happens
+in reverse when numifiying a string value.
+
+This knowledge is almost never necessary, except that in a few exotic
+circumstances, Perl 5 may prefer one form over another.  If a value has a
+cached representation in a form you do not expect, relying on an implicit
+conversion may produce surprising results.  You almost never need to be
+explicit about what you expect, but know that caching does occur and you may be
+able to diagnose an odd situation when it occurs.
+
+=begin sidebar
+
+This is, admittedly, rare--your author recalls it happening perhaps twice in
+the past decade.
+
+=end sidebar
+
+=head4 Dualvars
+
+X<coercion; dualvars>
+X<dualvar()>
+X<Scalar::Util>
+X<dualvar>
+
+The caching of string and numeric values allows for the use of a
+rare-but-useful feature known as a I<dualvar>, or a value that has divergent
+numeric and string values.  The core module C<Scalar::Util> provides a function
+C<dualvar()> which allows you to create a value which has specified numeric and
+string values, even if those values have no connection:
+
+=begin programlisting
+
+    use Scalar::Util 'dualvar';
+    my $false_name = dualvar 0, 'Sparkles & Blue';
+
+    say 'Boolean false!' if        !! $false_name;
+    say 'Numeric false!' unless  0  + $false_name;
+    say 'String true!'   if     ''  . $false_name;
+
+=end programlisting
+
+=for author
+
+Are these useful?
 
 recognizing operator type contexts
     - stringy ops
@@ -34,6 +160,4 @@ recognizing operator type contexts
     - boolean operations
     - perlop (logical, stringwise, numeric)
 
-
 =end for
-
