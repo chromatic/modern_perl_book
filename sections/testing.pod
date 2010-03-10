@@ -152,27 +152,209 @@ output:
 
 =end screen
 
-=for author
+=head4 Better Comparisons
 
-comparisions:
-    - is
-    - isa/can
-    - is_deeply()
-        - maybe look to something else for this
+Even though the heart of all automated testing is the boolean condition "is
+this true or false?", reducing everything to that boolean condition is tedious,
+error-prone, and limited in its diagnostic purposes.  C<Test::More> provides
+several other convenient functions to ensure that your code behaves as you
+intend.
 
-test organization
-    - .t files
-    - group by usage
-    - test granularity suggestions
-    - plan management
-    - idempotency
+X<is()>
+X<testing; is()>
+X<Test::More; is()>
 
-pluggable test modules
-    - Test::Exception
-    - Test::Database (forgot the exact name)
-    - ... what else?
+The C<is()> function compares two values.  If they match, the test passes.
+Otherwise, the test fails and provides a diagnostic message indicating that
+they do not match:
 
-further organization
-    - refer to Test::Class series on MPB
+=begin programlisting
 
-=end for
+    is( 4, 2 + 2, 'addition should be consistent across the universe' );
+    is( 'pancake', 100, 'pancakes should have a delicious numeric value' );
+
+=end programlisting
+
+As you might expect, the first test passes and the second fails:
+
+=begin screen
+
+    t/is_tests.t .. 1/2
+    #   Failed test 'pancakes should have a delicious numeric value'
+    #   at t/is_tests.t line 8.
+    #          got: 'pancake'
+    #     expected: '100'
+    # Looks like you failed 1 test of 2.
+
+=end screen
+
+Where C<ok()> only provides the line number of the failing test, C<is()>
+displays the mismatched values.
+
+C<ok()> applies implicit scalar context to its values.  This means that you can
+check the number of elements in an array without explicitly evaluating the
+array in scalar context:
+
+=begin programlisting
+
+    my @cousins = qw( Rick Kristen AJ Kaycee Eric Corey );
+    is( @cousins, 6, 'I should have only six cousins' );
+
+=end programlisting
+
+... though some people prefer to write C<scalar @cousins> for the sake of
+clarity.
+
+X<isnt()>
+X<testing; isnt()>
+X<Test::More; isnt()>
+
+C<Test::More> provides a corresponding C<isnt()> function which passes if the
+provided values are not equal.  Otherwise, it behaves the same way as C<is()>
+with respect to scalar context and comparison types.
+
+X<cmp_ok()>
+X<testing; cmp_ok()>
+X<Test::More; cmp_ok()>
+
+Both C<is()> and C<isnt()> perform I<string comparisons> with the Perl 5
+operators C<eq> and C<ne>.  This almost always does the right thing, but for
+complex values such as objects with overloading (L<overloading>) or dual vars
+(L<dualvars>), you may prefer explicit comparison testing.  The C<cmp_ok()>
+function allows you to specify your own comparison operator:
+
+=begin programlisting
+
+    cmp_ok(     100, $cur_balance, '<=', 'I should have at least $100' );
+    cmp_ok( $monkey,         $ape, '==', 'Simian numifications should agree' );
+
+=end programlisting
+
+X<isa_ok()>
+X<testing; isa_ok()>
+X<Test::More; isa_ok()>
+
+Classes and objects provide their own interesting ways to interact with tests.
+Test that a class or object extends another class (L<inheritance>) with
+C<isa_ok()>:
+
+=begin programlisting
+
+    my $chimpzilla = RobotMonkey->new();
+    isa_ok( $chimpzilla, 'Robot' );
+    isa_ok( $chimpzilla, 'Monkey' );
+
+=end programlisting
+
+C<isa_ok()> provides its own diagnostic message on failure.
+
+C<can_ok()> verifies that a class or object can perform the requested method:
+
+=begin programlisting
+
+    can_ok( $chimpzilla, 'eat_banana' );
+    can_ok( $chimpzilla, 'transform', 'destroy_tokyo' );
+
+=end programlisting
+
+It takes a list of method names that the invocant must be able to perform.
+
+The C<is_deeply()> function compares two references to ensure that their
+contents are equal:
+
+=begin programlisting
+
+    use Clone;
+
+    my $numbers   = [ 4, 8, 15, 16, 23, 42 ];
+    my $clonenums = Clone::clone( $numbers );
+
+    is_deeply( $numbers, $clonenums,
+         'Clone::clone() should produce identical structures' );
+
+=end programlisting
+
+If the comparison fails, C<Test::More> will do its best to provide a reasonable
+diagnostic indicating the position of the first inequality between the
+structures.  See the CPAN modules C<Test::Differences> and C<Test::Deep> for
+more configurable tests.
+
+C<Test::More> has several more test functions, but these are the most useful.
+
+=head4 Organizing Tests
+
+X<testing; .t files>
+X<testing; t/ directory>
+
+The standard CPAN approach for organizing tests is to create a F<t/> directory
+containing one or more programs ending with the F<.t> suffix.  All of the CPAN
+distribution management tools (and the CPAN infrastructure itself) understand
+this system.  By default, when you build a distribution with C<Module::Build>
+or C<ExtUtils::MakeMaker>, the testing step runs all of the F<t/*.t> files,
+summarizes their output, and succeeds or fails on the results of the test suite
+as a whole.
+
+There are no concrete guidelines on how to manage the contents of individual
+F<.t> files, though two strategies are popular:
+
+=over 4
+
+=item * Each F<.t> file should correspond to a F<.pm> file
+
+=item * Each F<.t> file should correspond to a feature
+
+=back
+
+The important considerations are maintainability of the test files, as larger
+files are more difficult to maintain than smaller files, and the granularity of
+the test suite, as finding the right tests to run or to modify is easier by
+feature.  Some combination of this approach tends to work for almost every
+project.
+
+When running tests, it's often important to be able to run only those tests for
+the specific feature under development.  That is, if you're adding the ability
+to breathe fire to your C<RobotMonkey>, you may want only to run the
+F<t/breathe_fire.t> test file while you're coding.  When you have the feature
+working to your satisfaction, run the entire test suite to verify that local
+changes have no unintended global effects.
+
+=head4 Other Testing Modules
+
+X<Test::Builder>
+X<testing; modules>
+X<testing; Test::Builder>
+
+C<Test::More> relies on a testing backend known as C<Test::Builder>.  The
+latter module manages the test plan and coordinates the test output into a form
+that C<Test::Harness> and other tools can understand.
+
+=begin sidebar
+
+X<TAP>
+X<testing; TAP>
+
+This output format is TAP, the Test Anything Protocol.  See
+U<http://testanything.org/> for more details.
+
+=end sidebar
+
+This design allows multiple test modules to share the same C<Test::Builder>
+backend.  Consequently, the CPAN has hundreds of test modules available--and
+they can all work together in the same program.
+
+C<Test::Exception> provides functions to ensure that your code throws (and does
+not throw) exceptions appropriately.
+
+C<Test::MockObject> allows you to test difficult interfaces by I<mocking>
+(emulating but producing different results).
+
+C<Test::WWW::Mechanize> allows you to test live web applications.
+
+C<Test::Database> provides functions to test the use and abuse of databases.
+
+C<Test::Class> offers an alternate mechanism for organizing test suites.  It
+allows you to create classes in which specific methods group tests.  You can
+inherit from test classes just as your code classes inherit from each other.
+This is an excellent way to reduce duplication in test suites.  See the
+C<Test::Class> series written by Curtis Poe at
+U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
