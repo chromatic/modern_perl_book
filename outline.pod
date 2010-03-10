@@ -137,7 +137,7 @@ short chapter.
 Not sure what exactly this will be; perhaps infix, prefix, and built-in
 functions.
 
-=head3 Coercion
+=head3 Coercion *
 
 Here's why there's a specific operators chapter.  Working effectively with Perl
 means taking advantage of operators to enforce stringy, numeric, etc contexts
@@ -281,7 +281,7 @@ lot to say in here.  I don't want to repeat Perl Best Practices, but I do want
 to show off some of the power of the language when used appropriately.  Cutting
 this up between Idioms and Beautiful Features may work best.
 
-=head3 Testing
+=head3 Testing *
 
 Might explain this much earlier, right after syntactic features, so that people
 can use it to explore on their own (and the text can use it to show off
