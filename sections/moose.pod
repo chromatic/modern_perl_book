@@ -595,13 +595,222 @@ this role or the source of attribute or method definitions.  A class could
 choose to provide its own C<age()> method or obtain it from another role; that
 doesn't matter.  All that matters is that it contains one.
 
+=head3 Inheritance
+
+Z<inheritance>
+
+X<inheritance>
+X<Moose; inheritance>
+
+An alternative to roles is the notion of I<inheritance>, where one class
+specializes another.  This establishes a relationship between the two classes,
+where the child inherits attributes and behavior of the parent.  As with two
+classes which provide the same role, you may substitute a child class for its
+parent.  In a very real sense, a subclass provides the role implied by the
+existence of its parent class.
+
+=begin sidebar
+
+The decision to use either inheritance or roles is largely a matter of taste.
+Roles provide composition-time safety, better type checking, and arguably
+better-factored and less coupled code, but inheritance is more familiar to
+users of other languages.  The design question is whether one class truly
+I<extends> another or whether it provides additional (or, at least,
+I<different>) behavior.
+
+=end sidebar
+
+Consider a C<LightSource> class which provides two public attributes
+(C<candle_power> and C<enabled>) and two methods (C<light> and C<extinguish>):
+
+=begin programlisting
+
+    {
+        package LightSource;
+
+        use Moose;
+
+        has 'candle_power', is      => 'ro', isa     => 'Int',
+                            default => 1;
+        has 'enabled',      is      => 'ro', isa     => 'Bool',
+                            default => 0,    _writer => '_set_enabled';
+
+        sub light
+        {
+            my $self = shift;
+            $self->_set_enabled(1);
+        }
+
+        sub extinguish
+        {
+            my $self = shift;
+            $self->_set_enabled(0);
+        }
+    }
+
+=end programlisting
+
+=begin sidebar
+
+The C<_writer> option to the C<enabled> attribute creates a private accessor
+usable within the class to set the value.
+
+=end sidebar
+
+=head4 Inheritance and Attributes
+
+Subclassing C<LightSource> makes it possible to define a super candle, which
+behaves the same way as C<LightSource> but provides a hundred times the amount
+of light:
+
+=begin programlisting
+
+    {
+        package LightSource::SuperCandle;
+
+        use Moose;
+
+        B<extends 'LightSource'>;
+
+        has 'B<+>candle_power', default => 100;
+    }
+
+=end programlisting
+
+X<Moose; extends>
+
+The C<extends> syntax takes a list of class names to use as parents of the
+current class.  The C<+> at the start of the C<candle_power> attribute name
+indicates that the current class extends the declaration of the attribute.  In
+this case, the super candle overrides the default value of the light source, so
+any new C<SuperCandle> created has a light value of 100 candles.  The other
+attribute and both methods are available on C<SuperCandle> instances; when you
+invoke C<light> or C<extinguish> on such an instance, Perl will look in
+C<LightSource::SuperCandle> for the method, then in the list of parents of the
+class, where it finds them in C<LightSource>.
+
+X<Moose; attribute inheritance>
+
+Attribute inheritance works in a similar fashion, except that the act of
+I<constructing> the instance makes all of the appropriate attributes available
+in the proper fashion.  You do not need to understand how this works (though
+see C<Class::MOP> for more detail than you want to know).
+
+X<methods; resolution>
+X<method resolution order>
+X<methods; dispatch order>
+X<multiple inheritance>
+X<objects; inheritance>
+X<objects; multiple inheritance>
+
+Method dispatch order is easy to understand in the case of single-parent
+inheritance.  In a situation where a class has multiple parents (also known as
+I<multiple inheritance>), dispatch is less obvious.  By default, Perl 5
+provides a depth-first strategy of method resolution.  It searches the class of
+the I<first> named parent and all of its parents recursively before searching
+the class of the subsequent named parents.  In general, you should avoid the
+situation of multiple inheritance until you understand this.  See C<perldoc
+mro> for more details about method resolution and dispatch strategies.
+
+=head4 Inheritance and Methods
+
+X<Moose; override method>
+
+You may also override methods in subclasses.  Imagine a light that you cannot
+extinguish:
+
+=begin programlisting
+
+    {
+        package LightSource::Glowstick;
+
+        use Moose;
+
+        extends 'LightSource';
+
+        sub extinguish {};
+    }
+
+=end programlisting
+
+For objects of this class, all calls to the C<extinguish> method will do
+nothing, as Perl's method dispatch system will find this method and will not
+look for any methods of this name in any of the parent classes.
+
+=for author
+
+Check the facts on this.
+
+=end for
+
+Sometimes an overridden method needs behavior from its parent as well.  The
+C<override> command tells Moose that the subclass deliberately overrides the
+named method and makes the C<super()> function available:
+
+=begin programlisting
+
+    {
+        package LightSource::Cranky;
+
+        use Carp;
+        use Moose;
+
+        extends 'LightSource';
+
+        B<override> light => sub
+        {
+            my $self = shift;
+
+            Carp::carp( "Can't light a lit light source!" )
+                if $self->enabled;
+
+            B<super()>;
+        }
+
+        B<override> extinguish => sub
+        {
+            my $self = shift;
+
+            Carp::carp( "Can't light a lit light source!" )
+                unless $self->enabled;
+
+            B<super()>;
+        }
+    }
+
+=end programlisting
+
+This subclass adds a warning when trying to light or extinguish a light source
+that already has the current state.  The C<super()> function dispatches to the
+nearest parent's implementation of the current method, per the normal Perl 5
+method resolution order.
+
+=begin sidebar
+
+You can achieve the same behavior by using Moose method modifiers.  See
+C<perldoc Moose::Manual::MethodModifiers>.
+
+=end sidebar
+
+=head4 Inheritance and isa()
+
+X<isa()>
+X<Moose; isa()>
+
+As you might expect, inheriting from a parent class means that the child class
+and all of its instances will return true when you call the C<isa()> method on
+them:
+
+=begin programlisting
+
+    say 'Looks like a LightSource' if     $sconce->isa( 'LightSource' );
+    say 'Monkeys do not glow'      unless $chimpy->isa( 'LightSource' );
+
+=end programlisting
+
 =for author
 
 More OO
-    - inheritance
-        - necessary evil
-    - method modifiers
-        - maybe?
 
 installation (wish I didn't have to, but....)
 
