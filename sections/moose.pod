@@ -808,19 +808,107 @@ them:
 
 =end programlisting
 
-=for author
+=head4 Moose and Perl 5 OO
 
-More OO
+X<moose; versus Perl 5 OO>
 
-installation (wish I didn't have to, but....)
+Moose provides many features you'd otherwise have to build for yourself with
+the default object orientation of Perl 5.  While you I<can> build everything
+you get with Moose yourself (see L<blessed_references), or cobble it together
+with a series of CPAN distributions, Moose is a coherent package which just
+works, includes good documentation, is part of many successful projects, and is
+under active development by an attentive and talented community.
 
-differences between Moose and core OO
-    - MOP (avoid too much detail)
-    - defaults (more handled for you)
-    - slightly better syntax
+X<metaprogramming>
+X<Moose; MOP>
+X<Moose; metaprogramming>
+X<Class::MOP>
+X<Class::MOP::Class>
 
-syntax
-    - MooseX::Declare
-    - much improved
+By default, with Moose objects you do not have to worry about constructors and
+deconstructors, accessors, and encapsulation.  Moose objects can extend and
+work with objects from the vanilla Perl 5 system.  You also get
+I<metaprogramming> and the concomitant extensibility.  (Metaprogramming is, at
+heart, a way of accessing the implementation of the system through the system
+itself.)  This may seem confusing, but if you've ever wondered which methods
+are available on a class or an object or which attributes an object supports,
+this metaprogramming information is available with Moose:
 
-=end for
+=begin programlisting
+
+    my $metaclass = Monkey::Pants->meta();
+
+    say 'Monkey::Pants instances have the attributes:';
+
+    say $_->name for $metaclass->get_all_attributes;
+
+    say 'Monkey::Pants instances support the methods:';
+
+    say $_->fully_qualified_name for $metaclass->get_all_methods;
+
+=end programlisting
+
+You can even see which classes extend a given class:
+
+=begin programlisting
+
+    my $metaclass = Monkey->meta();
+
+    say 'Monkey is the superclass of:';
+
+    say $_ for $metaclass->subclasses;
+
+=end programlisting
+
+See C<perldoc Class::MOP::Class> for more information about metaclass
+operations and C<perldoc Class::MOP> for Moose metaprogramming information.
+
+X<metaprogramming; MOP>
+X<MOP>
+
+Moose and its I<meta-object protocol> (or MOP) offers the possibility of a
+better syntax for declaring and working with classes and objects in Perl 5.
+This is valid Perl 5 code:
+
+=begin programlisting
+
+    use MooseX::Declare;
+
+    B<role> LivingBeing { requires qw( name age diet ) }
+
+    B<role> CalculateAgeFromBirthYear
+    {
+        has 'birth_year', is => 'ro', isa => 'Int',
+                          default => (localtime)[5] + 1900;
+
+        B<method> age
+        {
+            return (localtime)[5] + 1900 - $self->birth_year();
+        }
+    }
+
+    B<class Cat with LivingBeing with CalculateAgeFromBirthYear>
+    {
+        has 'name', is => 'ro', isa => 'Str';
+        has 'diet', is => 'rw';
+    }
+
+=end programlisting
+
+X<MooseX::Declare>
+X<Devel::Declare>
+
+The C<MooseX::Declare> extension from the CPAN uses a clever module called
+C<Devel::Declare> to add new syntax to Perl 5, specifically for Moose.  The
+C<class>, C<role>, and C<method> keywords reduce the amount of boilerplate
+necessary to write good OO code in Perl 5.  Note specifically the declarative
+nature of this example, as well as the now unnecessary C<my $self = shift;>
+line at the start of the C<age> method.
+
+One drawback of this approach is that you must be able to install CPAN modules
+(or a custom Perl 5 distribution such as Strawberry or Chocolate Perl which may
+include them for you), but in comparison to Perl 5's built-in object
+orientation, the advantage in cleanliness and simplicity of Moose should be
+obvious.
+
+See C<perldoc Moose::Manual> for more information on using Moose.
