@@ -239,7 +239,7 @@ use
 require
 import()
 
-=head2 Objects
+=head2 Objects *
 
 Perhaps start with syntactic elements and then show Moose?  Vice versa?  Must
 cover packages and modules first, at least.
@@ -261,14 +261,12 @@ Really not a fan.
 
 Mixins, roles.
 
-=head3 Moose
+=head3 Moose *
 
 The bare bones: classes, attributes, methods.
 
 Note that this is the single place in the book in which I want to describe
 something other than the default language behavior.  Hoist this up earlier?
-
-Maybe MooseX::Declare?  Leave that for the (hypothetical) Moose book?
 
 =head3 Reflection
 
