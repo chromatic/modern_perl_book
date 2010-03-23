@@ -2,9 +2,117 @@
 
 Z<global_variables>
 
+X<super globals>
+X<variables; super global>
+
+Perl 5 provides several I<super global variables> that are truly global, not
+restricted to any specific package.  C<perldoc perlvar> contains the exhaustive
+list of such variables.  In practice, only a handful are useful with any
+frequency.  These super globals have two drawbacks.  First, they're global; any
+direct or indirect modifications may have effects on other parts of the
+program.  Second, they're terse.  Experienced Perl 5 programmers have memorized
+many of them.  Few people have memorized all of them.
+
+=head4 Managing Super Globals
+
+X<super globals; managing>
+X<local>
+
+The best approach to managing the global behavior of these super globals is to
+avoid using them.  That's not always possible.  In those cases, use C<local> in
+the smallest possible scope to constrain any modifications.  You are still
+susceptible to any changes code you I<call> makes to those globals, but you
+reduce the likelihood of making surprising changes to code outside of your
+scope.
+
+=begin sidebar
+
+Workarounds exist for some of this global behavior, but many of these variables
+have existed since Perl 1 Perl 1 and will continue as part of Perl 5 throughout
+its lifetime.  As the easy file slurping idiom (L<easy_file_slurping>)
+demonstrates, this is often possible:
+
+=begin programlisting
+
+    my $file = do { B<local $/> = <$fh> };
+
+=end programlisting
+
+The effect of C<local>izing C<$/> lasts only through the end of the block.
+There is a low chance that any Perl code will run as a result of reading lines
+from the filehandleN<A tied filehandle is one of the few possibilities.> and
+change the value of C<$/> within the C<do> block.
+
+Not all cases of using super globals are this easy to guard, but this often
+works.
+
 =for author
 
-useful global variables
+Recheck this example.
+
+=end for
+
+Other times you need to I<read> the value of a super global and hope that no
+other code has modified it.  Catching exceptions with C<eval> BLOCK can be
+susceptible to race conditionsN<< So use C<Try::Tiny> instead! >>, in that
+C<DESTROY()> methods invoked on lexicals that have gone out of scope may reset
+C<$@>:
+
+=begin programlisting
+
+    local @;
+
+    eval { ... };
+
+    if (B<my $exception = $@>) { ... }
+
+=end programlisting
+
+Copying the contents of C<$@> I<immediately> help to preserve the information
+you want.
+
+=end sidebar
+
+=head4 English Names
+
+X<english>
+
+The core C<English> module provides more verbose names for the
+punctuation-heavy super globals.  Import them into a namespace with:
+
+=begin programlisting
+
+    use English '-no_match_vars';
+
+=end programlisting
+
+... and subsequently you can use the verbose names documented in C<perldoc
+perlvar> within the scope of this namespace.
+
+=begin sidebar
+
+Three regex-related super globals impose a global performance penalty for
+I<all> regular expressions within a program.  If you neglect to provide that
+import flag, your program will suffer the penalty even if you don't explicitly
+read from those variables.  This is not the default behavior for
+backwards-compatibility concerns.
+
+Modern Perl programs should use the C<@-> variable as a replacement for the
+terrible three.
+
+=end sidebar
+
+=head4 Useful Super Globals
+
+X<super globals; useful>
+
+Most modern Perl 5 programs can get by with using only a couple of the super
+globals.  Several exist for special circumstances you're unlikely to encounter.
+While C<perldoc perlvar> is the canonical documentation for most of these
+variables, some are so useful or ubiquitous that they deserve special mention.
+
+=for author
+
     - $/
     - $.
     - @ARGV
@@ -14,9 +122,9 @@ useful global variables
     - $@
     - $0
     - $$
+    - @INC
+    - %SIG
 
-localization strategies
-English module
 alternatives
 
 =end for
