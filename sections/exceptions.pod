@@ -156,6 +156,8 @@ objects as exceptions.  Consider using it in your own systems.
 
 =head4 Exception Caveats
 
+Z<exception_caveats>
+
 Using C<$@> correctly can be tricky; the global nature of the variable leaves
 it open to several subtle flaws:
 
