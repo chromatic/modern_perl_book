@@ -2,27 +2,202 @@
 
 Z<code_generation>
 
+Programming--especially becoming an experienced programmer--means always
+searching for newer, better abstractions.  The less code you have to write, the
+better.  The more generalized your solutions, the better.  When you can delete
+code and add features, you've achieved something great.
+
+Novice programmers write a lot more code than they need to write, partly due to
+inexperience with the language but also due to their inexperience in creating
+and reusing good abstractions.  Then they discover functions and parameters,
+then objects, then perhaps higher-order functions and closures.
+
+X<metaprogramming>
+X<code generation>
+
+One powerful technique is writing programs which write programs.  Colloquially,
+this is I<metaprogramming> or code generation.  It can be as powerful as
+exploiting higher-order programming capabilities or it can be a rathole down
+which you find yourself confused and frightened.  The techniques are powerful
+and useful, however--and some of them form the basis of powerful tools such as
+Moose (L<moose>).
+
+The C<AUTOLOAD> technique (L<autoload>) for missing functions and methods
+demonstrates this technique in a constrained form; Perl 5's function and method
+dispatch system allows you to customize what happens when normal lookup fails.
+
+=head4 C<eval>
+
+X<eval STRING>
+X<operators; eval>
+
+The simplestN<At least I<conceptually>....> technique to generate code is to
+build a string containing a snippet of valid Perl and compile it with the
+C<eval> STRING operator.  Unlike the exception-catching C<eval> BLOCK operator,
+C<eval> STRING compiles the contents of the string within the current scope,
+including the current package and lexical bindings.
+
+A common use for this technique is providing a fallback if you can't (or don't
+want to) load an optional dependency:
+
+=begin programlisting
+
+    eval { require Monkey::Tracer }
+        or eval 'sub Monkey::Tracer::log {}';
+
+=end programlisting
+
+If C<Monkey::Tracer> is not available, its C<log()> function will exist, but
+will do nothing.
+
+=begin sidebar
+
+This isn't necessarily the I<best> way to handle this feature, as the Null
+Object pattern offers more encapsulation, but it is I<a> way to do things.
+
+=end sidebar
+
+This exmaple seems simple, but that's deceptive.  If you want to use variables
+within your C<eval>d code, you have to deal with quoting issues.  This gets
+more complicated if you want to interpolate some variables but not others:
+
+=begin programlisting
+
+    sub generate_accessors
+    {
+        my ($methname, $attrname) = @_;
+
+        eval <<"END_ACCESSOR";
+        sub get_$methname
+        {
+            my \$self = shift;
+
+            return \$self->{$attrname};
+        }
+
+        sub set_$methname
+        {
+            my (\$self, \$value) = @_;
+
+            \$self->{$attrname} = \$value;
+        }
+    END_ACCESSOR
+    }
+
+=end programlisting
+
+Woe to you if you forget a backslash, and good luck convincing your text editor
+to perform the appropriate syntax highlighting on the contents of the string.
+Don't forget that each invocation of C<eval> STRING builds a new data structure
+representing the entire code, and that compiling code incurs a non-zero cost.
+It's not terribly expensive (especially compared to performing disk or network
+IO), but it's not free.
+
+Even so, this technique is simple and reasonably easy to understand.
+
+=head4 Parametric Closures
+
+X<closures; parametric>
+
+While the C<eval> STRING example of building accessors and mutators is
+reasonably straightforward, the use of closures (L<closures>) has further
+benefits.  In particular, closures allow you to perform the parameterization of
+the generated code at the point of closure creation without requiring
+additional compilation.  As usual, an example makes this more clear:
+
+=begin programlisting
+
+    sub generate_accessors
+    {
+        my $attrname = shift;
+
+        my $getter = sub
+        {
+            my $self = shift;
+            return $self->{$attrname};
+        };
+
+        my $setter = sub
+        {
+            my ($self, $value) = @_;
+
+            $self->{$attrname} = $value;
+        };
+
+        return $getter, $setter;
+    }
+
+=end programlisting
+
+Though this code I<doesn't> install the generated methods into the appropriate
+symbol table (it could, but that's not the point of this example), note that it
+avoids unpleasant quoting issues.  It's also very slightly faster, because it
+doesn't have to invoke the Perl 5 compiler.  It even uses less memory, as no
+matter how many times you invoke this function, it uses the I<same> compiled
+code for the bodies of the two functions.  All that differs is the binding to
+the C<$attrname> lexical.  If you find yourself generating a lot of similar
+functions, this memory savings can be a huge advantage.
+
+X<closures; installing into symbol table>
+X<symbol tables>
+
+Installing into symbol tables is reasonably easy, if ugly.  There's a subtle
+trap, however, which is one good reason to separate the creation of these
+closures from their installation:
+
+=begin programlisting
+
+    {
+        my ($getter, $setter) = generate_accessors( 'homecourt' );
+
+        no strict 'refs';
+        *{ 'get_homecourt' } = $getter;
+        *{ 'set_homecourt' } = $setter;
+    }
+
+=end programlisting
+
+The odd splatty hash looking syntax refers to a symbol in the current I<symbol
+table>, which is the place in the current namespace which contains
+globally-accessible symbols such as package globals, functions, and methods.
+Assigning a reference to a symbol table entry installs or replaces the
+appropriate entry.  That is to say, to promote an anonymous function to a
+method, assign that function reference to the appropriate symbol table's entry,
+as shown here.
+
+This operation is a symbolic reference, so it's necessary to disable C<strict>
+reference checking for the operation.  Therein lies the subtle bug in many
+programs which generate code with parametric closures; they perform the
+assignment and the generation in a single step:
+
+=begin programlisting
+
+    {
+        # a subtle bug
+        no strict 'refs';
+
+        *{ $methname } = sub { ... };
+    }
+
+=end programlisting
+
+This example disables strictures for the outer block as well as the inner
+block, the body of the function itself.  Only the assignment violates strict
+reference checking, so disable strictures for that operation for the assignment
+alone.
+
 =for author
 
-eval STRING
-    - building up code
-    - drawbacks
-        - quoting
-        - complexity
-        - some speed concerns; more memory concerns
-
-parameterization with closures
-    - the strict 'refs' trap
-    - installation into the symbol table
-    - accessors/mutators
-    - something better than Moose?
+=head4 Compile-time Manipulation
 
 necessity of C<BEGIN>
     - use of C<subs> pragma
     - introspection and utility of C<can>
     - exportability
 
-AUTOLOAD (separate section?)
+=head4 Class::MOP
+
+=head4 Devel::Declare
 
 Devel::Declare
     - way beyond the scope of this book
