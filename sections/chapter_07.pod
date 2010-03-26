@@ -2,7 +2,7 @@
 
 L<functions>
 
-L<scoping>
+L<scope>
 
 L<anonymous_functions>
 
