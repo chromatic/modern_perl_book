@@ -1,1 +1,5 @@
 =head1 Objects
+
+L<moose>
+
+L<blessed_references>

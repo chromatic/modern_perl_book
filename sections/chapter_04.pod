@@ -9,3 +9,11 @@ L<control_flow>
 L<scalars>
 
 L<arrays>
+
+L<hashes>
+
+L<coercion>
+
+L<references>
+
+L<packages>

@@ -1,6 +1,6 @@
 =head3 Global Variables
 
-Z<global_variables>
+Z<globals>
 
 X<super globals>
 X<variables; super global>

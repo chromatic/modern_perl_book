@@ -1,5 +1,9 @@
 =head1 What to Avoid
 
+L<barewords>
+
 L<indirect_objects>
 
 L<prototypes>
+
+L<method_sub_equivalence>
