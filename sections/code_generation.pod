@@ -190,21 +190,134 @@ alone.
 
 =head4 Compile-time Manipulation
 
-necessity of C<BEGIN>
-    - use of C<subs> pragma
-    - introspection and utility of C<can>
-    - exportability
+Unlike code written explicitly as code, code generated through C<eval> STRING
+gets compiled at runtime.  That should be no surprise, but the implications of
+that behavior can be surprising.  In particular, where you might expect a
+normal function will be available throughout the lifetime of your program, a
+generated function might not be available when you expect it.
+
+X<BEGIN>
+
+You can force Perl to run code--to generate other code--during the compilation
+stage by wrapping it in a C<BEGIN> block.  When the Perl 5 parser encounters a
+block labeled C<BEGIN>, it parses the entire code.  As soon as parsing finishes
+(provided it did not encounter syntax errors), Perl runs the contents of that
+block.  From there, parsing continues as if there were no interruption.
+
+In practical terms, the difference between writing:
+
+=begin programlisting
+
+    sub get_age    { ... }
+    sub set_age    { ... }
+
+    sub get_name   { ... }
+    sub set_name   { ... }
+
+    sub get_weight { ... }
+    sub set_weight { ... }
+
+=end programlisting
+
+... and:
+
+=begin programlisting
+
+    sub make_accessors { ... }
+
+    BEGIN
+    {
+        for my $accessor (qw( age name weight ))
+        {
+            my ($get, $set) = make_accessors( $accessor );
+
+            no strict 'refs';
+            *{ 'get_' . $accessor } = $get;
+            *{ 'set_' . $accessor } = $set;
+        }
+    }
+
+=end programlisting
+
+... is that the latter example requires less copy-and-paste boilerplate
+codeN<Though do be aware of the necessity of defining C<make_accessors()>
+I<before> the C<BEGIN> block executes.>.
+
+X<BEGIN; implicit>
+X<modules; implicit BEGIN>
+
+In modules, this tends not to matter as much because C<use> adds an implicit
+C<BEGIN> around the C<require> and C<import> (L<importing>).  Thus any code
+outside of a function but inside the module will execute I<before> the
+C<import()> call occurs.  However, when someone loads your module with
+C<require>, the execution of code outside of functions will happen at the end
+of parsing.
+
+Also beware of the interaction between lexical I<declaration> (the association
+of a name with a scope) and lexical I<assignment>.  The former happens during
+compilation, while the latter occurs at the point of execution.  That is to
+say, this code has an apparent bug:
+
+=begin programlisting
+
+    use UNIVERSAL::require;
+
+    my $wanted_package = 'Monkey::Jetpack';
+
+    BEGIN
+    {
+        $wanted_package->require();
+        $wanted_package->import();
+    }
+
+=end programlisting
+
+... because the C<BEGIN> block will execute before the assignment of the string
+value to C<$wanted_package> occurs.  The result will be an exception from
+attempting to invoke the C<require()> method on the undefined value.
 
 =head4 Class::MOP
 
-=head4 Devel::Declare
+X<Class::MOP>
+X<Moose>
+X<objects; meta object protocol>
+X<MOP>
+X<meta object protocol>
 
-Devel::Declare
-    - way beyond the scope of this book
-    - how much to mention?
-    - show examples of use
-        - signatures
-        - MooseX::Declare
-        - MooseX::MultiMethods
+Unlike installing function references to populate namespaces and to create
+methods, there's no simple built-in way to create classes in Perl 5.
+Fortunately, a mature and powerful distribution is available from the CPAN to
+do just this.  C<Clas::MOP> is the library which makes C<Moose> (L<moose>)
+possible.  It provides a I<meta object protocol>, which sounds like a
+complicated entity, but really is only a mechanism for creating and
+manipulating an object system in terms of itself.
+
+Rather than writing your own fragile C<eval> STRING code or trying to poke into
+symbol tables manually, you can manipulate the entities and abstractions of
+your program with objects and methods.
+
+To create a class:
+
+=begin programlisting
+
+    use Class::MOP;
+
+    my $class = Class::MOP::Class->create( 'Monkey::Wrench' );
+
+=end programlisting
+
+X<metaclass>
+X<OO; metaclass>
+
+You can add methods and attributes to this class when you create it, and you
+can perform introspection on the class with the I<metaclass> (the object which
+represents that class) returned from the C<create()> constructor.  Similarly
+you can create and manipulate and introspect attributes and methods with
+C<Class::MOP::Attribute> and C<Class::MOP::Method>.
+
+=for author
+
+Does this need more of an example?
 
 =end for
+

@@ -382,6 +382,8 @@ importing and exporting.
 
 =head3 Importing
 
+Z<importing>
+
 X<functions; importing>
 
 When loading a module with the C<use> keyword (see L<modules>), Perl
