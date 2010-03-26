@@ -283,7 +283,7 @@ flattening and slurping when passing aggregate parameters.
 X<parameter aliasing>
 X<functions; aliasing parameters>
 
-One remanining feature of C<@_> can be surprising (though useful): it contains
+One remaining feature of C<@_> can be surprising (though useful): it contains
 aliases to the passed-in parameters, at least until you unpack C<@_> into its
 own variables.  This behavior is easiest to demonstrate with an example:
 

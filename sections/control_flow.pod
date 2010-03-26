@@ -1027,7 +1027,7 @@ C<log_and_greet_person()> and immediately returning I<from>
 C<log_and_greet_person()>.  Returning directly from C<greet_person()> to the
 caller of C<log_and_greet_person()> is a tailcall optimization.
 
-Unfortuately, Perl 5 cannot perform this optimization automatically.
+Unfortunately, Perl 5 cannot perform this optimization automatically.
 
 Fortunately, you can perform it manually.
 

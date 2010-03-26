@@ -59,7 +59,7 @@ meant and had to guess at the proper interpretation.  Even though Perl often
 guesses correctly, disambiguation on your part will ensure that your programs
 run correctly.
 
-The C<warnings> pramga has a lexical effect on the compile-time scope of its
+The C<warnings> pragma has a lexical effect on the compile-time scope of its
 use.  You may disable some or all warnings with C<no warnings> (within the
 smallest possible scope, of course).  See C<perldoc perllexwarn> and C<perldoc
 warnings> for more details.
@@ -108,7 +108,7 @@ C<IO::Handle> for you.
 
 =head4 The C<autodie> Pragma
 
-Perl 5's default error checking is parsimonius.  If you're not careful to check
+Perl 5's default error checking is parsimonious.  If you're not careful to check
 the return value of every C<open()> call, for example, you could try to read
 from a closed filehandle--or worse, lose data as you try to write to one.  The C<autodie> pragma changes the default behavior.  If you write:
 

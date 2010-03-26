@@ -170,7 +170,7 @@ X<integers>
 X<floating-point values>
 
 Perl also supports numbers, whether integers or floating-point values.  They
-support scientific notation as well as binary, octal, and hexidecimal
+support scientific notation as well as binary, octal, and hexadecimal
 representations:
 
 =begin programlisting
@@ -188,7 +188,7 @@ The emboldened characters are the numeric prefixes for binary, octal, and hex
 notation respectively.  Be aware that the leading zero always indicates octal
 mode; this can occasionally produce unanticipated confusion.
 
-X<numbers; undercore separator>
+X<numbers; underscore separator>
 X<underscore>
 
 For dealing with large numbers, you may use the underscore character (C<_>) to

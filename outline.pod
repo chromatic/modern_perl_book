@@ -97,7 +97,7 @@ Containers; Perl's built-in data types.
 L<scalars> *
 
 Should be simple, provided that the reference part stays put.  Should mention
-numerification/stringification, magical auto-increment.
+numification/stringification, magical auto-increment.
 
 =head3 Arrays
 

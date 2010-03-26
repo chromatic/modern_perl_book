@@ -431,7 +431,7 @@ the object passed in doesn't matter, nor does its I<implementation>.  All that
 matters is that it supports three methods, C<name()>, C<age()>, and C<diet()>
 which take no arguments and each return something which can concatenate in a
 string context.  Thus you may have a hundred different classes in your code,
-none of which have any obvious relationshp between each other, but if they
+none of which have any obvious relationship between each other, but if they
 conform to this expectation of behavior, they will work with this method.
 
 This is an improvement over writing specific functions to extract and display
@@ -443,7 +443,7 @@ like.  The details of those calculations is where it matters most: in the
 bodies of the methods in the classes themselves.
 
 Of course, the mere existence of a method called C<name()> or C<age()> does not
-by itself imply the behavior of that object.  A C<Dog> object may have an
+by itself imply the behavior of that object.  A C<Cat> object may have an
 C<age()> which is an accessor and tells you that C<$rodney> is 8 but C<$lucky>
 is 3.  A C<Cheese> object may have an C<age()> method that lets you determine
 how long to stow C<$cheddar> so that it becomes sharp; in other words, C<age()>

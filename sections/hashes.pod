@@ -147,7 +147,7 @@ automatically according to the same rules as fat commas:
 
 =begin programlisting
 
-    # autoquoted
+    # auto-quoted
     my $address = $addresses{Victor};
 
     # needs quoting; not a valid bareword
@@ -422,7 +422,7 @@ themselves evaluate to false in a boolean context.
     nok( %empty, 'empty hash should evaluate to false' );
 
     my %false_key = ( 0 => 'true value' );
-    ok( %false_key, 'hash containing false key should evalute to true' );
+    ok( %false_key, 'hash containing false key should evaluate to true' );
 
     my %false_value = ( 'true key' => 0 );
     ok( %false_value, 'hash containing false value should evaluate to true' );
