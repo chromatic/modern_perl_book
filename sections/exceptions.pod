@@ -27,7 +27,7 @@ file for logging.  If you cannot open the file, something has gone wrong:
     {
         my $name = shift;
         open my $fh, '>>', $name
-            B<or die "Can't open logging file '$name': $!";
+            B<or die "Can't open logging file '$name': $!";>
         return $fh;
     }
 

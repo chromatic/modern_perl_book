@@ -217,7 +217,7 @@ the verification and validation for you:
         use Moose;
 
         has 'name', is => 'ro', isa => 'Str';
-        B<< has 'age',  is => 'ro';>>
+        B<< has 'age',  is => 'ro'; >>
     }
 
     my $invalid = Cat->new( name => 'bizarre', age => 'purple' );
@@ -814,7 +814,7 @@ X<moose; versus Perl 5 OO>
 
 Moose provides many features you'd otherwise have to build for yourself with
 the default object orientation of Perl 5.  While you I<can> build everything
-you get with Moose yourself (see L<blessed_references), or cobble it together
+you get with Moose yourself (see L<blessed_references>), or cobble it together
 with a series of CPAN distributions, Moose is a coherent package which just
 works, includes good documentation, is part of many successful projects, and is
 under active development by an attentive and talented community.

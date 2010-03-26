@@ -20,7 +20,7 @@ suppress warnings.  If you have the wherewithal to eliminate warnings and
 potential warnings throughout the entire codebase, this is useful.
 
 It's more useful to use the warnings pragma, however.  The presence of C<use
-warnings;> or an equivalentN<Such as C<use Modern::Perl;> in code indicates
+warnings;> or an equivalentN<Such as C<use Modern::Perl;>> in code indicates
 that the authors intended that normal operation of the code should not produce
 warnings.
 
