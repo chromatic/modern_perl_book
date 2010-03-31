@@ -1,0 +1,94 @@
+=head2 Advanced OO Perl
+
+Z<advanced_oo>
+
+Creating and using objects in Perl 5 with Moose (L<moose>) is easy.
+I<Designing> good object systems is more difficult.  The additional
+capabilities for abstraction offer many possibilities for obfuscation.  Only
+practical experience can help you understand the most important design
+techniques... but several principles can guide you to that point.
+
+=head3 Favor Composition Over Inheritance
+
+Novice OO designs often overuse inheritance.  It's common to see class
+hierarchies which try to model all of the behavior for entities within the
+system in single classes.  This adds a conceptual overhead to understanding the
+system, because you have to understand the hierarchy, and it adds technical
+weight to every class, because conflicting responsibilties and methods may get
+in the way of necessary behaviors or future modifications.
+
+The encapsulation provided by classes offers better ways to organize code.  You
+don't have to inherit behavior to provide behavior to users of objects.  A
+C<Car> object does not have to inherit from a C<Vehicle::Wheeled> object to
+contain C<Wheel>s; it can contain several C<Wheel> objects as instance
+attributes.
+
+Decomposing complex classes into smaller, focused entities (whether classes or
+roles) improves encapsulation and reduces the possibility that any one class or
+role will grow to do too much.  Smaller, simpler, better encapsulated entities
+are easier to understand, test, and maintain.
+
+=head3 Single Responsibility Principle
+
+When you design your object system, model the problem in terms of
+responsibilities, or reasons why each specific entity may need to change.  For
+example, an Employee object may represent specific information about a person's
+name, contact information, and other personal data, while a Job object may
+represent business responsibilities.  A simple design might conflate the two
+into a single entity, but separating them allows the Employee class to consider
+only the problem of managing information specific to who the person is and the
+Job class to represent what the person does.
+
+When each class has a single responsibility, you can improve the encapsulation
+of class-specific data and behaviors and reduce coupling between classes.
+
+=head3 Don't Repeat Yourself
+
+Complexity and duplication complicate development and maintenance activities.
+The DRY principle (Don't Repeat Yourself) is a reminder to seek out and to
+eliminate duplication within the system.  Duplication exists in many forms, not
+only code but also data.  If you find yourself repeating configuration
+information, user data, and other artifacts within your system, instead find a
+canonical, single representation of that information, then generate all of the
+other artifacts from that representation.
+
+This principle helps to reduce the possibility that important parts of your
+system can get unsynchronized, and helps you to find the optimal representation
+of the system and its data.
+
+=head3 Liskov Substitution Principle
+
+=for author
+
+This is not easy to explain, especially at the level of knowledge expected at
+this point in the book.
+
+=end for
+
+The Liskov substitution principle suggests that subtypes of a given type
+(specializations of a class or role or subclasses of a class) should be
+substitutable for the parent type without narrowing the types of data they
+receive or expanding the types of data they produce.  In other words, they
+should be as general as or more general at what they expect and as specific as
+or more specific about what they produce.
+
+=head3 Immutability
+
+A common pattern among programmers new to object orientation is to treat
+objects as if they were bundles of records which use methods to get and set
+internal values.  While this is simple to implement and easy to understand, it
+can lead to the unfortunate temptation to pull the behavioral responsibilities
+out of the classes where they belong.
+
+In general, the most useful technique to working with objects effectively is to
+tell them what to do, not how to do it.  If you find yourself accessing the
+instance data of objects (even through accessor methods), you may have too much
+access to the responsibilities of the class.
+
+One approach to preventing this behavior is to consider objects as immutable.
+Pass in all of the relevant configuration data to their constructors, then
+disallow any modifications of this information from outside the class.  Do not
+expose any methods to mutate instance data.
+
+Some designs go as far as to prohibit the modification of instance data
+I<within> the class itself, though this is much more difficult to achieve.

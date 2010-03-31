@@ -3,3 +3,5 @@
 L<moose>
 
 L<blessed_references>
+
+L<advanced_oo>
