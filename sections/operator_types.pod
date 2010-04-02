@@ -1,0 +1,152 @@
+=head1 Operator Types
+
+Z<operator_types>
+
+X<operand>
+
+Because Perl is an operator oriented language and because of its pervasive
+notion of context, especially value contexts (L<value_contexts>), understanding
+Perl 5 operators requires understanding the contexts they provide to their
+I<operands> (the entities on which they operate).  That is to say, the correct
+operator to use in a given situation depends on what type of value you expect
+to use in that situation.
+
+=head2 Mathematic Operators
+
+X<operators; mathematic>
+X<operators; arithmetic>
+X<operators; +>
+X<+>
+X<operators; ->
+X<->
+X<operators; *>
+X<*>
+X<operators; />
+X</>
+X<operators; **>
+X<**>
+X<operators; %>
+X<%>
+X<operators; +=>
+X<+=>
+X<operators; -=>
+X<-=>
+X<operators; *=>
+X<*=>
+X<operators; /=>
+X</=>
+X<operators; **=>
+X<**=>
+X<operators; %=>
+X<%=>
+X<operators; -->
+X<-->
+
+The mathematic operators enforce numeric contexts on their operands.  They
+consist of the standard arithmetic operators such as addition (C<+>),
+subtraction (C<->), multiplication (C<*>), division (C</>), exponentiation
+(C<**>), modulo (C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>,
+C<**=>, and C<%=>), and auto-decrement (C<-->), whether postfix or prefix.
+
+X<operators; ==>
+X<==>
+X<operators; !=>
+X<!=>
+X<< operators; E<gt> >>
+X<< E<gt> >>
+X<< operators; E<lt> >>
+X<< E<lt> >>
+X<< operators; E<gt>= >>
+X<< E<gt>= >>
+X<< operators; E<lt>= >>
+X<< E<lt>= >>
+X<< operators; E<lt>=E<gt> >>
+X<< E<lt>=E<gt> >>
+
+Several comparison operators enforce numeric contexts upon their operands.
+These are numeric equality (C<==>), numeric inequality (C<!=>), greater than
+(C<< E<gt> >>), less than (C<< E<lt> >>), greater than or equal to (C<< E<gt>=
+>>), less than or equal to (C<< E<lt>= >>), and the sort comparison operator
+(C<< E<lt>=E<gt> >>).
+
+=head2 String Operators
+
+X<operators; string>
+X<strings; operators>
+X<operators; =~
+X<=~>
+X<operators; !~>
+X<!~>
+X<operators; .>
+X<.>
+
+The string operators enforce string contexts on their operands.  They consist
+of the positive and negative regular expression binding operators (C<=~> and
+C<!~>, respectively), and the concatenation operator (C<.>).
+
+X<operators; eq>
+X<eq>
+X<operators; ne>
+X<ne>
+X<operators; gt>
+X<gt>
+X<operators; lt>
+X<lt>
+X<operators; ge>
+X<ge>
+X<operators; le>
+X<le>
+X<operators; cmp>
+X<cmp>
+
+Several comparison operators enforce string contexts upon their operands.
+These are string equality (C<eq>), string inequality (C<ne>), greater than
+(C<gt>), less than (C<lt>), greater than or equal to (C<ge>), less than or
+equal to (C<le>), and the string sort comparison operator (C<cmp>).
+
+=head1 Bitwise Operators
+
+X<operators; bitwise>
+X<< operators; E<lt>E<lt> >>
+X<< E<lt>E<lt> >>
+X<< operators; E<gt>E<gt> >>
+X<< E<gt>E<gt> >>
+X<operators; &>
+X<&>
+X<operators; |>
+X<|>
+X<operators; ^>
+X<^>
+X<operators; &=>
+X<&=>
+X<operators; |=>
+X<|=>
+X<operators; ^=>
+X<^=>
+
+The bitwise operators treat their operands numerically at the bit level.  These
+are somewhat uncommon in many Perl 5 programs.  They consist of left shift (C<<
+<< >>), right shift (C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and
+binary or (C<^>), as well as their in-place variants (C<&=>, C<|=>, and C<^=>).
+
+=head2 Special Operators
+
+X<operators; auto-increment>
+X<auto-increment>
+X<operators; ++>
+
+The auto-increment operator has a special case.  If anything has ever used a
+variable in a numeric context, it increments the numeric value of that
+variable.  If the variable is obviously a string (and has never been evaluated
+in a numeric context), the string value increments with a carry, such that C<a>
+increments to C<b>, C<zz> to C<aaa>, and C<a9> to C<b0>.
+
+X<operators; repetition>
+X<operators; x>
+X<x>
+
+The repetition operator (C<x>) depends on amount context.  In scalar context,
+it repeats its left operand into a single scalar.  In list context, it produces
+a list of its left operand repeated.  There is one special case to Perl 5's
+list syntax; if the left operand is a scalar enclosed in parentheses, the
+repetition operator will treat it as if it were a list.
