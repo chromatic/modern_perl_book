@@ -1,0 +1,152 @@
+=head1 Reflection
+
+Z<reflection>
+
+X<reflection>
+
+I<Reflection> is the process of asking a program about itself as it runs.
+Whereas you can write many useful programs without ever having to use
+reflection, techniques such as metaprogramming (L<metaprogramming>) benefit
+from a deeper understanding of which entities are in the system.
+
+C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
+systems, but many useful programs do not use objects pervasively, and many
+useful programs do not use C<Class::MOP>.  Several idioms (L<idioms>) exist for performing reflection effectively in the absence of a formal system.
+
+=head2 Checking that a Package Exists
+
+To check that a package exists somewhere in the system--that is, if some code
+somewhere has executed a C<package> directive with a given name--you can check
+that the package inherits from C<UNIVERSAL>.  One easy way to do so is to check
+that the package can perform the C<can()> method:
+
+=begin programlisting
+
+    say "$pkg exists" if $pkg->can( 'can' );
+
+=end programlisting
+
+Note that although you I<may> use packages with the names C<0> and C<''>N<...
+only if you define them symbolically, as these are I<not> allowable identifiers
+in source code.>, the C<can()> method will throw a method invocation exception
+if you use them as invocants.  Wrap the invocation in an C<eval> block to
+prevent this:
+
+=for author
+
+Need C<&& 1> here?  Only if someone's written a Liskov-violating C<can()>.
+
+=end for
+
+=begin programlisting
+
+    say "$pkg exists" if eval { $pkg->can( 'can' ) };
+
+=end programlisting
+
+You I<could> also grovel through the symbol table, but this approach is quicker
+and easier to understand.
+
+=head2 Checking that a Class Exists
+
+Because Perl 5 makes no strong distinction between packages and classes, the
+same technique for checking the existence of a package works for checking that
+a class exists.  There is no generic way for determining if a package is a
+class.  You I<can> check that the package C<can()> perform C<new()>, but there
+is no guarantee that any C<new()> found is a method, nor a constructor.
+
+=head2 Checking that a Module Has Loaded
+
+X<%INC>
+X<@INC>
+
+If you know the name of a module, you can check that Perl believes it has
+loaded that module from disk by looking in the C<%INC> hash.  This hash
+corresponds to C<@INC>; when Perl 5 loads code with C<use> or C<require>, it
+stores an entry in C<%INC> where the key is the pathified name of the module to
+load and the value is the full path on disk to that module.  In other words,
+loading C<Modern::Perl> effectively does:
+
+=begin programlisting
+
+    $INC{'Modern/Perl.pm'} =>
+        '/path/to/perl/lib/site_perl/5.12.0/Modern/Perl.pm';
+
+=end programlisting
+
+The details of the path will vary depending on your installation, but for the
+purpose of testing that Perl has successfully loaded a module, you can convert
+the name of the module into the canonical file form and test for existence
+within C<%INC>:
+
+=begin programlisting
+
+    sub module_loaded
+    {
+        (my $modname = shift) =~ s!::!/!g;
+        return exists $INC{ $modname . '.pm' };
+    }
+
+=end programlisting
+
+Nothing prevents other code from manipulating C<%INC> itself.  Depending on
+your paranoia level, you may check the path and the expected contents of the
+package yourself, but modules with good reasons for manipulating this variable
+(such as C<Test::MockObject> or C<Test::MockModule>) have their own reasons and
+modules with poor reasons have other problems.
+
+=head2 Checking the Version of a Module
+
+There is no guarantee that a given module provides a version.  Even so, all
+modules inherit from C<UNIVERSAL> (L<universal>), so they all have a
+C<VERSION()> method available:
+
+=begin programlisting
+
+    my $mod_ver = $module->VERSION();
+
+=end programlisting
+
+If the given module does not override C<VERSION()> or contain a package
+variable C<$VERSION>, the method will return an undefined value.  Likewise, if
+the module does not exist, the method call will fail.
+
+=head2 Checking that a Function Exists
+
+The simplest mechanism by which to determine if a function exists is to use the
+C<can()> method on the package name:
+
+=begin programlisting
+
+    say "$func() exists" if $pkg->can( $func );
+
+=end programlisting
+
+Note that C<$pkg> must be a valid invocant; wrap the method call in an C<eval>
+block if you have any doubts about its validity.  Beware that a function
+implemented in terms of C<AUTOLOAD()> (L<autoload>) may report the wrong answer
+if the function's package does not also override C<can()> correctly.  This is a
+bug in the other package.
+
+You may use this technique to determine if a modules C<import()> has imported a function into the current namespace:
+
+=begin programlisting
+
+    say "$func() imported!" if __PACKAGE__->can( $func );
+
+=end programlisting
+
+You may also root around in the symbol table and typeglobs to determine if a
+function exists, but this mechanism is simpler and easier to explain.
+
+=head2 Checking that a Method Exists
+
+There is no generic way to determine whether a given function is a function or
+a method.  Some functions perform dual duty as both functions and methods;
+though this is overly complex and usually a mistake, it is an allowed feature.
+
+=for author
+
+Rooting around in the symbol table to determine if a variable exists?  Icky.
+
+=end for

@@ -278,6 +278,8 @@ attempting to invoke the C<require()> method on the undefined value.
 
 =head4 Class::MOP
 
+Z<class_mop>
+
 X<Class::MOP>
 X<Moose>
 X<objects; meta object protocol>
