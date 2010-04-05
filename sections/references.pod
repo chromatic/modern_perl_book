@@ -349,6 +349,8 @@ an anonymous hash.
 
 =head4 Function References
 
+Z<function_references>
+
 X<function references>
 X<references; functions>
 X<subroutine references>

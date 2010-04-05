@@ -13,6 +13,8 @@ and preventing them from leaking out.
 
 =head4 Lexical Scope
 
+Z<lexical_scope>
+
 X<lexical scope>
 X<scope; lexical>
 
