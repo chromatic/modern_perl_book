@@ -119,5 +119,6 @@ Similarly, the C<looks_like_number()> function returns true if the scalar value 
 scalars and truth; boolean context
 undef
 the C<scalar()> function ?
+scalar types, my Foo $foo;
 
 =end for
