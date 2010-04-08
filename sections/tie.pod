@@ -1,0 +1,128 @@
+=head3 Tie
+
+Z<tie>
+
+X<tie>
+X<keywords; tie>
+X<tying>
+
+Overloading (L<overload>) lets you give classes custom behavior for specific
+types of coercions and accesses.  A similar mechanism exists for making
+variables act like built-in types (scalars, arrays, and hashes), but with more
+specific behaviors.  This mechanism uses the C<tie> keyword; it is C<tying>.
+
+The original use of C<tie> was to produce a hash stored on disk, rather than in
+memory.  This allowed the use of dbm files from Perl, as well as the ability to
+access files larger than would comfortably fit in memory.  The core module
+C<Tie::File> provides a similar system by which to handle data files too large
+to fit in memory.
+
+The class to which you C<tie> a variable must conform to a specific,
+well-documented interface for the specific datatype.  C<perldoc perltie> is the
+primary source of information about these interfaces, though the core modules
+C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> are more useful in practice.
+Inherit from them to start, and override only those specific methods you need
+to modify.
+
+=for author
+
+Recommend use of Tie::Std* variants instead?  Their lack of documentation is
+unfortunate.
+
+=end for
+
+=head4 Tying Variables
+
+Given a variable to tie, tie it with the syntax:
+
+=begin programlisting
+
+    tie my @file, 'Tie::File', @args;
+
+=end programlisting
+
+... where the first argument is the variable to tie, the second is the name of
+the class into which to tie it, and C<@args> is an optional list of arguments
+required for the tying function.  In the case of C<Tie::File>, this is the name
+of the file to which to tie the array.
+
+The tying function resembles a constructor (in the L<blessed_references>)
+sense); 's C<TIESCALAR>, C<TIEARRAY()>, C<TIEHASH()>, or C<TIEHANDLE()> for
+scalars, arrays, hashes, and filehandles respectively.  This function also
+returns an object, and the C<tie()> operator returns that object as well.  Few
+people use this object.
+
+The C<tied()> operator returns the same object when used on a tied variable.
+Again, few people use that object; the general case is to use C<tied()> to
+determine whether the given variable is tied.  If not, C<tied()> returns the
+undefined value.
+
+=head4 Implementing Tied Variables
+
+To implement the class of a tied variable, inherit from a core module such as
+C<Tie::StdScalar>, then override the specific methods for the operations you
+want to change.  In the case of a tied scalar, you probably need to override
+C<FETCH> and C<STORE>, may need to override C<TIESCALAR()>, and probably can
+ignore C<DESTROY()>.
+
+You can create a class which logs all reads from and writes to a scalar with a
+surprisingly small amount of code:
+
+=begin programlisting
+
+    package Tie::Scalar::Logged;
+
+    use Modern::Perl;
+
+    use Tie::Scalar;
+    use base 'Tie::StdScalar';
+
+    sub STORE
+    {
+        my ($self, $value) = @_;
+        Logger->log("Storing <$value> (was [$$self])", 1);
+        $$self = $value;
+    }
+
+    sub FETCH
+    {
+        my $self = shift;
+        Logger->log("Retrieving <$$self>", 1);
+        return $$self;
+    }
+
+1;
+
+=end programlisting
+
+Assume that the C<Logger> class method C<log()> takes a string and the number
+of frames up the callstack of which to report the location.  Note as well that
+C<Tie::StdScalar> does not have its own F<.pm> file, so you must use
+C<Tie::Scalar> to make it available.
+
+Within the C<STORE()> and C<FETCH()> methods, C<$self> acts like a blessed
+scalar, because it is.  Assigning to that scalar reference changes the value of
+the scalar and reading from it returns its value.
+
+Similarly, the methods of C<Tie::StdArray> and C<Tie::StdHash> act on blessed
+array and hash references, respectively.  The C<perldoc perltie> documentation
+explains the copious methods they support, as you can read or write multiple values from them, among other operations.
+
+=head4 When to use Tied Variables
+
+Tied variables seem like fun opportunities for cleverness, but they make for
+conusing interfaces in almost all cases, as developers encounter them so
+rarely.  Unless you have a very good reason for making objects behave as if
+they were built-in data types, avoid creating your own ties.
+
+Good reasons include to ease debugging (use the logged scalar to help you
+understand where a value changes) and to make certain impossible operations
+possible (accessing large files in a memory-efficient way).  Tied variables are
+less useful as the primary interfaces to objects; it's often too difficult and
+constraining to try to fit your whole interface to that supported by C<tie()>.
+
+The final word of warning is both sad and convincing; far too much code does
+not expect to work with tied variables.  Code which violates encapsulation for
+whatever reason may prohibit good and valid uses of cleverness.  This is
+unfortunate, but violating the expectations of library code tends to reveal
+bugs that are often out of your power to fix.
