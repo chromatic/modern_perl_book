@@ -111,7 +111,7 @@ explains the copious methods they support, as you can read or write multiple val
 =head4 When to use Tied Variables
 
 Tied variables seem like fun opportunities for cleverness, but they make for
-conusing interfaces in almost all cases, as developers encounter them so
+confusing interfaces in almost all cases, as developers encounter them so
 rarely.  Unless you have a very good reason for making objects behave as if
 they were built-in data types, avoid creating your own ties.
 
