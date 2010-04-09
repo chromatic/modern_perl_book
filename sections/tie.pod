@@ -91,7 +91,7 @@ surprisingly small amount of code:
         return $$self;
     }
 
-1;
+    1;
 
 =end programlisting
 

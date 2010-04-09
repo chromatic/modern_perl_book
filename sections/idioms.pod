@@ -257,7 +257,7 @@ contents of the file.  Even though C<$/> immediately reverts to its previous
 state at the end of the block, C<$file> now contains the contents of the file.
 
 This can be useful (and, admittedly, maddening for people unfamiliar with this
-particular combination of Perl 5 features) if you don't have C<Perl::Slurp>
+particular combination of Perl 5 features) if you don't have C<File::Slurp>
 installed from the CPAN.
 
 =head3 Controlled Execution
