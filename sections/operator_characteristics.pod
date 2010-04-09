@@ -1,0 +1,141 @@
+=head1 Operator Characteristics
+
+Z<operator_characteristics>
+X<operators>
+X<operators; characteristics>
+
+An accurate, if irreverent, description of Perl is an "operator-oriented
+language".  The interaction of operators with their operands gives Perl its
+expressivity and power.  Understanding Perl requires understanding its
+operators and how they behave.  For the sake of this discussion, a working
+definition of a Perl I<operator> is a series of one or more symbols used as
+part of the syntax of a language.
+
+=begin sidebar
+
+The most accurate definition of operators is "What's in C<perlop>", but even
+that leaves out some operators in C<perlsyn> and includes built-in functions.
+Don't get too attached to a single definition.
+
+=end sidebar
+
+As usual, the documentation provides copious detail about Perl's operators.
+See C<perldoc perlop> and C<perldoc perlsyn>.  Several aspects of these
+operators benefit from more explanation, however.
+
+=head2 Precedence
+
+Z<precedence>
+X<precedence>
+
+The I<precedence> of an operator helps determine when Perl should evaluate it
+in an expression.  Operators with higher precedence get evaluated before
+operators with lower precedence.  Operators with the same precedence get
+evaluated from left to right.  Because the precedence of multiplication is
+higher than the precedence of addition, C<7 + 7 * 10> evaluates to C<77>, not
+C<140>.  You may force the evaluation of some operators before others by
+wrapping them and their arguments in parentheses; C<(7 + 7) * 10> I<does>
+evaluate to C<140>, as the addition operation becomes a single unit which gets
+multiplied.
+
+C<perldoc perlop> contains a table of precedence.  Almost no one has this table
+memorized.  The best way to manage precedence is to keep your expressions
+simple.  The second best way is to use parentheses to clarify precedence where
+you must create complex nested expressions.
+
+=head2 Associativity
+
+Z<associativity>
+X<associativity>
+X<associativity; left>
+X<left associative>
+X<associativity; right>
+X<right associative>
+
+Operators of the same precedence may have different I<associativity>, which
+governs whether they evaluate from left to right or right to left.  Again, this
+is only a feature of complex expressions.  Addition is a left-associative, such
+that C<2 + 3 + 4> evaluates C<2 + 3> first, then adds C<4> to the result.
+Exponentiation is right associative, such that C<2 ** 3 ** 4> performs C<3 **
+4> first, then raises C<2> to that power.
+
+Again, simplifying complex expressions and using parentheses to demonstrate
+your intent is important.
+
+=begin sidebar
+
+X<B::Deparse>
+X<precedence; disambiguation>
+X<associativity; disambiguation>
+
+The core C<B::Deparse> module can rewrite snippets of code to demonstrate
+exactly how Perl handles operator precedence and associativity.  Use the C<-p>
+flag to produce extra parentheses which demonstrate the grouping of units of
+expressions.  Use C<perl -MO=Deparse,p> on such a snippet of code, though
+beware that in the examples given, Perl will optimize away all mathematical
+operations it can perform during parsing and include the constants instead.
+Use C<$a ** $b ** $c> instead.
+
+=end sidebar
+
+=for author
+
+=head2 Arity
+
+Z<arity>
+
+X<arity>
+X<operators; arity>
+X<nullary>
+X<unary>
+X<binary>
+X<trinary>
+X<listary>
+
+The I<arity> of an operator represents the number of operands on which it
+operates.  A I<nullary> operator operates on zero operands.  A I<unary>
+operator operates on one operand.  A I<binary> operator operates on two
+operands.  A I<trinary> operator operates on three operands.  A I<listary>
+operator operates on a list of operands.
+
+There's no single good rule for determining the arity of an operator, other
+than the fact that most operate on two, many, or one operands.  The description
+of the operator should suggest what you can expect.
+
+For example, the arithmetic operators are binary operators, and usually left
+associative.  C<2 + 3 - 4> evaluates C<2 + 3> first; addition and subtraction
+have the same precedence, but they're left associative and binary, so the
+proper evaluation order is the leftmost two operands (C<2> and C<3>) with the
+leftmost operator (C<+>), and then the result as the first operand and C<4>
+with the second to the rightmost operator.
+
+One common source of confusion for Perl novices is the interaction of listary
+operators (especially function calls) with nested expressions.  Again, the
+judicious use of parentheses often clarifies.
+
+=for author
+
+Is there anything more to say here?
+
+=end for
+
+=head4 Fixity
+
+Z<fixity>
+X<fixity>
+X<operators; fixity>
+X<infix>
+X<fixity; infix>
+X<prefix>
+X<fixity; prefix>
+X<postfix>
+X<fixity; postfix>
+
+The final characteristic of operators is their I<fixity>, or their position
+relative to their operands.  The mathematic operators tend to be I<infix>
+operators, where they appear between their operands.  Other operators are
+C<prefix>, where they appear before their operands; these tend to be unary
+operators, such as the prefix increment operator C<++$x> or the negation
+operator (C<!$x>).  The other fixity type is I<postfix>, where the operator
+appears after its operand (such as the list of arguments provided to a function
+or method call).
