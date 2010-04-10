@@ -567,10 +567,10 @@ You can even set default parameters with this approach:
     sub make_sundae
     {
         my %parameters =
-        B<(>
-            B<<flavor => 'Vanilla',>>
-            B<<topping => 'fudge',>>
-            B<<sprinkles => 100,>>
+        (
+            B<< flavor => 'Vanilla', >>
+            B<< topping => 'fudge', >>
+            B<< sprinkles => 100, >>
             @
         );
         ...
