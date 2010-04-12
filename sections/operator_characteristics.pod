@@ -54,7 +54,7 @@ X<right associative>
 
 Operators of the same precedence may have different I<associativity>, which
 governs whether they evaluate from left to right or right to left.  Again, this
-is only a feature of complex expressions.  Addition is a left-associative, such
+is only a feature of complex expressions.  Addition is left associative, such
 that C<2 + 3 + 4> evaluates C<2 + 3> first, then adds C<4> to the result.
 Exponentiation is right associative, such that C<2 ** 3 ** 4> performs C<3 **
 4> first, then raises C<2> to that power.
