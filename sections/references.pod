@@ -296,7 +296,7 @@ existence of, or retrieve) by using the dereferencing arrow:
     sub translate_to_spanish
     {
         my $color = shift;
-        return B<$colors_ref->{$color}>;
+        return B<< $colors_ref->{$color} >>;
     }
 
 =end programlisting
