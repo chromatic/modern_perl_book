@@ -88,7 +88,7 @@ C<$ENV{PATH}> to a specific and well-secured path:
 =begin programlisting
 
     delete @ENV{ qw( IFS CDPATH ENV BASH_ENV ) };
-    $ENV{PATH] = '/path/to/app/binaries/';
+    $ENV{PATH} = '/path/to/app/binaries/';
 
 =end programlisting
 
