@@ -9,10 +9,10 @@ values which form the basis of some rarely-used metaprogramming
 
 =begin sidebar
 
-Attributes are rare for a couple of reasons.  First, their implementation has
-traditionally required some awkward contortions to produce well.  Second, it's
-easy to use them to make a mess.  Use them only when they offer compelling
-benefits for maintainance and clarity.
+Attributes rarely appear in most code.  The mechanism for defining attributes
+can be awkward to use, and it's easy to make a mess with poorly desined
+attributes.  Even so, sometimes they clarify--but use them only when they offer
+compelling benefits of maintainance and clarity.
 
 =head2 Using Attributes
 
