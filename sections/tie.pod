@@ -75,7 +75,7 @@ surprisingly small amount of code:
     use Modern::Perl;
 
     use Tie::Scalar;
-    use base 'Tie::StdScalar';
+    use parent -norequire => 'Tie::StdScalar';
 
     sub STORE
     {
@@ -106,7 +106,16 @@ the scalar and reading from it returns its value.
 
 Similarly, the methods of C<Tie::StdArray> and C<Tie::StdHash> act on blessed
 array and hash references, respectively.  The C<perldoc perltie> documentation
-explains the copious methods they support, as you can read or write multiple values from them, among other operations.
+explains the copious methods they support, as you can read or write multiple
+values from them, among other operations.
+
+=begin sidebar
+
+The C<-norequire> option prevents the C<parent> pragma from attempting to load
+a file for C<Tie::StdScalar>, as that module is part of the file
+F<Tie/Scalar.pm>.
+
+=end sidebar
 
 =head4 When to use Tied Variables
 
