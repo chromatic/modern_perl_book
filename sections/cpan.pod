@@ -74,7 +74,7 @@ distribution does and how you may use it.
 
 =back
 
-Several additional services build in the CPAN to provide comprehensive
+Several additional services build on the CPAN to provide comprehensive
 automated testing and reporting of every CPAN distribution for adherence to
 packaging and distribution guidelines and correctness of behavior on various
 platforms and versions of Perl.  Every CPAN distribution has its own ticket
