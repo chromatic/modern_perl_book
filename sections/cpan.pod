@@ -18,7 +18,7 @@ Regardless of how you answer those questions for any other language, modern
 Perl programming makes heavy use of the CPAN (U<http://www.cpan.org/>).  The
 CPAN, or Comprehensive Perl Archive Network, is an uploading and mirroring
 system for redistributable, reusable Perl code.  It's one of -- if not I<the>
-largest -- archives of libraries of code in the world.
+-- largest archives of libraries of code in the world.
 
 =begin sidebar
 
