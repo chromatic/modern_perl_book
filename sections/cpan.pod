@@ -40,8 +40,8 @@ X<distribution>
 X<module>
 
 CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
-code.  A single distribution can contain one or more I<module>, which is a
-self-contained library of Perl code.  Each distribution lives in its own
+code.  A single distribution can contain one or more I<modules>, which are
+self-contained libraries of Perl code.  Each distribution lives in its own
 namespace on the CPAN, contains its own metadata, and is buildable,
 installable, updateable, and testable on its own.
 
