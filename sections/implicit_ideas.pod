@@ -100,8 +100,8 @@ list two at a time.
 Be careful, however.  If you call subroutines within code that uses C<$_>
 whether implicitly or explicitly, they may overwrite the value of C<$_>.
 Similarly, if you write a subroutine which uses C<$_>, you may clobber a caller
-subroutine's use of C<$_>.  Perl 5.10 allows you to declare C<$_> as a lexical
-variable with C<my> to prevent this clobbering behavior.
+subroutine's use of C<$_>.  Perl 5.10 allows you to use C<my> to declare C<$_>
+as a lexical variable, which prevents this clobbering behavior.
 
     while (<STDIN>)
     {
