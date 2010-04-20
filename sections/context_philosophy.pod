@@ -44,7 +44,7 @@ context>I<void context>:
 
 =end programlisting
 
-Calling the function and assign its return value to a single element evaluates
+Calling the function and assigning its return value to a single element evaluates
 the function in X<scalar context>I<scalar_context>:
 
 =begin programlisting
