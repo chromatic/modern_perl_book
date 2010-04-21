@@ -1,0 +1,3 @@
+build/chapters
+build/html/*.html
+examples/
