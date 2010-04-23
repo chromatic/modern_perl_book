@@ -106,9 +106,9 @@ counter example:
 Perl 5.10 deprecated a technique abused in previous versions of Perl by which
 you could effectively emulate C<state>.  Using a postfix conditional which
 evalutes to false with a C<my> declaration avoids I<reinitializing> a lexical
-variable to C<undef> or its initialized value.  This technique now gives a
-deprecated warning, and rightfully so.  Avoid it, but understand it if you
-encounter it:
+variable to C<undef> or its initialized value.  Using this technique will now
+produce a warning about its deprecation, and rightfully so.  Avoid it, but
+understand it if you encounter it:
 
 =begin programlisting
 
