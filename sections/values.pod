@@ -163,6 +163,86 @@ the ending delimiter.
 
 =end sidebar
 
+=head4 Unicode and Strings
+
+X<unicode>
+
+Unicode is a system for representing characters in the world's written
+languages.  While most English text uses only 127 characters (and thus requires
+seven bits of storage, which fits nicely into eight-bit bytes), it's
+naE<iuml>ve to believe that you won't someday need an umlaut, for example.
+
+Perl 5 handles Unicode internally, and mostly you can ignore that it does so.
+Because there are several representations for I<how> to store Unicode, you have
+to know what kind of data you receive from the external world and what kind of
+data you want to emit to the external world, but inside Perl, all of the string
+operations you expect work just fine on Unicode data as opposed to ASCII
+dataN<Provided you don't assume that a character in a string requires a byte of
+storage.>.
+
+For more details on what Unicode is, why encodings matter, and how to manage
+incoming and outgoing data in a Unicode world, see C<perldoc perluniintro>.
+
+X<pragmas; utf8>
+X<utf8>
+X<encoding>
+
+You may include Unicode characters in your programs in three ways.  The easiest
+is to use the C<utf8> pragma (L<pragmas>), which tells the Perl parser to read
+the rest of the source code file in the UTF-8 I<encoding> (an arrangement and
+representation of Unicode characters).  This allows you to use Unicode
+characters in strings as well in identifiers:
+
+=begin programlisting
+
+    use utf8;
+
+    my $cost = '1000£';
+
+    sub ¥ { ... }
+
+=end programlisting
+
+You will need to use a text editor which understands the UTF-8 encoding, and
+you will need to save your file appropriately.
+
+X<escapes; \x{}>
+X<\x{}>
+
+You may also use the Unicode escape sequence to represent character encodings.
+The syntax C<\x{}> represents a single character; place the hex form of the
+character's Unicode number within the curly brackets.
+
+=begin sidebar
+
+Note that these escapes interpolate only within double-quoted strings.
+
+=end sidebar
+
+X<charnames pragma>
+X<pragmas; charnames>
+X<escapes; \N{}>
+X<\N{}>
+
+Some Unicode characters have names.  Though these are more verbose, they can be
+clearer to read than Unicode numbers.  You must use the C<charnames> pragma to
+enable them.  Use the C<\N{}> escape to refer to them:
+
+=begin programlisting
+
+    use charnames ':full';
+    use Test::More tests => 1;
+
+    my $escaped_thorn = "\x{00FE}";
+    my $named_thorn   = "\N{LATIN SMALL LETTER THORN}";
+
+    is( $escaped_thorn, $named_thorn, 'Thorn equivalence check' );
+
+=end programlisting
+
+You may use the C<\x{}> and C<\N{}> forms within regular expressions as well as
+anywhere else you may legitimately use a string or a character.
+
 =head4 Numbers
 
 X<numbers>
@@ -247,7 +327,6 @@ X<undef>
 Perl 5 has a value which represents an unassigned/undefined/unknown value:
 C<undef>.  Declared but undefined scalar variables contain C<undef>:
 
-
 =begin programlisting
 
     my $name = undef;   # unnecessary assignment
@@ -270,9 +349,9 @@ When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list.  When evaluated in scalar context, this evaluates to
 C<undef>.  In list context, it represents an empty list.
 
-When used on the left-hand side of an assignment, it enforces list context.
-Thus to count the number of elements returned from an expression in list
-context without using a temporary variable, you may write the idiomatic:
+When used on the left-hand side of an assignment, it enforces list context.  To
+count the number of elements returned from an expression in list context
+without using a temporary variable, you use the idiom (L<idioms>):
 
 =begin programlisting
 
@@ -280,23 +359,86 @@ context without using a temporary variable, you may write the idiomatic:
 
 =end programlisting
 
+Because of the right associativity (L<associativity>) of the assignment
+operator, Perl calls C<get_all_clown_hats()> in list context.  This produces a
+list.  Even though that list never gets assigned to anything, that list is the
+return value of that subexpression.  The assignment of that return value is in
+scalar context because C<$count> is a scalar,
+
+You don't have to understand all of the implications of this code right now,
+but it does demonstrate how a few of Perl's fundamental design features can
+combine to produce interesting and useful behavior.
+
+=head4 Lists
+
+X<lists>
+
+Lists and arrays are not interchangeable in Perl.  You may store a list in an
+array and you may coerce an array to a list with the appropriate context, but
+they are separate entities.  Lists may occur verbatim in source code as values:
+
+=begin programlisting
+
+    my @first_fibs = (1, 1, 2, 3, 5, 8, 13, 21);
+
+=end programlisting
+
 =for author
 
-Really ought to discuss Unicode and representations here, but I don't know
-enough to write with CONFIDENCE.
-
-others?
-
-lists
-
-barewords (see elsewhere)
-
-operators
-
-functions
-
-regular expressions
-
-references
+Explain lvalue?  Link from here?
 
 =end for
+
+... as lvalue targets of assignments:
+
+=begin programlisting
+
+    my ($package, $filename, $line) = caller();
+
+=end programlisting
+
+... or as lists of expressions:
+
+=begin programlisting
+
+    say name(), ' => ', age();
+
+=end programlisting
+
+Note that you do not need parentheses to I<create> lists; where present, the
+parentheses in these examples group expressions to change I<precedence> of
+those expressions (L<precedence>).
+
+X<operators; range>
+X<operators; ..>
+X<..>
+X<range operator>
+
+You may use the range operator to create lists of literals in a compact form:
+
+=begin programlisting
+
+    my @chars = 'a' .. 'z';
+    my @count = 13 .. 27;
+
+=end programlisting
+
+X<qw()>
+X<operators; qw()>
+X<qw() operator>
+
+... and you may use the C<qw()> operator to split a literal string on
+whitespace to produce a list of strings:
+
+=begin programlisting
+
+    my @stooges = qw( Larry Curly Moe Shemp Joey Kenny );
+
+=end programlisting
+
+=begin sidebar
+
+Perl will produce a warning if the literal string contains a comma or the
+comment character.
+
+=end sidebar
