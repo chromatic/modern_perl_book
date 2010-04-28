@@ -147,11 +147,11 @@ with a different syntax:
 
 =end programlisting
 
-The C<< <<'END_BLURB' >> syntax has three several parts.  The double
-angle-brackets introduce the heredoc.  The quotes are optional and determine
-whether the heredoc obeys single-quoted or double-quoted behavior with regard
-to variable and escape character interpolation.  The C<END_BLURB> itself is an
-arbitrary identifier which the Perl 5 parser uses as the ending delimiter.
+The C<< <<'END_BLURB' >> syntax has three parts.  The double angle-brackets
+introduce the heredoc.  The quotes are optional and determine whether the
+heredoc obeys single-quoted or double-quoted behavior with regard to variable
+and escape character interpolation.  The C<END_BLURB> itself is an arbitrary
+identifier which the Perl 5 parser uses as the ending delimiter.
 
 Be careful; regardless of the indentation of the heredoc declaration, the
 ending delimiter must begin in the first column of the program.
