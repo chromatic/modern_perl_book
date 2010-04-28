@@ -73,7 +73,7 @@ These are numeric equality (C<==>), numeric inequality (C<!=>), greater than
 
 X<operators; string>
 X<strings; operators>
-X<operators; =~
+X<operators; =~>
 X<=~>
 X<operators; !~>
 X<!~>
