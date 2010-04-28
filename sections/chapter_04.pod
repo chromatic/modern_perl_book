@@ -2,6 +2,8 @@
 
 L<names>
 
+L<variables>
+
 L<values>
 
 L<control_flow>
@@ -17,3 +19,5 @@ L<coercion>
 L<references>
 
 L<packages>
+
+L<nested_data_structures>

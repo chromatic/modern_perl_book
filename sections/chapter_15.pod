@@ -1,9 +1,3 @@
-=head1 What to Avoid
+=head1 What's Missing
 
-L<barewords>
-
-L<indirect_objects>
-
-L<prototypes>
-
-L<method_sub_equivalence>
+L<missing_defaults>
