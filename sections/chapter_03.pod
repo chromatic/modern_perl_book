@@ -1,3 +1,0 @@
-=head1 The Perl Community
-
-L<perl_community>

@@ -1,80 +1,70 @@
-=head2 The Perl Community
-
 Z<perl_community>
 
-One of the goals of Perl 5.000 was to encourage Perl development outside the
-core of the language itself.  Where there were several forks of Perl 4 to talk
-to various relational databases (sybperl to connect to Sybase, oraperl to talk
-to Oracle, et cetera), Larry wanted people to be able to customize their own
-dialects of Perl locally, without forking the language into thousands of
-incompatible pidgins.
-
-Encouraging customization -- while ensuring some degree of compatibility -- in
-a culture that already supports sharing of knowledge and code is a great way to
-build a community.
-
-You don't have to join an "official" Perl community (as if such a thing
-existed), but the Perl community exists in many forms in many places.  Consider
-taking advantage of the knowledge and experience to help you solve your
-problems and make the Perl ecosystem a little better.
-
-=head3 Community Sites
+=head2 Community Sites
 
 X<perl.org>
 X<websites; perl.org>
 
-The main domain for Perl is U<http://www.perl.org/>.  This site hosts many
-forums for communication as well as web sites dedicated to improving the world
-of Perl.  Many of the best mailing lists have their hosting on perl.org.  See
-U<lists.perl.org> for a list.  In particular, the Perl beginners mailing list
-is a friendly place to ask novice questions and get accurate and helpful
-answers from friendly people.  See U<http://beginners.perl.org/>.
+Perl's homepage is U<http://www.perl.org/>.  This site hosts documentation,
+source code, tutorials, mailing lists, and several important community
+projects.  If you're new to Perl, the Perl beginners mailing list is a friendly
+place to ask novice questions and get accurate and helpful answers.  See
+U<http://beginners.perl.org/>.
 
-perl.org also provides hosting for several important projects in the Perl
-world.  One of the most important is U<http://dev.perl.org/>, a central site
-for core development of Perl 5, Perl 6, and even Perl 1.
+An important subdomain of note is U<http://dev.perl.org/>, a central site for
+core development of Perl 5, Perl 6N<The main Perl 6 site is
+U<http://www.perl6.org/>>, and even Perl 1.
+
+X<Perl Pub>
+
+=for author
+
+Fix link when appropriate, or remove reference.
+
+=end for
+
+Perl.org also hosts Perl Pub, a website which publishes several articles and
+tutorials about Perl programming every month.  Its archives reach back into the
+20th century.  See U<http://www.perl.org/pub/>.
 
 X<cpan.org>
 X<websites; cpan.org>
 
-The CPAN's central location is U<http://www.cpan.org/>.  Though
-U<http://search.cpan.org/> is likely a more popular starting location, the
-central software distribution hub of reusable, free Perl code is an essential
-part of the Perl community.  See L<CPAN> for more.
-
-X<PAUSE>
-X<CPAN; PAUSE>
-
-Note that PAUSE, the service CPAN authors and maintainers use to manage their
-distributions, is part of C<perl.org>.
+The CPAN's central location is U<http://www.cpan.org/>, though experienced
+users spend more time on U<http://search.cpan.org/>.  This central software
+distribution hub of reusable, free Perl code is an essential part of the Perl
+community.  See L<CPAN> for more.
 
 X<PerlMonks>
 
-=for author
-
-Should change the tense of "to celebrate" when appropriate.
-
-=end for
-
 PerlMonks, at U<http://perlmonks.org/>, is a venerable community site devoted
-to questions and answers and other discussions about Perl programming.  It will
-celebrate its tenth anniversary in December 2009, making it one of the oldest
-web communities dedicated to any programming language.
+to questions and answers and other discussions about Perl programming.  It
+celebrated its tenth anniversary in December 2009, making it one of the longest
+lasting web communities dedicated to any programming language.
+
+X<use Perl;>
 
 Several community sites offer news and commentary.  The oldest is
 U<http://use.perl.org/>; it has offered custom journals for many years.
 Several well-known Perl hackers write there.
 
+X<Enlightened Perl Organization>
+
 Other sites aggregate the Perl-related musings of Perl hackers, including
 U<http://perlsphere.net/>, U<http://planet.perl.org/>, and
 U<http://ironman.enlightenedperl.org/>.  The latter is part of an initiative
-from the Enlightened Perl Organization (http://enlightenedperl.org/>) to
+from the Enlightened Perl Organization (U<http://enlightenedperl.org/>) to
 increase the amount of and improve the quality of Perl publishing on the web.
+
+X<Perl Buzz>
 
 Perl Buzz (U<perlbuzz.com>) collects and republishes some of the most
 interesting and useful Perl news on a regular basis.
 
-=head3 Development Sites
+=head2 Development Sites
+
+X<RT>
+X<Best Practical>
 
 Best Practical Consulting (U<http://bestpractical.com/>) maintains an
 installation of their popular request tracking system, RT, for CPAN authors as
@@ -82,23 +72,32 @@ well as Perl 5 and Perl 6 development.  Every CPAN distribution has its own RT
 queue, linked from C<search.cpan.org> and available on U<http://rt.cpan.org/>.
 Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
 
+X<corehackers>
+
 The corehackers project helps identify useful changes to Perl 5 and helps to
 mentor new developers into fixing bugs and adding features.  Its wiki is
 available at U<http://corehackers.perl.org/>.
 
+X<Perl 5 Porters>
+X<p5p>
+
 The Perl 5 Porters mailing list is the central point for Perl 5 development
 discussion.  See U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
+
+X<TPF>
+X<The Perl Foundation>
+X<TPF wiki>
 
 The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all
 things Perl 5.  See U<http://www.perlfoundation.org/perl5>.
 
-=head3 Events
+=head2 Events
 
 X<YAPC>
 
 There are plenty of events in the physical world as well.  The Perl community
 holds a lot of conferences, workshops, and seminars.  In particular, the
-community-held YAPC -- Yet Another Perl Conference -- is a successful, local,
+community-run YAPC--Yet Another Perl Conference--is a successful, local,
 low-cost conference model held on multiple continents.  See
 U<http://yapc.org/>.
 

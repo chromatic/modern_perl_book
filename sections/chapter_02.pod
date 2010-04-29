@@ -1,3 +1,23 @@
-=head1 The CPAN
+=head1 Perl and Its Community
+
+One of Larry's main goals for Perl 5 was to encourage Perl development and
+evolution outside the core distribution.  Perl 4 had several forks, because
+there was no easy way to connect it to a relational database, for example.
+Larry wanted people to create and maintain their own extensions without
+fragmenting Perl into thousands of incompatible pidgins.
+
+You can add technical mechanisms for extensions, but you must also consider
+community aspects as well.  Extensions and enhancements that no one shares are
+extensions and enhancements that everyone has to build and test and debug and
+maintain themselves.  Yet shared extensions and libraries are worthless if you
+can't find them, or you can't enhance them, or you don't have permission to use
+them.
+
+Fortunately, the Perl community exists.  It's strong and healthy.  It welcomes
+willing participants at all levels--and not just for people who produce and
+share code.  Consider taking advantage of the knowledge and experience of
+countless other Perl programmers, and to share your abilities as well.
+
+L<perl_community>
 
 L<cpan>
