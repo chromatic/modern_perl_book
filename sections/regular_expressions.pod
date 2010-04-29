@@ -14,7 +14,7 @@ detail, including advanced features not covered here.
 
 =head3 Literals
 
-The simplest regexs are simple substring patterns:
+The simplest regexes are simple substring patterns:
 
     my $name = 'Chatfield';
     say "Found a hat!" if $name =~ /hat/;

@@ -54,6 +54,7 @@ number into individual digits with C<split>:
 
 =head4 Numeric Coercion
 
+Z<numeric_coercion>
 X<coercion; numeric>
 
 Numeric coercion occurs when using numeric comparison operators (such as C<==>

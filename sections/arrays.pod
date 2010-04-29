@@ -155,8 +155,6 @@ version of C<my @items>.  Prefer the latter.
 
 =end sidebar
 
-
-
 X<array slice>
 X<slices; array>
 

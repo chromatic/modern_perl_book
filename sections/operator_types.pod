@@ -11,9 +11,11 @@ I<operands> (the entities on which they operate).  That is to say, the correct
 operator to use in a given situation depends on what type of value you expect
 to use in that situation.
 
-=head2 Mathematic Operators
+=head2 Numeric Operators
 
-X<operators; mathematic>
+Z<numeric_operators>
+
+X<operators; numeric>
 X<operators; arithmetic>
 X<operators; +>
 X<+>
@@ -42,11 +44,11 @@ X<%=>
 X<operators; -->
 X<-->
 
-The mathematic operators enforce numeric contexts on their operands.  They
-consist of the standard arithmetic operators such as addition (C<+>),
-subtraction (C<->), multiplication (C<*>), division (C</>), exponentiation
-(C<**>), modulo (C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>,
-C<**=>, and C<%=>), and auto-decrement (C<-->), whether postfix or prefix.
+The numeric operators enforce numeric contexts on their operands.  They consist
+of the standard arithmetic operators such as addition (C<+>), subtraction
+(C<->), multiplication (C<*>), division (C</>), exponentiation (C<**>), modulo
+(C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
+C<%=>), and auto-decrement (C<-->), whether postfix or prefix.
 
 X<operators; ==>
 X<==>

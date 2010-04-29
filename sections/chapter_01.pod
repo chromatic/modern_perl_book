@@ -1,9 +1,31 @@
 =head1 The Perl Philosophy
 
+Perl is a language for getting things done.  It's flexible, forgiving, and
+malleable.  In the hands of a capable programmer, it can perform almost any
+task, from one-liner calculations and automations to multi-programmer,
+multi-year projects and everything in between.
+
+Perl is powerful, and modern Perl--Perl which takes advantage of the best
+knowledge, deepest experience, and reusable idioms of the global Perl
+community--can be maintainable, fast, and easy to use.  Perhaps most important,
+it can help you do what you need to do with little frustration and no ceremony.
+
+Perl is a pragmatic language.  Its design goals attempt to give power back to
+the programmer.  Rather than manipulating your mind and your problems to fit
+how the language designer thinks you should write programs, Perl allows you to
+solve your problems as you see fit.
+
+Perl is a language which can grow with you.  You can write useful programs with
+the knowledge you can learn in an hour of reading this book.  Yet if you take
+the time to understand the philsophies behind the syntax, semantics, and design
+of the language, you can be ten times as productive.
+
+First, you need to know how to learn more.
+
+L<perldoc>
+
 L<expressivity>
 
 L<context_philosophy>
 
 L<implicit_ideas>
-
-L<perldoc>
