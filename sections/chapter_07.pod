@@ -1,13 +1,3 @@
-=head1 Functions
+=head1 Regular Expressions
 
-L<functions>
-
-L<scope>
-
-L<anonymous_functions>
-
-L<closures>
-
-L<attributes>
-
-L<state>
+L<regular_expressions>

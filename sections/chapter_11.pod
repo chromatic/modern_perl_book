@@ -1,21 +1,7 @@
-=head1 Writing Real Programs
+=head1 Perl Idioms
 
-L<testing>
+L<autoload>
 
-L<handling_warnings>
+L<globals>
 
-L<exceptions>
-
-L<modules>
-
-L<pragmas>
-
-L<distributions>
-
-L<universal>
-
-L<code_generation>
-
-L<overloading>
-
-L<taint>
+L<idioms>

@@ -1,7 +1,13 @@
-=head1 Operators
+=head1 Functions
 
-L<operator_characteristics>
+L<functions>
 
-L<operator_types>
+L<scope>
 
-L<useful_operators>
+L<anonymous_functions>
+
+L<closures>
+
+L<attributes>
+
+L<state>

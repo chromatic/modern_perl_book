@@ -1,3 +1,9 @@
-=head1 Regular Expressions
+=head1 Objects
 
-L<regular_expressions>
+L<moose>
+
+L<blessed_references>
+
+L<reflection>
+
+L<advanced_oo>

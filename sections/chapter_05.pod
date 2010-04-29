@@ -1,1 +1,7 @@
-=head1 Data Types
+=head1 Operators
+
+L<operator_characteristics>
+
+L<operator_types>
+
+L<useful_operators>

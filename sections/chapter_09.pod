@@ -1,9 +1,3 @@
-=head1 Objects
+=head1 Stylish Perl
 
-L<moose>
-
-L<blessed_references>
-
-L<reflection>
-
-L<advanced_oo>
+L<style>
