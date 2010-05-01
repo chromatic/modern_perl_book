@@ -1,22 +1,29 @@
-=head3 Variables
+=head2 Variables
 
 Z<variables>
 
-A I<variable> in Perl is a storage location for a value (L<values>).  Rather
-than working with values directly, working with variables allows you to make
-your code more generic by assuming that certain types of values are
-interchangeable.  This may seem basic and obvious, but the process of writing
-robust, well-designed, testable, and composable programs requires you to
-identify points of genericity and exploit them where possible.
+A I<variable> in Perl is a storage location for a value (L<values>).  You can
+work with values directly, but all but the most trivial code works with
+variables.  A variable is a level of indirection that allows you to describe an
+operation rather than its effects; it's easier to explain the Pythagorean
+theorem in terms of the variables C<a>, C<b>, and C<c> than with the side
+lengths of every right triangle you can imagine.  This may seem basic and
+obvious, but to write robust, well-designed, testable, and composable programs,
+you must identify and exploit points of genericity wherever possible.
 
-=head4 Variable Naming
+=head3 Variable Naming
+
+X<variables; names>
 
 Not all variables require names, but most of the variables you will encounter
 in your programs will have names.  Variables in Perl 5 must conform to the
 standard rules of identifier naming (L<identifiers>).  Varibles also have
 leading sigils.
 
-=head4 Variable Scopes
+=head3 Variable Scopes
+
+X<variables; scope>
+X<scope>
 
 Variables also have visibility, depending on their scope (L<scope>).  Most of
 the variables you will encounter have lexical scope L<lexical_scope>), as the
@@ -35,7 +42,7 @@ example:
 =end programlisting
 
 Within the C<Store::IceCream> package, C<$num_flavors> is available without a
-prefix.  Outside of that package, it is available as
+namespace prefix.  Outside of that package, it is available as
 C<$Store::IceCream::num_flavors>.  If C<$num_flavors> were a lexical variable
 (declared with C<my>), it would not be available outside of the package.
 Inside the package, it would only be available within the appropriate scope.
@@ -48,40 +55,44 @@ X<symbol tables>
 
 This difference in visibility between package variables and lexical variables
 is apparent in the different storage mechanisms of these variables within Perl
-5 itself.  Lexical variables get stored in lexical pads attached to scopes.
+5 itself.  Lexical variables get stored in I<lexical pads> attached to scopes.
 Every new entry into such a lexical scope requires Perl to create a new pad to
 contain the values of the variables for that particular entry into the scope.
-(This is how a subroutine can call itself and not clobber existing variables.)
+(This is how a subroutine can call itself and not clobber the values of
+existing variables.)
 
-Package variables have a storage mechanism called symbol tables.  There is one
-symbol table per package, and each non-lexical variable has an entry in this
-table.  You can inspect and modify this symbol table from Perl; in fact, this
-is how importing works (L<importing>).
+Package variables have a storage mechanism called symbol tables.  Each package
+has a single symbol table, and every package variable has an entry in this
+table.  You can inspect and modify this symbol table from Perl; this is how
+importing works (L<importing>).
 
 =end sidebar
 
-=head4 Variable Sigils
+=head3 Variable Sigils
+
+X<variables; sigils>
+X<sigils>
 
 In Perl 5, the sigil of the variable in a declaration determines the type of
-the variable, whether scalar, array, or hash.  The sigil of the variable all
-subsequent times determines the type of access to the value of the variable.
-In other words, sigils on variables vary depending on what you do to the
-variable.  Thus, you declare an array as C<@values>.  You access the first
-element--a single value--of the array with C<$values[0]>.  You access a list of
-values from the array with C<@values[ @indices ]>.  See the arrays (L<arrays>)
-and hashes (L<hashes>) sections for more.
+the variable, whether scalar, array, or hash.  The sigil of the variable used
+to access the variable determines the type of access to its value.  Sigils on
+variables vary depending on what you do to the variable.  For example, you
+declare an array as C<@values>.  You access the first element--a single
+value--of the array with C<$values[0]>.  You access a list of values from the
+array with C<@values[ @indices ]>.  See the arrays (L<arrays>) and hashes
+(L<hashes>) sections for more.
 
-=head4 Anonymous Variables
+=head3 Anonymous Variables
 
 X<anonymous variables>
 X<variables; anonymous>
 
-Perl 5 variables do not need names; Perl can allocate storage space for
+Perl 5 variables do not I<need> names; Perl can allocate storage space for
 variables without storing them in lexical pads or symbol tables.  These are
 I<anonymous> variables.  The only way to access them is by reference
 (L<references>).
 
-=head4 Variables, Types, and Coercion
+=head3 Variables, Types, and Coercion
 
 X<variables; types>
 X<types; containers>
@@ -89,17 +100,18 @@ X<types; variables>
 X<container types>
 
 Perl 5 variables do not enforce types on their values.  You may store a string
-in a variable in one line, append to it a number, and reassign a reference to a
-function in the next (L<function_references>).  The types of the I<values> is
-flexible (or dynamic), but the type of the I<variable> is static.  A scalar
-variable can only hold scalars.  An array variable only contains lists.  A hash
-variable must contain an even-sized list of key/value pairs.
+in a variable in one line, append to that variable a number on the next, and
+reassign a reference to a function (L<function_references>) on the third.  The
+types of the I<values> is flexible (or dynamic), but the type of the
+I<variable> is static.  A scalar variable can only hold scalars.  An array
+variable only contains lists.  A hash variable must contain an even-sized list
+of key/value pairs.
 
 Assigning to a variable may cause coercion (L<coercion>).  The documented way
 to determine the number of entries in an array is to evaluate that array in
-scalar context.  Because a scalar variable can only ever contain a scalar,
-assigning an array to a scalar imposes scalar context on the operation and
-produces the proper count:
+scalar context (L<context>).  Because a scalar variable can only ever contain a
+scalar, assigning an array to a scalar imposes scalar context on the operation
+and produces the number of elements in the array:
 
 =begin programlisting
 

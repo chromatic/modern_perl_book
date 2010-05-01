@@ -1,15 +1,17 @@
-=head3 Names
+=head2 Names
 
 Z<names>
 
 X<names>
 X<identifiers>
 
-Perl I<names> (or I<identifiers>) follow simple rules.  A variable name, a
-function name, a package name, a class name, and a filehandle name must all
+I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
+functions, packages, classes, and even filehandles have names.  These names all
 start with a letter or an underscore.  They may optionally include any
 combination of letters, numbers, and underscores.  These are all valid Perl
 identifiers:
+
+=begin programlisting
 
     my $name;
     my @_private_names;
@@ -19,7 +21,11 @@ identifiers:
 
     package a_less_awkward_name;
 
+=end programlisting
+
 These are invalid Perl identifiers:
+
+=begin programlisting
 
     my $invalid name;
     my @3;
@@ -27,42 +33,72 @@ These are invalid Perl identifiers:
 
     package a-lisp-style-name;
 
-When the C<utf8> pragma is in effect, you may use any valid UTF-8 characters in
-identifiers, provided that they still start with a letter or underscore and
-optionally contain one or more alphanumeric or underscore characters.
+=end programlisting
+
+=for author
+
+Move these next two sections elsewhere?  Find the balance between accuracy and
+complexity.
+
+=end for
+
+=begin sidebar
+
+When the C<utf8> pragma (L<pragmas>, L<unicode>) is in effect, you may use any
+valid UTF-8 characters in identifiers, provided that they still start with a
+letter or underscore and optionally contain one or more alphanumeric or
+underscore characters.
+
+=end sidebar
 
 X<symbolic lookups>
 
-The rules are different for I<symbolic lookups>, however.  These rules only
-apply to literal names found in source code.  Perl's dynamic nature makes it
-possible to refer to entities with names generated at runtime or provided as
-input to a program.  This is more difficult than the straightforward approach,
-but it's also more flexible -- if slightly more dangerous.  In particular,
-invoking subroutines or methods indirectly or looking up namespaced symbols
-lets you bypass Perl's parser, which is the only part of Perl that enforces
-these grammatic rules.  This can produce confusing code, however.
+These rules only apply to literal names found in source code.  The rules are
+different for I<symbolic lookups>.  Perl's dynamic nature makes it possible to
+refer to entities with names generated at runtime or provided as input to a
+program.  This is more difficult than the straightforward approach, but it's
+also more flexible--if more dangerous.  In particular, invoking subroutines or
+methods indirectly or looking up namespaced symbols lets you bypass Perl's
+parser, which is the only part of Perl that enforces these grammatic rules.  Be
+aware that doing so can produce confusing code; usually using a hash
+(L<hashes>) is more straightforward.
 
-=head4 Variable Names and Sigils
+=head3 Variable Names and Sigils
 
-X<Variable names>
+X<variables; names>
+X<scalar variables>
+X<variables; scalars>
+X<scalars>
+X<array variables>
+X<variables; arrays>
+X<hash variables>
+X<variables; hashes>
 
-I<Variable names> always have a leading sigil which suggests the type of the
-variable.  X<scalar variables>I<Scalar variables> have a leading dollar sign
-(C<$>) character.  X<array variables>I<Array variables> have a leading at sign
-(C<@>) character.  X<hash variables>I<Hash variables> have a leading percent
-sign (C<%>) character:
+I<Variable names> always have a leading sigil which indicates the type of the
+variable's value.  I<Scalar variables> (L<scalars>) have a leading dollar sign
+(C<$>) character.  I<Array variables> (L<arrays>) have a leading at sign (C<@>)
+character.  I<Hash variables> (L<hashes>) have a leading percent sign (C<%>)
+character:
+
+=begin programlisting
 
     my $scalar;
     my @array;
     my %hash;
 
+=end programlisting
+
 These sigils offer a sort of namespacing for the variables, where it's possible
 (though often confusing) to have variables of the same name but different
 types:
 
+=begin programlisting
+
     my ($bad_name, @bad_name, %bad_name);
 
-Perl won't get confused, but the person reading the code will.
+=end programlisting
+
+Perl won't get confused, but people reading the code will.
 
 X<variant sigils>
 
@@ -70,50 +106,70 @@ Perl 5 uses I<variant sigils>, where the sigil on a variable may change
 depending on what you do with it.  For example, to access a (scalar) element of
 an array or a hash, the sigil changes to the dollar sign (C<$>) character:
 
+=begin programlisting
+
     my $hash_element  = $hash{ $key };
     my $array_element = $array[ $index ]
 
-Using a scalar element of an aggregate as an lvalue in an expression imposes
-L<scalar context> on the rvalue.
+    $hash{ $key }     = 'value';
+    $array[ $index ]  = 'item';
 
-Similarly, accessing multiple elements of a hash or an array -- an operation
-known as L<slicing> -- uses the at symbol (C<@>) as the leading sigil and
-enforces list context:
+=end programlisting
+
+X<lvalue>
+X<rvalue>
+
+In the latter two lines, using a scalar element of an aggregate as an I<lvalue>
+(the target of an assignment, on the left side of the C<=> character) imposes
+scalar context (L<context>) on the I<rvalue> (the value assigned, on the right
+side of the C<=> character).
+
+X<slicing>
+
+Similarly, accessing multiple elements of a hash or an array--an operation
+known as I<slicing>--uses the at symbol (C<@>) as the leading sigil and
+enforces list context when used as an lvalue:
+
+=begin programlisting
 
     my @hash_elements  = @hash{ @keys };
     my @array_elements = @array[ @elements ];
 
-The most reliable way to determine the type of a variable -- scalar, array, or
-hash -- is to look at the operations performed on it.  Scalars support all
-basic operations, such as string, numeric, and boolean manipulations.  Arrays
-support indexed access through square brackets.  Hashes support keyed access
-through curly brackets.
+=end programlisting
 
-=head4 Package-Qualified Names
+The most reliable way to determine the type of a variable--scalar, array, or
+hash--is to look at the operations performed on it.  Scalars support all basic
+operations, such as string, numeric, and boolean manipulations.  Arrays support
+indexed access through square brackets.  Hashes support keyed access through
+curly brackets.
+
+=head3 Package-Qualified Names
+
+X<fully-qualified name>
 
 Occasionally you may need to refer to functions or variables in a separate
-namespace.  Often you will need to refer to a class by its X<fully-qualified
-name>I<fully-qualified name>.  These names are collections of package names
-joined by double colons (C<::>).  That is, C<My::Fine::Package> refers to a
-logical collection of variables and functions.
+namespace.  Often you will need to refer to a class by its I<fully-qualified
+name>.  These names are collections of package names joined by double colons
+(C<::>).  That is, C<My::Fine::Package> refers to a logical collection of
+variables and functions.
 
 While the standard naming rules apply to package names, by convention
 user-defined packages all start with uppercase letters.  The Perl core reserves
-lowercase package names for built-in pragmas, such as C<strict> and
-C<warnings>.  This is a policy enforced by community guidelines, however.
+lowercase package names for built-in pragmas (L<pragmas>), such as C<strict>
+and C<warnings>.  This is a policy enforced by community guidelines, rather
+than technical mechanisms.
 
 Namespaces do not nest in Perl 5.  Perl enforces no logical relationship
 between C<Some::Package> and C<Some::Package::Refinement>.  Consider choosing
 naming and code-organization schemes which the apparent relationship between
 the names of these classes or namespaces makes obvious.
 
-=begin footnote
+=begin sidebar
 
 This isn't I<entirely> true.  When Perl looks up a symbol in
 C<Some::Package::Refinement>, it looks in the C<main::> symbol table for a
 symbol representing the C<Some::> namespace, then in there for the C<Package::>
-namespace, and so on.  This is merely a storage mechanism, however.  It has no
-further implications on the relationships between parent and child or sibling
-packages.
+namespace, and so on.  This is merely a storage mechanism, with no further
+implications on the relationships between parent and child or sibling packages.
 
-=end footnote
+=end sidebar
