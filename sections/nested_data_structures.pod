@@ -1,0 +1,34 @@
+=head1 Nested Data Structures
+
+Z<nested_data_structures>
+
+=for author
+
+autovivification
+    - what it is
+    - why
+    - embracing
+    - avoiding
+
+dereferencing arrow and optionality
+    - always use arrow
+    - always exclude arrow
+
+dismabiguation blocks
+    - clarity of grouping
+    - slicing
+    - value of temporaries
+
+array of array
+hash of hash
+
+array of hash
+hash of array
+
+debugging
+    - Data::Dumper
+    - YAML
+
+alternatives to deeply-nested structures
+
+=end for
