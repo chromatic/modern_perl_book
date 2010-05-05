@@ -1,38 +1,36 @@
-=head3 Values
+=head2 Values
 
 Z<values>
+
+Effective Perl programs depend on the accurate representation and manipulation
+of values.
 
 X<variables>
 X<variables>
 
 Computer programs contain I<variables>: containers which hold I<values>.
 Values are the actual data the programs manipulate.  While it's easy to explain
-what that data might be -- your aunt's name and address, the distance between
+what that data might be--your aunt's name and address, the distance between
 your office and a golf course on the moon, or the weight of all cookies you've
-eaten this year -- the rules regarding that data are often strict.  Writing an
-effective program often means understanding the best (or simplest or fastest or
-most compact or easiest) way of representing that data for the particular
-manipulations your program must perform on that data.
-
-Thus effective Perl programs depend on the accurate representation and
-manipulation of values.
+eaten in the past year--the rules regarding the format of that data are often
+strict.  Writing an effective program often means understanding the best
+(simplest, fastest, most compact, or easiest) way of representing that data.
 
 While the structure of a program depends heavily on the means by which you
 model your data with appropriate variables, these variables would be
-meaningless if they couldn't accurately contain the data itself -- the values.
+meaningless if they couldn't accurately contain the data itself--the values.
 
-=head4 Strings
+=head3 Strings
 
 X<strings>
 
-One primary value in Perl 5 is the I<string>.  A string is a piece of data with
-no particular formatting, no particular contents, and no semantic meaning
-beyond the fact that it's a string.  It could be your name.  It could be the
-contents of an image file read from your hard drive.  It could be the Perl
-program itself.
-
-A string has no meaning to the program until you give it meaning.  The
-emboldened lines in this example are strings:
+A I<string> is a piece of data with no particular formatting, no particular
+contents, and no semantic meaning beyond the fact that it's a string.  It could
+be your name.  It could be the contents of an image file read from your hard
+drive.  It could be the Perl program itself.  A string has no meaning to the
+program until you give it meaning.  A string is a fixed amount of data
+delineated by quotes of some form.  Most strings use either single or double
+quotes:
 
 =begin programlisting
 
@@ -41,13 +39,11 @@ emboldened lines in this example are strings:
 
 =end programlisting
 
-A string is a fixed amount of data delineated by some quoting form.  This
-example shows single quotes and double quotes.
-
 X<strings; single-quoted>
 
 Characters in a I<single-quoted string> represent themselves literally, with
-one exception.  You may embed a single quote inside a single-quoted string by escaping the quote with a leading backlash:
+one exception.  You may embed a single quote inside a single-quoted string by
+escaping the quote with a leading backlash:
 
 =begin programlisting
 
@@ -58,7 +54,7 @@ one exception.  You may embed a single quote inside a single-quoted string by es
 X<strings; double-quoted>
 
 A I<double-quoted string> has more complex (and often, more useful) behavior.
-You may escape control and non-printable characters in the string.
+You may escape control and non-printable characters in the string:
 
 =begin programlisting
 
@@ -70,10 +66,10 @@ You may escape control and non-printable characters in the string.
 
 =begin sidebar
 
-You may also embed the characters themselves directly into the string -- a
-string declaration may cross lines and run as long as you want, but it's often
-more maintainable to use the escapes.  Whitespace can be difficult to read
-precisely in a text editor.
+You may also embed these control characters themselves directly into the
+string--a string declaration may cross lines and run as long as you want, but
+it's often more maintainable to use the escapes.  Whitespace can be difficult
+to read precisely in a text editor.
 
 =end sidebar
 
@@ -115,13 +111,15 @@ The C<q> operator performs single quoting, while the C<qq> operator performs
 double quoting.  In each case, you may choose your own delimiter for the
 string.  The character immediately following the operator determines the
 beginning and end of the string.  If the character is the opening character of
-a balanced pair, the closing character will be the final delimiter.  Otherwise,
-the character itself will be both the starting and ending delimiter.
+a balanced pair--such as opening and closing braces--the closing character will
+be the final delimiter.  Otherwise, the character itself will be both the
+starting and ending delimiter.
 
 =begin programlisting
 
-    my $quote    = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
-    my $reminder = B<q|>Don't forget to escape the single quote!B<|>;
+    my $quote     = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
+    my $reminder  = B<q|>Don't forget to escape the single quote!B<|>;
+    my $complaint = B<q{>It's too early to be awake.B<}>;
 
 =end programlisting
 
@@ -129,7 +127,7 @@ X<heredocs>
 X<strings; heredocs>
 
 Even though you can declare a complex string with a series of embedded escape
-characters, sometime's it's easier to declare a multi-line string on multiple
+characters, sometimes it's easier to declare a multi-line string on multiple
 lines.  The I<heredoc> syntax lets you assign one or more lines of a string
 with a different syntax:
 
@@ -148,58 +146,67 @@ with a different syntax:
 =end programlisting
 
 The C<< <<'END_BLURB' >> syntax has three parts.  The double angle-brackets
-introduce the heredoc.  The quotes are optional and determine whether the
-heredoc obeys single-quoted or double-quoted behavior with regard to variable
-and escape character interpolation.  The C<END_BLURB> itself is an arbitrary
+introduce the heredoc.  The quotes determine whether the heredoc obeys
+single-quoted or double-quoted behavior with regard to variable and escape
+character interpolation.  They're optional; the default behavior is
+double-quoted interpolation.  The C<END_BLURB> itself is an arbitrary
 identifier which the Perl 5 parser uses as the ending delimiter.
 
-Be careful; regardless of the indentation of the heredoc declaration, the
-ending delimiter must begin in the first column of the program.
+Be careful; regardless of the indentation of the heredoc declaration itself,
+the ending delimiter must begin in the first column of the program.
 
 =begin sidebar
 
-If the identifier begins with spaces, those spaces must be present exactly in
-the ending delimiter.
+If the identifier begins with whitespace, that spaces must be present exactly
+in the ending delimiter.  Even if you do intent the identifier, Perl 5 will
+I<not> remove equivalent whitespace from the start of each line of the heredoc.
 
 =end sidebar
 
-=head4 Unicode and Strings
+=head3 Unicode and Strings
 
 X<unicode>
 
 Unicode is a system for representing characters in the world's written
-languages.  While most English text uses only 127 characters (and thus requires
-seven bits of storage, which fits nicely into eight-bit bytes), it's
-naE<iuml>ve to believe that you won't someday need an umlaut, for example.
+languages.  While most English text uses a character set of only 127 characters
+(which requires seven bits of storage and fits nicely into eight-bit bytes),
+it's naE<iuml>ve to believe that you won't someday need an umlaut, for example.
 
-Perl 5 handles Unicode internally, and mostly you can ignore that it does so.
-Because there are several representations for I<how> to store Unicode, you have
-to know what kind of data you receive from the external world and what kind of
-data you want to emit to the external world, but inside Perl, all of the string
-operations you expect work just fine on Unicode data as opposed to ASCII
-dataN<Provided you don't assume that a character in a string requires a byte of
-storage.>.
+Perl 5 handles Unicode internally.  For the most part, you can ignore this,
+except that there are several representations for I<how> to store Unicode.  You
+don't have to understand what happens after you have the data within your
+program, but you have to know what kind of data you receive from the external
+world and what kind of data you want to emit to the external world.  As long as
+you do not assume that a character in a Perl 5 string requires a byte of
+storage, all of the Perl 5 string operations perform correctly on Unicode and
+ASCII strings.
 
-For more details on what Unicode is, why encodings matter, and how to manage
-incoming and outgoing data in a Unicode world, see C<perldoc perluniintro>.
+For far more detail what Unicode is, encodings, and how to manage incoming and
+outgoing data in a Unicode world, see C<perldoc perluniintro>.
+
+=for author
+
+Probably need C<binmode> here.
+
+=end for
 
 X<pragmas; utf8>
 X<utf8>
 X<encoding>
 
 You may include Unicode characters in your programs in three ways.  The easiest
-is to use the C<utf8> pragma (L<pragmas>), which tells the Perl parser to read
-the rest of the source code file in the UTF-8 I<encoding> (an arrangement and
-representation of Unicode characters).  This allows you to use Unicode
-characters in strings as well in identifiers:
+is to use the C<utf8> pragma (L<pragmas>), which tells the Perl parser to
+interpret the rest of the source code file with the UTF-8 I<encoding> (an
+arrangement and representation of Unicode characters).  This allows you to use
+Unicode characters in strings as well in identifiers:
 
 =begin programlisting
 
     use utf8;
 
-    my $cost = '1000£';
+    sub £_to_¥ { ... }
 
-    sub ¥ { ... }
+    my $pounds = £_to_¥('1000£');
 
 =end programlisting
 
@@ -211,7 +218,13 @@ X<\x{}>
 
 You may also use the Unicode escape sequence to represent character encodings.
 The syntax C<\x{}> represents a single character; place the hex form of the
-character's Unicode number within the curly brackets.
+character's Unicode number within the curly brackets:
+
+=begin programlisting
+
+    my $escaped_thorn = "\x{00FE}";
+
+=end programlisting
 
 =begin sidebar
 
@@ -243,13 +256,13 @@ enable them.  Use the C<\N{}> escape to refer to them:
 You may use the C<\x{}> and C<\N{}> forms within regular expressions as well as
 anywhere else you may legitimately use a string or a character.
 
-=head4 Numbers
+=head3 Numbers
 
 X<numbers>
 X<integers>
 X<floating-point values>
 
-Perl also supports numbers, whether integers or floating-point values.  They
+Perl also supports numbers, both integers and floating-point values.  They
 support scientific notation as well as binary, octal, and hexadecimal
 representations:
 
@@ -271,16 +284,6 @@ mode; this can occasionally produce unanticipated confusion.
 X<numbers; underscore separator>
 X<underscore>
 
-For dealing with large numbers, you may use the underscore character (C<_>) to
-separate thousands.  Compare the readability advantage:
-
-=begin programlisting
-
-    my $us_billion = 1000000000;
-    my $us_billion = 1B<_>000B<_>000B<_>000;
-
-=end programlisting
-
 =begin sidebar
 
 Even though you can represent floating-point values explicitly in Perl 5 with
@@ -290,10 +293,10 @@ C<perldoc perlnumber> for more details.
 
 =end sidebar
 
-You may not use commas to separate thousands in numeric literals; the parser
-will interpret the commas as comma operators.  You I<can> use underscores in
-other places within the number, however.  The parser will treat them as
-invisible characters.  Your readers may not.  These are equivalent:
+You may not use commas to separate thousands in numeric literals because the
+parser will interpret the commas as comma operators.  You I<can> use
+underscores in other places within the number, however.  The parser will treat
+them as invisible characters.  Your readers may not.  These are equivalent:
 
 =begin programlisting
 
@@ -309,23 +312,26 @@ X<Scalar::Util>
 X<looks_like_number>
 X<Scalar::Util; looks_like_number>
 
-Occasionally it's useful to determine whether Perl 5 will consider something
-that looks like a number as a number.  The core module C<Scalar::Util> contains
-a function named C<looks_like_number> which returns true Perl will consider the
-given argument numeric.
+Because of coercion (L<coercion>), Perl programmers rarely have to worry about
+converting text read from outside the program to numbers.  Perl will treat
+anything which looks like a number as a number in numeric contexts.  Even
+though it almost always does so correctly, occasionally it's useful to know if
+something really does look like a number.  The core module C<Scalar::Util>
+contains a function named C<looks_like_number> which returns true if Perl will
+consider the given argument numeric.
 
 X<Regexp::Common>
 
-The C<Regexp::Common> module from the CPAN provides several well-tested regular
-expressions to determine the I<type> (whole number, integer, floating-point
-value) of a numeric value.
+The C<Regexp::Common> module from the CPAN also provides several well-tested
+regular expressions to identify valid I<types> (whole number, integer,
+floating-point value) of numeric values.
 
-=head4 Undef
+=head3 Undef
 
 X<undef>
 
-Perl 5 has a value which represents an unassigned/undefined/unknown value:
-C<undef>.  Declared but undefined scalar variables contain C<undef>:
+Perl 5 has a value which represents an unassigned, undefined, and unknown
+value: C<undef>.  Declared but undefined scalar variables contain C<undef>:
 
 =begin programlisting
 
@@ -334,24 +340,26 @@ C<undef>.  Declared but undefined scalar variables contain C<undef>:
 
 =end programlisting
 
+X<undef; coercions>
+
 C<undef> evaluates to false in boolean context.  Be aware that an array
 containing a single element which is itself C<undef> evaluates to true in a
-boolean context.  Interpolating C<undef> into a string -- or evaluating it in a
-string context -- produces an C<uninitialized value> warning, if you have
+boolean context.  Interpolating C<undef> into a string--or evaluating it in a
+string context--produces an C<uninitialized value> warning, if you have
 C<warnings> enabled.
 
-=head4 The Empty List
+=head3 The Empty List
 
 X<empty list>
 X<()>
 
 When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list.  When evaluated in scalar context, this evaluates to
-C<undef>.  In list context, it represents an empty list.
+C<undef>.  In list context, it is effectively an empty list.
 
-When used on the left-hand side of an assignment, it enforces list context.  To
-count the number of elements returned from an expression in list context
-without using a temporary variable, you use the idiom (L<idioms>):
+When used on the left-hand side of an assignment, the C<()> construct enforces
+list context.  To count the number of elements returned from an expression in
+list context without using a temporary variable, you use the idiom (L<idioms>):
 
 =begin programlisting
 
@@ -360,22 +368,25 @@ without using a temporary variable, you use the idiom (L<idioms>):
 =end programlisting
 
 Because of the right associativity (L<associativity>) of the assignment
-operator, Perl calls C<get_all_clown_hats()> in list context.  This produces a
-list.  Even though that list never gets assigned to anything, that list is the
-return value of that subexpression.  The assignment of that return value is in
-scalar context because C<$count> is a scalar,
+operator, Perl first evalutes the second assignment by calling
+C<get_all_clown_hats()> in list context.  This produces a list.  Even though
+that list never gets assigned to anything, the return value of the second
+assignment is that list.  Perl next evaluates that list in scalar context, due
+to the scalar assignment to C<$count> in the first assignment.  As a result,
+C<$count> contains the number of elements in the list returned from
+C<get_all_clown_hats()>.
 
 You don't have to understand all of the implications of this code right now,
 but it does demonstrate how a few of Perl's fundamental design features can
 combine to produce interesting and useful behavior.
 
-=head4 Lists
+=head3 Lists
 
 X<lists>
 
 Lists and arrays are not interchangeable in Perl.  You may store a list in an
-array and you may coerce an array to a list with the appropriate context, but
-they are separate entities.  Lists may occur verbatim in source code as values:
+array and you may coerce an array to a list, but they are separate entities.
+Lists may occur verbatim in source code as values:
 
 =begin programlisting
 
@@ -383,13 +394,7 @@ they are separate entities.  Lists may occur verbatim in source code as values:
 
 =end programlisting
 
-=for author
-
-Explain lvalue?  Link from here?
-
-=end for
-
-... as lvalue targets of assignments:
+... as targets of assignments:
 
 =begin programlisting
 
@@ -406,7 +411,7 @@ Explain lvalue?  Link from here?
 =end programlisting
 
 Note that you do not need parentheses to I<create> lists; where present, the
-parentheses in these examples group expressions to change I<precedence> of
+parentheses in these examples group expressions to change the I<precedence> of
 those expressions (L<precedence>).
 
 X<operators; range>
@@ -442,3 +447,6 @@ Perl will produce a warning if the literal string contains a comma or the
 comment character.
 
 =end sidebar
+
+Lists can (and often do) occur as the results of expressions, but these lists
+do not appear literally in source code.
