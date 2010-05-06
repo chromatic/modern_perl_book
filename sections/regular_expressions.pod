@@ -337,7 +337,7 @@ Given a string, C<$contact_info>, which contains contact information, you can
 apply the C<$phone_number> regular expression and I<capture> any matches into a
 variable with I<named captures>:
 
-    if ($contact_info =~ /(?<phone>$phone_number))
+    if ($contact_info =~ /(?<phone>$phone_number)/)
     {
         say "Found a number $+{phone}";
     }
