@@ -70,6 +70,8 @@ importing works (L<importing>).
 
 =head3 Variable Sigils
 
+Z<sigils>
+
 X<variables; sigils>
 X<sigils>
 

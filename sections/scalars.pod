@@ -1,38 +1,32 @@
-=head3 Scalars
+=head2 Scalars
 
 Z<scalars>
 
 X<scalar>
 
-One of Perl 5's fundamental data types is the scalar.  This represents a
-single, discrete value.  That value may be a string, an integer, a floating
-point value, an object, or a reference -- but it is always a single value.
+Perl 5's fundamental data type is the I<scalar>, which represents a single,
+discrete value.  That value may be a string, an integer, a floating point
+value, an object, or a reference--but it is always a single value.  Scalar
+values and scalar context have a deep connection; assigning to a scalar
+provides scalar context.
 
-As you might expect from the name, scalar values have a close relationship with
-scalar L<context>.  Assigning the result of a function call to a scalar
-variable enforces scalar context on the function call.
-
-Scalars may be lexical or global variables.
-
-Scalar names appearing explicitly in source code must conform to the L<names>
-guidelines.
-
-When accessing variables in Perl 5, the leading dollar-sign (C<$>) L<sigil>
-indicates that the value is a scalar value.  If you have three variables named
-C<$user>, C<@user>, and C<%user> as well as a subroutine named C<user()>, the
-sigil can differentiate between all three.
+Scalars may be lexical or global variables, and the names of scalar variables
+must conform to the L<names> guidelines.  Scalar variables always use the
+leading dollar-sign (C<$>) sigil (L<sigils>).
 
 =begin sidebar
 
-This is not I<universally> true; the scalar sigil applied to an operation on an
-aggregate variable determines the type of value accessed through that
-operation; see L<arrays> and L<hashes> for more.
+The converse is not I<universally> true; the scalar sigil applied to an
+operation on an aggregate variable determines the amount type accessed through
+that operation (L<arrays>, L<hashes>).
 
 =end sidebar
 
-Perl 5 scalars do not have static typing; a scalar variable can contain any
-type of scalar value without special conversions or casts.  Thus this code is
-all legal:
+=head3 Scalars and Types
+
+Perl 5 scalars do not have static typing.  A scalar variable can contain any
+type of scalar value without special conversions or casts, and the type of
+value in a variable can change.  This code is legal:
 
 =begin programlisting
 
@@ -44,11 +38,13 @@ all legal:
 
 =end programlisting
 
-Even though this is I<legal>, it can be confusing to readers of the code.
+Yet even though this is I<legal>, it can be confusing.  Choose descriptive and
+unique names for your variables to avoid this confusion.
 
-As mentioned in L<context>, Perl 5 performs conversions when accessing the
-value of a scalar in specific contexts.  You may treat the contents of a scalar
-as a string, even if you didn't explicitly assign it a string:
+The type context of evaluation of a scalar may cause Perl to perform a coercion
+of the value of that scalar (L<coercion>).  For example, you may treat the
+contents of a scalar as a string, even if you didn't explicitly assign it a
+string:
 
 =begin programlisting
 
@@ -82,43 +78,52 @@ C<$call_sign-->.
 
 =end sidebar
 
-Magical string increment turns C<a> into C<b> and C<z> into C<aa>, respecting
-character set and case.  Note that C<ZZ9> becomes C<ZZ0> and C<ZZ09> becomes
-C<ZZ10>, however -- numbers wrap around but do not carry to alphabetic
+This string increment operation turns C<a> into C<b> and C<z> into C<aa>,
+respecting character set and case.  Note that C<ZZ9> becomes C<ZZ0> and C<ZZ09>
+becomes C<ZZ10>, however--numbers wrap around but do not carry to alphabetic
 components.
 
 X<stringification>
 X<numification>
 
-=for author
-
-Mention this here or move it elsewhere?
-
-=end for
-
-Perl 5 stringifies L<references> evaluated in scalar string context and
-numifies references evaluated in scalar numeric context.
+Perl 5 stringifies references (L<references>) evaluated in scalar string
+context and numifies references evaluated in scalar numeric context.
 
 X<Scalar::Util>
 X<dualvars>
-X<dualvar; Scalar::Util>
-
-Perl 5 scalars have a unique property in that they can contain numeric parts as
-well as string parts.  Perl 5 can store both a numeric value and a string value
-in the internal data structure which represents scalars.  The core
-C<Scalar::Util> module's C<dualvar()> function allows you to store these values
-explicitly.
-
-X<looks_like_number>
+X<dualvar(); Scalar::Util>
+X<looks_like_number()>
 X<looks_like_number;Scalar::Util>
 
-Similarly, the C<looks_like_number()> function returns true if the scalar value provided is something Perl 5 would interpret as a number.
+All of these coercions and operations are possible because Perl 5 scalars can
+contain numeric parts as well as string parts.  The internal data structure
+which represents a scalar in Perl 5 has a numeric slot and a string slot.
+Accessing a string in a numeric context eventually produces a scalar with both
+string and numeric values.  The C<dualvar()> function within the core
+C<Scalar::Util> module allows you to manipulate both values directly within a
+single scalar.  Similarly, the module's C<looks_like_number()> function returns
+true if the scalar value provided is something Perl 5 would interpret as a
+number.
 
-=for author
+X<boolean>
+X<scalars; boolean values>
+X<boolean true>
+X<boolean false>
+X<strings; true>
+X<strings; false>
+X<numbers; true>
+X<numbers; false>
 
-scalars and truth; boolean context
-undef
-the C<scalar()> function ?
-scalar types, my Foo $foo;
+Scalars do not have a separate slot for boolean values.  In boolean context,
+the empty string (C<''>) and C<'0'> are false.  All other strings are true.  In
+boolean context, numbers which evaluate to zero (C<0>, C<0.0>, and C<0e0>) are
+false.  All other numbers are true.
 
-=end for
+Be careful that the I<strings> C<'0.0'> and C<'0e0'> are true; this is one
+place where Perl 5 makes distinction what looks like a number and what really
+is a number.
+
+X<undef>
+
+One other value is always false: C<undef>.  This is the value of uninitialized
+variables as well as a value in its own right.
