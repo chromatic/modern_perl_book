@@ -1,10 +1,13 @@
-Z<arrays>
+=head2 Arrays
 
-Perl 5 arrays are first-class data structures which store zero or more scalars.
-This means that Perl 5 provides a separate data type at the language level (an
-array) with its own naming slot (an array sigil).  Arrays support indexed
-access; that is, you can access individual members of the array by integer
-indexes.
+Z<arrays>
+X<arrays>
+X<first-class>
+
+Perl 5 I<arrays> are data structures which store zero or more scalars.  They're
+I<first-class> data structures, which means that Perl 5 provides a separate
+data type at the language level.  Arrays support indexed access; that is, you
+can access individual members of the array by integer indexes.
 
 The C<@> sigil denotes an array.  To declare an array:
 
@@ -13,6 +16,17 @@ The C<@> sigil denotes an array.  To declare an array:
     my @items;
 
 =end programlisting
+
+=head3 Array Elements
+
+X<variant sigils>
+X<sigils; variance>
+
+I<Accessing> an individual element of an array in Perl 5 requires the scalar
+sigil.  Perl 5 (and you) can recognize that C<$cats[0]> refers to the C<@cats>
+array even despite the change of sigil because the square brackets (C<[]>)
+always identify indexed access to an aggregate variable.  In simpler terms,
+that means "look up one thing in a group of things by an integer".
 
 Array indices start at 0.  The first element of an array is at index zero:
 
@@ -23,20 +37,10 @@ Array indices start at 0.  The first element of an array is at index zero:
 
 =end programlisting
 
-X<variant sigils>
-X<sigils; variance>
-
-Note that I<accessing> an individual element of an array in Perl 5 requires the
-scalar sigil.  Perl 5 (and you) can recognize that C<$cats[0]> refers to the
-C<@cats> array even with the sigil change.  The square brackets (C<[]>) always
-identify indexed access to an aggregate variable.  That may sound like a lot to
-remember, but all it means is "look up one thing in a group of things by an
-integer".
-
-The first index of an array is 0.  The last index of an array depends on the
-number of elements in the array.  An array in scalar context (scalar
-assignment, string concatenation, addition, boolean context) evaluates to the
-number of elements it contains:
+The last index of an array depends on the number of elements in the array.  An
+array in scalar context (due to scalar assignment, string concatenation,
+addition, or boolean context) evaluates to the number of elements contained in
+the array:
 
 =begin programlisting
 
@@ -54,9 +58,8 @@ number of elements it contains:
 
 =end programlisting
 
-Thus if you need the specific index of the final element of an array, subtract
-one from the number of elements of the array (because array indexes start at
-0):
+If you need the specific index of the final element of an array, subtract one
+from the number of elements of the array (because array indexes start at 0):
 
 =begin programlisting
 
@@ -84,8 +87,10 @@ replace the C<@> array sigil with the slightly more unwieldy C<$#>:
 That may not read as nicely, however.  Most of the time you don't need that
 syntax, for two reasons.  First, you can use negative offsets to access an
 array from the end instead of the start.  The final element of an array is
-available from the index C<-1>.  The penultimate element of the array is
-available at index C<-2> and so on.
+available at the index C<-1>.  The penultimate element of the array is
+available at index C<-2>, and so on.
+
+=head3 Array Assignment
 
 You can assign to individual positions in an array directly by index:
 
@@ -100,9 +105,16 @@ You can assign to individual positions in an array directly by index:
 
 =end programlisting
 
-Note that the array declaration did not require a size, nor is there an error
-assigning to subsequent indices.  Perl 5 arrays are mutable; they do not have a
-static size.  They can extend or contract as necessary.
+Perl 5 arrays are mutable.  They do not have a static size; they expand or
+contract as necessary.
+
+=begin sidebar
+
+You don't have to assign in order, either.  If you assign to an index beyond
+where you've assigned before, Perl will extend the array to account for the new
+size and will fill in all intermediary slots with C<undef>.
+
+=end sidebar
 
 Assignment in multiple lines can be tedious.  You can initialize an array from
 a list in one step:
@@ -117,7 +129,7 @@ a list in one step:
 
 Remember that the parentheses I<do not> create a list.  Without parentheses,
 this would assign C<Daisy> as the first and only element of the array, due to
-operator precedence.
+operator precedence (L<precedence>).
 
 =end sidebar
 
@@ -133,10 +145,6 @@ Any expression which produces a list in list context can assign to an array:
 
 Assigning to a scalar element of an array enforces scalar context, while
 assigning to the array as a whole enforces list context.
-
-If you access an element of an array which does not exist, you will receive the
-C<undef> value.  If you store to an element of an array beyond its current
-length, the intervening values will contain the C<undef> value.
 
 To clear an array, assign an empty list:
 
@@ -155,11 +163,14 @@ version of C<my @items>.  Prefer the latter.
 
 =end sidebar
 
+=head3 Array Slices
+
 X<array slice>
 X<slices; array>
 
 You can also access elements of an array in list context with a construct known
-as an I<array slice>.
+as an I<array slice>.  Unlike scalar access of an array element, this indexing
+operation takes a list of indices and uses the array sigil (C<@>):
 
 =begin programlisting
 
@@ -177,7 +188,7 @@ You can assign to an array slice as well:
 
 =end programlisting
 
-A slice can contain zero or more elements -- including one:
+A slice can contain zero or more elements--including one:
 
 =begin programlisting
 
@@ -189,13 +200,15 @@ A slice can contain zero or more elements -- including one:
 
 Be aware that the only syntactic difference between an array slice of one
 element and the scalar access of an array element is the leading sigil.  The
-semantic difference is greater: an array slice always enforces list context.
+I<semantic> difference is greater: an array slice always enforces list context.
 
 =begin sidebar
 
 This behavior is one reason why Perl 6 uses invariant sigils.
 
 =end sidebar
+
+=head3 Array Operations
 
 Managing array indices can be a hassle.  Because Perl 5 can expand or contract
 arrays as necessary, the language also provides several operations to treat
@@ -205,7 +218,7 @@ X<push>
 X<pop>
 
 The C<push> and C<pop> operators add and remove elements from the tail of the
-array, respectively.
+array, respectively:
 
 =begin programlisting
 
@@ -214,7 +227,7 @@ array, respectively.
     # what is there to eat?
     push @meals, qw( hamburgers pizza lasagna salad );
 
-    # forget the salad...
+    # ... but the nephew hates vegetables
     pop @meals;
 
 =end programlisting
@@ -243,25 +256,30 @@ returns the first element of the array.
 
 =begin sidebar
 
-Few programs use the return values of C<push> and C<unshift>.
+Few programs use the return values of C<push> and C<unshift>.  Writing this
+chapter led to a patch to Perl 5 to optimize the use of C<push> in void
+context.
 
 =end sidebar
 
-X<splice> C<splice> is another important -- if less frequently used -- array
-operator.  It removes and replaces elements from an array given an offset, a
-length of a list slice, and replacements.  Both replacing and removing are
-optional; you may omit either behavior.  The C<perlfunc> description of
-C<splice> demonstrates its equivalences with C<push>, C<pop>, C<shift>, and
-C<unshift>.  Note that the other operators are shorter and simpler to read and
-understand.
+X<splice>
+
+C<splice> is another important--if less frequently used--array operator.  It
+removes and replaces elements from an array given an offset, a length of a list
+slice, and replacements.  Both replacing and removing are optional; you may
+omit either behavior.  The C<perlfunc> description of C<splice> demonstrates
+its equivalences with C<push>, C<pop>, C<shift>, and C<unshift>.  Note that the
+other operators are shorter and simpler to read and understand.
 
 Arrays often contain elements to process in a loop; see L<looping_directives>
 for more detail about Perl 5 control flow and array processing.
 
+=head3 Arrays and Context
+
 X<list context; arrays>
 
 In list context, arrays flatten into lists.  If you pass multiple arrays to a
-normal Perl 5 subroutine, they will become a single list:
+normal Perl 5 function, they will flatten into a single list:
 
 =begin programlisting
 
@@ -279,15 +297,14 @@ normal Perl 5 subroutine, they will become a single list:
 
 =end programlisting
 
-In other words, C<@_> will contain seven elements, not two.
+Within the function, C<@_> will contain seven elements, not two.
 
 As well, list assignment to arrays is I<greedy>.  An array will consume as many
-elements from this type of assignment as possible.  After the assignment,
-C<@cats> will contain I<every> argument passed to the subroutine.  C<@dogs>
-will be empty.
+elements from the list as possible.  After the assignment, C<@cats> will
+contain I<every> argument passed to the subroutine.  C<@dogs> will be empty.
 
-This flattening behavior sometimes confuses novices intending to create nested
-arrays in Perl 5:
+This flattening behavior sometimes confuses novices who attempt to create
+nested arrays in Perl 5:
 
 =begin programlisting
 
@@ -299,12 +316,14 @@ arrays in Perl 5:
 While some people may initially expect this code to produce an array where the
 first ten elements are the numbers one through ten and the eleventh element is
 an array containing the numbers eleven through 20 and an array containing the
-numbers twenty-one through thirty, this actually produces an array containing
-the numbers one through 30, inclusive.  Remember that parentheses do not
-I<create> lists in these circumstances -- they only group expressions.
+numbers twenty-one through thirty, this code instead produces an array
+containing the numbers one through 30, inclusive.  Remember that parentheses do
+not I<create> lists in these circumstances--they only group expressions.
 
 The solution to this flattening behavior is the same for passing arrays to
-subroutines and for creating nested arrays; see L<references> for more details.
+subroutines and for creating nested arrays (L<references>).
+
+=head3 Array Interpolation
 
 X<array interpolation>
 X<interpolation; arrays>
@@ -337,9 +356,3 @@ this example several years ago>:
     }
 
 =end programlisting
-
-=for author
-
-Check stringification of array elements during interpolation.
-
-=end for
