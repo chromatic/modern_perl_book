@@ -78,8 +78,6 @@ Use C<$a ** $b ** $c> instead.
 
 =end sidebar
 
-=for author
-
 =head2 Arity
 
 Z<arity>

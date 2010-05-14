@@ -186,8 +186,6 @@ block, the body of the function itself.  Only the assignment violates strict
 reference checking, so disable strictures for that operation for the assignment
 alone.
 
-=for author
-
 =head4 Compile-time Manipulation
 
 Unlike code written explicitly as code, code generated through C<eval> STRING
