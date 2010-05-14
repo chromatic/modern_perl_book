@@ -31,4 +31,6 @@ debugging
 
 alternatives to deeply-nested structures
 
+Z<circular_references>
+
 =end for
