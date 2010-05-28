@@ -2,13 +2,12 @@
 
 Z<operator_types>
 
-X<operand>
-
-Because of Perl's pervasive notion of context, especially value contexts
-(L<value_contexts>), understanding an operator requires understanding the
-context it provides to its operands.  The correct operator to use in a given
-situation depends both on what you intend to do as well as on what type of
-value you expect to use in that situation.
+Perl's pervasive contexts--especially value contexts
+(L<value_contexts>)--extend to the behavior of its operators.  Perl operators
+provide value contexts to their operands.  Choosing the most appropriate
+operator for a given situation requires you to understand what type of value
+you expect to receive as well as the type of values on which you wish to
+operate.
 
 =head3 Numeric Operators
 
@@ -151,7 +150,6 @@ X<x>
 Is there a better way to explain this?  I may have confused myself writing it.
 
 =end for
-
 
 The repetition operator (C<x>) depends on amount context.  In scalar context,
 it repeats its left operand into a single scalar.  In list context, it produces
