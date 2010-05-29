@@ -1,3 +1,5 @@
+Z<functions>
+
 =head2 Declaring Functions
 
 X<subroutines; declaration>
