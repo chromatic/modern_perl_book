@@ -197,8 +197,10 @@ exported functions.  You may also export variables:
 
 =begin sidebar
 
-The CPAN module C<Sub::Exporter> provides a nicer interface to export symbols
-without using package globals.  It also offers more powerful options.
+The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
+without using package globals.  It also offers more powerful options.  However,
+C<Exporter> can export variables, while C<Sub::Exporter> only exports
+functions.
 
 =end sidebar
 
