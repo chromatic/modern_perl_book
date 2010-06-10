@@ -286,6 +286,8 @@ C<$VERSION>.
 
 =head3 State Scope
 
+Z<state>
+
 X<state>
 X<scope; state>
 

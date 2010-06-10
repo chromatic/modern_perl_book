@@ -20,6 +20,6 @@ L<anonymous_functions>
 
 L<closures>
 
-L<attributes>
+L<state_versus_closures>
 
-L<state>
+L<attributes>

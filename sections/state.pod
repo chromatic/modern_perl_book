@@ -1,11 +1,11 @@
-=head1 State
+=head2 State versus Closures
 
-Z<state>
+Z<state_versus_closures>
 
 Closures (L<closures>) are an easy, effective, and safe way to make data
-persistent between function invocations without using global variables.  If you
-need to share variables between named functions, a common idiom is to introduce
-a new scope for only those function declarations:
+persist between function invocations without using global variables.  If you
+need to share variables between named functions, you can introduce a new scope
+(L<scope>) for only those function declarations:
 
 =begin programlisting
 
@@ -24,12 +24,14 @@ a new scope for only those function declarations:
 
 =end programlisting
 
-The encapsulation of functions to toggle the safety lets all three functions
-share state without exposing it to external code directly.  This idiom works
-well for cases where external code should be able to change internal state, but
-it's clunkier when only one function needs to manage that state.
+The encapsulation of functions to toggle the safety allows all three functions
+to share state without exposing the lexical variable directly to external code.
+This idiom works well for cases where external code should be able to change
+internal state, but it's clunkier when only one function needs to manage that
+state.
 
-For example, suppose that you want to count the number of customers at your ice cream parlor.  Every hundredth person gets free sprinkles:
+Suppose that you want to count the number of customers at your ice cream
+parlor.  Every hundredth person gets free sprinkles:
 
 =begin programlisting
 
@@ -52,9 +54,10 @@ For example, suppose that you want to count the number of customers at your ice 
 
 X<state>
 
-That I<works>, but creating a new lexical scope for a single function
-introduces more accidental complexity than is necessary.  A new feature in
-5.10, the C<state> keyword, lets you declare a lexically scoped variable with a value that persists between invocations:
+This approach I<works>, but creating a new lexical scope for a single function
+introduces more accidental complexity than is necessary.  The C<state> keyword
+(L<state>) allows you to declare a lexically scoped variable with a value that
+persists between invocations:
 
 =begin programlisting
 
@@ -70,11 +73,6 @@ introduces more accidental complexity than is necessary.  A new feature in
     }
 
 =end programlisting
-
-Declare a C<state> variable the same way you would declare a lexical with
-C<my>.  Only the first invocation of the C<state> keyword performs the
-initialization.  All subsequent invocations of this function will retain the
-value of C<$cust_count> at the point control flow left the function.
 
 X<feature>
 X<feature; state>
@@ -99,16 +97,22 @@ counter example:
 
 =end programlisting
 
-... though there are fewer obvious benefits to this approach.
+... though there are few obvious benefits to this approach.
 
 =begin sidebar
 
-Perl 5.10 deprecated a technique abused in previous versions of Perl by which
-you could effectively emulate C<state>.  Using a postfix conditional which
-evalutes to false with a C<my> declaration avoids I<reinitializing> a lexical
-variable to C<undef> or its initialized value.  Using this technique will now
-produce a warning about its deprecation, and rightfully so.  Avoid it, but
-understand it if you encounter it:
+Perl 5.10 deprecated a technique from previous versions of Perl by which you
+could effectively emulate C<state>.  Using a postfix conditional which evalutes
+to false with a C<my> declaration avoids I<reinitializing> a lexical variable
+to C<undef> or its initialized value.  In effect, a named function can close
+over its previous lexical scope by abusing a quirk of implementation.
+
+
+Any use of a postfix conditional expression modifying a lexical variable
+declaration now produces a deprecation warning.  It's too easy to write
+inadvertently buggy code with this technique; use C<state> instead where
+available, or a true closure otherwise.  Avoid this idiom, but understand it if
+you encounter it:
 
 =begin programlisting
 
@@ -121,10 +125,5 @@ understand it if you encounter it:
     }
 
 =end programlisting
-
-Any use of a postfix conditional expression modifying a lexical variable
-declaration gives this warning now.  It's too easy to write inadvertently buggy
-code with this technique, and it's too rarely clear if the programmer intended
-to emulate C<state>.
 
 =end sidebar
