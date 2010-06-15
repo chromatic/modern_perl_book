@@ -1,25 +1,6 @@
-=head2 Regular Expressions
-
 Z<regular_expressions>
-X<regular expressions>
-X<regex>
-X<regular expression engine>
 
-Perl's powerful ability to manipulate text comes in part from its inclusion of
-a computing concept known as I<regular expressions>.  A regular expression (or
-I<regex>) is a I<pattern> which describes characteristics of a string of text.
-A I<regular expression engine> interprets a pattern and applies it to strings
-of text to identify those which match.
-
-Perl's core documentation describes Perl regular expressions in copious detail;
-see C<perldoc perlretut>, C<perldoc perlre>, and C<perldoc perlreref> for a
-tutorial, the full documentation, and a reference guide, respectively.  Jeffrey
-Friedl's book I<Mastering Regular Expressions> explains the theory and the
-mechanics of how regular expressions work.  Even though those references may
-seem daunting, regular expressions are like Perl--you can do many things with
-only a little knowledge.
-
-=head3 Literals
+=head2 Literals
 
 The simplest regexes are simple substring patterns:
 
@@ -52,7 +33,7 @@ in scalar context, a match evaluates to a true value if it succeeds.
 The negated form of the binding operator C(!~) evalutes to false if the match
 succeeds.
 
-=head3 The C<qr//> Operator and Regex Combinations
+=head2 The C<qr//> Operator and Regex Combinations
 
 X<operators; qr//>
 X<regular expressions; qr//>
@@ -90,7 +71,7 @@ You may interpolate and combine them into larger and more complex patterns:
 
 =end programlisting
 
-=head3 Quantifiers
+=head2 Quantifiers
 
 X<regular expressions; quantifiers>
 X<operators; index>
@@ -209,7 +190,7 @@ more than I<m> times:
 
 =end programlisting
 
-=head3 Metacharacters
+=head2 Metacharacters
 
 X<regular expressions; metacharacters>
 X<regular expressions; .>
@@ -332,7 +313,7 @@ negating carat.
 
 =end sidebar
 
-=head3 Greediness
+=head2 Greediness
 
 X<greedy quantifiers>
 X<quantifiers; greedy>
@@ -459,7 +440,7 @@ better.  If you find yourself writing a lot of regular expression with greedy
 matches, test them thoroughly with a comprehensive and automated test suite
 with representative data to lessen the possibility of unpleasant surprises.
 
-=head3 Capturing
+=head2 Capturing
 
 It's often useful to match part of a string and use it later; perhaps you want
 to extract an address or an American telephone number from a string:
@@ -557,7 +538,7 @@ use of captures of in regex fragments; save it for top-level regexes.
 
 =end sidebar
 
-=head3 Grouping and Alternation
+=head2 Grouping and Alternation
 
 Previous examples have all applied quantifiers to simple atoms.  They can also
 apply to more complex subpatterns as a whole:
@@ -649,7 +630,7 @@ C<(?-xism:rice|beans)>.
 
 =end sidebar
 
-=head3 Other Escape Sequences
+=head2 Other Escape Sequences
 
 X<regex metacharacters>
 X<metacharacters; regex>
@@ -700,7 +681,7 @@ effective denial-of-service attack against your program.
 
 =end note
 
-=head3 Assertions
+=head2 Assertions
 
 X<regex assertions>
 
