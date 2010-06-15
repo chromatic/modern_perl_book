@@ -74,6 +74,8 @@ or more specific about what they produce.
 
 =head3 Immutability
 
+Z<immutability>
+
 A common pattern among programmers new to object orientation is to treat
 objects as if they were bundles of records which use methods to get and set
 internal values.  While this is simple to implement and easy to understand, it
