@@ -1,4 +1,4 @@
-=head3 Testing
+=head2 Testing
 
 Z<testing>
 
@@ -6,21 +6,23 @@ X<testing>
 X<tests>
 
 I<Testing> is the process of writing and running automated verifications that
-your software performs as intended, in whole or in parts.  At its heart, this
-is an automation of a process you've performed countless times already: write a
-little bit of code, run it, and see if it works.  The difference is in the
-I<automation>.  Perl 5 provides great tools in the core to help you begin to
-write good and useful automated tests, and the CPAN has far more.
+your software performs as intended, in whole or in part.  At its heart, this is
+an automation of a process you've performed countless times already: write a
+bit of code, run it, and see if it works.  The difference is in the
+I<automation>.  Rather than performing these manual steps and relying on humans
+to do everything perfectly every time, let the computer handle the repetition.
 
-=head4 C<Test::More>
+Perl 5 provides great tools to help you write good and useful automated tests.
+
+=head3 C<Test::More>
 
 X<Test::More>
 X<ok()>
 X<testing; ok()>
 
-Perl testing begins with the core module C<Test::More>.  Almost everything you
-need to understand is in its C<ok()> function.  C<ok()> takes two parameters, a
-boolean value and a string describing the purpose of the test:
+Perl testing begins with the core module C<Test::More> and its single C<ok()>
+function.  C<ok()> takes two parameters, a boolean value and a string
+describing the purpose of the test:
 
 =begin programlisting
 
@@ -32,8 +34,8 @@ boolean value and a string describing the purpose of the test:
 =end programlisting
 
 Ultimately, any condition you can test for in your program should become a
-binary value.  Does the code do what I intended it to do?  A complex program
-may have thousands of these individual conditions.  In general, the smaller the
+binary value.  Does the code work as I intended?  A complex program may have
+thousands of these individual conditions.  In general, the smaller the
 granularity the better.  The purpose of writing individual assertions is to
 isolate individual features to understand what doesn't work as you intended and
 what ceases to work after you make changes in the future.
@@ -43,8 +45,8 @@ X<test plan>
 X<Test::More; plan()>
 
 This snippet isn't a complete test script, however.  C<Test::More> and related
-modules need a couple of other features, including a I<test plan>, which
-represents the number of individual tests you plan to run:
+modules require the use of a I<test plan>, which represents the number of
+individual tests you plan to run:
 
 =begin programlisting
 
@@ -58,24 +60,28 @@ represents the number of individual tests you plan to run:
 =end programlisting
 
 The C<tests> argument to C<Test::More> sets the test plan for the program.
-This gives the test an additional assertion.  If fewer than four tests run,
-something went wrong.  If more than four tests run, something went wrong.  That
+This gives the test an additional assertion.  If fewer than four tests ran,
+something went wrong.  If more than four tests ran, something went wrong.  That
 assertion is unlikely to be useful in this simple scenario, but it I<can> catch
-bugs in code that seems too simple to have errors.
+bugs in code that seems too simple to have errorsN<As a rule, any code you brag
+about being too simple to contain errors will contain errors at the least
+opportune moment.>.
 
 =begin sidebar
 
 You don't have to provide C<< tests => ... >> as an C<import()> argument.  At
-the end of your test program, call the function C<done_testing()> to get the
-benefit of verifying that the entire program completed without having to count
-the number of tests run.
+the end of your test program, call the function C<done_testing()>.  While a
+plan at the start with a fixed number of tests can verify that you ran only the
+expected number of tests, sometimes it's difficult or painful to verify that
+number.  In those cases, C<done_testing()> verifies that the test program
+completed successfully--otherwise, how would you I<know>?
 
 =end sidebar
 
-=head4 Running Tests
+=head3 Running Tests
 
-The resulting program is now a full-fledged Perl 5 program.  You can run it on
-its own and review the results yourself:
+The resulting program is now a full-fledged Perl 5 program which produces the
+output:
 
 =begin screen
 
@@ -93,21 +99,26 @@ its own and review the results yourself:
 
 =end screen
 
-This output should match your expectations.  In particular, note that the
-failed tests provide diagnostic messages about what failed and where.  This is
-a tremendous aid to debugging.
+X<TAP>
+X<test anything protocol>
+X<testing; TAP>
+
+This format adheres to a standard of test output called I<TAP>, the I<Test
+Anything Protocol> (U<http://testanything.org/>).  Note that the failed tests
+provide diagnostic messages about what failed and where.  This is a tremendous
+aid to debugging.
 
 X<Test::Harness>
 X<prove>
 X<testing; prove>
 X<testing; running tests>
 
-Even so, the output of a file with more than a handful of individual tests
-(especially if there are multiple failures) can be daunting.  It's more
-important to understand what, if anything, failed.  The core module
-C<Test::Harness> does the hard work of interpreting this output and displaying
-only the most pertinent information.  It also provides a program called
-C<prove> which takes the hard work out of the process:
+The output of a test file containing multiple assertions (especially multiple
+I<failed> assertions) can be verbose.  In most cases, you want to know either
+that everything passed or that x, y, and z failed.  The core module
+C<Test::Harness> interprets TAP and and displays only the most pertinent
+information.  It also provides a program called C<prove> which takes the hard
+work out of the process:
 
 =begin programlisting
 
@@ -141,8 +152,7 @@ boolean conversion (L<boolean_conversion>):
 
 =end programlisting
 
-With those two changes, C<prove> now produces much friendlier and simpler
-output:
+With those two changes, C<prove> now displays:
 
 =begin screen
 
@@ -152,26 +162,24 @@ output:
 
 =end screen
 
-=head4 Better Comparisons
+=head3 Better Comparisons
 
 Even though the heart of all automated testing is the boolean condition "is
-this true or false?", reducing everything to that boolean condition is tedious,
-error-prone, and limited in its diagnostic purposes.  C<Test::More> provides
-several other convenient functions to ensure that your code behaves as you
-intend.
+this true or false?", reducing everything to that boolean condition is tedious
+and offers few diagnostic possibilities.  C<Test::More> provides several other
+convenient functions to ensure that your code behaves as you intend.
 
 X<is()>
 X<testing; is()>
 X<Test::More; is()>
 
 The C<is()> function compares two values.  If they match, the test passes.
-Otherwise, the test fails and provides a diagnostic message indicating that
-they do not match:
+Otherwise, the test fails and provides a relevant diagnostic message:
 
 =begin programlisting
 
-    is( 4, 2 + 2, 'addition should be consistent across the universe' );
-    is( 'pancake', 100, 'pancakes should have a delicious numeric value' );
+    is(         4, 2 + 2, 'addition should hold steady across the universe' );
+    is( 'pancake',   100, 'pancakes should have a delicious numeric value' );
 
 =end programlisting
 
@@ -191,13 +199,13 @@ As you might expect, the first test passes and the second fails:
 Where C<ok()> only provides the line number of the failing test, C<is()>
 displays the mismatched values.
 
-C<ok()> applies implicit scalar context to its values.  This means that you can
-check the number of elements in an array without explicitly evaluating the
-array in scalar context:
+C<ok()> applies implicit scalar context to its values.  This means, for
+example, that you can check the number of elements in an array without
+explicitly evaluating the array in scalar context:
 
 =begin programlisting
 
-    my @cousins = qw( Rick Kristen AJ Kaycee Eric Corey );
+    my @cousins = qw( Rick Kristen Alex Kaycee Eric Corey );
     is( @cousins, 6, 'I should have only six cousins' );
 
 =end programlisting
@@ -248,7 +256,8 @@ C<isa_ok()>:
 
 C<isa_ok()> provides its own diagnostic message on failure.
 
-C<can_ok()> verifies that a class or object can perform the requested method:
+C<can_ok()> verifies that a class or object can perform the requested method
+(or methods):
 
 =begin programlisting
 
@@ -256,8 +265,6 @@ C<can_ok()> verifies that a class or object can perform the requested method:
     can_ok( $chimpzilla, 'transform', 'destroy_tokyo' );
 
 =end programlisting
-
-It takes a list of method names that the invocant must be able to perform.
 
 The C<is_deeply()> function compares two references to ensure that their
 contents are equal:
@@ -281,7 +288,7 @@ more configurable tests.
 
 C<Test::More> has several more test functions, but these are the most useful.
 
-=head4 Organizing Tests
+=head3 Organizing Tests
 
 X<testing; .t files>
 X<testing; t/ directory>
@@ -307,54 +314,50 @@ F<.t> files, though two strategies are popular:
 
 The important considerations are maintainability of the test files, as larger
 files are more difficult to maintain than smaller files, and the granularity of
-the test suite, as finding the right tests to run or to modify is easier by
-feature.  Some combination of this approach tends to work for almost every
-project.
+the test suite.  A hybrid approach is the most flexible; one test can verify
+that all of your modules compile, while other tests verify that each module
+behaves as intended.
 
-When running tests, it's often important to be able to run only those tests for
-the specific feature under development.  That is, if you're adding the ability
-to breathe fire to your C<RobotMonkey>, you may want only to run the
-F<t/breathe_fire.t> test file while you're coding.  When you have the feature
+It's often useful to run tests only for a specific feature under development.
+If you're adding the ability to breathe fire to your C<RobotMonkey>, you may
+want only to run the F<t/breathe_fire.t> test file.  When you have the feature
 working to your satisfaction, run the entire test suite to verify that local
 changes have no unintended global effects.
 
-=head4 Other Testing Modules
+=head3 Other Testing Modules
 
 X<Test::Builder>
 X<testing; modules>
 X<testing; Test::Builder>
 
 C<Test::More> relies on a testing backend known as C<Test::Builder>.  The
-latter module manages the test plan and coordinates the test output into a form
-that C<Test::Harness> and other tools can understand.
-
-=begin sidebar
-
-X<TAP>
-X<testing; TAP>
-
-This output format is TAP, the Test Anything Protocol.  See
-U<http://testanything.org/> for more details.
-
-=end sidebar
-
+latter module manages the test plan and coordinates the test output into TAP.
 This design allows multiple test modules to share the same C<Test::Builder>
 backend.  Consequently, the CPAN has hundreds of test modules available--and
 they can all work together in the same program.
 
-C<Test::Exception> provides functions to ensure that your code throws (and does
-not throw) exceptions appropriately.
+=over 4
 
-C<Test::MockObject> allows you to test difficult interfaces by I<mocking>
-(emulating but producing different results).
+=item * C<Test::Exception> provides functions to ensure that your code throws
+(and does not throw) exceptions appropriately.
 
-C<Test::WWW::Mechanize> allows you to test live web applications.
+=item * C<Test::MockObject> and C<Test::MockModule> allow you to test difficult
+interfaces by I<mocking> (emulating but producing different results).
 
-C<Test::Database> provides functions to test the use and abuse of databases.
+=item * C<Test::WWW::Mechanize> allows you to test live web applications.
 
-C<Test::Class> offers an alternate mechanism for organizing test suites.  It
-allows you to create classes in which specific methods group tests.  You can
-inherit from test classes just as your code classes inherit from each other.
-This is an excellent way to reduce duplication in test suites.  See the
+=item * C<Test::Database> provides functions to test the use and abuse of
+databases.
+
+=item * C<Test::Class> offers an alternate mechanism for organizing test
+suites.  It allows you to create classes in which specific methods group tests.
+You can inherit from test classes just as your code classes inherit from each
+other.  This is an excellent way to reduce duplication in test suites.  See the
 C<Test::Class> series written by Curtis Poe at
 U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
+
+=back
+
+The Perl QA project (U<http://qa.perl.org/>) is a primary source of test
+modules as well as wisdom and practical experience making testing in Perl easy
+and effective.
