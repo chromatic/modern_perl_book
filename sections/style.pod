@@ -1,67 +1,49 @@
-=head1 Style
-
 Z<style>
-
-Learning to program and learning to program I<well> are two different things.
-Learning to program requires to you understand how computers work, how to
-approach problems, and how to describe your intentions correctly in a given
-programming language.  Learning how to program well requires you to understand
-the tradeoffs between multiple ways to accomplish the same goals in terms of
-specific priorities.  If we only wrote programs once and never had to modify or
-maintain them, if our programs never had bugs, if we never had to choose
-between using more memory or taking more time, and if we never had to work with
-other people, we wouldn't have to worry about how well we program.
-
-Writing Perl well means understanding how Perl works.  It also means developing
-a sense of good taste.  The only reliable way to do that is to practice writing
-code and to practice reading good code.
-
-You can help that process by following a few guidelines.
 
 =head2 Writing Maintainable Perl
 
 X<maintenance>
+X<maintainability>
 
-If you ever set aside a program for a time, then have to test it in a new
-environment or make changes to it, you'll realize that programming with
-maintenance concerns in mind can make your work much easier.  The easier your
-program is to understand and to modify, the better.
+The easier your program is to understand and to modify, the better.  This is
+I<maintainability>.  Set aside your current program for six months, then try to
+fix a bug or add a feature.  The more maintainable the code, the less
+artificial complexity you will encounter making changes.
 
 To write maintainable Perl you must:
 
 =over 4
 
 =item * I<Remove duplication.>  Perl offers many opportunitites to use
-abstraction to reduce and remove duplication.  Functions, objects, roles,
-modules, and other design entities exist to let you define models of the
-problem and your solution.
+abstraction to reduce and remove duplication.  Functions, objects, roles, and
+modules, for examplel, allow you to define models of the problem and your
+solution.
 
 The more duplication in your system, the more work it is to make a necessary
 change, and the more likely you will forget to make a change in every place
 necessary.  The less duplication in your system, the more likely you've found
-an effective design for your problem.
+an effective design for your problem.  The best designs allow you to add
+features while removing code overall.
 
 =item * I<Name entities well.>  Everything you can name in your
-system--functions, objects, methods, variables, modules--can add to the clarity
-of your design or take away from it.  The ease with which you can name and
-describe components of your system reveals your understanding of the problem
-and the cohesion of your design.  Your design tells a story, and the nouns and
-verbs you use can help you remember that story when you must later maintain the
-code.  Time invested in finding the right words will help you.
+system--functions, classes, methods, variables, modules--can aid or hinder
+clarity.  The ease with which you can name these entities system reveals your
+understanding of the problem and the cohesion of your design.  Your design
+tells a story, and every words you use effectively can help you remember that
+story when you must later maintain the code.
 
 =item * I<Avoid unnecessary cleverness.>  Novices sometimes mistake cleverness
 for conciseness.  Concise code avoids unnecessary structure or complexity.
 Clever code sometimes prefers its own cleverness to simplicity.  Perl offers
-many approaches to solve similar problems.  Sometimes one is more readable than
-the others.  Sometimes one is faster than the others.  Usuall one is more
-obvious in context than the others.
+many approaches to solve similar problems.  Often one form is more readable.
+Sometimes one form is faster, or simpler.  Usually one is more obvious in
+context.
 
 You can't always avoid the dark corners of Perl, and some problems require
-cleverness to solve effectively.  Good taste and experience will help you
-determine whether any given code is more clever than it needs to be.  As a rule
-of thumb, if you're prouder that you've written something brilliant that took a
-lot of work to discover than that you've solved the problem effectively, you
-may have unnecessary complexity.
+cleverness to solve effectively.  Only good taste and experience will help you
+evaluate the appropriate level of cleverness.  As a rule of thumb, if you're
+prouder of explaining your solution to your coworkers than you are of solving a
+problem, your code may have unnecessary complexity.
 
 =item * I<Embrace simplicity.>  Given two programs which solve the same
 problem, the simplest is almost always easier to maintain.  Simplicity doesn't
@@ -69,11 +51,11 @@ require you to eschew advanced Perl knowledge, or to avoid using libraries, or
 to pound out hundreds of lines of procedural code.
 
 Simplicity means that you've solved the problem at hand effectively without
-adding anything you don't need.  This is not an excuse to avoid checking for
-errors or corner cases or boundary conditions.  Instead it's a reminder to
-think about what's really important.  Sometimes you don't need frameworks, or
-objects, or complex data structures.  Sometimes you do.  Simplicity means
-knowing the difference.
+adding anything you don't need.  This is no excuse to avoid error checking or
+verification or validation or security.  Instead it's a reminder to think about
+what's really important.  Sometimes you don't need frameworks, or objects, or
+complex data structures.  Sometimes you do.  Simplicity means knowing the
+difference.
 
 =back
 
@@ -82,40 +64,39 @@ knowing the difference.
 X<idioms>
 
 Perl steals ideas from other languages as well as from the wild world outside
-of programming.  Perl tends to claim these ideas by making them Perlish.
-Writing good Perl requires you to understand how Perl works and why.  Part of
-that means knowing how experienced Perl programmers write Perl.
+of programming.  Perl tends to claim these ideas by making them Perlish.  To
+write Perl well, you must know how experienced Perl programmers write it.
 
 =over 4
 
-=item * I<Understand community wisdom.>  While debates often occur over the use
-of one technique over another, being part of the Perl community as a whole lets
-you understand what other people do, what they avoid, and why.  You know your
-specific needs, but CPAN authors, CPAN developers, your local Perl Mongers
-group, and other programmers have experience solving similar problems.  Talk to
-them.  Read their public code.  Ask questions.  Learn from them, as they learn
+=item * I<Understand community wisdom.>  The Perl community often debates
+techniques, sometimes fiercely.  Yet even these disagreements offer
+enlightenment on specific design tradeoffs and styles.  You know your specific
+needs, but CPAN authors, CPAN developers, your local Perl Mongers group, and
+other programmers have experience solving similar problems.  Talk to them.
+Read their public code.  Ask questions.  Learn from them and let them learn
 from you.
 
 =item * I<Follow community norms.>  The Perl community isn't always right,
-especially if your needs are very specific or unique, but it has invested a lot
-of work in solving problems as broadly as possible.  Perl's testing and
-packaging tools work best when you organize your code as if you were to
-distribute it on the CPAN.  If you adopt the standard approaches to writing,
-documenting, packaging, testing, and distributing your code, you can take
-advantage of these tools.
+especially if your needs are very specific or unique, but it works continually
+to solve problems as broadly as possible.  Perl's testing and packaging tools
+work best when you organize your code as if you were to distribute it on the
+CPAN.  Adopt the standard approaches to writing, documenting, packaging,
+testing, and distributing your code, to take advantage of these tools.
 
-Similarly, utilities such as C<Perl::Critic> and C<Perl::Tidy> and
+Similarly, CPAN distributions such as C<Perl::Critic> and C<Perl::Tidy> and
 C<CPAN::Mini> can make your work simpler and easier.
 
-=item * I<Read code.>  Participating in a mailing list such as the Perl
-Beginners list
+=item * I<Read code.>  Join in a mailing list such as the Perl Beginners list
 (U<http://learn.perl.org/faq/beginners.htmlhttp://learn.perl.org/faq/beginners.html>),
-joining PerlMonks (U<http://perlmonks.org/>), and participating in the Perl
-Community (U<http://www.perl.org/community.html> has copious links) will give
-you opportunities to see how other people solve their problems, good and bad.
-Learn from the good (it's often obvious) and the bad (to see what to avoid).
+sign up for PerlMonks (U<http://perlmonks.org/>), and otherwise immerse
+yourself in the Perl Community (U<http://www.perl.org/community.html> has
+copious links).  You'll have plenty of opportunities to see how other people
+solve their problems, good and bad.  Learn from the good (it's often obvious)
+and the bad (to see what to avoid).
 
-Working throw a few lines of code is a great way to learn.
+Writing a few lines of code to solve a problem someone else posted is a great
+way to learn.
 
 =back
 
@@ -123,9 +104,8 @@ Working throw a few lines of code is a great way to learn.
 
 X<efficacy>
 
-All of this assumes that you can write Perl effectively.  Knowing the syntax
-and semantics is only the beginning.  You can only achieve good design if you
-follow habits to I<encourage> good design.
+Knowing Perl's syntax and semantics is only the beginning.  You can only
+achieve good design if you follow habits to I<encourage> good design.
 
 =over 4
 
@@ -135,19 +115,15 @@ exercises the same design skills as designing programs well; never forget that
 test code is still code.  Even so, a good test suite will give you confidence
 that you can modify a program and not break existing behaviors you care about.
 
-=item * I<Modularize.>  Besides allowing you to take advantage of Perl
-development tools and to reduce duplication, breaking your code into individual
-modules can help you enforce boundaries of abstraction and encapsulation.  If
-you develop this into a habit, you'll recognize when any individual unit of
-code starts to do too much.  You'll identify multiple units that work too
-tightly together.
+=item * I<Modularize.>  Break your code into individual modules to enforce
+encapsulation and abstraction boundaries.  Make a habit of this and you'll
+recognize individual units of code which do too many things.  You'll identify
+multiple units that work too tightly together.
 
 Modularity also forces you to manage different levels of abstraction; you must
-consider how larger entities of your system work together, rather than only
-caring about how individual lines in your program work together.  This is a
-difficult skill to learn, but it's essential to programming well.  There's no
-better way to learn the value of abstraction than having to revise systems into
-effective abstractions.
+consider how the entities of your system work together.  There's no better way
+to learn the value of abstraction than having to revise systems into effective
+abstractions.
 
 =item * I<Take advantage of the CPAN.>  The single best force multiplier for
 any Perl 5 program is the amazing library of reusable code available for anyone
@@ -159,10 +135,9 @@ modern Perl has helped the Perl community grow in knowledge, in wisdom, and in
 efficacy.
 
 Whenever possible, search the CPAN first--and ask your fellow community
-members--for advice on solving your problems.  You're likely to find
-somethings.  well-worth using.  You may even report a bug, or submit a patch,
-or produce your own distribution on the CPAN.  After all, there's nothing says
-you're an effective Perl programmer more than helping other people write
-effective Perl too.
+members--for advice on solving your problems.  You may even report a bug, or
+submit a patch, or produce your own distribution on the CPAN.  Nothing
+demonstrates you're an effective Perl programmer more than helping other people
+solve their problems.
 
 =back
