@@ -788,7 +788,7 @@ instances will return true when you call the C<isa()> method on them:
 
 =end programlisting
 
-=head4 Moose and Perl 5 OO
+=head3 Moose and Perl 5 OO
 
 X<moose; versus Perl 5 OO>
 
