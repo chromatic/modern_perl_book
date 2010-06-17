@@ -2,17 +2,23 @@
 
 Z<expressivity>
 
-Perl takes cues from human languages.  Larry Wall's studies in linguistics
-inform Perl's design.  As with natural language, there are many ways to write a
-Perl program depending on your project's style, the available time to create
-the program, the expected maintenance burden, or even your own personal sense
-of expression.  You may write in a straightforward, top-to-bottom style.  You
-may write many small and independent functions.  You may model your problem
-with classes and objects.  You may eschew or embrace advanced features.
+X<Wall, Larry>
+X<Larry Wall>
+
+Perl takes cues from human languages.  Larry WallN<The creator of Perl.>'s
+studies in linguistics inform Perl's design.  As with natural language, there
+are many ways to write a Perl program depending on your project's style, the
+available time to create the program, the expected maintenance burden, or even
+your own personal sense of expression.  You may write in a straightforward,
+top-to-bottom style.  You may write many small and independent functions.  You
+may model your problem with classes and objects.  You may eschew or embrace
+advanced features.
 
 X<TIMTOWTDI>
-Perl hackers have a slogan for this: I<TIMTOWTDI>, or "There's more than one
-way to do it!"
+X<Tim Toady>
+
+Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounded "Tim Toady", or
+"There's more than one way to do it!"
 
 Where this expressivity can provide a large palette with which master craftsman
 can create amazing and powerful edifices, unwise conglomerations of various

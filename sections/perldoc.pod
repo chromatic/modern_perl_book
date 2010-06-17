@@ -3,7 +3,8 @@
 Z<perldoc>
 
 One of Perl's most useful and least appreciated features is the C<perldoc>
-utility.  This program is part of every complete Perl 5 installation.  It
+utility.  This program is part of every complete Perl 5 installationN<On free
+Unix-like systems you may need to install a package such as C<perl-doc>.>.  It
 displays the documentation of every Perl module installed on the
 system--whether a core module or one installed from the CPAN--as well as
 thousands of pages of Perl's copious core documentation.
@@ -18,7 +19,7 @@ versions of the Perl documentation.
 The default behavior of C<perldoc> is to display the documentation for a named
 module or a specific section of the core documentation:
 
-    $ B<perldoc Modern::Perl>
+    $ B<perldoc List::Util>
     $ B<perldoc perltoc>
 
 The first command-line example extracts documentation written for the

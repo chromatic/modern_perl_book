@@ -74,12 +74,12 @@ X<CPAN.pm>
 X<CPANPLUS>
 
 Modern Perl installations include two clients to connect to, search, download,
-build, test, and install CPAN distributions, CPAN and CPANPLUS.  They behave
+build, test, and install CPAN distributions, CPAN.pm and CPANPLUS.  They behave
 equivalently; their use is a matter of taste.  This book recommends the use of
-CPAN solely due to its ubiquity.
+CPAN.pm solely due to its ubiquity.
 
-CPAN configuration is largely decision-free.  For any complete installation of
-Perl, you may start the client with:
+CPAN.pm configuration is largely decision-free.  For any complete installation
+of Perl, you may start the client with:
 
     $ B<cpan>
 
@@ -88,10 +88,10 @@ To install a distribution:
     $ B<cpan Modern::Perl>
 
 X<Eric Wilhelm>
-X<CPAN; configuration>
-X<CPAN; troubleshooting>
+X<CPAN.pm; configuration>
+X<CPAN.pm; troubleshooting>
 
-Eric Wilhelm's excellent tutorial on configuring the CPAN
+Eric Wilhelm's excellent tutorial on configuring CPAN.pm
 (U<http://learnperl.scratchcomputing.com/tutorials/configuration/>) is worth
 reading twice, especially its section on troubleshooting.
 
