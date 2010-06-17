@@ -223,6 +223,7 @@ characters and the underscore:
         next unless $word =~ B</lB<\w\w>m/>;
 
 =end programlisting
+
 X<regular expressions; \d>
 
 Use the C<\d> metacharacter to match digits:
