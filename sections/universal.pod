@@ -1,4 +1,4 @@
-=head3 The UNIVERSAL Package
+=head2 The UNIVERSAL Package
 
 Z<universal>
 
@@ -8,7 +8,7 @@ Perl 5 provides a special package which is the ancestor of all other packages
 in a very object-oriented way.  The C<UNIVERSAL> package provides a few methods
 available for all other classes and objects.
 
-=head4 The C<isa()> Method
+=head3 The C<isa()> Method
 
 X<UNIVERSAL::isa>
 X<isa()>
@@ -18,8 +18,8 @@ of a built-in type.  You can call it as a class method or an instance method on
 an object.  It returns true if the class or object is or derives from the named
 class, or if the object itself is a blessed reference to the given type.
 
-In other words, given an object C<$pepper>, a hash reference blessed into the
-C<Monkey> class (which inherits from the C<Mammal>) class:
+Given an object C<$pepper>, a hash reference blessed into the C<Monkey> class
+(which inherits from the C<Mammal>) class:
 
 =begin programlisting
 
@@ -47,19 +47,19 @@ You can override C<isa()> in your own classes.  This can be useful when working
 with mock objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN,
 for example) or with code that does not use roles (L<roles>).
 
-=head4 The C<can()> Method
+=head3 The C<can()> Method
 
 X<UNIVERSAL::can>
 X<can()>
 
 The C<can()> method takes the string containing the name of a method (though
 see L<method_sub_equivalence> for a disclaimer).  It returns a reference to the
-function which implements that method, if it exits.  Otherwise, it returns
+function which implements that method, if it exists.  Otherwise, it returns
 false.  You may call this on a class, an object, or the name of a package.  In
 the latter case, it returns a reference to a function, not a method.
 
-In other words, given a class named C<SpiderMonkey> with a method named
-C<screech>, you can get a reference to the method with:
+Given a class named C<SpiderMonkey> with a method named C<screech>, you can get
+a reference to the method with:
 
 =begin programlisting
 
@@ -72,8 +72,8 @@ C<screech>, you can get a reference to the method with:
 
 =end programlisting
 
-Given a plugin-style architecture, you can test to see if a given package
-implements a specific function in a similar way:
+Given a plugin-style architecture, you can test to see if a package implements
+a specific function in a similar way:
 
 =begin programlisting
 
@@ -97,21 +97,21 @@ C<AUTOLOAD()>.  See L<autoload_drawbacks> for a longer explanation.
 There is I<one> known case where calling C<UNIVERSAL::can()> as a function and
 not a method is not incorrect: to determine whether a class exists in Perl 5.
 If C<UNIVERSAL::can( $classname, 'can' )> returns true, someone somewhere has
-defined a class of the name C<$classname>.  Alternately, you can use C<Moose>
-and its introspection to determine this.
+defined a class of the name C<$classname>.  Alternately, C<Moose>'s
+introspection is much more powerful and easier to use.
 
 =end sidebar
 
-=head4 The C<VERSION()> Method
+=head3 The C<VERSION()> Method
 
 X<UNIVERSAL::VERSION>
 X<VERSION()>
 
 The C<VERSION()> method is available to all packages, classes, and objects.  It
 returns the value of the C<$VERSION> variable for the appropriate package or
-class.  It takes an optional parameter, a version number.  If you provide this
-version number, the method will throw an exception if the queried C<$VERSION>
-is not equal to or greater than the parameter.
+class.  It takes a version number as an optional parameter.  If you provide
+this version number, the method will throw an exception if the queried
+C<$VERSION> is not equal to or greater than the parameter.
 
 Given a C<HowlerMonkey> module of version C<1.23>:
 
@@ -128,21 +128,20 @@ Given a C<HowlerMonkey> module of version C<1.23>:
 You can override C<VERSION()> in your own code, but there's little reason to do
 so.
 
-=head4 The C<DOES()> Method
+=head3 The C<DOES()> Method
 
 X<UNIVERSAL::DOES>
 X<DOES()>
 
 The C<DOES()> method is new in Perl 5.10.0.  It exists to support the use of
-roles (L<roles>) in programs.  You can call it on a class or an object; pass
-the name of a role, and the method will return true if the appropriate class
-somehow performs that role.  (The class may do so through inheritance, through
-delegation, through composition, through role application, or any other
-mechanism.)
+roles (L<roles>) in programs.  Pass it an invocant and the name of a role, and
+the method will return true if the appropriate class somehow performs that
+role.  (The class may do so through inheritance, through delegation, through
+composition, through role application, or any other mechanism.)
 
 The default implementation of C<DOES()> falls back to C<isa()>, because
-inheritance is one mechanism by which a class may perform a role.  Thus, given
-a C<Cappuchin>:
+inheritance is one mechanism by which a class may perform a role.  Given a
+C<Cappuchin>:
 
 =begin programlisting
 
@@ -156,10 +155,10 @@ You can (and should) override C<DOES()> in your own code if you manually
 provide a role or other allomorphic behavior.  Alternately, use C<Moose> and
 don't worry about the details.
 
-=head4 Extending UNIVERSAL
+=head3 Extending UNIVERSAL
 
-It's tempting to store other methods in UNIVERSAL to make it available to all
-other classes and objects in Perl 5.  Try to avoid this temptation; this global
+It's tempting to store other methods in C<UNIVERSAL> to make it available to
+all other classes and objects in Perl 5.  Avoid this temptation; this global
 behavior can have subtle side effects because it is unconstrained.
 
 With that said, occasional abuse of C<UNIVERSAL> for I<debugging> purposes and
@@ -169,10 +168,10 @@ operator usable.  The C<UNIVERSAL::can> and C<UNIVERSAL::isa> distributions can
 help you find and eliminate old idioms which prevent good uses of polymorphism
 (though see C<Perl::Critic> for a different approach with other advantages).
 
-As mentioned earlier, C<UNIVERSAL::require> adds useful behavior to help load
-modules and classes at runtime--though using a distribution such as
-C<Module::Pluggable> is safer and more useful and less invasive.
+The C<UNIVERSAL::require> module adds useful behavior to help load modules and
+classes at runtime--though using a distribution such as C<Module::Pluggable> is
+safer and less invasive.
 
 Outside of very carefully controlled code and very specific, very pragmatic
-situations, there's no reason to put code in UNIVERSAL directly.  There are
+situations, there's no reason to put code in C<UNIVERSAL> directly.  There are
 almost always much better design alternatives.

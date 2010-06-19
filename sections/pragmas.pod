@@ -1,11 +1,10 @@
-=head3 Pragmas
+=head2 Pragmas
 
 Z<pragmas>
 
-Perl 5's extension mechanism is modules (L<modules>).  Usually modules provide
-functions to call or define classes (L<moose>).  Some modules instead influence
-the behavior of the language itself, whether enabling or disabling errors or
-warnings or changing how code acts within a particular scope.
+Perl 5's extension mechanism is modules (L<modules>).  Most modules provide
+functions to call or they define classes (L<moose>), but some modules instead
+influence the behavior of the language itself.
 
 X<pragma>
 X<modules; pragmas>
@@ -14,13 +13,14 @@ A module which influences the behavior of the compiler is a I<pragma>.  By
 convention, pragmas have lower-case names to differentiate them from other
 modules.  You've heard of some before: C<strict> and C<warnings>, for example.
 
+=head3 Pragmas and Scope
+
 X<pragmas; scope>
 
 A pragma works by exporting specific behavior or information into the enclosing
-static scope.  That is, the scope of a pragma is the same as the scope of a
-lexical variable.  (In a way, you can think of lexical variable declaration as
-a sort of pragma with funny syntaxN<Global variable declaration I<can> use the
-C<vars> pragma.>.)  This may be easiest to understand with an example:
+static scope.  The scope of a pragma is the same as the scope of a lexical
+variable.  In a way, you can think of lexical variable declaration as a sort of
+pragma with funny syntax.  Pragma scope is clearer with an example:
 
 =begin programlisting
 
@@ -38,14 +38,13 @@ C<vars> pragma.>.)  This may be easiest to understand with an example:
 
 =begin sidebar
 
-This applies to well-behaved pragmas, of course.  A sufficiently motivated Perl
-guru could implement a pragma which ignores scoping, but that would be
-unneighborly.
+A sufficiently motivated Perl guru could implement a poorly behaved pragma
+which ignores scoping, but that would be unneighborly.
 
 =end sidebar
 
 Just as lexical declarations affect inner scopes, so do pragmas maintain their
-effects on inner scopes by default:
+effects on inner scopes:
 
 =begin programlisting
 
@@ -60,14 +59,14 @@ effects on inner scopes by default:
 
 =end programlisting
 
+=head3 Using Pragmas
+
 X<pragmas; enabling>
 X<pragmas; customizing>
 
-As you can see, enabling a pragma looks like using a module.  As with modules,
-you may specify the desired version number of the pragmaN<... though Perl 5
-currently allows you to load versions of the pragma with equal or higher
-version numbers.>, and you may pass a list of arguments to the pragma to
-control its behavior at a finer level:
+Pragmas have the same usage mechanism as modules.  As with modules, you may
+specify the desired version number of the pragma and you may pass a list of
+arguments to the pragma to control its behavior at a finer level:
 
 =begin programlisting
 
@@ -92,9 +91,11 @@ Within a scope you may disable all or part of a pragma with the C<no> keyword:
 
 =end programlisting
 
+=head3 Useful Core Pragmas
+
 X<pragmas; useful>
 
-You may find several pragmas useful.  In the core:
+Perl 5 includes several useful core pragmas:
 
 =over 4
 
@@ -133,5 +134,6 @@ Is this ending worthwhile?  What a downer.
 
 =end for
 
-The C<perldoc perlpragma> documentation goes into more detail about how to
-write your own pragmas.  This is a feature introduced with Perl 5.10.
+Perl 5.10.0 added a mechanism by which you may more easily write your own
+pragmas which respect lexical scoping.  See C<perldoc perlpragma> for more
+details.

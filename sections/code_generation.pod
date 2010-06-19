@@ -1,40 +1,42 @@
-=head3 Code Generation
+=head2 Code Generation
 
 Z<code_generation>
 
-Programming--especially becoming an experienced programmer--means always
-searching for newer, better abstractions.  The less code you have to write, the
-better.  The more generalized your solutions, the better.  When you can delete
-code and add features, you've achieved something great.
+Improving as a programmer requires you to search for better abstractions.  The
+less code you have to write, the better.  The more general your solutions, the
+better.  When you can delete code and add features, you've achieved something
+great.
 
-Novice programmers write a lot more code than they need to write, partly due to
-inexperience with the language but also due to their inexperience in creating
-and reusing good abstractions.  Then they discover functions and parameters,
-then objects, then perhaps higher-order functions and closures.
+Novice programmers write more code than they need to write, partly from
+unfamiliarity with their languages, libraries, and idioms, but also due to
+inexperience creating and maintaining good abstractions.  They start by writing
+long lists of procedural code, then discover functions, then parameters, then
+objects, and--perhaps--higher-order functions and closures.
 
 X<metaprogramming>
 X<code generation>
 
-One powerful technique is writing programs which write programs.  Colloquially,
-this is I<metaprogramming> or code generation.  It can be as powerful as
-exploiting higher-order programming capabilities or it can be a rathole down
-which you find yourself confused and frightened.  The techniques are powerful
-and useful, however--and some of them form the basis of powerful tools such as
-Moose (L<moose>).
+
+I<Metaprogramming> (or I<code generation>)--writing programs which write
+programs--is another abstraction technique.  It can be as clear as exploiting
+higher-order programming capabilities or it can be a rathole down which you
+find yourself confused and frightened.  The techniques are powerful and useful,
+however--and some of them form the basis of powerful tools such as Moose
+(L<moose>).
 
 The C<AUTOLOAD> technique (L<autoload>) for missing functions and methods
 demonstrates this technique in a constrained form; Perl 5's function and method
 dispatch system allows you to customize what happens when normal lookup fails.
 
-=head4 C<eval>
+=head3 C<eval>
 
-X<eval STRING>
+X<eval strinG>
 X<operators; eval>
 
 The simplestN<At least I<conceptually>....> technique to generate code is to
 build a string containing a snippet of valid Perl and compile it with the
-C<eval> STRING operator.  Unlike the exception-catching C<eval> BLOCK operator,
-C<eval> STRING compiles the contents of the string within the current scope,
+C<eval> string operator.  Unlike the exception-catching C<eval> block operator,
+C<eval> string compiles the contents of the string within the current scope,
 including the current package and lexical bindings.
 
 A common use for this technique is providing a fallback if you can't (or don't
@@ -57,9 +59,9 @@ Object pattern offers more encapsulation, but it is I<a> way to do things.
 
 =end sidebar
 
-This exmaple seems simple, but that's deceptive.  If you want to use variables
-within your C<eval>d code, you have to deal with quoting issues.  This gets
-more complicated if you want to interpolate some variables but not others:
+This simple example is deceptive.  You must handle quoting issues to include
+variables within your C<eval>d code.  Add more complexity to interpolate some
+but not others:
 
 =begin programlisting
 
@@ -86,24 +88,20 @@ more complicated if you want to interpolate some variables but not others:
 
 =end programlisting
 
-Woe to you if you forget a backslash, and good luck convincing your text editor
-to perform the appropriate syntax highlighting on the contents of the string.
-Don't forget that each invocation of C<eval> STRING builds a new data structure
-representing the entire code, and that compiling code incurs a non-zero cost.
-It's not terribly expensive (especially compared to performing disk or network
-IO), but it's not free.
+Woe to you who forget a backslash!  Good luck convincing your syntax
+highlighter what's happening!  Worse yet, each invocation of C<eval> string
+builds a new data structure representing the entire code.  Compiling code isn't
+free, either--cheaper than performing IO, perhaps, but not free.
 
 Even so, this technique is simple and reasonably easy to understand.
 
-=head4 Parametric Closures
+=head3 Parametric Closures
 
 X<closures; parametric>
 
-While the C<eval> STRING example of building accessors and mutators is
-reasonably straightforward, the use of closures (L<closures>) has further
-benefits.  In particular, closures allow you to perform the parameterization of
-the generated code at the point of closure creation without requiring
-additional compilation.  As usual, an example makes this more clear:
+While building accessors and mutators with C<eval> is straightforward, closures
+(L<closures>) allow you to add parameters to generated code at compilation time
+without requiring additional evaluation:
 
 =begin programlisting
 
@@ -129,21 +127,17 @@ additional compilation.  As usual, an example makes this more clear:
 
 =end programlisting
 
-Though this code I<doesn't> install the generated methods into the appropriate
-symbol table (it could, but that's not the point of this example), note that it
-avoids unpleasant quoting issues.  It's also very slightly faster, because it
-doesn't have to invoke the Perl 5 compiler.  It even uses less memory, as no
-matter how many times you invoke this function, it uses the I<same> compiled
-code for the bodies of the two functions.  All that differs is the binding to
-the C<$attrname> lexical.  If you find yourself generating a lot of similar
-functions, this memory savings can be a huge advantage.
+This code avoids unpleasant quoting issues.  It also performs better, as
+there's only one compilation stage, no matter how many accessors you create.
+It even uses less memory by reusing the I<same> compiled code for the bodies of
+the two functions.  All that differs is the binding to the C<$attrname>
+lexical.  In a long-running process, or with a lot of accessors, this technique
+can be very useful.
 
 X<closures; installing into symbol table>
 X<symbol tables>
 
-Installing into symbol tables is reasonably easy, if ugly.  There's a subtle
-trap, however, which is one good reason to separate the creation of these
-closures from their installation:
+Installing into symbol tables is reasonably easy, if ugly:
 
 =begin programlisting
 
@@ -161,14 +155,13 @@ The odd splatty hash looking syntax refers to a symbol in the current I<symbol
 table>, which is the place in the current namespace which contains
 globally-accessible symbols such as package globals, functions, and methods.
 Assigning a reference to a symbol table entry installs or replaces the
-appropriate entry.  That is to say, to promote an anonymous function to a
-method, assign that function reference to the appropriate symbol table's entry,
-as shown here.
+appropriate entry.  To promote an anonymous function to a method, assign that
+function reference to the appropriate entry in the symbol table.
 
 This operation is a symbolic reference, so it's necessary to disable C<strict>
-reference checking for the operation.  Therein lies the subtle bug in many
-programs which generate code with parametric closures; they perform the
-assignment and the generation in a single step:
+reference checking for the operation.  Many programs have a subtle bug in
+similar code, as they perform the assignment and the generation in a single
+step:
 
 =begin programlisting
 
@@ -183,24 +176,22 @@ assignment and the generation in a single step:
 
 This example disables strictures for the outer block as well as the inner
 block, the body of the function itself.  Only the assignment violates strict
-reference checking, so disable strictures for that operation for the assignment
-alone.
+reference checking, so disable strictures for that operation alone.
 
-=head4 Compile-time Manipulation
+=head3 Compile-time Manipulation
 
-Unlike code written explicitly as code, code generated through C<eval> STRING
-gets compiled at runtime.  That should be no surprise, but the implications of
-that behavior can be surprising.  In particular, where you might expect a
-normal function will be available throughout the lifetime of your program, a
-generated function might not be available when you expect it.
+Unlike code written explicitly as code, code generated through C<eval> string
+gets compiled at runtime.  Where you might expect a normal function to be
+available throughout the lifetime of your program, a generated function might
+not be available when you expect it.
 
 X<BEGIN>
 
-You can force Perl to run code--to generate other code--during the compilation
-stage by wrapping it in a C<BEGIN> block.  When the Perl 5 parser encounters a
-block labeled C<BEGIN>, it parses the entire code.  As soon as parsing finishes
-(provided it did not encounter syntax errors), Perl runs the contents of that
-block.  From there, parsing continues as if there were no interruption.
+Force Perl to run code--to generate other code--during the compilation stage by
+wrapping it in a C<BEGIN> block.  When the Perl 5 parser encounters a block
+labeled C<BEGIN>, it parses the entire block.  Provided it contains no syntax
+errors, the block will run immediately.  When it finishes, parsing will
+continue as if there were no interruption.
 
 In practical terms, the difference between writing:
 
@@ -237,29 +228,28 @@ In practical terms, the difference between writing:
 
 =end programlisting
 
-... is that the latter example requires less copy-and-paste boilerplate
-codeN<Though do be aware of the necessity of defining C<make_accessors()>
-I<before> the C<BEGIN> block executes.>.
+... is primarily one of maintainability.
 
 X<BEGIN; implicit>
 X<modules; implicit BEGIN>
 
-In modules, this tends not to matter as much because C<use> adds an implicit
-C<BEGIN> around the C<require> and C<import> (L<importing>).  Thus any code
+Within a module, C<BEGIN> concerns tend not to matter because C<use> adds an
+implicit C<BEGIN> around the C<require> and C<import> (L<importing>).  Any code
 outside of a function but inside the module will execute I<before> the
-C<import()> call occurs.  However, when someone loads your module with
-C<require>, the execution of code outside of functions will happen at the end
-of parsing.
+C<import()> call occurs.  If you C<require> the module, however, there is no
+implicit C<BEGIN> block.  The execution of code outside of functions will
+happen at the I<end> of parsing.
 
 Also beware of the interaction between lexical I<declaration> (the association
 of a name with a scope) and lexical I<assignment>.  The former happens during
-compilation, while the latter occurs at the point of execution.  That is to
-say, this code has an apparent bug:
+compilation, while the latter occurs at the point of execution.  This code has
+a subtle bug:
 
 =begin programlisting
 
     use UNIVERSAL::require;
 
+    # buggy; do not use
     my $wanted_package = 'Monkey::Jetpack';
 
     BEGIN
@@ -270,11 +260,11 @@ say, this code has an apparent bug:
 
 =end programlisting
 
-... because the C<BEGIN> block will execute before the assignment of the string
-value to C<$wanted_package> occurs.  The result will be an exception from
-attempting to invoke the C<require()> method on the undefined value.
+... because the C<BEGIN> block will execute I<before> the assignment of the
+string value to C<$wanted_package> occurs.  The result will be an exception
+from attempting to invoke the C<require()> method on the undefined value.
 
-=head4 Class::MOP
+=head3 Class::MOP
 
 Z<class_mop>
 
@@ -288,11 +278,10 @@ Unlike installing function references to populate namespaces and to create
 methods, there's no simple built-in way to create classes in Perl 5.
 Fortunately, a mature and powerful distribution is available from the CPAN to
 do just this.  C<Clas::MOP> is the library which makes C<Moose> (L<moose>)
-possible.  It provides a I<meta object protocol>, which sounds like a
-complicated entity, but really is only a mechanism for creating and
+possible.  It provides a I<meta object protocol>--a mechanism for creating and
 manipulating an object system in terms of itself.
 
-Rather than writing your own fragile C<eval> STRING code or trying to poke into
+Rather than writing your own fragile C<eval> string code or trying to poke into
 symbol tables manually, you can manipulate the entities and abstractions of
 your program with objects and methods.
 
@@ -320,4 +309,3 @@ C<Class::MOP::Attribute> and C<Class::MOP::Method>.
 Does this need more of an example?
 
 =end for
-
