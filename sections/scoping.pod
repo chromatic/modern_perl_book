@@ -263,6 +263,7 @@ variables used other places in your code.
 
 =head4 Our Scope
 
+Z<our>
 X<our>
 X<package scope>
 

@@ -22,6 +22,8 @@ leading sigils.
 
 =head3 Variable Scopes
 
+Z<variable_scopes>
+
 X<variables; scope>
 X<scope>
 
