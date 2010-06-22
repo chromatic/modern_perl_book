@@ -1,33 +1,23 @@
-=head3 Missing Defaults
+=head2 Missing Defaults
 
 Z<missing_defaults>
 
-When Larry and the other Perl hackers designed Perl 5 back in 1993 and 1994,
-they didn't know how the next decade and a half would change the world, let
-alone programming.  Perl 5 added many great new features, but it also kept
-compatibility with the previous seven years of Perl releases, from Perl 1
-through Perl 4.  To keep all of the existing programs working, Perl's default
-behavior supported Perl 4.
-
+Perl 5's design process in 1993 and 1994 tried to anticipate new directions for
+the language, but it's impossible to predict the future.  Perl 5 added many
+great new features, but it also kept compatibility with the previous seven
 Sixteen years later, the best way to write clean, maintainable, powerful, and
-succinct Perl 5 code is very different.  The default behaviors sometimes get in
-the way; fortunately, better behaviors are available.
+succinct Perl 5 code is very different from Perl 5.000.  The default behaviors
+sometimes get in the way; fortunately, better behaviors are available.
 
-=head4 The C<strict> Pragma
+=head3 The C<strict> Pragma
 
 X<strict>
 X<modules; strict>
 X<pragmas; strict>
 
-=for author
-
-Ensure that something explains "pragmas".
-
-=end for
-
-The C<strict> pragma allows you to forbid (or re-enable) various language
-constructs which offer power but also the potential for accidental abuse.  The
-C<Modern::Perl> module enables everything in C<strict> by default.
+The C<strict> pragma (L<pragmas>) allows you to forbid (or re-enable) various
+language constructs which offer power but also the potential for accidental
+abuse.
 
 C<strict> performs three functions: forbidding symbolic references, requiring
 variable declarations, and forbidding the use of undeclared barewords
@@ -35,11 +25,11 @@ variable declarations, and forbidding the use of undeclared barewords
 to perform symbol-table manipulation and exporting (barring the use of helper
 modules, such as C<Moose>), the use of a variable as a variable name offers the
 possibility of subtle errors of action at a distance--or, worse, the
-possibility of unchecked or underchecked user input manipulating internal-only
-data for malicious purposes.
+possibility of poorly validated user input manipulating internal-only data for
+malicious purposes.
 
-Requiring variable declarations helps to prevent typos in variable names, and
-it encourages proper scoping of lexical variables.  It's much easier to see the
+Requiring variable declarations helps to prevent typos in variable names and
+encourages proper scoping of lexical variables.  It's much easier to see the
 intended scope of a lexical variable if all variables have C<my> or C<our>
 declarations in the appropriate scope.
 
@@ -47,12 +37,12 @@ C<strict> has a lexical effect, based on the compile-time scope of its use.
 You may disable certain features of C<strict> (within the smallest possible
 scope, of course) with C<no strict>.  See C<perldoc strict> for more details.
 
-=head4 The C<warnings> Pragma
+=head3 The C<warnings> Pragma
 
-The C<warnings> pragma controls the reporting of various classes of warnings in
-Perl 5, such as attempting to stringify the C<undef> value or using the wrong
-type of operator on values.  It also warns about the use of deprecated
-features.
+The C<warnings> pragma (L<warnings>) controls the reporting of various classes
+of warnings in Perl 5, such as attempting to stringify the C<undef> value or
+using the wrong type of operator on values.  It also warns about the use of
+deprecated features.
 
 The most useful warnings explain that Perl had trouble understanding what you
 meant and had to guess at the proper interpretation.  Even though Perl often
@@ -74,7 +64,7 @@ because it can produce verbose error output.
 
 =end sidebar
 
-=head4 C<IO::Handle>
+=head3 C<IO::Handle>
 
 Perl 5.6.0 added lexical filehandles.  Previously, filehandles were all package
 globals.  This was occasionally messy and often confusing.  Now that you can
@@ -82,7 +72,7 @@ write:
 
 =begin programlisting
 
-    open( my $fh, '>', $file ) or die "Can't write to '$file': $!\n";
+    open my $fh, '>', $file or die "Can't write to '$file': $!\n";
 
 =end programlisting
 
@@ -100,23 +90,22 @@ associated filehandle, for example.  It could be as easy as:
 
 =end programlisting
 
-... but only if your program has somewhere executed the line C<use IO::Handle>.
-The solution is to add this line to your programs so that lexical
-filehandles--the objects as they are--behave as objects should behave.
-Alternately, use a pragmatic module such as C<Modern::Perl> which loads
-C<IO::Handle> for you.
+... but only if your program somewhere contains C<use IO::Handle>.  The
+solution is to add this line to your programs so that lexical filehandles--the
+objects as they are--behave as objects should behave.
 
-=head4 The C<autodie> Pragma
+=head3 The C<autodie> Pragma
 
-Perl 5's default error checking is parsimonious.  If you're not careful to check
-the return value of every C<open()> call, for example, you could try to read
-from a closed filehandle--or worse, lose data as you try to write to one.  The C<autodie> pragma changes the default behavior.  If you write:
+Perl 5's default error checking is parsimonious.  If you're not careful to
+check the return value of every C<open()> call, for example, you could try to
+read from a closed filehandle--or worse, lose data as you try to write to one.
+The C<autodie> pragma changes the default behavior.  If you write:
 
 =begin programlisting
 
     use autodie;
 
-    open( my $fh, '>', $file );
+    open my $fh, '>', $file;
 
 =end programlisting
 
@@ -126,11 +115,5 @@ system call is throwing an exception, this pragma can remove a lot of
 boilerplate code and allow you the peace of mind of knowing that you haven't
 forgotten to check a return value.
 
-This pragma entered the Perl 5 core as of Perl 5.10.1.  See C<perldoc autodie> for more information.
-
-=for author
-
-utf8
-    - maybe....
-
-=end for
+This pragma entered the Perl 5 core as of Perl 5.10.1.  See C<perldoc autodie>
+for more information.
