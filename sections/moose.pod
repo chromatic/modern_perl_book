@@ -573,13 +573,16 @@ available to other classes.  Now C<Cat> can perform both roles:
 
 =end programlisting
 
+X<allomorphism>
+X<roles; allomorphism>
+
 The implementation of the C<age()> method supplied by the
 C<CalculateAgeFromBirthYear> satisfies the requirement of the C<LivingBeing>
-role, and the composition succeeds.  Note that checking that objects perform
-the C<LivingBeing> role remains unchanged, regardless of I<how> objects perform
+role, and the composition succeeds.  Checking that objects perform the
+C<LivingBeing> role remains unchanged, regardless of I<how> objects perform
 this role.  A class could choose to provide its own C<age()> method or obtain
 it from another role; that doesn't matter.  All that matters is that it
-contains one.
+contains one.  This is I<allomorphism>.
 
 =head3 Inheritance
 

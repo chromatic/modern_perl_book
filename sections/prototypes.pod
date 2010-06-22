@@ -1,14 +1,13 @@
-=head3 Prototypes
+=head2 Prototypes
 
 Z<prototypes>
 
 X<prototypes>
 
-Perl 5's prototypes serve two purposes.  First, they're hints to the parser to
-change the way it parses subroutines and their arguments.  Second, they change
-the way Perl 5 handles arguments to those subroutines when it executes them.  A
-common novice mistake is to assume that they serve the same language purpose as
-subroutine signatures in other languages.  This is not true.
+Novices commonly assume that they serve as subroutine signatures.  They do not;
+instead they serve two separate purposes.  They offer hints to the parser to
+change the way it parses subroutines and their arguments.  They also modify the
+way Perl 5 handles arguments to those subroutines when it executes them.
 
 To declare a subroutine prototype, add it after the name:
 
@@ -35,18 +34,19 @@ for the desire to write too-clever code.
 =end sidebar
 
 The original intent of prototypes was to allow users to define their own
-subroutines which behaved like (certain) built-in operators.  For example,
-consider the behavior of the C<push> operator, which takes an array and a list.
-While Perl 5 would normally flatten the array and list into a single list at
-the call site, the Perl 5 parser knows that a call to C<push> must effectively
-pass the array as a single unit so that C<push> can operate on the array in
-place.
+subroutines which behaved like (certain) built-in operators.  Consider the
+behavior of the C<push> operator, which takes an array and a list.  While Perl
+5 would normally flatten the array and list into a single list at the call
+site, the Perl 5 parser knows that a call to C<push> must effectively pass the
+array as a single unit so that C<push> can operate on the array in place.
 
 X<prototype>
+X<keywords; prototype>
 
-The C<prototype> operator takes the name of a function and returns a string
-representing its prototype, if any, and C<undef> otherwise.  To see the
-prototype of a built-in operator, use the C<CORE::> form:
+C<prototype> takes the name of a function and returns a string representing its
+prototype.  If you cannot emulate that function (if it's a core keyword),
+C<prototype> will return C<undef>.  To see the prototype of a built-in keyword,
+use the C<CORE::> form:
 
 =begin programlisting
 
@@ -55,9 +55,8 @@ prototype of a built-in operator, use the C<CORE::> form:
 
 =end programlisting
 
-As you might expect, the C<@> character represents a list.  The backslash
-forces the corresponding argument to become a I<reference> to that argument.
-Thus C<mypush> might be:
+The C<@> character represents a list.  The backslash forces the use of a
+I<reference> to the corresponding argument.  Thus C<mypush> might be:
 
 =begin programlisting
 
@@ -71,15 +70,13 @@ Thus C<mypush> might be:
 
 Valid prototype characters include C<$> to force a scalar argument, C<%> to
 mark a hash (most often used as a reference), and C<&> which marks a code
-block.  The fullest documentation is available in C<perldoc perlsub>.
+block.  See C<perldoc perlsub> for full documentation.
 
-=head4 The Problem with Prototypes
+=head3 The Problem with Prototypes
 
-The main problem with prototypes is that they behave differently than most
-people expect when first encountering them.  Prototypes can change the parsing
-of subsequent code and they can coerce the types of arguments.  They don't
-serve as documentation to the number or types of arguments subroutines expect,
-nor do they map arguments to named parameters.
+Prototypes can change the parsing of subsequent code and they can coerce the
+types of arguments.  They don't serve as documentation to the number or types
+of arguments subroutines expect, nor do they map arguments to named parameters.
 
 Prototype coercions work in subtle ways, such as enforcing scalar context on
 incoming arguments:
@@ -98,7 +95,7 @@ incoming arguments:
 
 =end programlisting
 
-... and I<not> working on anything more complex than simple expressions:
+... but do I<not> work on anything more complex than a simple expression:
 
 =begin programlisting
 
@@ -112,21 +109,21 @@ incoming arguments:
 Those aren't even the I<subtler> kinds of confusion you can get from
 prototypes.
 
-=head4 Good Uses of Prototypes
+=head3 Good Uses of Prototypes
 
 As long as code maintainers do not confuse them for full subroutine signatures,
 prototypes have a few valid uses.
 
-X<overriding core operators>
-X<overriding; operators>
+X<overriding core keywords>
+X<overriding; keywords>
 X<pragmas; subs>
 X<subs pragma>
 
-First, they are often necessary to emulate and override built-in operators with
-user-defined subroutines.  As shown earlier, you must first check that you
-I<can> override the built-in operator by checking that C<prototype> does not
-return undef.  Once you know the prototype of the operator, use the C<subs>
-pragma to declare that you want to override a core operator:
+First, they are often necessary to emulate and override built-in keywords with
+user-defined functions.  You must first check that you I<can> override the
+built-in keywod by checking that C<prototype> does not return C<undef>.  Once
+you know the prototype of the keyword, use a forward declaration of a function
+with the same name as the core keyword:
 
 =begin programlisting
 
@@ -142,9 +139,9 @@ regardless of any lexical scoping.
 X<constants>
 
 The second reason to use prototypes is to define compile-time constants.  A
-subroutine declared with an empty prototype (as opposed to an I<absent>
-prototype) which evaluates to a single expression becomes a constant in the
-Perl 5 optree rather than a subroutine call:
+subroutine declared with an empty prototype (as opposed to I<no> prototype)
+which evaluates to a single expression becomes a constant in the Perl 5 optree
+rather than a subroutine call:
 
 =begin programlisting
 
@@ -171,12 +168,11 @@ X<modules; Test::Exception>
 
 The final reason to use a prototype is to extend Perl's syntax to operate on
 anonymous functions as blocks.  The CPAN module C<Test::Exception> uses this to
-good effect to provide a nice API with delayed computation.  This sounds
-complex, but it's easy to explain.  The C<throws_ok()> subroutine takes three
-arguments: a block of code to run, a regular expression to match against the
-string of the exception, and an optional description of the test.  Suppose that
-you want to test Perl 5's exception message when attempting to invoke a method
-on an undefined value:
+good effect to provide a nice API with delayed computation.  Its C<throws_ok()>
+subroutine takes three arguments: a block of code to run, a regular expression
+to match against the string of the exception, and an optional description of
+the test.  Suppose that you want to test Perl 5's exception message when
+attempting to invoke a method on an undefined value:
 
 =begin programlisting
 
@@ -224,11 +220,11 @@ A sparing use of subroutine prototypes to remove the need for the C<sub>
 keyword is reasonable.  Few other uses of prototypes are compelling enough to
 overcome their drawbacks.
 
+=begin sidebar
 
-Ben Tilly:
+Ben Tilly suggests a third: when defining a custom function to use with
+C<sort>.  Declare this function with a prototype of C<($$)> and Perl will pass
+its arguments in C<@_> rather than the package globals C<$a> and C<$b>.  This
+is a rare case, but it can save you time debugging.
 
-There is an omission in your list of good reasons to use prototypes.
-
-A final good reason to use prototypes is in a comparison sub. If you pass sort a subroutine with ($$) as a prototype then it passes the arguments in @_ rather than setting $a and $b in the package that sort was called from. If you're setting up a sort in a different package than you're calling sort in, this can be a lifesaver.
-
-This may seem like an obscure boundary case, but I've personally found it to be the most common reason why I've used prototypes at $work.
+=end sidebar
