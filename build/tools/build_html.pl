@@ -4,6 +4,11 @@ use strict;
 use warnings;
 
 use Pod::PseudoPod::HTML;
+
+# P::PP::H uses Text::Wrap which breaks HTML tags
+local *Text::Wrap::wrap;
+*Text::Wrap::wrap = sub { $_[2] };
+
 use File::Spec::Functions qw( catfile catdir splitpath );
 
 for my $chapter (get_chapter_list())
