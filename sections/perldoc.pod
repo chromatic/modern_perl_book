@@ -23,7 +23,7 @@ module or a specific section of the core documentation:
     $ B<perldoc perltoc>
 
 The first command-line example extracts documentation written for the
-C<Modern::Perl> module and displays it in a form appropriate for your screen.
+C<List::Util> module and displays it in a form appropriate for your screen.
 Community standards for CPAN modules (L<cpan>) suggest that additional
 libraries use the same documentation format and form as core modules, so
 there's no distinction between reading the documentation for a core library
