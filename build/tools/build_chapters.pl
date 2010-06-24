@@ -78,7 +78,7 @@ sub insert_section
     die "Unknown section '$name' in '$chapter'\n"
         unless exists $sections_href->{ $1 };
 
-    my $text = "=head2 ***\n\n" . read_file( $sections_href->{ $1 } );
+    my $text = read_file( $sections_href->{ $1 } );
     delete $sections_href->{ $1 };
     return $text;
 }
