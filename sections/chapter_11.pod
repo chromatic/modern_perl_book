@@ -1,5 +1,11 @@
 =head1 What to Avoid
 
+Perl 5 isn't perfect.  Some features seemed like good ideas at the time, but
+they're difficult to use correctly.  Others don't work as anyone might expect.
+A few more are simply bad ideas.  These features will likely persist--removing
+a feature from Perl is a serious process reserved for only the most egregious
+offenses--but you can and should avoid them in almost every case.
+
 L<barewords>
 
 L<indirect_objects>
