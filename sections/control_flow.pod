@@ -343,13 +343,13 @@ entire expression.
 X<context; conditional>
 
 The conditional directives--C<if>, C<unless>, and the ternary conditional
-operator--all evaluate an expression in boolean context (L<context>).  As
-comparison operators such as C<eq>, C<==>, C<ne>, and C<!=> all produce boolean
-results when evaluated, Perl coerces the results of other
-expressions--including variables and values--into boolean forms.  Empty hashes
-and arrays evaluate to false.  Scalars containing C<undef>, the values 0 and
-0.0, and the empty string evaluate to false.  Everything else is true, in the
-absence of deeper magic.
+operator--all evaluate an expression in boolean context
+(L<context_philosophy>).  As comparison operators such as C<eq>, C<==>, C<ne>,
+and C<!=> all produce boolean results when evaluated, Perl coerces the results
+of other expressions--including variables and values--into boolean forms.
+Empty hashes and arrays evaluate to false.  Scalars containing C<undef>, the
+values 0 and 0.0, and the empty string evaluate to false.  Everything else is
+true, in the absence of deeper magic.
 
 =for author
 
@@ -360,7 +360,7 @@ Review the rules on truthiness of scalars again.
 =begin sidebar
 
 The C<Want> module available from the CPAN allows you to detect boolean context
-within your own subroutines.  The core C<overload> pragma (L<overload>,
+within your own subroutines.  The core C<overloading> pragma (L<overloading>,
 L<pragmas>) allows you to specify what your own data types produce when
 evaluated in a boolean context.
 
@@ -1063,7 +1063,13 @@ The C<when> construct is even more powerful; it can match against many other
 types of expressions including scalars, aggregates, references, arbitrary
 comparison expressions, and even code references.  The "Smart matching in
 detail" section of the I<perlsyn> perldoc provides a useful table of all
-possible match types.  See also L<smart match>.
+possible match types.
+
+=for author
+
+Link to smart match.
+
+=end for
 
 =head3 Tailcalls
 

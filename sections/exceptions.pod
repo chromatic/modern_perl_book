@@ -208,9 +208,9 @@ may be worth catching; syntax errors rarely are.
 
 =over 4
 
-=item * Using a disallowed key in a restricted hash (L<restricted_hashes>)
+=item * Using a disallowed key in a locked hash (L<locked_hashes>)
 
-=item * Blessing a non-reference (L<bless>)
+=item * Blessing a non-reference (L<blessed_references>)
 
 =item * Calling a method on an invalid invocant (L<moose>)
 
@@ -224,6 +224,6 @@ may be worth catching; syntax errors rarely are.
 
 =back
 
-If you have enabled fatal lexical warnings (L<lexical_warnings>), you can catch
-the exceptions they throw.  The same goes for exceptions from C<autodie>
+If you have enabled fatal lexical warnings (L<registering_warnings>), you can
+catch the exceptions they throw.  The same goes for exceptions from C<autodie>
 (L<autodie>).

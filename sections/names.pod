@@ -121,8 +121,8 @@ X<rvalue>
 
 In the latter two lines, using a scalar element of an aggregate as an I<lvalue>
 (the target of an assignment, on the left side of the C<=> character) imposes
-scalar context (L<context>) on the I<rvalue> (the value assigned, on the right
-side of the C<=> character).
+scalar context (L<context_philosophy>) on the I<rvalue> (the value assigned, on
+the right side of the C<=> character).
 
 X<slicing>
 

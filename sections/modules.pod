@@ -176,6 +176,7 @@ Portable programs are strict about case even if they don't have to be.
 
 =head3 Exporting
 
+Z<exporting>
 X<exporting>
 
 A module can make certain global symbols available to other packages through a

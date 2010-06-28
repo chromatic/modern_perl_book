@@ -108,11 +108,12 @@ various types of data structures available in Perl with their syntax.
 
 =head3 Autovivification
 
+Z<autovivification>
 X<autovivification>
 
-Perl's DWIMminess (L<DWIM>) extends to nested data structures.  When you
-attempt to write to a component of a nested data structure, Perl will create
-the path through the data structure to that piece if it does not exist:
+Perl's expressivity extends to nested data structures.  When you attempt to
+write to a component of a nested data structure, Perl will create the path
+through the data structure to that piece if it does not exist:
 
 =begin programlisting
 

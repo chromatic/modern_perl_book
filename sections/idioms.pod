@@ -84,8 +84,8 @@ uses slightly less memory than the other approach.
 
 =end sidebar
 
-This technique works well with C<import()> (L<import>); you can process as many
-parameters as you like before slurping the remainder into a hash:
+This technique works well with C<import()> (L<importing>); you can process as
+many parameters as you like before slurping the remainder into a hash:
 
 =begin programlisting
 

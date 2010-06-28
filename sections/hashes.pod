@@ -176,10 +176,10 @@ Even Perl 5 keywords get the autoquoting treatment:
 
 =end programlisting
 
-The unary plus (L<unary>; L<numeric_operators>) turns what would be a bareword
-(C<shift>) subject to autoquoting rules into an expression.  As this implies,
-you can use an arbitrary expression--not only a function call--as the key of a
-hash:
+The unary plus (L<unary_coercions>; L<numeric_operators>) turns what would be a
+bareword (C<shift>) subject to autoquoting rules into an expression.  As this
+implies, you can use an arbitrary expression--not only a function call--as the
+key of a hash:
 
 =begin programlisting
 
@@ -522,8 +522,8 @@ its boolean truth.  The defined-or assignment operator is new in Perl 5.10.
 X<hashes; named parameters>
 
 Hashes can also serve many purposes named parameters passed to functions.  If
-your function takes several arguments, you can use a slurpy hash (L<parameter
-slurping>) to gather key/value pairs into a single hash:
+your function takes several arguments, you can use a slurpy hash
+(L<parameter_slurping>) to gather key/value pairs into a single hash:
 
 =begin programlisting
 
@@ -575,9 +575,11 @@ overwrite the previous values.
 
 =head3 Locking Hashes
 
+Z<locked_hashes>
+X<locked hashes>
+
 X<hashes; locked>
 X<hashes; locking>
-X<locked hashes>
 
 One drawback of hashes is that their keys are barewords which offer little typo
 protection (especially compared to the function and variable name protection

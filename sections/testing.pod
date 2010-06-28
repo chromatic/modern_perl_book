@@ -80,6 +80,8 @@ completed successfully--otherwise, how would you I<know>?
 
 =head3 Running Tests
 
+Z<running_tests>
+
 The resulting program is now a full-fledged Perl 5 program which produces the
 output:
 
@@ -143,7 +145,7 @@ work out of the process:
 That's a lot of output to display what is already obvious: the second and third
 tests fail because zero and the empty string evaluate to false.  It's easy to
 fix that failure by inverting the sense of the condition with the use of
-boolean conversion (L<boolean_conversion>):
+boolean coercion (L<boolean_coercion>):
 
 =begin programlisting
 

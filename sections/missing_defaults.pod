@@ -39,10 +39,10 @@ scope, of course) with C<no strict>.  See C<perldoc strict> for more details.
 
 =head3 The C<warnings> Pragma
 
-The C<warnings> pragma (L<warnings>) controls the reporting of various classes
-of warnings in Perl 5, such as attempting to stringify the C<undef> value or
-using the wrong type of operator on values.  It also warns about the use of
-deprecated features.
+The C<warnings> pragma (L<handling_warnings>) controls the reporting of various
+classes of warnings in Perl 5, such as attempting to stringify the C<undef>
+value or using the wrong type of operator on values.  It also warns about the
+use of deprecated features.
 
 The most useful warnings explain that Perl had trouble understanding what you
 meant and had to guess at the proper interpretation.  Even though Perl often
@@ -95,6 +95,10 @@ solution is to add this line to your programs so that lexical filehandles--the
 objects as they are--behave as objects should behave.
 
 =head3 The C<autodie> Pragma
+
+Z<autodie>
+X<autodie>
+X<pragmas; autodie>
 
 Perl 5's default error checking is parsimonious.  If you're not careful to
 check the return value of every C<open()> call, for example, you could try to

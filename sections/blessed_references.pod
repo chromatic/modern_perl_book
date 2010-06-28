@@ -313,7 +313,7 @@ can work around this for you.  Moose handles it nicely as well.
 =head3 Strategies for Coping with Blessed References
 
 Avoid C<AUTOLOAD> where possible.  If you I<must> use it, use forward
-declarations of your subs (L<forward_declaration>) to help Perl know which
+declarations of your functions (L<functions>) to help Perl know which
 C<AUTOLOAD> will provide the method implementation.
 
 Use accessor methods rather than accessing instance data directly through the

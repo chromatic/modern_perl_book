@@ -1,7 +1,6 @@
 =head2 Coercion
 
 Z<coercion>
-
 X<coercion>
 
 Unlike other languages, where a variable can hold only a particular type of
@@ -17,6 +16,7 @@ mean>), though you must be specific about your intentions.
 
 =head3 Boolean Coercion
 
+Z<boolean_coercion>
 X<coercion; boolean>
 
 Boolean coercion occurs when you test the truth of a value, such as in a C<if>

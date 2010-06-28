@@ -26,9 +26,9 @@ expression--in this example, C<hat>.  Even though that reads like a word, it
 means "the C<h> character, followed by the C<a> character, followed by the C<t>
 character, appearing anywhere in the string."  Each character is an I<atom> in
 the regex: an indivisible unit of the pattern.  The regex binding operator
-(C<=~>) is an infix operator (L<infix>) which applies the regular expression on
-its right to the string produced by the expression on its left.  When evaluated
-in scalar context, a match evaluates to a true value if it succeeds.
+(C<=~>) is an infix operator (L<fixity>) which applies the regular expression
+on its right to the string produced by the expression on its left.  When
+evaluated in scalar context, a match evaluates to a true value if it succeeds.
 
 The negated form of the binding operator C(!~) evalutes to false if the match
 succeeds.
@@ -461,11 +461,12 @@ them.
 
 =end sidebar
 
+=head3 Named Captures
+
+Z<named_captures>
 X<captures>
 X<named captures>
 X<captures; named>
-
-Z<named_captures>
 
 Given a string, C<$contact_info>, which contains contact information, you can
 apply the C<$phone_number> regular expression and I<capture> any matches into a
@@ -502,6 +503,8 @@ the same grouping behavior as parentheses do in regular Perl code.  They also
 enclose one or more atoms to capture whatever portion of the matched string
 they match.  To use literal parentheses in a regular expression, you must
 preface them with a backslash, just as in the C<$area_code> variable.
+
+=head3 Anonymous Captures
 
 X<anonymous captures>
 X<captures; anonymous>

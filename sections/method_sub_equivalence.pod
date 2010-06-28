@@ -2,13 +2,13 @@
 
 Z<method_sub_equivalence>
 
-Perl 5's object system is deliberately minimal (L<objects>).  Because a class
-is a package, Perl itself makes no strong distinction between a function stored
-in a package and a method stored in a package.  The same keyword, C<sub>,
-expresses both.  Documentation and the convention of treating the first
-parameter as C<$self> can imply intent to readers of the code, but Perl itself
-will treat any function of the appropriate name it can find in an appropriate
-package as a method if you try to call it as a method.
+Perl 5's object system is deliberately minimal (L<blessed_references>).
+Because a class is a package, Perl itself makes no strong distinction between a
+function stored in a package and a method stored in a package.  The same
+keyword, C<sub>, expresses both.  Documentation and the convention of treating
+the first parameter as C<$self> can imply intent to readers of the code, but
+Perl itself will treat any function of the appropriate name it can find in an
+appropriate package as a method if you try to call it as a method.
 
 Likewise, you can invoke a method as if it were a function--fully-qualified,
 exported, or as a reference--if you pass in your own invocant manually.

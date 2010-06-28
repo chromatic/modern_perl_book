@@ -109,9 +109,12 @@ obvious:
 
 =end programlisting
 
+X<operators; scalar>
+X<scalar>
+
 The latter example probably will not do what you expect, at least if you expect
-it to return a single item.  See the C<scalar> operator (L<scalar_operator>)
-for the solution.
+it to return a single item.  Use the C<scalar> operator to enforce scalar
+context on the function call.
 
 =head4 Numeric, String, and Boolean Context
 

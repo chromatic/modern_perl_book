@@ -33,7 +33,7 @@ X<websites; cpan.org>
 The CPAN's central location is U<http://www.cpan.org/>, though experienced
 users spend more time on U<http://search.cpan.org/>.  This central software
 distribution hub of reusable, free Perl code is an essential part of the Perl
-community.  See L<CPAN> for more.
+community.  See L<cpan> for more.
 
 X<PerlMonks>
 

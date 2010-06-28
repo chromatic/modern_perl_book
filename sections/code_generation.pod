@@ -16,7 +16,6 @@ objects, and--perhaps--higher-order functions and closures.
 X<metaprogramming>
 X<code generation>
 
-
 I<Metaprogramming> (or I<code generation>)--writing programs which write
 programs--is another abstraction technique.  It can be as clear as exploiting
 higher-order programming capabilities or it can be a rathole down which you

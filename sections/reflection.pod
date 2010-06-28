@@ -3,11 +3,13 @@
 Z<reflection>
 
 X<reflection>
+X<introspection>
 
-I<Reflection> is the process of asking a program about itself as it runs.  Even
-though you can write many useful programs without ever having to use
-reflection, techniques such as metaprogramming (L<metaprogramming>) benefit
-from a deeper understanding of which entities are in the system.
+I<Reflection> (or I<introspection>) is the process of asking a program about
+itself as it runs.  Even though you can write many useful programs without ever
+having to use reflection, techniques such as metaprogramming
+(L<code_generation>) benefit from a deeper understanding of which entities are
+in the system.
 
 C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
 systems, but many useful programs do not use objects pervasively, and many

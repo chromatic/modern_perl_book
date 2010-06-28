@@ -5,7 +5,7 @@ Z<attributes>
 Named entities in Perl--variables and functions--can have additional metadata
 attached to them in the form of I<attributes>.  Attributes are names (and,
 often, values) which allow certain types of metaprogramming
-(L<metaprogramming>).
+(L<code_generation>).
 
 =begin sidebar
 
@@ -51,7 +51,7 @@ arguments to good effect:
 
 The C<Test> attribute identifies methods which include test assertions, and
 optionally identifies the number of assertions the method intends to run.
-While introspection (L<introspection>) of these classes could discover the
+While introspection (L<reflection>) of these classes could discover the
 appropriate test methods, given well-designed solid heuristics, the C<:Test>
 attribute makes the code and its intent unambiguous.
 

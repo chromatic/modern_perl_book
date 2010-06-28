@@ -1,6 +1,6 @@
-Z<functions>
+=head2 Functions
 
-=head2 Declaring Functions
+Z<functions>
 
 X<subroutines; declaration>
 X<functions; declaration>
@@ -15,6 +15,20 @@ Use the C<sub> keyword to declare a function:
 
 Now C<greet_me()> is available for invocation anywhere else within the program,
 provided that the symbol--the function's name--is visible.
+
+X<forward declaration>
+X<functions; forward declaration>
+
+You do not have to I<define> a function at the point you declare it.  You may
+use a I<forward declaration> to tell Perl that you intend for the function to
+exist, then delay its definition:
+
+=begin programlisting
+
+    sub greet_sun;
+
+=end programlisting
+
 
 =begin sidebar
 
@@ -257,7 +271,7 @@ remove it from the end of C<@_>):
 
 =head3 Slurping
 
-Z<parameter slurping>
+Z<parameter_slurping>
 X<parameter slurping>
 
 As with any lvalue assignment to an aggregate, assigning to C<%pets> within the
@@ -337,8 +351,8 @@ to a function is correct by evaluating C<@_> in scalar context:
 =end programlisting
 
 Type checking is more difficult, because of Perl's operator-oriented type
-conversions (see L<context>).  In cases where you need more strictness,
-consider the CPAN module C<Params::Validate>.
+conversions (see L<context_philosophy>).  In cases where you need more
+strictness, consider the CPAN module C<Params::Validate>.
 
 =head2 Namespaces
 

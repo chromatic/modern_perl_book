@@ -165,6 +165,7 @@ I<not> remove equivalent whitespace from the start of each line of the heredoc.
 
 =head3 Unicode and Strings
 
+Z<unicode>
 X<unicode>
 
 Unicode is a system for representing characters in the world's written

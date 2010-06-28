@@ -17,8 +17,8 @@ X<variables; names>
 
 Not all variables require names, but most of the variables you will encounter
 in your programs will have names.  Variables in Perl 5 must conform to the
-standard rules of identifier naming (L<identifiers>).  Varibles also have
-leading sigils.
+standard rules of identifier naming (L<names>).  Varibles also have leading
+sigils.
 
 =head3 Variable Scopes
 
@@ -113,9 +113,9 @@ of key/value pairs.
 
 Assigning to a variable may cause coercion (L<coercion>).  The documented way
 to determine the number of entries in an array is to evaluate that array in
-scalar context (L<context>).  Because a scalar variable can only ever contain a
-scalar, assigning an array to a scalar imposes scalar context on the operation
-and produces the number of elements in the array:
+scalar context (L<context_philosophy>).  Because a scalar variable can only
+ever contain a scalar, assigning an array to a scalar imposes scalar context on
+the operation and produces the number of elements in the array:
 
 =begin programlisting
 
@@ -123,5 +123,5 @@ and produces the number of elements in the array:
 
 =end programlisting
 
-The relationship between variable types, sigils, and context (L<context>) is
-vital to a proper understanding of Perl.
+The relationship between variable types, sigils, and context is vital to a
+proper understanding of Perl.

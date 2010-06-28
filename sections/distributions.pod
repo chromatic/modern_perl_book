@@ -4,7 +4,7 @@ Z<distributions>
 
 X<distribution>
 
-A I<distribution> is a collection of one or more modules (L<module>) which
+A I<distribution> is a collection of one or more modules (L<modules>) which
 forms a single redistributable, testable, and installable unit.  Effectively
 it's a collection of module and metadata.
 
@@ -89,8 +89,8 @@ intends to replace.  It is still in wide use, though it is in maintenance mode
 and receives only the most critical bugfixes.  It works with the F<Makefile.PL>
 file mentioned earlier.
 
-=item * C<Test::More> (L<writing_tests>) is the basic and most widely used
-testing module used to write automated tests for Perl software.
+=item * C<Test::More> (L<testing>) is the basic and most widely used testing
+module used to write automated tests for Perl software.
 
 =item * C<Test::Harness> and C<prove> (L<running_tests>) are the tools used to
 run tests and to interpret and report their results.
