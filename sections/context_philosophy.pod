@@ -57,7 +57,7 @@ in I<void context>:
 X<scalar context>
 
 Assigning the function's return value to a single element evaluates the
-function in I<scalar_context>:
+function in I<scalar context>:
 
 =begin programlisting
 
@@ -68,7 +68,7 @@ function in I<scalar_context>:
 X<list context>
 
 Assigning the results of calling the function to an array or a list, or using
-it in a list evaluates the function in I<list_context>:
+it in a list evaluates the function in I<list context>:
 
 =begin programlisting
 
@@ -168,7 +168,7 @@ In exchange for not having to declare (or at least track) explicitly what
 I<type> of data a variable contains or a function produces, Perl offers
 specific type contexts that tell the compiler how to treat a given value during
 an operation.  The C<eq> operator treats its operands as strings by enforcing
-I<string_context> on them.  The C<==> operator enforces I<numeric context>.
+I<string context> on them.  The C<==> operator enforces I<numeric context>.
 
 X<boolean context>
 X<context; boolean>
