@@ -116,6 +116,17 @@ The latter example probably will not do what you expect, at least if you expect
 it to return a single item.  Use the C<scalar> operator to enforce scalar
 context on the function call.
 
+=begin programlisting
+
+    my %results =
+    (
+        cheap_operation     => $cheap_operation_results,
+        expensive_operation => scalar some_expensive_operation(),
+    );
+
+=end programlisting
+
+
 =head4 Numeric, String, and Boolean Context
 
 Z<value_contexts>
