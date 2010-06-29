@@ -887,6 +887,14 @@ necessary to write good OO code in Perl 5.  Note specifically the declarative
 nature of this example, as well as the now unnecessary C<my $self = shift;>
 line at the start of the C<age> method.
 
+=for author
+
+Certainly worth noting that the C<Devel::Declare> infrastructure is
+essentially core in Perl 5.12, though I am unaware of C<MooseX::>
+modules like C<MooseX::Method::Signatures> being ported to that yet.
+
+=end
+
 One drawback of this approach is that you must be able to install CPAN modules
 (or a custom Perl 5 distribution such as Strawberry or Chocolate Perl which may
 include them for you), but in comparison to Perl 5's built-in object
