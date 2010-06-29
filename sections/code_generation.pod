@@ -307,4 +307,10 @@ C<Class::MOP::Attribute> and C<Class::MOP::Method>.
 
 Does this need more of an example?
 
+Ideas: applying roles to object instances (which is basically
+generating code), generating classes from a database schema or XML
+Schema structure, ... not all of these with concrete examples yet.
+But metaprogramming is very cool :-).  Perhaps worth noting that it is
+this very flexibility that has allowed Moose itself to be written.
+
 =end for
