@@ -17,7 +17,7 @@ advanced features.
 X<TIMTOWTDI>
 X<Tim Toady>
 
-Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounded "Tim Toady", or
+Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounced "Tim Toady", or
 "There's more than one way to do it!"
 
 Where this expressivity can provide a large palette with which master craftsman
