@@ -138,7 +138,7 @@ Another type of context determines how Perl understands a piece of data--not
 I<how many> pieces of data you want, but what the data means.  You've probably
 already noticed that Perl's flexible about figuring out if you have a number or
 a string and converting between the two as you want them.  This I<value
-context> help explain how it does so.
+context> helps to explain how it does so.
 
 Suppose you want to compare the contents of two strings.  The C<eq> operator
 tells you if the strings contain the same information:
