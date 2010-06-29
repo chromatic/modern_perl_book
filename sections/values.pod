@@ -158,7 +158,7 @@ the ending delimiter must begin in the first column of the program.
 =begin sidebar
 
 If the identifier begins with whitespace, that spaces must be present exactly
-in the ending delimiter.  Even if you do intent the identifier, Perl 5 will
+in the ending delimiter.  Even if you do indent the identifier, Perl 5 will
 I<not> remove equivalent whitespace from the start of each line of the heredoc.
 
 =end sidebar
