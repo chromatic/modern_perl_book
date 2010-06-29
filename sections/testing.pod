@@ -326,6 +326,17 @@ want only to run the F<t/breathe_fire.t> test file.  When you have the feature
 working to your satisfaction, run the entire test suite to verify that local
 changes have no unintended global effects.
 
+=head3 Coverage Testing and Profiling
+
+=for author
+
+What do we have here, C<Devel::Cover>, C<Devel::NYTProfiler> (iirc),
+etc.  Very useful for knowing if that change would be expected to
+break that test.  Profiler to test your code for performance.  Both
+essential tools!
+
+=end
+
 =head3 Other Testing Modules
 
 X<Test::Builder>
