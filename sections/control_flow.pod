@@ -309,7 +309,6 @@ This example prints:
 =begin screen
 
     not ok 1 - first subexpression
-    Both true!
 
 =end screen
 
