@@ -20,8 +20,8 @@ string value, or a value that's either true or false.
 
 Context can be tricky if you try to write or read Perl code as a series of
 single expressions which stand apart from from their environments.  You may
-find yourself slapping your forehead after a long debugging session only to
-find that your assumptions about context were incorrect.  However, if you're
+find yourself slapping your forehead after a long debugging session when you 
+discover that your assumptions about context were incorrect.  However, if you're
 cognizant of contexts, they can make your code clearer, more concise, and more
 flexible.
 
