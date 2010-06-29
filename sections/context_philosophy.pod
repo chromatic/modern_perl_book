@@ -114,7 +114,7 @@ X<scalar>
 
 The latter example probably will not do what you expect, at least if you expect
 it to return a single item.  Use the C<scalar> operator to enforce scalar
-context on the function call.
+context on the function call:
 
 =begin programlisting
 
