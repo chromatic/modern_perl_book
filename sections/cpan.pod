@@ -124,7 +124,7 @@ have your own CPAN installation without disturbing other users.
 C<App::cpanminus> is a new CPAN client with goals of speed, simplicity, and
 zero configuration.
 
-C<App::perlbrew> is a system to manage and to switch between your own installatoins of multiple versions and configurations of Perl.
+C<App::perlbrew> is a system to manage and to switch between your own installations of multiple versions and configurations of Perl.
 
 Advanced users will see more benefit from these projects, but novices can and
 should take advantage of them as well.
