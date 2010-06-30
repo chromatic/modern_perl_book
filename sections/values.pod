@@ -444,8 +444,9 @@ whitespace to produce a list of strings:
 
 =begin sidebar
 
-Perl will produce a warning if the literal string contains a comma or the
-comment character.
+Perl will produce a warning if a C<qw()> contains a comma or the comment
+character (C<#>), because not only are such characters rarely included in a
+C<qw()>, their presence usually indicates an oversight.
 
 =end sidebar
 
