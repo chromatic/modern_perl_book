@@ -759,7 +759,7 @@ overridding method to the overridden method:
         {
             my $self = shift;
 
-            Carp::carp( "Can't light a lit light source!" )
+            Carp::carp( "Can't extinguish an unlit light source!" )
                 unless $self->enabled;
 
             B<super()>;
