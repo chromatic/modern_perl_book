@@ -571,7 +571,7 @@ The I<for-style loop> allows the programmer to manage iteration manually:
 
 =begin programlisting
 
-    for (my $i = 0; $i <= 10; ++$i)
+    for (my $i = 0; $i <= 10; $i += 2)
     {
         say "$i * $i = ", $i * $i;
     }
@@ -588,7 +588,7 @@ section of this construct I<will> overwrite its contents:
 
     my $i = 'pig';
 
-    for ($i = 0; $i <= 10; ++$i)
+    for ($i = 0; $i <= 10; $i += 2)
     {
         say "$i * $i = ", $i * $i;
     }
