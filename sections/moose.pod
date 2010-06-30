@@ -298,7 +298,7 @@ birth:
         B<my $self = shift;>
         B<my $year = (localtime)[5] + 1900;>
 
-        B<return $year - $self->birth_year();>
+        B<< return $year - $self->birth_year(); >>
     B<}>
 
 =end programlisting
