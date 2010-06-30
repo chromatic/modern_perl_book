@@ -883,7 +883,7 @@ once you've seen the ending delimiter, you might write:
 
 X<redo>
 
-The I<redo> statement restarts the current iteration without evaluting the
+The I<redo> statement restarts the current iteration without evaluating the
 conditional again.  This can be useful in those few cases where you want to
 modify the line you've read in place, then start processing over from the
 beginning without clobbering it with another line.  For example, you could
