@@ -271,7 +271,7 @@ subsequent subexpressions.  This is most obvious with an example:
 =begin programlisting
 
     say "Both true!" if ok(1, 'first subexpression')
-                     && ok(1, 'second subexpression' );
+                     && ok(1, 'second subexpression');
 
 =end programlisting
 
@@ -300,7 +300,7 @@ subsequent subexpressions:
 =begin programlisting
 
     say "Both true!" if ok(0, 'first subexpression')
-                     && ok(1, 'second subexpression' );
+                     && ok(1, 'second subexpression');
 
 =end programlisting
 
@@ -319,7 +319,7 @@ either subexpression must be true for the conditional as a whole to succeed:
 =begin programlisting
 
     say "Either true!" if ok(1, 'first subexpression')
-                       || ok(1, 'second subexpression' );
+                       || ok(1, 'second subexpression');
 
 =end programlisting
 
