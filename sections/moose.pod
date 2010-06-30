@@ -128,7 +128,7 @@ By convention, invocants in Perl methods are lexical variables named C<$self>,
 but this is merely pervasive convention.  The example implementation of
 C<meow()> does not use the invocant, so it's irrelevant once method dispatch
 has completed.  In that sense, C<meow()> is like C<new()>; you can safely use
-the name of the class C(<Cat>) as its invocant.  This is a I<class method>:
+the name of the class (C<Cat>) as its invocant.  This is a I<class method>:
 
 =begin programlisting
 

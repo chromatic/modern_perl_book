@@ -30,7 +30,7 @@ the regex: an indivisible unit of the pattern.  The regex binding operator
 on its right to the string produced by the expression on its left.  When
 evaluated in scalar context, a match evaluates to a true value if it succeeds.
 
-The negated form of the binding operator C(!~) evalutes to false if the match
+The negated form of the binding operator (C<!~>) evalutes to false if the match
 succeeds.
 
 =head2 The C<qr//> Operator and Regex Combinations
@@ -380,7 +380,7 @@ X<word boundary metacharacter>
 
 If you're not fortunate enough to have a Unix word dictionary file available,
 the I<word boundary metacharacter> (C<\b>) matches only at the boundary between
-a word character (C<\w>) and a non-word character C(<\W>):
+a word character (C<\w>) and a non-word character (C<\W>):
 
 =begin programlisting
 
