@@ -23,7 +23,7 @@ X<-w>
 X<command-line arguments; -w>
 
 Lexical encapsulation of warnings is as important as lexical encapsulation of
-variables.  Older code may use the C<-w> command line argument to enable
+variables.  Older code may use the C<-w> command-line argument to enable
 warnings throughout the program, even if other code has not specifically
 attempted to suppress warnings.  It's all or nothing.  If you have the
 wherewithal to eliminate warnings and potential warnings throughout the entire

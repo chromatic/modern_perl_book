@@ -39,7 +39,7 @@ call the C<add_box()> function only by C<MyCode::add_box()>.  A fully qualified
 name includes its complete package name.
 
 The default package is the C<main> package.  If you do not declare a package
-explicitly, whether in a one-liner on a command line or in a standalone Perl
+explicitly, whether in a one-liner on a command-line or in a standalone Perl
 program or even in a F<.pm> file on disk, the current package will be the
 C<main> package.
 
