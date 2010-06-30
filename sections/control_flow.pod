@@ -423,7 +423,7 @@ place of the topic variable:
 
 =end programlisting
 
-If you do so, Perl will not set the topic variable C(<$_>) to the iterated
+If you do so, Perl will not set the topic variable (C<$_>) to the iterated
 values.  Note also that the scope of the variable C<$i> is only valid I<within>
 the loop.  If you have declared a lexical C<$i> in an outer scope, that value
 will remain outside the loop:
