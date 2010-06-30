@@ -33,11 +33,11 @@ input with behavior:
 
     my %dispatch =
     (
-        plus     => sub { $_[0] + $_[1] },
-        minus    => sub { $_[0] - $_[1] },
-        times    => sub { $_[0] * $_[1] },
-        goesinto => sub { $_[0] / $_[1] },
-        raisedto => sub { $_[0] ^ $_[1] },
+        plus     => sub { $_[0]  + $_[1] },
+        minus    => sub { $_[0]  - $_[1] },
+        times    => sub { $_[0]  * $_[1] },
+        goesinto => sub { $_[0]  / $_[1] },
+        raisedto => sub { $_[0] ** $_[1] },
     );
 
     sub dispatch
