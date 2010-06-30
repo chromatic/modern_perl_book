@@ -560,8 +560,8 @@ You can even set default parameters with this approach:
     {
         my %parameters =
         (
-            B<< flavor => 'Vanilla', >>
-            B<< topping => 'fudge', >>
+            B<< flavor   => 'Vanilla', >>
+            B<< topping   => 'fudge', >>
             B<< sprinkles => 100, >>
             @_,
         );
