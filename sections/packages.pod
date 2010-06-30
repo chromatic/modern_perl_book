@@ -99,8 +99,8 @@ X<namespaces>
 
 Every C<package> declaration causes Perl to perform two tasks.  It creates a
 new namespace if that namespace does not already exist.  It also tells the
-parser to put all package global symbols (global variables and functions) into
-that namespace.
+parser to put all subsequent package global symbols (global variables and
+functions) into that namespace.
 
 X<namespaces; open>
 X<open namespaces>
