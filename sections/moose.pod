@@ -502,6 +502,8 @@ explicitly mark that it performs the role:
 
     B<with 'LivingBeing';>
 
+    sub age { ... }
+
 =end programlisting
 
 X<roles; composition>
