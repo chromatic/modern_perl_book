@@ -60,7 +60,7 @@ increase the amount of and improve the quality of Perl publishing on the web.
 
 X<Perl Buzz>
 
-Perl Buzz (U<perlbuzz.com>) collects and republishes some of the most
+Perl Buzz (U<http://perlbuzz.com/>) collects and republishes some of the most
 interesting and useful Perl news on a regular basis.
 
 =head2 Development Sites
