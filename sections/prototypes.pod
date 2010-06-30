@@ -121,7 +121,7 @@ X<subs pragma>
 
 First, they are often necessary to emulate and override built-in keywords with
 user-defined functions.  You must first check that you I<can> override the
-built-in keywod by checking that C<prototype> does not return C<undef>.  Once
+built-in keyword by checking that C<prototype> does not return C<undef>.  Once
 you know the prototype of the keyword, use a forward declaration of a function
 with the same name as the core keyword:
 
