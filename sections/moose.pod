@@ -543,6 +543,8 @@ role:
     {
         package CalculateAgeFromBirthYear;
 
+        use Moose::Role;
+
         has 'birth_year', is => 'ro', isa => 'Int',
                           default => sub { (localtime)[5] + 1900 };
 
