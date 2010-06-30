@@ -834,7 +834,7 @@ to exhaust a filehandle with a C<while> loop:
 Opening the filehandle outside of the C<for> loop leaves the file position
 unchanged between each iteration of the C<for> loop.  On its second iteration,
 the C<while> loop will have nothing to read and will not execute.  To solve
-this problem, You may re-open the file inside the C<for> loop (simple to
+this problem, you may re-open the file inside the C<for> loop (simple to
 understand, but not always a good use of system resources), slurp the entire
 file into memory (which may not work if the file is large), or C<seek> the
 filehandle back to the beginning of the file for each iteration (an overlooked
