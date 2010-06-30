@@ -1,6 +1,6 @@
 =head2 State versus Closures
 
-Z<state_versus_closures>
+Z<state>
 
 Closures (L<closures>) are an easy, effective, and safe way to make data
 persist between function invocations without using global variables.  If you
