@@ -544,9 +544,9 @@ You can even set default parameters with this approach:
     sub make_sundae
     {
         my %parameters = @_;
-        B<$parameters{flavor}    = 'Vanilla';>
-        B<$parameters{topping}   = 'fudge';>
-        B<$parameters{sprinkles} = 100;>
+        B<$parameters{flavor}    //= 'Vanilla';>
+        B<$parameters{topping}   //= 'fudge';>
+        B<$parameters{sprinkles} //= 100;>
         ...
     }
 
