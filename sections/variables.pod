@@ -17,7 +17,7 @@ X<variables; names>
 
 Not all variables require names, but most of the variables you will encounter
 in your programs will have names.  Variables in Perl 5 must conform to the
-standard rules of identifier naming (L<names>).  Varibles also have leading
+standard rules of identifier naming (L<names>).  Variables also have leading
 sigils.
 
 =head3 Variable Scopes

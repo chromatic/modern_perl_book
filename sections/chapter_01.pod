@@ -17,7 +17,7 @@ solve your problems as you see fit.
 
 Perl is a language which can grow with you.  You can write useful programs with
 the knowledge that you can learn in an hour of reading this book.  Yet if you
-take the time to understand the philsophies behind the syntax, semantics, and
+take the time to understand the philosophies behind the syntax, semantics, and
 design of the language, you can be ten times as productive.
 
 First, you need to know how to learn more.

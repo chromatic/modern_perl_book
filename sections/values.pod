@@ -369,7 +369,7 @@ list context without using a temporary variable, you use the idiom (L<idioms>):
 =end programlisting
 
 Because of the right associativity (L<associativity>) of the assignment
-operator, Perl first evalutes the second assignment by calling
+operator, Perl first evaluates the second assignment by calling
 C<get_all_clown_hats()> in list context.  This produces a list.  Even though
 that list never gets assigned to anything, the return value of the second
 assignment is that list.  Perl next evaluates that list in scalar context, due
@@ -444,8 +444,9 @@ whitespace to produce a list of strings:
 
 =begin sidebar
 
-Perl will produce a warning if the literal string contains a comma or the
-comment character.
+Perl will produce a warning if a C<qw()> contains a comma or the comment
+character (C<#>), because not only are such characters rarely included in a
+C<qw()>, their presence usually indicates an oversight.
 
 =end sidebar
 

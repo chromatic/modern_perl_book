@@ -66,7 +66,7 @@ interesting and useful Perl news on a regular basis.
 X<RT>
 X<Best Practical>
 
-Best Practical Consulting (U<http://bestpractical.com/>) maintains an
+Best Practical Solutions (U<http://bestpractical.com/>) maintains an
 installation of their popular request tracking system, RT, for CPAN authors as
 well as Perl 5 and Perl 6 development.  Every CPAN distribution has its own RT
 queue, linked from C<search.cpan.org> and available on U<http://rt.cpan.org/>.

@@ -202,7 +202,7 @@ rest to another function:
 =end programlisting
 
 The dominant practice seems to be to use C<shift> only when your function must
-access a single paramater and list assignment when accessing multiple
+access a single parameter and list assignment when accessing multiple
 parameters.
 
 =head3 Flattening

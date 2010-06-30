@@ -38,7 +38,7 @@ value:
 
 =end programlisting
 
-This postfix form is useful for simple expressions.  A block block form groups
+This postfix form is useful for simple expressions.  A block form groups
 multiple expressions into a single unit:
 
 =begin programlisting
@@ -271,7 +271,7 @@ subsequent subexpressions.  This is most obvious with an example:
 =begin programlisting
 
     say "Both true!" if ok(1, 'first subexpression')
-                     && ok(1, 'second subexpression' );
+                     && ok(1, 'second subexpression');
 
 =end programlisting
 
@@ -300,7 +300,7 @@ subsequent subexpressions:
 =begin programlisting
 
     say "Both true!" if ok(0, 'first subexpression')
-                     && ok(1, 'second subexpression' );
+                     && ok(1, 'second subexpression');
 
 =end programlisting
 
@@ -319,7 +319,7 @@ either subexpression must be true for the conditional as a whole to succeed:
 =begin programlisting
 
     say "Either true!" if ok(1, 'first subexpression')
-                       || ok(1, 'second subexpression' );
+                       || ok(1, 'second subexpression');
 
 =end programlisting
 
@@ -567,12 +567,11 @@ through C<$_>.
 
 X<for loop>
 
-The I<for-style loop> allows the programmer to manage iteration conditions
-manually:
+The I<for-style loop> allows the programmer to manage iteration manually:
 
 =begin programlisting
 
-    for (my $i = 0; $i <= 10; ++$i)
+    for (my $i = 0; $i <= 10; $i += 2)
     {
         say "$i * $i = ", $i * $i;
     }
@@ -589,7 +588,7 @@ section of this construct I<will> overwrite its contents:
 
     my $i = 'pig';
 
-    for ($i = 0; $i <= 10; ++$i)
+    for ($i = 0; $i <= 10; $i += 2)
     {
         say "$i * $i = ", $i * $i;
     }
@@ -835,7 +834,7 @@ to exhaust a filehandle with a C<while> loop:
 Opening the filehandle outside of the C<for> loop leaves the file position
 unchanged between each iteration of the C<for> loop.  On its second iteration,
 the C<while> loop will have nothing to read and will not execute.  To solve
-this problem, You may re-open the file inside the C<for> loop (simple to
+this problem, you may re-open the file inside the C<for> loop (simple to
 understand, but not always a good use of system resources), slurp the entire
 file into memory (which may not work if the file is large), or C<seek> the
 filehandle back to the beginning of the file for each iteration (an overlooked
@@ -884,7 +883,7 @@ once you've seen the ending delimiter, you might write:
 
 X<redo>
 
-The I<redo> statement restarts the current iteration without evaluting the
+The I<redo> statement restarts the current iteration without evaluating the
 conditional again.  This can be useful in those few cases where you want to
 modify the line you've read in place, then start processing over from the
 beginning without clobbering it with another line.  For example, you could
