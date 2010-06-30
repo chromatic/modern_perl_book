@@ -38,7 +38,7 @@ value:
 
 =end programlisting
 
-This postfix form is useful for simple expressions.  A block block form groups
+This postfix form is useful for simple expressions.  A block form groups
 multiple expressions into a single unit:
 
 =begin programlisting
