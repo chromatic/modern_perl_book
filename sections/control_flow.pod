@@ -567,8 +567,7 @@ through C<$_>.
 
 X<for loop>
 
-The I<for-style loop> allows the programmer to manage iteration conditions
-manually:
+The I<for-style loop> allows the programmer to manage iteration manually:
 
 =begin programlisting
 
