@@ -96,7 +96,7 @@ documentation should make this clear.
 For example, the arithmetic operators are binary operators, and are usually
 left associative.  C<2 + 3 - 4> evaluates C<2 + 3> first; addition and
 subtraction have the same precedence, but they're left associative and binary,
-so the proper evaluation order applies the leftmost operator (C<+>) to the the
+so the proper evaluation order applies the leftmost operator (C<+>) to the
 leftmost two operands (C<2> and C<3>) with the leftmost operator (C<+>), then
 applies the rightmost operator (C<->) to the result of the first operation and
 the rightmost operand (C<4>).
