@@ -538,7 +538,7 @@ individual atoms.
 
 Name collisions are still possible with named captures, though that's less
 frequent than number collisions with anonymous captures.  Consider avoiding the
-use of captures of in regex fragments; save it for top-level regexes.
+use of captures in regex fragments; save it for top-level regexes.
 
 =end sidebar
 
