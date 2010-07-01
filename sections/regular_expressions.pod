@@ -514,7 +514,7 @@ years.  You may encounter I<anonymous captures> as well:
 
 =begin programlisting
 
-    if ($contact_info =~ /($phone_number))
+    if ($contact_info =~ /($phone_number)/)
     {
         say "Found a number $1";
     }
