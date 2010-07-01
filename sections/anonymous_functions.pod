@@ -14,9 +14,9 @@ is that it has no name.  You always deal with anonymous functions by reference
 =head3 Declaring Anonymous Functions
 
 You may never declare an anonymous function on its own; you must construct it
-and assign it to a variable or pass it as an argument to a function, either
-explicitly or implicitly.  Explicit creation uses the C<sub> keyword with no
-name:
+and assign it to a variable, invoke it immediately, or pass it as an argument
+to a function, either explicitly or implicitly.  Explicit creation uses the
+C<sub> keyword with no name:
 
 =begin programlisting
 
