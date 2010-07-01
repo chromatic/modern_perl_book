@@ -142,7 +142,7 @@ useful for several reasons:
 
 =over 4
 
-=item * To pass and return arrays from subroutines without flattening
+=item * To pass and return arrays from functions without flattening
 
 =item * To create multi-dimensional data structures
 

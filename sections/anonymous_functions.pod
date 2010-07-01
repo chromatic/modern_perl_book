@@ -55,7 +55,7 @@ input with behavior:
 The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
 returns the result of evaluating the operation.
 
-You may use anonymous functions in place of subroutine references.  To Perl,
+You may use anonymous functions in place of function references.  To Perl,
 they're equivalent.  Nothing I<necessitates> the use of anonymous functions to
 perform these mathematical operations, but for functions this short, there's
 little drawback to writing them this way.
@@ -251,7 +251,7 @@ wart on otherwise helpful syntax, courtesy of a quirk of the Perl 5 parser.
 =end sidebar
 
 The implementation of both functions does not care which mechanism you use to
-pass subroutine references.  You can pass named functions by reference as well:
+pass function references.  You can pass named functions by reference as well:
 
 =begin programlisting
 

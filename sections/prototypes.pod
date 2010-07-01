@@ -4,12 +4,12 @@ Z<prototypes>
 
 X<prototypes>
 
-Novices commonly assume that they serve as subroutine signatures.  They do not;
+Novices commonly assume that they serve as function signatures.  They do not;
 instead they serve two separate purposes.  They offer hints to the parser to
-change the way it parses subroutines and their arguments.  They also modify the
-way Perl 5 handles arguments to those subroutines when it executes them.
+change the way it parses functions and their arguments.  They also modify the
+way Perl 5 handles arguments to those functions when it executes them.
 
-To declare a subroutine prototype, add it after the name:
+To declare a function prototype, add it after the name:
 
 =begin programlisting
 
@@ -19,9 +19,9 @@ To declare a subroutine prototype, add it after the name:
 
 =end programlisting
 
-You may add prototypes to subroutine forward declarations.  You may also omit
+You may add prototypes to function forward declarations.  You may also omit
 them from forward declarations.  If you use a forward declaration with a
-prototype, that prototype must be present in the full subroutine declaration;
+prototype, that prototype must be present in the full function declaration;
 Perl will give a prototype mismatch warning if not.  The converse is not true:
 you may omit the prototype from a forward declaration and include it for the
 full declaration.
@@ -34,7 +34,7 @@ for the desire to write too-clever code.
 =end sidebar
 
 The original intent of prototypes was to allow users to define their own
-subroutines which behaved like (certain) built-in operators.  Consider the
+functions which behaved like (certain) built-in operators.  Consider the
 behavior of the C<push> operator, which takes an array and a list.  While Perl
 5 would normally flatten the array and list into a single list at the call
 site, the Perl 5 parser knows that a call to C<push> must effectively pass the
@@ -76,7 +76,7 @@ block.  See C<perldoc perlsub> for full documentation.
 
 Prototypes can change the parsing of subsequent code and they can coerce the
 types of arguments.  They don't serve as documentation to the number or types
-of arguments subroutines expect, nor do they map arguments to named parameters.
+of arguments functions expect, nor do they map arguments to named parameters.
 
 Prototype coercions work in subtle ways, such as enforcing scalar context on
 incoming arguments:
@@ -111,7 +111,7 @@ prototypes.
 
 =head3 Good Uses of Prototypes
 
-As long as code maintainers do not confuse them for full subroutine signatures,
+As long as code maintainers do not confuse them for full function signatures,
 prototypes have a few valid uses.
 
 X<overriding core keywords>
@@ -139,9 +139,9 @@ regardless of any lexical scoping.
 X<constants>
 
 The second reason to use prototypes is to define compile-time constants.  A
-subroutine declared with an empty prototype (as opposed to I<no> prototype)
+function declared with an empty prototype (as opposed to I<no> prototype)
 which evaluates to a single expression becomes a constant in the Perl 5 optree
-rather than a subroutine call:
+rather than a function call:
 
 =begin programlisting
 
@@ -169,7 +169,7 @@ X<modules; Test::Exception>
 The final reason to use a prototype is to extend Perl's syntax to operate on
 anonymous functions as blocks.  The CPAN module C<Test::Exception> uses this to
 good effect to provide a nice API with delayed computation.  Its C<throws_ok()>
-subroutine takes three arguments: a block of code to run, a regular expression
+function takes three arguments: a block of code to run, a regular expression
 to match against the string of the exception, and an optional description of
 the test.  Suppose that you want to test Perl 5's exception message when
 attempting to invoke a method on an undefined value:
@@ -186,7 +186,7 @@ attempting to invoke a method on an undefined value:
 
 =end programlisting
 
-The exported C<throws_ok()> subroutine has a prototype of C<&$;$>.  Its first
+The exported C<throws_ok()> function has a prototype of C<&$;$>.  Its first
 argument is a block, which Perl upgrades to a full-fledged anonymous function.
 The second requirement is a scalar.  The third argument is optional.
 
@@ -216,7 +216,7 @@ You can use this API without the prototype.  It's slightly less attractive:
 
 =end programlisting
 
-A sparing use of subroutine prototypes to remove the need for the C<sub>
+A sparing use of function prototypes to remove the need for the C<sub>
 keyword is reasonable.  Few other uses of prototypes are compelling enough to
 overcome their drawbacks.
 

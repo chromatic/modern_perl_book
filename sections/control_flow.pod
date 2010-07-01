@@ -108,7 +108,7 @@ C<unless> is much rarer than its postfix form:
 =end programlisting
 
 C<unless> works very well for postfix conditionals, especially parameter
-validation in subroutines (L<postfix_parameter_validation>):
+validation in functions (L<postfix_parameter_validation>):
 
 =begin programlisting
 
@@ -359,7 +359,7 @@ Review the rules on truthiness of scalars again.
 =begin sidebar
 
 The C<Want> module available from the CPAN allows you to detect boolean context
-within your own subroutines.  The core C<overloading> pragma (L<overloading>,
+within your own functions.  The core C<overloading> pragma (L<overloading>,
 L<pragmas>) allows you to specify what your own data types produce when
 evaluated in a boolean context.
 
@@ -1080,9 +1080,9 @@ Do I need to explain recursion?  I fear so.
 
 =end for
 
-A I<tailcall> occurs when the last expression within a subroutine is a call to
-another subroutine--the return value of the outer subroutine is the return
-value of the inner subroutine:
+A I<tailcall> occurs when the last expression within a function is a call to
+another function--the return value of the outer function is the return
+value of the inner function:
 
 =begin programlisting
 

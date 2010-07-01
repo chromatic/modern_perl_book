@@ -20,7 +20,7 @@ Consider the program:
 =end programlisting
 
 When you run it, Perl will throw an exception due to the call to the undefined
-subroutine C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
+function C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 
 =begin programlisting
 

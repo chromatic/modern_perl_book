@@ -5,7 +5,7 @@ Z<closures>
 You've seen how functions work (L<functions>).  You understand how scope works
 (L<scope>).  You know that every time control flow enters a function, that
 function gets a new environment representing that invocation's lexical scope.
-You can work with subroutine references (L<references>) and anonymous functions
+You can work with function references (L<references>) and anonymous functions
 (L<anonymous_functions>).
 
 You know everything you need to know to understand closures.

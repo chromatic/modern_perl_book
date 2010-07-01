@@ -183,7 +183,7 @@ A module can make certain global symbols available to other packages through a
 process known as I<exporting>.  This is the flip side of passing arguments to
 C<import()> through a C<use> statement.
 
-The standard way of exporting subroutines or variables to other modules is
+The standard way of exporting functions or variables to other modules is
 through the core module C<Exporter>.  C<Exporter> relies on the presence of
 package global variables--C<@EXPORT_OK> and C<@EXPORT> in particular--which
 contain a list of symbols to export when requested.

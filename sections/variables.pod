@@ -60,7 +60,7 @@ is apparent in the different storage mechanisms of these variables within Perl
 5 itself.  Lexical variables get stored in I<lexical pads> attached to scopes.
 Every new entry into such a lexical scope requires Perl to create a new pad to
 contain the values of the variables for that particular entry into the scope.
-(This is how a subroutine can call itself and not clobber the values of
+(This is how a function can call itself and not clobber the values of
 existing variables.)
 
 Package variables have a storage mechanism called symbol tables.  Each package

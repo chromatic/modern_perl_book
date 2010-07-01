@@ -301,7 +301,7 @@ Within the function, C<@_> will contain seven elements, not two.
 
 As well, list assignment to arrays is I<greedy>.  An array will consume as many
 elements from the list as possible.  After the assignment, C<@cats> will
-contain I<every> argument passed to the subroutine.  C<@dogs> will be empty.
+contain I<every> argument passed to the function.  C<@dogs> will be empty.
 
 This flattening behavior sometimes confuses novices who attempt to create
 nested arrays in Perl 5:
@@ -321,7 +321,7 @@ containing the numbers one through 30, inclusive.  Remember that parentheses do
 not I<create> lists in these circumstances--they only group expressions.
 
 The solution to this flattening behavior is the same for passing arrays to
-subroutines and for creating nested arrays (L<references>).
+functions and for creating nested arrays (L<references>).
 
 =head3 Array Interpolation
 
