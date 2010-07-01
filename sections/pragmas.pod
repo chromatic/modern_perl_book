@@ -102,7 +102,7 @@ Perl 5 includes several useful core pragmas:
 =item * the C<strict> pragma enables compiler checking of symbolic references,
 the use of barewords, and the declaration of variables
 
-=item * the C<warnings> pramga enables optional warnings for deprecated,
+=item * the C<warnings> pragma enables optional warnings for deprecated,
 unintended, and awkward behaviors that are not I<necessarily> errors but may
 produce unwanted behaviors
 

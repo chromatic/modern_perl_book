@@ -31,7 +31,7 @@ subroutine C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 Nothing obvious will happen, except that there is no error.  The presence of a
 function named C<AUTOLOAD()> in a package tells Perl to call that function
 whenever normal dispatch for that function or method fails.  Change the
-C<AUTOLAOD()> to emit a message to demonstrate this:
+C<AUTOLOAD()> to emit a message to demonstrate this:
 
 =begin programlisting
 

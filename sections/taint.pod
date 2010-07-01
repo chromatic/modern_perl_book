@@ -69,7 +69,7 @@ input consists of a US telephone number, you can untaint it with:
 =end programlisting
 
 The more specific your pattern is about what you allow, the more secure your
-program can be.  The opposite approach ofI<denying> specific items or forms
+program can be.  The opposite approach of I<denying> specific items or forms
 runs the risk of overlooking something harmful.  In the case of security, Perl
 prefers that you disallow something that's safe but unexpected than that you
 allow something harmful which appears safe.  Even so, nothing prevents you from
@@ -101,7 +101,7 @@ its insecurity.
 
 If this environment variable contained the current working directory, or if it
 contained relative directories, or if the directories specified had
-world-writeable permissions, a clever attacker could hijack system calls to
+world-writable permissions, a clever attacker could hijack system calls to
 perform insecure operations.
 
 =end sidebar

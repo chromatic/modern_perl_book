@@ -29,7 +29,7 @@ dispatch system allows you to customize what happens when normal lookup fails.
 
 =head3 C<eval>
 
-X<eval strinG>
+X<eval string>
 X<operators; eval>
 
 The simplestN<At least I<conceptually>....> technique to generate code is to

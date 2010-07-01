@@ -14,7 +14,7 @@ Novice OO designs often overuse inheritance.  It's common to see class
 hierarchies which try to model all of the behavior for entities within the
 system in a single class.  This adds a conceptual overhead to understanding the
 system, because you have to understand the hierarchy, and it adds technical
-weight to every class, because conflicting responsibilties and methods may get
+weight to every class, because conflicting responsibilities and methods may get
 in the way of necessary behaviors or future modifications.
 
 The encapsulation provided by classes offers better ways to organize code.  You

@@ -14,9 +14,9 @@ To write maintainable Perl you must:
 
 =over 4
 
-=item * I<Remove duplication.>  Perl offers many opportunitites to use
+=item * I<Remove duplication.>  Perl offers many opportunities to use
 abstraction to reduce and remove duplication.  Functions, objects, roles, and
-modules, for examplel, allow you to define models of the problem and your
+modules, for example, allow you to define models of the problem and your
 solution.
 
 The more duplication in your system, the more work it is to make a necessary

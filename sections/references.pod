@@ -329,7 +329,7 @@ You may create anonymous hashes in place with curly braces:
 =begin programlisting
 
     my $food_ref = B<{>
-        'birthday cake' => 'la torta de cumpleaños',
+        'birthday cake' => 'la torta de cumpleaE<ntilde>os',
         candy           => 'la dulces',
         cupcake         => 'panquecitos',
         'ice cream'     => 'el helado',

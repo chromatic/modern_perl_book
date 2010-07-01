@@ -167,7 +167,7 @@ To define object attributes, describe them as part of the class:
 =end programlisting
 
 In English, that line of code means "C<Cat> objects have a C<name> attribute.
-It's readable but not writeable, and it's a string."  That single line of code
+It's readable but not writable, and it's a string."  That single line of code
 creates an accessor method (C<name()>) and allows you to pass a C<name>
 parameter to the constructor:
 
@@ -828,7 +828,7 @@ X<Class::MOP>
 X<Class::MOP::Class>
 
 By default, with Moose objects you do not have to worry about constructors and
-deconstructors, accessors, and encapsulation.  Moose objects can extend and
+destructors, accessors, and encapsulation.  Moose objects can extend and
 work with objects from the vanilla Perl 5 system.  You also get
 I<metaprogramming>--a way of accessing the implementation of the system through
 the system itself--and the concomitant extensibility.  If you've ever wondered
