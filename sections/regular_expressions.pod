@@ -30,7 +30,7 @@ the regex: an indivisible unit of the pattern.  The regex binding operator
 on its right to the string produced by the expression on its left.  When
 evaluated in scalar context, a match evaluates to a true value if it succeeds.
 
-The negated form of the binding operator C(!~) evalutes to false if the match
+The negated form of the binding operator C(!~) evaluates to false if the match
 succeeds.
 
 =head2 The C<qr//> Operator and Regex Combinations

@@ -102,7 +102,7 @@ counter example:
 =begin sidebar
 
 Perl 5.10 deprecated a technique from previous versions of Perl by which you
-could effectively emulate C<state>.  Using a postfix conditional which evalutes
+could effectively emulate C<state>.  Using a postfix conditional which evaluates
 to false with a C<my> declaration avoids I<reinitializing> a lexical variable
 to C<undef> or its initialized value.  In effect, a named function can close
 over its previous lexical scope by abusing a quirk of implementation.
