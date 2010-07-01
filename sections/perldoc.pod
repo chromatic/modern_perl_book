@@ -3,16 +3,17 @@
 Z<perldoc>
 
 One of Perl's most useful and least appreciated features is the C<perldoc>
-utility.  This program is part of every complete Perl 5 installationN<On free
-Unix-like systems you may need to install a package such as C<perl-doc>.>.  It
-displays the documentation of every Perl module installed on the
-system--whether a core module or one installed from the CPAN--as well as
-thousands of pages of Perl's copious core documentation.
+utility.  This program is part of every complete Perl 5 installationN<You may
+have to install an additional package on a free Unix-like system; on Debian and
+Ubuntu this is C<perl-doc>.>.  It displays the documentation of every Perl
+module installed on the system--whether a core module or one installed from the
+CPAN--as well as thousands of pages of Perl's copious core documentation.
 
 =begin sidebar
 
 If you prefer an online version, U<http://perldoc.perl.org/> hosts recent
-versions of the Perl documentation.
+versions of the Perl documentation.  Windows users, both ActivePerl and
+Strawberry Perl provide a link in your Start menu to the documentation.
 
 =end sidebar
 
