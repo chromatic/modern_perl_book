@@ -17,7 +17,7 @@ they I<can> offer compelling benefits of maintenance and clarity.
 
 =head3 Using Attributes
 
-In its simplest form, an attribute is a colon-preceded identifer attached to a
+In its simplest form, an attribute is a colon-preceded identifier attached to a
 variable or function declaration:
 
 =begin programlisting
