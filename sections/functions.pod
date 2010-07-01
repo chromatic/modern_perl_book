@@ -652,7 +652,8 @@ why the C<elem_exists()> function has several C<return> statements.
 
 Perl offers a helpful warning when it detects what might be runaway recursion:
 C<Deep recursion on subroutine>.  The limit is 100 recursive calls, which can
-be too few in certain circumstances but too many in others.
+be too few in certain circumstances but too many in others. You can disable
+this warning with C<no warnings 'recursion'>.
 
 X<functions; tail call elimination>
 
