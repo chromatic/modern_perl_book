@@ -72,12 +72,6 @@ well as Perl 5 and Perl 6 development.  Every CPAN distribution has its own RT
 queue, linked from C<search.cpan.org> and available on U<http://rt.cpan.org/>.
 Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
 
-X<corehackers>
-
-The corehackers project helps identify useful changes to Perl 5 and helps to
-mentor new developers into fixing bugs and adding features.  Its wiki is
-available at U<http://corehackers.perl.org/>.
-
 X<Perl 5 Porters>
 X<p5p>
 

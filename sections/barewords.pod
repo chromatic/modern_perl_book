@@ -2,12 +2,12 @@
 
 Z<barewords>
 
-Perl uses sigils other punctuation pervasively; they help both the parser and
+Perl uses sigils and other punctuation pervasively to help both the parser and
 the programmer identify the categories of named entities.  Even so, Perl is a
 malleable language.  You can write programs in the most creative, maintainable,
-obfuscated, or bizarre fashion you prefer.  Maintainability is a concern of
+obfuscated, or bizarre fashion as you prefer.  Maintainability is a concern of
 good programs, but the developers of Perl itself don't presume to dictate what
-I<you> most maintainable.
+I<you> find most maintainable.
 
 X<bareword>
 
@@ -32,7 +32,7 @@ Hash keys in Perl 5 are barewords.  These are usually not ambiguous because
 their use as keys is sufficient for the parser to identify them as the
 equivalent of single-quoted strings.  Yet be aware that attempting to evaluate
 a function call or a built-in operator (such as C<shift>) to I<produce> a hash
-key may not do as you expect, unless you disambiguate.
+key may not do what you expect, unless you disambiguate.
 
 =begin programlisting
 
@@ -52,7 +52,7 @@ X<packages; bareword names>
 Package names in Perl 5 are barewords in a sense.  Good naming conventions for
 packages (initial caps) help prevent unwanted surprises, but the parser uses a
 heuristic to determine whether C<< Package->method() >> means to call a
-function named C<Package()> and the call the C<method()> method on its results
+function named C<Package()> and then call the C<method()> method on its results
 or whether to treat C<Package> as the name of a package.  You can disambiguate
 this with the postfix package separator (C<::>), but that's rare and admittedly
 ugly:
