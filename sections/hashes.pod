@@ -446,8 +446,8 @@ Hashes have several uses, such as finding unique elements of lists or arrays:
 =end programlisting
 
 The use of the C<undef> operator with the hash slice sets the values of the
-hash to C<undef>.  It cheap, both in terms of code and memory, to use only the
-keys of a hash for storage.
+hash to C<undef>.  It is cheaper, both in terms of code and memory, to use only
+the keys of a hash for storage.
 
 X<hashes; counting items>
 
