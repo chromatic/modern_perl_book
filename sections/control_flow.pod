@@ -340,21 +340,25 @@ entire expression.
 =head3 Context for Conditional Directives
 
 X<context; conditional>
+X<truth>
+X<boolean truth>
+X<true value>
+X<false value>
 
 The conditional directives--C<if>, C<unless>, and the ternary conditional
 operator--all evaluate an expression in boolean context
 (L<context_philosophy>).  As comparison operators such as C<eq>, C<==>, C<ne>,
 and C<!=> all produce boolean results when evaluated, Perl coerces the results
 of other expressions--including variables and values--into boolean forms.
-Empty hashes and arrays evaluate to false.  Scalars containing C<undef>, the
-values 0 and 0.0, and the empty string evaluate to false.  Everything else is
-true, in the absence of deeper magic.
+Empty hashes and arrays evaluate to false.
 
-=for author
-
-Review the rules on truthiness of scalars again.
-
-=end for
+Perl 5 has no single true value, nor a single false value.  Any number that
+evaluates to 0 is false.  This includes C<0>, C<0.0>, C<0e0>, C<0x0>, and so
+on.  The empty string (C<''>) and C<"0"> evaluate to false, but the strings
+C<"0.0">, C<"0e0">, and so on do not.  The idiom C<"0 but true"> evaluates to 0
+in numeric context but evaluates to true, thanks to its string contents.  Both
+the empty list and C<undef> evaluate to false.  Empty arrays and hashes return
+the number 0 in scalar context, so they evaluate to false in boolean context.
 
 =begin sidebar
 
