@@ -103,3 +103,23 @@ X<Perl Mongers>
 There are also hundreds of local Perl Mongers groups which get together
 frequently for technical talks and social interaction.  See
 U<http://www.pm.org/>.
+
+=head2 IRC
+
+X<IRC>
+X<IRC; #moose>
+X<IRC; #catalyst>
+X<IRC; #perl-help>
+X<IRC; #perl>
+
+When Perl mongers aren't at local meetups or conferences or workshops, many
+collaborate and chat online through IRC, a textual group chat system from the
+early days of the Internet.  Many of the most popular and useful Perl projects
+have their own IRC channels, such as I<#moose> or I<#catalyst>.
+
+The main server for Perl community is U<irc://irc.perl.org/>.  Other notable
+channels include I<#perl-help>, for general assistance on Perl programming, and
+I<#perl-qa>, devoted to testing and other quality issues.  Be aware that the
+channel I<#perl> is I<not> for general help--instead, it's a general purpose
+room for discussing whatever its participants want to discussN<... and it's not
+often friendly to people who ask basic programming questions.>.
