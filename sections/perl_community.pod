@@ -30,10 +30,10 @@ tutorials about Perl programming every month.  Its archives reach back into the
 X<cpan.org>
 X<websites; cpan.org>
 
-The CPAN's central location is U<http://www.cpan.org/>, though experienced
-users spend more time on U<http://search.cpan.org/>.  This central software
-distribution hub of reusable, free Perl code is an essential part of the Perl
-community.  See L<cpan> for more.
+The CPAN's (L<cpan>) central location is U<http://www.cpan.org/>, though
+experienced users spend more time on U<http://search.cpan.org/>.  This central
+software distribution hub of reusable, free Perl code is an essential part of
+the Perl community.
 
 X<PerlMonks>
 
@@ -43,10 +43,12 @@ celebrated its tenth anniversary in December 2009, making it one of the longest
 lasting web communities dedicated to any programming language.
 
 X<use Perl;>
+X<blogs.perl.org>
 
 Several community sites offer news and commentary.  The oldest is
 U<http://use.perl.org/>; it has offered custom journals for many years.
-Several well-known Perl hackers write there.
+Several well-known Perl hackers write there.  U<http://blogs.perl.org/> is a
+newer community site dedicated to blogging about Perl.
 
 X<Enlightened Perl Organization>
 
@@ -84,6 +86,15 @@ X<TPF wiki>
 
 The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all
 things Perl 5.  See U<http://www.perlfoundation.org/perl5>.
+
+X<Github>
+X<Gitpan>
+
+Many Perl hackers use Github (U<http://github.com/) to host their projectsN<...
+including the drafts of this book at
+U<http://github.com/chromatic/modern_perl_book/>).  The site is most notable
+for Gitpan, a Git repository of the entire history of the CPAN.  See
+U<http://github.com/gitpan/>.
 
 =head2 Events
 
