@@ -500,11 +500,15 @@ function and the context of the call:
 
 =end programlisting
 
+X<Carp>
+X<Carp; croak>
+X<Carp; cluck>
+
 The standard C<Carp> module uses this technique to great effect for reporting
 errors and throwing warnings in functions.  You may see C<croak()> used to
 throw exceptions in place of C<die> in library code.  C<croak()> throws an
-exception and reports a stack trace from the perspective of its caller.  The
-C<cluck()> function gives a warning from the perspective of its caller.
+exception reported from the file and line number of its caller.  The C<cluck()>
+function reports a warning from the file and line number of its caller.
 
 This behavior is most useful when validating parameters or preconditions of a
 function, when you want to indicate that the calling code is wrong somehow:
