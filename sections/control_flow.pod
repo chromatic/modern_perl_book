@@ -277,7 +277,7 @@ subsequent subexpressions.  This is most obvious with an example:
 
 =begin sidebar
 
-Remember that the return value of C<ok()> is the boolean value obtained by
+The return value of C<ok()> (L<testing>) is the boolean value obtained by
 evaluating the first argument.
 
 =end sidebar
