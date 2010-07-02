@@ -14,6 +14,7 @@ warnings--and Perl supports this.
 warn
 Carp carp() and cluck()
 do they work with $SIG{__WARN__}?  Must verify.
+perl -MCarp=verbose
 
 =end for
 
