@@ -587,7 +587,7 @@ offered by the C<strict> pragma).  The core module C<Hash::Util> provides
 mechanisms to restrict the modification of a hash or the keys allowed in the
 hash.
 
-To prevent someone from accidentally adding a hash key you did not intent
+To prevent someone from accidentally adding a hash key you did not intend
 (presumably with a typo or with data from untrusted input), use the
 C<lock_keys()> function to restrict the hash to its current set of keys.  Any
 attempt to add a key/value pair to the hash where the key is not in the allowed
