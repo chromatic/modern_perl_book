@@ -45,7 +45,7 @@ X<exceptions; $@>
 
 C<die()> sets the global variable C<$@> to its argument and immediately exits
 the current function I<without returning anything>.  If the calling function
-does not explicitly handle this exception, the exception will propogate upwards
+does not explicitly handle this exception, the exception will propagate upwards
 to every caller until something handles the exception or the program exits with
 an error message.
 

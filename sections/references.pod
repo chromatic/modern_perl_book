@@ -142,7 +142,7 @@ useful for several reasons:
 
 =over 4
 
-=item * To pass and return arrays from subroutines without flattening
+=item * To pass and return arrays from functions without flattening
 
 =item * To create multi-dimensional data structures
 
@@ -329,7 +329,7 @@ You may create anonymous hashes in place with curly braces:
 =begin programlisting
 
     my $food_ref = B<{>
-        'birthday cake' => 'la torta de cumpleaños',
+        'birthday cake' => 'la torta de cumpleaE<ntilde>os',
         candy           => 'la dulces',
         cupcake         => 'panquecitos',
         'ice cream'     => 'el helado',
@@ -519,7 +519,7 @@ When the counter reaches zero, Perl can safely recycle that value.
 Within the inner block in the example, there's one C<$fh>.  (Multiple lines in
 the source code refer to it, but there's only one I<reference> to it; C<$fh>
 itself.)  C<$fh> is only in scope in the block and does not get assigned to
-anyting outside of the block, so when the block ends, its reference count
+anything outside of the block, so when the block ends, its reference count
 reaches zero.  The recycling of C<$fh> calls an implicit C<close()> method on
 the filehandle, and so the file gets closed.
 

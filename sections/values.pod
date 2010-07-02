@@ -157,12 +157,14 @@ the ending delimiter must begin in the first column of the program.
 
 =begin sidebar
 
-If the identifier begins with whitespace, that same whitespace must be
-present exactly in the ending delimiter.  Even if you do indent the
-identifier, Perl 5 will I<not> remove equivalent whitespace from the
-start of each line of the heredoc.
+If the identifier begins with whitespace, that spaces must be present exactly
+in the ending delimiter.  Even if you do indent the identifier, Perl 5 will
+I<not> remove equivalent whitespace from the start of each line of the heredoc.
 
 =end sidebar
+
+You may use a string in other contexts, such as boolean or numeric; its
+contents will determine the resulting value (L<coercion>).
 
 =head3 Unicode and Strings
 
@@ -186,11 +188,45 @@ ASCII strings.
 For far more detail what Unicode is, encodings, and how to manage incoming and
 outgoing data in a Unicode world, see C<perldoc perluniintro>.
 
+=head4 Unicode in Your Data
+
+X<Encode>
+X<Encode; decode()>
+X<Encode; encode()>
+
+Perl 5's internal encoding shields you from most of the details of Unicode and
+character sets and representations, but you have to meet it part way.  In
+particular, the sooner you can ask Perl to convert from data that you have to
+its own internal format, the fewer odd conversions and mismatches you will
+suffer.  The core module C<Encode> provides a function named C<decode()> to
+convert a scalar containing data in a known format to the internal encoding.
+For example, if you have UTF-8 data:
+
+=begin programlisting
+
+    my $string = decode('utf8', $data);
+
+=end programlisting
+
+The corresponding C<encode()> function converts from Perl's internal encoding
+to the desired output encoding:
+
+=begin programlisting
+
+    my $latin1 = encode('iso-8859-1', $string);
+
+=end programlisting
+
+If you always convert at the inputs and outputs of your program, you will avoid
+many problems.
+
 =for author
 
 Probably need C<binmode> here.
 
 =end for
+
+=head4 Unicode in Your Programs
 
 X<pragmas; utf8>
 X<utf8>
@@ -206,9 +242,9 @@ Unicode characters in strings as well in identifiers:
 
     use utf8;
 
-    sub £_to_¥ { ... }
+    sub E<pound>_to_E<yen> { ... }
 
-    my $pounds = £_to_¥('1000£');
+    my $pounds = E<pound>_to_E<yen>('1000E<pound>');
 
 =end programlisting
 
@@ -370,7 +406,7 @@ list context without using a temporary variable, you use the idiom (L<idioms>):
 =end programlisting
 
 Because of the right associativity (L<associativity>) of the assignment
-operator, Perl first evalutes the second assignment by calling
+operator, Perl first evaluates the second assignment by calling
 C<get_all_clown_hats()> in list context.  This produces a list.  Even though
 that list never gets assigned to anything, the return value of the second
 assignment is that list.  Perl next evaluates that list in scalar context, due
@@ -445,8 +481,9 @@ whitespace to produce a list of strings:
 
 =begin sidebar
 
-Perl will produce a warning if the literal string contains a comma or the
-comment character.
+Perl will produce a warning if a C<qw()> contains a comma or the comment
+character (C<#>), because not only are such characters rarely included in a
+C<qw()>, their presence usually indicates an oversight.
 
 =end sidebar
 

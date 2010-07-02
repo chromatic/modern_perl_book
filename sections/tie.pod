@@ -18,7 +18,7 @@ provides a similar system by which to handle data files too large to fit in
 memory.
 
 The class to which you C<tie> a variable must conform to a specific,
-well-documented interface for the specific datatype.  C<perldoc perltie> is the
+well-documented interface for the specific data type.  C<perldoc perltie> is the
 primary source of information about these interfaces, though the core modules
 C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> are more useful in practice.
 Inherit from them to start, and override only those specific methods you need
@@ -97,7 +97,7 @@ very little code:
 =end programlisting
 
 Assume that the C<Logger> class method C<log()> takes a string and the number
-of frames up the callstack of which to report the location.  Be aware that
+of frames up the call stack of which to report the location.  Be aware that
 C<Tie::StdScalar> does not have its own F<.pm> file, so you must use
 C<Tie::Scalar> to make it available.
 

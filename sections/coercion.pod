@@ -19,10 +19,10 @@ mean>), though you must be specific about your intentions.
 Z<boolean_coercion>
 X<coercion; boolean>
 
-Boolean coercion occurs when you test the truth of a value, such as in a C<if>
-or C<while> condition.  Numeric 0 is false.  The undefined value is false.  The
-empty string is false, and so is the string C<'0'>.  The strings C<'0.0'> and
-C<'0e'> are I<true>, however.
+Boolean coercion occurs when you test the truthiness of a value, such as in a
+C<if> or C<while> condition.  Numeric 0 is false.  The undefined value is
+false.  The empty string is false, and so is the string C<'0'>.  The strings
+C<'0.0'> and C<'0e'> are I<true>, however.
 
 All other values are true, including the idiomatic string C<'0 but true'>.  In
 the case of a scalar with both string and numeric portions (L<dualvars>), Perl
@@ -109,9 +109,9 @@ stringification and a numificationN<This is a simplification, but the gory
 details are truly gory.>.  Stringifying a numeric value does not replace the
 numeric value with a string.  Instead, it I<attaches> a stringified value to
 the value in addition to the numeric value.  The same sort of operation happens
-when numifiying a string value.
+when numifying a string value.
 
-You almost never need to know that this happpens--perhaps once or twice a
+You almost never need to know that this happens--perhaps once or twice a
 decade, if anecdotal evidence is admissible.
 
 Perl 5 may prefer one form over another.  If a value has a cached

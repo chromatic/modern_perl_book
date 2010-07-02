@@ -12,7 +12,7 @@ is I<overloading>.
 Overloading can be subtle but powerful.  An interesting example is overloading
 how an object behaves in boolean context, especially if you use something like
 the Null Object pattern (U<http://www.c2.com/cgi/wiki?NullObject>).  In boolean
-context, an object will be true... but not if you overload booleanification.
+context, an object will be true... but not if you overload boolification.
 
 You can overload what the object does for almost every operation:
 stringification, numification, iteration, invocation, array access, hash
@@ -135,7 +135,7 @@ pervasive.  A new problem domain without that established notation is a poor
 candidate for overloading, as is a problem domain where you have to squint to
 make Perl's existing operators match a different notation.
 
-Damian Conway's I<Perl Best Practices> suggsts that the other useful use of
+Damian Conway's I<Perl Best Practices> suggests that the other useful use of
 overloading is to prevent the accidental abuse of objects.  For example,
 overloading numification to C<croak()> for objects which have no reasonable
 single numeric representation can help you find real bugs in real programs.

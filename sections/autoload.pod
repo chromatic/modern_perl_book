@@ -20,7 +20,7 @@ Consider the program:
 =end programlisting
 
 When you run it, Perl will throw an exception due to the call to the undefined
-subroutine C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
+function C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 
 =begin programlisting
 
@@ -31,7 +31,7 @@ subroutine C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 Nothing obvious will happen, except that there is no error.  The presence of a
 function named C<AUTOLOAD()> in a package tells Perl to call that function
 whenever normal dispatch for that function or method fails.  Change the
-C<AUTOLAOD()> to emit a message to demonstrate this:
+C<AUTOLOAD()> to emit a message to demonstrate this:
 
 =begin programlisting
 
@@ -163,7 +163,7 @@ the program needs them:
             Log::method_call( $name, @_ );
 
             my $self = shift;
-            return $$self->$name( @_ );
+            return $self->$name( @_ );
         }
 
         B<no strict 'refs';>

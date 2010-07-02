@@ -234,8 +234,8 @@ contains the given key:
 
 Using C<exists> instead of accessing the hash key directly avoids two problems.
 First, it does not check the boolean nature of the hash I<value>; a hash key
-may exist with a value even if that value evaluates to a boolean false.
-Second, with nested data structures, it avoids autovivifying
+may exist with a value even if that value evaluates to a boolean false (including
+C<undef>). Second, with nested data structures, it avoids autovivifying
 (L<autovivification>) the value.
 
 =head3 Accessing Hash Keys and Values
@@ -544,9 +544,9 @@ You can even set default parameters with this approach:
     sub make_sundae
     {
         my %parameters = @_;
-        B<$parameters{flavor}    = 'Vanilla';>
-        B<$parameters{topping}   = 'fudge';>
-        B<$parameters{sprinkles} = 100;>
+        B<$parameters{flavor}    //= 'Vanilla';>
+        B<$parameters{topping}   //= 'fudge';>
+        B<$parameters{sprinkles} //= 100;>
         ...
     }
 
@@ -560,10 +560,10 @@ You can even set default parameters with this approach:
     {
         my %parameters =
         (
-            B<< flavor => 'Vanilla', >>
-            B<< topping => 'fudge', >>
+            B<< flavor   => 'Vanilla', >>
+            B<< topping   => 'fudge', >>
             B<< sprinkles => 100, >>
-            @
+            @_,
         );
         ...
     }

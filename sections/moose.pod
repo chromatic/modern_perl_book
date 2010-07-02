@@ -128,7 +128,7 @@ By convention, invocants in Perl methods are lexical variables named C<$self>,
 but this is merely pervasive convention.  The example implementation of
 C<meow()> does not use the invocant, so it's irrelevant once method dispatch
 has completed.  In that sense, C<meow()> is like C<new()>; you can safely use
-the name of the class C(<Cat>) as its invocant.  This is a I<class method>:
+the name of the class (C<Cat>) as its invocant.  This is a I<class method>:
 
 =begin programlisting
 
@@ -167,7 +167,7 @@ To define object attributes, describe them as part of the class:
 =end programlisting
 
 In English, that line of code means "C<Cat> objects have a C<name> attribute.
-It's readable but not writeable, and it's a string."  That single line of code
+It's readable but not writable, and it's a string."  That single line of code
 creates an accessor method (C<name()>) and allows you to pass a C<name>
 parameter to the constructor:
 
@@ -298,7 +298,7 @@ birth:
         B<my $self = shift;>
         B<my $year = (localtime)[5] + 1900;>
 
-        B<return $year - $self->birth_year();>
+        B<< return $year - $self->birth_year(); >>
     B<}>
 
 =end programlisting
@@ -502,6 +502,8 @@ explicitly mark that it performs the role:
 
     B<with 'LivingBeing';>
 
+    sub age { ... }
+
 =end programlisting
 
 X<roles; composition>
@@ -542,6 +544,8 @@ role:
 
     {
         package CalculateAgeFromBirthYear;
+
+        use Moose::Role;
 
         has 'birth_year', is => 'ro', isa => 'Int',
                           default => sub { (localtime)[5] + 1900 };
@@ -755,7 +759,7 @@ overridding method to the overridden method:
         {
             my $self = shift;
 
-            Carp::carp( "Can't light a lit light source!" )
+            Carp::carp( "Can't extinguish an unlit light source!" )
                 unless $self->enabled;
 
             B<super()>;
@@ -791,6 +795,21 @@ instances will return true when you call the C<isa()> method on them:
 
 =end programlisting
 
+=head3 Sub-types, Type coercion, lazy yet immutable data
+
+=for author
+
+To me this is one of the most exciting areas of development of Perl.
+sub-typing, along with type coercion rules (both in
+C<Moose::Util::TypeConstraints>), type libraries (C<MooseX::Types>)
+and read-only objects that you can still construct lazily allow you to
+efficiently layer assertions in a declarative fashion, into very easy
+to debug code.  (Read-only objects will also later win when it comes
+to threading, STM, etc of course as people port their designs to Perl
+6, but no need to scare readers with such crazy talk).
+
+=end
+
 =head3 Moose and Perl 5 OO
 
 X<moose; versus Perl 5 OO>
@@ -809,7 +828,7 @@ X<Class::MOP>
 X<Class::MOP::Class>
 
 By default, with Moose objects you do not have to worry about constructors and
-deconstructors, accessors, and encapsulation.  Moose objects can extend and
+destructors, accessors, and encapsulation.  Moose objects can extend and
 work with objects from the vanilla Perl 5 system.  You also get
 I<metaprogramming>--a way of accessing the implementation of the system through
 the system itself--and the concomitant extensibility.  If you've ever wondered
@@ -886,6 +905,14 @@ C<class>, C<role>, and C<method> keywords reduce the amount of boilerplate
 necessary to write good OO code in Perl 5.  Note specifically the declarative
 nature of this example, as well as the now unnecessary C<my $self = shift;>
 line at the start of the C<age> method.
+
+=for author
+
+Certainly worth noting that the C<Devel::Declare> infrastructure is
+essentially core in Perl 5.12, though I am unaware of C<MooseX::>
+modules like C<MooseX::Method::Signatures> being ported to that yet.
+
+=end
 
 One drawback of this approach is that you must be able to install CPAN modules
 (or a custom Perl 5 distribution such as Strawberry or Chocolate Perl which may

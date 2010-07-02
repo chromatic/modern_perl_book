@@ -5,7 +5,7 @@ Z<closures>
 You've seen how functions work (L<functions>).  You understand how scope works
 (L<scope>).  You know that every time control flow enters a function, that
 function gets a new environment representing that invocation's lexical scope.
-You can work with subroutine references (L<references>) and anonymous functions
+You can work with function references (L<references>) and anonymous functions
 (L<anonymous_functions>).
 
 You know everything you need to know to understand closures.
@@ -167,12 +167,12 @@ I<n>th element of the Fibonacci series.  The function generates all preceding
 values in the series as necessary, caching them, and returning the requested
 element.  It delays computation until absolutely necessary.
 
-If all you ever need to do is to calculate Fibonnaci numbers, this approach may
+If all you ever need to do is to calculate Fibonacci numbers, this approach may
 seem overly complex.  Consider, however, that the function C<gen_fib()> can
 become amazingly generic: it initializes an array as a cache, performs some
 custom code to populate arbitrary elements of the cache, and returns the
 calculated or cached value.  If you extract the behavior which calculates
-Fibonnaci values, you can use this code to perform all sorts of cached, lazy
+Fibonacci values, you can use this code to perform all sorts of cached, lazy
 iterator behaviors.
 
 In other words, you can extract a function, C<generate_caching_closure()>, and

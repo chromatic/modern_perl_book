@@ -61,7 +61,7 @@ makes the caller-side of the function appear to support named parameters:
 
 =end programlisting
 
-The callee side can unpack these parameters into a hash and treate the hash as
+The callee side can unpack these parameters into a hash and treat the hash as
 if it were the single argument:
 
 =begin programlisting
@@ -220,7 +220,7 @@ This transformation is simple.  Consider the case where calculating the right
 value to sort is expensive in time or memory, such as calculating a
 cryptographic hash for a large file.  In that case, the Schwartzian transform
 is also useful because you can perform those expensive operations once (in the
-rightmost C<map>), compare them repeatedly from a de-facto cache in the
+rightmost C<map>), compare them repeatedly from a de facto cache in the
 C<sort>, and then remove them in the leftmost C<map>.
 
 =head3 Easy File Slurping

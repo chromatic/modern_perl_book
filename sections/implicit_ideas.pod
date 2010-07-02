@@ -17,7 +17,7 @@ X<$_>
 The best example a linguistic shortcut in Perl is the default scalar variable,
 C<$_>.  It's most notable in its I<absence>: many of Perl's built in operations
 perform their work on the contents of C<$_> in the absence of an explicit
-variable.  You can still use C<$_> as the variable, but it's unnecessary.
+variable.  You can still use C<$_> as the variable, but it's often unnecessary.
 
 For example, the C<chomp> operator removes any trailing newline sequence from
 the given string:
@@ -47,18 +47,11 @@ other arguments:
 
 =begin programlisting
 
-    print;  # prints $_
-    say;    # prints $_ with a trailing newline
+    print;  # prints $_ to the currently selected filehandle
+    say;    # prints $_ to the currently selected filehandle
+            # with a trailing newline
 
 =end programlisting
-
-=begin sidebar
-
-If you use the three-argument form of C<print> and C<say>, where the first
-argument is a filehandle to which to print, you cannot omit C<$_>; Perl will
-interpret this as the two-argument form of both functions.
-
-=end sidebar
 
 Perl's regular expression facilities (L<regular_expressions>) can also operate
 on C<$_>, performing matches, substitutions, and transliterations:
@@ -84,8 +77,7 @@ Check how many other string functions this includes?
 Many of Perl's scalar operators work on the default scalar variable if you do
 not provide an alternative.
 
-Perl's looping constructs also set C<$_>.  For example, iterating over a list
-with C<for>:
+Perl's looping constructs also set C<$_>, such as C<for> iterating over a list:
 
 =begin programlisting
 
@@ -110,7 +102,7 @@ with C<for>:
 
 =end programlisting
 
-... or transforming a list through the use of C<map>:
+... or C<map> transforming a list:
 
 =begin programlisting
 
@@ -119,16 +111,17 @@ with C<for>:
 
 =end programlisting
 
-=begin sidebar
+... or C<grep> filtering a list:
 
-Note that C<sort> does not set C<$_>, as it must process the elements of its
-list two at a time.
+=begin programlisting
 
-=end sidebar
+    say 'Brunch time!' if grep { /pancake mix/ } @pantry;
 
-If you call subroutines within code that uses C<$_> whether implicitly or
+=end programlisting
+
+If you call functions within code that uses C<$_> whether implicitly or
 explicitly, they may overwrite the value of C<$_>.  Similarly, if you write a
-subroutine which uses C<$_>, you may clobber a caller subroutine's use of
+function which uses C<$_>, you may clobber a caller function's use of
 C<$_>.  Perl 5.10 allows you to use C<my> to declare C<$_> as a lexical
 variable, which prevents this clobbering behavior.  Be wise.
 
@@ -146,7 +139,7 @@ variable, which prevents this clobbering behavior.  Be wise.
 
 =end programlisting
 
-In this example, if C<calculate_value()> or any other subroutine it happened to
+In this example, if C<calculate_value()> or any other function it happened to
 call changed C<$_>, it would remain changed throughout the C<while> loop.
 Adding a C<my> declaration prevents that behavior:
 
@@ -178,9 +171,8 @@ X<default array variables>
 X<variables; @_>
 X<@_>
 
-Another default variable is available inside Perl subroutines; this is C<@_>.
-Perl passes arguments to subroutines in this array.  Array manipulation
-operations (L<arrays>) performed inside subroutines affect this array by
+Perl passes arguments to functions in an array named C<@_>.  Array manipulation
+operations (L<arrays>) performed inside functions affect this array by
 default.  Thus, these two snippets of code are equivalent:
 
 =begin programlisting
@@ -200,17 +192,17 @@ default.  Thus, these two snippets of code are equivalent:
 =end programlisting
 
 I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
-subroutines.  Array functions such as C<unshift>, C<push>, C<splice>, and
+functions.  Array functions such as C<unshift>, C<push>, C<splice>, and
 C<pop> operate on C<@_>.
 
 X<variables; @ARGV>
 X<@ARGV>
 
-Outside of a subroutine, the default array variable is C<@ARGV>.  This array
+Outside of a function, the default array variable is C<@ARGV>.  This array
 represents all command-line arguments to the program.  The same array functions
-which use C<@_> implicitly I<within> subroutines use C<@ARGV> implicitly at the
-top level of a program outside of any subroutine.  You cannot use C<@_> when
-you mean C<@ARGV>.
+which use C<@_> implicitly I<within> functions use C<@ARGV> implicitly at the
+top level of a program outside of any function.  You cannot use C<@_> when you
+mean C<@ARGV>.
 
 X<null filehandle>
 X<@ARGV>

@@ -85,7 +85,7 @@ arrays or hashes requires disambiguation blocks:
 
 =end programlisting
 
-Similarly, slicing a nested data structure requires additional puncutation:
+Similarly, slicing a nested data structure requires additional punctuation:
 
 =begin programlisting
 

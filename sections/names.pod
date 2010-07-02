@@ -57,7 +57,7 @@ These rules only apply to literal names found in source code.  The rules are
 different for I<symbolic lookups>.  Perl's dynamic nature makes it possible to
 refer to entities with names generated at runtime or provided as input to a
 program.  This is more difficult than the straightforward approach, but it's
-also more flexible--if more dangerous.  In particular, invoking subroutines or
+also more flexible--if more dangerous.  In particular, invoking functions or
 methods indirectly or looking up namespaced symbols lets you bypass Perl's
 parser, which is the only part of Perl that enforces these grammatic rules.  Be
 aware that doing so can produce confusing code; usually using a hash

@@ -9,7 +9,7 @@ combine to form the simple--though effective--basic object system:
 
 =item * A class is a package.
 
-=item * A method is a subroutine.
+=item * A method is a function.
 
 =item * A (blessed) reference is an object.
 

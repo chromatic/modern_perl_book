@@ -229,7 +229,7 @@ package global variables.  You cannot C<local>ize lexical variables.
 
 =begin sidebar
 
-You I<can> localize subroutines and methods, but that's deep magic you should
+You I<can> localize functions and methods, but that's deep magic you should
 avoid wherever possible.
 
 =end sidebar

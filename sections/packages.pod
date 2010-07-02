@@ -39,7 +39,7 @@ call the C<add_box()> function only by C<MyCode::add_box()>.  A fully qualified
 name includes its complete package name.
 
 The default package is the C<main> package.  If you do not declare a package
-explicitly, whether in a one-liner on a command line or in a standalone Perl
+explicitly, whether in a one-liner on a command-line or in a standalone Perl
 program or even in a F<.pm> file on disk, the current package will be the
 C<main> package.
 
@@ -99,8 +99,8 @@ X<namespaces>
 
 Every C<package> declaration causes Perl to perform two tasks.  It creates a
 new namespace if that namespace does not already exist.  It also tells the
-parser to put all package global symbols (global variables and functions) into
-that namespace.
+parser to put all subsequent package global symbols (global variables and
+functions) into that namespace.
 
 X<namespaces; open>
 X<open namespaces>
