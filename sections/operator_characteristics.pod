@@ -67,7 +67,7 @@ exactly how Perl handles operator precedence and associativity; run C<perl
 -MO=Deparse,p> on a snippet of code.  (The C<-p> flag adds extra grouping
 parentheses which often clarify evaluation order.) Beware that Perl's optimizer
 will simplify mathematical operations as given as examples earlier in this
-section; use variables instead, as in C<$a ** $b ** $c>.
+section; use variables instead, as in C<$x ** $y ** $z>.
 
 =end sidebar
 
