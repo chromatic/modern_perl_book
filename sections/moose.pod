@@ -485,7 +485,7 @@ that the object I<performs> the C<LivingBeing> role:
 
 =end programlisting
 
-Anything which performs this rule must supply the C<name()>, C<age()>, and
+Anything which performs this role must supply the C<name()>, C<age()>, and
 C<diet()> methods.  This does not happen automatically; the C<Cat> class must
 explicitly mark that it performs the role:
 
