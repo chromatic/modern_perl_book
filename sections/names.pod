@@ -137,6 +137,15 @@ enforces list context when used as an lvalue:
 
 =end programlisting
 
+=for author
+
+Add an example that uses a hash slice as an lvalue?  I.E.
+
+my %hash;
+@hash{ @keys } = @values;
+
+=end for
+
 The most reliable way to determine the type of a variable--scalar, array, or
 hash--is to look at the operations performed on it.  Scalars support all basic
 operations, such as string, numeric, and boolean manipulations.  Arrays support
