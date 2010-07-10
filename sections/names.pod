@@ -133,7 +133,7 @@ enforces list context when used as an lvalue:
 =begin programlisting
 
     my @hash_elements  = @hash{ @keys };
-    my @array_elements = @array[ @elements ];
+    my @array_elements = @array[ @indexes ];
 
 =end programlisting
 
