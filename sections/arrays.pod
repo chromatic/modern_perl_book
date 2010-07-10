@@ -225,7 +225,7 @@ array, respectively:
     my @meals;
 
     # what is there to eat?
-    push @meals, qw( hamburgers pizza lasagna salad );
+    push @meals, qw( hamburgers pizza lasagna turnip );
 
     # ... but the nephew hates vegetables
     pop @meals;
