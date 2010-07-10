@@ -172,7 +172,14 @@ start of each line of the heredoc.
 =end sidebar
 
 You may use a string in other contexts, such as boolean or numeric; its
-contents will determine the resulting value (L<coercion>).
+contents will determine the resulting value (L<coercion>).  For example:
+
+=begin programlisting
+
+    my $string = 'aa';
+    say $string++ for 1..30;
+
+=end programlisting
 
 =head3 Unicode and Strings
 
