@@ -871,8 +871,8 @@ the C<while> loop will have nothing to read and will not execute.  To solve
 this problem, you may re-open the file inside the C<for> loop (simple to
 understand, but not always a good use of system resources), slurp the entire
 file into memory (which may not work if the file is large), or C<seek> the
-filehandle back to the beginning of the file for each iteration (an overlooked
-option).
+filehandle back to the beginning of the file for each iteration (an often
+overlooked option).
 
 =head3 Loop Control
 
