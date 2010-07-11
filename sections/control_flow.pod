@@ -1070,7 +1070,7 @@ Scissors game:
             when (/paper/)    { say 'You win!' };
             when (/rock/)     { say 'We tie!'  };
             when (/scissors/) { say 'I win!'   };
-            default           { say 'I don't understand your move' };
+            default           { say "I don't understand your move" };
         }
     }
 
@@ -1083,7 +1083,7 @@ Scissors game:
             when (/paper/)    { say 'We tie!'  };
             when (/rock/)     { say 'I win!'   };
             when (/scissors/) { say 'You win!' };
-            default           { say 'I don't understand your move' };
+            default           { say "I don't understand your move" };
         }
     }
 
@@ -1096,7 +1096,7 @@ Scissors game:
             when (/paper/)    { say 'I win!'   };
             when (/rock/)     { say 'You win!' };
             when (/scissors/) { say 'We tie!'  };
-            default           { say 'I don't understand your move' };
+            default           { say "I don't understand your move" };
         }
     }
 
