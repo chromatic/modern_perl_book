@@ -504,3 +504,9 @@ C<qw()>, their presence usually indicates an oversight.
 
 Lists can (and often do) occur as the results of expressions, but these lists
 do not appear literally in source code.
+
+=for author
+
+Example perhaps? 
+
+=end for
