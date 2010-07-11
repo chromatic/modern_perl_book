@@ -967,11 +967,28 @@ If you find yourself nesting loops such that you need labels to manage control
 flow, consider simplifying your code: perhaps extracting inner loops into
 functions for clarity.
 
-=for author
+=head3 Continue
 
-Does anyone care about C<continue>?
+X<continue>
 
-=end for
+The rarely used C<continue> construct may be used with a C<while>, C<until> or 
+C<foreach> loop.  It behaves like the third subexpression of a C<for> loop -- 
+it is evaluated for each iteration of the loop, even when a loop iteration is 
+exited with a C<next>.  It can be used to increment a loop variable:
+
+=begin programlisting
+
+    while($i < 10 ){
+        next unless $i % 2;
+        say $i;
+    }continue{
+        say "continuing...";
+        $i++;
+    }
+
+C<continue> can also be used with in a C<when> block, see below.
+
+=end programlisting
 
 =head3 Given/When
 
