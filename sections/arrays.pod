@@ -97,6 +97,12 @@ available at index C<-2>, and so on.  For example:
 
 =end programlisting
 
+=for author
+
+What's the second reason you don't need $#?
+
+=end for
+
 =head3 Array Assignment
 
 You can assign to individual positions in an array directly by index:
