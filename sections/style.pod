@@ -27,9 +27,9 @@ features while removing code overall.
 
 =item * I<Name entities well.>  Everything you can name in your
 system--functions, classes, methods, variables, modules--can aid or hinder
-clarity.  The ease with which you can name these entities system reveals your
+clarity.  The ease with which you can name these entities reveals your
 understanding of the problem and the cohesion of your design.  Your design
-tells a story, and every words you use effectively can help you remember that
+tells a story, and every word you use effectively can help you remember that
 story when you must later maintain the code.
 
 =item * I<Avoid unnecessary cleverness.>  Novices sometimes mistake cleverness
