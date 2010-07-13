@@ -136,7 +136,7 @@ X<barewords; function calls>
 
 Code written without C<strict 'subs'> in effect may use bareword function
 names.  You may safely parenthesize the argument lists to these functions
-without changing the intent of the codeN<Use C<perl -MO=B::Deparse,-p> to
+without changing the intent of the codeN<Use C<perl -MO=Deparse,-p> to
 discover how Perl parses them, then parenthesize accordingly.>.
 
 X<barewords; hash values>
