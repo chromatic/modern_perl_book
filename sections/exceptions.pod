@@ -140,7 +140,7 @@ you can handle the exception or if you should rethrow it:
 
 Copy C<$@> to C<$exception> to avoid the possibility of subsequent code
 clobbering the global variable C<$@>.  You never know what else has used
-C<eval> block elsewhere and reset $@.
+an C<eval> block elsewhere and reset $@.
 
 =end sidebar
 
@@ -201,7 +201,7 @@ Z<builtin_exceptions>
 
 X<exceptions; core>
 
-Perl 5 has several exceptional conditions you can catch with C<eval> block.
+Perl 5 has several exceptional conditions you can catch with an C<eval> block.
 C<perldoc perldiag> lists them as "trappable fatal errors".  Most are syntax
 errors thrown during compilation.  Others are runtime errors.  Some of these
 may be worth catching; syntax errors rarely are.
