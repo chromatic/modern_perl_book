@@ -733,7 +733,7 @@ for any methods of this name in any of the parent classes.
 Sometimes an overridden method needs behavior from its parent as well.  The
 C<override> command tells Moose that the subclass deliberately overrides the
 named method.  The C<super()> function is available to dispatch from the
-overridding method to the overridden method:
+overriding method to the overridden method:
 
 =begin programlisting
 
