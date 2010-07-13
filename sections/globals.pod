@@ -49,7 +49,7 @@ X<eval>
 X<exceptions; catching>
 
 Other times you need to I<read> the value of a super global and hope that no
-other code has modified it.  Catching exceptions with C<eval> block can be
+other code has modified it.  Catching exceptions with an C<eval> block can be
 susceptible to race conditionsN<< Use C<Try::Tiny> instead! >>, in that
 C<DESTROY()> methods invoked on lexicals that have gone out of scope may reset
 C<$@>:
