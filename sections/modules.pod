@@ -255,7 +255,7 @@ package with their fully-qualified names:
 
 =head3 Organizing Code with Modules
 
-Perl 5 does not require you to use modules, nor package, nor namespaces.  You
+Perl 5 does not require you to use modules, nor packages, nor namespaces.  You
 may put all of your code in a single F<.pl> file, or in multiple F<.pl> files
 you C<do> or C<require> as necessary.  You have the flexibility to manage your
 code in the most appropriate way, given your development style, the formality
