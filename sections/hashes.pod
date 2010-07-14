@@ -521,9 +521,9 @@ its boolean truth.  The defined-or assignment operator is new in Perl 5.10.
 
 X<hashes; named parameters>
 
-Hashes can also serve many purposes named parameters passed to functions.  If
-your function takes several arguments, you can use a slurpy hash
-(L<parameter_slurping>) to gather key/value pairs into a single hash:
+Hashes can also collect named parameters passed to functions.  If your function
+takes several arguments, you can use a slurpy hash (L<parameter_slurping>) to
+gather key/value pairs into a single hash:
 
 =begin programlisting
 
