@@ -159,17 +159,11 @@ lowercase package names for built-in pragmas (L<pragmas>), such as C<strict>
 and C<warnings>.  This is a policy enforced by community guidelines, rather
 than technical mechanisms.
 
-Namespaces do not nest in Perl 5.  Perl enforces no logical relationship
-between C<Some::Package> and C<Some::Package::Refinement>.  Consider choosing
-naming and code-organization schemes which the apparent relationship between
-the names of these classes or namespaces makes obvious.
-
-=begin sidebar
-
-This isn't I<entirely> true.  When Perl looks up a symbol in
-C<Some::Package::Refinement>, it looks in the C<main::> symbol table for a
-symbol representing the C<Some::> namespace, then in there for the C<Package::>
-namespace, and so on.  This is merely a storage mechanism, with no further
-implications on the relationships between parent and child or sibling packages.
-
-=end sidebar
+Namespaces do not nest in Perl 5.  The relationship between between
+C<Some::Package> and C<Some::Package::Refinement> is only a storage mechanism,
+with no further implications on the relationships between parent and child or
+sibling packages.  When Perl looks up a symbol in C<Some::Package::Refinement>,
+it looks in the C<main::> symbol table for a symbol representing the C<Some::>
+namespace, then in there for the C<Package::> namespace, and so on.  It's your
+responsibility to make any I<logical> relationships between entities obvious
+when you choose names and organize your code.
