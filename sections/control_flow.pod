@@ -971,22 +971,25 @@ functions for clarity.
 
 X<continue>
 
-The rarely used C<continue> construct may be used with a C<while>, C<until> or 
-C<foreach> loop.  It behaves like the third subexpression of a C<for> loop -- 
-it is evaluated for each iteration of the loop, even when a loop iteration is 
-exited with a C<next>.  It can be used to increment a loop variable:
+The C<continue> construct behaves like the third subexpression of a C<for>
+loop; Perl executes its block for each iteration of the loop, even when you
+exit an iteration with C<next>.  You may use it with may be used with a
+C<while>, C<until>, C<with>, or C<for> loop.  Examples of C<continue> are rare,
+but it's useful any time you want to guarantee that something occurs for every
+iteration of the loop regardless of how that iteration ends:
 
 =begin programlisting
 
-    while($i < 10 ){
+    while ($i < 10 )
+    {
         next unless $i % 2;
         say $i;
-    }continue{
-        say "continuing...";
+    }
+    continue
+    {
+        say 'Continuing...';
         $i++;
     }
-
-C<continue> can also be used with in a C<when> block, see below.
 
 =end programlisting
 
