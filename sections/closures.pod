@@ -277,7 +277,8 @@ to emulate with closures:
 
 =end programlisting
 
-Now instead of calling C<make_sundae()>, you can invoke C<$make_cart_sundae()>
-and pass only the interesting arguments, without worrying about forgetting the
-invariants or passing them incorrectlyN<You can even use C<Sub::Install> from
-the CPAN to install this function into your namespace directly.>.
+Now instead of calling C<make_sundae()>, you can invoke
+C<< $make_cart_sundae->() >> and pass only the interesting arguments, without
+worrying about forgetting the invariants or passing them incorrectlyN<You can
+even use C<Sub::Install> from the CPAN to install this function into your
+namespace directly.>.
