@@ -126,11 +126,16 @@ X<operators; |=>
 X<|=>
 X<operators; ^=>
 X<^=>
+X<< operators; <<= >>
+X<< <<= >>
+X<<< operators; >>= >>>
+X<<< >>= >>>
 
 The bitwise operators treat their operands numerically at the bit level.  These
 are uncommon in most Perl 5 programs.  They consist of left shift (C<< << >>),
 right shift (C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and binary or
-(C<^>), as well as their in-place variants (C<&=>, C<|=>, and C<^=>).
+(C<^>), as well as their in-place variants (C<&=>, C<|=>, C<^=>, C<< <<= >>,
+and C<< >>= >>).
 
 =head3 Special Operators
 
