@@ -92,8 +92,8 @@ available at index C<-2>, and so on.  For example:
 
 =begin programlisting
 
-    my $last_cat = @cats[-1];
-    my $second_to_last_cat = @cats[-2];
+    my $last_cat = $cats[-1];
+    my $second_to_last_cat = $cats[-2];
 
 =end programlisting
 
