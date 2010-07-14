@@ -307,7 +307,7 @@ existence of, or retrieve) by using the dereferencing arrow:
 =begin sidebar
 
 As with array references, you may eschew the dereferencing arrow for a
-prepended scalar sigil: C<$$colors_ref{$dolor}>, though the arrow is often much
+prepended scalar sigil: C<$$colors_ref{$color}>, though the arrow is often much
 clearer.
 
 =end sidebar

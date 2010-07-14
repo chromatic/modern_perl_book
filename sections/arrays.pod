@@ -48,7 +48,7 @@ the array:
     my $num_cats = @cats;
 
     # string concatenation
-    say 'I have ' . @cats ' cats!';
+    say 'I have ' . @cats . ' cats!';
 
     # addition
     my $num_animals = @cats + @dogs + @fish;
@@ -225,7 +225,7 @@ array, respectively:
     my @meals;
 
     # what is there to eat?
-    push @meals, qw( hamburgers pizza lasagna salad );
+    push @meals, qw( hamburgers pizza lasagna turnip );
 
     # ... but the nephew hates vegetables
     pop @meals;

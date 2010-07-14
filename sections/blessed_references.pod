@@ -83,7 +83,7 @@ reference:
 =end programlisting
 
 Where classes built with Moose define their own object attributes
-declaratively, Perl 5's default OO is lax.  An class representing basketball
+declaratively, Perl 5's default OO is lax.  A class representing basketball
 players which stores jersey number and position might use a constructor like:
 
 =begin programlisting

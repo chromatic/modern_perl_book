@@ -51,6 +51,13 @@ escaping the quote with a leading backlash:
 
 =end programlisting
 
+=for author
+
+Is it worth mentioning \\ here? Like, what happens when you put \ or
+\\ or \\\ or \\' or \\\' in a single-quoted string?
+
+=end for
+
 X<strings; double-quoted>
 
 A I<double-quoted string> has more complex (and often, more useful) behavior.
@@ -157,9 +164,10 @@ the ending delimiter must begin in the first column of the program.
 
 =begin sidebar
 
-If the identifier begins with whitespace, that spaces must be present exactly
-in the ending delimiter.  Even if you do indent the identifier, Perl 5 will
-I<not> remove equivalent whitespace from the start of each line of the heredoc.
+If the identifier begins with whitespace, that same whitespace must be
+present exactly in the ending delimiter.  Even if you do indent the
+identifier, Perl 5 will I<not> remove equivalent whitespace from the
+start of each line of the heredoc.
 
 =end sidebar
 
