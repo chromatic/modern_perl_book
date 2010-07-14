@@ -409,7 +409,7 @@ within the parentheses:
 
 =begin programlisting
 
-    $bake_something_ref->( 'cupcakes ');
+    $bake_something_ref->( 'cupcakes' );
 
 =end programlisting
 
