@@ -61,7 +61,7 @@ You may interpolate and combine them into larger and more complex patterns:
 =begin programlisting
 
     my $hat   = qr/hat/;
-    my $field = qr/field;
+    my $field = qr/field/;
 
     say 'Found a hat in a field!' if $name =~ /B<$hat$field>/;
 
