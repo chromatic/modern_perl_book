@@ -222,6 +222,23 @@ may not change the order in which the block types appear:
 You may also use the C<elsif> block with an C<unless> chain, but the resulting
 code may be unclear.  There is no C<elseunless>.
 
+There is no C<else if> construct; this is a syntax error:
+
+=begin programlisting
+
+    if ($name eq 'Rick')
+    {
+        say 'Hi, cousin!';
+    }
+
+    # warning; syntax error
+    else if ($name eq 'Kristen')
+    {
+        say 'Hi, cousin-in-law!';
+    }
+
+=end programlisting
+
 =head3 The Ternary Conditional Operator
 
 X<ternary conditional>
