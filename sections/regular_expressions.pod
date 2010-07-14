@@ -525,7 +525,9 @@ The parentheses enclose the fragment to capture, but there is no regex
 directive giving the I<name> of the capture.  Instead, Perl stores the captured
 substring in a series of magic variables starting with C<$1> and continuing for
 as many capture groups are present in the regex.  The I<first> matching capture
-that Perl finds goes into C<$1>, the second into C<$2>, and so on.
+that Perl finds goes into C<$1>, the second into C<$2>, and so on.  Capture
+counts start at the I<opening> parenthesis of the capture; thus the first left
+parenthesis begins the capture into C<$1>, the second into C<$2>, and so on.
 
 While the syntax for named captures is longer than for anonymous captures, it
 provides additional clarity.  You do not have to count the number of opening
