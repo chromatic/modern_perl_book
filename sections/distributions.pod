@@ -23,7 +23,7 @@ standards can be tested on several versions of Perl 5 on several different
 hardware platforms within a few hours of its uploading--all without human
 intervention.
 
-You may never choose to release any of your code as public CPAN distributions,
+You may choose never to release any of your code as public CPAN distributions,
 but you can reuse existing CPAN tools and designs as possible.  The combination
 of intelligent defaults and customizability are likely to meet your specific
 needs.
