@@ -27,11 +27,12 @@ pragma with funny syntax.  Pragma scope is clearer with an example:
     {
         # $lexical is B<not> visible; strict is B<not> in effect
         {
-            # $lexical B<is> visible; strict B<is> in effect
             use strict;
             my $lexical = 'available here';
+            # $lexical B<is> visible; strict B<is> in effect
             ...
         }
+        # $lexical is again B<not> visible; strict is B<not> in effect
     }
 
 =end programlisting
