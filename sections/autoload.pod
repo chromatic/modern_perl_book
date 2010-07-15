@@ -213,7 +213,7 @@ destination method:
 
 This has the same effect as invoking C<$method> directly, except that
 C<AUTOLOAD()> will no longer appear in the list of calls available from
-C<caller()>.
+C<caller()>, so it looks like the generated method was simply called directly.
 
 =head3 Drawbacks of C<AUTOLOAD>
 

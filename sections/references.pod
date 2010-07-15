@@ -330,9 +330,9 @@ You may create anonymous hashes in place with curly braces:
 
     my $food_ref = B<{>
         'birthday cake' => 'la torta de cumpleaE<ntilde>os',
-        candy           => 'la dulces',
-        cupcake         => 'panquecitos',
-        'ice cream'     => 'el helado',
+        candy           => 'dulces',
+        cupcake         => 'pancuecitos',
+        'ice cream'     => 'helado',
     B<}>;
 
 =end programlisting
@@ -409,7 +409,7 @@ within the parentheses:
 
 =begin programlisting
 
-    $bake_something_ref->( 'cupcakes ');
+    $bake_something_ref->( 'cupcakes' );
 
 =end programlisting
 

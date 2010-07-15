@@ -222,6 +222,23 @@ may not change the order in which the block types appear:
 You may also use the C<elsif> block with an C<unless> chain, but the resulting
 code may be unclear.  There is no C<elseunless>.
 
+There is no C<else if> construct; this is a syntax error:
+
+=begin programlisting
+
+    if ($name eq 'Rick')
+    {
+        say 'Hi, cousin!';
+    }
+
+    # warning; syntax error
+    else if ($name eq 'Kristen')
+    {
+        say 'Hi, cousin-in-law!';
+    }
+
+=end programlisting
+
 =head3 The Ternary Conditional Operator
 
 X<ternary conditional>
@@ -518,6 +535,19 @@ You cannot use aliasing to modify I<constant> values, however:
 
 ... as this will throw an exception about modification of read-only values.
 There's little point in doing so anyhow.
+
+You may occasionally see the use of C<for> with a single scalar variable to
+alias C<$_> to the variable:
+
+=begin programlisting
+
+    for ($user_input)
+    {
+        s/(\w)/\\$1/g;  # escape non-word characters
+        s/^\s*|\s$/g;   # trim whitespace
+    }
+
+=end programlisting
 
 =head3 Iteration and Scoping
 
@@ -841,8 +871,8 @@ the C<while> loop will have nothing to read and will not execute.  To solve
 this problem, you may re-open the file inside the C<for> loop (simple to
 understand, but not always a good use of system resources), slurp the entire
 file into memory (which may not work if the file is large), or C<seek> the
-filehandle back to the beginning of the file for each iteration (an overlooked
-option).
+filehandle back to the beginning of the file for each iteration (an often
+overlooked option).
 
 =head3 Loop Control
 
@@ -897,7 +927,7 @@ implement a silly file parser that joins lines which end with a backslash with:
 
     while (<$fh>)
     {
-        if (s{.*\\$}{})
+        if (s{\\$}{})
         {
             $line .= <$fh>;
             redo;
@@ -937,11 +967,31 @@ If you find yourself nesting loops such that you need labels to manage control
 flow, consider simplifying your code: perhaps extracting inner loops into
 functions for clarity.
 
-=for author
+=head3 Continue
 
-Does anyone care about C<continue>?
+X<continue>
 
-=end for
+The C<continue> construct behaves like the third subexpression of a C<for>
+loop; Perl executes its block for each iteration of the loop, even when you
+exit an iteration with C<next>.  You may use it with may be used with a
+C<while>, C<until>, C<with>, or C<for> loop.  Examples of C<continue> are rare,
+but it's useful any time you want to guarantee that something occurs for every
+iteration of the loop regardless of how that iteration ends:
+
+=begin programlisting
+
+    while ($i < 10 )
+    {
+        next unless $i % 2;
+        say $i;
+    }
+    continue
+    {
+        say 'Continuing...';
+        $i++;
+    }
+
+=end programlisting
 
 =head3 Given/When
 
@@ -993,11 +1043,43 @@ modification:
 
 X<when>
 
+X<topicalization>
+X<topicalize>
+
 By itself, this feature may seem less than useful.  In combination with
-C<when>, it is very useful.  Use C<given> to topicalize a value.  Within the
+C<when>, it is very useful.  Use C<given> to I<topicalize> a value.  Within the
 associated block, multiple C<when> statements match the topic against
 expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper,
 Scissors game:
+
+=for author
+
+This seems like an rather verbose example.  Also, I'm not sure how to work 
+mention of continue into it.  Perhaps something like this (pretty much ripped
+from perldoc perlsyn) might suffice?
+
+given($foo) {
+    when (undef) {
+        say '$foo is undefined';
+    }
+    when ([2, 3, 5, 7, 11, 13, 17, 19]) {
+        say '$foo is a prime less than 20';
+        continue; 
+    }
+    when ($_ % 2){
+        say '$foo is odd';
+        continue;
+    }
+    when ($_ < 20) {
+        say '$foo is numerically less than 20';
+    }
+    default {
+        say q{I don't know what to say about $foo};
+    }
+}
+
+
+=end for
 
 =begin programlisting
 
@@ -1020,7 +1102,7 @@ Scissors game:
             when (/paper/)    { say 'You win!' };
             when (/rock/)     { say 'We tie!'  };
             when (/scissors/) { say 'I win!'   };
-            default           { say 'I don't understand your move' };
+            default           { say "I don't understand your move" };
         }
     }
 
@@ -1033,7 +1115,7 @@ Scissors game:
             when (/paper/)    { say 'We tie!'  };
             when (/rock/)     { say 'I win!'   };
             when (/scissors/) { say 'You win!' };
-            default           { say 'I don't understand your move' };
+            default           { say "I don't understand your move" };
         }
     }
 
@@ -1046,7 +1128,7 @@ Scissors game:
             when (/paper/)    { say 'I win!'   };
             when (/rock/)     { say 'You win!' };
             when (/scissors/) { say 'We tie!'  };
-            default           { say 'I don't understand your move' };
+            default           { say "I don't understand your move" };
         }
     }
 

@@ -20,6 +20,13 @@ in your programs will have names.  Variables in Perl 5 must conform to the
 standard rules of identifier naming (L<names>).  Variables also have leading
 sigils.
 
+=for author
+
+the Variable Naming section seems quite redundant with the Variable Names and Sigils
+section from names.pod, which gets inserted directly above this section in chapter 3
+
+=end for
+
 =head3 Variable Scopes
 
 Z<variable_scopes>

@@ -125,7 +125,7 @@ starting and ending delimiter.
 =begin programlisting
 
     my $quote     = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
-    my $reminder  = B<q|>Don't forget to escape the single quote!B<|>;
+    my $reminder  = B<q^>Don't forget to escape the single quote!B<^>;
     my $complaint = B<q{>It's too early to be awake.B<}>;
 
 =end programlisting
@@ -497,3 +497,9 @@ C<qw()>, their presence usually indicates an oversight.
 
 Lists can (and often do) occur as the results of expressions, but these lists
 do not appear literally in source code.
+
+=for author
+
+Example perhaps? 
+
+=end for

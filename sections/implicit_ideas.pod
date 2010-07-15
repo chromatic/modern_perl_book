@@ -32,8 +32,7 @@ the given string:
 =end programlisting
 
 Without an explicit variable, C<chomp> removes the trailing newline sequence
-from C<$_>.  Thus, if C<$_> contains the string C<Jim\n>, these two lines of
-code are equivalent:
+from C<$_>.  Thus, these two lines of code are equivalent:
 
 =begin programlisting
 

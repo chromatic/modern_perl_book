@@ -7,7 +7,8 @@ utility.  This program is part of every complete Perl 5 installationN<You may
 have to install an additional package on a free Unix-like system; on Debian and
 Ubuntu this is C<perl-doc>.>.  It displays the documentation of every Perl
 module installed on the system--whether a core module or one installed from the
-CPAN--as well as thousands of pages of Perl's copious core documentation.
+Comprehensive Perl Archive Network (CPAN)--as well as thousands of pages of
+Perl's copious core documentation.
 
 =begin sidebar
 

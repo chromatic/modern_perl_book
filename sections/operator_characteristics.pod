@@ -114,7 +114,8 @@ parentheses clarify, yet watch out for confusion in code such as:
 
 ... as Perl 5 happily interprets the parentheses as postcircumfix (L<fixity>)
 operators denoting the arguments to C<say>, not circumfix parentheses grouping
-an expression to change precedence.
+an expression to change precedence.  In other words, the code prints the value
+C<6> and evaluates to the return value of C<say> multiplied by C<4>.
 
 =head3 Fixity
 

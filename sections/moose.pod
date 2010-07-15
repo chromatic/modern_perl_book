@@ -362,18 +362,18 @@ for each object, including a hash or array reference.
 
 A program which deals with one type of data and one type of behavior on that
 data benefits little from the use of objects.  A well-designed object-oriented
-program should be capable of managing many types of data.  If done well,
-designing classes helps encapsulate specific details of objects into a single
-place), then a curious thing happens for the rest of the program: it has the
-opportunity to become I<less> specific.
+program should be capable of managing many types of data.  When well designed
+classes encapsulate specific details of objects into the appropriate places,
+something curious happens to the rest of the program: it has the opportunity to
+become I<less> specific.
 
 In other words, moving the specifics of the details of what the program knows
 about individual C<Cat>s (the attributes) and what the program knows that
 C<Cat>s can do (the methods) into the C<Cat> class means that code that deals
 with C<Cat> instances can happily ignore I<how> C<Cat> does what it does.
 
-This is clearer with an example.  Consider this function, which takes an object
-and describes it:
+This is clearer with an example.  Consider a function which describes an
+object:
 
 =begin programlisting
 
@@ -733,7 +733,7 @@ for any methods of this name in any of the parent classes.
 Sometimes an overridden method needs behavior from its parent as well.  The
 C<override> command tells Moose that the subclass deliberately overrides the
 named method.  The C<super()> function is available to dispatch from the
-overridding method to the overridden method:
+overriding method to the overridden method:
 
 =begin programlisting
 
