@@ -206,6 +206,15 @@ C<perldoc perldiag> lists them as "trappable fatal errors".  Most are syntax
 errors thrown during compilation.  Others are runtime errors.  Some of these
 may be worth catching; syntax errors rarely are.
 
+=for author
+
+What's that list?  The exhaustive exception list?  The ones
+worth catching?  The most interesting ones?
+
+A list header and/or some reordering could help.
+
+=end
+
 =over 4
 
 =item * Using a disallowed key in a locked hash (L<locked_hashes>)
