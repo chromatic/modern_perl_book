@@ -129,6 +129,8 @@ two pragmas may not belong yet in your production code without extensive
 testing and thoughtful consideration, but they demonstrate the power and
 utility of pragmas.
 
+=head3 Your own Pragmas
+
 =for author
 
 Is this ending worthwhile?  What a downer.
