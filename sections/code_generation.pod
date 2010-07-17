@@ -165,10 +165,12 @@ step:
 =begin programlisting
 
     {
-        # a subtle bug
         no strict 'refs';
 
-        *{ $methname } = sub { ... };
+        *{ $methname } = sub {
+            # subtle bug: strict refs
+            # are disabled in here too
+        };
     }
 
 =end programlisting
