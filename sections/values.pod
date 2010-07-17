@@ -184,17 +184,91 @@ languages.  While most English text uses a character set of only 127 characters
 (which requires seven bits of storage and fits nicely into eight-bit bytes),
 it's naE<iuml>ve to believe that you won't someday need an umlaut, for example.
 
-Perl 5 handles Unicode internally.  For the most part, you can ignore this,
-except that there are several representations for I<how> to store Unicode.  You
-don't have to understand what happens after you have the data within your
-program, but you have to know what kind of data you receive from the external
-world and what kind of data you want to emit to the external world.  As long as
-you do not assume that a character in a Perl 5 string requires a byte of
-storage, all of the Perl 5 string operations perform correctly on Unicode and
-ASCII strings.
+Perl 5's strings are used to represent two closely related but ultimately
+different data types:
 
-For far more detail what Unicode is, encodings, and how to manage incoming and
-outgoing data in a Unicode world, see C<perldoc perluniintro>.
+=over 4
+
+=item Sequences of Unicode characters
+
+The Unicode character set contains characters from the scripts of most
+languages, and various other symbols.
+
+Each character has a codepoint, its own unique number which identifies it in
+the Unicode character set.
+
+=item Sequences of octets
+
+Binary data is made of a sequence of 8 bit numbers, each of which can represent
+a number between 0 and 255.
+
+=back
+
+Unicode strings and binary strings also look very similar in Perl, they can
+concatenated, processed with regexes, and they have a C<length()>.
+
+Except when processing binary data, strings contain text and therefore should
+be sequences of Unicode characters.
+
+However, because because on disk or over the wire all data is represented using
+sequences of octets, Perl can't know if the data you read is an image
+file or a text document or anything else, and so by default all read data
+treated as sequences of octets.
+
+=head4 Character Encodings
+
+In order to be treated as a sequence of Unicode characters, data has to be
+decoded.
+
+Unicode characters are represented as sequences of octets using a character
+encoding.
+
+Some encodings can encode all of the characters in the Unicode character set
+(like UTF-8), while others are only concerned with a subset (for instance ASCII
+which can only represent English text with no accents, or Latin-1 which can
+represent text in most languages with a Latin script).
+
+If you always convert at the inputs and outputs of your program, you will avoid
+many problems.
+
+=head4 Unicode in Your Filehandles
+
+X<open>
+X<binmode>
+
+Perl can be told that certain filehandles contain encoded text, and can convert
+the data to Unicode strings automatically:
+
+=begin programlisting
+
+	use autodie;
+
+	open my $fh, "<:utf8", $textfile;
+
+	my $unicode_string = <$fh>;
+
+=end programlisting
+
+This can be done to an already opened handle too:
+
+=begin programlisting
+
+	binmode $fh, ":utf8";
+
+=end programlisting
+
+This works for output as well, automatically encoding your strings to UTF-8 data:
+
+=begin programlisting
+
+	binmode STDOUT, ":utf8";
+	say $unicode_string;
+
+=end programlisting
+
+Without the C<utf8> mode printing unicode strings to a filehandle would result
+in a warning (C<Wide character in %s>), because files contain octets, not
+Unicode characters.
 
 =head4 Unicode in Your Data
 
@@ -202,12 +276,8 @@ X<Encode>
 X<Encode; decode()>
 X<Encode; encode()>
 
-Perl 5's internal encoding shields you from most of the details of Unicode and
-character sets and representations, but you have to meet it part way.  In
-particular, the sooner you can ask Perl to convert from data that you have to
-its own internal format, the fewer odd conversions and mismatches you will
-suffer.  The core module C<Encode> provides a function named C<decode()> to
-convert a scalar containing data in a known format to the internal encoding.
+The core module C<Encode> provides a function named C<decode()> to
+convert a scalar containing data in a known format to a Unicode string.
 For example, if you have UTF-8 data:
 
 =begin programlisting
@@ -224,15 +294,6 @@ to the desired output encoding:
     my $latin1 = encode('iso-8859-1', $string);
 
 =end programlisting
-
-If you always convert at the inputs and outputs of your program, you will avoid
-many problems.
-
-=for author
-
-Probably need C<binmode> here.
-
-=end for
 
 =head4 Unicode in Your Programs
 
@@ -301,6 +362,127 @@ enable them.  Use the C<\N{}> escape to refer to them:
 
 You may use the C<\x{}> and C<\N{}> forms within regular expressions as well as
 anywhere else you may legitimately use a string or a character.
+
+=head4 Implicit Conversion
+
+Most problems dealing with Unicode in Perl arise from the fact that there are
+two similar but distinct data types; sequences of octets and sequences of
+characters; and that Perl allows these two data types to be combined with each
+other by implicitly converting things.
+
+While this implicit conversion is usually wrong, unfortunately it's quite rare
+that it's obviously wrong.
+
+When Perl concatenates a sequences of octets with a sequence of Unicode
+characters, the octet sequence is implicitly decoded using the Latin-1
+encoding, and the resulting string contains Unicode characters.
+
+However, when Perl prints out Unicode characters, the string is encoded using
+the UTF-8 encoding, because Latin-1 cannot represent the entire set of
+Unicode characters.
+
+This asymmetry can lead to Unicode strings that getting encoded as UTF-8 and
+subsequently being wrongly decoded as Latin-1 the next time they are read.
+
+Making matters worse, when the text only contains English characters with no
+accents the bug remains hidden because both encodings have the same
+representation for such text.
+
+=begin programlisting
+
+	my $hello = "Hello, ";
+	my $greeting = $hello . $name;
+
+=end programlisting
+
+If C<$name> contains an English name such as C<Alice> you will never notice any
+problem, because the Latin-1 representation is the same as the UTF-8
+representation.
+
+If, on the other hand, C<$name> contains a name like C<JosE<eacute>>, there are
+several possible values in C<$name>:
+
+=over 4
+
+=item *
+
+C<$name> contains 4 Unicode characters.
+
+=item *
+
+C<$name> contains 4 Latin-1 octets representing 4 Unicode characters.
+
+=item *
+
+C<$name> contains 5 UTF-8 octets representing 4 Unicode characters.
+
+=back
+
+And several possible scenarios for the string literal:
+
+=over 4
+
+=item ASCII string literal
+
+=begin programlisting
+
+	my $hello = "Hello, ";
+
+=end programlisting
+
+The string literal contains octets.
+
+=item Latin-1 string literal with no explicit encoding, such as:
+
+=begin programlisting
+
+	my $hello = "E<iexcl>Hola, ";
+
+=end programlisting
+
+The string literal contains octets.
+
+=item Non ASCII string literal with the C<utf8> or C<encoding> pragma:
+
+=begin programlisting
+
+	use utf8;
+	my $hello = "E<#x5E9>E<#x5DC>E<#x5D5>E<#x5DD>, ";
+
+=end programlisting
+
+The string literal contains Unicode characters.
+
+=back
+
+If both C<$hello> and C<$name> contain octets, the two octet streams are simply
+concatenated into a new octet stream.
+
+If both values are Unicode strings, the concatenation results in another
+Unicode string.
+
+This will also work fine if the data was octets of the same encoding, for
+example Latin-1 data can be concatenated with other Latin-1 data resulting in
+more Latin-1 data.
+
+However, it could also result UTF-8 data being appended to Latin-1 data,
+resulting in a sequence of octets that no longer makes sense in either
+encoding.
+
+This could happen if the user entered their name as UTF-8 data, and the
+greeting was a Latin-1 string literal, but neither was decoded.
+
+However, if only one of the values is a Unicode string, the other value will be
+decoded as Latin-1 data. When the octets are not Latin-1 data, the resulting
+Unicode characters will be wrong.
+
+For example, if the user input was UTF-8 data and the string literal was a
+unicode string, the name will be incorrectly decoded into 5 Unicode characters
+C<JosE<Atilde>E<copy>> instead of C<JosE<eacute>>. This is because the UTF-8
+data means something else when decoded as Latin-1 data.
+
+For far more detail what Unicode is, encodings, and how to manage incoming and
+outgoing data in a Unicode world, see C<perldoc perluniintro>.
 
 =head3 Numbers
 
