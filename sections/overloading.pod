@@ -15,7 +15,8 @@ the Null Object pattern (U<http://www.c2.com/cgi/wiki?NullObject>).  In boolean
 context, an object will be true... but not if you overload boolification.
 
 You can overload what the object does for almost every operation:
-stringification, numification, iteration, invocation, array access, hash
+stringification, numification, boolification,
+iteration, invocation, array access, hash
 access, arithmetic operations, comparison operations, smart match, bitwise
 operations, and even assignment.
 
