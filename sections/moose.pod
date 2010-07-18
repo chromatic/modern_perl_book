@@ -753,7 +753,7 @@ overriding method to the overridden method:
                 if $self->enabled;
 
             B<super()>;
-        }
+        };
 
         B<override> extinguish => sub
         {
@@ -763,7 +763,7 @@ overriding method to the overridden method:
                 unless $self->enabled;
 
             B<super()>;
-        }
+        };
     }
 
 =end programlisting
