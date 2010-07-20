@@ -925,9 +925,11 @@ implement a silly file parser that joins lines which end with a backslash with:
 
 =begin programlisting
 
-    while (<$fh>)
+    while (my $line = <$fh>)
     {
-        if (s{\\$}{})
+        chomp $line;
+
+        if ($line =~ s{\\$}{})
         {
             $line .= <$fh>;
             redo;
