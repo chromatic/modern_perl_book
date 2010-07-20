@@ -758,14 +758,113 @@ Because the assertion is zero-width, it consumes none of the source string.
 Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
 capture would only capture the C<cat> portion of the source string.
 
+=head2 Regex Modifiers
+
+X<regex modifiers>
+X<regular expressions; modifiers>
+X</i>
+X<regular expressions; case-insensitive>
+
+The regular expression operators allow several modifiers to change the behavior
+of matches.  These modifiers appear at the end of the match, substitution, and
+C<qr//> operators.  For example, to enable case-insensitive matching:
+
+=begin programlisting
+
+    my $pet = 'CaMeLiA';
+
+    like( $pet, qr/Camelia/,  'You have a nice butterfly there'       );
+    like( $pet, qr/Camelia/i, 'Your butterfly has a broken shift key' );
+
+=end programlisting
+
+The first C<like()> will fail, because the strings contain different letters.
+The second C<like()> will pass, because the C</i> modifier causes the regex to
+ignore case distinctions.  C<M> and C<m> are equivalent in the second regex due
+to the modifier.
+
+You may also embed regex modifiers within a pattern:
+
+=begin programlisting
+
+    my $find_a_cat = qr/(?<feline>(?i)cat)/;
+
+=end programlisting
+
+The C<(?i)> syntax enables case-insensitive matching only for its enclosing
+group: in this case, the entire C<feline> capture group.  You may use multiple
+modifiers with this form (provided they make sense for a portion of a pattern).
+You may also disable specific modifiers by preceding them with C<->:
+
+=begin programlisting
+
+    my $find_a_rational = qr/(?<number>(?-i)Rat/;
+
+=end programlisting
+
+X</m>
+X<regular expressions; multiline>
+
 =for author
 
-Add section on Regex flags:
+How do I rephrase this paragraph?
 
-/i
-/g
-/s
-/m
-/x
+=end for
+
+Other modifiers include C</m>, the multiline operator.  When this is active,
+the C<^> and C<$> anchors match at any start of line or end of line within the
+string, depending on your newline settings.
+
+X</s>
+X<regular expressions; single line>
+
+The C</s> modifier treats the source string as a single line such that the C<.>
+metacharacter matches the newline character.  Damian Conway suggests a mnemonic
+that C</m> modifies the behavior of I<multiple> regex metacharacters, while
+C</s> modifies the behavior of a I<single> regex metacharacter.
+
+X</x>
+X<regular expressions; extended readability>
+
+The C</x> modifier allows you to embed additional whitespace and comments
+within patterns without changing their meaning.  With this modifier in effect,
+the regex engine treats whitespace and the comment character (C<#>) and
+everything following as comments; it ignores them.  This allows you to write
+much more readable regular expressions:
+
+=begin programlisting
+
+    my $attr_re = qr{
+        ^                     # start of line
+
+        # miscellany
+        (?:
+          [;\n\s]*            # blank spaces and spurious semicolons
+          (?:/\*.*?\*/)?      # C comments
+        )*
+
+        # attribute marker
+        ATTR
+
+        # type
+        \s+
+        (   U?INTVAL
+          | FLOATVAL
+          | STRING\s+\*
+          | PMC\s+\*
+          | \w*
+        )
+    }x;
+
+=end programlisting
+
+This regex isn't I<simple>, but comments and whitespace improve its
+readability.  Even if you compose regexes together from compiled fragments, the
+C</x> modifier can still improve your code.
+
+=for author
+
+/g - \G, use of assertions without consuming position
+/e
 
 =end for
