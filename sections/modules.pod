@@ -232,7 +232,7 @@ C<@EXPORT_OK>:
 
 =begin programlisting
 
-    our @EXPORT_OK = qw( monkey_dance monkey_sleep );
+    our @EXPORT = qw( monkey_dance monkey_sleep );
 
 =end programlisting
 
