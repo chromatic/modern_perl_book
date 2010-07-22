@@ -862,9 +862,62 @@ This regex isn't I<simple>, but comments and whitespace improve its
 readability.  Even if you compose regexes together from compiled fragments, the
 C</x> modifier can still improve your code.
 
-=for author
+X</g>
+X<regular expressions; global match>
 
-/g - \G, use of assertions without consuming position
-/e
+The C</g> modifier performs a regex globally throughout a string.  This makes
+sense when used with a substitution:
 
-=end for
+=begin programlisting
+
+    # appease the Mitchell estate
+    my $contents = slurp( $file );
+    $contents    =~ s/Scarlett O'Hara/Mauve Midway/g;
+
+=end programlisting
+
+X<\G>
+X<regexes; global match anchor>
+
+When used with a match--not a substitution--the C<\G> metacharacter allows you
+to process a string within a loop one chunk at a time.  C<\G> matches at the
+position where the most recent match ended.  To process a poorly-encoded file
+full of American numbers in logical chunks, you might write:
+
+=begin programlisting
+
+    while ($contents =~ /\G(\w{3})(\w{3})(\w{4})/g)
+    {
+        push @numbers, "($1) $2-$3";
+    }
+
+=end programlisting
+
+Be aware that the C<\G> anchor will take up at the last point in the string
+where the previous iteration of the match occurred.  If the previous match
+ended with a greedy match such as C<.*>, the next match will have less
+available string to match.  The use of lookahead assertions can become very
+important here, as they do not consume the available string to match.
+
+X</e>
+X<regular expressions; substitution evaluation>
+
+The C</e> modifier allows you to write arbitrary Perl 5 code on the right side
+of a substitution operation.  If the match succeeds, the regex engine will run
+the code, using its return value as the substitution value.  The earlier global
+substitution example could be more robust about replacing some or all of an
+unfortunate protagonist's name with:
+
+=begin programlisting
+
+    # appease the Mitchell estate
+    my $contents = slurp( $file );
+    $contents    =~ s{Scarlett( O'Hara)?}
+                     { 'Mauve' . defined $1 ? ' Midway' : '' }ge;
+
+=end programlisting
+
+You may add as many C</e> modifiers as you like to a substitution.  Each
+additional occurrence of this modifier will perform another evaluation of the
+result of the expression, though only Perl golfers tend to use C</ee> or
+anything more complex.
