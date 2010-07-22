@@ -78,7 +78,7 @@ but not others:
 
         sub set_$methname
         {
-            my (\$self, \$value) = @_;
+            my (\$self, \$value) = \@_;
 
             \$self->{$attrname} = \$value;
         }
