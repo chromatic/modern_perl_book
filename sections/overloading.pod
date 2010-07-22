@@ -85,6 +85,10 @@ Setting C<fallback> to a true value lets Perl use any other defined overloads
 to compose the requested operation, if possible.  If that's not possible, Perl
 will act as if there were no overloads in effect.  This is often what you want.
 
+Without C<fallback>, Perl will only use the specific overloadings you have
+provided.  If someone tries to perform an operation you have not overloaded,
+Perl will throw an exception.
+
 =head3 Overload and Inheritance
 
 X<overloading; inheritance>
