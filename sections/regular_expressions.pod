@@ -33,7 +33,7 @@ evaluated in scalar context, a match evaluates to a true value if it succeeds.
 The negated form of the binding operator (C<!~>) evaluates to false if the match
 succeeds.
 
-=head2 The C<qr//> Operator and Regex Combinations
+=head2 The qr// Operator and Regex Combinations
 
 X<operators; qr//>
 X<regular expressions; qr//>

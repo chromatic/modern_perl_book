@@ -14,7 +14,7 @@ to do everything perfectly every time, let the computer handle the repetition.
 
 Perl 5 provides great tools to help you write good and useful automated tests.
 
-=head3 C<Test::More>
+=head3 Test::More
 
 X<Test::More>
 X<ok()>

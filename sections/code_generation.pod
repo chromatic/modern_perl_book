@@ -27,7 +27,7 @@ The C<AUTOLOAD> technique (L<autoload>) for missing functions and methods
 demonstrates this technique in a constrained form; Perl 5's function and method
 dispatch system allows you to customize what happens when normal lookup fails.
 
-=head3 C<eval>
+=head3 eval
 
 X<eval string>
 X<operators; eval>
