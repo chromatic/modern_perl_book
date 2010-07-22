@@ -5,9 +5,10 @@ Z<missing_defaults>
 Perl 5's design process in 1993 and 1994 tried to anticipate new directions for
 the language, but it's impossible to predict the future.  Perl 5 added many
 great new features, but it also kept compatibility with the previous seven
-Sixteen years later, the best way to write clean, maintainable, powerful, and
-succinct Perl 5 code is very different from Perl 5.000.  The default behaviors
-sometimes get in the way; fortunately, better behaviors are available.
+years of Perl 1 through Perl 4.  Sixteen years later, the best way to write
+clean, maintainable, powerful, and succinct Perl 5 code is very different from
+Perl 5.000.  The default behaviors sometimes get in the way; fortunately,
+better behaviors are available.
 
 =head3 The strict Pragma
 
