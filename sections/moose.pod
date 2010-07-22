@@ -208,6 +208,49 @@ tries to provide invalid data for an attribute.  The balance between
 flexibility and correctness depends on your local coding standards and the type
 of errors you want to catch.
 
+=begin sidebar
+
+The Moose documentation uses parentheses to separate an attribute name from its
+characteristics:
+
+=begin programlisting
+
+        has 'name' => ( is => 'ro', isa => 'Str' );
+
+=end programlisting
+
+Perl parses both that form and the form used in this book the same way.  You
+I<could> achieve the same effect by writing either:
+
+=begin programlisting
+
+    has( 'name', 'is', 'ro', 'isa', 'Str' );
+    has( qw( name is ro isa Str ) );
+
+=end programlisting
+
+... but in this case, extra punctuation adds clarity.  The approach of the
+Moose documentation is most useful when dealing with multiple characteristics:
+
+=begin programlisting
+
+    has 'name' => (
+        is         => 'ro',
+        isa        => 'Str',
+
+        # advanced Moose options; perldoc Moose
+        init_arg   => undef,
+        lazy_build => 1,
+    );
+
+=end programlisting
+
+... but for the sake of simplicity of introduction, this book prefers to use
+less punctuation.  Perl gives you the flexibility to choose whichever approach
+makes the intent of your code most clear.
+
+=end sidebar
+
 X<attributes; rw>
 X<attributes; read-write>
 
