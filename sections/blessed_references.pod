@@ -279,10 +279,8 @@ declare, or import into the child class may override a method in the parent
 class simply by existing and having the same name.
 
 Even so, you can override methods in child classes if you're cautious: declare
-a method of the same name as the method in the parent with the same signature.
-
-Within an overridden method, you can call the parent method with the C<SUPER::>
-dispatch hint:
+a method of the same name as the method in the parent.  Within an overridden
+method, you can call the parent method with the C<SUPER::> dispatch hint:
 
 =begin programlisting
 
