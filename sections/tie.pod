@@ -18,18 +18,18 @@ provides a similar system by which to handle data files too large to fit in
 memory.
 
 The class to which you C<tie> a variable must conform to a specific,
-well-documented interface for the specific data type.  C<perldoc perltie> is the
-primary source of information about these interfaces, though the core modules
-C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> are more useful in practice.
-Inherit from them to start, and override only those specific methods you need
-to modify.
+well-documented interface for the specific data type.  C<perldoc perltie> is
+the primary source of information about these interfaces, though the core
+modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> are more
+useful in practice.  Inherit from them to start, and override only those
+specific methods you need to modify.
 
 =begin sidebar
 
-The C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> are classes from
-which to inherit if you implement your own ties.  Their documentation is in the
-C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> modules, respectively, as are
-their implementations.
+The documentation and implementations of these parent classes are in the
+C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> modules.  Consequently you must
+also C<use Tie::Scalar> if you want to inherit from C<Tie::StdScalar>.  If
+C<tie()> hasn't confused you, the organization of this code might.
 
 =end sidebar
 
