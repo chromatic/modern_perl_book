@@ -179,6 +179,26 @@ This example disables strictures for the outer block as well as the inner
 block, the body of the function itself.  Only the assignment violates strict
 reference checking, so disable strictures for that operation alone.
 
+=begin sidebar
+
+If the name of the method is a string literal in your source code, rather than
+the contents of a variable, you can assign to the relevant symbol directly
+rather than through a symbolic reference:
+
+=begin programlisting
+
+    {
+        no warnings 'once';
+        (*get_homecourt, *set_homecourt) = generate_accessors( 'homecourt' );
+    }
+
+=end programlisting
+
+This does not violate strictures, but it does produce a "used only once"
+warning unless you explicitly suppress it within the scope.
+
+=end sidebar
+
 =head3 Compile-time Manipulation
 
 Unlike code written explicitly as code, code generated through C<eval> string
