@@ -9,7 +9,7 @@ X<tying>
 Overloading (L<overloading>) lets you give classes custom behavior for specific
 types of coercions and accesses.  A similar mechanism exists for making
 variables act like built-in types (scalars, arrays, and hashes), but with more
-specific behaviors.  This mechanism uses the C<tie> keyword; it is C<tying>.
+specific behaviors.  This mechanism uses the C<tie> keyword; it is I<tying>.
 
 The original use of C<tie> was to produce a hash stored on disk, rather than in
 memory.  This allowed the use of dbm files from Perl, as well as the ability to

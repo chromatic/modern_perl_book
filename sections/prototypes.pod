@@ -44,20 +44,49 @@ array as a single unit so that C<push> can operate on the array in place.
 X<prototype>
 X<keywords; prototype>
 
-C<prototype> takes the name of a function and returns a string representing its
-prototype.  If you cannot emulate that function (if it's a core keyword),
-C<prototype> will return C<undef>.  To see the prototype of a built-in keyword,
-use the C<CORE::> form:
+The builtin C<prototype> takes the name of a function and returns a string
+representing its prototype.  To see the prototype of a built-in keyword,
+use the C<CORE::> form:
+ 
+=begin programlisting
 
-=begin programlisting
+    $ B<perl -E "say prototype 'CORE::push';">
+    \@@
+    $ B<perl -E "say prototype 'CORE::keys';">
+    \%
+    $ B<perl -E "say prototype 'CORE::open';">
+    *;$@
 
-    $ B<perl -E "say prototype 'CORE::push';">
-    \@@
+=end programlisting
+
+If you cannot emulate the prototype of a builtin (and some you can't!),
+C<prototype> will return C<undef>:
+
+=begin programlisting
+
+    $ B<perl -E "say prototype 'CORE::system' // 'undef' ">
+    undef
+    # You can't emulate builtin function C<system>'s calling convention.
+
+    $ B<perl -E "say prototype 'CORE::prototype' // 'undef' ">
+    undef
+    # Builtin function C<prototype> has no prototype.
+ 
+=end programlisting
+
+Look at C<push> again:
+ 
+=begin programlisting
+
+    $ B<perl -E "say prototype 'CORE::push';">
+    \@@
 
 =end programlisting
 
 The C<@> character represents a list.  The backslash forces the use of a
-I<reference> to the corresponding argument.  Thus C<mypush> might be:
+I<reference> to the corresponding argument.  Thus this function takes a
+reference to an array (because you can't take a reference to a list) and a list
+of values.  C<mypush> might be:
 
 =begin programlisting
 
