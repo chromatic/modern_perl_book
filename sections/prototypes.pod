@@ -225,7 +225,7 @@ overcome their drawbacks.
 
 =begin sidebar
 
-Ben Tilly suggests a third: when defining a custom function to use with
+Ben Tilly suggests a fourth: when defining a custom function to use with
 C<sort>.  Declare this function with a prototype of C<($$)> and Perl will pass
 its arguments in C<@_> rather than the package globals C<$a> and C<$b>.  This
 is a rare case, but it can save you time debugging.
