@@ -151,7 +151,8 @@ rather than a function call:
 
 =end programlisting
 
-The Perl 5 parser knows to substitute the calculated value of pi whenever it
+After it processed that prototype declaration, the Perl 5 optimizer
+knows it should substitute the calculated value of pi whenever it
 encounters a bareword or parenthesized call to C<PI> in the rest of the source
 code (with respect to scoping and visibility).
 
