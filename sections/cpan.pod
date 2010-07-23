@@ -7,10 +7,9 @@ ever-pragmatic Perl community has extended that language and made their work
 available to the world.  If you have a problem to solve, chances are someone's
 already uploaded code to the CPAN for it.
 
-The line between a modern language and its libraries is thin and fuzzy.  Is a
-language only syntax?  Is it the core libraries?  Is it the availability of
-external libraries and the ease at which you can use them within your own
-projects?
+The line between a modern language and its libraries is fuzzy.  Is a language
+only syntax?  Is it the core libraries?  Is it the availability of external
+libraries and the ease at which you can use them within your own projects?
 
 X<CPAN>
 
@@ -24,10 +23,10 @@ X<distribution>
 X<module>
 
 CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
-code.  A single distribution can contain one or more I<modules>, which are
+code.  A single distribution can contain one or more I<modules>, or
 self-contained libraries of Perl code.  Each distribution lives in its own
-namespace on the CPAN, contains its own metadata, and is buildable,
-installable, updateable, and testable on its own.
+namespace on the CPAN and contains its own metadata.  You can build, install,
+test, and update each distribution on its own.
 
 =begin sidebar
 
@@ -78,8 +77,9 @@ build, test, and install CPAN distributions, CPAN.pm and CPANPLUS.  They behave
 equivalently; their use is a matter of taste.  This book recommends the use of
 CPAN.pm solely due to its ubiquity.
 
-CPAN.pm configuration is largely decision-free.  For any complete installation
-of Perl, you may start the client with:
+If you use a recent version of CPAN.pm (as of this writing, 1.9402 is the
+latest stable release), CPAN.pm configuration is largely decision-free.  For
+any complete installation of Perl, you may start the client with:
 
     $ B<cpan>
 
@@ -100,9 +100,9 @@ reading twice, especially its section on troubleshooting.
 Even though the CPAN client is a core module for the Perl 5 distribution, you
 may also have to install standard development tools such as a C<make> utility
 and possibly a C compiler to install all of the distributions you want.
-Strawberry Perl and Strawberry Perl Professional include such utilities for
-Windows users. Mac OS X users need their developer tools installed; Unix and
-Unix-like users, consult your local system administrator.
+Windows users, see Strawberry Perl and Strawberry Perl Professional.  Mac OS X
+users need their developer tools installed.  Unix and Unix-like users, consult
+your local system administrator.
 
 =end sidebar
 
@@ -119,7 +119,7 @@ CPAN... now you have something amazing.
 Three projects are worth your attention throughout 2010.  C<local::lib>, a CPAN
 module, allows you to install and to manage distributions in your own user
 directory, rather than for the system as a whole.  This is an effective way to
-have your own CPAN installation without disturbing other users.
+maintain CPAN distributions without affecting other users.
 
 C<App::cpanminus> is a new CPAN client with goals of speed, simplicity, and
 zero configuration.

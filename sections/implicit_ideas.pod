@@ -171,8 +171,8 @@ X<variables; @_>
 X<@_>
 
 Perl passes arguments to functions in an array named C<@_>.  Array manipulation
-operations (L<arrays>) performed inside functions affect this array by
-default.  Thus, these two snippets of code are equivalent:
+operations (L<arrays>) performed inside functions affect this array by default.
+Thus, these two snippets of code are equivalent:
 
 =begin programlisting
 

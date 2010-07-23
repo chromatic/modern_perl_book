@@ -23,21 +23,26 @@ module or a specific section of the core documentation:
 
     $ B<perldoc List::Util>
     $ B<perldoc perltoc>
+    $ B<perldoc Moose::Manual>
 
-The first command-line example extracts documentation written for the
-C<List::Util> module and displays it in a form appropriate for your screen.
-Community standards for CPAN modules (L<cpan>) suggest that additional
-libraries use the same documentation format and form as core modules, so
-there's no distinction between reading the documentation for a core library
-such as C<Data::Dumper> or one installed from the CPAN.  The standard
-documentation template includes a description of the module, demonstrates
-sample uses, and then contains a detailed explanation of the module and its
-interface.  While the amount of documentation varies by author, the form of the
-documentation is remarkably consistent.
+The first example extracts documentation written for the C<List::Util> module
+and displays it in a form appropriate for your screen.  Community standards for
+CPAN modules (L<cpan>) suggest that additional libraries use the same
+documentation format and form as core modules, so there's no distinction
+between reading the documentation for a core library such as C<Data::Dumper> or
+one installed from the CPAN.  The standard documentation template includes a
+description of the module, demonstrates sample uses, and then contains a
+detailed explanation of the module and its interface.  While the amount of
+documentation varies by author, the form of the documentation is remarkably
+consistent.
 
-The second command-line example displays a pure documentation file, the table
-of contents of the core documentation itself.  It describes each section of
-documentation.  You should browse this file when learning Perl.
+The second example displays a pure documentation file, in this case the table
+of contents of the core documentation itself.  This file describes each section
+of documentation.  Browsing it is a good investment into understanding Perl.
+
+The third example resembles the second; C<Moose::Manual> is part of the Moose
+CPAN distribution (L<moose>).  It is also purely documentation; it contains no
+code.
 
 =begin sidebar
 
@@ -72,7 +77,7 @@ warning messages.
 
 X<POD>
 
-Perl's documentation system is I<POD>, or I<Plain Old Documentation>.
+Perl 5's documentation system is I<POD>, or I<Plain Old Documentation>.
 C<perldoc perlpod> describes how POD works.  The C<perldoc> utility will
 display the POD in any Perl module you create and install for your project, and
 other POD tools such as C<podchecker>, which validates the form of your POD,
