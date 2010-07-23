@@ -39,6 +39,7 @@ Given a variable to tie, tie it with the syntax:
 
 =begin programlisting
 
+    use Tie::File;
     tie my @file, 'Tie::File', @args;
 
 =end programlisting
