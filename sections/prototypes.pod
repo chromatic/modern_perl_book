@@ -5,7 +5,7 @@ Z<prototypes>
 X<prototypes>
 
 A I<prototype> is a piece of optional metadata attached to a function
-declaration.  Novices commonly assume that these <prototypes serve as function
+declaration.  Novices commonly assume that these prototypes serve as function
 signatures.  They do not; instead they serve two separate purposes.  They offer
 hints to the parser to change the way it parses functions and their arguments.
 They also modify the way Perl 5 handles arguments to those functions.
