@@ -2,7 +2,7 @@
 
 Z<blessed_references>
 
-Perl 5 default object system is deliberately minimal.  Three simple rules
+Perl 5's default object system is deliberately minimal.  Three simple rules
 combine to form the simple--though effective--basic object system:
 
 =over 4
