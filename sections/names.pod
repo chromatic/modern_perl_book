@@ -8,8 +8,9 @@ X<identifiers>
 I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
 functions, packages, classes, and even filehandles have names.  These names all
 start with a letter or an underscore.  They may optionally include any
-combination of letters, numbers, and underscores.  These are all valid Perl
-identifiers:
+combination of letters, numbers, and underscores.  When the C<utf8> pragma
+(L<pragmas>, L<unicode>) is in effect, you may use any valid UTF-8 characters
+in identifiers.  These are all valid Perl identifiers:
 
 =begin programlisting
 
@@ -19,7 +20,8 @@ identifiers:
 
     sub anAwkwardName3;
 
-    package a_less_awkward_name;
+    # with C<use utf8;> enabled
+    package Ingy::DE<ouml>t::Net;
 
 =end programlisting
 
@@ -34,22 +36,6 @@ These are invalid Perl identifiers:
     package a-lisp-style-name;
 
 =end programlisting
-
-=for author
-
-Move these next two sections elsewhere?  Find the balance between accuracy and
-complexity.
-
-=end for
-
-=begin sidebar
-
-When the C<utf8> pragma (L<pragmas>, L<unicode>) is in effect, you may use any
-valid UTF-8 characters in identifiers, provided that they still start with a
-letter or underscore and optionally contain one or more alphanumeric or
-underscore characters.
-
-=end sidebar
 
 X<symbolic lookups>
 
