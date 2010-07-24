@@ -65,9 +65,11 @@ You may escape control and non-printable characters in the string:
 
 =begin programlisting
 
-    my $newline  = "B<\n>";
-    my $tab      = "B<\t>";
-    my $carriage = "B<\r>";
+    my $tab       = "B<\t>";
+    my $newline   = "B<\n>";
+    my $carriage  = "B<\r>";
+    my $formfeed  = "B<\f>";
+    my $backspace = "B<\b>";
 
 =end programlisting
 
@@ -79,12 +81,6 @@ it's often more maintainable to use the escapes.  Whitespace can be difficult
 to read precisely in a text editor.
 
 =end sidebar
-
-=for author
-
-Should I include a table of escapes here?  It's the same as in regexes.
-
-=end for
 
 X<interpolation>
 X<strings; interpolation>
