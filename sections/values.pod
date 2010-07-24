@@ -564,8 +564,7 @@ X<undef; coercions>
 C<undef> evaluates to false in boolean context.  Be aware that an array
 containing a single element which is itself C<undef> evaluates to true in a
 boolean context.  Interpolating C<undef> into a string--or evaluating it in a
-string context--produces an C<uninitialized value> warning, if you have
-C<warnings> enabled.
+string context--produces an C<uninitialized value> warning.
 
 =head3 The Empty List
 

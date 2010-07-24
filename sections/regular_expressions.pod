@@ -255,6 +255,8 @@ These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
 C<\D>.  To match anything but a space, use C<\S>.
 
+=head2 Character Classes
+
 X<character classes>
 
 If the range of allowed characters in these four groups isn't specific enough,
@@ -296,9 +298,9 @@ Move the hyphen character to the start of the class to include it in the class:
 =end programlisting
 
 Just as the word and digit class metacharacters (C<\w> and C<\d>) have
-negations, so too you can negate a character class.  Use the caret
-(C<^>) as the first element of the character class to mean "anything
-I<except> these characters":
+negations, so too you can negate a character class.  Use the caret (C<^>) as
+the first element of the character class to mean "anything I<except> these
+characters":
 
 =begin programlisting
 

@@ -56,8 +56,8 @@ X<state>
 
 This approach I<works>, but creating a new lexical scope for a single function
 introduces more accidental complexity than is necessary.  The C<state> keyword
-(L<state>) allows you to declare a lexically scoped variable with a value that
-persists between invocations:
+allows you to declare a lexically scoped variable with a value that persists
+between invocations:
 
 =begin programlisting
 

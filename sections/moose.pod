@@ -90,8 +90,8 @@ strategy describes how the object system decides I<which> method to call.  This
 may seem obvious when there's only a C<Cat>, but method dispatch is fundamental
 to the design of object systems.
 
-The invocant of a method in Perl 5 method is its first argument.  For example,
-the C<Cat> class could have a C<meow()> method:
+The invocant of a method in Perl 5 is its first argument.  For example, the
+C<Cat> class could have a C<meow()> method:
 
 =begin programlisting
 

@@ -230,7 +230,7 @@ C<AUTOLOAD()> can be a useful tool in certain circumstances, but it can be
 difficult to use properly.  Consider other techniques, such as C<Moose> and
 other abstractions, instead.
 
-The naI<iuml>ve approach to generating methods at runtime means that the
+The naE<iuml>ve approach to generating methods at runtime means that the
 C<can()> method will not report the right information about the capabilities of
 objects and classes.  You can solve this in several ways; one of the easiest is
 to predeclare all functions you plan to AUTOLOAD with the C<subs> pragma:

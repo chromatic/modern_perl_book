@@ -342,10 +342,9 @@ execution.
 
 =begin sidebar
 
-A common novice typo is to assign an anonymous hash to a standard hash.  If you
-have warnings enabled, you'll receive a warning about an odd number of elements
-in the hash.  Use parentheses for a named hash and curly brackets for an
-anonymous hash.
+A common novice typo is to assign an anonymous hash to a standard hash.  This
+produces a warning about an odd number of elements in the hash.  Use
+parentheses for a named hash and curly brackets for an anonymous hash.
 
 =end sidebar
 
