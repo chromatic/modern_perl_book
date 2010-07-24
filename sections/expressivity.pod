@@ -6,13 +6,13 @@ X<Wall, Larry>
 X<Larry Wall>
 
 Perl takes cues from human languages.  Larry WallN<The creator of Perl.>'s
-studies in linguistics inform Perl's design.  As with natural language, there
-are many ways to write a Perl program depending on your project's style, the
-available time to create the program, the expected maintenance burden, or even
-your own personal sense of expression.  You may write in a straightforward,
-top-to-bottom style.  You may write many small and independent functions.  You
-may model your problem with classes and objects.  You may eschew or embrace
-advanced features.
+studies in linguistics continue to influence Perl's design.  As with natural
+language, there are many ways to write a Perl program depending on your
+project's style, the available time to create the program, the expected
+maintenance burden, or even your own personal sense of expression.  You may
+write in a straightforward, top-to-bottom style.  You may write many small and
+independent functions.  You may model your problem with classes and objects.
+You may eschew or embrace advanced features.
 
 X<TIMTOWTDI>
 X<Tim Toady>
@@ -23,7 +23,8 @@ Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounced "Tim Toady", or
 Where this expressivity can provide a large palette with which master craftsman
 can create amazing and powerful edifices, unwise conglomerations of various
 techniques can impede maintainability and comprehensibility.  You can write
-good code or you can make a mess.  The choice is yours.
+good code or you can make a mess.  The choice is yoursN<... but be kind to
+other people, if you must make a mess.>.
 
 Where other languages might suggest that one enforced way to perform any
 operation is the right solution, Perl allows you to optimize for your most

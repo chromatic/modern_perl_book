@@ -37,8 +37,9 @@ documentation varies by author, the form of the documentation is remarkably
 consistent.
 
 The second example displays a pure documentation file, in this case the table
-of contents of the core documentation itself.  This file describes each section
-of documentation.  Browsing it is a good investment into understanding Perl.
+of contents of the core documentation itself.  This file describes each
+individual piece of the core documentation; browse it for a good understanding
+of Perl's breadth.
 
 The third example resembles the second; C<Moose::Manual> is part of the Moose
 CPAN distribution (L<moose>).  It is also purely documentation; it contains no
