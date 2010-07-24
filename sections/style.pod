@@ -45,6 +45,9 @@ evaluate the appropriate level of cleverness.  As a rule of thumb, if you're
 prouder of explaining your solution to your coworkers than you are of solving a
 problem, your code may have unnecessary complexity.
 
+If you I<do> need clever code, encapsulate it behind a simple interface and
+document your cleverness very well.
+
 =item * I<Embrace simplicity.>  Given two programs which solve the same
 problem, the simplest is almost always easier to maintain.  Simplicity doesn't
 require you to eschew advanced Perl knowledge, or to avoid using libraries, or
@@ -139,5 +142,12 @@ members--for advice on solving your problems.  You may even report a bug, or
 submit a patch, or produce your own distribution on the CPAN.  Nothing
 demonstrates you're an effective Perl programmer more than helping other people
 solve their problems.
+
+=item * I<Establish sensible coding standards.>  Effective guidelines establish
+policies for error handling, security, encapsulation, API design, project
+layout, and other maintainability concerns.  Excellent guidelines evolve as you
+and your team understand each other and your projects better.  The goal of
+programming is to solve problems, and the goal of coding standards is to help
+you communicate your intentions clearly.
 
 =back
