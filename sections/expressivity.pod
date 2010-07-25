@@ -66,13 +66,55 @@ unfamiliar Perl expression and understand its intent.
 
 X<baby Perl>
 
-If you're new to Perl, don't expect this ability right away.  The flip side of
+If you're new to Perl, you will develop this skill over time.  The flip side of
 Perl's expressivity is that Perl novices can write useful programs before they
 learn all of Perl's powerful features.  The Perl community often refers to this
 as I<baby Perl>.  Though it may sound dismissive, please don't take offense;
 everyone is a novice once.  Take the opportunity to learn from more experienced
 programmers and ask for explanations of idioms and constructs you don't yet
 understand.
+
+=begin sidebar
+
+A Perl novice might multiply a list of numbers by three by writing:
+
+=begin programlisting
+
+    my @tripled;
+    my $count = @numbers;
+
+    for (my $i = 0; $i < $count; $i++)
+    {
+        $tripled[$i] = $numbers[$i] * 3;
+    }
+
+=end programlisting
+
+A Perl adept might write:
+
+=begin programlisting
+
+    my @tripled;
+
+    for my $num (@numbers)
+    {
+        push @tripled, $num * 3;
+    }
+
+=end programlisting
+
+An experienced Perl hacker might write:
+
+=begin programlisting
+
+    my @tripled = map { $_ * 3 } @numbers;
+
+=end programlisting
+
+Experience writing Perl will help you to focus on what you want to do rather
+than how to do it.
+
+=end sidebar
 
 Perl is a language intended to grow with your understanding of programming.  It
 won't punish you for writing simple programs.  It allows you to refine and
