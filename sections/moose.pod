@@ -317,7 +317,7 @@ X<encapsulation>
 
 Moose allows you to declare I<which> attributes class instances possess as well
 as how to treat those attributes.  The examples shown so far do not describe
-I<how> to store those instances.  This information is available if you really
+I<how> to store those attributes.  This information is available if you really
 need it, but the declarative approach can actually improve your programs.  In
 this way, Moose encourages I<encapsulation>, or hiding the internal details of
 an object from external uses of that object.
@@ -480,8 +480,8 @@ Of course, the mere existence of a method called C<name()> or C<age()> does not
 by itself imply the behavior of that object.  A C<Dog> object may have an
 C<age()> which is an accessor such that you can discover C<$rodney> is 8 but
 C<$lucky> is 3.  A C<Cheese> object may have an C<age()> method that lets you
-determine how long to stow C<$cheddar> so that it becomes sharp; in other
-words, C<age()> may be an accessor in one class but not in another:
+control how long to stow C<$cheddar> so that it becomes sharp; in other words,
+C<age()> may be an accessor in one class but not in another:
 
 =begin programlisting
 

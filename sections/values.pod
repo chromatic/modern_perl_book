@@ -61,7 +61,7 @@ Is it worth mentioning \\ here? Like, what happens when you put \ or
 X<strings; double-quoted>
 
 A I<double-quoted string> has more complex (and often, more useful) behavior.
-You may escape control and non-printable characters in the string:
+For example, you may encode non-printable characters in the string:
 
 =begin programlisting
 
@@ -73,14 +73,21 @@ You may escape control and non-printable characters in the string:
 
 =end programlisting
 
-=begin sidebar
+A string declaration may cross logical newlines, such that these two strings
+are equivalent:
 
-You may also embed these control characters themselves directly into the
-string--a string declaration may cross lines and run as long as you want, but
-it's often more maintainable to use the escapes.  Whitespace can be difficult
-to read precisely in a text editor.
+=begin programlisting
 
-=end sidebar
+    my $escaped = "two\nlines";
+    my $literal = "two
+    lines";
+    is( $escaped, $literal, '\n and newline are equivalent' );
+
+=end programlisting
+
+You I<can> enter these characters directly in the strings, but it's
+often difficult to see the visual distinction between one tab character and
+four (or two or eight) spaces.
 
 X<interpolation>
 X<strings; interpolation>
