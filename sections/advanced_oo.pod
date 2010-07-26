@@ -73,7 +73,7 @@ A common pattern among programmers new to object orientation is to treat
 objects as if they were bundles of records which use methods to get and set
 internal values.  While this is simple to implement and easy to understand, it
 can lead to the unfortunate temptation to spread the behavioral
-responsibilities out individual classes throughout the system.
+responsibilities among individual classes throughout the system.
 
 The most useful technique to working with objects effectively is to tell them
 what to do, not how to do it.  If you find yourself accessing the instance data

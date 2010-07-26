@@ -9,7 +9,7 @@ X<tying>
 Overloading (L<overloading>) lets you give classes custom behavior for specific
 types of coercions and accesses.  A similar mechanism exists for making
 variables act like built-in types (scalars, arrays, and hashes), but with more
-specific behaviors.  This mechanism uses the C<tie> keyword; it is C<tying>.
+specific behaviors.  This mechanism uses the C<tie> keyword; it is I<tying>.
 
 The original use of C<tie> was to produce a hash stored on disk, rather than in
 memory.  This allowed the use of dbm files from Perl, as well as the ability to
@@ -18,18 +18,18 @@ provides a similar system by which to handle data files too large to fit in
 memory.
 
 The class to which you C<tie> a variable must conform to a specific,
-well-documented interface for the specific data type.  C<perldoc perltie> is the
-primary source of information about these interfaces, though the core modules
-C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> are more useful in practice.
-Inherit from them to start, and override only those specific methods you need
-to modify.
+well-documented interface for the specific data type.  C<perldoc perltie> is
+the primary source of information about these interfaces, though the core
+modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> are more
+useful in practice.  Inherit from them to start, and override only those
+specific methods you need to modify.
 
 =begin sidebar
 
-The C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> are classes from
-which to inherit if you implement your own ties.  Their documentation is in the
-C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> modules, respectively, as are
-their implementations.
+The documentation and implementations of these parent classes are in the
+C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> modules.  Consequently you must
+also C<use Tie::Scalar> if you want to inherit from C<Tie::StdScalar>.  If
+C<tie()> hasn't confused you, the organization of this code might.
 
 =end sidebar
 
@@ -39,6 +39,7 @@ Given a variable to tie, tie it with the syntax:
 
 =begin programlisting
 
+    use Tie::File;
     tie my @file, 'Tie::File', @args;
 
 =end programlisting

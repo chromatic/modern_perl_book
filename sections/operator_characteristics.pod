@@ -102,8 +102,9 @@ applies the rightmost operator (C<->) to the result of the first operation and
 the rightmost operand (C<4>).
 
 One common source of confusion for Perl novices is the interaction of listary
-operators (especially function calls) with nested expressions.  Grouping
-parentheses clarify, yet watch out for confusion in code such as:
+operators (especially function calls) with nested expressions.  Using grouping
+parentheses to clarify your intent, yet watch out for confusion in code such
+as:
 
 =begin programlisting
 

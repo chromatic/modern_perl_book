@@ -11,15 +11,15 @@ community--can be maintainable, fast, and easy to use.  Perhaps most
 importantly, it can help you do what you need to do with little frustration
 and no ceremony.
 
-Perl is a pragmatic language.  Its design goals attempt to give power back to
-the programmer.  Rather than manipulating your mind and your problems to fit
-how the language designer thinks you should write programs, Perl allows you to
-solve your problems as you see fit.
+Perl is a pragmatic language.  You, the programmer, are in charge.  Rather than
+manipulating your mind and your problems to fit how the language designer
+thinks you should write programs, Perl allows you to solve your problems as you
+see fit.
 
 Perl is a language which can grow with you.  You can write useful programs with
 the knowledge that you can learn in an hour of reading this book.  Yet if you
 take the time to understand the philosophies behind the syntax, semantics, and
-design of the language, you can be ten times as productive.
+design of the language, you can be far more productive.
 
 First, you need to know how to learn more.
 

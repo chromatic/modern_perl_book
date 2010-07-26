@@ -178,12 +178,21 @@ the function to use for sorting to avoid the use of barewords:
 
 =end programlisting
 
-The result is one line longer, but it avoids the use of a bareword.
+The result is one line longer, but it avoids the use of a bareword.  Unlike
+other bareword examples, Perl's parser needs no disambiguation for this syntax.
+There is only one way for it to interpret C<compare_lengths>.  Even so, the
+clarity of an explicit reference can help human readers.
 
-=begin sidebar
+Even so, Perl 5's parser does not understand the single-line version:
 
-Unlike other bareword examples, Perl's parser needs no disambiguation.  There
-is only one way for it to interpret C<compare_lengths>.  Even so, the clarity
-of explicit reference can help human readers.
+=begin programlisting
 
-=end sidebar
+    # does not work
+    my @sorted = \&compare_lengths @unsorted;
+
+=end programlisting
+
+This is due to the special parsing of C<sort>; you cannot use an arbitrary
+expression (such as taking a reference to a named function) where a block or a
+scalar might otherwise go.
+

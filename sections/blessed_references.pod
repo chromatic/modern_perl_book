@@ -2,7 +2,7 @@
 
 Z<blessed_references>
 
-Perl 5 default object system is deliberately minimal.  Three simple rules
+Perl 5's default object system is deliberately minimal.  Three simple rules
 combine to form the simple--though effective--basic object system:
 
 =over 4
@@ -276,13 +276,13 @@ You may override methods in the default Perl 5 OO system as well as in Moose.
 Unfortunately, core Perl 5 provides no mechanism for indicating your I<intent>
 to override a parent's method.  Worse yet, any function you predeclare,
 declare, or import into the child class may override a method in the parent
-class simply by existing and having the same name.
+class simply by existing and having the same name.  While you may forget to use
+the C<override> system of Moose, you have no such protection (even optional) in
+the default Perl 5 OO system.
 
-Even so, you can override methods in child classes if you're cautious: declare
-a method of the same name as the method in the parent with the same signature.
-
-Within an overridden method, you can call the parent method with the C<SUPER::>
-dispatch hint:
+To override a method in a child class, declare a method of the same name as the
+method in the parent.  Within an overridden method, call the parent method with
+the C<SUPER::> dispatch hint:
 
 =begin programlisting
 

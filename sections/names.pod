@@ -8,8 +8,9 @@ X<identifiers>
 I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
 functions, packages, classes, and even filehandles have names.  These names all
 start with a letter or an underscore.  They may optionally include any
-combination of letters, numbers, and underscores.  These are all valid Perl
-identifiers:
+combination of letters, numbers, and underscores.  When the C<utf8> pragma
+(L<pragmas>, L<unicode>) is in effect, you may use any valid UTF-8 characters
+in identifiers.  These are all valid Perl identifiers:
 
 =begin programlisting
 
@@ -19,7 +20,8 @@ identifiers:
 
     sub anAwkwardName3;
 
-    package a_less_awkward_name;
+    # with C<use utf8;> enabled
+    package Ingy::DE<ouml>t::Net;
 
 =end programlisting
 
@@ -35,33 +37,20 @@ These are invalid Perl identifiers:
 
 =end programlisting
 
-=for author
-
-Move these next two sections elsewhere?  Find the balance between accuracy and
-complexity.
-
-=end for
-
-=begin sidebar
-
-When the C<utf8> pragma (L<pragmas>, L<unicode>) is in effect, you may use any
-valid UTF-8 characters in identifiers, provided that they still start with a
-letter or underscore and optionally contain one or more alphanumeric or
-underscore characters.
-
-=end sidebar
-
 X<symbolic lookups>
 
-These rules only apply to literal names found in source code.  The rules are
-different for I<symbolic lookups>.  Perl's dynamic nature makes it possible to
-refer to entities with names generated at runtime or provided as input to a
-program.  This is more difficult than the straightforward approach, but it's
-also more flexible--if more dangerous.  In particular, invoking functions or
-methods indirectly or looking up namespaced symbols lets you bypass Perl's
-parser, which is the only part of Perl that enforces these grammatic rules.  Be
-aware that doing so can produce confusing code; usually using a hash
-(L<hashes>) is more straightforward.
+These rules only apply to names which appear in literal form in source code;
+that is, if you've typed it directly like C<sub fetch_pie> or C<my
+$wafflemaker>.
+
+Perl's dynamic nature makes it possible to refer to entities with names
+generated at runtime or provided as input to a program.  These are I<symbolic
+lookups>.  You get more flexibility this way at the expense of some safety.  In
+particular, invoking functions or methods indirectly or looking up namespaced
+symbols lets you bypass Perl's parser, which is the only part of Perl that
+enforces these grammatic rules.  Be aware that doing so can produce confusing
+code; a hash (L<hashes>) or nested data structure (L<nested_data_structures>)
+is often clearer.
 
 =head3 Variable Names and Sigils
 

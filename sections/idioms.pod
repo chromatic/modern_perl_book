@@ -12,7 +12,7 @@ them--and they're not quite large enough that you can encapsulate them away
 behind functions and methods.  Instead, they're mannerisms.  They're ways of
 writing Perl with a Perlish accent.
 
-=head3 The Object as C<$self>
+=head3 The Object as $self
 
 X<$self>
 X<variables; $self>
@@ -138,8 +138,8 @@ their phone extensions:
 =end programlisting
 
 Suppose you want to print a list of extensions and co-workers sorted by their
-names, not their extensions.  In other words, you need to sort a hash by its
-keys.  Sorting the values of the hash in string order is easy:
+names, not their extensions.  In other words, you need to sort this hash by its
+values.  Sorting the values of the hash in string order is easy:
 
 =begin programlisting
 
@@ -239,6 +239,10 @@ For example, you can slurp files into a scalar in a single expression:
 
     my $file = do { local $/ = <$fh> };
 
+    # or
+
+    my $file = do { local $/; <$fh> };
+
 =end programlisting
 
 C<$/> is the input record separator.  C<local>izing it sets its value to
@@ -249,6 +253,10 @@ Because a C<do> block evaluates to the value of the last expression evaluated
 within the block, this evaluates to the value of the assignment, or the
 contents of the file.  Even though C<$/> immediately reverts to its previous
 state at the end of the block, C<$file> now contains the contents of the file.
+
+The second example is similar, except that it performs no assignment and merely
+returns the single line read from the filehandle.  You may see either example;
+they both work the same way in this case.
 
 This can be useful (and, admittedly, maddening for people unfamiliar with this
 particular combination of Perl 5 features) if you don't have C<File::Slurp>

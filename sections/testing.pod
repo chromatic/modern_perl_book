@@ -14,7 +14,7 @@ to do everything perfectly every time, let the computer handle the repetition.
 
 Perl 5 provides great tools to help you write good and useful automated tests.
 
-=head3 C<Test::More>
+=head3 Test::More
 
 X<Test::More>
 X<ok()>
@@ -118,7 +118,7 @@ X<testing; running tests>
 The output of a test file containing multiple assertions (especially multiple
 I<failed> assertions) can be verbose.  In most cases, you want to know either
 that everything passed or that x, y, and z failed.  The core module
-C<Test::Harness> interprets TAP and and displays only the most pertinent
+C<Test::Harness> interprets TAP and displays only the most pertinent
 information.  It also provides a program called C<prove> which takes the hard
 work out of the process:
 

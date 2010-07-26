@@ -5,7 +5,7 @@ Z<prototypes>
 X<prototypes>
 
 A I<prototype> is a piece of optional metadata attached to a function
-declaration.  Novices commonly assume that these <prototypes serve as function
+declaration.  Novices commonly assume that these prototypes serve as function
 signatures.  They do not; instead they serve two separate purposes.  They offer
 hints to the parser to change the way it parses functions and their arguments.
 They also modify the way Perl 5 handles arguments to those functions.
@@ -44,10 +44,37 @@ array as a single unit so that C<push> can operate on the array in place.
 X<prototype>
 X<keywords; prototype>
 
-C<prototype> takes the name of a function and returns a string representing its
-prototype.  If you cannot emulate that function (if it's a core keyword),
-C<prototype> will return C<undef>.  To see the prototype of a built-in keyword,
-use the C<CORE::> form:
+The builtin C<prototype> takes the name of a function and returns a string
+representing its prototype.  To see the prorotype of a built-in keyword, use
+the C<CORE::> form:
+
+=begin programlisting
+
+    $ B<perl -E "say prototype 'CORE::push';">
+    \@@
+    $ B<perl -E "say prototype 'CORE::keys';">
+    \%
+    $ B<perl -E "say prototype 'CORE::open';">
+    *;$@
+
+=end programlisting
+
+Some builtins have prototypes you cannot emulate.  In these cases,
+C<prototype> will return C<undef>:
+
+=begin programlisting
+
+    $ B<perl -E "say prototype 'CORE::system' // 'undef' ">
+    undef
+    # You can't emulate builtin function C<system>'s calling convention.
+
+    $ B<perl -E "say prototype 'CORE::prototype' // 'undef' ">
+    undef
+    # Builtin function C<prototype> has no prototype.
+
+=end programlisting
+
+Look at C<push> again:
 
 =begin programlisting
 
@@ -57,7 +84,9 @@ use the C<CORE::> form:
 =end programlisting
 
 The C<@> character represents a list.  The backslash forces the use of a
-I<reference> to the corresponding argument.  Thus C<mypush> might be:
+I<reference> to the corresponding argument.  Thus this function takes a
+reference to an array (because you can't take a reference to a list) and a list
+of values.  C<mypush> might be:
 
 =begin programlisting
 
@@ -102,7 +131,8 @@ incoming arguments:
 
     sub mypush(\@@);
 
-    # XXX: prototype type mismatch syntax error
+    # compilation error: prototype mismatch
+    # (expected array, got scalar assignment)
     mypush( my $elems = [], 1 .. 20 );
 
 =end programlisting
@@ -150,7 +180,8 @@ rather than a function call:
 
 =end programlisting
 
-The Perl 5 parser knows to substitute the calculated value of pi whenever it
+After it processed that prototype declaration, the Perl 5 optimizer
+knows it should substitute the calculated value of pi whenever it
 encounters a bareword or parenthesized call to C<PI> in the rest of the source
 code (with respect to scoping and visibility).
 
@@ -223,7 +254,7 @@ overcome their drawbacks.
 
 =begin sidebar
 
-Ben Tilly suggests a third: when defining a custom function to use with
+Ben Tilly suggests a fourth: when defining a custom function to use with
 C<sort>.  Declare this function with a prototype of C<($$)> and Perl will pass
 its arguments in C<@_> rather than the package globals C<$a> and C<$b>.  This
 is a rare case, but it can save you time debugging.

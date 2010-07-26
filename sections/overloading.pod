@@ -15,7 +15,8 @@ the Null Object pattern (U<http://www.c2.com/cgi/wiki?NullObject>).  In boolean
 context, an object will be true... but not if you overload boolification.
 
 You can overload what the object does for almost every operation:
-stringification, numification, iteration, invocation, array access, hash
+stringification, numification, boolification,
+iteration, invocation, array access, hash
 access, arithmetic operations, comparison operations, smart match, bitwise
 operations, and even assignment.
 
@@ -83,6 +84,10 @@ overloads as fallbacks where possible:
 Setting C<fallback> to a true value lets Perl use any other defined overloads
 to compose the requested operation, if possible.  If that's not possible, Perl
 will act as if there were no overloads in effect.  This is often what you want.
+
+Without C<fallback>, Perl will only use the specific overloadings you have
+provided.  If someone tries to perform an operation you have not overloaded,
+Perl will throw an exception.
 
 =head3 Overload and Inheritance
 

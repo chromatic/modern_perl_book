@@ -153,7 +153,7 @@ developers.
 
 You can also check for the existence of specific hash keys and the number of
 elements in arrays before dereferencing each level of a complex data structure,
-but that can produce tedious, length code which many Perl programmers prefer to
+but that can produce tedious, lengthy code which many programmers prefer to
 avoid.
 
 =end programlisting

@@ -90,8 +90,8 @@ strategy describes how the object system decides I<which> method to call.  This
 may seem obvious when there's only a C<Cat>, but method dispatch is fundamental
 to the design of object systems.
 
-The invocant of a method in Perl 5 method is its first argument.  For example,
-the C<Cat> class could have a C<meow()> method:
+The invocant of a method in Perl 5 is its first argument.  For example, the
+C<Cat> class could have a C<meow()> method:
 
 =begin programlisting
 
@@ -208,6 +208,49 @@ tries to provide invalid data for an attribute.  The balance between
 flexibility and correctness depends on your local coding standards and the type
 of errors you want to catch.
 
+=begin sidebar
+
+The Moose documentation uses parentheses to separate an attribute name from its
+characteristics:
+
+=begin programlisting
+
+        has 'name' => ( is => 'ro', isa => 'Str' );
+
+=end programlisting
+
+Perl parses both that form and the form used in this book the same way.  You
+I<could> achieve the same effect by writing either:
+
+=begin programlisting
+
+    has( 'name', 'is', 'ro', 'isa', 'Str' );
+    has( qw( name is ro isa Str ) );
+
+=end programlisting
+
+... but in this case, extra punctuation adds clarity.  The approach of the
+Moose documentation is most useful when dealing with multiple characteristics:
+
+=begin programlisting
+
+    has 'name' => (
+        is         => 'ro',
+        isa        => 'Str',
+
+        # advanced Moose options; perldoc Moose
+        init_arg   => undef,
+        lazy_build => 1,
+    );
+
+=end programlisting
+
+... but for the sake of simplicity of introduction, this book prefers to use
+less punctuation.  Perl gives you the flexibility to choose whichever approach
+makes the intent of your code most clear.
+
+=end sidebar
+
 X<attributes; rw>
 X<attributes; read-write>
 
@@ -274,7 +317,7 @@ X<encapsulation>
 
 Moose allows you to declare I<which> attributes class instances possess as well
 as how to treat those attributes.  The examples shown so far do not describe
-I<how> to store those instances.  This information is available if you really
+I<how> to store those attributes.  This information is available if you really
 need it, but the declarative approach can actually improve your programs.  In
 this way, Moose encourages I<encapsulation>, or hiding the internal details of
 an object from external uses of that object.
@@ -437,8 +480,8 @@ Of course, the mere existence of a method called C<name()> or C<age()> does not
 by itself imply the behavior of that object.  A C<Dog> object may have an
 C<age()> which is an accessor such that you can discover C<$rodney> is 8 but
 C<$lucky> is 3.  A C<Cheese> object may have an C<age()> method that lets you
-determine how long to stow C<$cheddar> so that it becomes sharp; in other
-words, C<age()> may be an accessor in one class but not in another:
+control how long to stow C<$cheddar> so that it becomes sharp; in other words,
+C<age()> may be an accessor in one class but not in another:
 
 =begin programlisting
 
@@ -753,7 +796,7 @@ overriding method to the overridden method:
                 if $self->enabled;
 
             B<super()>;
-        }
+        };
 
         B<override> extinguish => sub
         {
@@ -763,7 +806,7 @@ overriding method to the overridden method:
                 unless $self->enabled;
 
             B<super()>;
-        }
+        };
     }
 
 =end programlisting

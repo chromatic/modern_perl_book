@@ -27,11 +27,12 @@ pragma with funny syntax.  Pragma scope is clearer with an example:
     {
         # $lexical is B<not> visible; strict is B<not> in effect
         {
-            # $lexical B<is> visible; strict B<is> in effect
             use strict;
             my $lexical = 'available here';
+            # $lexical B<is> visible; strict B<is> in effect
             ...
         }
+        # $lexical is again B<not> visible; strict is B<not> in effect
     }
 
 =end programlisting
@@ -128,12 +129,18 @@ two pragmas may not belong yet in your production code without extensive
 testing and thoughtful consideration, but they demonstrate the power and
 utility of pragmas.
 
+=head3 Your own Pragmas
+
 =for author
 
 Is this ending worthwhile?  What a downer.
 
 =end for
 
-Perl 5.10.0 added a mechanism by which you may more easily write your own
-pragmas which respect lexical scoping.  See C<perldoc perlpragma> for more
-details.
+Since Perl 5.10.0, generalized hooks to implement lexical pragmas are
+available.  They are accessible directly from Perl code.  
+
+See C<perldoc perlpragma> for instructions to write your own pragmas.
+If you're interested in learning how it all works behind the scenes,
+the place to go is the C<$^H> variable's explanation in
+C<perldoc perlvar>.

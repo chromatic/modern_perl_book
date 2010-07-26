@@ -5,9 +5,14 @@ Z<context_philosophy>
 X<context>
 
 Spoken languages have a notion of I<context> where the meaning of a word or
-phrase depends on its surroundings.  So does Perl.  This may sound strange and
-foreign in a programming language--but if you understand this paragraph, you
-already understand how Perlish contexts work in English.
+phrase depends on its surroundings.  You may understand this in a spoken
+language, where the inappropriate pluralization of "Please give me one
+hamburgers!" sounds wrong or the incorrect gender of "la gato" makes native
+speakers laugh at you.
+
+Context in Perl is similar; the language understands expectations of the amount
+of data to provide as well as what kind of data to provide.  Perl will happily
+attempt to provide exactly what you ask for.
 
 One type of context in Perl means that certain operators have different
 behavior if you want zero, one, or many results.  It's possible that a specific
@@ -32,13 +37,10 @@ Z<amount_context>
 X<context; amount>
 X<amount context>
 
-One of the axes of context governs I<how many> items you expect.  This is
-I<amount context>.  To express this context, evaluate an expression and see
-what you do with the results.  One easy way to think of the amount type of
-context is to compare it to subject-verb number agreement in English.  You
-already know how to do this, even if you don't remember English classes.  If
-you can spot the error in the sentence "Perl are a fun language", you've
-trained your mind to spot similar types of errors.
+One of the aspects of context governs I<how many> items you expect.  This is
+I<amount context>.  Compare this context to compare it to subject-verb number
+agreement in English.  If you can spot the error in the sentence "Perl are a
+fun language", you already know how to do this.
 
 X<void context>
 X<context; void>
@@ -90,8 +92,8 @@ except that no assignment to the array actually occurs:
 
 =end programlisting
 
-Evaluating a function or expression in list context apart from assignment can
-occasionally produce confusion.  Remember that argument lists and lists
+Evaluating a function or expression--except for assignment--in list context can
+produce confusion.  Remember that argument lists and lists
 themselves--especially lists used in hash initializers--propagate list context
 to the expressions they contain.  Thus both of these calls to
 C<some_expensive_operation()> are in list context, even if it's not immediately
@@ -138,7 +140,10 @@ Another type of context determines how Perl understands a piece of data--not
 I<how many> pieces of data you want, but what the data means.  You've probably
 already noticed that Perl's flexible about figuring out if you have a number or
 a string and converting between the two as you want them.  This I<value
-context> helps to explain how it does so.
+context> helps to explain how it does so.  In exchange for not having to
+declare (or at least track) explicitly what I<type> of data a variable contains
+or a function produces, Perl offers specific type contexts that tell the
+compiler how to treat a given value during an operation.
 
 Suppose you want to compare the contents of two strings.  The C<eq> operator
 tells you if the strings contain the same information:
@@ -164,11 +169,9 @@ X<numeric context>
 X<context; string>
 X<context; numeric>
 
-In exchange for not having to declare (or at least track) explicitly what
-I<type> of data a variable contains or a function produces, Perl offers
-specific type contexts that tell the compiler how to treat a given value during
-an operation.  The C<eq> operator treats its operands as strings by enforcing
-I<string context> on them.  The C<==> operator enforces I<numeric context>.
+The C<eq> operator treats its operands as strings by enforcing I<string
+context> on them.  The C<==> operator enforces I<numeric context>.  The example
+code fails because the value of both strings when treated as numbers is C<0>.
 
 X<boolean context>
 X<context; boolean>

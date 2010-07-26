@@ -144,13 +144,17 @@ Similarly:
 
     BEGIN
     {
+        require 'Module/Name.pm';
         Module::Name->unimport( qw( list of arguments ) );
     }
 
 =end programlisting
 
+... including the C<require> of the module.
+
 You may call C<import()> and C<unimport()> directly, though it makes little
-sense to unimport a pragma, as they often have compilation-time effects.
+sense to unimport a pragma outside of a C<BEGIN> block, as they often have
+compilation-time effects.
 
 =begin sidebar
 
@@ -228,7 +232,7 @@ C<@EXPORT_OK>:
 
 =begin programlisting
 
-    our @EXPORT_OK = qw( monkey_dance monkey_sleep );
+    our @EXPORT = qw( monkey_dance monkey_sleep );
 
 =end programlisting
 

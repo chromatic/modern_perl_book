@@ -61,30 +61,33 @@ Is it worth mentioning \\ here? Like, what happens when you put \ or
 X<strings; double-quoted>
 
 A I<double-quoted string> has more complex (and often, more useful) behavior.
-You may escape control and non-printable characters in the string:
+For example, you may encode non-printable characters in the string:
 
 =begin programlisting
 
-    my $newline  = "B<\n>";
-    my $tab      = "B<\t>";
-    my $carriage = "B<\r>";
+    my $tab       = "B<\t>";
+    my $newline   = "B<\n>";
+    my $carriage  = "B<\r>";
+    my $formfeed  = "B<\f>";
+    my $backspace = "B<\b>";
 
 =end programlisting
 
-=begin sidebar
+A string declaration may cross logical newlines, such that these two strings
+are equivalent:
 
-You may also embed these control characters themselves directly into the
-string--a string declaration may cross lines and run as long as you want, but
-it's often more maintainable to use the escapes.  Whitespace can be difficult
-to read precisely in a text editor.
+=begin programlisting
 
-=end sidebar
+    my $escaped = "two\nlines";
+    my $literal = "two
+    lines";
+    is( $escaped, $literal, '\n and newline are equivalent' );
 
-=for author
+=end programlisting
 
-Should I include a table of escapes here?  It's the same as in regexes.
-
-=end for
+You I<can> enter these characters directly in the strings, but it's
+often difficult to see the visual distinction between one tab character and
+four (or two or eight) spaces.
 
 X<interpolation>
 X<strings; interpolation>
@@ -125,7 +128,7 @@ starting and ending delimiter.
 =begin programlisting
 
     my $quote     = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
-    my $reminder  = B<q^>Don't forget to escape the single quote!B<^>;
+    my $reminder  = B<q^>Didn't need to escape the single quote!B<^>;
     my $complaint = B<q{>It's too early to be awake.B<}>;
 
 =end programlisting
@@ -179,22 +182,105 @@ contents will determine the resulting value (L<coercion>).
 Z<unicode>
 X<unicode>
 
-Unicode is a system for representing characters in the world's written
+I<Unicode> is a system for representing characters in the world's written
 languages.  While most English text uses a character set of only 127 characters
 (which requires seven bits of storage and fits nicely into eight-bit bytes),
 it's naE<iuml>ve to believe that you won't someday need an umlaut, for example.
 
-Perl 5 handles Unicode internally.  For the most part, you can ignore this,
-except that there are several representations for I<how> to store Unicode.  You
-don't have to understand what happens after you have the data within your
-program, but you have to know what kind of data you receive from the external
-world and what kind of data you want to emit to the external world.  As long as
-you do not assume that a character in a Perl 5 string requires a byte of
-storage, all of the Perl 5 string operations perform correctly on Unicode and
-ASCII strings.
+Perl 5 strings can represent either of two related but different data types:
 
-For far more detail what Unicode is, encodings, and how to manage incoming and
-outgoing data in a Unicode world, see C<perldoc perluniintro>.
+X<codepoint>
+
+=over 4
+
+=item Sequences of Unicode characters
+
+The Unicode character set contains characters from the scripts of most
+languages, and various other symbols.  Each character has a I<codepoint>, a own
+unique number which identifies it in the Unicode character set.
+
+=item Sequences of octets
+
+Binary data is a sequence of 8 bit numbers, each of which can represent a
+number between 0 and 255.
+
+=back
+
+Unicode strings and binary strings look very similar.  They each have a
+C<length()>, and you can perform standard string operations on them such as
+concatenation, splicing, and regular expression processing.  Any string which
+is not purely binary data is textual data, and should be a sequence of Unicode
+characters.
+
+However, because of how your operating system represents data on disk or from
+users or over the network--as sequences of octets--Perl can't know if the data
+you read is an image file or a text document or anything else.  By default,
+Perl treats all incoming data as sequences of octets.  Any additional meaning
+of the string's contents are your responsibility.
+
+=head4 Character Encodings
+
+X<encoding>
+X<Unicode; encoding>
+X<UTF-8>
+X<ASCII>
+X<Latin-1>
+
+A Unicode string is a sequence of octets which represent a sequence of
+characters.  A I<Unicode encoding> maps octet sequences to characters.  Some
+encodings, such as UTF-8, can encode all of the characters in the Unicode
+character set.  Others, represent a subset of Unicode characters.  For example,
+ASCII encodes plain English text with no accented characters and Latin-1 can
+represent text in most languages which use the Latin script.
+
+If you always decode to and from the appropriate encoding at the inputs and
+outputs of your program, you will avoid many problems.
+
+=head4 Unicode in Your Filehandles
+
+X<open>
+X<IO layers>
+
+One source of Unicode input is filehandles.  If you tell Perl that a specific
+filehandle works with encoded text, Perl can convert the data to Unicode
+strings automatically.  To do this, add a IO layer to the mode of the C<open>
+builtin.  An I<IO layer> wraps around input or output and performs some sort of
+conversion of the data.  In this case, the C<:utf8> layer performs decoding of
+UTF-8 data:
+
+=begin programlisting
+
+    use autodie;
+
+    open my $fh, '<:utf8', $textfile;
+
+    my $unicode_string = <$fh>;
+
+=end programlisting
+
+X<binmode>
+X<builtins; binmode>
+
+You may also modify an existing filehandle with C<binmode>:
+
+=begin programlisting
+
+    binmode $fh, ':utf8';
+
+=end programlisting
+
+This works for input as well as output:
+
+=begin programlisting
+
+    binmode STDOUT, ':utf8';
+    say $unicode_string;
+
+=end programlisting
+
+Without the C<utf8> mode, printing Unicode strings to a filehandle will result
+in a warning (C<Wide character in %s>), because files contain octets, not
+Unicode characters.
 
 =head4 Unicode in Your Data
 
@@ -202,12 +288,8 @@ X<Encode>
 X<Encode; decode()>
 X<Encode; encode()>
 
-Perl 5's internal encoding shields you from most of the details of Unicode and
-character sets and representations, but you have to meet it part way.  In
-particular, the sooner you can ask Perl to convert from data that you have to
-its own internal format, the fewer odd conversions and mismatches you will
-suffer.  The core module C<Encode> provides a function named C<decode()> to
-convert a scalar containing data in a known format to the internal encoding.
+The core module C<Encode> provides a function named C<decode()> to
+convert a scalar containing data in a known format to a Unicode string.
 For example, if you have UTF-8 data:
 
 =begin programlisting
@@ -225,15 +307,6 @@ to the desired output encoding:
 
 =end programlisting
 
-If you always convert at the inputs and outputs of your program, you will avoid
-many problems.
-
-=for author
-
-Probably need C<binmode> here.
-
-=end for
-
 =head4 Unicode in Your Programs
 
 X<pragmas; utf8>
@@ -242,9 +315,8 @@ X<encoding>
 
 You may include Unicode characters in your programs in three ways.  The easiest
 is to use the C<utf8> pragma (L<pragmas>), which tells the Perl parser to
-interpret the rest of the source code file with the UTF-8 I<encoding> (an
-arrangement and representation of Unicode characters).  This allows you to use
-Unicode characters in strings as well in identifiers:
+interpret the rest of the source code file with the UTF-8 encoding This allows
+you to use Unicode characters in strings as well in identifiers:
 
 =begin programlisting
 
@@ -256,8 +328,8 @@ Unicode characters in strings as well in identifiers:
 
 =end programlisting
 
-You will need to use a text editor which understands the UTF-8 encoding, and
-you will need to save your file appropriately.
+To I<write> this code, your text editor must understand UTF-8 and you must save
+the file with the appropriate encoding.
 
 X<escapes; \x{}>
 X<\x{}>
@@ -301,6 +373,114 @@ enable them.  Use the C<\N{}> escape to refer to them:
 
 You may use the C<\x{}> and C<\N{}> forms within regular expressions as well as
 anywhere else you may legitimately use a string or a character.
+
+=head4 Implicit Conversion
+
+Most Unicode problems in Perl arise from the fact that a string could be either
+a sequence of octets or a sequence of characters.  Perl allows you to combine
+these types through the use of implicit conversions.  When these conversions
+are wrong, they're rarely I<obviously> wrong.
+
+When Perl concatenates a sequences of octets with a sequence of Unicode
+characters, it implicitly decodes the octet sequence using the Latin-1
+encoding.  The resulting string contains Unicode characters.  When you print
+Unicode characters, Perl encodes the string using UTF-8, because Latin-1 cannot
+represent the entire set of Unicode characters.
+
+This asymmetry can lead to Unicode strings encoded as UTF-8 for output and
+decoded as Latin-1 when input.
+
+Worse yet, when the text contains only English characters with no accents, the
+bug hides--because both encodings have the same representation for every such
+character.
+
+=begin programlisting
+
+    my $hello    = "Hello, ";
+    my $greeting = $hello . $name;
+
+=end programlisting
+
+If C<$name> contains an English name such as C<Alice> you will never notice any
+problem, because the Latin-1 representation is the same as the UTF-8
+representation.
+
+If, on the other hand, C<$name> contains a name like C<JosE<eacute>>, C<$name>
+can contain several possible values:
+
+=over 4
+
+=item *
+
+C<$name> contains four Unicode characters.
+
+=item *
+
+C<$name> contains four Latin-1 octets representing four Unicode characters.
+
+=item *
+
+C<$name> contains five UTF-8 octets representing four Unicode characters.
+
+=back
+
+The string literal has several possible scenarios:
+
+=over 4
+
+=item ASCII string literal
+
+=begin programlisting
+
+    my $hello = "Hello, ";
+
+=end programlisting
+
+The string literal contains octets.
+
+=item Latin-1 string literal with no explicit encoding, such as:
+
+=begin programlisting
+
+    my $hello = "E<iexcl>Hola, ";
+
+=end programlisting
+
+The string literal contains octets.
+
+=item Non ASCII string literal with the C<utf8> or C<encoding> pragma:
+
+=begin programlisting
+
+    use utf8;
+    my $hello = "E<#x5E9>E<#x5DC>E<#x5D5>E<#x5DD>, ";
+
+=end programlisting
+
+The string literal contains Unicode characters.
+
+=back
+
+If both C<$hello> and C<$name> are Unicode strings, the concatenation will
+produce another Unicode string.
+
+If both strings are octet streams, Perl will concatenate them into a new octet
+string.  If both values are octets of the same encoding--both Latin-1, for
+example, the concatenation will work correctly.  If the octets do not share an
+encoding, the concatenation append UTF-8 data to Latin-1 data, producing a
+sequence of octets which makes sense in I<neither> encoding.  This could happen
+if the user entered a name as UTF-8 data and the greeting were a Latin-1 string
+literal, but the program decoded neither.
+
+If only one of the values is a Unicode string, Perl will decode the other as
+Latin-1 data. If this is not the correct encoding, the resulting Unicode
+characters will be wrong.  For example, if the user input were UTF-8 data and
+the string literal were a Unicode string, the name will be incorrectly decoded
+into five Unicode characters C<JosE<Atilde>E<copy>> instead of C<JosE<eacute>>
+because the UTF-8 data means something else when decoded as Latin-1 data.
+
+See C<perldoc perluniintro> for far more detail Unicode, encodings, and how to
+manage incoming and outgoing data in a Unicode world.
 
 =head3 Numbers
 
@@ -391,8 +571,7 @@ X<undef; coercions>
 C<undef> evaluates to false in boolean context.  Be aware that an array
 containing a single element which is itself C<undef> evaluates to true in a
 boolean context.  Interpolating C<undef> into a string--or evaluating it in a
-string context--produces an C<uninitialized value> warning, if you have
-C<warnings> enabled.
+string context--produces an C<uninitialized value> warning.
 
 =head3 The Empty List
 
@@ -500,6 +679,6 @@ do not appear literally in source code.
 
 =for author
 
-Example perhaps? 
+Example perhaps?
 
 =end for

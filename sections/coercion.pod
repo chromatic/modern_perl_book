@@ -18,10 +18,12 @@ mean>), though you must be specific about your intentions.
 
 Z<boolean_coercion>
 X<coercion; boolean>
+X<truthiness>
 
-Boolean coercion occurs when you test the truthiness of a value, such as in a
-C<if> or C<while> condition.  Numeric 0 is false.  The undefined value is
-false.  The empty string is false, and so is the string C<'0'>.  The strings
+Boolean coercion occurs when you test the I<truthiness> of a valueN<Truthiness
+is like truthfulness if you squint and say "Yeah, that's true, but....">, such
+as in a C<if> or C<while> condition.  Numeric 0 is false.  The undefined value
+is false.  The empty string is false, and so is the string C<'0'>.  The strings
 C<'0.0'> and C<'0e'> are I<true>, however.
 
 All other values are true, including the idiomatic string C<'0 but true'>.  In
