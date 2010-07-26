@@ -234,9 +234,25 @@ contains the given key:
 
 Using C<exists> instead of accessing the hash key directly avoids two problems.
 First, it does not check the boolean nature of the hash I<value>; a hash key
-may exist with a value even if that value evaluates to a boolean false (including
-C<undef>). Second, with nested data structures, it avoids autovivifying
-(L<autovivification>) the value.
+may exist with a value even if that value evaluates to a boolean false
+(including C<undef>). Second, with nested data structures, it avoids
+autovivifying (L<autovivification>) the value.
+
+X<defined>
+X<operators; defined>
+
+The corresponding operator for hash values is C<defined>.  If a hash key
+exists, its value may be C<undef>.  Check that with C<defined>:
+
+=begin programlisting
+
+    $addresses{Leibniz} = undef;
+
+    say "Gottfried lives at $addresses{Leibniz}"
+        if exists  $addresses{Leibniz}
+        && defined $addresses{Leibniz};
+
+=end programlisting
 
 =head3 Accessing Hash Keys and Values
 
@@ -303,13 +319,12 @@ a random factor.  With that caveat in mind, the order of items in a hash is the
 same for C<keys>, C<values>, and C<each>.  Modifying the hash may change the
 order, but you can rely on that order if the hash remains the same.
 
-Beware that each hash has only a single iterator for the C<each> operator.  You
-cannot reliably iterate over a hash with C<each> more than once; if you begin a
-new iteration while another is in progress, the former will end prematurely and
-the latter will begin partway through the hash.
+Each hash has only a I<single> iterator for the C<each> operator.  You cannot
+reliably iterate over a hash with C<each> more than once; if you begin a new
+iteration while another is in progress, the former will end prematurely and the
+latter will begin partway through the hash.
 
-You can reset a hash's iterator with the use of C<keys> or C<values> in void
-context:
+Reset a hash's iterator with the use of C<keys> or C<values> in void context:
 
 =begin programlisting
 
@@ -435,7 +450,9 @@ list contextN<The loop will loop forever, unless the hash is empty.>.
 
 X<hashes; finding uniques>
 
-Hashes have several uses, such as finding unique elements of lists or arrays:
+Hashes have several uses, such as finding unique elements of lists or arrays.
+Because each key exists only once in a hash, assigning the same key to a hash
+multiple times stores only the most recent key:
 
 =begin programlisting
 
@@ -560,7 +577,7 @@ You can even set default parameters with this approach:
     {
         my %parameters =
         (
-            B<< flavor   => 'Vanilla', >>
+            B<< flavor    => 'Vanilla', >>
             B<< topping   => 'fudge', >>
             B<< sprinkles => 100, >>
             @_,

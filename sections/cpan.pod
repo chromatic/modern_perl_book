@@ -100,9 +100,9 @@ reading twice, especially its section on troubleshooting.
 Even though the CPAN client is a core module for the Perl 5 distribution, you
 may also have to install standard development tools such as a C<make> utility
 and possibly a C compiler to install all of the distributions you want.
-Windows users, see Strawberry Perl and Strawberry Perl Professional.  Mac OS X
-users need their developer tools installed.  Unix and Unix-like users, consult
-your local system administrator.
+Windows users, see Strawberry Perl (U<http://strawberryperl.com/>) and
+Strawberry Perl Professional.  Mac OS X users need their developer tools
+installed.  Unix and Unix-like users, consult your local system administrator.
 
 =end sidebar
 

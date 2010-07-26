@@ -17,15 +17,9 @@ U<http://www.perl6.org/>>, and even Perl 1.
 
 X<Perl Pub>
 
-=for author
-
-Fix link when appropriate, or remove reference.
-
-=end for
-
-Perl.org also hosts Perl Pub, a website which publishes several articles and
-tutorials about Perl programming every month.  Its archives reach back into the
-20th century.  See U<http://www.perl.org/pub/>.
+Perl.com publishes several articles and tutorials about Perl programming every
+month.  Its archives reach back into the 20th century.  See
+U<http://www.perl.com/>.
 
 X<cpan.org>
 X<websites; cpan.org>

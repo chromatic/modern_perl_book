@@ -149,14 +149,23 @@ autovivification in a lexical scope for specific types of operations; it's
 worth your time to consider this in large projects, or projects with multiple
 developers.
 
-=begin programlisting
+=begin sidebar
 
 You can also check for the existence of specific hash keys and the number of
 elements in arrays before dereferencing each level of a complex data structure,
 but that can produce tedious, lengthy code which many programmers prefer to
 avoid.
 
-=end programlisting
+You may wonder at the contradiction between taking advantage of
+autovivification while enabling C<strictures>.  The question is one of balance.
+is it more convenient to catch errors which change the behavior of your program
+at the expense of disabling those error checks for a few well-encapsulated
+symbolic references?  Is it more convenient to allow data structures to grow
+rather than specifying their size and allowed keys?
+
+The answer to the latter question depends on your specific project.
+
+=end sidebar
 
 =head3 Debugging Nested Data Structures
 

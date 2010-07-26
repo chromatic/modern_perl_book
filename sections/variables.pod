@@ -1,15 +1,15 @@
 =head2 Variables
 
 Z<variables>
+X<variable>
 
 A I<variable> in Perl is a storage location for a value (L<values>).  You can
 work with values directly, but all but the most trivial code works with
-variables.  A variable is a level of indirection that allows you to describe an
-operation rather than its effects; it's easier to explain the Pythagorean
-theorem in terms of the variables C<a>, C<b>, and C<c> than with the side
-lengths of every right triangle you can imagine.  This may seem basic and
-obvious, but to write robust, well-designed, testable, and composable programs,
-you must identify and exploit points of genericity wherever possible.
+variables.  A variable is a level of indirection; it's easier to explain the
+Pythagorean theorem in terms of the variables C<a>, C<b>, and C<c> than with
+the side lengths of every right triangle you can imagine.  This may seem basic
+and obvious, but to write robust, well-designed, testable, and composable
+programs, you must identify and exploit points of genericity wherever possible.
 
 =head3 Variable Naming
 

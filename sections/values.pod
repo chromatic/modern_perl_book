@@ -29,8 +29,10 @@ contents, and no semantic meaning beyond the fact that it's a string.  It could
 be your name.  It could be the contents of an image file read from your hard
 drive.  It could be the Perl program itself.  A string has no meaning to the
 program until you give it meaning.  A string is a fixed amount of data
-delineated by quotes of some form.  Most strings use either single or double
-quotes:
+delineated by quotes of some form, yet Perl strings can grow or shrink as you
+add to or remove from them.
+
+Most strings use either single or double quotes:
 
 =begin programlisting
 
@@ -163,7 +165,23 @@ double-quoted interpolation.  The C<END_BLURB> itself is an arbitrary
 identifier which the Perl 5 parser uses as the ending delimiter.
 
 Be careful; regardless of the indentation of the heredoc declaration itself,
-the ending delimiter must begin in the first column of the program.
+the ending delimiter I<must> begin in the first column of the program:
+
+=begin programlisting
+
+    sub some_function {
+        my $ingredients =<<'END_INGREDIENTS';
+        Two eggs
+        One cup flour
+        Two ounces butter
+        One-quarter teaspoon salt
+        One cup milk
+        One drop vanilla
+        Season to taste
+    END_INGREDIENTS
+    }
+
+=end programlisting
 
 =begin sidebar
 
@@ -568,10 +586,24 @@ value: C<undef>.  Declared but undefined scalar variables contain C<undef>:
 
 X<undef; coercions>
 
-C<undef> evaluates to false in boolean context.  Be aware that an array
-containing a single element which is itself C<undef> evaluates to true in a
-boolean context.  Interpolating C<undef> into a string--or evaluating it in a
-string context--produces an C<uninitialized value> warning.
+C<undef> evaluates to false in boolean context.  Interpolating C<undef> into a
+string--or evaluating it in a string context--produces an C<uninitialized
+value> warning:
+
+=begin programlisting
+
+    my $undefined;
+    my $defined = $undefined . '... and so forth';
+
+=end programlisting
+
+... produces:
+
+=begin screen
+
+    Use of uninitialized value $undefined in concatenation (.) or string...
+
+=end screen
 
 =head3 The Empty List
 

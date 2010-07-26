@@ -77,7 +77,8 @@ Check how many other string functions this includes?
 Many of Perl's scalar operators work on the default scalar variable if you do
 not provide an alternative.
 
-Perl's looping constructs also set C<$_>, such as C<for> iterating over a list:
+Perl's looping directives (L<looping_directives>) also set C<$_>, such as
+C<for> iterating over a list:
 
 =begin programlisting
 
@@ -222,6 +223,17 @@ command-line filter which reverses its input:
     }
 
 =end programlisting
+
+=begin sidebar
+
+Why C<scalar>?  C<say> imposes list context on its operands.  C<reverse> passes
+its context on to its operands, treating them as a list in list context and a
+concatenated string in scalar context.  If this sounds confusing, it can be: if
+Perl 5 arguably should have had different operators for these different
+operations.
+
+=end sidebar
+
 
 If you run it with a list of files:
 

@@ -377,6 +377,10 @@ in numeric context but evaluates to true, thanks to its string contents.  Both
 the empty list and C<undef> evaluate to false.  Empty arrays and hashes return
 the number 0 in scalar context, so they evaluate to false in boolean context.
 
+An array which contains a single element--even C<undef>--evaluates to true in
+boolean context.  A hash which contains any elements--even a key and a value of
+C<undef>--evaluates to true in boolean context.
+
 =begin sidebar
 
 The C<Want> module available from the CPAN allows you to detect boolean context
@@ -576,8 +580,8 @@ this can be troublesome:
 
 =end programlisting
 
-To avoid the possibility of this situation, lexicalize the topic variable with
-C<my $_>:
+If you I<must> use C<$_> rather than a named variable, lexicalize the topic
+variable with C<my $_>:
 
 =begin programlisting
 
@@ -872,7 +876,25 @@ this problem, you may re-open the file inside the C<for> loop (simple to
 understand, but not always a good use of system resources), slurp the entire
 file into memory (which may not work if the file is large), or C<seek> the
 filehandle back to the beginning of the file for each iteration (an often
-overlooked option).
+overlooked option):
+
+=begin programlisting
+
+    use autodie;
+
+    open my $fh, '<', $some_file;
+
+    for my $prefix (@prefixes)
+    {
+        while (<$fh>)
+        {
+            say $prefix, $_;
+        }
+
+        seek $fh, 0, 0;
+    }
+
+=end programlisting
 
 =head3 Loop Control
 
@@ -929,6 +951,7 @@ implement a silly file parser that joins lines which end with a backslash with:
     {
         chomp $line;
 
+        # match backslash at the end of a line
         if ($line =~ s{\\$}{})
         {
             $line .= <$fh>;
@@ -1162,12 +1185,6 @@ Link to smart match.
 X<tailcalls>
 X<goto>
 
-=for author
-
-Do I need to explain recursion?  I fear so.
-
-=end for
-
 A I<tailcall> occurs when the last expression within a function is a call to
 another function--the return value of the outer function is the return
 value of the inner function:
@@ -1199,10 +1216,10 @@ manually.
 
 =begin sidebar
 
-Why would you want to do this?  Heavily recursive code, especially mutually
-recursive code, can quickly consume a lot of memory.  Reducing the memory
-needed for internal bookkeeping of control flow can make otherwise expensive
-algorithms tractable.
+Why would you want to do this?  Heavily recursive code (L<recursion>),
+especially mutually recursive code, can quickly consume a lot of memory.
+Reducing the memory needed for internal bookkeeping of control flow can make
+otherwise expensive algorithms tractable.
 
 =end sidebar
 
