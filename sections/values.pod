@@ -44,7 +44,7 @@ Most strings use either single or double quotes:
 X<strings; single-quoted>
 
 Characters in a I<single-quoted string> represent themselves literally, with
-one exception.  You may embed a single quote inside a single-quoted string by
+two exceptions.  You may embed a single quote inside a single-quoted string by
 escaping the quote with a leading backlash:
 
 =begin programlisting
@@ -52,6 +52,17 @@ escaping the quote with a leading backlash:
     my $reminder = 'DonB<\'>t forget to escape the single quote!';
 
 =end programlisting
+
+If a backslash occurs at the end of the string, escape it with another
+backslash, lest the Perl parser believe you are trying to escape the trailing
+single quote:
+
+=begin programlisting
+
+    my $exception = 'This string ends with a backslash, not a quote: \\';
+
+=end programlisting
+
 
 =for author
 
@@ -561,8 +572,8 @@ converting text read from outside the program to numbers.  Perl will treat
 anything which looks like a number as a number in numeric contexts.  Even
 though it almost always does so correctly, occasionally it's useful to know if
 something really does look like a number.  The core module C<Scalar::Util>
-contains a function named C<looks_like_number> which returns true if Perl will
-consider the given argument numeric.
+contains a function named C<looks_like_number> which returns a true value if
+Perl will consider the given argument numeric.
 
 X<Regexp::Common>
 
@@ -626,11 +637,12 @@ list context without using a temporary variable, you use the idiom (L<idioms>):
 
 Because of the right associativity (L<associativity>) of the assignment
 operator, Perl first evaluates the second assignment by calling
-C<get_all_clown_hats()> in list context.  This produces a list.  Even though
-that list never gets assigned to anything, the return value of the second
-assignment is that list.  Perl next evaluates that list in scalar context, due
-to the scalar assignment to C<$count> in the first assignment.  As a result,
-C<$count> contains the number of elements in the list returned from
+C<get_all_clown_hats()> in list context.  This produces a list.
+
+Assignment to the empty list throws away all of the values of the list, but
+that assignment takes place in scalar context, which evaluates to the number of
+items on the right hand side of the assignment.  As a result, C<$count>
+contains the number of elements in the list returned from
 C<get_all_clown_hats()>.
 
 You don't have to understand all of the implications of this code right now,
@@ -641,8 +653,8 @@ combine to produce interesting and useful behavior.
 
 X<lists>
 
-Lists and arrays are not interchangeable in Perl.  You may store a list in an
-array and you may coerce an array to a list, but they are separate entities.
+A list is a comma-separated group of one or more expressions.
+
 Lists may occur verbatim in source code as values:
 
 =begin programlisting
@@ -709,8 +721,31 @@ C<qw()>, their presence usually indicates an oversight.
 Lists can (and often do) occur as the results of expressions, but these lists
 do not appear literally in source code.
 
-=for author
+Lists and arrays are not interchangeable in Perl.  Lists are values and arrays
+are containers.  You may store a list in an array and you may coerce an array
+to a list, but they are separate entities.  For example, indexing into a list
+is always occurs in list context.  Indexing into an array can occur in scalar
+context (for a single element) or list context (for a slice):
 
-Example perhaps?
+=begin programlisting
 
-=end for
+    sub context
+    {
+        my $context = wantarray;
+        if (defined $context)
+        {
+            say $wantarray ? 'list' : 'scalar';
+        }
+        else
+        {
+            say 'void';
+        }
+
+        return 0;
+    }
+
+    my @list_slice  = (1, 2, 3)[context()];
+    my @array_slice = @list_slice[context()];
+    my $array_index = $array_slice[context()];
+
+=end programlisting

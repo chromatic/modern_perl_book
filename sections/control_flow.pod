@@ -74,12 +74,6 @@ add clarityN<It may also argue against using the postfix form.>:
 
 =end programlisting
 
-=begin sidebar
-
-You may not omit the curly braces in block form under any circumstances.
-
-=end sidebar
-
 X<unless>
 X<control flow directives; unless>
 X<postfix unless>
@@ -354,6 +348,16 @@ the second subexpression.  If the first subexpression were false, the result of
 evaluating the second subexpression would dictate the result of evaluating the
 entire expression.
 
+Besides allowing you to avoid potentially expensive computations, short
+circuiting can help you to avoid errors and warnings:
+
+=begin programlisting
+
+    if (exists $barbeque{pork} and $barbeque{pork} eq 'shoulder') { ... }
+
+=end programlisting
+
+
 =head3 Context for Conditional Directives
 
 X<context; conditional>
@@ -605,7 +609,7 @@ through C<$_>.
 
 X<for loop>
 
-The I<for-style loop> allows the programmer to manage iteration manually:
+The C-style I<for loop> allows the programmer to manage iteration manually:
 
 =begin programlisting
 

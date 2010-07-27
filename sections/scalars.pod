@@ -6,13 +6,14 @@ X<scalar>
 
 Perl 5's fundamental data type is the I<scalar>, which represents a single,
 discrete value.  That value may be a string, an integer, a floating point
-value, an object, or a reference--but it is always a single value.  Scalar
+value, a filehandle, or a reference--but it is always a single value.  Scalar
 values and scalar context have a deep connection; assigning to a scalar
 provides scalar context.
 
-Scalars may be lexical or global variables, and the names of scalar variables
-must conform to the L<names> guidelines.  Scalar variables always use the
-leading dollar-sign (C<$>) sigil (L<sigils>).
+Scalars may be lexical, package, or global (L<globals>) variables.  You may
+only declare lexical or package variables.  The names of scalar variables must
+conform to the L<names> guidelines.  Scalar variables always use the leading
+dollar-sign (C<$>) sigil (L<sigils>).
 
 =begin sidebar
 
