@@ -1,10 +1,26 @@
 <!--
 
-h1 { font-family: sans-serif; }
-h2 { font-family: sans-serif; }
-h3 { font-family: sans-serif; }
-h4 { font-family: sans-serif; }
-h5 { font-family: sans-serif; }
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2em;
+  font-family: 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: sans-serif;
+  margin: 1.2em 0 0.6em 0;
+}
+
+p {
+  line-height: 1.5em;
+  margin: 1.6em 0;
+}
+
+code {
+  /* borrowed from Dive Into HTML5 */
+  font: normal normal normal medium/1.2 Consolas, 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
+}
 
 table { font-size: 12px; font-family: sans-serif; }
 
