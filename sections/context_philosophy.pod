@@ -38,17 +38,19 @@ X<context; amount>
 X<amount context>
 
 One of the aspects of context governs I<how many> items you expect.  This is
-I<amount context>.  Compare this context to compare it to subject-verb number
-agreement in English.  If you can spot the error in the sentence "Perl are a
-fun language", you already know how to do this.
+I<amount context>.  Compare this context to subject-verb number agreement in
+English.  Even if you haven't learned the formal description of the rule, you
+probably understand the error in the sentence "Perl are a fun language".  The
+rule in Perl is that the number of items you request determines how many you
+get.
 
 X<void context>
 X<context; void>
 
-Suppose you have a function called C<some_expensive_operation()> which performs
-an expensive calculation and can produce many, many results.  If you call the
-function on its own and never use its return value, you've called the function
-in I<void context>:
+Suppose you have a function (L<functions>) called C<some_expensive_operation()>
+which performs an expensive calculation and can produce many, many results.  If
+you call the function on its own and never use its return value, you've called
+the function in I<void context>:
 
 =begin programlisting
 
@@ -69,8 +71,8 @@ function in I<scalar context>:
 
 X<list context>
 
-Assigning the results of calling the function to an array or a list, or using
-it in a list evaluates the function in I<list context>:
+Assigning the results of calling the function to an array (L<arrays>) or a
+list, or using it in a list evaluates the function in I<list context>:
 
 =begin programlisting
 
@@ -107,11 +109,8 @@ tasks, you can use a one or two-element list.
 =end sidebar
 
 Evaluating a function or expression--except for assignment--in list context can
-produce confusion.  Remember that argument lists and lists
-themselves--especially lists used in hash initializers--propagate list context
-to the expressions they contain.  Thus both of these calls to
-C<some_expensive_operation()> are in list context, even if it's not immediately
-obvious:
+produce confusion.  Lists propagate list context to the expressions they
+contain.  Both calls to C<some_expensive_operation()> occur in list context:
 
 =begin programlisting
 
@@ -128,9 +127,8 @@ obvious:
 X<operators; scalar>
 X<scalar>
 
-The latter example probably will not do what you expect, at least if you expect
-it to return a single item.  Use the C<scalar> operator to enforce scalar
-context on the function call:
+The latter example often surprises novice programmers who expect scalar context
+for the call.  Use the C<scalar> operator to enforce it:
 
 =begin programlisting
 
