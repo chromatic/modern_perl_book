@@ -541,6 +541,7 @@ U<http://hop.perl.plover.com/>.
 
 =head3 Recursion
 
+Z<recursion>
 X<recursion>
 X<call frame>
 X<functions; call frame>

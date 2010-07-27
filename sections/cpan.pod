@@ -26,7 +26,9 @@ CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
 code.  A single distribution can contain one or more I<modules>, or
 self-contained libraries of Perl code.  Each distribution lives in its own
 namespace on the CPAN and contains its own metadata.  You can build, install,
-test, and update each distribution on its own.
+test, and update each distribution.  Distributions may depend on other
+distributions.  For this reason, installing distributions through a CPAN client
+is often simpler than doing so manually.
 
 =begin sidebar
 
@@ -81,11 +83,19 @@ If you use a recent version of CPAN.pm (as of this writing, 1.9402 is the
 latest stable release), CPAN.pm configuration is largely decision-free.  For
 any complete installation of Perl, you may start the client with:
 
+=begin programlisting
+
     $ B<cpan>
+
+=end programlisting
 
 To install a distribution:
 
+=begin programlisting
+
     $ B<cpan Modern::Perl>
+
+=end programlisting
 
 X<Eric Wilhelm>
 X<CPAN.pm; configuration>
@@ -100,9 +110,9 @@ reading twice, especially its section on troubleshooting.
 Even though the CPAN client is a core module for the Perl 5 distribution, you
 may also have to install standard development tools such as a C<make> utility
 and possibly a C compiler to install all of the distributions you want.
-Windows users, see Strawberry Perl and Strawberry Perl Professional.  Mac OS X
-users need their developer tools installed.  Unix and Unix-like users, consult
-your local system administrator.
+Windows users, see Strawberry Perl (U<http://strawberryperl.com/>) and
+Strawberry Perl Professional.  Mac OS X users need their developer tools
+installed.  Unix and Unix-like users, consult your local system administrator.
 
 =end sidebar
 
@@ -112,21 +122,44 @@ to profiling tools to protocols for almost every network device ever created to
 sound and graphics libraries and wrappers for shared libraries on your system.
 
 Modern Perl without the CPAN is just another language.  Modern Perl with the
-CPAN... now you have something amazing.
+CPAN is amazing.
 
 =begin sidebar
 
-Three projects are worth your attention throughout 2010.  C<local::lib>, a CPAN
-module, allows you to install and to manage distributions in your own user
-directory, rather than for the system as a whole.  This is an effective way to
-maintain CPAN distributions without affecting other users.
+Serious Perl developers often manage their own Perl library paths or even full
+installations.  Several projects help to make this possible.
 
 C<App::cpanminus> is a new CPAN client with goals of speed, simplicity, and
-zero configuration.
+zero configuration.  Installation is as easy as:
 
-C<App::perlbrew> is a system to manage and to switch between your own installations of multiple versions and configurations of Perl.
+=begin programlisting
 
-Advanced users will see more benefit from these projects, but novices can and
-should take advantage of them as well.
+    $ curl -LO http://xrl.us/cpanm
+    $ chmod +x cpanm
+
+=end programlisting
+
+C<App::perlbrew> is a system to manage and to switch between your own
+installations of multiple versions and configurations of Perl.  Installation is as easy as:
+
+=begin programlisting
+
+    $ curl -LO http://xrl.us/perlbrew
+    $ chmod +x perlbrew
+    $ ./perlbrew install
+    $ perldoc App::perlbrew
+
+=end programlisting
+
+The C<local::lib> CPAN distribution allows you to install and to manage
+distributions in your own user directory, rather than for the system as a
+whole.  This is an effective way to maintain CPAN distributions without
+affecting other users.  Installation is somewhat more involved than the
+previous two distributions.  See U<http://search.cpan.org/perldoc?local::lib>
+for more details.
+
+All three distributions projects tend to assume a Unix-like environment (such
+as a GNU/Linux distribution or even Mac OS X). Windows users, see the Padre
+all-in-one download (U<http://padre.perlide.org/download.html>).
 
 =end sidebar

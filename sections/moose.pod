@@ -631,6 +631,20 @@ this role.  A class could choose to provide its own C<age()> method or obtain
 it from another role; that doesn't matter.  All that matters is that it
 contains one.  This is I<allomorphism>.
 
+=head4 Roles and DOES()
+
+X<DOES()>
+X<Moose; DOES()>
+
+Applying a role to a class means that the class and its instances will return
+true when you call the C<DOES()> method on them:
+
+=begin programlisting
+
+    say 'This Cat is alive!' if $kitten->DOES( 'LivingBeing' );
+
+=end programlisting
+
 =head3 Inheritance
 
 Z<inheritance>
@@ -647,11 +661,13 @@ its parent class.
 
 =begin sidebar
 
-The decision to use either inheritance or roles is largely a matter of
-familiarity.  Roles provide composition-time safety, better type checking, and
-arguably better-factored and less coupled code, but inheritance is more
-familiar to users of other languages.  The design question is whether one class
-truly I<extends> another or whether it provides additional (or, at least,
+Recent experiments in role-based systems in Perl 5 demonstrate that you can
+replace almost every use of inheritance in a system with roles.  The decision
+to use either one is largely a matter of familiarity.  Roles provide
+composition-time safety, better type checking, better-factored and less coupled
+code, and finger-grained control over names and behaviors, but inheritance is
+more familiar to users of other languages.  The design question is whether one
+class truly I<extends> another or whether it provides additional (or, at least,
 I<different>) behavior.
 
 =end sidebar

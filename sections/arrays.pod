@@ -28,7 +28,7 @@ array even despite the change of sigil because the square brackets (C<[]>)
 always identify indexed access to an aggregate variable.  In simpler terms,
 that means "look up one thing in a group of things by an integer".
 
-Array indices start at 0.  The first element of an array is at index zero:
+The first element of an array is at index zero:
 
 =begin programlisting
 
@@ -85,23 +85,21 @@ replace the C<@> array sigil with the slightly more unwieldy C<$#>:
 =end programlisting
 
 That may not read as nicely, however.  Most of the time you don't need that
-syntax, for two reasons.  First, you can use negative offsets to access an
-array from the end instead of the start.  The final element of an array is
-available at the index C<-1>.  The penultimate element of the array is
-available at index C<-2>, and so on.  For example:
+syntax, as you can use negative offsets to access an array from the end instead
+of the start.  The final element of an array is available at the index C<-1>.
+The penultimate element of the array is available at index C<-2>, and so on.
+For example:
 
 =begin programlisting
 
-    my $last_cat = $cats[-1];
+    my $last_cat           = $cats[-1];
     my $second_to_last_cat = $cats[-2];
 
 =end programlisting
 
-=for author
-
-What's the second reason you don't need $#?
-
-=end for
+You can resize an array by assigning to C<$#>.  If you shrink an array, Perl
+will discard values which do not fit in the resized array.  If you expand an
+array, Perl will fill in the expanded values with C<undef>.
 
 =head3 Array Assignment
 
@@ -207,19 +205,32 @@ A slice can contain zero or more elements--including one:
 
     # single-element array slice; function call in I<list> context
     @cats[-1] = get_more_cats();
+
+    # single-element array access; function call in I<scalar> context
     $cats[-1] = get_more_cats();
 
 =end programlisting
 
-Be aware that the only syntactic difference between an array slice of one
-element and the scalar access of an array element is the leading sigil.  The
-I<semantic> difference is greater: an array slice always enforces list context.
+The only syntactic difference between an array slice of one element and the
+scalar access of an array element is the leading sigil.  The I<semantic>
+difference is greater: an array slice always enforces list context.  Any array
+slice evaluated in scalar context will produce a warning:
 
-=begin sidebar
+=begin screen
 
-This behavior is one reason why Perl 6 uses invariant sigils.
+    Scalar value @cats[1] better written as $cats[1] at...
 
-=end sidebar
+=end screen
+
+An array slice imposes list context (L<context_philosophy>) on the expression
+used as its index:
+
+=begin programlisting
+
+    # function called in list context
+    my @cats = @cats[ get_cat_indices() ];
+
+=end programlisting
 
 =head3 Array Operations
 
@@ -365,7 +376,15 @@ this example several years ago>:
     # what's in this array again?
     {
         local $" = ')(';
-        say "(@some_values)";
+        say "(@sweet_treats)";
     }
 
 =end programlisting
+
+... which produces the result:
+
+=begin screen
+
+    (pie)(cake)(doughnuts)(cookies)(raisin bread)
+
+=end screen

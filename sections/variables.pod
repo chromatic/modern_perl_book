@@ -1,15 +1,15 @@
 =head2 Variables
 
 Z<variables>
+X<variable>
 
 A I<variable> in Perl is a storage location for a value (L<values>).  You can
 work with values directly, but all but the most trivial code works with
-variables.  A variable is a level of indirection that allows you to describe an
-operation rather than its effects; it's easier to explain the Pythagorean
-theorem in terms of the variables C<a>, C<b>, and C<c> than with the side
-lengths of every right triangle you can imagine.  This may seem basic and
-obvious, but to write robust, well-designed, testable, and composable programs,
-you must identify and exploit points of genericity wherever possible.
+variables.  A variable is a level of indirection; it's easier to explain the
+Pythagorean theorem in terms of the variables C<a>, C<b>, and C<c> than with
+the side lengths of every right triangle you can imagine.  This may seem basic
+and obvious, but to write robust, well-designed, testable, and composable
+programs, you must identify and exploit points of genericity wherever possible.
 
 =head3 Variable Naming
 
@@ -46,15 +46,55 @@ example:
 
     package Store::IceCream;
 
-    our $num_flavors = 42;
+    use vars '$num_flavors';
+    $num_flavors = 42;
 
 =end programlisting
 
-Within the C<Store::IceCream> package, C<$num_flavors> is available without a
-namespace prefix.  Outside of that package, it is available as
-C<$Store::IceCream::num_flavors>.  If C<$num_flavors> were a lexical variable
-(declared with C<my>), it would not be available outside of the package.
-Inside the package, it would only be available within the appropriate scope.
+X<pragmas; vars>
+X<vars>
+
+The C<vars> pragma here declares a global variable without violating the rules
+of the C<strict> pragma.  Within the C<Store::IceCream> package,
+C<$num_flavors> is available without a namespace prefix.  Outside of that
+package, it is available as C<$Store::IceCream::num_flavors>.  If
+C<$num_flavors> were a lexical variable (declared with C<my>), it would not be
+available outside of the package.  Inside the package, it would only be
+available within the appropriate scope.
+
+X<our>
+X<keywords; our>
+
+You may also declare package variables with the C<our> keyword.  Unlike C<vars>
+variables, these variables have a lexical scope:
+
+=begin programlisting
+
+    {
+        package Store::Candy;
+
+        our $jellybeans;
+    }
+
+    # $Store::Candy::jellybeans not visible here
+
+=end programlisting
+
+... yet remember that files themselves have their own lexical scopes, where the
+C<package> declaration on its own does not create a new scope:
+
+=begin programlisting
+
+    package Store::Toy;
+
+    our $discount = 0.10;
+
+    package Store::Music;
+
+    # $Store::Toy::discount still visible as $discount
+    say "Our current discount is $discount!";
+
+=end programlisting
 
 =begin sidebar
 

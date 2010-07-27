@@ -92,6 +92,20 @@ except that no assignment to the array actually occurs:
 
 =end programlisting
 
+=begin sidebar
+
+Why is context interesting for functions?  Suppose
+C<some_expensive_operation()> calculates all of the tasks you have to do around
+the house, sorted in order of their priority.  If you have only time to do one
+task, you can call the function in scalar context to get a useful task--perhaps
+not necessarily the most important, but important enough without having to go
+through your whole task list.  In list context, the function can perform all of
+the sorting and searching and comparison and give you an exhaustive list in the
+proper order.  If you want all of that work, but only have time for a couple of
+tasks, you can use a one or two-element list.
+
+=end sidebar
+
 Evaluating a function or expression--except for assignment--in list context can
 produce confusion.  Remember that argument lists and lists
 themselves--especially lists used in hash initializers--propagate list context

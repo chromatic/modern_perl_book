@@ -13,7 +13,8 @@ Perl's copious core documentation.
 =begin sidebar
 
 If you prefer an online version, U<http://perldoc.perl.org/> hosts recent
-versions of the Perl documentation.  Windows users, both ActivePerl and
+versions of the Perl documentation.  U<http://search.cpan.org/> displays the
+documentation of every module on the CPAN.  Windows users, both ActivePerl and
 Strawberry Perl provide a link in your Start menu to the documentation.
 
 =end sidebar

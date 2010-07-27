@@ -58,7 +58,7 @@ sub process_chapter
     my ($path, $sections_href) = @_;
     my $text                 = read_file( $path );
 
-    $text =~ s/L<(\w+)>/insert_section( $sections_href, $1, $path )/eg;
+    $text =~ s/^L<(\w+)>/insert_section( $sections_href, $1, $path )/emg;
 
     $text =~ s/(=head1 .*)\n\n=head2 \*{3}/$1/g;
     return $text;

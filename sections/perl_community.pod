@@ -17,15 +17,9 @@ U<http://www.perl6.org/>>, and even Perl 1.
 
 X<Perl Pub>
 
-=for author
-
-Fix link when appropriate, or remove reference.
-
-=end for
-
-Perl.org also hosts Perl Pub, a website which publishes several articles and
-tutorials about Perl programming every month.  Its archives reach back into the
-20th century.  See U<http://www.perl.org/pub/>.
+Perl.com publishes several articles and tutorials about Perl programming every
+month.  Its archives reach back into the 20th century.  See
+U<http://www.perl.com/>.
 
 X<cpan.org>
 X<websites; cpan.org>
@@ -77,8 +71,9 @@ Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
 X<Perl 5 Porters>
 X<p5p>
 
-The Perl 5 Porters mailing list is the central point for Perl 5 development
-discussion.  See U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
+The Perl 5 Porters (also known as I<p5p>) mailing list is the central point for
+Perl 5 development discussion.  See
+U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
 
 X<TPF>
 X<The Perl Foundation>

@@ -31,8 +31,8 @@ A hash has the C<%> sigil.  Declare a lexical hash with:
 =end programlisting
 
 A hash starts out empty, with no keys or values.  In boolean context, a hash
-returns false if it's empty (if it contains no keys or values) and true
-otherwise.
+returns false if it contains no keys.  Otherwise, it returns a string which
+evaluates to true.
 
 You can assign and access individual elements of a hash:
 
@@ -75,9 +75,10 @@ required pairing more visible:
 =end programlisting
 
 The fat comma operator acts like the regular comma, but it also causes the Perl
-parser to treat the previous bareword as if it were a quoted word.  The
-C<strict> pragma will not warn about the bare word, and if you have a function
-with the same name as a hash key, the fat comma will I<not> call the function:
+parser to treat the previous bareword (L<barewords>) as if it were a quoted
+word.  The C<strict> pragma will not warn about the bare word, and if you have
+a function with the same name as a hash key, the fat comma will I<not> call the
+function:
 
 =begin programlisting
 
@@ -234,9 +235,25 @@ contains the given key:
 
 Using C<exists> instead of accessing the hash key directly avoids two problems.
 First, it does not check the boolean nature of the hash I<value>; a hash key
-may exist with a value even if that value evaluates to a boolean false (including
-C<undef>). Second, with nested data structures, it avoids autovivifying
-(L<autovivification>) the value.
+may exist with a value even if that value evaluates to a boolean false
+(including C<undef>). Second, with nested data structures, it avoids
+autovivifying (L<autovivification>) the value.
+
+X<defined>
+X<operators; defined>
+
+The corresponding operator for hash values is C<defined>.  If a hash key
+exists, its value may be C<undef>.  Check that with C<defined>:
+
+=begin programlisting
+
+    $addresses{Leibniz} = undef;
+
+    say "Gottfried lives at $addresses{Leibniz}"
+        if exists  $addresses{Leibniz}
+        && defined $addresses{Leibniz};
+
+=end programlisting
 
 =head3 Accessing Hash Keys and Values
 
@@ -258,11 +275,18 @@ keys of the hash:
 
 =end programlisting
 
+=begin sidebar
+
+You may assign a numeric value to C<keys> to modify the expected size of the
+hash.  This is a minor optimization you almost never need.
+
+=end sidebar
+
 X<values>
 X<hashes; values>
 X<operators; values>
 
-Similarly, the C<values> operator returns a list of values of the hash:
+The C<values> operator returns a list of values of the hash:
 
 =begin programlisting
 
@@ -303,13 +327,12 @@ a random factor.  With that caveat in mind, the order of items in a hash is the
 same for C<keys>, C<values>, and C<each>.  Modifying the hash may change the
 order, but you can rely on that order if the hash remains the same.
 
-Beware that each hash has only a single iterator for the C<each> operator.  You
-cannot reliably iterate over a hash with C<each> more than once; if you begin a
-new iteration while another is in progress, the former will end prematurely and
-the latter will begin partway through the hash.
+Each hash has only a I<single> iterator for the C<each> operator.  You cannot
+reliably iterate over a hash with C<each> more than once; if you begin a new
+iteration while another is in progress, the former will end prematurely and the
+latter will begin partway through the hash.
 
-You can reset a hash's iterator with the use of C<keys> or C<values> in void
-context:
+Reset a hash's iterator with the use of C<keys> or C<values> in void context:
 
 =begin programlisting
 
@@ -435,7 +458,9 @@ list contextN<The loop will loop forever, unless the hash is empty.>.
 
 X<hashes; finding uniques>
 
-Hashes have several uses, such as finding unique elements of lists or arrays:
+Hashes have several uses, such as finding unique elements of lists or arrays.
+Because each key exists only once in a hash, assigning the same key to a hash
+multiple times stores only the most recent key:
 
 =begin programlisting
 
@@ -560,7 +585,7 @@ You can even set default parameters with this approach:
     {
         my %parameters =
         (
-            B<< flavor   => 'Vanilla', >>
+            B<< flavor    => 'Vanilla', >>
             B<< topping   => 'fudge', >>
             B<< sprinkles => 100, >>
             @_,

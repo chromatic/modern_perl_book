@@ -228,10 +228,10 @@ Surround a list of values or expressions with square brackets:
 
 =end programlisting
 
-This array reference behaves the same as named array references.  Do note,
-however, that anonymous array references I<always> create a new reference,
-while taking a reference to a named array always refers to the I<same> array
-with regard to scoping.  That is to say:
+This array reference behaves the same as named array references, except that
+anonymous array references I<always> create a new reference, while taking a
+reference to a named array always refers to the I<same> array with regard to
+scoping.  That is to say:
 
 =begin programlisting
 

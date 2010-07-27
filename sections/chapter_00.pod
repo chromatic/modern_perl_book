@@ -37,6 +37,21 @@ program:
 
 =end programlisting
 
+Other code snippets use testing functions such as C<ok()>, C<like()>, and
+C<is()> (L<testing>).  That skeleton program is:
+
+=begin programlisting
+
+    #!/usr/bin/perl
+
+    use Modern::Perl;
+    B<use Test::More 'no_Plan';>
+
+    # example code here
+    ...
+
+=end programlisting
+
 If you don't already have a modern version of Perl installed, you can install
 it yourself, using:
 
