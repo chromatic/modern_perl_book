@@ -136,7 +136,7 @@ X<fixity; postcircumfix>
 
 The I<fixity> of an operator is its position relative to its operands.  The
 mathematic operators tend to be I<infix> operators, where they appear between
-their operands.  Other operators are C<prefix>, where they appear before their
+their operands.  Other operators are I<prefix>, where they appear before their
 operands; these tend to be unary operators, such as the prefix increment
 operator C<++$x> or the mathematical and boolean negation operators (C<-$x> and
 C<!$x>, respectively).  I<Postfix> operators appear after their operands (such

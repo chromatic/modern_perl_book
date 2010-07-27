@@ -107,6 +107,71 @@ These are string equality (C<eq>), string inequality (C<ne>), greater than
 (C<gt>), less than (C<lt>), greater than or equal to (C<ge>), less than or
 equal to (C<le>), and the string sort comparison operator (C<cmp>).
 
+=head3 Logical Operators
+
+X<operators; logical>
+X<operators; &&>
+X<&&>
+X<operators; and>
+X<and>
+X<operators; ||>
+X<||>
+X<operators; or>
+X<or>
+X<operators; //>
+X<//>
+X<operators; defined-or>
+X<defined-or>
+X<operators; ?:>
+X<?:>
+X<operators; !>
+X<!>
+X<operators; not>
+X<not>
+X<operators; xor>
+X<xor>
+X<short-circuiting>
+
+The logical operators treat their operands in a boolean context.  The C<&&> and
+C<and> operators test that both expressions are logically true, while the C<||>
+and C<or> operators test that either expression is true.  All four are infix
+operators.  All four perform I<short-circuiting> behavior: if the evaluation of
+one expression will make the entire expression false, Perl will not evaluate
+the other expression.  The word forms of these operators have lower precedence
+than the symbolic forms.
+
+The defined-or operator, C<//>, tests the I<definedness> of its operand.
+Unlike C<||> which tests the truthiness of its operand, C<//> evaluates to a
+true value if its operand evalutes to a numeric zero or the empty string.  This
+is especially useful for setting default parameter values:
+
+=begin programlisting
+
+    sub name_pet
+    {
+        my $name = shift // 'Fluffy';
+        ...
+    }
+
+=end programlisting
+
+The ternary conditional operator, C<?:>, takes three operands.  It evaluates
+the first in boolean context and evaluates to the second if the first is true
+and the third otherwise:
+
+=begin programlisting
+
+    my $truthiness = $value ? 'true' : 'false';
+
+=end programlisting
+
+The C<!> and C<not> operators return the logical opposite of the boolean value
+of their operands.  C<not> has a lower precedence than C<!>.  These are prefix
+operators.
+
+The C<xor> operator is an infix operator which performs the exclusive or of its
+operands.
+
 =head3 Bitwise Operators
 
 X<operators; bitwise>
@@ -151,6 +216,26 @@ value of that variable.  If the variable is obviously a string (and has never
 been evaluated in a numeric context), the string value increments with a carry,
 such that C<a> increments to C<b>, C<zz> to C<aaa>, and C<a9> to C<b0>.
 
+=begin programlisting
+
+    my $num = 1;
+    my $str = 'a';
+
+    $num++;
+    $str++;
+    is( $num,   2, 'numeric autoincrement should stay numeric' );
+    is( $str, 'b', 'string autoincrement should stay string' );
+
+    no warnings 'numeric';
+    $num += $str;
+    $str++;
+
+    is( $num, 2, 'adding $str to $num should add numeric value of $str' );
+    is( $str, 1, '... but $str should now autoincrement its numeric part' );
+
+=end programlisting
+
+
 X<operators; repetition>
 X<operators; x>
 X<x>
@@ -161,14 +246,34 @@ Is there a better way to explain this?  I may have confused myself writing it.
 
 =end for
 
-The repetition operator (C<x>) depends on amount context.  In scalar context,
-it repeats its left operand into a single scalar.  In list context, it produces
-a list of its left operand repeated.  There is one special case to Perl 5's
-list syntax; if the left operand is a scalar enclosed in parentheses, the
-repetition operator will treat it as if it were a list:
+In list context, the repetition operator (C<x>) changes its behavior based on
+its first operand.  When given a list, it evaluates to that list repeated the
+number of times specified by its second operand.  When given a scalar, it
+produces a string consisisting of the string value of its first operand
+concatenated to itself the number of times specified by its second operand.  In
+scalar context, the operator always produces a concatenated string repeated
+appropriately.
+
+This is an infix operator:
 
 =begin programlisting
 
     my @scheherazade = ('nights') x 1001;
+    my $calendar     =  'nights'  x 1001;
+
+    is( @scheherazade,                      1001, 'list repeated' );
+    is( length $calendar, 1001 * length 'nights', 'word repeated' );
+
+    my @schenolist   =  'nights'  x 1001;
+    my $calscalar    = ('nights') x 1001;
+
+    is( @schenolist,                            1, 'no lvalue list'      );
+    is( length $calscalar, 1001 * length 'nights', 'word still repeated' );
 
 =end programlisting
+
+=for author
+
+Add readline, comma, range, flip-flop, and C<...>.
+
+=end for
