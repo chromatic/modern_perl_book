@@ -5,14 +5,13 @@ Z<expressivity>
 X<Wall, Larry>
 X<Larry Wall>
 
-Perl takes cues from human languages.  Larry WallN<The creator of Perl.>'s
-studies in linguistics continue to influence Perl's design.  As with natural
-language, there are many ways to write a Perl program depending on your
-project's style, the available time to create the program, the expected
-maintenance burden, or even your own personal sense of expression.  You may
-write in a straightforward, top-to-bottom style.  You may write many small and
-independent functions.  You may model your problem with classes and objects.
-You may eschew or embrace advanced features.
+Before Larry Wall created Perl, he studied linguistics and human languages.
+His experiences continue to influence Perl's design.  There are many ways to
+write a Perl program depending on your project's style, the available time to
+create the program, the expected maintenance burden, or even your own personal
+sense of expression.  You may write in a straightforward, top-to-bottom style.
+You may write many small and independent functions.  You may model your problem
+with classes and objects.  You may eschew or embrace advanced features.
 
 X<TIMTOWTDI>
 X<Tim Toady>
