@@ -319,20 +319,48 @@ To create a class:
 X<metaclass>
 X<OO; metaclass>
 
-You can add methods and attributes to this class when you create it, and you
-can perform introspection on the class with the I<metaclass> (the object which
-represents that class) returned from the C<create()> constructor.  Similarly
-you can create and manipulate and introspect attributes and methods with
-C<Class::MOP::Attribute> and C<Class::MOP::Method>.
+You can add attributes and methods to this class when you create it:
 
-=for author
+=begin programlisting
+    use Class::MOP;
 
-Does this need more of an example?
+    my $class = Class::MOP::Class->create(
+        'Monkey::Wrench' =>
+        (
+            attributes =>
+            (
+                Class::MOP::Attribute->new( '$material' ),
+                Class::MOP::Attribute->new( '$color' ),
+            )
+            methods =>
+            {
+                tighten => sub { ... },
+                loosen  => sub { ... },
+            }
+        ),
+    );
 
-Ideas: applying roles to object instances (which is basically
-generating code), generating classes from a database schema or XML
-Schema structure, ... not all of these with concrete examples yet.
-But metaprogramming is very cool :-).  Perhaps worth noting that it is
-this very flexibility that has allowed Moose itself to be written.
+=end programlisting
 
-=end for
+... or add them to the I<metaclass> (the object which represents that class)
+after you've created it:
+
+=begin programlisting
+
+    $class->add_attribute( experience  => Class::MOP::Attribute->new( '$xp' ) );
+    $class->add_method(    bash_zombie => sub { ... } );
+
+=end programlisting
+
+... and you can perform introspection on the metaclass:
+
+=begin programlisting
+
+    my @attrs = $class->get_all_attributes();
+    my @meths = $class->get_all_methods();
+
+=end programlisting
+
+You can similarly create and manipulate and introspect attributes and methods
+with C<Class::MOP::Attribute> and C<Class::MOP::Method>.  This metaobject
+protocol and the flexibility it affords powers Moose (L<moose>).
