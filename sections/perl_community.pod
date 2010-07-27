@@ -71,8 +71,9 @@ Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
 X<Perl 5 Porters>
 X<p5p>
 
-The Perl 5 Porters mailing list is the central point for Perl 5 development
-discussion.  See U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
+The Perl 5 Porters (also known as I<p5p>) mailing list is the central point for
+Perl 5 development discussion.  See
+U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
 
 X<TPF>
 X<The Perl Foundation>
