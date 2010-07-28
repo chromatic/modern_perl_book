@@ -121,10 +121,10 @@ elements by index:
 
 =end programlisting
 
-You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and list slices
-on C<@_>. Inside a function, the C<shift> and C<pop> operators operate on C<@_>
-implicitly in the same way that they operate on C<@ARGV> outside of any
-function:
+You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and use list
+slices on C<@_>. Inside a function, the C<shift> and C<pop> operators operate
+on C<@_> implicitly in the same way that they operate on C<@ARGV> outside of
+any function:
 
 =begin programlisting
 
@@ -143,7 +143,7 @@ implicit operand to C<shift> is idiomatic in Perl 5.
 
 =end sidebar
 
-Do take care that assigning a scalar parameter from C<@_> requires C<shift>,
+Take care that assigning a scalar parameter from C<@_> requires C<shift>,
 indexed access to C<@_>, or lvalue list context parentheses.  Otherwise, Perl 5
 will happily evaluate C<@_> in scalar context for you and assign the number of
 parameters passed:
@@ -204,6 +204,13 @@ rest to another function:
 The dominant practice seems to be to use C<shift> only when your function must
 access a single parameter and list assignment when accessing multiple
 parameters.
+
+=begin sidebar
+
+See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
+modules on the CPAN for declarative parameter handling.
+
+=end sidebar
 
 =head3 Flattening
 
@@ -322,37 +329,6 @@ behavior is easiest to demonstrate with an example:
 
 If you modify an element of C<@_> directly, you will modify the original
 parameter directly.  Be cautious.
-
-=begin sidebar
-
-See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
-modules on the CPAN for declarative parameter handling.
-
-=end sidebar
-
-=head3 Validating
-
-Defensive programming often benefits from checking types and values of
-arguments for appropriateness before performing further processing.  By
-default, Perl 5 provides few built-in mechanisms for doing so (and don't expect
-L<prototypes> to help). You can check that the I<number> of parameters passed
-to a function is correct by evaluating C<@_> in scalar context:
-
-=begin programlisting
-
-    sub add_numbers
-    {
-        croak "Expected two numbers, but received: " . @_
-            unless @_ == 2;
-
-        ...
-    }
-
-=end programlisting
-
-Type checking is more difficult, because of Perl's operator-oriented type
-conversions (see L<context_philosophy>).  In cases where you need more
-strictness, consider the CPAN module C<Params::Validate>.
 
 =head2 Namespaces
 
@@ -507,7 +483,7 @@ X<Carp; cluck>
 The standard C<Carp> module uses this technique to great effect for reporting
 errors and throwing warnings in functions.  You may see C<croak()> used to
 throw exceptions in place of C<die> in library code.  C<croak()> throws an
-exception reported from the file and line number of its caller.  The C<cluck()>
+exception reported from the file and line number of its caller.  The C<carp()>
 function reports a warning from the file and line number of its caller.
 
 This behavior is most useful when validating parameters or preconditions of a
@@ -527,17 +503,34 @@ function, when you want to indicate that the calling code is wrong somehow:
 
 =end programlisting
 
+=head3 Validating Arguments
+
+Defensive programming often benefits from checking types and values of
+arguments for appropriateness before performing further processing.  By
+default, Perl 5 provides few built-in mechanisms for doing so (and don't expect
+L<prototypes> to help). You can check that the I<number> of parameters passed
+to a function is correct by evaluating C<@_> in scalar context:
+
+=begin programlisting
+
+    sub add_numbers
+    {
+        croak "Expected two numbers, but received: " . @_
+            unless @_ == 2;
+
+        ...
+    }
+
+=end programlisting
+
+Type checking is more difficult, because of Perl's operator-oriented type
+conversions (see L<context_philosophy>).  In cases where you need more
+strictness, consider the CPAN module C<Params::Validate>.
+
 =head2 Advanced Functions
 
 Functions may seem simple, but you can do much, much more with them (see
 L<closures> and L<anonymous_functions> for more details).
-
-=begin sidebar
-
-I<Higher Order Perl>, by Mark Jason Dominus, is well worth your time.  See
-U<http://hop.perl.plover.com/>.
-
-=end sidebar
 
 =head3 Recursion
 
@@ -653,8 +646,8 @@ why the C<elem_exists()> function has several C<return> statements.
 
 Perl offers a helpful warning when it detects what might be runaway recursion:
 C<Deep recursion on subroutine>.  The limit is 100 recursive calls, which can
-be too few in certain circumstances but too many in others. You can disable
-this warning with C<no warnings 'recursion'>.
+be too few in certain circumstances but too many in others.  Disable this
+warning with C<no warnings 'recursion'> in the scope of the recursive call.
 
 X<functions; tail call elimination>
 
@@ -695,10 +688,9 @@ the parent call directly.
 
 Perl 5 supports manual tail call elimination, but two recent CPAN modules
 provide a much better syntax (and even better performance).  Yuval Kogman's
-C<Sub::Call::Tail> and C<Sub::Call::Recur> are worth exploring if you find
-yourself with highly recursive code or code that could benefit from tail call
-elimination.  C<Sub::Call::Tail> is appropriate for tail calls of non-recursive
-code:
+C<Sub::Call::Tail> is worth exploring if you find yourself with highly
+recursive code or code that could benefit from tail call elimination.
+C<Sub::Call::Tail> is appropriate for tail calls of non-recursive code:
 
 =begin programlisting
 
@@ -720,26 +712,6 @@ with no functional changes (yet more clarity and improved performance):
 =begin programlisting
 
         B<tail> dispatch( $dispatcher, $request );
-
-=end programlisting
-
-=for editor
-
-Sadly, S::C::R 0.0.4 caused infinite loops for me on Perl 5.10.0; I'm not sure
-if this is Yuval's bug or mine.  I asked him.
-
-=end for
-
-Similarly, C<Sub::Call::Recur> is appropriate for recursive calls.  Replace the C<return elem_exists> code with:
-
-=begin programlisting
-
-        # split the array down and recurse
-        B<recur>( $item, @array[0 .. $midpoint] )
-            if $item < $miditem;
-
-        # split the array up and recurse
-        B<recur>( $item, @array[$midpoint + 1 .. $#array] );
 
 =end programlisting
 

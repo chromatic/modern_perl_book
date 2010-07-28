@@ -6,10 +6,9 @@ X<scope>
 X<encapsulation>
 
 I<Scope> in Perl refers to the lifespan and visibility of symbols.  Everything
-with a name in Perl (a variable, a function) has a scope.  Outside of that
-scope, you may or may not be able to refer to the symbol.  Scoping is important
-because it helps to enforce I<encapsulation>--keeping related concepts together
-and preventing them from leaking out.
+with a name in Perl (a variable, a function) has a scope.  Scoping helps to
+enforce I<encapsulation>--keeping related concepts together and preventing them
+from leaking out.
 
 =head3 Lexical Scope
 
@@ -19,8 +18,8 @@ X<lexical scope>
 X<scope; lexical>
 
 The most common form of scoping in modern Perl is lexical scoping.  The Perl
-compiler resolves this scope during compilation.  This is the scope that you
-can understand as you read a program.
+compiler resolves this scope during compilation.  This scope is visible as you
+I<read> a program.
 
 To create a new lexical scope, create a block delimited by curly braces.  This
 block can be a bare block, the block of a loop construct, the block of a C<sub>
@@ -181,7 +180,7 @@ calling context.  Consider the example:
 =begin programlisting
 
     {
-        use vars '$scope';
+        our '$scope';
 
         sub inner
         {
@@ -274,13 +273,10 @@ C<Sub::Exporter> don't handle?
 
 =end for
 
-Within a given scope, you may declare a global variable with the C<our>
-keyword.  C<our> works similarly to C<my>, except that outside of the current
-package, you may still access the value with the variable's fully-qualified
-name.
-
-Even so, it's still a global variable, with all of the concomitant risks and
-drawbacks.
+Within a given scope, you may declare an alias to a package variable with the
+C<our> keyword.  Like C<my>, C<our> enforces lexical scoping--of the alias.
+The fully-qualified name is available everywhere, but the lexical alias is
+visible only within its scope.
 
 The best use of C<our> is for variables you absolutely I<must> have, such as
 C<$VERSION>.
