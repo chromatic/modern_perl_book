@@ -54,13 +54,12 @@ example:
 X<pragmas; vars>
 X<vars>
 
-The C<vars> pragma here declares a global variable without violating the rules
-of the C<strict> pragma.  Within the C<Store::IceCream> package,
-C<$num_flavors> is available without a namespace prefix.  Outside of that
-package, it is available as C<$Store::IceCream::num_flavors>.  If
-C<$num_flavors> were a lexical variable (declared with C<my>), it would not be
-available outside of the package.  Inside the package, it would only be
-available within the appropriate scope.
+The C<vars> pragma declares a global variable without violating the rules of
+the C<strict> pragma.  Within the C<Store::IceCream> package, C<$num_flavors>
+is available without a namespace prefix.  Outside of that package, it is
+available as C<$Store::IceCream::num_flavors>.  If C<$num_flavors> were a
+lexical variable (declared with C<my>), it would not be available outside of
+the enclosing scope.
 
 X<our>
 X<keywords; our>
