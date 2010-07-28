@@ -230,7 +230,7 @@ X<local>
 Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,
 then C<local>izes the variable.  This changes the visibility of the symbol
 within the current lexical scope I<as well as> in any functions called from the
-current lexical scope.  Thus, C<$scope> contains C<in main> within the body of
+current lexical scope.  Thus, C<$scope> contains C<main() scope> within the body of
 both C<middle()> and C<inner()>.  After C<main()> returns--at the point of
 exiting the block containing the C<local>ization of C<$scope>, Perl restores
 the original value of the variable.  The final C<say> prints C<outer scope>
