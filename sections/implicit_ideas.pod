@@ -193,8 +193,8 @@ Thus, these two snippets of code are equivalent:
 =end programlisting
 
 I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
-functions.  Array functions such as C<unshift>, C<push>, C<splice>, and
-C<pop> operate on C<@_>.
+functions.  The array operators C<shift> and C<pop> operate on C<@_> with no
+other operands provided.
 
 X<variables; @ARGV>
 X<@ARGV>
