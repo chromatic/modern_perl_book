@@ -5,7 +5,7 @@ available in the core.  More are available from the CPAN.  Experienced Perl
 developers have their own idea of how an ideal Perl 5 should behave, and they
 often use their own configurations very effectively.
 
-Novices may not know how Perl can help them write programs better.  Three core
-pragmas will make you much more productive.
+Novices may not know how Perl can help them write programs better.  A handful
+of core modules will make you much more productive.
 
 L<missing_defaults>
