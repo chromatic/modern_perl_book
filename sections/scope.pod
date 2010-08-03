@@ -6,10 +6,9 @@ X<scope>
 X<encapsulation>
 
 I<Scope> in Perl refers to the lifespan and visibility of symbols.  Everything
-with a name in Perl (a variable, a function) has a scope.  Outside of that
-scope, you may or may not be able to refer to the symbol.  Scoping is important
-because it helps to enforce I<encapsulation>--keeping related concepts together
-and preventing them from leaking out.
+with a name in Perl (a variable, a function) has a scope.  Scoping helps to
+enforce I<encapsulation>--keeping related concepts together and preventing them
+from leaking out.
 
 =head3 Lexical Scope
 
@@ -19,8 +18,8 @@ X<lexical scope>
 X<scope; lexical>
 
 The most common form of scoping in modern Perl is lexical scoping.  The Perl
-compiler resolves this scope during compilation.  This is the scope that you
-can understand as you read a program.
+compiler resolves this scope during compilation.  This scope is visible as you
+I<read> a program.
 
 To create a new lexical scope, create a block delimited by curly braces.  This
 block can be a bare block, the block of a loop construct, the block of a C<sub>
@@ -167,6 +166,20 @@ dynamic scope.
 Finally, lexical scoping facilitates closures (see L<closures>).  Beware
 creating closures accidentally.
 
+=head4 Our Scope
+
+Z<our>
+X<our>
+X<package scope>
+
+Within a given scope, you may declare an alias to a package variable with the
+C<our> keyword.  Like C<my>, C<our> enforces lexical scoping--of the alias.
+The fully-qualified name is available everywhere, but the lexical alias is
+visible only within its scope.
+
+The best use of C<our> is for variables you absolutely I<must> have, such as
+C<$VERSION>.
+
 =head3 Dynamic Scope
 
 Z<dynamic_scope>
@@ -181,7 +194,7 @@ calling context.  Consider the example:
 =begin programlisting
 
     {
-        use vars '$scope';
+        our $scope;
 
         sub inner
         {
@@ -209,8 +222,8 @@ calling context.  Consider the example:
 
 =end programlisting
 
-The program begins by declaring a package global variable, C<$scope>, as well
-as three functions.  It ends by assigning to C<$scope> and calling C<main()>.
+The program begins by declaring an C<our> variable, C<$scope>, as well as three
+functions.  It ends by assigning to C<$scope> and calling C<main()>.
 
 X<local>
 
@@ -223,14 +236,18 @@ exiting the block containing the C<local>ization of C<$scope>, Perl restores
 the original value of the variable.  The final C<say> prints C<outer scope>
 once again.
 
-This can be tricky and subtle, but it can be useful for changing the value of
-special variables.  Note, however, that you can only C<local>ize global and
-package global variables.  You cannot C<local>ize lexical variables.
+Note that the variable is I<visible> within all scopes, but the I<value> of the
+variable changes depending on C<local>ization and assignment.  This feature can
+be tricky and subtle, but it is especially useful for changing the values of
+special variables.
+
+You may only C<local>ize global and package global variables.  You cannot
+C<local>ize lexical variables.
 
 =begin sidebar
 
-You I<can> localize functions and methods, but that's deep magic you should
-avoid wherever possible.
+You I<can> localize functions and methods, but that's deep magic to avoid
+unless absolutely necessary.
 
 =end sidebar
 
@@ -260,30 +277,6 @@ filehandle after every write operation.
 These are all special global variables; C<local>izing them in the narrowest
 possible scope will avoid the action at a distance problem of modifying global
 variables used other places in your code.
-
-=head4 Our Scope
-
-Z<our>
-X<our>
-X<package scope>
-
-=for author
-
-Is this too handwavey?  Are there other good uses of C<our> that C<parent> or
-C<Sub::Exporter> don't handle?
-
-=end for
-
-Within a given scope, you may declare a global variable with the C<our>
-keyword.  C<our> works similarly to C<my>, except that outside of the current
-package, you may still access the value with the variable's fully-qualified
-name.
-
-Even so, it's still a global variable, with all of the concomitant risks and
-drawbacks.
-
-The best use of C<our> is for variables you absolutely I<must> have, such as
-C<$VERSION>.
 
 =head3 State Scope
 

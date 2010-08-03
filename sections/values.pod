@@ -729,18 +729,15 @@ context (for a single element) or list context (for a slice):
 
 =begin programlisting
 
+    # you do not need to understand this all
     sub context
     {
         my $context = wantarray;
-        if (defined $context)
-        {
-            say $wantarray ? 'list' : 'scalar';
-        }
-        else
-        {
-            say 'void';
-        }
-
+        say defined $context
+             ? $context
+                 ? 'list'
+                 : 'scalar'
+             : 'void';
         return 0;
     }
 

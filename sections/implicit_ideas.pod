@@ -172,9 +172,10 @@ X<default array variables>
 X<variables; @_>
 X<@_>
 
-Perl passes arguments to functions in an array named C<@_>.  Array manipulation
-operations (L<arrays>) performed inside functions affect this array by default.
-Thus, these two snippets of code are equivalent:
+While Perl has a single implicit scalar variable, it has two implicit array
+variables.  Perl passes arguments to functions in an array named C<@_>.  Array
+manipulation operations (L<arrays>) performed inside functions affect this
+array by default.  Thus, these two snippets of code are equivalent:
 
 =begin programlisting
 
@@ -193,25 +194,23 @@ Thus, these two snippets of code are equivalent:
 =end programlisting
 
 I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
-functions.  Array functions such as C<unshift>, C<push>, C<splice>, and
-C<pop> operate on C<@_>.
+functions.  The array operators C<shift> and C<pop> operate on C<@_> with no
+other operands provided.
 
 X<variables; @ARGV>
 X<@ARGV>
 
-Outside of a function, the default array variable is C<@ARGV>.  This array
-represents all command-line arguments to the program.  The same array functions
-which use C<@_> implicitly I<within> functions use C<@ARGV> implicitly at the
-top level of a program outside of any function.  You cannot use C<@_> when you
-mean C<@ARGV>.
+Outside of all functions, the default array variable C<@ARGV> contains the
+command-line arguments to the program.  The same array operators which use
+C<@_> implicitly I<within> functions use C<@ARGV> implicitly outside of
+functions.  You cannot use C<@_> when you mean C<@ARGV>.
 
 X<null filehandle>
-X<@ARGV>
 
-Perl uses C<@ARGV> implicitly in one special case where it does not use C<@_>.
-If you read from the null filehandle C<< <> >>, Perl will treat every element
-in C<@ARGV> as the I<name> of a file to open for reading.  (If C<@ARGV> is
-empty, Perl will read from standard input.)  It's easy to write a simple
+C<ARGV> has one special case.  If you read from the null filehandle C<< <> >>,
+Perl will treat every element in C<@ARGV> as the I<name> of a file to open for
+reading.  (If C<@ARGV> is empty, Perl will read from standard input.) This
+implicit C<@ARGV> behavior is useful for writing short programs, such as this
 command-line filter which reverses its input:
 
 =begin programlisting
@@ -234,7 +233,6 @@ operations.
 
 =end sidebar
 
-
 If you run it with a list of files:
 
 =begin screen
@@ -246,6 +244,3 @@ If you run it with a list of files:
 ... the result will be one long stream of output.  Without any arguments, you
 can provide your own standard input by piping in from another program or typing
 directly.
-
-The implicit C<@ARGV> behavior can be useful for writing short filter programs
-in Perl, but avoid it in larger programs.
