@@ -63,11 +63,11 @@ Z<catching_exceptions>
 X<exceptions; catching>
 
 Uncaught exceptions eventually terminate the program.  Sometimes this is
-useful; a system administration program run from cron might throw an exception
-when the error logs have filled; this could page an administrator that
-something has gone wrong.  Yet many other exceptions should not be fatal; good
-programs can recover from them, or at least save their state and exit more
-cleanly.
+useful; a system administration program run from cron (a Unix jobs scheduler)
+might throw an exception when the error logs have filled; this could page an
+administrator that something has gone wrong.  Yet many other exceptions should
+not be fatal; good programs can recover from them, or at least save their
+state and exit more cleanly.
 
 X<keywords; eval>
 X<keywords; eval block>
