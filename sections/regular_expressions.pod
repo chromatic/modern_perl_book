@@ -441,7 +441,6 @@ class:
 
 =end programlisting
 
-
 Just as the word and digit class metacharacters (C<\w> and C<\d>) have
 negations, so too you can negate a character class.  Use the caret (C<^>) as
 the first element of the character class to mean "anything I<except> these
