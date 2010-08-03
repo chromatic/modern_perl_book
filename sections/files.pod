@@ -59,9 +59,9 @@ C<open> keyword.  To open a file for reading:
 
 The first operand is a lexical which will hold the opened filehandle.  The
 second operand is the X<file mode>, which determines the type of the filehandle
-operation (L<file_modes_table>).  The final operand is the name of the file.
-If the C<open> fails, the C<die> clause will throw an exception, with the
-contents of C<$!> giving the reason why the open failed.
+operation.  The final operand is the name of the file.  If the C<open> fails,
+the C<die> clause will throw an exception, with the contents of C<$!> giving
+the reason why the open failed.
 
 =begin table File Modes
 
