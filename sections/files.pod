@@ -216,7 +216,7 @@ Given a filehandle open for output, you may C<print> or C<say> to it:
 =begin programlisting
 
     use autodie;
-    open my $out_fh, '<', 'output_file.txt';
+    open my $out_fh, '>', 'output_file.txt';
 
     print $out_fh "Here's a line of text\n";
     say   $out_fh "... and here's another";
