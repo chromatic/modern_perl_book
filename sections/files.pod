@@ -260,7 +260,7 @@ As usual, C<autodie> (L<autodie>) handles these checks for you:
 
     use autodie;
 
-    open my $fh, '<', $file;
+    open my $fh, '>', $file;
 
     ...
 
