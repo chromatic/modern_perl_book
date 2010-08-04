@@ -330,7 +330,7 @@ changes have no unintended global effects.
 
 =for author
 
-What do we have here, C<Devel::Cover>, C<Devel::NYTProfiler> (iirc),
+What do we have here, C<Devel::Cover>, C<Devel::NYTProf> (iirc),
 etc.  Very useful for knowing if that change would be expected to
 break that test.  Profiler to test your code for performance.  Both
 essential tools!
