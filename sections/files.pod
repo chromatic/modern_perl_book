@@ -22,7 +22,7 @@ input or output, such as the standard input or output of a program, a file from
 or two which to read or write, and the position in a given file.  Every Perl 5
 program has three standard filehandles available, C<STDIN> (the input to the
 program), C<STDOUT> (the output from the program), and C<STDERR> (the error
-output from the program.
+output from the program).
 
 By default, everything you C<print> or C<say> goes to C<STDOUT>, while errors
 and warnings and everything you C<warn()> goes to C<STDERR>.  This separation
