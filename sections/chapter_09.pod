@@ -14,6 +14,8 @@ Perl provides many tools and techniques to write real programs.
 
 L<testing>
 
+L<files>
+
 L<exceptions>
 
 L<handling_warnings>
