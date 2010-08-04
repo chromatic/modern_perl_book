@@ -75,7 +75,7 @@ variables, these variables have a lexical scope:
         our $jellybeans;
     }
 
-    # $Store::Candy::jellybeans not visible here
+    # $Store::Candy::jellybeans not visible as $jellybeans here
 
 =end programlisting
 
