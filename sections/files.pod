@@ -52,7 +52,7 @@ C<open> keyword.  To open a file for reading:
 
 =begin programlisting
 
-    open my $fh, '>', 'filename'
+    open my $fh, '<', 'filename'
         or die "Cannot read '$filename': $!\n";
 
 =end programlisting
