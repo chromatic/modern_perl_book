@@ -158,7 +158,7 @@ at a time in a C<while()> loop:
 =begin programlisting
 
     use autodie;
-    open my $fh, '>', 'some_file';
+    open my $fh, '<', 'some_file';
 
     while (<$fh>)
     {
