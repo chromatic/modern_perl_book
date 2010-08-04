@@ -79,20 +79,20 @@ Z<file_modes_table>
 
 =row
 
-=cell C<< > >>
+=cell C<< < >>
 
 =cell Open for reading
 
 =row
 
-=cell C<< < >>
+=cell C<< > >>
 
 =cell Open for writing, clobbering existing contents if the file exists and
 creating a new file otherwise.
 
 =row
 
-=cell C<<< << >>>
+=cell C<<< >> >>>
 
 =cell Open for writing, appending to any existing contents and creating a new
 file otherwise.
