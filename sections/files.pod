@@ -194,7 +194,7 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
 
     use autodie;
 
-    open my $fh, '>', $filename;
+    open my $fh, '<', $filename;
 
     while (my $line = <$fh>)
     {
