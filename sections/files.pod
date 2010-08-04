@@ -122,12 +122,12 @@ Such filehandles support all of the existing file modes.
 
 You may encounter older code which uses the two-argument form of C<open()>:
 
-=for author
+=begin programlisting
 
-    open my $fh, '> $some_file'
-        or die "Cannot write to $some_file: $!\n";
+    open my $fh, "> $some_file"
+        or die "Cannot write to '$some_file': $!\n";
 
-=end for
+=end programlisting
 
 The lack of clean separation between the intended file mode and the name of the
 file allows the possibility of unintentional behaviorsN<When you read that
