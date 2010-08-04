@@ -22,7 +22,7 @@ input or output, such as the standard input or output of a program, a file from
 or two which to read or write, and the position in a given file.  Every Perl 5
 program has three standard filehandles available, C<STDIN> (the input to the
 program), C<STDOUT> (the output from the program), and C<STDERR> (the error
-output from the program.
+output from the program).
 
 By default, everything you C<print> or C<say> goes to C<STDOUT>, while errors
 and warnings and everything you C<warn()> goes to C<STDERR>.  This separation
@@ -52,7 +52,7 @@ C<open> keyword.  To open a file for reading:
 
 =begin programlisting
 
-    open my $fh, '>', 'filename'
+    open my $fh, '<', 'filename'
         or die "Cannot read '$filename': $!\n";
 
 =end programlisting
@@ -79,20 +79,20 @@ Z<file_modes_table>
 
 =row
 
-=cell C<< > >>
+=cell C<< < >>
 
 =cell Open for reading
 
 =row
 
-=cell C<< < >>
+=cell C<< > >>
 
 =cell Open for writing, clobbering existing contents if the file exists and
 creating a new file otherwise.
 
 =row
 
-=cell C<<< << >>>
+=cell C<<< >> >>>
 
 =cell Open for writing, appending to any existing contents and creating a new
 file otherwise.
@@ -122,12 +122,12 @@ Such filehandles support all of the existing file modes.
 
 You may encounter older code which uses the two-argument form of C<open()>:
 
-=for author
+=begin programlisting
 
-    open my $fh, '> $some_file'
-        or die "Cannot write to $some_file: $!\n";
+    open my $fh, "> $some_file"
+        or die "Cannot write to '$some_file': $!\n";
 
-=end for
+=end programlisting
 
 The lack of clean separation between the intended file mode and the name of the
 file allows the possibility of unintentional behaviorsN<When you read that
@@ -158,7 +158,7 @@ at a time in a C<while()> loop:
 =begin programlisting
 
     use autodie;
-    open my $fh, '>', 'some_file';
+    open my $fh, '<', 'some_file';
 
     while (<$fh>)
     {
@@ -194,7 +194,7 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
 
     use autodie;
 
-    open my $fh, '>', $filename;
+    open my $fh, '<', $filename;
 
     while (my $line = <$fh>)
     {
@@ -216,7 +216,7 @@ Given a filehandle open for output, you may C<print> or C<say> to it:
 =begin programlisting
 
     use autodie;
-    open my $out_fh, '<', 'output_file.txt';
+    open my $out_fh, '>', 'output_file.txt';
 
     print $out_fh "Here's a line of text\n";
     say   $out_fh "... and here's another";
@@ -260,7 +260,7 @@ As usual, C<autodie> (L<autodie>) handles these checks for you:
 
     use autodie;
 
-    open my $fh, '<', $file;
+    open my $fh, '>', $file;
 
     ...
 
