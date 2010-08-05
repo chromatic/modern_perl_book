@@ -395,11 +395,15 @@ in directory listings by default.  It also skips the first two files returned
 from every C<readdir> invocation, specifically C<.> and C<..>.  These two files
 represent the current directory and the parent directory, respectively.
 
+X<files; relative paths>
+X<files; absolute paths>
+
 Be careful that the names returned from C<readdir> are I<relative> to the
 directory itself.  In other words, if the F<tasks/> directory contains three
 files named F<eat>, F<drink>, and F<be_monkey>, C<readdir> will return C<eat>,
 C<drink>, and C<be_monkey> and I<not> F<tasks/eat>, F<tasks/drink>, and
-F<task/be_monkey>.
+F<task/be_monkey>.  In contrast, an I<absolute> path is a path fully qualified
+to its filesystem.
 
 X<closedir>
 X<keywords; closedir>
@@ -471,10 +475,90 @@ information.
 
 =head3 File Manipulation
 
-=for author
+X<-X>
+X<operators; -X>
 
--X operators
-copy
-move
+Besides reading and writing files, you can also manipulate them as you would
+directly from a command line or a file manager.  The C<-X> file test operators
+can give you information about the attributes of files and directories on your
+system.  For example, to test that a file exists:
 
-=end for
+X<operators; -e>
+
+=begin programlisting
+
+    say 'Present!' if -e $filename;
+
+=end programlisting
+
+The C<-e> operator has a single operand, the name of a file or a file or
+directory handle.  If the file exists, the expression will evaluate to a true
+value.  C<perldoc -f -X> lists several other file tests; the most popular are:
+
+X<operators; -f>
+X<operators; -d>
+X<operators; -r>
+X<operators; -z>
+
+=over 4
+
+=item C<-f>, which returns a true value if its operand is a plain file
+
+=item C<-d>, which returns a true value if its operand is a directory
+
+=item C<-r>, which returns a true value if the file permissions of its operand
+permit reading by the current user
+
+=item C<-z>, which returns a true value if its operand is a non-empty file
+
+=back
+
+As of Perl 5.10.1, you may look up the documentation for any of these operators
+with C<perldoc -f -r>, for example.
+
+=begin sidebar
+
+X<chdir>
+X<keywords; chdir>
+X<Cwd>
+
+Perl also allows you to change its notion of the current directory.  By
+default, this is the active directory from where you launched the program.  The
+core C<Cwd> module allows you to determine this.  The keyword C<chdir> attempts
+to change the current working directory.  This can be useful for performing
+file manipulations with relative--not absolute--paths.
+
+=end sidebar
+
+X<rename>
+X<keywords; rename>
+
+The C<rename> keyword can rename a file or move it between directories.  It
+takes two operands, the old name of the file and the new name:
+
+=begin programlisting
+
+    use autodie;
+
+    rename 'death_star.txt', 'carbon_sink.txt';
+
+=end programlisting
+
+X<File::Copy>
+X<unlink>
+X<files; copying>
+X<files; moving>
+X<files; removing>
+X<files; deleting>
+
+There's no core keyword to copy a file, but the core C<File::Copy> module
+provides both C<copy()> and C<move()> functions.  Use C<unlink> to remove one
+or more files.  These functions and keywords all return true values on success
+and set C<$!> on error.
+
+=begin sidebar
+
+C<Path::Class> provides convenience methods to check certain file attribtes as
+well as to remove files completely, in a cross-platform fashion.
+
+=end sidebar
