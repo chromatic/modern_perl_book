@@ -181,12 +181,11 @@ loop.
 X<keywords; chomp>
 X<chomp>
 
-The term I<line> is somewhat of a misnomer.  C<readline> uses the current
-contents of C<$/> to determine how lines end (see example in L<dynamic_scope>).
-By default, this variable contains the most appropriate line-ending character
-sequence for text files on your current platform.  The lines produced by
-C<readline> contain the line ending characters at the end; C<readline> does not
-remove them by default.  Use C<chomp> to remove them.
+Every line read from C<readline> includes the character or characters which
+mark the end of a line.  In most cases, this is a platform-specific sequence
+consisting of a newline (C<\n>), a carriage return (C<\r>), or a combination of
+the two (C<\r\n>).  Use C<chomp> to remove your platform's specific newline
+sequence.
 
 With everything all together, the cleanest way to read from files in Perl 5 is:
 
@@ -203,18 +202,6 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
     }
 
 =end programlisting
-
-X<variables; $.>
-X<$.>
-
-For every line read, Perl 5 increments the value of the variable C<$.>, which
-serves as a line counter.
-
-=for author
-
-Discuss buffering?  perlopentut doesn't.
-
-=end for
 
 =head4 Writing to Files
 
@@ -279,6 +266,68 @@ As usual, C<autodie> (L<autodie>) handles these checks for you:
     close $fh;
 
 =end programlisting
+
+=head4 Special File Handling Variables
+
+X<variables; $.>
+X<$.>
+
+For every line read, Perl 5 increments the value of the variable C<$.>, which
+serves as a line counter.
+
+X<variables; $.>
+X<$.>
+
+C<readline> uses the current contents of C<$/> as the line-ending sequence (see
+example in L<dynamic_scope>).  The value of this variable defaults to the most
+appropriate line-ending character sequence for text files on your current
+platform.  In truth, the word I<line> is a misnomer.  You can set C<$/> to
+contain any sequence of charactersN<... but never a regular expression, because
+Perl 5 does not support that.>.  This is useful for highly-structured data in
+which you want to read a I<record> at a time.
+
+X<variables; $|>
+X<$|>
+X<buffering>
+
+By default, Perl uses I<buffered output>, where it performs IO only when it has
+enough data to exceed a threshold.  This allows Perl to batch up expensive IO
+operations instead of always writing very small amounts of data.  Yet sometimes
+you want to send data as soon as you have it without waiting for that
+buffering--especially if you're writing a command-line filter connected to
+other programs or a line-oriented network service.
+
+The C<$|> variable controls buffering on the currently active output
+filehandle.  When set to a non-zero value, Perl will flush the output after
+each write to the filehandle.  When set to a zero value, Perl will use its
+default buffering strategy.
+
+X<IO::File>
+X<IO::File; autoflush()>
+
+In lieu of the global variable, use the C<autoflush()> method on a lexical
+filehandle.  Be sure to load C<IO::File> first, as you cannot call methods on
+lexical filehandles otherwise:
+
+=begin programlisting
+
+    use autodie;
+    use IO::File;
+
+    open my $fh, '>', 'pecan.log';
+    $fh->autoflush( 1 );
+
+    ...
+
+=end programlisting
+
+X<IO::File; input_line_number()>
+X<IO::File; input_record_separator()>
+
+Once you have loaded C<IO::File>, you may also use its C<input_line_number()>
+and C<input_record_separator()> methods instead of C<$.> and C<$/>
+respectively.  See C<perldoc IO::File> and C<perldoc IO::Handle> for more
+information.
 
 =head3 Directories and Paths
 
