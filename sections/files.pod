@@ -59,9 +59,9 @@ C<open> keyword.  To open a file for reading:
 
 The first operand is a lexical which will hold the opened filehandle.  The
 second operand is the X<file mode>, which determines the type of the filehandle
-operation (L<file_modes_table>).  The final operand is the name of the file.
-If the C<open> fails, the C<die> clause will throw an exception, with the
-contents of C<$!> giving the reason why the open failed.
+operation.  The final operand is the name of the file.  If the C<open> fails,
+the C<die> clause will throw an exception, with the contents of C<$!> giving
+the reason why the open failed.
 
 =begin table File Modes
 
@@ -204,6 +204,18 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
 
 =end programlisting
 
+X<variables; $.>
+X<$.>
+
+For every line read, Perl 5 increments the value of the variable C<$.>, which
+serves as a line counter.
+
+=for author
+
+Discuss buffering?  perlopentut doesn't.
+
+=end for
+
 =head4 Writing to Files
 
 X<print>
@@ -270,16 +282,143 @@ As usual, C<autodie> (L<autodie>) handles these checks for you:
 
 =head3 Directories and Paths
 
-=for author
+X<opendir>
+X<keywords; opendir>
 
-opendir
-readdir
-glob
-paths
-    - path::class
-    - file::spec
+You may also manipulate directories and file paths with Perl 5.  Working with
+directories is similar to working with files, except that you cannot I<write>
+to directoriesN<Instead, you save and move and rename and remove files.>.  Open
+a directory handle with C<opendir>:
 
-=end for
+=begin programlisting
+
+    use autodie;
+
+    opendir my $dirh, '/home/monkeytamer/tasks/';
+
+=end programlisting
+
+X<readdir>
+X<keywords; readdir>
+
+The keyword to read from a directory is C<readdir>.  As with C<readline>, you
+may iterate over the contents of directories one at a time or you may assign
+them to a list in one swoop:
+
+=begin programlisting
+
+    # iteration
+    while (my $file = readdir $dirh )
+    {
+        ...
+    }
+
+    # flattening into a list
+    my @files = readdir $otherdirh;
+
+=end programlisting
+
+As a new feature available in 5.12, C<readdir> in a C<while> will set C<$_>,
+just as does C<readline> in C<while>:
+
+=begin programlisting
+
+    use 5.012;
+    use autodie;
+
+    opendir my $dirh, 'tasks/circus/';
+
+    while (readdir $dirh)
+    {
+        next if /^\./;
+        say "Found a task $_!";
+    }
+
+=end programlisting
+
+X<Unix; hidden files>
+X<files; hidden>
+X<hidden files>
+
+The curious regular expression in this example skips so-called I<hidden files>
+on Unix and Unix-like systems, where a leading dot prevents them from appearing
+in directory listings by default.  It also skips the first two files returned
+from every C<readdir> invocation, specifically C<.> and C<..>.  These two files
+represent the current directory and the parent directory, respectively.
+
+Be careful that the names returned from C<readdir> are I<relative> to the
+directory itself.  In other words, if the F<tasks/> directory contains three
+files named F<eat>, F<drink>, and F<be_monkey>, C<readdir> will return C<eat>,
+C<drink>, and C<be_monkey> and I<not> F<tasks/eat>, F<tasks/drink>, and
+F<task/be_monkey>.
+
+X<closedir>
+X<keywords; closedir>
+
+Close a directory handle by letting it go out of scope or with the C<closedir>
+keyword.
+
+=head4 Manipulating Paths
+
+Perl 5 offers a Unixish view of the world, or at least your filesystem.  Even
+if you aren't using a Unix-like platform, Perl will interpret Unix-style paths
+appropriately for your operating system and filesystem.  In other words, if
+you're using Microsoft Windows, you can use the path F<C:/My
+Documents/Robots/Bender/> just as easily as you can use the path F<C:\My
+Documents\Robots\Caprica Six\>.
+
+X<File::Spec>
+
+Even so, manipulating file paths in a safe and cross-platform manner suggests
+that you avoid string interpolation and concatenation.  The core C<File::Spec>
+module family provides abstractions to allow you to manipulate file paths in
+safe and portable fashions.  Even so, it's not always easy to understand or to
+use correctly.
+
+X<Path::Class>
+X<Path::Class::Dir>
+X<Path::Class::File>
+
+The C<Path::Class> distribution on the CPAN provides a nicer interface around
+C<File::Spec>.  Use the C<dir()> function to create an object representing a
+directory and the C<file()> function to create an object repesenting a file:
+
+=begin programlisting
+
+    use Path::Class;
+
+    my $meals = dir( 'tasks', 'cooking' );
+    my $file  = file( 'tasks', 'health', 'exoskeleton_research.txt' );
+
+=end programlisting
+
+... and you can get file objects from directories:
+
+=begin programlisting
+
+    my $lunch = $meals->file( 'veggie_calzone.txt' );
+
+=end programlisting
+
+... and vice versa:
+
+=begin programlisting
+
+    my $robots_dir = $robot_list->dir();
+
+=end programlisting
+
+You can even open filehandles to directories and files:
+
+=begin programlisting
+
+    my $dir_fh    = $dir->open();
+    my $robots_fh = $robot_list->open( 'r' );
+
+=end programlisting
+
+See the documentation of C<Path::Class::Dir> and C<Path::Class::File> for more
+information.
 
 =head3 File Manipulation
 
