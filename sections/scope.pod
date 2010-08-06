@@ -163,8 +163,8 @@ within its block:
 lexicalize the topic yourself, though this is more useful when considering
 dynamic scope.
 
-Finally, lexical scoping facilitates closures (see L<closures>).  Beware
-creating closures accidentally.
+Finally, lexical scoping facilitates closures (L<closures>).  Beware creating
+closures accidentally.
 
 =head4 Our Scope
 
@@ -230,9 +230,9 @@ X<local>
 Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,
 then C<local>izes the variable.  This changes the visibility of the symbol
 within the current lexical scope I<as well as> in any functions called from the
-current lexical scope.  Thus, C<$scope> contains C<main() scope> within the body of
-both C<middle()> and C<inner()>.  After C<main()> returns--at the point of
-exiting the block containing the C<local>ization of C<$scope>, Perl restores
+current lexical scope.  Thus, C<$scope> contains C<main() scope> within the
+body of both C<middle()> and C<inner()>.  After C<main()> returns--at the point
+of exiting the block containing the C<local>ization of C<$scope>, Perl restores
 the original value of the variable.  The final C<say> prints C<outer scope>
 once again.
 
@@ -241,8 +241,23 @@ variable changes depending on C<local>ization and assignment.  This feature can
 be tricky and subtle, but it is especially useful for changing the values of
 special variables.
 
-You may only C<local>ize global and package global variables.  You cannot
-C<local>ize lexical variables.
+X<lexicals; pads>
+X<lexpads>
+X<symbol tables>
+
+This difference in visibility between package variables and lexical variables
+is apparent in the different storage mechanisms of these variables within Perl
+5 itself.  Lexical variables get stored in I<lexical pads> attached to scopes.
+Every new entry into such a lexical scope requires Perl to create a new pad to
+contain the values of the variables for that particular entry into the scope.
+(This is how a function can call itself and not clobber the values of
+existing variables.)
+
+Package variables have a storage mechanism called symbol tables.  Each package
+has a single symbol table, and every package variable has an entry in this
+table.  You can inspect and modify this symbol table from Perl; this is how
+importing works (L<importing>).  This is also why you may only C<local>ize
+global and package global variables and never lexical variables.
 
 =begin sidebar
 
