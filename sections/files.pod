@@ -203,6 +203,16 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
 
 =end programlisting
 
+X<binmode>
+X<keywords; binmode>
+
+If you're not reading I<textual> data--instead reading I<binary> data--use
+C<binmode> on the filehandle before reading from or writing to it.  This
+keyword tells Perl to treat all of the filehandle's data as pure data.  Perl
+will not modify it in any fashion, as it might for platform portability.
+Although Unix-like platforms tend not to need C<binmode> in this case, portable
+programs use it anyway.  See L<unicode> for other features of C<binmode>.
+
 =head4 Writing to Files
 
 X<print>
