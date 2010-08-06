@@ -9,7 +9,9 @@ of a word or phrase depends on its surroundings.  You may understand this in a
 spoken language, where the inappropriate pluralization of "Please give me one
 hamburgers!"N<The pluralization of the noun differs from the amount.> sounds
 wrong or the incorrect gender of "la gato"N<The article is feminine, but the
-noun is masculine.> makes native speakers chuckle.
+noun is masculine.> makes native speakers chuckle.  Consider also the pronoun
+"you" or the noun "sheep" which can be singular or plural depending on the
+remainder of the sentence.
 
 Context in Perl is similar; the language understands expectations of the amount
 of data to provide as well as what kind of data to provide.  Perl will happily
