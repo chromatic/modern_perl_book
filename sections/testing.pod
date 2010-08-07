@@ -326,17 +326,6 @@ want only to run the F<t/breathe_fire.t> test file.  When you have the feature
 working to your satisfaction, run the entire test suite to verify that local
 changes have no unintended global effects.
 
-=head3 Coverage Testing and Profiling
-
-=for author
-
-What do we have here, C<Devel::Cover>, C<Devel::NYTProf> (iirc),
-etc.  Very useful for knowing if that change would be expected to
-break that test.  Profiler to test your code for performance.  Both
-essential tools!
-
-=end
-
 =head3 Other Testing Modules
 
 X<Test::Builder>
@@ -348,6 +337,14 @@ latter module manages the test plan and coordinates the test output into TAP.
 This design allows multiple test modules to share the same C<Test::Builder>
 backend.  Consequently, the CPAN has hundreds of test modules available--and
 they can all work together in the same program.
+
+X<Test::Exception>
+X<Test::MockObject>
+X<Test::MockModule>
+X<Test::WWW::Mechanize>
+X<Test::Database>
+X<Test::Class>
+X<Devel::Cover>
 
 =over 4
 
@@ -368,6 +365,11 @@ You can inherit from test classes just as your code classes inherit from each
 other.  This is an excellent way to reduce duplication in test suites.  See the
 C<Test::Class> series written by Curtis Poe at
 U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
+
+=item * C<Devel::Cover> analyzes the execution of your test suite to report on
+the amount of your code your tests actually exercises.  In general, the more
+coverage the better--though 100% coverage is not always possible, 95% is far
+better than 80%.
 
 =back
 

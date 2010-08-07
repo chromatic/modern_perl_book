@@ -65,6 +65,22 @@ receive or expanding the types of data they produce.  In other words, they
 should be as general as or more general at what they expect and as specific as
 or more specific about what they produce.
 
+=head3 Subtypes and Coercions
+
+Z<subtypes>
+Z<coercions>
+X<types>
+X<subtypes>
+X<coercion>
+
+Moose allows you to declare and use types and extend them through subtypes to
+form ever more specialized descriptions of what your data represents and how it
+behaves.  You can use these type annotations to verify that the data on which
+you want to work in specific functions or methods is appropriate and even to
+specify mechanisms by which to coerce data of one type to data of another type.
+
+See C<Moose::Util::TypeConstraints> and C<MooseX::Types> for more information.
+
 =head3 Immutability
 
 Z<immutability>

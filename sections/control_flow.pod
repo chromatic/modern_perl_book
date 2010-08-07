@@ -1081,35 +1081,6 @@ associated block, multiple C<when> statements match the topic against
 expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper,
 Scissors game:
 
-=for author
-
-This seems like an rather verbose example.  Also, I'm not sure how to work 
-mention of continue into it.  Perhaps something like this (pretty much ripped
-from perldoc perlsyn) might suffice?
-
-given($foo) {
-    when (undef) {
-        say '$foo is undefined';
-    }
-    when ([2, 3, 5, 7, 11, 13, 17, 19]) {
-        say '$foo is a prime less than 20';
-        continue; 
-    }
-    when ($_ % 2){
-        say '$foo is odd';
-        continue;
-    }
-    when ($_ < 20) {
-        say '$foo is numerically less than 20';
-    }
-    default {
-        say q{I don't know what to say about $foo};
-    }
-}
-
-
-=end for
-
 =begin programlisting
 
     my @options = ( \&rock, \&paper, \&scissors );
@@ -1167,8 +1138,8 @@ Perl executes the C<default> rule when none of the other conditions match.
 
 =begin sidebar
 
-The CPAN module C<MooseX::MultiMethods> demonstrates another technique which
-reduces this code further.
+The CPAN module C<MooseX::MultiMethods> allows another technique to reduce this
+code further.
 
 =end sidebar
 

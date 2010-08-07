@@ -317,12 +317,6 @@ better.  If you find yourself writing a lot of regular expression with greedy
 matches, test them thoroughly with a comprehensive and automated test suite
 with representative data to lessen the possibility of unpleasant surprises.
 
-=for author
-
-Greediness and captures?  Chas. likes the idea.
-
-=end for
-
 =head2 Metacharacters
 
 X<regular expressions; metacharacters>
@@ -837,15 +831,8 @@ You may also disable specific modifiers by preceding them with C<->:
 X</m>
 X<regular expressions; multiline>
 
-=for author
-
-How do I rephrase this paragraph?
-
-=end for
-
-Other modifiers include C</m>, the multiline operator.  When this is active,
-the C<^> and C<$> anchors match at any start of line or end of line within the
-string, depending on your newline settings.
+The multiline operator, C</m>, allows the C<^> and C<$> anchors match at any
+start of line or end of line within the string.
 
 X</s>
 X<regular expressions; single line>

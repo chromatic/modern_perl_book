@@ -58,7 +58,7 @@ C<open> keyword.  To open a file for reading:
 =end programlisting
 
 The first operand is a lexical which will hold the opened filehandle.  The
-second operand is the X<file mode>, which determines the type of the filehandle
+second operand is the I<file mode>, which determines the type of the filehandle
 operation.  The final operand is the name of the file.  If the C<open> fails,
 the C<die> clause will throw an exception, with the contents of C<$!> giving
 the reason why the open failed.
@@ -202,6 +202,16 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
     }
 
 =end programlisting
+
+X<binmode>
+X<keywords; binmode>
+
+If you're not reading I<textual> data--instead reading I<binary> data--use
+C<binmode> on the filehandle before reading from or writing to it.  This
+keyword tells Perl to treat all of the filehandle's data as pure data.  Perl
+will not modify it in any fashion, as it might for platform portability.
+Although Unix-like platforms tend not to need C<binmode> in this case, portable
+programs use it anyway.  See L<unicode> for other features of C<binmode>.
 
 =head4 Writing to Files
 

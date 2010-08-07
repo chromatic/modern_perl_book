@@ -137,14 +137,8 @@ variables, some deserve special mention.
 when reading input a line at a time.  By default, this is your
 platform-specific newline character sequence.  If you undefine this value, Perl
 will attempt to read the entire file into memory.  If you set this value to a
-I<reference> to an integer, Perl will try to read that many I<bytes> per
-record.
-
-=for author
-
-... or characters, in a Unicode mode?
-
-=end for
+I<reference> to an integer, Perl will try to read that many I<bytes> per record
+(so beware of Unicode concerns).
 
 =row
 

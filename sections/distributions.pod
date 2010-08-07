@@ -161,9 +161,12 @@ pollute their namespaces.
 
 =back
 
-=for author
+=begin sidebar
 
-local CPAN repository?
-    - too advanced?  Nice to discuss, if there's space
+X<CPAN::Mini>
+X<cpanmini>
 
-=end for
+The C<CPAN::Mini> distribution from the CPAN allows you to create your own
+local mirror of the CPAN into which you can inject your own distributions.
+
+=end sidebar

@@ -117,23 +117,17 @@ X<slicing>
 
 Similarly, accessing multiple elements of a hash or an array--an operation
 known as I<slicing>--uses the at symbol (C<@>) as the leading sigil and
-enforces list context when used as an lvalue:
+enforces list context:
 
 =begin programlisting
 
     my @hash_elements  = @hash{ @keys };
     my @array_elements = @array[ @indexes ];
 
+    my %hash;
+    @hash{ @keys }     = @values;
+
 =end programlisting
-
-=for author
-
-Add an example that uses a hash slice as an lvalue?  I.E.
-
-my %hash;
-@hash{ @keys } = @values;
-
-=end for
 
 The most reliable way to determine the type of a variable--scalar, array, or
 hash--is to look at the operations performed on it.  Scalars support all basic

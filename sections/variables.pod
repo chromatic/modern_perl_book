@@ -35,51 +35,8 @@ X<variables; scope>
 X<scope>
 
 Variables also have visibility, depending on their scope (L<scope>).  Most of
-the variables you will encounter have lexical scope L<lexical_scope>), as the
-expected visibility of these variables is local.
-
-Package variables have global visibility throughout the program, but they are
-only available when prefixed with the name of the containing package.  For
-example:
-
-=begin programlisting
-
-    package Store::IceCream;
-
-    use vars '$num_flavors';
-    $num_flavors = 42;
-
-=end programlisting
-
-X<pragmas; vars>
-X<vars>
-
-The C<vars> pragma declares a global variable without violating the rules of
-the C<strict> pragma.  Within the C<Store::IceCream> package, C<$num_flavors>
-is available without a namespace prefix.  Outside of that package, it is
-available as C<$Store::IceCream::num_flavors>.  If C<$num_flavors> were a
-lexical variable (declared with C<my>), it would not be available outside of
-the enclosing scope.
-
-X<our>
-X<keywords; our>
-
-You may also declare package variables with the C<our> keyword.  Unlike C<vars>
-variables, these variables have a lexical scope:
-
-=begin programlisting
-
-    {
-        package Store::Candy;
-
-        our $jellybeans;
-    }
-
-    # $Store::Candy::jellybeans not visible as $jellybeans here
-
-=end programlisting
-
-... yet remember that files themselves have their own lexical scopes, where the
+the variables you will encounter have lexical scope L<lexical_scope>).
+Remember that files themselves have their own lexical scopes, such that the
 C<package> declaration on its own does not create a new scope:
 
 =begin programlisting
@@ -94,27 +51,6 @@ C<package> declaration on its own does not create a new scope:
     say "Our current discount is $discount!";
 
 =end programlisting
-
-=begin sidebar
-
-X<lexicals; pads>
-X<lexpads>
-X<symbol tables>
-
-This difference in visibility between package variables and lexical variables
-is apparent in the different storage mechanisms of these variables within Perl
-5 itself.  Lexical variables get stored in I<lexical pads> attached to scopes.
-Every new entry into such a lexical scope requires Perl to create a new pad to
-contain the values of the variables for that particular entry into the scope.
-(This is how a function can call itself and not clobber the values of
-existing variables.)
-
-Package variables have a storage mechanism called symbol tables.  Each package
-has a single symbol table, and every package variable has an entry in this
-table.  You can inspect and modify this symbol table from Perl; this is how
-importing works (L<importing>).
-
-=end sidebar
 
 =head3 Variable Sigils
 

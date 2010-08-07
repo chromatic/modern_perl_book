@@ -63,13 +63,19 @@ single quote:
 
 =end programlisting
 
+=begin sidebar
 
-=for author
+Any other backslash appears literally in the string, but you can escape
+backslashes safely:
 
-Is it worth mentioning \\ here? Like, what happens when you put \ or
-\\ or \\\ or \\' or \\\' in a single-quoted string?
+=begin programlisting
 
-=end for
+    is 'Modern \ Perl', 'Modern \\ Perl', 'single quotes backslash escaping';
+
+=end programlisting
+
+
+=end sidebar
 
 X<strings; double-quoted>
 
