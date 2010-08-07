@@ -204,16 +204,8 @@ X<exceptions; core>
 Perl 5 has several exceptional conditions you can catch with an C<eval> block.
 C<perldoc perldiag> lists them as "trappable fatal errors".  Most are syntax
 errors thrown during compilation.  Others are runtime errors.  Some of these
-may be worth catching; syntax errors rarely are.
-
-=for author
-
-What's that list?  The exhaustive exception list?  The ones
-worth catching?  The most interesting ones?
-
-A list header and/or some reordering could help.
-
-=end
+may be worth catching; syntax errors rarely are.  The most interesting or
+likely exceptions occur for:
 
 =over 4
 
@@ -225,11 +217,12 @@ A list header and/or some reordering could help.
 
 =item * Failing to find a method of the given name on the invocant
 
-=item * Perl encountered a tainting violation (L<taint>)
+=item * Using a tainted value in an unsafe fashion (L<taint>)
 
 =item * Modifying a read-only value
 
-=item * Performing the wrong operation on the wrong type of reference (L<references>)
+=item * Performing the wrong operation on the wrong type of reference
+(L<references>)
 
 =back
 
