@@ -738,7 +738,8 @@ context (for a single element) or list context (for a slice):
     # you do not need to understand this all
     sub context
     {
-        my $context = wantarray;
+        my $context = wantarray();
+
         say defined $context
              ? $context
                  ? 'list'

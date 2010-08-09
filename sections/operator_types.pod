@@ -235,26 +235,19 @@ such that C<a> increments to C<b>, C<zz> to C<aaa>, and C<a9> to C<b0>.
 
 =end programlisting
 
-
 X<operators; repetition>
 X<operators; x>
 X<x>
 
-=for author
+The repetition operator (C<x>) is an infix operator.  In list context, its
+behavior changes based on its first operand.  When given a list, it evaluates
+to that list repeated the number of times specified by its second operand.
+When given a scalar, it produces a string consisisting of the string value of
+its first operand concatenated to itself the number of times specified by its
+second operand.  In scalar context, the operator always produces a concatenated
+string repeated appropriately.
 
-Is there a better way to explain this?  I may have confused myself writing it.
-
-=end for
-
-In list context, the repetition operator (C<x>) changes its behavior based on
-its first operand.  When given a list, it evaluates to that list repeated the
-number of times specified by its second operand.  When given a scalar, it
-produces a string consisisting of the string value of its first operand
-concatenated to itself the number of times specified by its second operand.  In
-scalar context, the operator always produces a concatenated string repeated
-appropriately.
-
-This is an infix operator:
+For example:
 
 =begin programlisting
 
@@ -272,8 +265,51 @@ This is an infix operator:
 
 =end programlisting
 
-=for author
+X<operators; range>
+X<range>
+X<operators; ..>
+X<..>
 
-Add readline, comma, range, flip-flop, and C<...>.
+The I<range> operator (C<..>) is an infix operator which produces a list of
+items in list context:
 
-=end for
+=begin programlisting
+
+    my @cards = ( 2 .. 10, 'J', 'Q', 'K', 'A' );
+
+=end programlisting
+
+It can produce simple, incrementing ranges (whether integers or
+autoincrementing strings), but it cannot intuit patterns or more complex
+ranges.
+
+X<operators; flip-flop>
+X<flip-flop>
+
+In boolean context, the range operator becomes the I<flip-flop> operator.  This
+operator returns a false value if its left operand is false, then it returns a
+true value while its right operand is true.  Thus you could quote the body of a
+pedantically formatted email with:
+
+=begin programlisting
+
+    while (/Hello, $user/ .. /Sincerely,/)
+    {
+        say "> $_";
+    }
+
+=end programlisting
+
+X<operators; comma>
+X<operators; ,>
+X<,>
+X<< operators; => >>
+X<< => >>
+
+The I<comma> operator (C<,>) is an infix operator.  In scalar context it
+evalutes its left operand then returns the value produced by evaluating its
+right operand.  In list context, it evalutes both operands in left-to-right
+order.
+
+The fat comma operator behaves the same way, except that it automatically
+quotes any bareword used as its left operand.

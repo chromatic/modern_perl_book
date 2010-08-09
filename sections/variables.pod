@@ -11,22 +11,6 @@ the side lengths of every right triangle you can imagine.  This may seem basic
 and obvious, but to write robust, well-designed, testable, and composable
 programs, you must identify and exploit points of genericity wherever possible.
 
-=head3 Variable Naming
-
-X<variables; names>
-
-Not all variables require names, but most of the variables you will encounter
-in your programs will have names.  Variables in Perl 5 must conform to the
-standard rules of identifier naming (L<names>).  Variables also have leading
-sigils.
-
-=for author
-
-the Variable Naming section seems quite redundant with the Variable Names and Sigils
-section from names.pod, which gets inserted directly above this section in chapter 3
-
-=end for
-
 =head3 Variable Scopes
 
 Z<variable_scopes>

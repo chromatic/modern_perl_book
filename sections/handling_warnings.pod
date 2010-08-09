@@ -9,14 +9,64 @@ warnings--and Perl supports this.
 
 =head3 Producing Warnings
 
-=for author
+Z<producing_warnings>
 
-warn
-Carp carp() and cluck()
-do they work with $SIG{__WARN__}?  Must verify.
-perl -MCarp=verbose
+X<keywords; warn>
+X<warn>
 
-=end for
+Use the C<warn> keyword to emit a warning:
+
+=begin programlisting
+
+    warn 'Something went wrong!';
+
+=end programlisting
+
+C<warn> prints a list of values to the STDERR filehandle (L<filehandle>).  Perl
+will append the filename and line number on which the C<warn> call occurred
+unless the last element of the list ends in a newline.
+
+X<Carp>
+X<Carp; carp()>
+X<Carp; cluck()>
+X<Carp; croak()>
+X<Carp; confess()>
+
+The core C<Carp> module offers other mechanisms to produce warnings.  Its
+C<carp()> function reports a warning from the perspective of the calling code.
+That is, you could check the arity of a function (L<arity>) with:
+
+=begin programlisting
+
+    use Carp;
+
+    sub only_two_arguments
+    {
+        my ($lop, $rop) = @_;
+        Carp::carp( 'Too many arguments provided' ) if @_ > 2;
+        ...
+    }
+
+=end programlisting
+
+... and anyone who reads the error message will receive the filename and line
+number of the I<calling> code, not C<only_two_arguments()>.  Similarly,
+C<Carp>'s C<cluck()> produces an entire backtrace of all function points up to
+its call.
+
+X<Carp; verbose>
+
+To track down weird warnings or exceptions throughout your system, enable
+C<Carp>'s verbose mode throughout the entire program:
+
+=begin programlisting
+
+    $ perl -MCarp=verbose my_prog.pl
+
+=end programlisting
+
+This changes all C<croak()> calls to produce C<confess()>'s behavior and all
+C<carp()> calls to C<cluck()>'s behavior.
 
 =head3 Enabling and Disabling Warnings
 
@@ -136,6 +186,12 @@ Admittedly, this technique is less useful than disabling warnings
 lexically--but it can come to good use in test modules such as
 C<Test::Warnings> from the CPAN, where the actual text of the warning is
 important.
+
+=begin sidebar
+
+C<perldoc perlvar> discusses C<%SIG> in more detail.
+
+=end sidebar
 
 =head3 Registering Your Own Warnings
 

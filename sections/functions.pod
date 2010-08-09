@@ -478,13 +478,14 @@ function and the context of the call:
 
 X<Carp>
 X<Carp; croak>
-X<Carp; cluck>
+X<Carp; carp>
 
 The standard C<Carp> module uses this technique to great effect for reporting
-errors and throwing warnings in functions.  You may see C<croak()> used to
-throw exceptions in place of C<die> in library code.  C<croak()> throws an
-exception reported from the file and line number of its caller.  The C<carp()>
-function reports a warning from the file and line number of its caller.
+errors and throwing warnings in functions; its C<croak()> throws an exception
+reported from the file and line number of its caller.  When used in place of
+C<die> in library code, C<croak()> can throw an exception due to incorrect
+usage from the point of use.  C<Carp>'s C<carp()> function reports a warning
+from the file and line number of its caller (L<producing_warnings>).
 
 This behavior is most useful when validating parameters or preconditions of a
 function, when you want to indicate that the calling code is wrong somehow:
@@ -531,6 +532,49 @@ strictness, consider the CPAN module C<Params::Validate>.
 
 Functions may seem simple, but you can do much, much more with them (see
 L<closures> and L<anonymous_functions> for more details).
+
+=head3 Context Awareness
+
+X<context>
+X<wantarray>
+X<keywords; wantarray>
+
+Perl 5's builtins know whether you've invoked them in void, scalar, or list
+context.  So too can your functions know their calling contexts.  The
+misnamedN<See C<perldoc -f wantarray> to verify.> C<wantarray> keyword returns
+C<undef> to signify void context, a false value to signify scalar context, and
+a true value to signify list context.
+
+=begin programlisting
+
+    sub context_sensitive
+    {
+        my $context = wantarray();
+        return qw( Called in list context )  if             $context;
+        say       'Called in void context'   unless defined $context;
+        return    'Called in scalar context' unless         $context;
+    }
+
+    context_sensitive();
+    say my $calar = context_sensitive();
+    say context_sensitive();
+
+=end programlisting
+
+This can be useful for functions which might produce expensive return values to
+avoid doing so in void context.  Some idiomatic functions return a list in list
+context and an array reference in scalar context (or the first element of the
+list).  Even so, there's no single best recommendation for the use or avoidance
+of C<wantarray>; sometimes it's clearer to write separate functions which
+clearly indicate their expected uses and return values.
+
+=begin sidebar
+
+With that said, Robin Houston's C<Want> and Damian Conway's
+C<Contextual::Return> distributions from the CPAN offer many possibilities for
+writing powerful and usable interfaces.
+
+=end sidebar
 
 =head3 Recursion
 
@@ -766,14 +810,17 @@ X<functions; Perl 1>
 As well, Perl 5 still supports old-style invocations of functions, carried over
 from older versions of Perl.  While you may now invoke Perl functions by name,
 previous versions of Perl required you to invoke them with a leading ampersand
-(C<&>) character.  Perl 1 required you to use the C<do> keyword as well:
+(C<&>) character.  Perl 1 required you to use the C<do> keyword:
 
 =begin programlisting
 
-    # Perl 4 style; avoid
+    # outdated style; avoid
     my $result = &calculate_result( 52 );
 
-    # Perl 1 style; really truly avoid
+    # Perl 1 style
+    my $result = do calculate_result( 42 );
+
+    # crazy mishmash; really truly avoid
     my $result = do &calculate_result( 42 );
 
 =end programlisting
@@ -808,9 +855,3 @@ array.
 
 This is admittedly an extreme case, but it is a case where proper
 parenthesization can clarify code and make subtle bugs obvious to the reader.
-
-=for author
-
-Add C<wantarray()> and Want.pm information?
-
-=end for
