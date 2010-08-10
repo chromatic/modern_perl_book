@@ -798,12 +798,6 @@ Not all features of Perl 5 functions are always helpful.  In particular,
 L<prototypes> rarely do what you mean.  They have their uses, but you can avoid
 them outside of a few cases.
 
-=for editor
-
-Check the timeline, but I'm pretty sure about this.
-
-=end for
-
 X<functions; Perl 4>
 X<functions; Perl 1>
 

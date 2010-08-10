@@ -192,7 +192,7 @@ of I<how> an object provides a method to leak out into the wider world.
 X<tailcall>
 X<goto; tailcall>
 
-Another idiom is to use a tailcall (L<tail_calls>) to I<replace> the current
+Another idiom is to use a tailcall (L<tailcalls>) to I<replace> the current
 invocation of C<AUTOLOAD()> from C<caller()>'s memory with a call to the
 destination method:
 

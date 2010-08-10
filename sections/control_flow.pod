@@ -1157,6 +1157,7 @@ Link to smart match.
 
 =head3 Tailcalls
 
+Z<tailcalls>
 X<tailcalls>
 X<goto>
 
@@ -1191,17 +1192,9 @@ manually.
 
 =begin sidebar
 
-Why would you want to do this?  Heavily recursive code (L<recursion>),
-especially mutually recursive code, can quickly consume a lot of memory.
-Reducing the memory needed for internal bookkeeping of control flow can make
-otherwise expensive algorithms tractable.
+Heavily recursive code (L<recursion>), especially mutually recursive code, can
+quickly consume a lot of memory.  Using tailcalls reduces the memory needed for
+internal bookkeeping of control flow, which can make otherwise expensive
+algorithms tractable.
 
 =end sidebar
-
-=for author
-
-Check Ruslan Zakirov's tailcall module for maturity and applicability here; it
-won't be core, but it may be worth mentioning.  There are two other sections
-which mention tailcalls; which has primacy?
-
-=end for
