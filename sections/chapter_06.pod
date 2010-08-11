@@ -1,4 +1,4 @@
-=head1 Regular Expressions
+=head1 Regular Expressions and Matching
 
 Z<regular_expressions>
 
@@ -22,3 +22,5 @@ seem daunting, regular expressions are like Perl--you can do many things with
 only a little knowledge.
 
 L<regular_expressions>
+
+L<smart_match>

@@ -1024,6 +1024,8 @@ iteration of the loop regardless of how that iteration ends:
 
 =head3 Given/When
 
+Z<given_when>
+
 X<given>
 
 The C<given> construct is a feature new to Perl 5.10.  It assigns the value of
@@ -1143,17 +1145,9 @@ code further.
 
 =end sidebar
 
-The C<when> construct is even more powerful; it can match against many other
-types of expressions including scalars, aggregates, references, arbitrary
-comparison expressions, and even code references.  The "Smart matching in
-detail" section of the I<perlsyn> perldoc provides a useful table of all
-possible match types.
-
-=for author
-
-Link to smart match.
-
-=end for
+The C<when> construct is even more powerful; it can match (L<smart_match>)
+against many other types of expressions including scalars, aggregates,
+references, arbitrary comparison expressions, and even code references.
 
 =head3 Tailcalls
 
