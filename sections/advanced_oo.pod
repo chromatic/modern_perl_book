@@ -65,6 +65,13 @@ receive or expanding the types of data they produce.  In other words, they
 should be as general as or more general at what they expect and as specific as
 or more specific about what they produce.
 
+The easiest way to understand this is to imagine two classes, C<Dessert> and
+C<PecanPie>, in which the latter subclasses the former.  If the classes follow
+the Liskov substitution principle, you can replace every use of C<Dessert>
+objects with C<PecanPie> objects in the test suite, and everything should
+passN<See Reg Braithwaite's "IS-STRICTLY-EQUIVALENT-TO-A" for more details,
+U<http://weblog.raganwald.com/2008/04/is-strictly-equivalent-to.html>.>.
+
 =head3 Subtypes and Coercions
 
 Z<subtypes>
