@@ -444,7 +444,7 @@ X<Path::Class::File>
 
 The C<Path::Class> distribution on the CPAN provides a nicer interface around
 C<File::Spec>.  Use the C<dir()> function to create an object representing a
-directory and the C<file()> function to create an object repesenting a file:
+directory and the C<file()> function to create an object representing a file:
 
 =begin programlisting
 
@@ -568,7 +568,7 @@ and set C<$!> on error.
 
 =begin sidebar
 
-C<Path::Class> provides convenience methods to check certain file attribtes as
+C<Path::Class> provides convenience methods to check certain file attributes as
 well as to remove files completely, in a cross-platform fashion.
 
 =end sidebar

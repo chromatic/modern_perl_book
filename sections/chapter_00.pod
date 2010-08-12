@@ -1,7 +1,7 @@
 =head0 Preface
 
 Perl turns 23 years old later this year.  The language has gone from a simple
-tool for system adminstration somewhere between shell scripting and C
+tool for system administration somewhere between shell scripting and C
 programming (Perl 1) to a powerful, general purpose language steeped in a rich
 heritage (Perl 5) and a consistent, coherent, rethinking of programming in
 general intended to last for another 25 years (Perl 6).
@@ -13,7 +13,7 @@ the worldwide Perl 5 community has invented, polished, and discovered are
 shorter, faster, more powerful, and easier to maintain than their alternatives.
 
 I<Modern Perl> is a loose description of how experienced and effective Perl 5
-programers work.  They use language idioms.  They take advantage of the CPAN.
+programmers work.  They use language idioms.  They take advantage of the CPAN.
 They're recognizably Perlish, and they show good taste and craftsmanship and a
 full understanding of Perl.
 
