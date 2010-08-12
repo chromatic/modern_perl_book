@@ -188,7 +188,7 @@ Even so, Perl 5's parser does not understand the single-line version:
 =begin programlisting
 
     # does not work
-    my @sorted = \&compare_lengths @unsorted;
+    my @sorted = sort \&compare_lengths @unsorted;
 
 =end programlisting
 

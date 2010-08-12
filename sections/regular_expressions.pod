@@ -507,8 +507,8 @@ The parentheses enclose the entire capture.  The C<< ?< name > >> construct
 must follow the left parenthesis.  It provides a name for the capture buffer.
 The rest of the construct within the parentheses is a regular expression.  If
 and when the regex matches this fragment, Perl stores the captured portion of
-the string in the special variable C<%+>: a hash where the key is the name of
-the capture buffer and the value is the portion of the string which matched the
+the string in the magic variable C<%+>: a hash where the key is the name of the
+capture buffer and the value is the portion of the string which matched the
 buffer's regex.
 
 Parentheses are special to Perl 5 regular expressions; by default they perform

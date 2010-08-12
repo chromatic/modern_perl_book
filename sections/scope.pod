@@ -239,7 +239,7 @@ once again.
 Note that the variable is I<visible> within all scopes, but the I<value> of the
 variable changes depending on C<local>ization and assignment.  This feature can
 be tricky and subtle, but it is especially useful for changing the values of
-special variables.
+magic variables.
 
 X<lexicals; pads>
 X<lexpads>
@@ -267,21 +267,15 @@ unless absolutely necessary.
 =end sidebar
 
 X<$/>
-X<special variables; $/>
+X<magic variables; $/>
 X<$!>
-X<special variables; $!>
+X<magic variables; $!>
 X<$@>
-X<special variables; $@>
+X<magic variables; $@>
 X<$|>
-X<special variables; $|>
+X<magic variables; $|>
 
-=for author
-
-Decide whether to use "special" or "magic".
-
-=end for
-
-It's common to C<local>ize several special variables.  For example, C<$/>, the
+It's common to C<local>ize several magic variables.  For example, C<$/>, the
 input record separator, governs how much data a C<readline> operation will read
 from a filehandle.  C<$!>, the system error variable, contains the error number
 of the most recent system call.  C<$@>, the Perl C<eval> error variable,
