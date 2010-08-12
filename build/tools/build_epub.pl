@@ -31,6 +31,8 @@ $epub->copy_stylesheet( $style, 'style.css' );
 
   for my $rec ( <$C> ) {
 
+    next if $rec !~ /^N:\s/;
+
     my ( $name, $email ) = $rec =~ /^N:\s(.*?)\nE:\s(.*?)\n/s;
 
     next if $name =~ /^(?:<name>|chromatic)?$/;
