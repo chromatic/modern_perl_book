@@ -19,7 +19,7 @@ X<variables; scope>
 X<scope>
 
 Variables also have visibility, depending on their scope (L<scope>).  Most of
-the variables you will encounter have lexical scope L<lexical_scope>).
+the variables you will encounter have lexical scope (L<lexical_scope>).
 Remember that files themselves have their own lexical scopes, such that the
 C<package> declaration on its own does not create a new scope:
 
