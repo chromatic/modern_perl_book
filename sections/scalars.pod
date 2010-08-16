@@ -96,7 +96,7 @@ either the string or numeric result:
 
     my $authors     = [qw( Pratchett Vinge Conway )];
     my $stringy_ref = '' . $authors;
-    my $numeric_ref =  0 . $authors;
+    my $numeric_ref =  0 + $authors;
 
 =end programlisting
 
