@@ -233,7 +233,7 @@ X<weak references>
 X<Scalar::Util>
 
 You must either break the reference count manually yourself (by clearing the
-children of C<$alice> and C<$bob> or the parents of C<$cianne>), or take
+children of C<$alice> and C<$robert> or the parents of C<$cianne>), or take
 advantage of a feature called I<weak references>.  A weak reference is a
 reference which does not increase the reference count of its referent.  Weak
 references are available through the core module C<Scalar::Util>.  Export the
