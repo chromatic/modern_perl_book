@@ -556,7 +556,7 @@ a true value to signify list context.
     }
 
     context_sensitive();
-    say my $calar = context_sensitive();
+    say my $scalar = context_sensitive();
     say context_sensitive();
 
 =end programlisting
