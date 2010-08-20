@@ -655,7 +655,7 @@ but some algorithms are much clearer recursively.
 
 Every new invocation of a function creates its own I<instance> of a lexical
 scope.  In the case of the recursive example, even though the declaration of
-C<elem_exists(>) creates a single scope for the lexicals C<$item>, C<@array>,
+C<elem_exists()> creates a single scope for the lexicals C<$item>, C<@array>,
 C<$midpoint>, and C<$miditem>, every I<call> to C<elem_exists()>, even
 recursively, has separate storage for the values of those lexical variables.
 You can demonstrate that by adding debugging code to the function:
