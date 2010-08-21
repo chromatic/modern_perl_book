@@ -322,6 +322,7 @@ X<OO; metaclass>
 You can add attributes and methods to this class when you create it:
 
 =begin programlisting
+
     use Class::MOP;
 
     my $class = Class::MOP::Class->create(
