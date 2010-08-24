@@ -62,7 +62,7 @@ instructions.>.
 
 C<perlbrew> allows you to install and to manage multiple versions of Perl 5.
 By default, it installs them to your own home directory.  Not only can you have
-multiple versions of Perl 5 installed without affection the system Perl but you
+multiple versions of Perl 5 installed without affecting the system Perl but you
 can also install any module you like into these directories without asking your
 system administrator for specific permission.
 
