@@ -48,7 +48,7 @@ generated at runtime or provided as input to a program.  These are I<symbolic
 lookups>.  You get more flexibility this way at the expense of some safety.  In
 particular, invoking functions or methods indirectly or looking up namespaced
 symbols lets you bypass Perl's parser, which is the only part of Perl that
-enforces these grammatic rules.  Be aware that doing so can produce confusing
+enforces these grammatical rules.  Be aware that doing so can produce confusing
 code; a hash (L<hashes>) or nested data structure (L<nested_data_structures>)
 is often clearer.
 

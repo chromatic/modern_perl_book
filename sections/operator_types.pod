@@ -142,7 +142,7 @@ than the symbolic forms.
 
 The defined-or operator, C<//>, tests the I<definedness> of its operand.
 Unlike C<||> which tests the truthiness of its operand, C<//> evaluates to a
-true value if its operand evalutes to a numeric zero or the empty string.  This
+true value if its operand evaluates to a numeric zero or the empty string.  This
 is especially useful for setting default parameter values:
 
 =begin programlisting
@@ -242,7 +242,7 @@ X<x>
 The repetition operator (C<x>) is an infix operator.  In list context, its
 behavior changes based on its first operand.  When given a list, it evaluates
 to that list repeated the number of times specified by its second operand.
-When given a scalar, it produces a string consisisting of the string value of
+When given a scalar, it produces a string consisting of the string value of
 its first operand concatenated to itself the number of times specified by its
 second operand.  In scalar context, the operator always produces a concatenated
 string repeated appropriately.
@@ -307,8 +307,8 @@ X<< operators; => >>
 X<< => >>
 
 The I<comma> operator (C<,>) is an infix operator.  In scalar context it
-evalutes its left operand then returns the value produced by evaluating its
-right operand.  In list context, it evalutes both operands in left-to-right
+evaluates its left operand then returns the value produced by evaluating its
+right operand.  In list context, it evaluates both operands in left-to-right
 order.
 
 The fat comma operator behaves the same way, except that it automatically
