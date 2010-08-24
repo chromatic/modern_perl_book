@@ -143,6 +143,10 @@ sub generate_ebook
     # Add Pod headings to table of contents.
     set_table_of_contents($epub, $table_of_contents);
 
+    # Make the directory if it doesn't exist.
+    my $dir = catdir(qw(build epub));
+    mkdir $dir unless -e $dir;
+
     # Generate the ePub eBook.
     my $filename = catfile(qw(build epub modern_perl.epub));
     $epub->pack_zip($filename);
