@@ -92,8 +92,9 @@ list, or using it in a list evaluates the function in I<list context>:
 The second line of the previous example may look confusing; the parentheses
 there give a hint to the compiler that although there's only a scalar, this
 assignment should occur in list context.  It's semantically equivalent to
-assigning to a scalar and a temporary array, and then throwing away the array,
-except that no assignment to the array actually occurs:
+assigning the first item in the list to a scalar and assigning the rest of the
+list to a temporary array, and then throwing away the array, except that no
+assignment to the array actually occurs:
 
 =begin programlisting
 
