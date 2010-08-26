@@ -201,7 +201,7 @@ As you might expect, the first test passes and the second fails:
 Where C<ok()> only provides the line number of the failing test, C<is()>
 displays the mismatched values.
 
-C<ok()> applies implicit scalar context to its values.  This means, for
+C<is()> applies implicit scalar context to its values.  This means, for
 example, that you can check the number of elements in an array without
 explicitly evaluating the array in scalar context:
 
