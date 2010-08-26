@@ -3,7 +3,11 @@
 Z<context_philosophy>
 
 X<context>
-
+[While reading this section I figured out that context in Perl is based on what
+operators you use and where you use them.  You never directly say this in this
+section, or in the operator_types.pod section.  But it's true.  I attempted to
+directly say this in this section somewhere, but I couldn't decide where or how,
+so this is just a suggestion then.]
 Spoken languages have a notion of I<context> where the correct usage or meaning
 of a word or phrase depends on its surroundings.  You may understand this in a
 spoken language, where the inappropriate pluralization of "Please give me one
