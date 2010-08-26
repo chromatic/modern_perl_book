@@ -7,7 +7,7 @@ multi-year projects and everything in between.
 
 Perl is powerful, and modern Perl--Perl which takes advantage of the best
 knowledge, deepest experience, and reusable idioms of the global Perl
-community--can be maintainable, fast, and easy to use.  Perhaps most
+community--is maintainable, fast, and easy to use.  Perhaps most
 importantly, it can help you do what you need to do with little frustration
 and no ceremony.
 
