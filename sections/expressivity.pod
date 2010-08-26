@@ -42,8 +42,8 @@ Learning Perl is like learning a second or third spoken language.  You'll learn
 a few words, then string together some sentences, and eventually will be able
 to have small, simple conversations.  Mastery comes with practice, both reading
 and writing.  You don't have to understand all of the details of this chapter
-immediately to be productive with Perl.  Keep the principles as you read the
-rest of this book.
+immediately to be productive with Perl.  Keep these principles in mind as you
+read the rest of this book.
 
 =end sidebar
 
