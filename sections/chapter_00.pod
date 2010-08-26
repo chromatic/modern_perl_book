@@ -45,10 +45,11 @@ C<is()> (L<testing>).  That skeleton program is:
     #!/usr/bin/perl
 
     use Modern::Perl;
-    B<use Test::More 'no_Plan';>
+    B<use Test::More;>
 
     # example code here
     ...
+    done_testing();
 
 =end programlisting
 
