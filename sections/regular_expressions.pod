@@ -557,7 +557,7 @@ use of captures in regex fragments; save it for top-level regexes.
 
 =end sidebar
 
-Named captures are less frustrating when you evaluate a match in list context:
+Anonymous captures are less frustrating when you evaluate a match in list context:
 
 =begin programlisting
 
