@@ -132,11 +132,16 @@ contain.  Both calls to C<some_expensive_operation()> occur in list context:
 
 =end programlisting
 
+C<expensive_operation> above is in list context, because it's being assigned to
+a hash, and hash assignments take a list of key/value pairs, which causes any
+expressions in that hash assignment to be evaulated in list context.
+
 X<operators; scalar>
 X<scalar>
 
 The latter example often surprises novice programmers who expect scalar context
-for the call.  Use the C<scalar> operator to enforce it:
+for the call; instead, it is list context, because that is the context the hash
+assignment forces.  Use the C<scalar> operator to enforce it:
 
 =begin programlisting
 
