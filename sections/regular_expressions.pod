@@ -675,7 +675,7 @@ capture pattern fragments.
 X<escape>
 X<metacharacters; escaping>
 
-To a I<literal> instance of a metacharacter, I<escape> it with a backslash
+To match a I<literal> instance of a metacharacter, I<escape> it with a backslash
 (C<\>).  Thus C<\(> refers to a single left parenthesis and C<\]> refers to a
 single right square bracket.  C<\.> refers to a literal period character
 instead of the "match anything but an explicit newline character" atom.

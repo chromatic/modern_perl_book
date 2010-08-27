@@ -352,7 +352,7 @@ modification at any point, you may do this even if the namespace does not yet
 exist, or if you have already declared functions in that namespace.
 
 You may only declare one function of the same name per namespace, lest Perl 5
-warn you about about subroutine redefinition.  If you're certain you want to
+warn you about subroutine redefinition.  If you're certain you want to
 I<replace> an existing function, disable this warning with C<no warnings
 'redefine'>.
 
