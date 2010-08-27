@@ -56,7 +56,7 @@ returns as well.  Most people ignore it.
 
 The C<tied()> operator returns the same object when used on a tied variable and
 C<undef> otherwise.  Again, few people use that object.  Instead, they check
-the boolean value of this object when they use use C<tied()> to determine
+the boolean value of this object when they use C<tied()> to determine
 whether the given variable is tied.
 
 =head3 Implementing Tied Variables
