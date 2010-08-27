@@ -56,7 +56,7 @@ C<$@>:
 
 =begin programlisting
 
-    local @;
+    local $@;
 
     eval { ... };
 
