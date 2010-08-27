@@ -34,8 +34,8 @@ is often simpler than doing so manually.
 
 The CPAN I<adds> hundreds of registered contributors and thousands of indexed
 modules in hundreds of distributions every month.  Those numbers do not take
-into account updates.  In late April 2010, search.cpan.org reported 8156
-uploaders, 81436 modules, and 20065 distributions.
+into account updates.  In late August 2010, search.cpan.org reported 8396
+uploaders, 85146 modules, and 20824 distributions.
 
 =end sidebar
 
