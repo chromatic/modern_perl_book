@@ -19,7 +19,7 @@ an object.  It returns true if the class or object is or derives from the named
 class, or if the object itself is a blessed reference to the given type.
 
 Given an object C<$pepper>, a hash reference blessed into the C<Monkey> class
-(which inherits from the C<Mammal>) class:
+(which inherits from the C<Mammal> class):
 
 =begin programlisting
 
