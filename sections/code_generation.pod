@@ -329,10 +329,10 @@ You can add attributes and methods to this class when you create it:
         'Monkey::Wrench' =>
         (
             attributes =>
-            (
+            [
                 Class::MOP::Attribute->new( '$material' ),
                 Class::MOP::Attribute->new( '$color' ),
-            )
+            ]
             methods =>
             {
                 tighten => sub { ... },
