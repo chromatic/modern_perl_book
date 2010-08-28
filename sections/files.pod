@@ -19,7 +19,7 @@ X<STDOUT>
 The primary mechanism of interacting with the world outside of a program is
 through a I<filehandle>.  Filehandles represent the state of some channel of
 input or output, such as the standard input or output of a program, a file from
-or two which to read or write, and the position in a given file.  Every Perl 5
+or to which to read or write, and the position in a given file.  Every Perl 5
 program has three standard filehandles available, C<STDIN> (the input to the
 program), C<STDOUT> (the output from the program), and C<STDERR> (the error
 output from the program).
