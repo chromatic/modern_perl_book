@@ -199,7 +199,7 @@ sub set_table_of_contents
         # The returned navpoint object is used for the next nested level.
         $navpoints[$heading_level] = $navpoint_obj;
 
-        # This is a workaround for non-contigous heading levels.
+        # This is a workaround for non-contiguous heading levels.
         $navpoints[$heading_level + 1] = $navpoint_obj;
 
     }
