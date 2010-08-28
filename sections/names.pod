@@ -41,7 +41,7 @@ X<symbolic lookups>
 
 These rules only apply to names which appear in literal form in source code;
 that is, if you've typed it directly like C<sub fetch_pie> or C<my
-$wafflemaker>.
+$waffleiron>.
 
 Perl's dynamic nature makes it possible to refer to entities with names
 generated at runtime or provided as input to a program.  These are I<symbolic
