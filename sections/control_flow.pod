@@ -1003,10 +1003,10 @@ X<continue>
 
 The C<continue> construct behaves like the third subexpression of a C<for>
 loop; Perl executes its block for each iteration of the loop, even when you
-exit an iteration with C<next>.  You may use it with may be used with a
-C<while>, C<until>, C<with>, or C<for> loop.  Examples of C<continue> are rare,
-but it's useful any time you want to guarantee that something occurs for every
-iteration of the loop regardless of how that iteration ends:
+exit an iteration with C<next>.  You may use it with a C<while>, C<until>,
+C<with>, or C<for> loop.  Examples of C<continue> are rare, but it's useful any
+time you want to guarantee that something occurs for every iteration of the loop
+regardless of how that iteration ends:
 
 =begin programlisting
 
