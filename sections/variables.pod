@@ -74,7 +74,7 @@ in a variable in one line, append to that variable a number on the next, and
 reassign a reference to a function (L<function_references>) on the third.  The
 types of the I<values> is flexible (or dynamic), but the type of the
 I<variable> is static.  A scalar variable can only hold scalars.  An array
-variable only contains lists.  A hash variable must contain an even-sized list
+variable only contains a list.  A hash variable must contain an even-sized list
 of key/value pairs.
 
 Assigning to a variable may cause coercion (L<coercion>).  The documented way
