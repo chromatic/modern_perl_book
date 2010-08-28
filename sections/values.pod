@@ -182,7 +182,7 @@ double-quoted interpolation.  The C<END_BLURB> itself is an arbitrary
 identifier which the Perl 5 parser uses as the ending delimiter.
 
 Be careful; regardless of the indentation of the heredoc declaration itself,
-the ending delimiter I<must> begin in the first column of the program:
+the ending delimiter I<must> start at the beginning of the line:
 
 =begin programlisting
 
