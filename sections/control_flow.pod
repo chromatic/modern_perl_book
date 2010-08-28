@@ -770,8 +770,9 @@ Perl 5 interprets this C<while> loop as if you had written:
 
 Without the implicit C<defined>, any line read from the filehandle which
 evaluated to false in a scalar context--a blank line or a line which contained
-only the character C<0>--would end the loop.  The C<readline> operator returns
-an undefined value only when it has finished reading lines from the file.
+only the character C<0>--would end the loop.  The C<readline> (C<< <> >>)
+operator returns an undefined value only when it has finished reading lines from
+the file.
 
 =begin sidebar
 
