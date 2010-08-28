@@ -148,8 +148,8 @@ variables and functions.
 While the standard naming rules apply to package names, by convention
 user-defined packages all start with uppercase letters.  The Perl core reserves
 lowercase package names for built-in pragmas (L<pragmas>), such as C<strict>
-and C<warnings>.  This is a policy enforced by community guidelines, rather
-than technical mechanisms.
+and C<warnings>.  This is a policy enforced by community guidelines instead of
+Perl itself.
 
 Namespaces do not nest in Perl 5.  The relationship between between
 C<Some::Package> and C<Some::Package::Refinement> is only a storage mechanism,
