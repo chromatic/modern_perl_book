@@ -514,8 +514,8 @@ the string literal were a Unicode string, the name will be incorrectly decoded
 into five Unicode characters C<JosE<Atilde>E<copy>> instead of C<JosE<eacute>>
 because the UTF-8 data means something else when decoded as Latin-1 data.
 
-See C<perldoc perluniintro> for far more detail Unicode, encodings, and how to
-manage incoming and outgoing data in a Unicode world.
+See C<perldoc perluniintro> for a far more detailed explanation of  Unicode,
+encodings, and how to manage incoming and outgoing data in a Unicode world.
 
 =head3 Numbers
 
