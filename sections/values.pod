@@ -70,7 +70,7 @@ backslashes safely:
 
 =begin programlisting
 
-    is 'Modern \ Perl', 'Modern \\ Perl', 'single quotes backslash escaping';
+    is('Modern \ Perl', 'Modern \\ Perl', 'single quotes backslash escaping');
 
 =end programlisting
 
