@@ -266,7 +266,7 @@ characters.  A I<Unicode encoding> maps octet sequences to characters.  Some
 encodings, such as UTF-8, can encode all of the characters in the Unicode
 character set.  Others, represent a subset of Unicode characters.  For example,
 ASCII encodes plain English text with no accented characters and Latin-1 can
-represent text in most languages which use the Latin script.
+represent text in most languages which use the Latin alphabet.
 
 If you always decode to and from the appropriate encoding at the inputs and
 outputs of your program, you will avoid many problems.
