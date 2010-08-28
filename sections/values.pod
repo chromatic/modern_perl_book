@@ -730,7 +730,7 @@ do not appear literally in source code.
 Lists and arrays are not interchangeable in Perl.  Lists are values and arrays
 are containers.  You may store a list in an array and you may coerce an array
 to a list, but they are separate entities.  For example, indexing into a list
-is always occurs in list context.  Indexing into an array can occur in scalar
+always occurs in list context.  Indexing into an array can occur in scalar
 context (for a single element) or list context (for a slice):
 
 =begin programlisting
