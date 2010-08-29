@@ -685,8 +685,8 @@ Z<tail_calls>
 X<recursion; guard conditions>
 
 One I<drawback> of recursion is that you must get your return conditions
-correct, lest your function call itself an infinite number of times.  This is
-why the C<elem_exists()> function has several C<return> statements.
+correct, or else your function will call itself an infinite number of times.
+This is why the C<elem_exists()> function has several C<return> statements.
 
 Perl offers a helpful warning when it detects what might be runaway recursion:
 C<Deep recursion on subroutine>.  The limit is 100 recursive calls, which can
