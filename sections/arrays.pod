@@ -323,7 +323,7 @@ normal Perl 5 function, they will flatten into a single list:
 
 Within the function, C<@_> will contain seven elements, not two.
 
-As well, list assignment to arrays is I<greedy>.  An array will consume as many
+Similarly, list assignment to arrays is I<greedy>.  An array will consume as many
 elements from the list as possible.  After the assignment, C<@cats> will
 contain I<every> argument passed to the function.  C<@dogs> will be empty.
 
