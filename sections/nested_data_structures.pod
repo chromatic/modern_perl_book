@@ -269,8 +269,7 @@ imagine, the human cost of understanding these data structures as well as the
 relationship of various pieces, not to mention the syntax required to access
 various portions, can be high.  Beyond two or three levels of nesting, consider
 whether modeling various components of your system with classes and objects
-(L<moose>) will allow you to operate on your data within encapsulation
-boundaries.
+(L<moose>) will allow for a clearer representation of your data.
 
 Sometimes bundling data with behaviors appropriate to that data can clarify
 code.
