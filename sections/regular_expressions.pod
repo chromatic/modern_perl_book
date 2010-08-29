@@ -382,7 +382,7 @@ X<regular expressions; \S>
 
 These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
-C<\D>.  To match anything but a space, use C<\S>.
+C<\D>.  To match anything but whitespace, use C<\S>.
 
 =head2 Character Classes
 
