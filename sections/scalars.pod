@@ -136,8 +136,8 @@ boolean context, numbers which evaluate to zero (C<0>, C<0.0>, and C<0e0>) are
 false.  All other numbers are true.
 
 Be careful that the I<strings> C<'0.0'> and C<'0e0'> are true; this is one
-place where Perl 5 makes distinction what looks like a number and what really
-is a number.
+place where Perl 5 makes a distinction between what looks like a number and
+what really is a number.
 
 X<undef>
 
