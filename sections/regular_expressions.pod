@@ -495,7 +495,7 @@ variable with I<named captures>:
 =end programlisting
 
 The capturing construct can look like a big wad of punctuation, but it's fairly
-simple when you can recognize as a single chunk:
+simple when you can recognize it as a single chunk:
 
 =begin programlisting
 
