@@ -521,7 +521,7 @@ the source code refer to it, but there's only one I<reference> to it; C<$fh>
 itself.)  C<$fh> is only in scope in the block and does not get assigned to
 anything outside of the block, so when the block ends, its reference count
 reaches zero.  The recycling of C<$fh> calls an implicit C<close()> method on
-the filehandle, and so the file gets closed.
+the filehandle, which closes the file. 
 
 You don't have to understand the details of how all of this works.  You only
 need to understand that your actions in taking references and passing them
