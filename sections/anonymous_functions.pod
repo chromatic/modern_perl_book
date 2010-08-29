@@ -201,7 +201,8 @@ This program produces:
 
 Note that both references refer to the same underlying anonymous function.
 Calling C<subname()> on C<$anon> and returning into C<$named> modifies that
-function, so any other reference to this function will see the same moniker.
+function, so any other reference to this function will see the same name
+C<pseudo-anonymous>.
 
 =head3 Implicit Anonymous Functions
 
