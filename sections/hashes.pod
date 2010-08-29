@@ -428,7 +428,7 @@ themselves evaluate to false in a boolean context.
 
 =begin programlisting
 
-    use Test::More 'no_plan';
+    use Test::More;
 
     my %empty;
     nok( %empty, 'empty hash should evaluate to false' );
@@ -440,6 +440,8 @@ themselves evaluate to false in a boolean context.
     ok( %false_value, 'hash containing false value should evaluate to true' );
 
     ...
+
+    done_testing();
 
 =end programlisting
 
