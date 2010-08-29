@@ -38,7 +38,7 @@ A simple declaration of an array of arrays might be:
 
 =begin sidebar
 
-Perl allows but does not require the trailing comma so to ease adding new
+Perl allows but does not require the trailing comma so as to ease adding new
 elements to the list.
 
 =end sidebar
