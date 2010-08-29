@@ -183,7 +183,8 @@ X<< -> >>
 X<< operators; -> >>
 X<operators; dereferencing arrow>
 
-You may also access individual elements by using the dereferencing arrow:
+You may also access individual elements by using the dereferencing arrow
+(C<< -> >>):
 
 =begin programlisting
 
