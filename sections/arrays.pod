@@ -86,8 +86,8 @@ replace the C<@> array sigil with the slightly more unwieldy C<$#>:
 
 That may not read as nicely, however.  Most of the time you don't need that
 syntax, as you can use negative offsets to access an array from the end instead
-of the start.  The final element of an array is available at the index C<-1>.
-The penultimate element of the array is available at index C<-2>, and so on.
+of the start.  The last element of an array is available at the index C<-1>.
+The second to last element of the array is available at index C<-2>, and so on.
 For example:
 
 =begin programlisting
