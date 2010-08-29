@@ -311,5 +311,5 @@ evaluates its left operand then returns the value produced by evaluating its
 right operand.  In list context, it evaluates both operands in left-to-right
 order.
 
-The fat comma operator behaves the same way, except that it automatically
-quotes any bareword used as its left operand.
+The fat comma operator (C<< => >>) behaves the same way, except that it
+automatically quotes any bareword used as its left operand.
