@@ -103,8 +103,8 @@ this construct.  Sometimes using temporary variables can clarify:
 
 =end programlisting
 
-C<perldoc perldsc>, the data structures cookbook, gives copious examples of
-various types of data structures available in Perl with their syntax.
+C<perldoc perldsc>, the data structures cookbook, gives copious examples of how
+to use the various types of data structures available in Perl.
 
 =head3 Autovivification
 
