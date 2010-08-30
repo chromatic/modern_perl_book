@@ -476,7 +476,7 @@ You can even open filehandles to directories and files:
 =begin programlisting
 
     my $dir_fh    = $dir->open();
-    my $robots_fh = $robot_list->open( 'r' );
+    my $robots_fh = $robot_list->open( 'r' ) or die "Open failed: $!";
 
 =end programlisting
 
