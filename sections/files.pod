@@ -503,7 +503,7 @@ X<operators; -e>
 
 The C<-e> operator has a single operand, the name of a file or a file or
 directory handle.  If the file exists, the expression will evaluate to a true
-value.  C<perldoc -f -X> lists several other file tests; the most popular are:
+value.  C<perldoc -f -X> lists all other file tests; the most popular are:
 
 X<operators; -f>
 X<operators; -d>
