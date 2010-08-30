@@ -171,8 +171,8 @@ X<constants>
 
 The second reason to use prototypes is to define compile-time constants.  A
 function declared with an empty prototype (as opposed to I<no> prototype)
-which evaluates to a single expression becomes a constant in the Perl 5 optree
-rather than a function call:
+which evaluates to a single expression becomes a constant rather than a function
+call:
 
 =begin programlisting
 
