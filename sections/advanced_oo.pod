@@ -48,7 +48,7 @@ Complexity and duplication complicate development and maintenance activities.
 The DRY principle (Don't Repeat Yourself) is a reminder to seek out and to
 eliminate duplication within the system.  Duplication exists in many forms, in
 data as well as in code.  If you find yourself repeating configuration
-information, user data, and other artifacts within your system, instead find a
+information, user data, and other artifacts within your system; instead, find a
 canonical, single representation of that information, then generate all of the
 other artifacts from that representation.
 
