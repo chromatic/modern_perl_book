@@ -42,7 +42,7 @@ test, bundle, and install the distribution.
 helps packaging tools produce an entire tarball and helps to verify that
 recipients of the tarball have all of the necessary files.
 
-=item * F<META.yml>, a file containing metadata about the distribution and its
+=item * F<META.yml> and/or F<META.json>, a file containing metadata about the distribution and its
 dependencies.
 
 =item * F<README>, a description of the distribution, its intent, and its
@@ -51,6 +51,8 @@ copyright and licensing information.
 =item * F<lib/>, the directory containing Perl modules.
 
 =item * F<t/>, a directory containing test files.
+
+=item * F<Changes>, a log of every change to the distribution.
 
 =back
 
