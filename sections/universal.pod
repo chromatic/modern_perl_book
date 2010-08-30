@@ -37,11 +37,11 @@ Given an object C<$pepper>, a hash reference blessed into the C<Monkey> class
 X<SCALAR>
 X<ARRAY>
 X<HASH>
-X<REGEX>
+X<Regexp>
 X<IO>
 X<CODE>
 
-Built-in types are C<SCALAR>, C<ARRAY>, C<HASH>, C<REGEX>, C<IO>, and C<CODE>.
+Built-in types are C<SCALAR>, C<ARRAY>, C<HASH>, C<Regexp>, C<IO>, and C<CODE>.
 
 You can override C<isa()> in your own classes.  This can be useful when working
 with mock objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN,
