@@ -1,4 +1,4 @@
-=head2 Context
+=head1 Context
 
 Z<context_philosophy>
 
@@ -37,7 +37,7 @@ discover that your assumptions about context were incorrect.  However, if you're
 cognizant of contexts, they can make your code clearer, more concise, and more
 flexible.
 
-=head3 Void, Scalar, and List Context
+=head2 Void, Scalar, and List Context
 
 Z<amount_context>
 
@@ -153,8 +153,7 @@ assignment forces.  Use the C<scalar> operator to enforce it:
 
 =end programlisting
 
-
-=head3 Numeric, String, and Boolean Context
+=head2 Numeric, String, and Boolean Context
 
 Z<value_contexts>
 

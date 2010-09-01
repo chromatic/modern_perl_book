@@ -1,4 +1,4 @@
-=head2 Implicit Ideas
+=head1 Implicit Ideas
 
 Z<implicit_ideas>
 
@@ -8,7 +8,7 @@ understand the expected number of results or the type of an operation from
 existing information without adding explicit additional information to
 disambiguate.  Others also exist.
 
-=head3 The Default Scalar Variable
+=head2 The Default Scalar Variable
 
 X<default scalar variable>
 X<variables; $_>
@@ -174,7 +174,7 @@ Of course, using a named lexical can be just as clear:
 
 Use C<$_> as you would the word "it" in formal writing: sparingly, in small and well-defined scopes.
 
-=head3 The Default Array Variables
+=head2 The Default Array Variables
 
 X<default array variables>
 X<variables; @_>
