@@ -431,7 +431,7 @@ themselves evaluate to false in a boolean context.
     use Test::More;
 
     my %empty;
-    nok( %empty, 'empty hash should evaluate to false' );
+    ok( ! %empty, 'empty hash should evaluate to false' );
 
     my %false_key = ( 0 => 'true value' );
     ok( %false_key, 'hash containing false key should evaluate to true' );
