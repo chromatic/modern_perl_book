@@ -235,7 +235,7 @@ command-line filter which reverses its input:
 
 Why C<scalar>?  C<say> imposes list context on its operands.  C<reverse> passes
 its context on to its operands, treating them as a list in list context and a
-concatenated string in scalar context.  If this sounds confusing, it can be: if
+concatenated string in scalar context.  This sounds confusing, because it is.
 Perl 5 arguably should have had different operators for these different
 operations.
 
