@@ -103,7 +103,7 @@ Constants declared with the C<constant> pragma are usable as barewords:
 
     ...
 
-    return unless $name eq NAME && $pass eq PASS;
+    return unless $name eq NAME && $pass eq PASSWORD;
 
 =end programlisting
 
