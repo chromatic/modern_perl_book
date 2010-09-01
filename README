@@ -77,6 +77,12 @@ This will produce nicely-formatted HTML in the build/html/ directory.  If
 anything looks wrong, it's a mistake on my part (or a CSS problem) and patches
 are very welcome.
 
+To build an ePub eBook from the woven chapters:
+
+    $ perl build/tools/build_epub.pl
+
+This will produce an ePub eBook in the build/epub/ directory.
+
 
 Contributing to Modern Perl
 ---------------------------
