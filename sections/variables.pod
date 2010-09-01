@@ -1,4 +1,4 @@
-=head2 Variables
+=head1 Variables
 
 Z<variables>
 X<variable>
@@ -11,7 +11,7 @@ the side lengths of every right triangle you can imagine.  This may seem basic
 and obvious, but to write robust, well-designed, testable, and composable
 programs, you must identify and exploit points of genericity wherever possible.
 
-=head3 Variable Scopes
+=head2 Variable Scopes
 
 Z<variable_scopes>
 
@@ -36,7 +36,7 @@ C<package> declaration on its own does not create a new scope:
 
 =end programlisting
 
-=head3 Variable Sigils
+=head2 Variable Sigils
 
 Z<sigils>
 
@@ -52,7 +52,7 @@ value--of the array with C<$values[0]>.  You access a list of values from the
 array with C<@values[ @indices ]>.  See the arrays (L<arrays>) and hashes
 (L<hashes>) sections for more.
 
-=head3 Anonymous Variables
+=head2 Anonymous Variables
 
 X<anonymous variables>
 X<variables; anonymous>
@@ -62,7 +62,7 @@ variables without storing them in lexical pads or symbol tables.  These are
 I<anonymous> variables.  The only way to access them is by reference
 (L<references>).
 
-=head3 Variables, Types, and Coercion
+=head2 Variables, Types, and Coercion
 
 X<variables; types>
 X<types; containers>

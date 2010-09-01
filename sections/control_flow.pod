@@ -1,4 +1,4 @@
-=head2 Control Flow
+=head1 Control Flow
 
 Z<control_flow>
 
@@ -21,7 +21,7 @@ Most programs need more complex control flow.  Perl's I<control flow
 directives> change the order of execution--what happens next in the
 program--depending on the values of arbitrarily complex expressions.
 
-=head3 Branching Directives
+=head2 Branching Directives
 
 X<if>
 X<control flow directives; if>
@@ -233,7 +233,7 @@ There is no C<else if> construct; this is a syntax error:
 
 =end programlisting
 
-=head3 The Ternary Conditional Operator
+=head2 The Ternary Conditional Operator
 
 X<ternary conditional>
 X<control flow directives; ternary conditional>
@@ -268,7 +268,7 @@ Again, weigh the benefits of clarity versus the benefits of conciseness.
 
 =end sidebar
 
-=head4 Short Circuiting
+=head3 Short Circuiting
 
 X<short circuiting behavior>
 X<short circuiting>
@@ -358,7 +358,7 @@ circuiting can help you to avoid errors and warnings:
 =end programlisting
 
 
-=head3 Context for Conditional Directives
+=head2 Context for Conditional Directives
 
 X<context; conditional>
 X<truth>
@@ -394,7 +394,7 @@ evaluated in a boolean context.
 
 =end sidebar
 
-=head3 Looping Directives
+=head2 Looping Directives
 
 Z<looping_directives>
 
@@ -486,7 +486,7 @@ a lexical:
 
 =end programlisting
 
-=head3 Iteration and Aliasing
+=head2 Iteration and Aliasing
 
 X<iteration aliasing>
 X<aliasing>
@@ -557,7 +557,7 @@ alias C<$_> to the variable:
 
 =end programlisting
 
-=head3 Iteration and Scoping
+=head2 Iteration and Scoping
 
 X<iterator scoping>
 X<scope; iterator>
@@ -605,7 +605,7 @@ variable with C<my $_>:
 Using a named iteration variable also prevents undesired aliasing behavior
 through C<$_>.
 
-=head3 The C-Style For Loop
+=head2 The C-Style For Loop
 
 X<for loop>
 
@@ -683,7 +683,7 @@ All three subexpressions are optional.  You may write an infinite loop with:
 
 =end programlisting
 
-=head3 While and Until
+=head2 While and Until
 
 X<while loop>
 X<loops; while>
@@ -831,7 +831,7 @@ form, the C<do> block with a postfix C<while> or C<until> will execute its body
 at least once.  This construct is less common than the other loop forms, but no
 less powerful.
 
-=head3 Loops within Loops
+=head2 Loops within Loops
 
 X<nested loops>
 X<loops; nested>
@@ -901,7 +901,7 @@ overlooked option):
 
 =end programlisting
 
-=head3 Loop Control
+=head2 Loop Control
 
 X<loop control>
 
@@ -997,7 +997,7 @@ If you find yourself nesting loops such that you need labels to manage control
 flow, consider simplifying your code: perhaps extracting inner loops into
 functions for clarity.
 
-=head3 Continue
+=head2 Continue
 
 X<continue>
 
@@ -1023,7 +1023,7 @@ regardless of how that iteration ends:
 
 =end programlisting
 
-=head3 Given/When
+=head2 Given/When
 
 Z<given_when>
 
@@ -1150,7 +1150,7 @@ The C<when> construct is even more powerful; it can match (L<smart_match>)
 against many other types of expressions including scalars, aggregates,
 references, arbitrary comparison expressions, and even code references.
 
-=head3 Tailcalls
+=head2 Tailcalls
 
 Z<tailcalls>
 X<tailcalls>

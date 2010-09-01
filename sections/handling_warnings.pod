@@ -1,4 +1,4 @@
-=head2 Handling Warnings
+=head1 Handling Warnings
 
 Z<handling_warnings>
 
@@ -7,7 +7,7 @@ situations.  Even though you should almost always enable warnings
 unconditionally, certain circumstances dictate prudence in disabling certain
 warnings--and Perl supports this.
 
-=head3 Producing Warnings
+=head2 Producing Warnings
 
 Z<producing_warnings>
 
@@ -68,7 +68,7 @@ C<Carp>'s verbose mode throughout the entire program:
 This changes all C<croak()> calls to produce C<confess()>'s behavior and all
 C<carp()> calls to C<cluck()>'s behavior.
 
-=head3 Enabling and Disabling Warnings
+=head2 Enabling and Disabling Warnings
 
 X<-w>
 X<command-line arguments; -w>
@@ -110,7 +110,7 @@ Code written before the C<warnings> pragma (Perl 5.6.0 in spring 2000) may
 C<local>ize C<$^W> to suppress certain warnings within a given scope.  New code
 should use the pragma instead.
 
-=head3 Disabling Warning Categories
+=head2 Disabling Warning Categories
 
 To disable selective warnings within a scope, use C<no warnings;> with an
 argument list.  Omitting the argument list disables all warnings within that
@@ -133,7 +133,7 @@ string-processing code which concatenates values from many sources.  Careful
 initialization of variables can avoid the need to disable the warning, but
 local style and concision may render this warning moot.
 
-=head3 Making Warnings Fatal
+=head2 Making Warnings Fatal
 
 Z<fatal_warnings>
 X<warnings; fatal>
@@ -156,7 +156,7 @@ deprecated constructs:
 
 =end programlisting
 
-=head3 Catching Warnings
+=head2 Catching Warnings
 
 X<signal handlers; __WARN__>
 X<__WARN__>
@@ -193,7 +193,7 @@ C<perldoc perlvar> discusses C<%SIG> in more detail.
 
 =end sidebar
 
-=head3 Registering Your Own Warnings
+=head2 Registering Your Own Warnings
 
 Z<registering_warnings>
 

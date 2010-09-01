@@ -1,4 +1,4 @@
-=head2 Arrays
+=head1 Arrays
 
 Z<arrays>
 X<arrays>
@@ -17,7 +17,7 @@ The C<@> sigil denotes an array.  To declare an array:
 
 =end programlisting
 
-=head3 Array Elements
+=head2 Array Elements
 
 X<variant sigils>
 X<sigils; variance>
@@ -101,7 +101,7 @@ You can resize an array by assigning to C<$#>.  If you shrink an array, Perl
 will discard values which do not fit in the resized array.  If you expand an
 array, Perl will fill in the expanded values with C<undef>.
 
-=head3 Array Assignment
+=head2 Array Assignment
 
 You can assign to individual positions in an array directly by index:
 
@@ -174,7 +174,7 @@ version of C<my @items>.  Prefer the latter.
 
 =end sidebar
 
-=head3 Array Slices
+=head2 Array Slices
 
 X<array slice>
 X<slices; array>
@@ -232,7 +232,7 @@ used as its index:
 
 =end programlisting
 
-=head3 Array Operations
+=head2 Array Operations
 
 Managing array indices can be a hassle.  Because Perl 5 can expand or contract
 arrays as necessary, the language also provides several operations to treat
@@ -298,7 +298,7 @@ other operators are shorter and simpler to read and understand.
 Arrays often contain elements to process in a loop; see L<looping_directives>
 for more detail about Perl 5 control flow and array processing.
 
-=head3 Arrays and Context
+=head2 Arrays and Context
 
 X<list context; arrays>
 
@@ -347,7 +347,7 @@ not I<create> lists in these circumstances--they only group expressions.
 The solution to this flattening behavior is the same for passing arrays to
 functions and for creating nested arrays (L<references>).
 
-=head3 Array Interpolation
+=head2 Array Interpolation
 
 X<array interpolation>
 X<interpolation; arrays>

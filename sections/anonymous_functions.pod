@@ -1,4 +1,4 @@
-=head2 Anonymous Functions
+=head1 Anonymous Functions
 
 Z<anonymous_functions>
 
@@ -11,7 +11,7 @@ references to it--it can do anything a named function can do.  The difference
 is that it has no name.  You always deal with anonymous functions by reference
 (see L<references> and L<function_references>).
 
-=head3 Declaring Anonymous Functions
+=head2 Declaring Anonymous Functions
 
 You may never declare an anonymous function on its own; you must construct it
 and assign it to a variable, invoke it immediately, or pass it as an argument
@@ -113,7 +113,7 @@ function parameters:
 
 =end programlisting
 
-=head3 Anonymous Function Names
+=head2 Anonymous Function Names
 
 X<anonymous functions; names>
 
@@ -204,7 +204,7 @@ Calling C<subname()> on C<$anon> and returning into C<$named> modifies that
 function, so any other reference to this function will see the same name
 C<pseudo-anonymous>.
 
-=head3 Implicit Anonymous Functions
+=head2 Implicit Anonymous Functions
 
 X<anonymous functions; implicit>
 

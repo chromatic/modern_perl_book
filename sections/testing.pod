@@ -1,4 +1,4 @@
-=head2 Testing
+=head1 Testing
 
 Z<testing>
 
@@ -14,7 +14,7 @@ to do everything perfectly every time, let the computer handle the repetition.
 
 Perl 5 provides great tools to help you write good and useful automated tests.
 
-=head3 Test::More
+=head2 Test::More
 
 X<Test::More>
 X<ok()>
@@ -78,7 +78,7 @@ completed successfully--otherwise, how would you I<know>?
 
 =end sidebar
 
-=head3 Running Tests
+=head2 Running Tests
 
 Z<running_tests>
 
@@ -164,7 +164,7 @@ With those two changes, C<prove> now displays:
 
 =end screen
 
-=head3 Better Comparisons
+=head2 Better Comparisons
 
 Even though the heart of all automated testing is the boolean condition "is
 this true or false?", reducing everything to that boolean condition is tedious
@@ -290,7 +290,7 @@ more configurable tests.
 
 C<Test::More> has several more test functions, but these are the most useful.
 
-=head3 Organizing Tests
+=head2 Organizing Tests
 
 X<testing; .t files>
 X<testing; t/ directory>
@@ -326,7 +326,7 @@ want only to run the F<t/breathe_fire.t> test file.  When you have the feature
 working to your satisfaction, run the entire test suite to verify that local
 changes have no unintended global effects.
 
-=head3 Other Testing Modules
+=head2 Other Testing Modules
 
 X<Test::Builder>
 X<testing; modules>

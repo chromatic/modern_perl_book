@@ -19,7 +19,7 @@ full understanding of Perl.
 
 You can learn this too.
 
-=head1 Running Modern Perl
+=head0 Running Modern Perl
 
 You don't have to install a new version of Perl to take advantage of most of
 this book, but the examples given assume that you're using Perl 5.10 or newer.

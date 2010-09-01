@@ -1,4 +1,4 @@
-=head2 Code Generation
+=head1 Code Generation
 
 Z<code_generation>
 
@@ -27,7 +27,7 @@ The C<AUTOLOAD> technique (L<autoload>) for missing functions and methods
 demonstrates this technique in a constrained form; Perl 5's function and method
 dispatch system allows you to customize what happens when normal lookup fails.
 
-=head3 eval
+=head2 eval
 
 X<eval string>
 X<operators; eval>
@@ -94,7 +94,7 @@ free, either--cheaper than performing IO, perhaps, but not free.
 
 Even so, this technique is simple and reasonably easy to understand.
 
-=head3 Parametric Closures
+=head2 Parametric Closures
 
 X<closures; parametric>
 
@@ -199,7 +199,7 @@ warning unless you explicitly suppress it within the scope.
 
 =end sidebar
 
-=head3 Compile-time Manipulation
+=head2 Compile-time Manipulation
 
 Unlike code written explicitly as code, code generated through C<eval> string
 gets compiled at runtime.  Where you might expect a normal function to be
@@ -285,7 +285,7 @@ a subtle bug:
 string value to C<$wanted_package> occurs.  The result will be an exception
 from attempting to invoke the C<require()> method on the undefined value.
 
-=head3 Class::MOP
+=head2 Class::MOP
 
 Z<class_mop>
 

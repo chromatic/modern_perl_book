@@ -1,4 +1,4 @@
-=head2 Advanced OO Perl
+=head1 Advanced OO Perl
 
 Z<advanced_oo>
 
@@ -8,7 +8,7 @@ abstraction also offer possibilities for obfuscation.  Only practical
 experience can help you understand the most important design techniques... but
 several principles can guide you.
 
-=head3 Favor Composition Over Inheritance
+=head2 Favor Composition Over Inheritance
 
 Novice OO designs often overuse inheritance.  It's common to see class
 hierarchies which try to model all of the behavior for entities within the
@@ -27,7 +27,7 @@ roles) improves encapsulation and reduces the possibility that any one class or
 role will grow to do too much.  Smaller, simpler, and better encapsulated
 entities are easier to understand, test, and maintain.
 
-=head3 Single Responsibility Principle
+=head2 Single Responsibility Principle
 
 When you design your object system, model the problem in terms of
 responsibilities, or reasons why each specific entity may need to change.  For
@@ -42,7 +42,7 @@ may have a C<Job>-sharing arrangement, for example.)
 When each class has a single responsibility, you can improve the encapsulation
 of class-specific data and behaviors and reduce coupling between classes.
 
-=head3 Don't Repeat Yourself
+=head2 Don't Repeat Yourself
 
 Complexity and duplication complicate development and maintenance activities.
 The DRY principle (Don't Repeat Yourself) is a reminder to seek out and to
@@ -56,7 +56,7 @@ This principle helps to reduce the possibility that important parts of your
 system can get unsynchronized, and helps you to find the optimal representation
 of the system and its data.
 
-=head3 Liskov Substitution Principle
+=head2 Liskov Substitution Principle
 
 The Liskov substitution principle suggests that subtypes of a given type
 (specializations of a class or role or subclasses of a class) should be
@@ -72,7 +72,7 @@ objects with C<PecanPie> objects in the test suite, and everything should
 passN<See Reg Braithwaite's "IS-STRICTLY-EQUIVALENT-TO-A" for more details,
 U<http://weblog.raganwald.com/2008/04/is-strictly-equivalent-to.html>.>.
 
-=head3 Subtypes and Coercions
+=head2 Subtypes and Coercions
 
 Z<subtypes>
 Z<coercions>
@@ -88,7 +88,7 @@ specify mechanisms by which to coerce data of one type to data of another type.
 
 See C<Moose::Util::TypeConstraints> and C<MooseX::Types> for more information.
 
-=head3 Immutability
+=head2 Immutability
 
 Z<immutability>
 

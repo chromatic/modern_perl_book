@@ -1,4 +1,4 @@
-=head2 Operator Characteristics
+=head1 Operator Characteristics
 
 Z<operator_characteristics>
 X<operators; characteristics>
@@ -13,7 +13,7 @@ Every operator possesses several important characteristics which govern its
 behavior: the number of operands on which it operates, its relationship to
 other operators, and its syntactic possibilities.
 
-=head3 Precedence
+=head2 Precedence
 
 Z<precedence>
 X<precedence>
@@ -37,7 +37,7 @@ simple.  The second best way is to use parentheses to clarify precedence in
 complex expressions.  If you find yourself drowning in a sea of parentheses,
 see the first rule again.
 
-=head3 Associativity
+=head2 Associativity
 
 Z<associativity>
 X<associativity>
@@ -71,7 +71,7 @@ section; use variables instead, as in C<$x ** $y ** $z>.
 
 =end sidebar
 
-=head3 Arity
+=head2 Arity
 
 Z<arity>
 
@@ -118,7 +118,7 @@ operators denoting the arguments to C<say>, not circumfix parentheses grouping
 an expression to change precedence.  In other words, the code prints the value
 C<6> and evaluates to the return value of C<say> multiplied by C<4>.
 
-=head3 Fixity
+=head2 Fixity
 
 Z<fixity>
 X<fixity>

@@ -1,4 +1,4 @@
-=head3 References
+=head2 References
 
 Z<references>
 
@@ -45,7 +45,7 @@ value.  A reference is a first-class, built-in scalar data type in Perl 5.
 It's not a string, an array, or a hash.  It's a scalar which refers to another
 first-class data type.
 
-=head4 Scalar References
+=head3 Scalar References
 
 X<references; operator>
 X<operators; reference>
@@ -132,7 +132,7 @@ locations if its garbage collector has reclaimed an unreferenced reference.
 
 =end sidebar
 
-=head4 Array References
+=head3 Array References
 
 X<array references>
 X<references; arrays>
@@ -260,7 +260,7 @@ scoping.  That is to say:
 square braces used to create the anonymous array reference, the C<@meals> array
 flattens in list context.
 
-=head4 Hash References
+=head3 Hash References
 
 X<hash references>
 X<references; hashes>
@@ -349,7 +349,7 @@ parentheses for a named hash and curly brackets for an anonymous hash.
 
 =end sidebar
 
-=head4 Function References
+=head3 Function References
 
 Z<function_references>
 
@@ -431,7 +431,7 @@ syntax; it has implications for implicit argument passing.
 
 =end sidebar
 
-=head4 Filehandle References
+=head3 Filehandle References
 
 Z<lexical_filehandles>
 
@@ -478,7 +478,7 @@ Besides the benefit of using lexical scope instead of package or global scope,
 lexical filehandles allow you to manage the lifespan of filehandles.  This is a
 nice feature of how Perl 5 manages memory and scopes.
 
-=head4 Reference Counts
+=head3 Reference Counts
 
 Z<reference_counts>
 

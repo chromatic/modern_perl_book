@@ -1,4 +1,4 @@
-=head2 The UNIVERSAL Package
+=head1 The UNIVERSAL Package
 
 Z<universal>
 
@@ -8,7 +8,7 @@ Perl 5 provides a special package which is the ancestor of all other packages
 in a very object-oriented way.  The C<UNIVERSAL> package provides a few methods
 available for all other classes and objects.
 
-=head3 The isa() Method
+=head2 The isa() Method
 
 X<UNIVERSAL::isa>
 X<isa()>
@@ -47,7 +47,7 @@ You can override C<isa()> in your own classes.  This can be useful when working
 with mock objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN,
 for example) or with code that does not use roles (L<roles>).
 
-=head3 The can() Method
+=head2 The can() Method
 
 X<UNIVERSAL::can>
 X<can()>
@@ -102,7 +102,7 @@ introspection is much more powerful and easier to use.
 
 =end sidebar
 
-=head3 The VERSION() Method
+=head2 The VERSION() Method
 
 X<UNIVERSAL::VERSION>
 X<VERSION()>
@@ -128,7 +128,7 @@ Given a C<HowlerMonkey> module of version C<1.23>:
 You can override C<VERSION()> in your own code, but there's little reason to do
 so.
 
-=head3 The DOES() Method
+=head2 The DOES() Method
 
 X<UNIVERSAL::DOES>
 X<DOES()>
@@ -155,7 +155,7 @@ You can (and should) override C<DOES()> in your own code if you manually
 provide a role or other allomorphic behavior.  Alternately, use C<Moose> and
 don't worry about the details.
 
-=head3 Extending UNIVERSAL
+=head2 Extending UNIVERSAL
 
 It's tempting to store other methods in C<UNIVERSAL> to make it available to
 all other classes and objects in Perl 5.  Avoid this temptation; this global

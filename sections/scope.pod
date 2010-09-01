@@ -1,4 +1,4 @@
-=head2 Scope
+=head1 Scope
 
 Z<scope>
 
@@ -10,7 +10,7 @@ with a name in Perl (a variable, a function) has a scope.  Scoping helps to
 enforce I<encapsulation>--keeping related concepts together and preventing them
 from leaking out.
 
-=head3 Lexical Scope
+=head2 Lexical Scope
 
 Z<lexical_scope>
 
@@ -166,7 +166,7 @@ dynamic scope.
 Finally, lexical scoping facilitates closures (L<closures>).  Beware creating
 closures accidentally.
 
-=head4 Our Scope
+=head3 Our Scope
 
 Z<our>
 X<our>
@@ -180,7 +180,7 @@ visible only within its scope.
 The best use of C<our> is for variables you absolutely I<must> have, such as
 C<$VERSION>.
 
-=head3 Dynamic Scope
+=head2 Dynamic Scope
 
 Z<dynamic_scope>
 
@@ -287,7 +287,7 @@ These are all special global variables; C<local>izing them in the narrowest
 possible scope will avoid the action at a distance problem of modifying global
 variables used other places in your code.
 
-=head3 State Scope
+=head2 State Scope
 
 Z<state>
 

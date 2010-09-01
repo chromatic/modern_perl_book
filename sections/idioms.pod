@@ -1,4 +1,4 @@
-=head2 Idioms
+=head1 Idioms
 
 Z<idioms>
 
@@ -12,7 +12,7 @@ them--and they're not quite large enough that you can encapsulate them away
 behind functions and methods.  Instead, they're mannerisms.  They're ways of
 writing Perl with a Perlish accent.
 
-=head3 The Object as $self
+=head2 The Object as $self
 
 X<$self>
 X<variables; $self>
@@ -31,7 +31,7 @@ language itself, but it is a convention strong enough that useful extensions
 such as C<MooseX::Method::Signatures> assume you will use C<$self> as the name
 of the invocant by default.
 
-=head3 Named Parameters
+=head2 Named Parameters
 
 X<parameters; named>
 X<arguments; named>
@@ -99,7 +99,7 @@ many parameters as you like before slurping the remainder into a hash:
 
 =end programlisting
 
-=head3 The Schwartzian Transform
+=head2 The Schwartzian Transform
 
 Z<schwartzian_transform>
 
@@ -223,7 +223,7 @@ is also useful because you can perform those expensive operations once (in the
 rightmost C<map>), compare them repeatedly from a de facto cache in the
 C<sort>, and then remove them in the leftmost C<map>.
 
-=head3 Easy File Slurping
+=head2 Easy File Slurping
 
 Z<easy_file_slurping>
 
@@ -262,7 +262,7 @@ This can be useful (and, admittedly, maddening for people unfamiliar with this
 particular combination of Perl 5 features) if you don't have C<File::Slurp>
 installed from the CPAN.
 
-=head3 Controlled Execution
+=head2 Controlled Execution
 
 Z<controlled_execution>
 
@@ -304,7 +304,7 @@ call frame represents C<use> or C<require> and undef otherwise.
 
 =end sidebar
 
-=head3 Handling Main
+=head2 Handling Main
 
 Perl requires no special syntax for creating closures (L<closures>); you can
 close over a lexical variable inadvertently.  This is I<rarely> a problem in
@@ -343,7 +343,7 @@ remind you to encapsulate the behavior of your program into functions and
 modules.  (It works nicely with files which can be programs and
 libraries--L<controlled_execution>.)
 
-=head3 Postfix Parameter Validation
+=head2 Postfix Parameter Validation
 
 Z<postfix_parameter_validation>
 
@@ -392,7 +392,7 @@ This is easier to read if you focus on the text of the message ("You need to
 pass two parameters!") and the test (C<@_> should contain two items).  It's
 almost a single row in a truth table.
 
-=head3 Regex En Passant
+=head2 Regex En Passant
 
 Z<regex_en_passant>
 
@@ -453,7 +453,7 @@ modification operators:
 
 =end programlisting
 
-=head3 Unary Coercions
+=head2 Unary Coercions
 
 Z<unary_coercions>
 

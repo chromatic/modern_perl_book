@@ -1,4 +1,4 @@
-=head2 Values
+=head1 Values
 
 Z<values>
 
@@ -20,7 +20,7 @@ While the structure of a program depends heavily on the means by which you
 model your data with appropriate variables, these variables would be
 meaningless if they couldn't accurately contain the data itself--the values.
 
-=head3 Strings
+=head2 Strings
 
 X<strings>
 
@@ -212,7 +212,7 @@ start of each line of the heredoc.
 You may use a string in other contexts, such as boolean or numeric; its
 contents will determine the resulting value (L<coercion>).
 
-=head3 Unicode and Strings
+=head2 Unicode and Strings
 
 Z<unicode>
 X<unicode>
@@ -253,7 +253,7 @@ you read is an image file or a text document or anything else.  By default,
 Perl treats all incoming data as sequences of octets.  Any additional meaning
 of the string's contents are your responsibility.
 
-=head4 Character Encodings
+=head3 Character Encodings
 
 X<encoding>
 X<Unicode; encoding>
@@ -271,7 +271,7 @@ represent text in most languages which use the Latin alphabet.
 If you always decode to and from the appropriate encoding at the inputs and
 outputs of your program, you will avoid many problems.
 
-=head4 Unicode in Your Filehandles
+=head3 Unicode in Your Filehandles
 
 X<open>
 X<IO layers>
@@ -317,7 +317,7 @@ Without the C<utf8> mode, printing Unicode strings to a filehandle will result
 in a warning (C<Wide character in %s>), because files contain octets, not
 Unicode characters.
 
-=head4 Unicode in Your Data
+=head3 Unicode in Your Data
 
 X<Encode>
 X<Encode; decode()>
@@ -342,7 +342,7 @@ to the desired output encoding:
 
 =end programlisting
 
-=head4 Unicode in Your Programs
+=head3 Unicode in Your Programs
 
 X<pragmas; utf8>
 X<utf8>
@@ -409,7 +409,7 @@ enable them.  Use the C<\N{}> escape to refer to them:
 You may use the C<\x{}> and C<\N{}> forms within regular expressions as well as
 anywhere else you may legitimately use a string or a character.
 
-=head4 Implicit Conversion
+=head3 Implicit Conversion
 
 Most Unicode problems in Perl arise from the fact that a string could be either
 a sequence of octets or a sequence of characters.  Perl allows you to combine
@@ -517,7 +517,7 @@ because the UTF-8 data means something else when decoded as Latin-1 data.
 See C<perldoc perluniintro> for a far more detailed explanation of  Unicode,
 encodings, and how to manage incoming and outgoing data in a Unicode world.
 
-=head3 Numbers
+=head2 Numbers
 
 X<numbers>
 X<integers>
@@ -587,7 +587,7 @@ The C<Regexp::Common> module from the CPAN also provides several well-tested
 regular expressions to identify valid I<types> (whole number, integer,
 floating-point value) of numeric values.
 
-=head3 Undef
+=head2 Undef
 
 X<undef>
 
@@ -622,7 +622,7 @@ value> warning:
 
 =end screen
 
-=head3 The Empty List
+=head2 The Empty List
 
 X<empty list>
 X<()>
@@ -655,7 +655,7 @@ You don't have to understand all of the implications of this code right now,
 but it does demonstrate how a few of Perl's fundamental design features can
 combine to produce interesting and useful behavior.
 
-=head3 Lists
+=head2 Lists
 
 X<lists>
 

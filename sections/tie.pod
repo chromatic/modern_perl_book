@@ -1,4 +1,4 @@
-=head2 Tie
+=head1 Tie
 
 Z<tie>
 
@@ -33,7 +33,7 @@ C<tie()> hasn't confused you, the organization of this code might.
 
 =end sidebar
 
-=head3 Tying Variables
+=head2 Tying Variables
 
 Given a variable to tie, tie it with the syntax:
 
@@ -59,7 +59,7 @@ C<undef> otherwise.  Again, few people use that object.  Instead, they check
 the boolean value of this object when they use C<tied()> to determine
 whether the given variable is tied.
 
-=head3 Implementing Tied Variables
+=head2 Implementing Tied Variables
 
 To implement the class of a tied variable, inherit from a core module such as
 C<Tie::StdScalar>, then override the specific methods for the operations you
@@ -119,7 +119,7 @@ F<Tie/Scalar.pm>.
 
 =end sidebar
 
-=head3 When to use Tied Variables
+=head2 When to use Tied Variables
 
 Tied variables seem like fun opportunities for cleverness, but they make for
 confusing interfaces in almost all cases, due mostly to their rarity.  Unless

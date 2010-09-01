@@ -1,4 +1,4 @@
-=head2 Indirect Objects
+=head1 Indirect Objects
 
 Z<indirect_objects>
 
@@ -34,7 +34,7 @@ case), where the verb (the method) precedes the noun to which it refers (the
 object).  This is fine in spoken languages, but it introduces parsing
 ambiguities in Perl 5.
 
-=head3 Bareword Indirect Invocations
+=head2 Bareword Indirect Invocations
 
 One problem is that the name of the method is a bareword (L<barewords>).  The
 parser must perform several heuristics to determine the proper interpretation.
@@ -63,7 +63,7 @@ name which just happens to conflict somehow with the name of a class or a
 method called indirectly.  This is infrequent, but so difficult to debug that
 avoiding this syntax is always worthwhile.
 
-=head3 Indirect Notation Scalar Limitations
+=head2 Indirect Notation Scalar Limitations
 
 Another danger of the syntax is that the parser expects a single scalar
 expression as the object.  Printing to a filehandle stored in an aggregate
@@ -89,7 +89,7 @@ disambiguate the expression which produces the intended invocant:
 
 =end programlisting
 
-=head3 Alternatives to Indirect Notation
+=head2 Alternatives to Indirect Notation
 
 Direct invocation notation does not suffer this ambiguity problem.  To
 construct an object, call the constructor method on the class name directly:

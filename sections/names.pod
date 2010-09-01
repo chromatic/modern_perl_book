@@ -1,4 +1,4 @@
-=head2 Names
+=head1 Names
 
 Z<names>
 
@@ -52,7 +52,7 @@ enforces these grammatical rules.  Be aware that doing so can produce confusing
 code; a hash (L<hashes>) or nested data structure (L<nested_data_structures>)
 is often clearer.
 
-=head3 Variable Names and Sigils
+=head2 Variable Names and Sigils
 
 X<variables; names>
 X<scalar variables>
@@ -135,7 +135,7 @@ operations, such as string, numeric, and boolean manipulations.  Arrays support
 indexed access through square brackets.  Hashes support keyed access through
 curly brackets.
 
-=head3 Package-Qualified Names
+=head2 Package-Qualified Names
 
 X<fully-qualified name>
 

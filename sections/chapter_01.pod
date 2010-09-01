@@ -1,4 +1,4 @@
-=head1 The Perl Philosophy
+=head0 The Perl Philosophy
 
 Perl is a language for getting things done.  It's flexible, forgiving, and
 malleable.  In the hands of a capable programmer, it can perform almost any

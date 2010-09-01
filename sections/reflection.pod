@@ -1,4 +1,4 @@
-=head2 Reflection
+=head1 Reflection
 
 Z<reflection>
 
@@ -16,7 +16,7 @@ systems, but many useful programs do not use objects pervasively, and many
 useful programs do not use C<Class::MOP>.  Several idioms (L<idioms>) exist for
 performing reflection effectively in the absence of such a formal system.
 
-=head3 Checking that a Package Exists
+=head2 Checking that a Package Exists
 
 To check that a package exists somewhere in the system--that is, if some code
 somewhere has executed a C<package> directive with a given name--check that the
@@ -37,7 +37,7 @@ if you use them as invocants.  The C<eval> block catches such an exception.
 You I<could> also grovel through the symbol table, but this approach is quicker
 and easier to understand.
 
-=head3 Checking that a Class Exists
+=head2 Checking that a Class Exists
 
 Because Perl 5 makes no strong distinction between packages and classes, the
 same technique for checking the existence of a package works for checking that
@@ -45,7 +45,7 @@ a class exists.  There is no generic way for determining if a package is a
 class.  You I<can> check that the package C<can()> perform C<new()>, but there
 is no guarantee that any C<new()> found is a method, nor a constructor.
 
-=head3 Checking that a Module Has Loaded
+=head2 Checking that a Module Has Loaded
 
 X<%INC>
 X<@INC>
@@ -85,7 +85,7 @@ package yourself, but modules with good reasons for manipulating this variable
 (such as C<Test::MockObject> or C<Test::MockModule>) may do so.  Code which
 manipulates C<%INC> for poor reasons deserves replacing.
 
-=head3 Checking the Version of a Module
+=head2 Checking the Version of a Module
 
 There is no guarantee that a given module provides a version.  Even so, all
 modules inherit from C<UNIVERSAL> (L<universal>), so they all have a
@@ -101,7 +101,7 @@ If the given module does not override C<VERSION()> or contain a package
 variable C<$VERSION>, the method will return an undefined value.  Likewise, if
 the module does not exist, the method call will fail.
 
-=head3 Checking that a Function Exists
+=head2 Checking that a Function Exists
 
 The simplest mechanism by which to determine if a function exists is to use the
 C<can()> method on the package name:
@@ -130,13 +130,13 @@ a function into the current namespace:
 You may also root around in the symbol table and typeglobs to determine if a
 function exists, but this mechanism is simpler and easier to explain.
 
-=head3 Checking that a Method Exists
+=head2 Checking that a Method Exists
 
 There is no generic way to determine whether a given function is a function or
 a method.  Some functions perform dual duty as both functions and methods;
 though this is overly complex and usually a mistake, it is an allowed feature.
 
-=head3 Rooting Around in Symbol Tables
+=head2 Rooting Around in Symbol Tables
 
 X<symbol tables>
 X<typeglobs>

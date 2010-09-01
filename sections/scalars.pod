@@ -1,4 +1,4 @@
-=head2 Scalars
+=head1 Scalars
 
 Z<scalars>
 
@@ -23,7 +23,7 @@ that operation (L<arrays>, L<hashes>).
 
 =end sidebar
 
-=head3 Scalars and Types
+=head2 Scalars and Types
 
 Perl 5 scalars do not have static typing.  A scalar variable can contain any
 type of scalar value without special conversions or casts, and the type of

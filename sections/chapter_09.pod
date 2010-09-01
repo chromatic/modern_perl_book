@@ -1,4 +1,4 @@
-=head1 Writing Real Programs
+=head0 Writing Real Programs
 
 Z<writing_real_programs>
 

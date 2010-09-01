@@ -1,4 +1,4 @@
-=head2 State versus Closures
+=head1 State versus Closures
 
 Z<state>
 

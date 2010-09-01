@@ -1,4 +1,4 @@
-=head2 Overloading
+=head1 Overloading
 
 Z<overloading>
 X<overloading>
@@ -20,7 +20,7 @@ iteration, invocation, array access, hash
 access, arithmetic operations, comparison operations, smart match, bitwise
 operations, and even assignment.
 
-=head3 Overloading Common Operations
+=head2 Overloading Common Operations
 
 X<overloading; boolean>
 X<overloading; numeric>
@@ -89,7 +89,7 @@ Without C<fallback>, Perl will only use the specific overloadings you have
 provided.  If someone tries to perform an operation you have not overloaded,
 Perl will throw an exception.
 
-=head3 Overload and Inheritance
+=head2 Overload and Inheritance
 
 X<overloading; inheritance>
 
@@ -125,7 +125,7 @@ decides as a code standard.
 
 =end sidebar
 
-=head3 Uses of Overloading
+=head2 Uses of Overloading
 
 Overloading may seem like a tempting tool to use to produce symbolic shortcuts
 for new operations.  The C<IO::All> CPAN distribution pushes this idea to its

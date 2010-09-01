@@ -1,4 +1,4 @@
-=head2 Attributes
+=head1 Attributes
 
 Z<attributes>
 
@@ -15,7 +15,7 @@ they I<can> offer compelling benefits of maintenance and clarity.
 
 =end sidebar
 
-=head3 Using Attributes
+=head2 Using Attributes
 
 In its simplest form, an attribute is a colon-preceded identifier attached to a
 variable or function declaration:
@@ -68,7 +68,7 @@ The Catalyst web framework also uses attributes to determine the visibility and 
 
 =end sidebar
 
-=head3 Drawbacks of Attributes
+=head2 Drawbacks of Attributes
 
 X<pragmas; attributes>
 X<attributes.pm>

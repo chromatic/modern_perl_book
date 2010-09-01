@@ -1,4 +1,4 @@
-=head2 Distributions
+=head1 Distributions
 
 Z<distributions>
 
@@ -28,7 +28,7 @@ but you can reuse existing CPAN tools and designs as possible.  The combination
 of intelligent defaults and customizability are likely to meet your specific
 needs.
 
-=head3 Attributes of a Distribution
+=head2 Attributes of a Distribution
 
 A distribution obviously includes one or more modules.  It also includes
 several other files and directories:
@@ -67,7 +67,7 @@ measure with heuristics.  Kwalitee is the automatable relative of quality.> of
 all CPAN distributions and recommends improvements to make them easier to
 install and to manage.)
 
-=head3 CPAN Tools for Managing Distributions
+=head2 CPAN Tools for Managing Distributions
 
 The Perl 5 core includes several tools to manage distributions--not just
 installing them from the CPAN, but developing and managing your own:
@@ -123,7 +123,7 @@ data on any failures.
 
 =back
 
-=head3 Designing Distributions
+=head2 Designing Distributions
 
 The process of designing a distribution could fill a book (see Sam Tregar's
 I<Writing Perl Modules for CPAN>), but a few design principles will help you.

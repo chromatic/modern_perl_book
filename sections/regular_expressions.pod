@@ -1,6 +1,6 @@
 Z<regular_expressions>
 
-=head2 Literals
+=head1 Literals
 
 The simplest regexes are simple substring patterns:
 
@@ -33,7 +33,7 @@ evaluated in scalar context, a match evaluates to a true value if it succeeds.
 The negated form of the binding operator (C<!~>) evaluates to a false value if
 the match succeeds.
 
-=head2 The qr// Operator and Regex Combinations
+=head1 The qr// Operator and Regex Combinations
 
 X<operators; qr//>
 X<regular expressions; qr//>
@@ -71,7 +71,7 @@ You may interpolate and combine them into larger and more complex patterns:
 
 =end programlisting
 
-=head2 Quantifiers
+=head1 Quantifiers
 
 X<regular expressions; quantifiers>
 X<operators; index>
@@ -190,7 +190,7 @@ more than I<m> times:
 
 =end programlisting
 
-=head2 Greediness
+=head1 Greediness
 
 X<greedy quantifiers>
 X<quantifiers; greedy>
@@ -317,7 +317,7 @@ better.  If you find yourself writing a lot of regular expression with greedy
 matches, test them thoroughly with a comprehensive and automated test suite
 with representative data to lessen the possibility of unpleasant surprises.
 
-=head2 Metacharacters
+=head1 Metacharacters
 
 X<regular expressions; metacharacters>
 X<regular expressions; .>
@@ -384,7 +384,7 @@ These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
 C<\D>.  To match anything but whitespace, use C<\S>.
 
-=head2 Character Classes
+=head1 Character Classes
 
 X<character classes>
 
@@ -454,7 +454,7 @@ caret or at the end of the class, or escape it.
 
 =end sidebar
 
-=head2 Capturing
+=head1 Capturing
 
 It's often useful to match part of a string and use it later; perhaps you want
 to extract an address or an American telephone number from a string:
@@ -474,7 +474,7 @@ them.
 
 =end sidebar
 
-=head3 Named Captures
+=head2 Named Captures
 
 Z<named_captures>
 X<captures>
@@ -517,7 +517,7 @@ enclose one or more atoms to capture whatever portion of the matched string
 they match.  To use literal parentheses in a regular expression, you must
 preface them with a backslash, just as in the C<$area_code> variable.
 
-=head3 Anonymous Captures
+=head2 Anonymous Captures
 
 X<anonymous captures>
 X<captures; anonymous>
@@ -570,7 +570,7 @@ Anonymous captures are less frustrating when you evaluate a match in list contex
 
 Perl will assign to the lvalues in order of the captures.
 
-=head2 Grouping and Alternation
+=head1 Grouping and Alternation
 
 Previous examples have all applied quantifiers to simple atoms.  They can also
 apply to more complex subpatterns as a whole:
@@ -662,7 +662,7 @@ C<(?-xism:rice|beans)>.
 
 =end sidebar
 
-=head2 Other Escape Sequences
+=head1 Other Escape Sequences
 
 X<regex metacharacters>
 X<metacharacters; regex>
@@ -713,7 +713,7 @@ effective denial-of-service attack against your program.
 
 =end note
 
-=head2 Assertions
+=head1 Assertions
 
 X<regex assertions>
 
@@ -784,7 +784,7 @@ Because the assertion is zero-width, it consumes none of the source string.
 Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
 capture would only capture the C<cat> portion of the source string.
 
-=head2 Regex Modifiers
+=head1 Regex Modifiers
 
 X<regex modifiers>
 X<regular expressions; modifiers>

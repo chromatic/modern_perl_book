@@ -1,4 +1,4 @@
-=head2 Functions
+=head1 Functions
 
 Z<functions>
 
@@ -38,7 +38,7 @@ L<attributes>.
 
 =end sidebar
 
-=head2 Invoking Functions
+=head1 Invoking Functions
 
 X<subroutines; invoking>
 X<functions; invoking>
@@ -73,7 +73,7 @@ You can, of course, pass multiple I<types> of arguments to a function:
 
 ... though see the L<references> section for more details.
 
-=head2 Function Parameters
+=head1 Function Parameters
 
 Z<function_parameters>
 
@@ -212,7 +212,7 @@ modules on the CPAN for declarative parameter handling.
 
 =end sidebar
 
-=head3 Flattening
+=head2 Flattening
 
 The flattening of parameters into C<@_> happens on the caller side.  Passing a
 hash as an argument produces a list of key/value pairs:
@@ -276,7 +276,7 @@ remove it from the end of C<@_>):
 
 =end programlisting
 
-=head3 Slurping
+=head2 Slurping
 
 Z<parameter_slurping>
 X<parameter slurping>
@@ -303,7 +303,7 @@ that:
 to an array as a parameter, of course.  See L<references> for ways to avoid
 flattening and slurping when passing aggregate parameters.
 
-=head3 Aliasing
+=head2 Aliasing
 
 X<parameter aliasing>
 X<functions; aliasing parameters>
@@ -330,7 +330,7 @@ behavior is easiest to demonstrate with an example:
 If you modify an element of C<@_> directly, you will modify the original
 parameter directly.  Be cautious.
 
-=head2 Namespaces
+=head1 Namespaces
 
 Every function lives in a namespace.  Functions in an undeclared
 namespace--that is, functions not declared after an explicit C<package ...>
@@ -373,7 +373,7 @@ short names from within the namespace in which they are declared--unless you
 have somehow made them available to the current namespace through the processes
 of importing and exporting (L<exporting>).
 
-=head3 Importing
+=head2 Importing
 
 Z<importing>
 
@@ -426,7 +426,7 @@ visible when compiling the rest of the program.  Otherwise, any functions
 imported from other modules but not declared in the current file would look
 like undeclared barewords and C<strict> would complain.
 
-=head2 Reporting Errors
+=head1 Reporting Errors
 
 X<caller>
 
@@ -504,7 +504,7 @@ function, when you want to indicate that the calling code is wrong somehow:
 
 =end programlisting
 
-=head3 Validating Arguments
+=head2 Validating Arguments
 
 Defensive programming often benefits from checking types and values of
 arguments for appropriateness before performing further processing.  By
@@ -528,12 +528,12 @@ Type checking is more difficult, because of Perl's operator-oriented type
 conversions (see L<context_philosophy>).  In cases where you need more
 strictness, consider the CPAN module C<Params::Validate>.
 
-=head2 Advanced Functions
+=head1 Advanced Functions
 
 Functions may seem simple, but you can do much, much more with them (see
 L<closures> and L<anonymous_functions> for more details).
 
-=head3 Context Awareness
+=head2 Context Awareness
 
 X<context>
 X<wantarray>
@@ -576,7 +576,7 @@ writing powerful and usable interfaces.
 
 =end sidebar
 
-=head3 Recursion
+=head2 Recursion
 
 Z<recursion>
 X<recursion>
@@ -651,7 +651,7 @@ This isn't necessarily the best algorithm for searching a sorted list, but it
 demonstrates recursion.  Again, you I<can> write this code in a procedural way;
 but some algorithms are much clearer recursively.
 
-=head3 Lexicals
+=head2 Lexicals
 
 Every new invocation of a function creates its own I<instance> of a lexical
 scope.  In the case of the recursive example, even though the declaration of
@@ -679,7 +679,7 @@ You can demonstrate that by adding debugging code to the function:
 The output demonstrates that not only can C<elem_exists()> call itself safely,
 but the lexical variables do not interfere with each other.
 
-=head3 Tail Calls
+=head2 Tail Calls
 
 Z<tail_calls>
 X<recursion; guard conditions>
@@ -789,7 +789,7 @@ different arguments:
 
 The comparative cleanliness of the CPAN versions is obvious.
 
-=head2 Pitfalls and Misfeatures
+=head1 Pitfalls and Misfeatures
 
 X<functions; pitfalls>
 X<functions; misfeatures>

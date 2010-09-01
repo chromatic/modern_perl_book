@@ -1,4 +1,4 @@
-=head2 Missing Defaults
+=head1 Missing Defaults
 
 Z<missing_defaults>
 
@@ -10,7 +10,7 @@ clean, maintainable, powerful, and succinct Perl 5 code is very different from
 Perl 5.000.  The default behaviors sometimes get in the way; fortunately,
 better behaviors are available.
 
-=head3 The strict Pragma
+=head2 The strict Pragma
 
 X<strict>
 X<modules; strict>
@@ -38,7 +38,7 @@ C<strict> has a lexical effect, based on the compile-time scope of its use.
 You may disable certain features of C<strict> (within the smallest possible
 scope, of course) with C<no strict>.  See C<perldoc strict> for more details.
 
-=head3 The warnings Pragma
+=head2 The warnings Pragma
 
 The C<warnings> pragma (L<handling_warnings>) controls the reporting of various
 classes of warnings in Perl 5, such as attempting to stringify the C<undef>
@@ -65,7 +65,7 @@ because it can produce verbose error output.
 
 =end sidebar
 
-=head3 IO::Handle
+=head2 IO::Handle
 
 Perl 5.6.0 added lexical filehandles.  Previously, filehandles were all package
 globals.  This was occasionally messy and often confusing.  Now that you can
@@ -95,7 +95,7 @@ associated filehandle, for example.  It could be as easy as:
 solution is to add this line to your programs so that lexical filehandles--the
 objects as they are--behave as objects should behave.
 
-=head3 The autodie Pragma
+=head2 The autodie Pragma
 
 Z<autodie>
 X<autodie>

@@ -1,4 +1,4 @@
-=head1 Stylish Perl
+=head0 Stylish Perl
 
 Programming and programming I<well> are related, but distinct skills.  If we
 only wrote programs once and never had to modify or maintain them, if our

@@ -1,4 +1,4 @@
-=head1 What's Missing
+=head0 What's Missing
 
 Perl 5 isn't perfect, at least as it behaves by default.  Some options are
 available in the core.  More are available from the CPAN.  Experienced Perl

@@ -1,4 +1,4 @@
-=head3 Expressivity
+=head2 Expressivity
 
 Z<expressivity>
 

@@ -1,4 +1,4 @@
-=head2 Prototypes
+=head1 Prototypes
 
 Z<prototypes>
 
@@ -102,7 +102,7 @@ Valid prototype characters include C<$> to force a scalar argument, C<%> to
 mark a hash (most often used as a reference), and C<&> which marks a code
 block.  See C<perldoc perlsub> for full documentation.
 
-=head3 The Problem with Prototypes
+=head2 The Problem with Prototypes
 
 Prototypes can change the parsing of subsequent code and they can coerce the
 types of arguments.  They don't serve as documentation to the number or types
@@ -140,7 +140,7 @@ incoming arguments:
 Those aren't even the I<subtler> kinds of confusion you can get from
 prototypes.
 
-=head3 Good Uses of Prototypes
+=head2 Good Uses of Prototypes
 
 As long as code maintainers do not confuse them for full function signatures,
 prototypes have a few valid uses.

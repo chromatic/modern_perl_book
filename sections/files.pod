@@ -1,4 +1,4 @@
-=head2 Files
+=head1 Files
 
 Z<files>
 
@@ -8,7 +8,7 @@ them in some other fashion.  Perl's early history as a language for system
 administration and text processing has produced a language very well suited for
 file manipulation.
 
-=head3 Input and Output
+=head2 Input and Output
 
 Z<filehandle>
 X<filehandle>
@@ -149,7 +149,7 @@ X<keywords; readline>
 X<< <> >>
 X<< operators; <> >>
 
-=head4 Reading from Files
+=head3 Reading from Files
 
 Given a filehandle opened for input, read from it with the C<readline>
 operator, also written as C<< <> >>.  The most common idiom is to read a line
@@ -213,7 +213,7 @@ will not modify it in any fashion, as it might for platform portability.
 Although Unix-like platforms tend not to need C<binmode> in this case, portable
 programs use it anyway.  See L<unicode> for other features of C<binmode>.
 
-=head4 Writing to Files
+=head3 Writing to Files
 
 X<print>
 X<keywords; print>
@@ -252,7 +252,7 @@ You may write an entire list of values to C<print> or C<say>, in which case
 Perl 5 uses the magic global C<$,> as the separator between list values.  Perl
 also uses any value of C<$\> as the final argument to C<print> or C<say>.
 
-=head4 Closing Files
+=head3 Closing Files
 
 X<close>
 X<keywords; close>
@@ -277,7 +277,7 @@ As usual, C<autodie> (L<autodie>) handles these checks for you:
 
 =end programlisting
 
-=head4 Special File Handling Variables
+=head3 Special File Handling Variables
 
 X<variables; $.>
 X<$.>
@@ -339,7 +339,7 @@ and C<input_record_separator()> methods instead of C<$.> and C<$/>
 respectively.  See C<perldoc IO::File> and C<perldoc IO::Handle> for more
 information.
 
-=head3 Directories and Paths
+=head2 Directories and Paths
 
 X<opendir>
 X<keywords; opendir>
@@ -421,7 +421,7 @@ X<keywords; closedir>
 Close a directory handle by letting it go out of scope or with the C<closedir>
 keyword.
 
-=head4 Manipulating Paths
+=head3 Manipulating Paths
 
 Perl 5 offers a Unixish view of the world, or at least your filesystem.  Even
 if you aren't using a Unix-like platform, Perl will interpret Unix-style paths
@@ -483,7 +483,7 @@ You can even open filehandles to directories and files:
 See the documentation of C<Path::Class::Dir> and C<Path::Class::File> for more
 information.
 
-=head3 File Manipulation
+=head2 File Manipulation
 
 X<-X>
 X<operators; -X>

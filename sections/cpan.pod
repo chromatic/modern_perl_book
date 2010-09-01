@@ -1,4 +1,4 @@
-=head2 The CPAN
+=head1 The CPAN
 
 Z<cpan>
 

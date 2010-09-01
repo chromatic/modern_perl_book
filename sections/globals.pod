@@ -1,4 +1,4 @@
-=head2 Global Variables
+=head1 Global Variables
 
 Z<globals>
 
@@ -13,7 +13,7 @@ programmers have memorized some of them.  Few people have memorized all of
 them.  Only a handful are ever useful.  C<perldoc perlvar> contains the
 exhaustive list of such variables.
 
-=head3 Managing Super Globals
+=head2 Managing Super Globals
 
 X<super globals; managing>
 X<local>
@@ -68,7 +68,7 @@ Copy C<$@> I<immediately> to preserve its contents.
 
 =end sidebar
 
-=head3 English Names
+=head2 English Names
 
 X<english>
 
@@ -104,7 +104,7 @@ terrible three.
 
 =end sidebar
 
-=head3 Useful Super Globals
+=head2 Useful Super Globals
 
 X<super globals; useful>
 
@@ -257,7 +257,7 @@ about signals and especially safe signals.
 
 =end table
 
-=head3 Alternatives to Super Globals
+=head2 Alternatives to Super Globals
 
 X<super globals; alternatives>
 

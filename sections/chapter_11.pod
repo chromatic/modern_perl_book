@@ -1,4 +1,4 @@
-=head1 What to Avoid
+=head0 What to Avoid
 
 Perl 5 isn't perfect.  Some features seemed like good ideas at the time, but
 they're difficult to use correctly.  Others don't work as anyone might expect.
