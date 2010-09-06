@@ -63,13 +63,24 @@ X<fat comma>
 If you assign an odd number of elements to the hash, you will receive a warning
 that the results are not what you anticipated.  It's often more obvious to use
 the I<fat comma> operator to associate values with keys, as it makes the
-required pairing more visible:
+required pairing more visible.  Compare:
 
 =begin programlisting
 
     my %favorite_flavors = (
         Gabi    B<< => >> 'Mint chocolate chip',
         Annette B<< => >> 'French vanilla',
+    );
+
+=end programlisting
+
+... to:
+
+=begin programlisting
+
+    my %favorite_flavors = (
+        'Jacob', 'anything',
+        'Floyd', 'Pistachio',
     );
 
 =end programlisting
@@ -452,8 +463,8 @@ meaningless to Perl programs.  You can safely ignore it.
 
 In list context, a hash evaluates to a list of key/value pairs similar to what
 you receive from the C<each> operator.  However, you I<cannot> iterate over
-this list the same way you can iterate over the list produced by C<each>.N<The
-loop will loop forever, unless the hash is empty.>.
+this list the same way you can iterate over the list produced by C<each>, as
+the loop will loop forever, unless the hash is empty.
 
 =head2 Hash Idioms
 

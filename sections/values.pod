@@ -25,26 +25,11 @@ meaningless if they couldn't accurately contain the data itself--the values.
 X<strings>
 
 A I<string> is a piece of data with no particular formatting, no particular
-contents, and no semantic meaning beyond the fact that it's a string.  It could
-be your name.  It could be the contents of an image file read from your hard
-drive.  It could be the Perl program itself.  A string has no meaning to the
-program until you give it meaning.  A string is a fixed amount of data
-delineated by quotes of some form, yet Perl strings can grow or shrink as you
-add to or remove from them.
-
-=for author
-
- "...and no semantic meaning beyond the fact that it's a string."
-Not that any data in any program has intrinsic semantic meaning... Humans
-provide that.
-
-You haven't explained what a string actually _is_ yet: text or binary data.
-It is explained lower down, in the "Unicode and Strings" section.
-
- "...Perl strings can grow or shrink as you add to or remove from them."
-Perl strings are values, and so are immutable, aren't they?
-
-=end for
+contents, and no other meaning to the program.  It could be your name.  It
+could be the contents of an image file read from your hard drive.  It could be
+the Perl program itself.  A string has no meaning to the program until you give
+it meaning.  A string is a fixed amount of data delineated by quotes of some
+form, yet Perl strings can grow or shrink as you add to or remove from them.
 
 The most common string delimiters are single and double quotes:
 

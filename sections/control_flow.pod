@@ -424,22 +424,13 @@ prints the squares of the integers.
 
 =begin sidebar
 
-Note that this is described as a I<foreach>-I<style> loop: Perl treats the
-keywords C<foreach> and C<for> interchangeably.  As only the I<type> of the
-loop governs its behavior, there are no drawbacks to using the shorter C<for>
-keyword.
+Perl treats the keywords C<foreach> and C<for> interchangeably.  The remainder
+of the syntax of the loop determines the behavior of the loop.  Though
+experienced Perl programmers tend to refer to the loop with automatic iteration
+as a C<foreach> loop, you can use C<for> safely and clearly any place you might
+want to use C<foreach>.
 
 =end sidebar
-
-=for author
-
-Previous paragraph:
- "As only the I<type> of the..."
-
-What does "type" mean here? Whether the variable is scalar or array? Or
-syntactic type? (Whatever that means.)
-
-=end for
 
 Like C<if> and C<unless>, the C<for> loop has a postfix form:
 
@@ -1193,15 +1184,8 @@ C<log_and_greet_person()>.  Returning directly from C<greet_person()> to the
 caller of C<log_and_greet_person()> is an optimization known as I<tailcall
 optimization>.
 
-Perl 5 cannot perform this optimization automatically, but you can perform it
-manually.
-
-=for author
-
-What does that mean? Perl won't automatically rearrange your code into a
-tail recursive form, but will automatically detect when it is in that form?
-
-=end for
+Perl 5 will not detect cases where it could perform this optimization
+automatically.
 
 =begin sidebar
 
