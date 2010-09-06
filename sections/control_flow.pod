@@ -400,12 +400,12 @@ Z<looping_directives>
 
 Perl also provides several directives for looping and iteration.
 
-C<foreach>
-C<for>
-C<looping directives; for>
-C<looping directives; foreach>
+X<foreach>
+X<for>
+X<looping directives; for>
+X<looping directives; foreach>
 
-The I<foreach> style loop evaluates an expression which produces a list and
+The I<foreach>-style loop evaluates an expression which produces a list and
 executes a statement or block until it has consumed that list:
 
 =begin programlisting
@@ -417,18 +417,29 @@ executes a statement or block until it has consumed that list:
 
 =end programlisting
 
-This example uses the C<range> operator to produce a list of integers from one
+This example uses the range operator to produce a list of integers from one
 to ten inclusive.  The C<foreach> directive loops over them, setting the topic
 variable (C<$_>) to each in turn.  Perl executes the block for each integer and
 prints the squares of the integers.
 
 =begin sidebar
 
-Though this is a I<foreach>-style loop, Perl treats the keywords C<foreach> and
-C<for> interchangeably.  As only the I<type> of the loop governs its behavior,
-there are no drawbacks to using the shorter C<for> keyword.
+Note that this is described as a I<foreach>-I<style> loop: Perl treats the
+keywords C<foreach> and C<for> interchangeably.  As only the I<type> of the
+loop governs its behavior, there are no drawbacks to using the shorter C<for>
+keyword.
 
 =end sidebar
+
+=for author
+
+Previous paragraph:
+ "As only the I<type> of the..."
+
+What does "type" mean here? Whether the variable is scalar or array? Or
+syntactic type? (Whatever that means.)
+
+=end for
 
 Like C<if> and C<unless>, the C<for> loop has a postfix form:
 
@@ -1184,6 +1195,13 @@ optimization>.
 
 Perl 5 cannot perform this optimization automatically, but you can perform it
 manually.
+
+=for author
+
+What does that mean? Perl won't automatically rearrange your code into a
+tail recursive form, but will automatically detect when it is in that form?
+
+=end for
 
 =begin sidebar
 

@@ -76,7 +76,7 @@ required pairing more visible:
 
 The fat comma operator acts like the regular comma, but it also causes the Perl
 parser to treat the previous bareword (L<barewords>) as if it were a quoted
-word.  The C<strict> pragma will not warn about the bare word, and if you have
+word.  The C<strict> pragma will not warn about the bareword, and if you have
 a function with the same name as a hash key, the fat comma will I<not> call the
 function:
 
@@ -452,9 +452,8 @@ meaningless to Perl programs.  You can safely ignore it.
 
 In list context, a hash evaluates to a list of key/value pairs similar to what
 you receive from the C<each> operator.  However, you I<cannot> iterate over
-this list the same way you can iterate over the list produced by C<each>,
-because there is no internal hash iteration provided when evaluating a hash in
-list contextN<The loop will loop forever, unless the hash is empty.>.
+this list the same way you can iterate over the list produced by C<each>.N<The
+loop will loop forever, unless the hash is empty.>.
 
 =head2 Hash Idioms
 

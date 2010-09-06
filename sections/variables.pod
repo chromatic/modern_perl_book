@@ -67,15 +67,26 @@ I<anonymous> variables.  The only way to access them is by reference
 X<variables; types>
 X<types; containers>
 X<types; variables>
-X<container types>
+X<container type>
+X<value type>
 
 Perl 5 variables do not enforce types on their values.  You may store a string
 in a variable in one line, append to that variable a number on the next, and
 reassign a reference to a function (L<function_references>) on the third.  The
-types of the I<values> is flexible (or dynamic), but the type of the
+types of the I<values> are flexible (or dynamic), but the type of the
 I<variable> is static.  A scalar variable can only hold scalars.  An array
 variable only contains a list.  A hash variable must contain an even-sized list
 of key/value pairs.
+
+=begin sidebar
+
+It may seem strange to talk about I<type> in two different terms: what kind of
+variable you have and what kind of data you have, but Perl makes that
+distinction.  It's clearest to refer to these two types of types as I<container
+type> and I<value type>.
+
+=end sidebar
+
 
 Assigning to a variable may cause coercion (L<coercion>).  The documented way
 to determine the number of entries in an array is to evaluate that array in

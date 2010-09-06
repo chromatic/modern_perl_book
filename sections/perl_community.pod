@@ -87,8 +87,8 @@ X<Gitpan>
 
 Many Perl hackers use Github (U<http://github.com/>) to host their
 projectsN<...  including the drafts of this book at
-U<http://github.com/chromatic/modern_perl_book/>)>.  One particularly notable 
-page on Github is Gitpan, which hosts Git repositories chronicling the complete 
+U<http://github.com/chromatic/modern_perl_book/>)>.  One particularly notable
+page on Github is Gitpan, which hosts Git repositories chronicling the complete
 history of every distribution on the CPAN.  See U<http://github.com/gitpan/>.
 
 =head1 Events

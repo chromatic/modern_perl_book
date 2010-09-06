@@ -32,7 +32,21 @@ program until you give it meaning.  A string is a fixed amount of data
 delineated by quotes of some form, yet Perl strings can grow or shrink as you
 add to or remove from them.
 
-Most strings use either single or double quotes:
+=for author
+
+ "...and no semantic meaning beyond the fact that it's a string."
+Not that any data in any program has intrinsic semantic meaning... Humans
+provide that.
+
+You haven't explained what a string actually _is_ yet: text or binary data.
+It is explained lower down, in the "Unicode and Strings" section.
+
+ "...Perl strings can grow or shrink as you add to or remove from them."
+Perl strings are values, and so are immutable, aren't they?
+
+=end for
+
+The most common string delimiters are single and double quotes:
 
 =begin programlisting
 
@@ -59,7 +73,7 @@ single quote:
 
 =begin programlisting
 
-    my $exception = 'This string ends with a backslash, not a quote: \\';
+    my $exception = 'This string ends with a backslash, not a quote: B<\\>';
 
 =end programlisting
 
@@ -70,7 +84,7 @@ next to each other, the first one will escape the the second one.
 
 =begin programlisting
 
-    is('Modern \ Perl', 'Modern \\ Perl', 'single quotes backslash escaping');
+    is('Modern B<\> Perl', 'Modern B<\\> Perl', 'single quotes backslash escaping');
 
 =end programlisting
 
@@ -556,8 +570,8 @@ C<perldoc perlnumber> for more details.
 
 You may not use commas to separate thousands in numeric literals because the
 parser will interpret the commas as comma operators.  You I<can> use
-underscores in other places within the number, however.  The parser will treat
-them as invisible characters.  Your readers may not.  These are equivalent:
+underscores within the number, however.  The parser will treat them as
+invisible characters; your readers may not.  These are equivalent:
 
 =begin programlisting
 
