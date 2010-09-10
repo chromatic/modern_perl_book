@@ -1,4 +1,4 @@
-=head2 Barewords
+=head1 Barewords
 
 Z<barewords>
 
@@ -23,7 +23,7 @@ for good reason.
 
 Even so, barewords are permissible in several places in Perl 5 for good reason.
 
-=head3 Good Uses of Barewords
+=head2 Good Uses of Barewords
 
 X<barewords; pros>
 X<hashes; bareword keys>
@@ -103,7 +103,7 @@ Constants declared with the C<constant> pragma are usable as barewords:
 
     ...
 
-    return unless $name eq NAME && $pass eq PASS;
+    return unless $name eq NAME && $pass eq PASSWORD;
 
 =end programlisting
 
@@ -118,7 +118,7 @@ bareword; Perl 5 knows everything it needs to know to parse all occurrences of
 that function appropriately.  Note that all of the drawbacks of prototypes
 still apply.
 
-=head3 Ill-Advised Uses of Barewords
+=head2 Ill-Advised Uses of Barewords
 
 X<barewords; cons>
 

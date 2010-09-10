@@ -1,4 +1,4 @@
-=head2 Operator Types
+=head1 Operator Types
 
 Z<operator_types>
 
@@ -9,7 +9,7 @@ operator for a given situation requires you to understand what type of value
 you expect to receive as well as the type of values on which you wish to
 operate.
 
-=head3 Numeric Operators
+=head2 Numeric Operators
 
 Z<numeric_operators>
 
@@ -72,7 +72,7 @@ These are numeric equality (C<==>), numeric inequality (C<!=>), greater than
 >>), less than or equal to (C<< E<lt>= >>), and the sort comparison operator
 (C<< E<lt>=E<gt> >>).
 
-=head3 String Operators
+=head2 String Operators
 
 X<operators; string>
 X<strings; operators>
@@ -107,7 +107,7 @@ These are string equality (C<eq>), string inequality (C<ne>), greater than
 (C<gt>), less than (C<lt>), greater than or equal to (C<ge>), less than or
 equal to (C<le>), and the string sort comparison operator (C<cmp>).
 
-=head3 Logical Operators
+=head2 Logical Operators
 
 X<operators; logical>
 X<operators; &&>
@@ -172,7 +172,7 @@ operators.
 The C<xor> operator is an infix operator which performs the exclusive or of its
 operands.
 
-=head3 Bitwise Operators
+=head2 Bitwise Operators
 
 X<operators; bitwise>
 X<< operators; E<lt>E<lt> >>
@@ -202,7 +202,7 @@ right shift (C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and binary or
 (C<^>), as well as their in-place variants (C<&=>, C<|=>, C<^=>, C<< <<= >>,
 and C<< >>= >>).
 
-=head3 Special Operators
+=head2 Special Operators
 
 Z<auto_increment_operator>
 
@@ -311,5 +311,5 @@ evaluates its left operand then returns the value produced by evaluating its
 right operand.  In list context, it evaluates both operands in left-to-right
 order.
 
-The fat comma operator behaves the same way, except that it automatically
-quotes any bareword used as its left operand.
+The fat comma operator (C<< => >>) behaves the same way, except that it
+automatically quotes any bareword used as its left operand (see L<hashes>).

@@ -1,4 +1,4 @@
-=head2 Modules
+=head1 Modules
 
 Z<modules>
 
@@ -59,7 +59,7 @@ the file.  Maintenance concerns highly recommend that convention, however.
 
 =end sidebar
 
-=head3 Using and Importing
+=head2 Using and Importing
 
 X<use>
 X<keywords; use>
@@ -178,7 +178,7 @@ will happen because the package name is C<strict>.
 
 Portable programs are strict about case even if they don't have to be.
 
-=head3 Exporting
+=head2 Exporting
 
 Z<exporting>
 X<exporting>
@@ -257,7 +257,7 @@ package with their fully-qualified names:
 
 =end programlisting
 
-=head3 Organizing Code with Modules
+=head2 Organizing Code with Modules
 
 Perl 5 does not require you to use modules, nor packages, nor namespaces.  You
 may put all of your code in a single F<.pl> file, or in multiple F<.pl> files

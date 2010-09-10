@@ -19,7 +19,7 @@ full understanding of Perl.
 
 You can learn this too.
 
-=head1 Running Modern Perl
+=head0 Running Modern Perl
 
 You don't have to install a new version of Perl to take advantage of most of
 this book, but the examples given assume that you're using Perl 5.10 or newer.
@@ -45,10 +45,11 @@ C<is()> (L<testing>).  That skeleton program is:
     #!/usr/bin/perl
 
     use Modern::Perl;
-    B<use Test::More 'no_Plan';>
+    B<use Test::More;>
 
     # example code here
     ...
+    done_testing();
 
 =end programlisting
 

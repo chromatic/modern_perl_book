@@ -1,4 +1,4 @@
-=head2 Moose
+=head1 Moose
 
 Z<moose>
 X<moose>
@@ -24,7 +24,7 @@ These are I<objects>.  In Moose terms, each object is an instance of a
 I<class>, which serves as a template to describe any data the object contains
 as well as its specific behaviors.
 
-=head3 Classes
+=head2 Classes
 
 X<classes>
 X<package>
@@ -59,7 +59,7 @@ the class and register it with Perl.  With that done, you can create objects
 The arrow syntax should look familiar.  Just as an arrow dereferences a
 reference, an arrow calls a method on an object or class.
 
-=head3 Methods
+=head2 Methods
 
 X<method>
 X<invocant>
@@ -130,7 +130,7 @@ the name of the class (C<Cat>) as its invocant.  This is a I<class method>:
 
 =end programlisting
 
-=head3 Attributes
+=head2 Attributes
 
 X<attributes (objects)>
 X<objects; attributes>
@@ -305,7 +305,7 @@ it contains as well as the behavior appropriate to that data.  An object is a
 collection of named data and behaviors.  A class is the description of the data
 and behaviors that instances of that class possess.
 
-=head3 Encapsulation
+=head2 Encapsulation
 
 X<encapsulation>
 
@@ -395,7 +395,7 @@ for each object, including a hash or array reference.
 
 =end sidebar
 
-=head4 Polymorphism
+=head3 Polymorphism
 
 A program which deals with one type of data and one type of behavior on that
 data benefits little from the use of objects.  A well-designed object-oriented
@@ -489,7 +489,7 @@ C<age()> may be an accessor in one class but not in another:
 
 Sometimes it's useful to know I<what> an object does.  In other words, you need to understand its type.
 
-=head3 Roles
+=head2 Roles
 
 Z<roles>
 
@@ -625,7 +625,7 @@ this role.  A class could choose to provide its own C<age()> method or obtain
 it from another role; that doesn't matter.  All that matters is that it
 contains one.  This is I<allomorphism>.
 
-=head4 Roles and DOES()
+=head3 Roles and DOES()
 
 X<DOES()>
 X<Moose; DOES()>
@@ -639,7 +639,7 @@ true when you call the C<DOES()> method on them:
 
 =end programlisting
 
-=head3 Inheritance
+=head2 Inheritance
 
 Z<inheritance>
 
@@ -703,7 +703,7 @@ usable within the class to set the value.
 
 =end sidebar
 
-=head4 Inheritance and Attributes
+=head3 Inheritance and Attributes
 
 Subclassing C<LightSource> makes it possible to define a super candle which
 behaves the same way as C<LightSource> but provides a hundred times the amount
@@ -758,7 +758,7 @@ inheritance until you understand it and have exhausted all other alternatives.
 See C<perldoc mro> for more details about method resolution and dispatch
 strategies.
 
-=head4 Inheritance and Methods
+=head3 Inheritance and Methods
 
 X<Moose; override method>
 
@@ -833,7 +833,7 @@ C<perldoc Moose::Manual::MethodModifiers>.
 
 =end sidebar
 
-=head4 Inheritance and isa()
+=head3 Inheritance and isa()
 
 X<isa()>
 X<Moose; isa()>
@@ -848,7 +848,7 @@ instances will return true when you call the C<isa()> method on them:
 
 =end programlisting
 
-=head3 Moose and Perl 5 OO
+=head2 Moose and Perl 5 OO
 
 X<moose; versus Perl 5 OO>
 

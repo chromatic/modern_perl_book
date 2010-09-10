@@ -1,4 +1,4 @@
-=head2 Pragmas
+=head1 Pragmas
 
 Z<pragmas>
 
@@ -13,7 +13,7 @@ A module which influences the behavior of the compiler is a I<pragma>.  By
 convention, pragmas have lower-case names to differentiate them from other
 modules.  You've heard of some before: C<strict> and C<warnings>, for example.
 
-=head3 Pragmas and Scope
+=head2 Pragmas and Scope
 
 X<pragmas; scope>
 
@@ -60,7 +60,7 @@ effects on inner scopes:
 
 =end programlisting
 
-=head3 Using Pragmas
+=head2 Using Pragmas
 
 X<pragmas; enabling>
 X<pragmas; customizing>
@@ -92,7 +92,7 @@ Within a scope you may disable all or part of a pragma with the C<no> keyword:
 
 =end programlisting
 
-=head3 Useful Core Pragmas
+=head2 Useful Core Pragmas
 
 X<pragmas; useful>
 

@@ -1,4 +1,4 @@
-=head2 Blessed References
+=head1 Blessed References
 
 Z<blessed_references>
 
@@ -149,7 +149,7 @@ thing with regard to encapsulation as well as genericity.
 
 =end sidebar
 
-=head3 Method Lookup and Inheritance
+=head2 Method Lookup and Inheritance
 
 X<method dispatch>
 X<objects; methods>
@@ -255,7 +255,7 @@ behavior with method dispatch.  Enable it in your class with:
 Unless you're writing a complex framework with multiple interoperable plugins,
 you likely never need to use this.
 
-=head3 AUTOLOAD
+=head2 AUTOLOAD
 
 X<AUTOLOAD>
 X<objects; AUTOLOAD>
@@ -270,7 +270,7 @@ for more details.
 As you might expect, this can get quite complex in the face of multiple
 inheritance and multiple potential C<AUTOLOAD> targets.
 
-=head3 Method Overriding and SUPER
+=head2 Method Overriding and SUPER
 
 You may override methods in the default Perl 5 OO system as well as in Moose.
 Unfortunately, core Perl 5 provides no mechanism for indicating your I<intent>
@@ -310,7 +310,7 @@ can work around this for you.  Moose handles it nicely as well.
 
 =end sidebar
 
-=head3 Strategies for Coping with Blessed References
+=head2 Strategies for Coping with Blessed References
 
 Avoid C<AUTOLOAD> where possible.  If you I<must> use it, use forward
 declarations of your functions (L<functions>) to help Perl know which

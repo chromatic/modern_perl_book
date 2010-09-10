@@ -1,4 +1,4 @@
-=head2 Coercion
+=head1 Coercion
 
 Z<coercion>
 X<coercion>
@@ -14,7 +14,7 @@ X<DWIM>
 By design, Perl attempts to do what you mean (I<DWIM> stands for I<do what I
 mean>), though you must be specific about your intentions.
 
-=head3 Boolean Coercion
+=head2 Boolean Coercion
 
 Z<boolean_coercion>
 X<coercion; boolean>
@@ -32,7 +32,7 @@ the case of a scalar with both string and numeric portions (L<dualvars>), Perl
 does evaluate to zero numerically, but is not the empty string, so it evaluates
 to true in boolean context.
 
-=head3 String Coercion
+=head2 String Coercion
 
 X<coercion; string>
 X<stringify>
@@ -51,7 +51,7 @@ a number into individual digits:
 
 =end programlisting
 
-=head3 Numeric Coercion
+=head2 Numeric Coercion
 
 Z<numeric_coercion>
 X<coercion; numeric>
@@ -77,7 +77,7 @@ Note that the strings C<Inf> and C<Infinity> represent the infinite value and
 behave as numbers, in the sense that numifying them does not produce the
 "Argument isn't numeric" warning.
 
-=head3 Reference Coercion
+=head2 Reference Coercion
 
 X<coercion; reference>
 X<autovivification>
@@ -100,7 +100,7 @@ Although the hash never contained values for C<Bradley> and C<Jack>, Perl 5
 helpfully created hash references for those values, then assigned them each a
 key/value pair keyed on C<id>.
 
-=head3 Cached Coercions
+=head2 Cached Coercions
 
 Z<cached_coercions>
 
@@ -122,7 +122,7 @@ may produce surprising results.  You almost never need to be explicit about
 what you expect, but know that caching does occur and you may be able to
 diagnose an odd situation when it occurs.
 
-=head3 Dualvars
+=head2 Dualvars
 
 Z<dualvars>
 

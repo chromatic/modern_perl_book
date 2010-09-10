@@ -1,6 +1,6 @@
 Z<perl_community>
 
-=head2 Community Sites
+=head1 Community Sites
 
 X<perl.org>
 X<websites; perl.org>
@@ -57,7 +57,7 @@ X<Perl Buzz>
 Perl Buzz (U<http://perlbuzz.com/>) collects and republishes some of the most
 interesting and useful Perl news on a regular basis.
 
-=head2 Development Sites
+=head1 Development Sites
 
 X<RT>
 X<Best Practical>
@@ -87,11 +87,11 @@ X<Gitpan>
 
 Many Perl hackers use Github (U<http://github.com/>) to host their
 projectsN<...  including the drafts of this book at
-U<http://github.com/chromatic/modern_perl_book/>)>.  One particularly notable 
-page on Github is Gitpan, which hosts Git repositories chronicling the complete 
+U<http://github.com/chromatic/modern_perl_book/>)>.  One particularly notable
+page on Github is Gitpan, which hosts Git repositories chronicling the complete
 history of every distribution on the CPAN.  See U<http://github.com/gitpan/>.
 
-=head2 Events
+=head1 Events
 
 X<YAPC>
 
@@ -110,7 +110,7 @@ There are also hundreds of local Perl Mongers groups which get together
 frequently for technical talks and social interaction.  See
 U<http://www.pm.org/>.
 
-=head2 IRC
+=head1 IRC
 
 X<IRC>
 X<IRC; #moose>

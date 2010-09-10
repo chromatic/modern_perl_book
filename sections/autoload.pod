@@ -1,4 +1,4 @@
-=head2 AUTOLOAD
+=head1 AUTOLOAD
 
 Z<autoload>
 
@@ -39,7 +39,7 @@ C<AUTOLOAD()> to emit a message to demonstrate this:
 
 =end programlisting
 
-=head3 Basic Features of AUTOLOAD
+=head2 Basic Features of AUTOLOAD
 
 The C<AUTOLOAD()> function receives the arguments passed to the undefined
 function in C<@_> directly.  You may manipulate these arguments as you like:
@@ -104,7 +104,7 @@ Finally, whatever C<AUTOLOAD()> returns, the original call receives:
 So far, these examples have merely intercepted calls to undefined functions.
 You have other options.
 
-=head3 Redispatching Methods in AUTOLOAD()
+=head2 Redispatching Methods in AUTOLOAD()
 
 X<AUTOLOAD; redispatch>
 X<AUTOLOAD; delegation>
@@ -143,7 +143,7 @@ it dereferences the proxied object from a blessed scalar reference, extracts
 the name of the undefined method, then invokes the method of that name on the
 proxied object, passing the given arguments.
 
-=head3 Generating Code in AUTOLOAD()
+=head2 Generating Code in AUTOLOAD()
 
 X<AUTOLOAD; code installation>
 
@@ -215,7 +215,7 @@ This has the same effect as invoking C<$method> directly, except that
 C<AUTOLOAD()> will no longer appear in the list of calls available from
 C<caller()>, so it looks like the generated method was simply called directly.
 
-=head3 Drawbacks of AUTOLOAD
+=head2 Drawbacks of AUTOLOAD
 
 Z<autoload_drawbacks>
 

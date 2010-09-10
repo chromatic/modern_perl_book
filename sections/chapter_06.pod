@@ -1,4 +1,4 @@
-=head1 Regular Expressions and Matching
+=head0 Regular Expressions and Matching
 
 Z<regular_expressions>
 

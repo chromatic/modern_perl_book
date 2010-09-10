@@ -1,4 +1,4 @@
-=head3 Perldoc
+=head1 Perldoc
 
 Z<perldoc>
 

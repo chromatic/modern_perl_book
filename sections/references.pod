@@ -1,4 +1,4 @@
-=head3 References
+=head2 References
 
 Z<references>
 
@@ -45,7 +45,7 @@ value.  A reference is a first-class, built-in scalar data type in Perl 5.
 It's not a string, an array, or a hash.  It's a scalar which refers to another
 first-class data type.
 
-=head4 Scalar References
+=head3 Scalar References
 
 X<references; operator>
 X<operators; reference>
@@ -94,9 +94,9 @@ The double scalar sigil dereferences a scalar reference.
 =begin sidebar
 
 This example isn't useful in the obvious case; why not have the function return
-the modified value directly?  Even so, scalar references are useful when
-processing I<large> scalars; copying the contents of those scalars can use a
-lot of time and memory.
+the modified value directly?  Scalar references are useful when processing
+I<large> scalars; copying the contents of those scalars can use a lot of time
+and memory.
 
 =end sidebar
 
@@ -127,12 +127,12 @@ reference is a value used as a mostly-unique identifier, as a reference does
 not necessarily have a name.  Unlike pointers in a language such as C, you
 cannot modify the address or treat it as an address into memory.
 
-These addresses are only mostly unique because Perl may reuse storage
+These addresses are only I<mostly> unique because Perl may reuse storage
 locations if its garbage collector has reclaimed an unreferenced reference.
 
 =end sidebar
 
-=head4 Array References
+=head3 Array References
 
 X<array references>
 X<references; arrays>
@@ -183,7 +183,8 @@ X<< -> >>
 X<< operators; -> >>
 X<operators; dereferencing arrow>
 
-You may also access individual elements by using the dereferencing arrow:
+You may also access individual elements by using the dereferencing arrow
+(C<< -> >>):
 
 =begin programlisting
 
@@ -203,8 +204,8 @@ C<< my $first_card = B<$$cards_ref[0]>; >>.
 
 =end sidebar
 
-You can slice an array through its reference with the curly-brace dereference
-grouping syntax:
+Slice an array through its reference with the curly-brace dereference grouping
+syntax:
 
 =begin programlisting
 
@@ -259,7 +260,7 @@ scoping.  That is to say:
 square braces used to create the anonymous array reference, the C<@meals> array
 flattens in list context.
 
-=head4 Hash References
+=head3 Hash References
 
 X<hash references>
 X<references; hashes>
@@ -348,7 +349,7 @@ parentheses for a named hash and curly brackets for an anonymous hash.
 
 =end sidebar
 
-=head4 Function References
+=head3 Function References
 
 Z<function_references>
 
@@ -430,7 +431,7 @@ syntax; it has implications for implicit argument passing.
 
 =end sidebar
 
-=head4 Filehandle References
+=head3 Filehandle References
 
 Z<lexical_filehandles>
 
@@ -477,7 +478,7 @@ Besides the benefit of using lexical scope instead of package or global scope,
 lexical filehandles allow you to manage the lifespan of filehandles.  This is a
 nice feature of how Perl 5 manages memory and scopes.
 
-=head4 Reference Counts
+=head3 Reference Counts
 
 Z<reference_counts>
 
@@ -520,9 +521,33 @@ the source code refer to it, but there's only one I<reference> to it; C<$fh>
 itself.)  C<$fh> is only in scope in the block and does not get assigned to
 anything outside of the block, so when the block ends, its reference count
 reaches zero.  The recycling of C<$fh> calls an implicit C<close()> method on
-the filehandle, and so the file gets closed.
+the filehandle, which closes the file.
 
 You don't have to understand the details of how all of this works.  You only
 need to understand that your actions in taking references and passing them
 around affect how Perl manages memory.  (Though see L<circular_references> for
 one caveat.)
+
+=head3 References and Functions
+
+When you use references as arguments to functions, document your intent
+carefully.  Modifying the values of a reference from within a function may
+surprise calling code, which expects no modifications.
+
+If you need to perform a destructive operation on the contents of a reference
+without affecting the reference itself, copy its values to a new variable:
+
+=begin programlisting
+
+    my @new_array = @{ $array_ref };
+    my %new_hash  = %{ $hash_ref  };
+
+=end programlisting
+
+X<Storable>
+X<dclone; Storable>
+
+This is only necessary in a few cases, but it's good policy to be explicit in
+those cases to avoid surprises for the callers.  If your references are more
+complex (L<nested_data_structures>), consider the use of the core module
+C<Storable> and its C<dclone> (I<deep cloning>) function.

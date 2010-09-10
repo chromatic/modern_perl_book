@@ -1,4 +1,4 @@
-=head2 Exceptions
+=head1 Exceptions
 
 Z<exceptions>
 
@@ -16,7 +16,7 @@ debugging.  Perl 5 handles exceptional conditions through the use of
 I<exceptions>: a dynamically-scoped form of control flow that lets you handle
 errors in the most appropriate place.
 
-=head3 Throwing Exceptions
+=head2 Throwing Exceptions
 
 Z<throwing_exceptions>
 
@@ -56,7 +56,7 @@ dynamic scoping of C<local> symbols (L<dynamic_scope>).
 
 =end sidebar
 
-=head3 Catching Exceptions
+=head2 Catching Exceptions
 
 Z<catching_exceptions>
 
@@ -157,7 +157,7 @@ to be 95% strings and 5% objects.
 As an alternative to writing your own exception system, see the CPAN
 distribution C<Exception::Class>.
 
-=head3 Exception Caveats
+=head2 Exception Caveats
 
 Z<exception_caveats>
 
@@ -195,7 +195,7 @@ understand, and very easy to use:
 Not only is the syntax somewhat nicer than the Perl 5 default, but the module
 handles all of those edge cases for you without your knowledge.
 
-=head3 Built-in Exceptions
+=head2 Built-in Exceptions
 
 Z<builtin_exceptions>
 

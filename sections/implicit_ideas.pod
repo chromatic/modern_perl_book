@@ -1,4 +1,4 @@
-=head3 Implicit Ideas
+=head1 Implicit Ideas
 
 Z<implicit_ideas>
 
@@ -8,17 +8,17 @@ understand the expected number of results or the type of an operation from
 existing information without adding explicit additional information to
 disambiguate.  Others also exist.
 
-=head4 The Default Scalar Variable
+=head2 The Default Scalar Variable
 
 X<default scalar variable>
 X<variables; $_>
 X<$_>
 
-The default scalar variable, C<$_>, is the best example of a linguistic
-shortcut in Perl.  It's most notable in its I<absence>: many of Perl's built in
-operations perform their work on the contents of C<$_> in the absence of an
-explicit variable.  You can still use C<$_> as the variable, but it's often
-unnecessary.
+The default scalar variable (also called the topic variable), C<$_>, is the best
+example of a linguistic shortcut in Perl.  It's most notable in its I<absence>:
+many of Perl's built in operations perform their work on the contents of C<$_>
+in the absence of an explicit variable.  You can still use C<$_> as the
+variable, but it's often unnecessary.
 
 For example, the C<chomp> operator removes any trailing newline sequence from
 the given string:
@@ -174,7 +174,7 @@ Of course, using a named lexical can be just as clear:
 
 Use C<$_> as you would the word "it" in formal writing: sparingly, in small and well-defined scopes.
 
-=head4 The Default Array Variables
+=head2 The Default Array Variables
 
 X<default array variables>
 X<variables; @_>
@@ -235,7 +235,7 @@ command-line filter which reverses its input:
 
 Why C<scalar>?  C<say> imposes list context on its operands.  C<reverse> passes
 its context on to its operands, treating them as a list in list context and a
-concatenated string in scalar context.  If this sounds confusing, it can be: if
+concatenated string in scalar context.  This sounds confusing, because it is.
 Perl 5 arguably should have had different operators for these different
 operations.
 

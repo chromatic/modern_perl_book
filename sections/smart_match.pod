@@ -1,4 +1,4 @@
-=head2 Smart Matching
+=head1 Smart Matching
 
 Z<smart_match>
 

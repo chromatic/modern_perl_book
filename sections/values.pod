@@ -1,4 +1,4 @@
-=head2 Values
+=head1 Values
 
 Z<values>
 
@@ -20,19 +20,18 @@ While the structure of a program depends heavily on the means by which you
 model your data with appropriate variables, these variables would be
 meaningless if they couldn't accurately contain the data itself--the values.
 
-=head3 Strings
+=head2 Strings
 
 X<strings>
 
 A I<string> is a piece of data with no particular formatting, no particular
-contents, and no semantic meaning beyond the fact that it's a string.  It could
-be your name.  It could be the contents of an image file read from your hard
-drive.  It could be the Perl program itself.  A string has no meaning to the
-program until you give it meaning.  A string is a fixed amount of data
-delineated by quotes of some form, yet Perl strings can grow or shrink as you
-add to or remove from them.
+contents, and no other meaning to the program.  It could be your name.  It
+could be the contents of an image file read from your hard drive.  It could be
+the Perl program itself.  A string has no meaning to the program until you give
+it meaning.  A string is a fixed amount of data delineated by quotes of some
+form, yet Perl strings can grow or shrink as you add to or remove from them.
 
-Most strings use either single or double quotes:
+The most common string delimiters are single and double quotes:
 
 =begin programlisting
 
@@ -54,23 +53,23 @@ escaping the quote with a leading backlash:
 =end programlisting
 
 If a backslash occurs at the end of the string, escape it with another
-backslash, lest the Perl parser believe you are trying to escape the trailing
+backslash, because the Perl parser thinks you are trying to escape the trailing
 single quote:
 
 =begin programlisting
 
-    my $exception = 'This string ends with a backslash, not a quote: \\';
+    my $exception = 'This string ends with a backslash, not a quote: B<\\>';
 
 =end programlisting
 
 =begin sidebar
 
-Any other backslash appears literally in the string, but you can escape
-backslashes safely:
+Any other backslash appears literally in the string, but if two backslashes are
+next to each other, the first one will escape the the second one.
 
 =begin programlisting
 
-    is 'Modern \ Perl', 'Modern \\ Perl', 'single quotes backslash escaping';
+    is('Modern B<\> Perl', 'Modern B<\\> Perl', 'single quotes backslash escaping');
 
 =end programlisting
 
@@ -182,7 +181,7 @@ double-quoted interpolation.  The C<END_BLURB> itself is an arbitrary
 identifier which the Perl 5 parser uses as the ending delimiter.
 
 Be careful; regardless of the indentation of the heredoc declaration itself,
-the ending delimiter I<must> begin in the first column of the program:
+the ending delimiter I<must> start at the beginning of the line:
 
 =begin programlisting
 
@@ -212,7 +211,7 @@ start of each line of the heredoc.
 You may use a string in other contexts, such as boolean or numeric; its
 contents will determine the resulting value (L<coercion>).
 
-=head3 Unicode and Strings
+=head2 Unicode and Strings
 
 Z<unicode>
 X<unicode>
@@ -253,7 +252,7 @@ you read is an image file or a text document or anything else.  By default,
 Perl treats all incoming data as sequences of octets.  Any additional meaning
 of the string's contents are your responsibility.
 
-=head4 Character Encodings
+=head3 Character Encodings
 
 X<encoding>
 X<Unicode; encoding>
@@ -266,12 +265,12 @@ characters.  A I<Unicode encoding> maps octet sequences to characters.  Some
 encodings, such as UTF-8, can encode all of the characters in the Unicode
 character set.  Others, represent a subset of Unicode characters.  For example,
 ASCII encodes plain English text with no accented characters and Latin-1 can
-represent text in most languages which use the Latin script.
+represent text in most languages which use the Latin alphabet.
 
 If you always decode to and from the appropriate encoding at the inputs and
 outputs of your program, you will avoid many problems.
 
-=head4 Unicode in Your Filehandles
+=head3 Unicode in Your Filehandles
 
 X<open>
 X<IO layers>
@@ -317,7 +316,7 @@ Without the C<utf8> mode, printing Unicode strings to a filehandle will result
 in a warning (C<Wide character in %s>), because files contain octets, not
 Unicode characters.
 
-=head4 Unicode in Your Data
+=head3 Unicode in Your Data
 
 X<Encode>
 X<Encode; decode()>
@@ -342,7 +341,7 @@ to the desired output encoding:
 
 =end programlisting
 
-=head4 Unicode in Your Programs
+=head3 Unicode in Your Programs
 
 X<pragmas; utf8>
 X<utf8>
@@ -409,7 +408,7 @@ enable them.  Use the C<\N{}> escape to refer to them:
 You may use the C<\x{}> and C<\N{}> forms within regular expressions as well as
 anywhere else you may legitimately use a string or a character.
 
-=head4 Implicit Conversion
+=head3 Implicit Conversion
 
 Most Unicode problems in Perl arise from the fact that a string could be either
 a sequence of octets or a sequence of characters.  Perl allows you to combine
@@ -514,10 +513,10 @@ the string literal were a Unicode string, the name will be incorrectly decoded
 into five Unicode characters C<JosE<Atilde>E<copy>> instead of C<JosE<eacute>>
 because the UTF-8 data means something else when decoded as Latin-1 data.
 
-See C<perldoc perluniintro> for far more detail Unicode, encodings, and how to
-manage incoming and outgoing data in a Unicode world.
+See C<perldoc perluniintro> for a far more detailed explanation of  Unicode,
+encodings, and how to manage incoming and outgoing data in a Unicode world.
 
-=head3 Numbers
+=head2 Numbers
 
 X<numbers>
 X<integers>
@@ -556,8 +555,8 @@ C<perldoc perlnumber> for more details.
 
 You may not use commas to separate thousands in numeric literals because the
 parser will interpret the commas as comma operators.  You I<can> use
-underscores in other places within the number, however.  The parser will treat
-them as invisible characters.  Your readers may not.  These are equivalent:
+underscores within the number, however.  The parser will treat them as
+invisible characters; your readers may not.  These are equivalent:
 
 =begin programlisting
 
@@ -587,7 +586,7 @@ The C<Regexp::Common> module from the CPAN also provides several well-tested
 regular expressions to identify valid I<types> (whole number, integer,
 floating-point value) of numeric values.
 
-=head3 Undef
+=head2 Undef
 
 X<undef>
 
@@ -622,7 +621,7 @@ value> warning:
 
 =end screen
 
-=head3 The Empty List
+=head2 The Empty List
 
 X<empty list>
 X<()>
@@ -655,7 +654,7 @@ You don't have to understand all of the implications of this code right now,
 but it does demonstrate how a few of Perl's fundamental design features can
 combine to produce interesting and useful behavior.
 
-=head3 Lists
+=head2 Lists
 
 X<lists>
 
@@ -730,7 +729,7 @@ do not appear literally in source code.
 Lists and arrays are not interchangeable in Perl.  Lists are values and arrays
 are containers.  You may store a list in an array and you may coerce an array
 to a list, but they are separate entities.  For example, indexing into a list
-is always occurs in list context.  Indexing into an array can occur in scalar
+always occurs in list context.  Indexing into an array can occur in scalar
 context (for a single element) or list context (for a slice):
 
 =begin programlisting

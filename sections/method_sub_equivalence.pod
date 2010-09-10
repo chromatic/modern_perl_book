@@ -1,4 +1,4 @@
-=head2 Method-Function Equivalence
+=head1 Method-Function Equivalence
 
 Z<method_sub_equivalence>
 
@@ -15,7 +15,7 @@ exported, or as a reference--if you pass in your own invocant manually.
 
 Both have their problems; avoid them.
 
-=head3 Caller-side
+=head2 Caller-side
 
 Suppose you have a class which contains several methods:
 
@@ -114,7 +114,7 @@ have updated.
 
 If you use this form of invocation, limit the scope of the references.
 
-=head3 Callee-side
+=head2 Callee-side
 
 X<methods; callable as functions (avoid)>
 X<functions; callable as methods (avoid)>

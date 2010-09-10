@@ -1,4 +1,4 @@
-=head1 Perl and Its Community
+=head0 Perl and Its Community
 
 One of Larry's main goals for Perl 5 was to encourage Perl development and
 evolution outside the core distribution.  Perl 4 had several forks, because

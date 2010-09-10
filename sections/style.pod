@@ -1,6 +1,6 @@
 Z<style>
 
-=head2 Writing Maintainable Perl
+=head1 Writing Maintainable Perl
 
 X<maintenance>
 X<maintainability>
@@ -62,7 +62,7 @@ difference.
 
 =back
 
-=head2 Writing Idiomatic Perl
+=head1 Writing Idiomatic Perl
 
 X<idioms>
 
@@ -103,7 +103,7 @@ way to learn.
 
 =back
 
-=head2 Writing Effective Perl
+=head1 Writing Effective Perl
 
 X<efficacy>
 

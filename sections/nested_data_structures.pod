@@ -1,4 +1,4 @@
-=head2 Nested Data Structures
+=head1 Nested Data Structures
 
 Z<nested_data_structures>
 X<data structures>
@@ -10,7 +10,7 @@ you to access aggregate data types indirectly, through special scalars.  Nested
 data structures in Perl, such as an array of arrays or a hash of hashes, are
 possible through the use of references.
 
-=head3 Declaring Nested Data Structures
+=head2 Declaring Nested Data Structures
 
 A simple declaration of an array of arrays might be:
 
@@ -38,12 +38,12 @@ A simple declaration of an array of arrays might be:
 
 =begin sidebar
 
-Perl allows but does not require the trailing comma so to ease adding new
+Perl allows but does not require the trailing comma so as to ease adding new
 elements to the list.
 
 =end sidebar
 
-=head3 Accessing Nested Data Structures
+=head2 Accessing Nested Data Structures
 
 Accessing elements in nested data structures uses Perl's reference syntax.  The
 sigil denotes the amount of data to retrieve, and the dereferencing arrow
@@ -103,10 +103,10 @@ this construct.  Sometimes using temporary variables can clarify:
 
 =end programlisting
 
-C<perldoc perldsc>, the data structures cookbook, gives copious examples of
-various types of data structures available in Perl with their syntax.
+C<perldoc perldsc>, the data structures cookbook, gives copious examples of how
+to use the various types of data structures available in Perl.
 
-=head3 Autovivification
+=head2 Autovivification
 
 Z<autovivification>
 X<autovivification>
@@ -167,7 +167,7 @@ The answer to the latter question depends on your specific project.
 
 =end sidebar
 
-=head3 Debugging Nested Data Structures
+=head2 Debugging Nested Data Structures
 
 The complexity of Perl 5's dereferencing syntax combined with the potential for
 confusion with multiple levels of references can make debugging nested data
@@ -196,7 +196,7 @@ verbose output.  Some developers prefer the use of the C<YAML::XS> or C<JSON>
 modules for debugging.  You have to learn a different format to understand
 their outputs, but their outputs can be much clearer to read and to understand.
 
-=head3 Circular References
+=head2 Circular References
 
 Z<circular_references>
 
@@ -262,15 +262,14 @@ collector from destroying those data structures.  You rarely have to use weak
 references if you design your data structures correctly, but they're useful in
 a few situations.
 
-=head3 Alternatives to Nested Data Structures
+=head2 Alternatives to Nested Data Structures
 
 While Perl is content to process data structures nested as deeply as you can
 imagine, the human cost of understanding these data structures as well as the
 relationship of various pieces, not to mention the syntax required to access
 various portions, can be high.  Beyond two or three levels of nesting, consider
 whether modeling various components of your system with classes and objects
-(L<moose>) will allow you to operate on your data within encapsulation
-boundaries.
+(L<moose>) will allow for a clearer representation of your data.
 
 Sometimes bundling data with behaviors appropriate to that data can clarify
 code.

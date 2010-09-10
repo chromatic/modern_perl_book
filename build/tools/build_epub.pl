@@ -1,7 +1,10 @@
 #!/usr/bin/perl
 
 # Simple program to create an ePub eBook version of Modern Perl.
-# The basic structure is copied from build_html.
+# The basic structure is copied from build_html with some additional
+# code from pod2epub.
+#
+# perltidy -nse -gnu
 
 use strict;
 use warnings;
@@ -26,7 +29,10 @@ sub Pod::PseudoPod::HTML::end_L
     {
         my $link = $1;
         die "Unknown link $link\n" unless exists $anchors->{$link};
-        $self->{scratch} .= '<a href="' . $anchors->{$link}[0] . "#$link\">"
+        $self->{scratch} .=
+            '<a href="'
+          . $anchors->{$link}[0]
+          . "#$link\">"
           . $anchors->{$link}[1] . '</a>';
     }
 }
@@ -124,6 +130,9 @@ sub generate_ebook
     $epub->add_author('chromatic');
     $epub->add_language('en');
 
+    # Add the book cover.
+    add_cover($epub, './images/mp_cover_full.png');
+
     # Add some other metadata to the OPF file.
     $epub->add_meta_item('EBook::EPUB version', $EBook::EPUB::VERSION);
 
@@ -136,7 +145,8 @@ sub generate_ebook
         my $name = (splitpath $chapter )[-1];
         $name =~ s/\.pod/\.xhtml/;
 
-        $epub->copy_xhtml('./build/xhtml/' . $name, 'text/' . $name,
+        $epub->copy_xhtml('./build/xhtml/' . $name,
+                          'text/' . $name,
                           linear => 'no');
     }
 
@@ -199,10 +209,77 @@ sub set_table_of_contents
         # The returned navpoint object is used for the next nested level.
         $navpoints[$heading_level] = $navpoint_obj;
 
-        # This is a workaround for non-contigous heading levels.
+        # This is a workaround for non-contiguous heading levels.
         $navpoints[$heading_level + 1] = $navpoint_obj;
 
     }
+}
+
+
+###############################################################################
+#
+# add_cover()
+#
+# Add a cover image to the eBook. Add cover metadata for iBooks and add an
+# additional cover page for other eBook readers.
+#
+sub add_cover
+{
+
+    my $epub        = shift;
+    my $cover_image = shift;
+
+
+    # Check if the cover image exists.
+    if (!-e $cover_image)
+    {
+        warn "Cover image $cover_image not found.\n";
+        return undef;
+    }
+
+    # Add cover metadata for iBooks.
+    my $cover_id = $epub->copy_image($cover_image, 'images/cover.jpg');
+    $epub->add_meta_item('cover', $cover_id);
+
+    # Add an additional cover page for other eBook readers.
+    my $cover_xhtml =
+        qq[<?xml version="1.0" encoding="UTF-8"?>\n]
+      . qq[<!DOCTYPE html\n]
+      . qq[     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"\n]
+      . qq[    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n\n]
+      . qq[<html xmlns="http://www.w3.org/1999/xhtml">\n]
+      . qq[<head>\n]
+      . qq[<title></title>\n]
+      . qq[<meta http-equiv="Content-Type" ]
+      . qq[content="text/html; charset=iso-8859-1"/>\n]
+      . qq[<style type="text/css"> img { max-width: 100%; }</style>\n]
+      . qq[</head>\n]
+      . qq[<body>\n]
+      . qq[    <img alt="" src="../images/cover.jpg" />\n]
+      . qq[</body>\n]
+      . qq[</html>\n\n];
+
+    # Crete a the cover xhtml file.
+    my $cover_filename = './build/xhtml/cover.xhtml';
+    open my $cover_fh, '>', $cover_filename
+      or die "Cannot write to '$cover_filename': $!\n";
+
+    print $cover_fh $cover_xhtml;
+    close $cover_fh;
+
+    # Add the cover page to the ePub doc.
+    $epub->copy_xhtml($cover_filename, 'text/cover.xhtml', linear => 'no');
+
+    # Add the cover to the OPF guide.
+    my $guide_options = {
+                         type  => 'cover',
+                         href  => 'text/cover.xhtml',
+                         title => 'Cover',
+                        };
+
+    $epub->guide->add_reference($guide_options);
+
+    return $cover_id;
 }
 
 
@@ -245,7 +322,7 @@ sub start_Document
 sub end_Z { $_[0]{'scratch'} .= '"/>' }
 
 # Override Pod::PseudoPod::HTML to escape all XML entities.
-sub handle_text{ $_[0]{'scratch'} .= encode_entities($_[1]); }
+sub handle_text { $_[0]{'scratch'} .= encode_entities($_[1]); }
 
 # Override Pod::PseudoPod::HTML to close list items.
 sub end_item_text { $_[0]{'scratch'} .= '</li>'; $_[0]->emit() }

@@ -1,4 +1,4 @@
-=head2 Closures
+=head1 Closures
 
 Z<closures>
 
@@ -18,7 +18,7 @@ You can read it online at U<http://hop.perl.plover.com/>.
 
 =end sidebar
 
-=head3 Creating Closures
+=head2 Creating Closures
 
 X<closure>
 X<functions; closures>
@@ -127,7 +127,7 @@ without your help.
 
 =end sidebar
 
-=head3 Uses of Closures
+=head2 Uses of Closures
 
 Closures can make effective iterators over fixed-size lists, but they
 demonstrate greater advantages when iterating over a list of items too
@@ -230,7 +230,7 @@ C<gen_caching_closure()>.
 
 =end sidebar
 
-=head3 Closures and Partial Application
+=head2 Closures and Partial Application
 
 Z<partial_application>
 

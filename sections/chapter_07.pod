@@ -1,4 +1,4 @@
-=head1 Objects
+=head0 Objects
 
 Writing large programs requires more discipline than writing small programs,
 due to the difficulty of managing all of the details of your program

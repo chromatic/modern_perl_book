@@ -1,4 +1,4 @@
-=head2 Hashes
+=head1 Hashes
 
 Z<hashes>
 
@@ -18,7 +18,7 @@ Hashes have two important properties.  First, they store one scalar per unique
 key.  Second, they do not provide any specific ordering of keys.  A hash is a
 big container full of key/value pairs.
 
-=head3 Declaring Hashes
+=head2 Declaring Hashes
 
 X<hashes; declaring>
 
@@ -63,7 +63,7 @@ X<fat comma>
 If you assign an odd number of elements to the hash, you will receive a warning
 that the results are not what you anticipated.  It's often more obvious to use
 the I<fat comma> operator to associate values with keys, as it makes the
-required pairing more visible:
+required pairing more visible.  Compare:
 
 =begin programlisting
 
@@ -74,9 +74,20 @@ required pairing more visible:
 
 =end programlisting
 
+... to:
+
+=begin programlisting
+
+    my %favorite_flavors = (
+        'Jacob', 'anything',
+        'Floyd', 'Pistachio',
+    );
+
+=end programlisting
+
 The fat comma operator acts like the regular comma, but it also causes the Perl
 parser to treat the previous bareword (L<barewords>) as if it were a quoted
-word.  The C<strict> pragma will not warn about the bare word, and if you have
+word.  The C<strict> pragma will not warn about the bareword, and if you have
 a function with the same name as a hash key, the fat comma will I<not> call the
 function:
 
@@ -120,7 +131,7 @@ it's somewhat more rare.>:
 
 =end programlisting
 
-=head3 Hash Indexing
+=head2 Hash Indexing
 
 X<hashes; accessing values>
 X<hashes; values>
@@ -211,7 +222,7 @@ stringified version of that object instead of the object itself:
 
 =end programlisting
 
-=head3 Hash Key Existence
+=head2 Hash Key Existence
 
 X<exists>
 X<operators; exists>
@@ -255,7 +266,7 @@ exists, its value may be C<undef>.  Check that with C<defined>:
 
 =end programlisting
 
-=head3 Accessing Hash Keys and Values
+=head2 Accessing Hash Keys and Values
 
 X<keys>
 X<hashes; keys>
@@ -356,7 +367,7 @@ often as you might expect.  Be cautious, but use C<each> when you need it.
 
 =end sidebar
 
-=head3 Hash Slices
+=head2 Hash Slices
 
 X<hash slices>
 X<hashes; slicing>
@@ -419,7 +430,7 @@ existing key/value pairs in C<%addresses>.
 
 =end sidebar
 
-=head3 The Empty Hash
+=head2 The Empty Hash
 
 An empty hash contains no keys or values.  It evaluates to false in a boolean
 context.  A hash which contains at least one key/value pair evaluates to true
@@ -428,10 +439,10 @@ themselves evaluate to false in a boolean context.
 
 =begin programlisting
 
-    use Test::More 'no_plan';
+    use Test::More;
 
     my %empty;
-    nok( %empty, 'empty hash should evaluate to false' );
+    ok( ! %empty, 'empty hash should evaluate to false' );
 
     my %false_key = ( 0 => 'true value' );
     ok( %false_key, 'hash containing false key should evaluate to true' );
@@ -440,6 +451,8 @@ themselves evaluate to false in a boolean context.
     ok( %false_value, 'hash containing false value should evaluate to true' );
 
     ...
+
+    done_testing();
 
 =end programlisting
 
@@ -450,11 +463,10 @@ meaningless to Perl programs.  You can safely ignore it.
 
 In list context, a hash evaluates to a list of key/value pairs similar to what
 you receive from the C<each> operator.  However, you I<cannot> iterate over
-this list the same way you can iterate over the list produced by C<each>,
-because there is no internal hash iteration provided when evaluating a hash in
-list contextN<The loop will loop forever, unless the hash is empty.>.
+this list the same way you can iterate over the list produced by C<each>, as
+the loop will loop forever, unless the hash is empty.
 
-=head3 Hash Idioms
+=head2 Hash Idioms
 
 X<hashes; finding uniques>
 
@@ -598,7 +610,7 @@ You can even set default parameters with this approach:
 ... as subsequent declarations of the same key with a different value will
 overwrite the previous values.
 
-=head3 Locking Hashes
+=head2 Locking Hashes
 
 Z<locked_hashes>
 X<locked hashes>

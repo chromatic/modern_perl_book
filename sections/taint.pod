@@ -1,4 +1,4 @@
-=head2 Taint
+=head1 Taint
 
 Z<taint>
 
@@ -6,7 +6,7 @@ Perl gives you tools with which to write programs securely.  These tools are no
 substitute for careful thought and planning, but they I<reward> caution and
 understanding and can help you avoid subtle mistakes.
 
-=head3 Using Taint Mode
+=head2 Using Taint Mode
 
 X<taint>
 X<taint mode>
@@ -28,7 +28,7 @@ mytaintedappl.pl> and neglect the C<-T> flag, Perl will exit with an exception.
 By the time Perl encounters the flag on the C<#!> line, it's missed its
 opportunity to taint the environment data which makes up C<%ENV>, for example.
 
-=head3 Sources of Taint
+=head2 Sources of Taint
 
 Taint can come from two places: file input and the program's operating
 environment.  The former is anything you read from a file or collect from users
@@ -50,7 +50,7 @@ its argument is tainted:
 
 =end programlisting
 
-=head3 Removing Taint from Data
+=head2 Removing Taint from Data
 
 X<taint; untainting>
 X<untainting>
@@ -76,7 +76,7 @@ allow something harmful which appears safe.  Even so, nothing prevents you from
 writing a capture for the entire contents of a variable--but in that case, why
 use taint?
 
-=head3 Removing Taint from the Environment
+=head2 Removing Taint from the Environment
 
 X<taint; removing sources of>
 
@@ -111,7 +111,7 @@ under taint mode.  Perl will also ignore the C<PERL5LIB> and C<PERLLIB>
 environment variables.  Use the C<lib> pragma or the C<-I> flag to C<perl> if
 you need to add library directories to the program.
 
-=head3 Taint Gotchas
+=head2 Taint Gotchas
 
 Taint mode is all or nothing.  It's either on or off.  This sometimes leads
 people to use permissive patterns to untaint data, and gives the illusion of

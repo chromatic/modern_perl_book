@@ -1,4 +1,4 @@
-=head1 The Perl Language
+=head0 The Perl Language
 
 The Perl language has several smaller parts which combine to form its syntax.
 Unlike spoken language, where nuance and tone of voice and intuition allow

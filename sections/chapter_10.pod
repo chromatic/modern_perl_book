@@ -1,4 +1,4 @@
-=head1 Perl Beyond Syntax
+=head0 Perl Beyond Syntax
 
 Perl 5 is a large language, like any language intended to solve problems in the
 real world.  Effective Perl programs require more than mere understanding of
