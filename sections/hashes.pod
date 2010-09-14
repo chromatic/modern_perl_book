@@ -317,13 +317,6 @@ value:
 
 =end programlisting
 
-=begin sidebar
-
-The C<while> loop is important to the C<each> example, as you cannot declare
-multiple lexical loop iterator variables in a C<for> loop.
-
-=end sidebar
-
 Unlike arrays, there is no obvious ordering to the list of keys or values.  The
 ordering depends on the internal implementation of the hash, which can depend
 both on the particular version of Perl you are using, the size of the hash, and
