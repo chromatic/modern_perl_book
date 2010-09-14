@@ -21,8 +21,6 @@ You can learn this too.
 
 =head1 Running Modern Perl
 
-You don't have to install a new version of Perl to take advantage of most of
-this book, but the examples given assume that you're using Perl 5.10 or newer.
 Unless otherwise mentioned, code snippets always assume the basic skeleton of a
 program:
 
@@ -36,6 +34,21 @@ program:
     ...
 
 =end programlisting
+
+=begin sidebar
+
+The Modern::Perl module is available from the CPAN.  You can install it
+yourself or replace it with:
+
+=begin programlisting
+
+    use strict;
+    use warnings;
+    use 5.010;
+
+=end programlisting
+
+=end sidebar
 
 Other code snippets use testing functions such as C<ok()>, C<like()>, and
 C<is()> (L<testing>).  That skeleton program is:
@@ -53,11 +66,16 @@ C<is()> (L<testing>).  That skeleton program is:
 
 =end programlisting
 
-If you don't already have a modern version of Perl installed, you can often
-install one yourself.  Windows users can download Strawberry Perl from
-U<http://www.strawberryperl.com/>.  Users of other operating systems with Perl
-5 already installed (and a C compiler and the other development tools), start
-by installing the CPAN module C<App::perlbrew>N<See
+The examples in this book assume you're using Perl 5.10.0 or newer; ideally at
+least Perl 5.10.1.  Many examples will work on older versions of Perl 5 with
+modest changes, but you will have more difficulty with anything older than
+5.10.0.  This book also mentions (but does not require the use of) features
+found in Perl 5.12.
+
+You can often install a new version of Perl yourself.  Windows users, download
+Strawberry Perl from U<http://www.strawberryperl.com/>.  Users of other
+operating systems with Perl 5 already installed (and a C compiler and the other
+development tools), start by installing the CPAN module C<App::perlbrew>N<See
 U<http://search.cpan.org/perldoc?App::perlbrew> for installation
 instructions.>.
 
@@ -66,15 +84,6 @@ By default, it installs them to your own home directory.  Not only can you have
 multiple versions of Perl 5 installed without affecting the system Perl but you
 can also install any module you like into these directories without asking your
 system administrator for specific permission.
-
-=begin sidebar
-
-Which version of Perl 5 should you install?  The rest of this book assumes
-you're using something at least as new as Perl 5.10.0--preferably 5.10.1--but,
-as written, all code examples will work with every release in the Perl 5.12.x
-family.  The book also indicates features added to Perl 5.12.
-
-=end sidebar
 
 =head1 Perl 5 and Perl 6
 
