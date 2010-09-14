@@ -314,17 +314,13 @@ UTF-8 data:
 X<binmode>
 X<builtins; binmode>
 
-You may also modify an existing filehandle with C<binmode>:
+You may also modify an existing filehandle with C<binmode>, whether for input
+or output:
 
 =begin programlisting
 
     binmode $fh, ':utf8';
-
-=end programlisting
-
-This works for input as well as output:
-
-=begin programlisting
+    my $unicode_string = <$fh>;
 
     binmode STDOUT, ':utf8';
     say $unicode_string;
