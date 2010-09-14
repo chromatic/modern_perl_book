@@ -192,7 +192,8 @@ X<context; numeric>
 
 The C<eq> operator treats its operands as strings by enforcing I<string
 context> on them.  The C<==> operator enforces I<numeric context>.  The example
-code fails because the value of both strings when treated as numbers is C<0>.
+code fails because the value of both strings when treated as numbers is C<0>
+(L<numeric_coercion>).
 
 X<boolean context>
 X<context; boolean>
