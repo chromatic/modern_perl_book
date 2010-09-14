@@ -239,7 +239,9 @@ arrays as necessary, the language also provides several operations to treat
 arrays as stacks, queues, and the like.
 
 X<push>
+X<builtins; push>
 X<pop>
+X<builtins; pop>
 
 The C<push> and C<pop> operators add and remove elements from the tail of the
 array, respectively:
@@ -260,6 +262,11 @@ You may C<push> as many elements as you like onto an array.  Its second
 argument is a list of values.  You may only C<pop> one argument at a time.
 C<push> returns the updated number of elements in the array.  C<pop> returns
 the removed element.
+
+X<shift>
+X<builtins; shift>
+X<unshift>
+X<builtins; unshift>
 
 Similarly, C<unshift> and C<shift> add elements to and remove an element from
 the start of an array:
@@ -287,6 +294,7 @@ context.
 =end sidebar
 
 X<splice>
+X<builtins; splice>
 
 C<splice> is another important--if less frequently used--array operator.  It
 removes and replaces elements from an array given an offset, a length of a list
@@ -297,6 +305,22 @@ other operators are shorter and simpler to read and understand.
 
 Arrays often contain elements to process in a loop; see L<looping_directives>
 for more detail about Perl 5 control flow and array processing.
+
+X<each>
+X<builtins; each>
+
+As of Perl 5.12, you can use C<each> to iterate over an array by index and
+value:
+
+=begin programlisting
+
+    while (my ($index, $value) = each @bookshelf)
+    {
+        say "#$index: $value";
+        ...
+    }
+
+=end programlisting
 
 =head2 Arrays and Context
 
