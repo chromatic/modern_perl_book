@@ -259,13 +259,6 @@ table.  You can inspect and modify this symbol table from Perl; this is how
 importing works (L<importing>).  This is also why you may only C<local>ize
 global and package global variables and never lexical variables.
 
-=begin sidebar
-
-You I<can> localize functions and methods, but that's deep magic to avoid
-unless absolutely necessary.
-
-=end sidebar
-
 X<$/>
 X<magic variables; $/>
 X<$!>
