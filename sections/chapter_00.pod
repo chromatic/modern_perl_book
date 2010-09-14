@@ -19,7 +19,7 @@ full understanding of Perl.
 
 You can learn this too.
 
-=head0 Running Modern Perl
+=head1 Running Modern Perl
 
 You don't have to install a new version of Perl to take advantage of most of
 this book, but the examples given assume that you're using Perl 5.10 or newer.
@@ -76,3 +76,42 @@ family.  The book also indicates features added to Perl 5.12.
 
 =end sidebar
 
+=head1 Perl 5 and Perl 6
+
+Should you learn Perl 5 or Perl 6?  They share philosophy and syntax and
+libraries and community; they fill different niches.  Learn Perl 5 if:
+
+=over 4
+
+=item * You have existing Perl 5 code to maintain
+
+=item * You need to take advantage of CPAN modules
+
+=item * Your deployment strategy requires rigorous stability
+
+=back
+
+Learn Perl 6 if:
+
+=over 4
+
+=item * You're comfortable managing frequent upgrades
+
+=item * You can afford to experiment with new syntax and features
+
+=item * You need new features only available in Perl 6
+
+=item * You can contribute to its development (whether patches, bug reports,
+documentation, sponsorship, or other resources)
+
+=back
+
+In general, Perl 5 development is conservative with regard to the core
+language.  For good or for ill, change occurs slowly.  Perl 6 is more
+experimental, as it considers finding the best possible design more important
+than keeping old code working.  Fortunately, you can learn and use both
+languages (and they interoperate to an ever-improving degree).
+
+This book discusses Perl 5.  To learn more about Perl 6, see
+U<http://perl6.org/>, try Rakudo (U<http://www.rakudo.org/>, and refer to the
+book I<Using Perl 6>, also published by Onyx Neon Press.
