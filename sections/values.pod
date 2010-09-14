@@ -235,10 +235,21 @@ unique number which identifies it in the Unicode character set.
 
 =item Sequences of octets
 
-Binary data is a sequence of 8 bit numbers, each of which can represent a
-number between 0 and 255.
+X<octet>
+
+Binary data is a sequence of I<octets>--8 bit numbers, each of which can
+represent a number between 0 and 255.
 
 =back
+
+=begin sidebar
+
+Why I<octet> and not I<byte>?  Think of Unicode as characters without thinking
+of any particular size of the representation of those characters in memory.
+Assuming that one character fits in one byte will cause you no end of Unicode
+grief.
+
+=end sidebar
 
 Unicode strings and binary strings look very similar.  They each have a
 C<length()>, and you can perform standard string operations on them such as
