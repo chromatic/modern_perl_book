@@ -24,11 +24,12 @@ X<atom>
 The match operator (C<//> or, more formally, C<m//>) contains a regular
 expression--in this example, C<hat>.  Even though that reads like a word, it
 means "the C<h> character, followed by the C<a> character, followed by the C<t>
-character, appearing anywhere in the string."  Each character is an I<atom> in
-the regex: an indivisible unit of the pattern.  The regex binding operator
-(C<=~>) is an infix operator (L<fixity>) which applies the regular expression
-on its right to the string produced by the expression on its left.  When
-evaluated in scalar context, a match evaluates to a true value if it succeeds.
+character, appearing anywhere in the string."  Each character in C<hat> is an
+I<atom> in the regex: an indivisible unit of the pattern.  The regex binding
+operator (C<=~>) is an infix operator (L<fixity>) which applies the regular
+expression on its right to the string produced by the expression on its left.
+When evaluated in scalar context, a match evaluates to a true value if it
+succeeds.
 
 The negated form of the binding operator (C<!~>) evaluates to a false value if
 the match succeeds.
@@ -383,6 +384,8 @@ X<regular expressions; \S>
 These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
 C<\D>.  To match anything but whitespace, use C<\S>.
+
+The regex engine treats all metacharacters as atoms.
 
 =head1 Character Classes
 
