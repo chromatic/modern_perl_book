@@ -48,7 +48,8 @@ X<$VERSION>
 
 Besides a package name (C<main> or C<MyCode> or any other allowable
 identifier), a package has a version and three implicit methods, C<VERSION()>,
-C<import()>, and C<unimport()>.
+C<import()> (L<importing>), and C<unimport()>.  C<VERSION()> returns the
+package's version number.
 
 The package's version is a series of numbers contained in a package global
 named C<$VERSION>.  By convention, versions tend to be a series of integers
