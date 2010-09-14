@@ -730,8 +730,7 @@ are candidates for tail call elimination.  This elimination avoids returning to
 the current call and then returning to the parent call.  Instead, it returns to
 the parent call directly.
 
-Perl 5 supports manual tail call elimination, but two recent CPAN modules
-provide a much better syntax (and even better performance).  Yuval Kogman's
+Perl 5 supports manual tail call elimination, but Yuval Kogman's
 C<Sub::Call::Tail> is worth exploring if you find yourself with highly
 recursive code or code that could benefit from tail call elimination.
 C<Sub::Call::Tail> is appropriate for tail calls of non-recursive code:
