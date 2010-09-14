@@ -125,8 +125,10 @@ directly:
 
 =end programlisting
 
+X<escaping>
+
 You may include a literal double-quote inside a double-quoted string by
-escaping it with a leading backslash:
+I<escaping> it (that is, preceding it with a leading backslash):
 
 =begin programlisting
 
