@@ -111,11 +111,17 @@ X<interpolation>
 X<strings; interpolation>
 
 You may also I<interpolate> the value of a scalar variable or the values of an
-array within a double-quoted string directly:
+array within a double-quoted string, such that the contents of the variable
+become part of the string as if you'd performed a concatenation operation
+directly:
 
 =begin programlisting
 
     my $factoid = "Did you know that B<$name> lives at B<$address>?";
+
+    # equivalent to
+
+    my $factoid = 'Did you know that ' . $name . ' lives at ' . $address . '?';
 
 =end programlisting
 
