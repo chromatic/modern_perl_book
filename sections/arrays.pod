@@ -321,11 +321,10 @@ normal Perl 5 function, they will flatten into a single list:
 
 =end programlisting
 
-Within the function, C<@_> will contain seven elements, not two.
-
-Similarly, list assignment to arrays is I<greedy>.  An array will consume as many
-elements from the list as possible.  After the assignment, C<@cats> will
-contain I<every> argument passed to the function.  C<@dogs> will be empty.
+Within the function, C<@_> will contain seven elements, not two.  Similarly,
+list assignment to arrays is I<greedy>.  An array will consume as many elements
+from the list as possible.  After the assignment, C<@cats> will contain
+I<every> argument passed to the function.  C<@dogs> will be empty.
 
 This flattening behavior sometimes confuses novices who attempt to create
 nested arrays in Perl 5:
