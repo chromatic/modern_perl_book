@@ -286,13 +286,6 @@ keys of the hash:
 
 =end programlisting
 
-=begin sidebar
-
-You may assign a numeric value to C<keys> to modify the expected size of the
-hash.  This is a minor optimization you almost never need.
-
-=end sidebar
-
 X<values>
 X<hashes; values>
 X<operators; values>
