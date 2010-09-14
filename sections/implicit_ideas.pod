@@ -10,15 +10,17 @@ disambiguate.  Others also exist.
 
 =head2 The Default Scalar Variable
 
+Z<default_scalar_variable>
+
 X<default scalar variable>
 X<variables; $_>
 X<$_>
 
-The default scalar variable (also called the topic variable), C<$_>, is the best
-example of a linguistic shortcut in Perl.  It's most notable in its I<absence>:
-many of Perl's built in operations perform their work on the contents of C<$_>
-in the absence of an explicit variable.  You can still use C<$_> as the
-variable, but it's often unnecessary.
+The I<default scalar variable> (also called the I<topic variable>), C<$_>, is
+the best example of a linguistic shortcut in Perl.  It's most notable in its
+I<absence>: many of Perl's built in operations perform their work on the
+contents of C<$_> in the absence of an explicit variable.  You can still use
+C<$_> as the variable, but it's often unnecessary.
 
 For example, the C<chomp> operator removes any trailing newline sequence from
 the given string:
