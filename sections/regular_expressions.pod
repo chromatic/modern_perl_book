@@ -520,13 +520,13 @@ enclose one or more atoms to capture whatever portion of the matched string
 they match.  To use literal parentheses in a regular expression, you must
 preface them with a backslash, just as in the C<$area_code> variable.
 
-=head2 Anonymous Captures
+=head2 Numbered Captures
 
-X<anonymous captures>
-X<captures; anonymous>
+X<numbered captures>
+X<captures; numbered>
 
 Named captures are new in Perl 5.10, but captures have existed in Perl for many
-years.  You may encounter I<anonymous captures> as well:
+years.  You may encounter I<numbered captures> as well:
 
 =begin programlisting
 
@@ -545,7 +545,7 @@ that Perl finds goes into C<$1>, the second into C<$2>, and so on.  Capture
 counts start at the I<opening> parenthesis of the capture; thus the first left
 parenthesis begins the capture into C<$1>, the second into C<$2>, and so on.
 
-While the syntax for named captures is longer than for anonymous captures, it
+While the syntax for named captures is longer than for numbered captures, it
 provides additional clarity.  You do not have to count the number of opening
 parentheses to figure out whether a particular capture is C<$4> or C<$5>, and
 composing regexes from smaller regexes is much easier, as they're less
@@ -555,12 +555,13 @@ individual atoms.
 =begin sidebar
 
 Name collisions are still possible with named captures, though that's less
-frequent than number collisions with anonymous captures.  Consider avoiding the
+frequent than number collisions with numbered captures.  Consider avoiding the
 use of captures in regex fragments; save it for top-level regexes.
 
 =end sidebar
 
-Anonymous captures are less frustrating when you evaluate a match in list context:
+Numbered captures are less frustrating when you evaluate a match in list
+context:
 
 =begin programlisting
 
