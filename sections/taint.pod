@@ -17,7 +17,8 @@ from tainted data is also tainted.  You may use tainted data within your
 program, but if you use it to affect the outside world--if you use it
 insecurely--Perl will throw a fatal exception.
 
-C<perldoc perlsec> explains taint mode in copious detail.
+C<perldoc perlsec> explains taint mode in copious detail among other security
+guidelines.
 
 X<-T>
 
