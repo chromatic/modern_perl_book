@@ -145,8 +145,8 @@ instances of the quantified atom in the string to match:
 This may seem useless, but it combines nicely with other regex features to
 indicate that you don't care about what may or may not be in that particular
 position in the string to match.  Even so, I<most> regular expressions benefit
-from using the C<?> and C<+> quantifiers far more than the C<*>
-quantifierN<Friedl's book explains why.>.
+from using the C<?> and C<+> quantifiers far more than the C<*> quantifier, as
+they avoid expensive backtracking and express your intent more clearly.
 
 X<numeric quantifiers>
 
