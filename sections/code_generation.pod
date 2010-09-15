@@ -254,12 +254,12 @@ In practical terms, the difference between writing:
 X<BEGIN; implicit>
 X<modules; implicit BEGIN>
 
-Within a module, C<BEGIN> concerns tend not to matter because C<use> adds an
-implicit C<BEGIN> around the C<require> and C<import> (L<importing>).  Any code
-outside of a function but inside the module will execute I<before> the
-C<import()> call occurs.  If you C<require> the module, however, there is no
-implicit C<BEGIN> block.  The execution of code outside of functions will
-happen at the I<end> of parsing.
+Within a module, any code outside of functions executes when you C<use> it,
+because of the implicit C<BEGIN> Perl adds around the C<require> and C<import>
+(L<importing>).  Any code outside of a function but inside the module will
+execute I<before> the C<import()> call occurs.  If you C<require> the module,
+there is no implicit C<BEGIN> block.  The execution of code outside of
+functions will happen at the I<end> of parsing.
 
 Also beware of the interaction between lexical I<declaration> (the association
 of a name with a scope) and lexical I<assignment>.  The former happens during
