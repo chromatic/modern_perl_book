@@ -345,7 +345,7 @@ Of course, if your list of potential matches were anything other than a list of
 words, this metacharacter could cause false positives, as it also matches
 punctuation characters, whitespace, numbers, and many other characters besides
 word characters.  The C<\w> metacharacter represents all alphanumeric
-characters (in a Unicode sense -- L<unicode>) and the underscore:
+characters (in a Unicode sense--L<unicode>) and the underscore:
 
 =begin programlisting
 

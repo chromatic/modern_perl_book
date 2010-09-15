@@ -21,9 +21,8 @@ X<precedence>
 The I<precedence> of an operator helps determine when Perl should evaluate it
 in an expression.  Evaluation order proceeds from highest to lowest precedence.
 For example, because the precedence of multiplication is higher than the
-precedence of addition, C<7 + 7
-* 10> evaluates to C<77>, not C<140>.
-You may force the evaluation of some operators before others by grouping their
+precedence of addition, C<7 + 7 * 10> evaluates to C<77>, not C<140>.  You may
+force the evaluation of some operators before others by grouping their
 subexpressions in parentheses; C<(7 + 7) * 10> I<does> evaluate to C<140>, as
 the addition operation becomes a single unit which must evaluate fully before
 multiplication can occur.
