@@ -273,7 +273,7 @@ choosing the most expressive and maintainable one.
 =end sidebar
 
 Sometimes you can't anchor a regular expression.  In those cases, you can turn
-a greedy quantifier into a parsimonious quantifier by appending the C<?>
+a greedy quantifier into a non-greedy quantifier by appending the C<?>
 quantifier:
 
 =begin programlisting
