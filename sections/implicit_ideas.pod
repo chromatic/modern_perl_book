@@ -6,7 +6,8 @@ Like many spoken languages, Perl provides linguistic shortcuts.  Context is one
 such feature: both the compiler and a programmer reading the code can
 understand the expected number of results or the type of an operation from
 existing information without requiring additional information to disambiguate.
-Others also exist.
+
+Other linguistic features include default variables--essentially pronouns.
 
 =head2 The Default Scalar Variable
 
@@ -35,7 +36,7 @@ the given string:
 =end programlisting
 
 Without an explicit variable, C<chomp> removes the trailing newline sequence
-from C<$_>.  Thus, these two lines of code are equivalent:
+from C<$_>.  These two lines of code are equivalent:
 
 =begin programlisting
 
@@ -43,6 +44,11 @@ from C<$_>.  Thus, these two lines of code are equivalent:
     chomp;
 
 =end programlisting
+
+C<$_> performs the same function in Perl as the pronoun I<it> does in English.
+Read the first line as "C<chomp> I<it>" and the second as "C<chomp>".  Perl
+understands what you mean when you don't explain what to chomp; Perl will
+always chomp I<it>.
 
 Similarly, the C<say> and C<print> builtins operate on C<$_> in the absence of
 other arguments:
@@ -203,9 +209,10 @@ array by default.  Thus, these two snippets of code are equivalent:
 
 =end programlisting
 
-I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
-functions.  The array operators C<shift> and C<pop> operate on C<@_> with no
-other operands provided.
+Just as C<$_> corresponds to the pronoun I<it>, C<@_> corresponds to the
+pronoun I<they> or I<them>.  I<Unlike> C<$_>, Perl automatically localizes
+C<@_> for you when you call other functions.  The array operators C<shift> and
+C<pop> operate on C<@_> with no other operands provided.
 
 X<variables; @ARGV>
 X<@ARGV>
