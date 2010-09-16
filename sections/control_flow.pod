@@ -216,7 +216,9 @@ may not change the order in which the block types appear:
 You may also use the C<elsif> block with an C<unless> chain, but the resulting
 code may be unclear.  There is no C<elseunless>.
 
-There is no C<else if> construct; this is a syntax error:
+There is no C<else if> constructN<Larry prefers C<elsif> for aesthetic reasons,
+as well the prior art of the Ada programming language.>, so this code contains
+a syntax error:
 
 =begin programlisting
 
