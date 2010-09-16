@@ -13,7 +13,7 @@ appropriate package as a method if you try to call it as a method.
 Likewise, you can invoke a method as if it were a function--fully-qualified,
 exported, or as a reference--if you pass in your own invocant manually.
 
-Both have their problems; avoid them.
+Both approaches have their problems; avoid them.
 
 =head2 Caller-side
 
@@ -106,8 +106,8 @@ does when invoking a method with a scalar containing its name:
 =end programlisting
 
 There is one small drawback in invoking a method by reference; if the structure
-of the program has changed in between storing the reference and invoking the
-reference, the reference may no longer refer to the current most appropriate
+of the program has changed between storing the reference and invoking the
+reference, the reference may no longer refer to the current, most appropriate
 method.  If the C<Order> class has changed such that C<Order::apply_discount>
 is no longer the right method to call, the reference in C<$meth_ref> will not
 have updated.

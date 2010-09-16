@@ -6,8 +6,8 @@ Perl uses sigils and other punctuation pervasively to help both the parser and
 the programmer identify the categories of named entities.  Even so, Perl is a
 malleable language.  You can write programs in the most creative, maintainable,
 obfuscated, or bizarre fashion as you prefer.  Maintainability is a concern of
-good programs, but the developers of Perl itself don't presume to dictate what
-I<you> find most maintainable.
+good programmers, but the developers of Perl itself don't presume to dictate
+what I<you> find most maintainable.
 
 X<bareword>
 
@@ -180,10 +180,10 @@ the function to use for sorting to avoid the use of barewords:
 
 The result is one line longer, but it avoids the use of a bareword.  Unlike
 other bareword examples, Perl's parser needs no disambiguation for this syntax.
-There is only one way for it to interpret C<compare_lengths>.  Even so, the
+There is only one way for it to interpret C<compare_lengths>.  However, the
 clarity of an explicit reference can help human readers.
 
-Even so, Perl 5's parser does not understand the single-line version:
+Note that Perl 5's parser does not understand the single-line version:
 
 =begin programlisting
 

@@ -16,7 +16,7 @@ them.
 Fortunately, the Perl community exists.  It's strong and healthy.  It welcomes
 willing participants at all levels--and not just for people who produce and
 share code.  Consider taking advantage of the knowledge and experience of
-countless other Perl programmers, and to share your abilities as well.
+countless other Perl programmers, and sharing your abilities as well.
 
 L<perl_community>
 

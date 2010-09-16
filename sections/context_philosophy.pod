@@ -15,8 +15,8 @@ remainder of the sentence.
 
 Context in Perl is similar; the language understands expectations of the amount
 of data to provide as well as what kind of data to provide.  Perl will happily
-attempt to provide exactly what you ask for--and you do this asking when you
-choose one operator over another.
+attempt to provide exactly what you ask for--and you ask by choosing one
+operator over another.
 
 One type of context in Perl means that certain operators have different
 behavior if you want zero, one, or many results.  It's possible that a specific
@@ -76,7 +76,7 @@ function in I<scalar context>:
 X<list context>
 
 Assigning the results of calling the function to an array (L<arrays>) or a
-list, or using it in a list evaluates the function in I<list context>:
+list, or using it in a list, evaluates the function in I<list context>:
 
 =begin programlisting
 
@@ -129,8 +129,8 @@ contain.  Both calls to C<some_expensive_operation()> occur in list context:
 
 =end programlisting
 
-C<expensive_operation> above is in list context, because it's being assigned to
-a hash, and hash assignments take a list of key/value pairs, which causes any
+C<expensive_operation> is in list context, because it's assigned to a
+hash, and hash assignments take a list of key/value pairs, which causes any
 expressions in that hash assignment to be evaulated in list context.
 
 X<operators; scalar>

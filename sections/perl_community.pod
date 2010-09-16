@@ -33,7 +33,7 @@ X<PerlMonks>
 
 PerlMonks, at U<http://perlmonks.org/>, is a venerable community site devoted
 to questions and answers and other discussions about Perl programming.  It
-celebrated its tenth anniversary in December 2009, making it one of the longest
+celebrated its tenth anniversary in December 2009, making it one of the longest-
 lasting web communities dedicated to any programming language.
 
 X<use Perl;>
@@ -50,7 +50,7 @@ Other sites aggregate the Perl-related musings of Perl hackers, including
 U<http://perlsphere.net/>, U<http://planet.perl.org/>, and
 U<http://ironman.enlightenedperl.org/>.  The latter is part of an initiative
 from the Enlightened Perl Organization (U<http://enlightenedperl.org/>) to
-increase the amount of and improve the quality of Perl publishing on the web.
+increase the amount and improve the quality of Perl publishing on the web.
 
 X<Perl Buzz>
 
@@ -87,7 +87,7 @@ X<Gitpan>
 
 Many Perl hackers use Github (U<http://github.com/>) to host their
 projectsN<...  including the drafts of this book at
-U<http://github.com/chromatic/modern_perl_book/>)>.  One particularly notable
+U<http://github.com/chromatic/modern_perl_book/>>.  One particularly notable
 page on Github is Gitpan, which hosts Git repositories chronicling the complete
 history of every distribution on the CPAN.  See U<http://github.com/gitpan/>.
 

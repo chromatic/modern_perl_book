@@ -2,7 +2,7 @@
 
 Perl turns 23 years old later this year.  The language has gone from a simple
 tool for system administration somewhere between shell scripting and C
-programming (Perl 1) to a powerful, general purpose language steeped in a rich
+programming (Perl 1) to a powerful, general-purpose language steeped in a rich
 heritage (Perl 5) and a consistent, coherent, rethinking of programming in
 general intended to last for another 25 years (Perl 6).
 

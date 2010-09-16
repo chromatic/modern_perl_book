@@ -26,7 +26,7 @@ variable declarations, and forbidding the use of undeclared barewords
 to perform symbol-table manipulation and exporting (barring the use of helper
 modules, such as C<Moose>), the use of a variable as a variable name offers the
 possibility of subtle errors of action at a distance--or, worse, the
-possibility of poorly validated user input manipulating internal-only data for
+possibility of poorly-validated user input manipulating internal-only data for
 malicious purposes.
 
 Requiring variable declarations helps to prevent typos in variable names and

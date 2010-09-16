@@ -3,10 +3,10 @@
 Z<implicit_ideas>
 
 Like many spoken languages, Perl provides linguistic shortcuts.  Context is one
-such feature.  Both the compiler and a programmer reading the code can
+such feature: both the compiler and a programmer reading the code can
 understand the expected number of results or the type of an operation from
-existing information without adding explicit additional information to
-disambiguate.  Others also exist.
+existing information without requiring additional information to disambiguate.
+Others also exist.
 
 =head2 The Default Scalar Variable
 
@@ -18,7 +18,7 @@ X<$_>
 
 The I<default scalar variable> (also called the I<topic variable>), C<$_>, is
 the best example of a linguistic shortcut in Perl.  It's most notable in its
-I<absence>: many of Perl's built in operations perform their work on the
+I<absence>: many of Perl's builtin operations perform their work on the
 contents of C<$_> in the absence of an explicit variable.  You can still use
 C<$_> as the variable, but it's often unnecessary.
 
@@ -83,9 +83,9 @@ X<keywords; reverse>
 X<uc>
 X<keywords; uc>
 
-Many of Perl's scalar operators (including but not limited to C<chr>, C<ord>,
-C<lc>, C<length>, C<reverse>, and C<uc>) work on the default scalar variable if
-you do not provide an alternative.
+Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
+C<reverse>, and C<uc>) work on the default scalar variable if you do not
+provide an alternative.
 
 Perl's looping directives (L<looping_directives>) also set C<$_>, such as
 C<for> iterating over a list:
