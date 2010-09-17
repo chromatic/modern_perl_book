@@ -44,7 +44,7 @@ sub get_anchor
 {
     my $path = shift;
 
-    open my $fh, '<', $path or die "Can't read '$path': $!\n";
+    open my $fh, '<:utf8', $path or die "Can't read '$path': $!\n";
     while (<$fh>) {
         next unless /Z<(\w*)>/;
         return $1;
@@ -67,7 +67,7 @@ sub process_chapter
 sub read_file
 {
     my $path = shift;
-    open my $fh, '<', $path or die "Can't read '$path': $!\n";
+    open my $fh, '<:utf8', $path or die "Can't read '$path': $!\n";
     return scalar do { local $/; <$fh>; };
 }
 
@@ -82,7 +82,9 @@ sub insert_section
     delete $sections_href->{ $1 };
     return $text;
 }
-sub write_chapter {
+
+sub write_chapter
+{
     my ($path, $text) = @_;
     my $name          = ( splitpath $path )[-1];
     my $chapter_dir   = catdir( 'build', 'chapters' );
@@ -90,7 +92,9 @@ sub write_chapter {
 
     mkpath( $chapter_dir ) unless -e $chapter_dir;
 
-    open my $fh, '>', $chapter_path or die "Cannot write '$chapter_path': $!\n";
+    open my $fh, '>:utf8', $chapter_path
+        or die "Cannot write '$chapter_path': $!\n";
+
     print {$fh} $text;
 
     warn "Writing '$path'\n";
