@@ -138,7 +138,7 @@ X<scalar>
 
 The latter example often surprises novice programmers who expect scalar context
 for the call; instead, it is list context, because that is the context the hash
-assignment forces.  Use the C<scalar> operator to enforce it:
+assignment provides.  Use the C<scalar> operator to impose scalar context:
 
 =begin programlisting
 
@@ -191,7 +191,7 @@ X<context; string>
 X<context; numeric>
 
 The C<eq> operator treats its operands as strings by enforcing I<string
-context> on them.  The C<==> operator enforces I<numeric context>.  The example
+context> on them.  The C<==> operator imposes I<numeric context>.  The example
 code fails because the value of both strings when treated as numbers is C<0>
 (L<numeric_coercion>).
 

@@ -42,7 +42,7 @@ X<%=>
 X<operators; -->
 X<-->
 
-The numeric operators enforce numeric contexts on their operands.  They consist
+The numeric operators impose numeric contexts on their operands.  They consist
 of the standard arithmetic operators such as addition (C<+>), subtraction
 (C<->), multiplication (C<*>), division (C</>), exponentiation (C<**>), modulo
 (C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
@@ -66,7 +66,7 @@ X<< E<lt>= >>
 X<< operators; E<lt>=E<gt> >>
 X<< E<lt>=E<gt> >>
 
-Several comparison operators enforce numeric contexts upon their operands.
+Several comparison operators impose numeric contexts upon their operands.
 These are numeric equality (C<==>), numeric inequality (C<!=>), greater than
 (C<< E<gt> >>), less than (C<< E<lt> >>), greater than or equal to (C<< E<gt>=
 >>), less than or equal to (C<< E<lt>= >>), and the sort comparison operator
@@ -83,7 +83,7 @@ X<!~>
 X<operators; .>
 X<.>
 
-The string operators enforce string contexts on their operands.  They consist
+The string operators impose string contexts on their operands.  They consist
 of the positive and negative regular expression binding operators (C<=~> and
 C<!~>, respectively), and the concatenation operator (C<.>).
 
@@ -102,7 +102,7 @@ X<le>
 X<operators; cmp>
 X<cmp>
 
-Several comparison operators enforce string contexts upon their operands.
+Several comparison operators impose string contexts upon their operands.
 These are string equality (C<eq>), string inequality (C<ne>), greater than
 (C<gt>), less than (C<lt>), greater than or equal to (C<ge>), less than or
 equal to (C<le>), and the string sort comparison operator (C<cmp>).

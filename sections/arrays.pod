@@ -154,8 +154,8 @@ Any expression which produces a list in list context can assign to an array:
 
 =end programlisting
 
-Assigning to a scalar element of an array enforces scalar context, while
-assigning to the array as a whole enforces list context.
+Assigning to a scalar element of an array imposes scalar context, while
+assigning to the array as a whole imposes list context.
 
 To clear an array, assign an empty list:
 
@@ -213,7 +213,7 @@ A slice can contain zero or more elements--including one:
 
 The only syntactic difference between an array slice of one element and the
 scalar access of an array element is the leading sigil.  The I<semantic>
-difference is greater: an array slice always enforces list context.  Any array
+difference is greater: an array slice always imposes list context.  Any array
 slice evaluated in scalar context will produce a warning:
 
 =begin screen

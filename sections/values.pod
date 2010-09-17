@@ -645,7 +645,7 @@ When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list.  When evaluated in scalar context, this evaluates to
 C<undef>.  In list context, it is effectively an empty list.
 
-When used on the left-hand side of an assignment, the C<()> construct enforces
+When used on the left-hand side of an assignment, the C<()> construct imposes
 list context.  To count the number of elements returned from an expression in
 list context without using a temporary variable, you use the idiom (L<idioms>):
 
