@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-use File::Path;
 use File::Spec::Functions qw( catfile catdir splitpath );
 
 # getting chapter list
@@ -14,12 +13,6 @@ require App::pod2pdf
     or die "pod2pdf is not present in your PATH; please install App::pod2pdf\n";
 
 my $outpath = catdir( qw( build pdf ) );
-
-# Make directory for copying PDFs
-unless (-d $outpath)
-{
-    File::Path::make_path($outpath) or die "Can't build path: $!\n";
-}
 
 for my $chapter ( @chapters ){
     my @filename = split( /\./ , $chapter );

@@ -83,6 +83,13 @@ To build an ePub eBook from the woven chapters:
 
 This will produce an ePub eBook in the build/epub/ directory.
 
+To build PDFs from the chapters:
+
+    $ perl build/tools/build_pdf.pl
+
+This will build PDFs in the build/pdf directory.  You must have App::pod2pdf
+installed from the CPAN.
+
 
 Contributing to Modern Perl
 ---------------------------
