@@ -788,6 +788,38 @@ Because the assertion is zero-width, it consumes none of the source string.
 Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
 capture would only capture the C<cat> portion of the source string.
 
+X<regex assertions; zero-width positive look-behind>
+X<zero-width positive look-behind assertion>
+X<regex assertions; zero-width negative look-behind>
+X<zero-width negative look-behind assertion>
+
+Zero-width look-behind assertions also exist.  Unlike the look-ahead
+assertions, the patterns of these assertions must have fixed widths; you may
+not use quantifiers in these patterns.
+
+To assert that your feline never occurs at the start of a line, you might use
+the I<zero-width negative look-behind assertion>:
+
+=begin programlisting
+
+    my $middle_cat = qr/(?<!^>cat/;
+
+=end programlisting
+
+... where the construct C<< (?<!...) >> contains the fixed-width pattern.
+Alternately, you could express that the C<cat> must always occur immediately
+after a space character with the I<zero-width positive look-behind assertion>:
+
+=begin programlisting
+
+    my $space_cat = qr/(?<=\s)cat/;
+
+=end programlisting
+
+... where the construct C<< (?<=...) >> contains the fixed-width pattern.  This
+approach can be useful when performing a global regex match with the C<\G>
+modifier, but it's an advanced feature you likely won't use often.
+
 =head1 Regex Modifiers
 
 X<regex modifiers>
