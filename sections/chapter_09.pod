@@ -1,4 +1,4 @@
-=head0 Writing Real Programs
+=head0 Managing Real Programs
 
 Z<writing_real_programs>
 
@@ -10,19 +10,14 @@ find and use its libraries.
 Practical programming requires you to manage code: to organize it, to know that
 it works, to make it robust in the face of errors of logic or intent, and to do
 all of this in a concise, clear, and maintainable fashion.  Fortunately, modern
-Perl provides many tools and techniques to write real programs.
+Perl provides many tools and techniques to write real programs--from testing to
+the organization of your source code.
 
 L<testing>
-
-L<files>
-
-L<exceptions>
 
 L<handling_warnings>
 
 L<modules>
-
-L<pragmas>
 
 L<distributions>
 

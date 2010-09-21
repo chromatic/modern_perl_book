@@ -1,4 +1,4 @@
-=head0 Stylish Perl
+=head0 Style and Efficacy
 
 Programming and programming I<well> are related, but distinct skills.  If we
 only wrote programs once and never had to modify or maintain them, if our
@@ -14,3 +14,9 @@ maintaining code and reading good code.  There are no shortcuts--but you can
 improve the effectiveness of your practice by following a few guidelines.
 
 L<style>
+
+L<files>
+
+L<exceptions>
+
+L<pragmas>
