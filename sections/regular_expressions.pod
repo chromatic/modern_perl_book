@@ -860,7 +860,7 @@ You may also disable specific modifiers by preceding them with C<->:
 
 =begin programlisting
 
-    my $find_a_rational = qr/(?<number>(?-i)Rat/;
+    my $find_a_rational = qr/(?<number>(?-i)Rat)/;
 
 =end programlisting
 

@@ -147,7 +147,7 @@ divergent numeric and string values:
     use Scalar::Util 'dualvar';
     my $false_name = dualvar 0, 'Sparkles & Blue';
 
-    say 'Boolean false!' if        !! $false_name;
+    say 'Boolean true!'  if        !! $false_name;
     say 'Numeric false!' unless  0  + $false_name;
     say 'String true!'   if     ''  . $false_name;
 
