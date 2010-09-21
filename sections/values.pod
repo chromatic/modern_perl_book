@@ -294,12 +294,12 @@ outputs of your program, you will avoid many problems.
 X<open>
 X<IO layers>
 
-One source of Unicode input is filehandles.  If you tell Perl that a specific
-filehandle works with encoded text, Perl can convert the data to Unicode
-strings automatically.  To do this, add a IO layer to the mode of the C<open>
-builtin.  An I<IO layer> wraps around input or output and performs some sort of
-conversion of the data.  In this case, the C<:utf8> layer performs decoding of
-UTF-8 data:
+One source of Unicode input is filehandles (L<files>).  If you tell Perl that a
+specific filehandle works with encoded text, Perl can convert the data to
+Unicode strings automatically.  To do this, add a IO layer to the mode of the
+C<open> builtin.  An I<IO layer> wraps around input or output and performs some
+sort of conversion of the data.  In this case, the C<:utf8> layer performs
+decoding of UTF-8 data:
 
 =begin programlisting
 
