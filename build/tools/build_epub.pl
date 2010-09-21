@@ -106,7 +106,7 @@ sub get_output_fh
     $name =~ s/\.pod/\.xhtml/;
     $name = catfile($xhtmldir, $name);
 
-    open my $fh, '>', $name
+    open my $fh, '>:utf8', $name
       or die "Cannot write to '$name': $!\n";
 
     return $fh;
@@ -261,7 +261,7 @@ sub add_cover
 
     # Crete a the cover xhtml file.
     my $cover_filename = './build/xhtml/cover.xhtml';
-    open my $cover_fh, '>', $cover_filename
+    open my $cover_fh, '>:utf8', $cover_filename
       or die "Cannot write to '$cover_filename': $!\n";
 
     print $cover_fh $cover_xhtml;

@@ -58,7 +58,7 @@ package names the parser has seen at the current point in the parse, which
 barewords it has already resolved (and how it resolved them), and the I<names>
 of functions already declared in the current package.
 
-Imagine running afoul of a function with (prototypes) L<prototypes> with a
+Imagine running afoul of a prototyped function (L<prototypes>) with a
 name which just happens to conflict somehow with the name of a class or a
 method called indirectly.  This is infrequent, but so difficult to debug that
 avoiding this syntax is always worthwhile.

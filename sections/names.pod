@@ -117,7 +117,7 @@ X<slicing>
 
 Similarly, accessing multiple elements of a hash or an array--an operation
 known as I<slicing>--uses the at symbol (C<@>) as the leading sigil and
-enforces list context:
+imposes list context:
 
 =begin programlisting
 

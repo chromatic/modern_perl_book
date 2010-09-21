@@ -2,7 +2,7 @@
 
 Perl turns 23 years old later this year.  The language has gone from a simple
 tool for system administration somewhere between shell scripting and C
-programming (Perl 1) to a powerful, general purpose language steeped in a rich
+programming (Perl 1) to a powerful, general-purpose language steeped in a rich
 heritage (Perl 5) and a consistent, coherent, rethinking of programming in
 general intended to last for another 25 years (Perl 6).
 
@@ -19,10 +19,8 @@ full understanding of Perl.
 
 You can learn this too.
 
-=head0 Running Modern Perl
+=head1 Running Modern Perl
 
-You don't have to install a new version of Perl to take advantage of most of
-this book, but the examples given assume that you're using Perl 5.10 or newer.
 Unless otherwise mentioned, code snippets always assume the basic skeleton of a
 program:
 
@@ -36,6 +34,21 @@ program:
     ...
 
 =end programlisting
+
+=begin sidebar
+
+The Modern::Perl module is available from the CPAN.  You can install it
+yourself or replace it with:
+
+=begin programlisting
+
+    use strict;
+    use warnings;
+    use 5.010;
+
+=end programlisting
+
+=end sidebar
 
 Other code snippets use testing functions such as C<ok()>, C<like()>, and
 C<is()> (L<testing>).  That skeleton program is:
@@ -53,11 +66,16 @@ C<is()> (L<testing>).  That skeleton program is:
 
 =end programlisting
 
-If you don't already have a modern version of Perl installed, you can often
-install one yourself.  Windows users can download Strawberry Perl from
-U<http://www.strawberryperl.com/>.  Users of other operating systems with Perl
-5 already installed (and a C compiler and the other development tools), start
-by installing the CPAN module C<App::perlbrew>N<See
+The examples in this book assume you're using Perl 5.10.0 or newer; ideally at
+least Perl 5.10.1.  Many examples will work on older versions of Perl 5 with
+modest changes, but you will have more difficulty with anything older than
+5.10.0.  This book also mentions (but does not require the use of) features
+found in Perl 5.12.
+
+You can often install a new version of Perl yourself.  Windows users, download
+Strawberry Perl from U<http://www.strawberryperl.com/>.  Users of other
+operating systems with Perl 5 already installed (and a C compiler and the other
+development tools), start by installing the CPAN module C<App::perlbrew>N<See
 U<http://search.cpan.org/perldoc?App::perlbrew> for installation
 instructions.>.
 
@@ -67,12 +85,42 @@ multiple versions of Perl 5 installed without affecting the system Perl but you
 can also install any module you like into these directories without asking your
 system administrator for specific permission.
 
-=begin sidebar
+=head1 Perl 5 and Perl 6
 
-Which version of Perl 5 should you install?  The rest of this book assumes
-you're using something at least as new as Perl 5.10.0--preferably 5.10.1--but,
-as written, all code examples will work with every release in the Perl 5.12.x
-family.  The book also indicates features added to Perl 5.12.
+Should you learn Perl 5 or Perl 6?  They share philosophy and syntax and
+libraries and community; they fill different niches.  Learn Perl 5 if:
 
-=end sidebar
+=over 4
 
+=item * You have existing Perl 5 code to maintain
+
+=item * You need to take advantage of CPAN modules
+
+=item * Your deployment strategy requires rigorous stability
+
+=back
+
+Learn Perl 6 if:
+
+=over 4
+
+=item * You're comfortable managing frequent upgrades
+
+=item * You can afford to experiment with new syntax and features
+
+=item * You need new features only available in Perl 6
+
+=item * You can contribute to its development (whether patches, bug reports,
+documentation, sponsorship, or other resources)
+
+=back
+
+In general, Perl 5 development is conservative with regard to the core
+language.  For good or for ill, change occurs slowly.  Perl 6 is more
+experimental, as it considers finding the best possible design more important
+than keeping old code working.  Fortunately, you can learn and use both
+languages (and they interoperate to an ever-improving degree).
+
+This book discusses Perl 5.  To learn more about Perl 6, see
+U<http://perl6.org/>, try Rakudo (U<http://www.rakudo.org/>, and refer to the
+book I<Using Perl 6>, also published by Onyx Neon Press.

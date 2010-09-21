@@ -73,9 +73,14 @@ The core module C<Scalar::Util> contains a C<looks_like_number()> function
 which uses the same parsing rules as the Perl 5 grammar to extract a number
 from a string.
 
-Note that the strings C<Inf> and C<Infinity> represent the infinite value and
-behave as numbers, in the sense that numifying them does not produce the
-"Argument isn't numeric" warning.
+=begin sidebar
+
+The strings C<Inf> and C<Infinity> represent the infinite value and behave as
+numbers, in the sense that numifying them does not produce the "Argument isn't
+numeric" warning.  The string C<NaN> represents the concept "not a number".
+Unless you're a mathemetician, you may not care.
+
+=end sidebar
 
 =head2 Reference Coercion
 
@@ -142,7 +147,7 @@ divergent numeric and string values:
     use Scalar::Util 'dualvar';
     my $false_name = dualvar 0, 'Sparkles & Blue';
 
-    say 'Boolean false!' if        !! $false_name;
+    say 'Boolean true!'  if        !! $false_name;
     say 'Numeric false!' unless  0  + $false_name;
     say 'String true!'   if     ''  . $false_name;
 

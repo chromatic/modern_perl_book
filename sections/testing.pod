@@ -20,7 +20,7 @@ X<Test::More>
 X<ok()>
 X<testing; ok()>
 
-Perl testing begins with the core module C<Test::More> and its single C<ok()>
+Perl testing begins with the core module C<Test::More> and its C<ok()>
 function.  C<ok()> takes two parameters, a boolean value and a string
 describing the purpose of the test:
 

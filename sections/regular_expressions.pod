@@ -24,11 +24,12 @@ X<atom>
 The match operator (C<//> or, more formally, C<m//>) contains a regular
 expression--in this example, C<hat>.  Even though that reads like a word, it
 means "the C<h> character, followed by the C<a> character, followed by the C<t>
-character, appearing anywhere in the string."  Each character is an I<atom> in
-the regex: an indivisible unit of the pattern.  The regex binding operator
-(C<=~>) is an infix operator (L<fixity>) which applies the regular expression
-on its right to the string produced by the expression on its left.  When
-evaluated in scalar context, a match evaluates to a true value if it succeeds.
+character, appearing anywhere in the string."  Each character in C<hat> is an
+I<atom> in the regex: an indivisible unit of the pattern.  The regex binding
+operator (C<=~>) is an infix operator (L<fixity>) which applies the regular
+expression on its right to the string produced by the expression on its left.
+When evaluated in scalar context, a match evaluates to a true value if it
+succeeds.
 
 The negated form of the binding operator (C<!~>) evaluates to a false value if
 the match succeeds.
@@ -144,8 +145,8 @@ instances of the quantified atom in the string to match:
 This may seem useless, but it combines nicely with other regex features to
 indicate that you don't care about what may or may not be in that particular
 position in the string to match.  Even so, I<most> regular expressions benefit
-from using the C<?> and C<+> quantifiers far more than the C<*>
-quantifierN<Friedl's book explains why.>.
+from using the C<?> and C<+> quantifiers far more than the C<*> quantifier, as
+they avoid expensive backtracking and express your intent more clearly.
 
 X<numeric quantifiers>
 
@@ -272,7 +273,7 @@ choosing the most expressive and maintainable one.
 =end sidebar
 
 Sometimes you can't anchor a regular expression.  In those cases, you can turn
-a greedy quantifier into a parsimonious quantifier by appending the C<?>
+a greedy quantifier into a non-greedy quantifier by appending the C<?>
 quantifier:
 
 =begin programlisting
@@ -344,7 +345,7 @@ Of course, if your list of potential matches were anything other than a list of
 words, this metacharacter could cause false positives, as it also matches
 punctuation characters, whitespace, numbers, and many other characters besides
 word characters.  The C<\w> metacharacter represents all alphanumeric
-characters (in a Unicode sense -- L<unicode>) and the underscore:
+characters (in a Unicode sense--L<unicode>) and the underscore:
 
 =begin programlisting
 
@@ -383,6 +384,8 @@ X<regular expressions; \S>
 These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
 C<\D>.  To match anything but whitespace, use C<\S>.
+
+The regex engine treats all metacharacters as atoms.
 
 =head1 Character Classes
 
@@ -517,13 +520,13 @@ enclose one or more atoms to capture whatever portion of the matched string
 they match.  To use literal parentheses in a regular expression, you must
 preface them with a backslash, just as in the C<$area_code> variable.
 
-=head2 Anonymous Captures
+=head2 Numbered Captures
 
-X<anonymous captures>
-X<captures; anonymous>
+X<numbered captures>
+X<captures; numbered>
 
 Named captures are new in Perl 5.10, but captures have existed in Perl for many
-years.  You may encounter I<anonymous captures> as well:
+years.  You may encounter I<numbered captures> as well:
 
 =begin programlisting
 
@@ -542,7 +545,7 @@ that Perl finds goes into C<$1>, the second into C<$2>, and so on.  Capture
 counts start at the I<opening> parenthesis of the capture; thus the first left
 parenthesis begins the capture into C<$1>, the second into C<$2>, and so on.
 
-While the syntax for named captures is longer than for anonymous captures, it
+While the syntax for named captures is longer than for numbered captures, it
 provides additional clarity.  You do not have to count the number of opening
 parentheses to figure out whether a particular capture is C<$4> or C<$5>, and
 composing regexes from smaller regexes is much easier, as they're less
@@ -552,12 +555,13 @@ individual atoms.
 =begin sidebar
 
 Name collisions are still possible with named captures, though that's less
-frequent than number collisions with anonymous captures.  Consider avoiding the
+frequent than number collisions with numbered captures.  Consider avoiding the
 use of captures in regex fragments; save it for top-level regexes.
 
 =end sidebar
 
-Anonymous captures are less frustrating when you evaluate a match in list context:
+Numbered captures are less frustrating when you evaluate a match in list
+context:
 
 =begin programlisting
 
@@ -784,6 +788,38 @@ Because the assertion is zero-width, it consumes none of the source string.
 Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
 capture would only capture the C<cat> portion of the source string.
 
+X<regex assertions; zero-width positive look-behind>
+X<zero-width positive look-behind assertion>
+X<regex assertions; zero-width negative look-behind>
+X<zero-width negative look-behind assertion>
+
+Zero-width look-behind assertions also exist.  Unlike the look-ahead
+assertions, the patterns of these assertions must have fixed widths; you may
+not use quantifiers in these patterns.
+
+To assert that your feline never occurs at the start of a line, you might use
+the I<zero-width negative look-behind assertion>:
+
+=begin programlisting
+
+    my $middle_cat = qr/(?<!^>cat/;
+
+=end programlisting
+
+... where the construct C<< (?<!...) >> contains the fixed-width pattern.
+Alternately, you could express that the C<cat> must always occur immediately
+after a space character with the I<zero-width positive look-behind assertion>:
+
+=begin programlisting
+
+    my $space_cat = qr/(?<=\s)cat/;
+
+=end programlisting
+
+... where the construct C<< (?<=...) >> contains the fixed-width pattern.  This
+approach can be useful when performing a global regex match with the C<\G>
+modifier, but it's an advanced feature you likely won't use often.
+
 =head1 Regex Modifiers
 
 X<regex modifiers>
@@ -824,7 +860,7 @@ You may also disable specific modifiers by preceding them with C<->:
 
 =begin programlisting
 
-    my $find_a_rational = qr/(?<number>(?-i)Rat/;
+    my $find_a_rational = qr/(?<number>(?-i)Rat)/;
 
 =end programlisting
 

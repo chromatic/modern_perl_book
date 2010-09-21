@@ -39,7 +39,7 @@ pragma with funny syntax.  Pragma scope is clearer with an example:
 
 =begin sidebar
 
-A sufficiently motivated Perl guru could implement a poorly behaved pragma
+A sufficiently motivated Perl guru could implement a poorly-behaved pragma
 which ignores scoping, but that would be unneighborly.
 
 =end sidebar

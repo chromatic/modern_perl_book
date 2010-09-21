@@ -351,9 +351,9 @@ but not the current namespace.  Because Perl 5 packages are open for
 modification at any point, you may do this even if the namespace does not yet
 exist, or if you have already declared functions in that namespace.
 
-You may only declare one function of the same name per namespace, lest Perl 5
-warn you about subroutine redefinition.  If you're certain you want to
-I<replace> an existing function, disable this warning with C<no warnings
+You may only declare one function of the same name per namespace. Otherwise
+Perl 5 wil warn you about subroutine redefinition.  If you're certain you want
+to I<replace> an existing function, disable this warning with C<no warnings
 'redefine'>.
 
 You may call functions in other namespaces by using their fully-qualified
@@ -730,8 +730,7 @@ are candidates for tail call elimination.  This elimination avoids returning to
 the current call and then returning to the parent call.  Instead, it returns to
 the parent call directly.
 
-Perl 5 supports manual tail call elimination, but two recent CPAN modules
-provide a much better syntax (and even better performance).  Yuval Kogman's
+Perl 5 supports manual tail call elimination, but Yuval Kogman's
 C<Sub::Call::Tail> is worth exploring if you find yourself with highly
 recursive code or code that could benefit from tail call elimination.
 C<Sub::Call::Tail> is appropriate for tail calls of non-recursive code:

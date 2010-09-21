@@ -111,16 +111,24 @@ X<interpolation>
 X<strings; interpolation>
 
 You may also I<interpolate> the value of a scalar variable or the values of an
-array within a double-quoted string directly:
+array within a double-quoted string, such that the contents of the variable
+become part of the string as if you'd performed a concatenation operation
+directly:
 
 =begin programlisting
 
     my $factoid = "Did you know that B<$name> lives at B<$address>?";
 
+    # equivalent to
+
+    my $factoid = 'Did you know that ' . $name . ' lives at ' . $address . '?';
+
 =end programlisting
 
+X<escaping>
+
 You may include a literal double-quote inside a double-quoted string by
-escaping it with a leading backslash:
+I<escaping> it (that is, preceding it with a leading backslash):
 
 =begin programlisting
 
@@ -235,10 +243,21 @@ unique number which identifies it in the Unicode character set.
 
 =item Sequences of octets
 
-Binary data is a sequence of 8 bit numbers, each of which can represent a
-number between 0 and 255.
+X<octet>
+
+Binary data is a sequence of I<octets>--8 bit numbers, each of which can
+represent a number between 0 and 255.
 
 =back
+
+=begin sidebar
+
+Why I<octet> and not I<byte>?  Think of Unicode as characters without thinking
+of any particular size of the representation of those characters in memory.
+Assuming that one character fits in one byte will cause you no end of Unicode
+grief.
+
+=end sidebar
 
 Unicode strings and binary strings look very similar.  They each have a
 C<length()>, and you can perform standard string operations on them such as
@@ -275,12 +294,12 @@ outputs of your program, you will avoid many problems.
 X<open>
 X<IO layers>
 
-One source of Unicode input is filehandles.  If you tell Perl that a specific
-filehandle works with encoded text, Perl can convert the data to Unicode
-strings automatically.  To do this, add a IO layer to the mode of the C<open>
-builtin.  An I<IO layer> wraps around input or output and performs some sort of
-conversion of the data.  In this case, the C<:utf8> layer performs decoding of
-UTF-8 data:
+One source of Unicode input is filehandles (L<files>).  If you tell Perl that a
+specific filehandle works with encoded text, Perl can convert the data to
+Unicode strings automatically.  To do this, add a IO layer to the mode of the
+C<open> builtin.  An I<IO layer> wraps around input or output and performs some
+sort of conversion of the data.  In this case, the C<:utf8> layer performs
+decoding of UTF-8 data:
 
 =begin programlisting
 
@@ -295,17 +314,13 @@ UTF-8 data:
 X<binmode>
 X<builtins; binmode>
 
-You may also modify an existing filehandle with C<binmode>:
+You may also modify an existing filehandle with C<binmode>, whether for input
+or output:
 
 =begin programlisting
 
     binmode $fh, ':utf8';
-
-=end programlisting
-
-This works for input as well as output:
-
-=begin programlisting
+    my $unicode_string = <$fh>;
 
     binmode STDOUT, ':utf8';
     say $unicode_string;
@@ -630,7 +645,7 @@ When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list.  When evaluated in scalar context, this evaluates to
 C<undef>.  In list context, it is effectively an empty list.
 
-When used on the left-hand side of an assignment, the C<()> construct enforces
+When used on the left-hand side of an assignment, the C<()> construct imposes
 list context.  To count the number of elements returned from an expression in
 list context without using a temporary variable, you use the idiom (L<idioms>):
 

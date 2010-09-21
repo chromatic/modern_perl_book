@@ -3,11 +3,7 @@
 Z<context_philosophy>
 
 X<context>
-[While reading this section I figured out that context in Perl is based on what
-operators you use and where you use them.  You never directly say this in this
-section, or in the operator_types.pod section.  But it's true.  I attempted to
-directly say this in this section somewhere, but I couldn't decide where or how,
-so this is just a suggestion then.]
+
 Spoken languages have a notion of I<context> where the correct usage or meaning
 of a word or phrase depends on its surroundings.  You may understand this in a
 spoken language, where the inappropriate pluralization of "Please give me one
@@ -19,7 +15,8 @@ remainder of the sentence.
 
 Context in Perl is similar; the language understands expectations of the amount
 of data to provide as well as what kind of data to provide.  Perl will happily
-attempt to provide exactly what you ask for.
+attempt to provide exactly what you ask for--and you ask by choosing one
+operator over another.
 
 One type of context in Perl means that certain operators have different
 behavior if you want zero, one, or many results.  It's possible that a specific
@@ -79,7 +76,7 @@ function in I<scalar context>:
 X<list context>
 
 Assigning the results of calling the function to an array (L<arrays>) or a
-list, or using it in a list evaluates the function in I<list context>:
+list, or using it in a list, evaluates the function in I<list context>:
 
 =begin programlisting
 
@@ -132,8 +129,8 @@ contain.  Both calls to C<some_expensive_operation()> occur in list context:
 
 =end programlisting
 
-C<expensive_operation> above is in list context, because it's being assigned to
-a hash, and hash assignments take a list of key/value pairs, which causes any
+C<expensive_operation> is in list context, because it's assigned to a
+hash, and hash assignments take a list of key/value pairs, which causes any
 expressions in that hash assignment to be evaulated in list context.
 
 X<operators; scalar>
@@ -141,7 +138,7 @@ X<scalar>
 
 The latter example often surprises novice programmers who expect scalar context
 for the call; instead, it is list context, because that is the context the hash
-assignment forces.  Use the C<scalar> operator to enforce it:
+assignment provides.  Use the C<scalar> operator to impose scalar context:
 
 =begin programlisting
 
@@ -194,8 +191,9 @@ X<context; string>
 X<context; numeric>
 
 The C<eq> operator treats its operands as strings by enforcing I<string
-context> on them.  The C<==> operator enforces I<numeric context>.  The example
-code fails because the value of both strings when treated as numbers is C<0>.
+context> on them.  The C<==> operator imposes I<numeric context>.  The example
+code fails because the value of both strings when treated as numbers is C<0>
+(L<numeric_coercion>).
 
 X<boolean context>
 X<context; boolean>

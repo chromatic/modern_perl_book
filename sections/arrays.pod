@@ -154,8 +154,8 @@ Any expression which produces a list in list context can assign to an array:
 
 =end programlisting
 
-Assigning to a scalar element of an array enforces scalar context, while
-assigning to the array as a whole enforces list context.
+Assigning to a scalar element of an array imposes scalar context, while
+assigning to the array as a whole imposes list context.
 
 To clear an array, assign an empty list:
 
@@ -213,7 +213,7 @@ A slice can contain zero or more elements--including one:
 
 The only syntactic difference between an array slice of one element and the
 scalar access of an array element is the leading sigil.  The I<semantic>
-difference is greater: an array slice always enforces list context.  Any array
+difference is greater: an array slice always imposes list context.  Any array
 slice evaluated in scalar context will produce a warning:
 
 =begin screen
@@ -239,7 +239,9 @@ arrays as necessary, the language also provides several operations to treat
 arrays as stacks, queues, and the like.
 
 X<push>
+X<builtins; push>
 X<pop>
+X<builtins; pop>
 
 The C<push> and C<pop> operators add and remove elements from the tail of the
 array, respectively:
@@ -260,6 +262,11 @@ You may C<push> as many elements as you like onto an array.  Its second
 argument is a list of values.  You may only C<pop> one argument at a time.
 C<push> returns the updated number of elements in the array.  C<pop> returns
 the removed element.
+
+X<shift>
+X<builtins; shift>
+X<unshift>
+X<builtins; unshift>
 
 Similarly, C<unshift> and C<shift> add elements to and remove an element from
 the start of an array:
@@ -287,6 +294,7 @@ context.
 =end sidebar
 
 X<splice>
+X<builtins; splice>
 
 C<splice> is another important--if less frequently used--array operator.  It
 removes and replaces elements from an array given an offset, a length of a list
@@ -297,6 +305,22 @@ other operators are shorter and simpler to read and understand.
 
 Arrays often contain elements to process in a loop; see L<looping_directives>
 for more detail about Perl 5 control flow and array processing.
+
+X<each>
+X<builtins; each>
+
+As of Perl 5.12, you can use C<each> to iterate over an array by index and
+value:
+
+=begin programlisting
+
+    while (my ($index, $value) = each @bookshelf)
+    {
+        say "#$index: $value";
+        ...
+    }
+
+=end programlisting
 
 =head2 Arrays and Context
 
@@ -321,11 +345,10 @@ normal Perl 5 function, they will flatten into a single list:
 
 =end programlisting
 
-Within the function, C<@_> will contain seven elements, not two.
-
-Similarly, list assignment to arrays is I<greedy>.  An array will consume as many
-elements from the list as possible.  After the assignment, C<@cats> will
-contain I<every> argument passed to the function.  C<@dogs> will be empty.
+Within the function, C<@_> will contain seven elements, not two.  Similarly,
+list assignment to arrays is I<greedy>.  An array will consume as many elements
+from the list as possible.  After the assignment, C<@cats> will contain
+I<every> argument passed to the function.  C<@dogs> will be empty.
 
 This flattening behavior sometimes confuses novices who attempt to create
 nested arrays in Perl 5:

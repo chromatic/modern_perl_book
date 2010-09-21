@@ -3,22 +3,25 @@
 Z<implicit_ideas>
 
 Like many spoken languages, Perl provides linguistic shortcuts.  Context is one
-such feature.  Both the compiler and a programmer reading the code can
+such feature: both the compiler and a programmer reading the code can
 understand the expected number of results or the type of an operation from
-existing information without adding explicit additional information to
-disambiguate.  Others also exist.
+existing information without requiring additional information to disambiguate.
+
+Other linguistic features include default variables--essentially pronouns.
 
 =head2 The Default Scalar Variable
+
+Z<default_scalar_variable>
 
 X<default scalar variable>
 X<variables; $_>
 X<$_>
 
-The default scalar variable (also called the topic variable), C<$_>, is the best
-example of a linguistic shortcut in Perl.  It's most notable in its I<absence>:
-many of Perl's built in operations perform their work on the contents of C<$_>
-in the absence of an explicit variable.  You can still use C<$_> as the
-variable, but it's often unnecessary.
+The I<default scalar variable> (also called the I<topic variable>), C<$_>, is
+the best example of a linguistic shortcut in Perl.  It's most notable in its
+I<absence>: many of Perl's builtin operations perform their work on the
+contents of C<$_> in the absence of an explicit variable.  You can still use
+C<$_> as the variable, but it's often unnecessary.
 
 For example, the C<chomp> operator removes any trailing newline sequence from
 the given string:
@@ -33,7 +36,7 @@ the given string:
 =end programlisting
 
 Without an explicit variable, C<chomp> removes the trailing newline sequence
-from C<$_>.  Thus, these two lines of code are equivalent:
+from C<$_>.  These two lines of code are equivalent:
 
 =begin programlisting
 
@@ -41,6 +44,11 @@ from C<$_>.  Thus, these two lines of code are equivalent:
     chomp;
 
 =end programlisting
+
+C<$_> performs the same function in Perl as the pronoun I<it> does in English.
+Read the first line as "C<chomp> I<it>" and the second as "C<chomp>".  Perl
+understands what you mean when you don't explain what to chomp; Perl will
+always chomp I<it>.
 
 Similarly, the C<say> and C<print> builtins operate on C<$_> in the absence of
 other arguments:
@@ -81,9 +89,9 @@ X<keywords; reverse>
 X<uc>
 X<keywords; uc>
 
-Many of Perl's scalar operators (including but not limited to C<chr>, C<ord>,
-C<lc>, C<length>, C<reverse>, and C<uc>) work on the default scalar variable if
-you do not provide an alternative.
+Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
+C<reverse>, and C<uc>) work on the default scalar variable if you do not
+provide an alternative.
 
 Perl's looping directives (L<looping_directives>) also set C<$_>, such as
 C<for> iterating over a list:
@@ -201,9 +209,10 @@ array by default.  Thus, these two snippets of code are equivalent:
 
 =end programlisting
 
-I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
-functions.  The array operators C<shift> and C<pop> operate on C<@_> with no
-other operands provided.
+Just as C<$_> corresponds to the pronoun I<it>, C<@_> corresponds to the
+pronoun I<they> or I<them>.  I<Unlike> C<$_>, Perl automatically localizes
+C<@_> for you when you call other functions.  The array operators C<shift> and
+C<pop> operate on C<@_> with no other operands provided.
 
 X<variables; @ARGV>
 X<@ARGV>
