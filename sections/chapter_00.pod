@@ -69,7 +69,7 @@ C<is()> (L<testing>).  That skeleton program is:
 The examples in this book assume you're using Perl 5.10.0 or newer; ideally at
 least Perl 5.10.1.  Many examples will work on older versions of Perl 5 with
 modest changes, but you will have more difficulty with anything older than
-5.10.0.  This book also mentions (but does not require the use of) features
+5.10.0.  This book also describes (but does not I<require> the use of) features
 found in Perl 5.12.
 
 You can often install a new version of Perl yourself.  Windows users, download

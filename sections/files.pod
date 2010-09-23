@@ -312,17 +312,17 @@ filehandle.  When set to a non-zero value, Perl will flush the output after
 each write to the filehandle.  When set to a zero value, Perl will use its
 default buffering strategy.
 
-X<IO::File>
-X<IO::File; autoflush()>
+X<FileHandle>
+X<FileHandle; autoflush()>
 
 In lieu of the global variable, use the C<autoflush()> method on a lexical
-filehandle.  Be sure to load C<IO::File> first, as you cannot call methods on
+filehandle.  Be sure to load C<FileHandle> first, as you cannot call methods on
 lexical filehandles otherwise:
 
 =begin programlisting
 
     use autodie;
-    use IO::File;
+    use FileHandle;
 
     open my $fh, '>', 'pecan.log';
     $fh->autoflush( 1 );
@@ -331,13 +331,19 @@ lexical filehandles otherwise:
 
 =end programlisting
 
-X<IO::File; input_line_number()>
-X<IO::File; input_record_separator()>
+X<FileHandle; input_line_number()>
+X<FileHandle; input_record_separator()>
 
-Once you have loaded C<IO::File>, you may also use its C<input_line_number()>
+Once you have loaded C<FileHandle>, you may also use its C<input_line_number()>
 and C<input_record_separator()> methods instead of C<$.> and C<$/>
-respectively.  See C<perldoc IO::File> and C<perldoc IO::Handle> for more
+respectively.  See C<perldoc FileHandle> and C<perldoc IO::Handle> for more
 information.
+
+=begin sidebar
+
+If you're using Perl 5.12 or newer, C<IO::File> has superseded C<FileHandle>.
+
+=end sidebar
 
 =head2 Directories and Paths
 
