@@ -51,9 +51,8 @@ multiple expressions into a single unit:
 
 =end programlisting
 
-Note that the postfix form does not I<require> parentheses around its
-condition, while the block form does.  The conditional expression may also be
-complex:
+While the block form requires parentheses around its condition, the postfix
+form does not.  The conditional expression may also be complex:
 
 =begin programlisting
 

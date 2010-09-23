@@ -390,9 +390,9 @@ You may retrieve multiple values from a hash with a slice:
 
 =end programlisting
 
-Note that, as with array slices, the sigil of the hash changes to indicate list
-context.  You can still tell that C<%addresses> is a hash by the use of the
-curly braces to indicate keyed access.
+As with array slices, the sigil of the hash changes to indicate list context.
+You can still tell that C<%addresses> is a hash by the use of the curly braces
+to indicate keyed access.
 
 Hash slices make it easy to merge two hashes:
 

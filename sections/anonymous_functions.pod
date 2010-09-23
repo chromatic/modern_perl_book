@@ -199,7 +199,7 @@ This program produces:
     pseudo-anonymous
     __ANON__
 
-Note that both references refer to the same underlying anonymous function.
+Be aware that both references refer to the same underlying anonymous function.
 Calling C<subname()> on C<$anon> and returning into C<$named> modifies that
 function, so any other reference to this function will see the same name
 C<pseudo-anonymous>.

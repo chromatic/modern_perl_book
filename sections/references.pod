@@ -377,9 +377,8 @@ a function:
 X<function sigil>
 X<sigils; &>
 
-Note that you must use the I<function sigil> (C<&>) with the name of the
-function.  If you leave this off, you will take a reference to whatever the
-function itself returns.
+Without the the I<function sigil> (C<&>), you will take a reference to the
+function's return value or values.
 
 You may also create anonymous functions:
 

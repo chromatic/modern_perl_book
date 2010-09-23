@@ -395,7 +395,7 @@ character's Unicode number within the curly brackets:
 
 =begin sidebar
 
-Note that these escapes interpolate only within double-quoted strings.
+These escapes interpolate only within double-quoted strings.
 
 =end sidebar
 
@@ -699,9 +699,9 @@ Lists may occur verbatim in source code as values:
 
 =end programlisting
 
-Note that you do not need parentheses to I<create> lists; where present, the
-parentheses in these examples group expressions to change the I<precedence> of
-those expressions (L<precedence>).
+You do not need parentheses to I<create> lists; the comma operator creates
+lists.  Where present, the parentheses in these examples group expressions to
+change the I<precedence> of those expressions (L<precedence>).
 
 X<operators; range>
 X<operators; ..>

@@ -16,9 +16,8 @@ of both operands.  You've seen this behavior before, as C<given>
 =begin sidebar
 
 See the "Smart matching in detail" section of C<perldoc perlsyn> for far more
-detail.  Note that some of the semantics of smart match have changed between
-Perl 5.10.0 and Perl 5.10.1, so when possible, use smart matching only in
-5.10.1 and newer.
+detail.  Some of the semantics of smart match have changed between Perl 5.10.0
+and Perl 5.10.1, so when possible, use smart matching only in 5.10.1 and newer.
 
 =end sidebar
 

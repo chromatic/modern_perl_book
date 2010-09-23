@@ -115,8 +115,7 @@ X<prototypes; barewords>
 Constants are a special case of prototyped functions (L<prototypes>).  If
 you've predeclared a prototype for a function, you may use that function as a
 bareword; Perl 5 knows everything it needs to know to parse all occurrences of
-that function appropriately.  Note that all of the drawbacks of prototypes
-still apply.
+that function appropriately.  The other drawbacks of prototypes still apply.
 
 =head2 Ill-Advised Uses of Barewords
 
@@ -183,7 +182,7 @@ other bareword examples, Perl's parser needs no disambiguation for this syntax.
 There is only one way for it to interpret C<compare_lengths>.  However, the
 clarity of an explicit reference can help human readers.
 
-Note that Perl 5's parser does not understand the single-line version:
+Perl 5's parser I<does not> understand the single-line version:
 
 =begin programlisting
 

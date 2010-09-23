@@ -236,7 +236,7 @@ of exiting the block containing the C<local>ization of C<$scope>, Perl restores
 the original value of the variable.  The final C<say> prints C<outer scope>
 once again.
 
-Note that the variable is I<visible> within all scopes, but the I<value> of the
+While the variable is I<visible> within all scopes, the I<value> of the
 variable changes depending on C<local>ization and assignment.  This feature can
 be tricky and subtle, but it is especially useful for changing the values of
 magic variables.
