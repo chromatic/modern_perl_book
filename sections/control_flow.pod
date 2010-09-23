@@ -282,8 +282,13 @@ subsequent subexpressions.  This is most obvious with an example:
 
 =begin programlisting
 
+    # see preface
+    use Test::More 'no_plan';
+
     say "Both true!" if ok(1, 'first subexpression')
                      && ok(1, 'second subexpression');
+
+    done_testing();
 
 =end programlisting
 
@@ -540,7 +545,11 @@ You cannot use aliasing to modify I<constant> values, however:
 
 =begin programlisting
 
-    lc for qw( Huey Dewey Louie );
+    for (qw( Huex Dewex Louie ))
+    {
+        $_++;
+        say;
+    }
 
 =end programlisting
 

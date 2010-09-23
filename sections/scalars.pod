@@ -58,7 +58,7 @@ You may also perform mathematical operations on strings:
 
 =begin programlisting
 
-    my $call_sign = 'KB7MIU';
+    my $call_sign = 'KBMIU';
     my $next_sign = $call_sign++;
 
     # also fine as

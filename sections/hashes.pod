@@ -247,8 +247,18 @@ contains the given key:
 Using C<exists> instead of accessing the hash key directly avoids two problems.
 First, it does not check the boolean nature of the hash I<value>; a hash key
 may exist with a value even if that value evaluates to a boolean false
-(including C<undef>). Second, with nested data structures, it avoids
-autovivifying (L<autovivification>) the value.
+(including C<undef>):
+
+=begin programlisting
+
+    my  %false_key_value = ( 0 => '' );
+    ok( %false_key_value,
+         'hash containing false key & value should evaluate to a true value' );
+
+=end programlisting
+
+Second, with nested data structures, C<exists> avoids autovivifying
+(L<autovivification>) the value.
 
 X<defined>
 X<operators; defined>
