@@ -80,7 +80,7 @@ dereferencing:
     sub reverse_in_place
     {
         my $name_ref = shift;
-        reverse B<$$name_ref>;
+        B<$$name_ref>   = reverse B<$$name_ref>;
     }
 
     my $name = 'Blabby';
@@ -108,8 +108,8 @@ messy:
 
     sub reverse_in_place
     {
-        my $name_ref = shift;
-        reverse B<${ $name_ref }>;
+        my $name_ref   = shift;
+        B<${ $name_ref }> = reverse B<${ $name_ref }>;
     }
 
 =end programlisting
