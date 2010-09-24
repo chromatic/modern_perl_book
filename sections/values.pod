@@ -502,7 +502,7 @@ The string literal contains octets.
 =begin programlisting
 
     use utf8;
-    my $hello = "E<#x5E9>E<#x5DC>E<#x5D5>E<#x5DD>, ";
+    my $hello = "KuirabE<aacute>, ";
 
 =end programlisting
 

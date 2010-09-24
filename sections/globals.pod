@@ -115,6 +115,8 @@ variables, some deserve special mention.
 
 =begin table Super Globals
 
+Z<super_globals_table>
+
 =headrow
 
 =row
@@ -252,8 +254,6 @@ contain.
 used to handle those signals.  Trap the standard Ctrl-C interrupt by catching
 the C<INT> signal, for example.  See C<perldoc perlipc> for more information
 about signals and especially safe signals.
-
-=row
 
 =end table
 
