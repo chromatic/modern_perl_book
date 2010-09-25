@@ -29,7 +29,7 @@ X<postfix if>
 X<postfix expressions; if>
 
 The C<if> directive evaluates a conditional expression and performs the
-associated action only when the conditional expression evaluates to a true
+associated action only when the conditional expression evaluates to a I<true>
 value:
 
 =begin programlisting
@@ -304,7 +304,7 @@ This example prints:
 =begin screen
 
     ok 1 - first subexpression
-    ok 2 - first subexpression
+    ok 2 - second subexpression
     Both true!
 
 =end screen
