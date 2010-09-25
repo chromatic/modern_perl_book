@@ -58,7 +58,7 @@ You may also perform mathematical operations on strings:
 
 =begin programlisting
 
-    my $call_sign = 'KB7MIU';
+    my $call_sign = 'KBMIU';
     my $next_sign = $call_sign++;
 
     # also fine as
@@ -73,16 +73,15 @@ X<increment; string>
 
 =begin sidebar
 
-Note that this magical string increment behavior does not have a corresponding
-magical decrement behavior.  You can't get the previous string value by writing
+This magical string increment behavior does not have a corresponding magical
+decrement behavior.  You can't get the previous string value by writing
 C<$call_sign-->.
 
 =end sidebar
 
 This string increment operation turns C<a> into C<b> and C<z> into C<aa>,
-respecting character set and case.  Note that C<ZZ9> becomes C<ZZ0> and C<ZZ09>
-becomes C<ZZ10>, however--numbers wrap around but do not carry to alphabetic
-components.
+respecting character set and case.  As well, C<ZZ9> becomes C<AA0>, but C<ZZ09>
+becomes C<ZZ10>--numbers wrap around but do not carry to alphabetic components.
 
 X<stringification>
 X<numification>

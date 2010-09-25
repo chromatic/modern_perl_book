@@ -77,7 +77,7 @@ between invocations:
 X<feature>
 X<feature; state>
 
-Note that you must enable this feature explicitly by using a module such as
+You must enable this feature explicitly by using a module such as
 C<Modern::Perl>, the C<feature> pragma, or requiring a specific version of Perl
 of 5.10 or newer (with C<use 5.010;> or C<use 5.012;>, for example).
 

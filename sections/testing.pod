@@ -106,9 +106,9 @@ X<test anything protocol>
 X<testing; TAP>
 
 This format adheres to a standard of test output called I<TAP>, the I<Test
-Anything Protocol> (U<http://testanything.org/>).  Note that the failed tests
-provide diagnostic messages about what failed and where.  This is a tremendous
-aid to debugging.
+Anything Protocol> (U<http://testanything.org/>).  As part of this protocol,
+failed tests produce diagnostic messages.  This is a tremendous aid to
+debugging.
 
 X<Test::Harness>
 X<prove>

@@ -133,15 +133,23 @@ X<fixity; circumfix>
 X<postcircumfix>
 X<fixity; postcircumfix>
 
-The I<fixity> of an operator is its position relative to its operands.  The
-mathematic operators tend to be I<infix> operators, where they appear between
-their operands.  Other operators are I<prefix>, where they appear before their
-operands; these tend to be unary operators, such as the prefix increment
-operator C<++$x> or the mathematical and boolean negation operators (C<-$x> and
-C<!$x>, respectively).  I<Postfix> operators appear after their operands (such
-as postfix increment C<$x++>).  I<Circumfix> operators surround their operands,
-such as the anonymous hash and anonymous array creation operators or quoting
-operators (C<{ ... }> and C<[ ... ]> or C<qq{ ... }>, for example).
-I<Postcircumfix> operators surround some operands but follow others, as in the
-case of array or hash indices (C<$hash{ ... }> and C<$array[ ... ]>, for
-example).
+An operator's I<fixity> is its position relative to its operands:
+
+=over 4
+
+=item I<Infix> operators appear between their operands.  Most mathematical
+operators are infix operators, such as the multiplication operator in C<$length
+* $width>.
+
+=item I<Prefix> operators appear before their operators and I<postfix>
+operators appear after.  These operators tend to be unary, such as mathematic
+negation (C<-$x>), boolean negation (C<!$y>), and postfix increment (C<$z++>).
+
+=item I<Circumfix> operators surround their operands.  Examples include the
+anonymous hash constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
+
+=item I<Postcircumfix> operators follow certain operands and surround others,
+as in the case of hash or array element access (C<$hash{ ...  }> and C<$array[
+... ]>).
+
+=back

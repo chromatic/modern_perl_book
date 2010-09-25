@@ -300,8 +300,7 @@ C<splice> is another important--if less frequently used--array operator.  It
 removes and replaces elements from an array given an offset, a length of a list
 slice, and replacements.  Both replacing and removing are optional; you may
 omit either behavior.  The C<perlfunc> description of C<splice> demonstrates
-its equivalences with C<push>, C<pop>, C<shift>, and C<unshift>.  Note that the
-other operators are shorter and simpler to read and understand.
+its equivalences with C<push>, C<pop>, C<shift>, and C<unshift>.
 
 Arrays often contain elements to process in a loop; see L<looping_directives>
 for more detail about Perl 5 control flow and array processing.

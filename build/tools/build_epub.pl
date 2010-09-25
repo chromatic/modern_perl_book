@@ -238,7 +238,7 @@ sub add_cover
     }
 
     # Add cover metadata for iBooks.
-    my $cover_id = $epub->copy_image($cover_image, 'images/cover.jpg');
+    my $cover_id = $epub->copy_image($cover_image, 'images/cover.png');
     $epub->add_meta_item('cover', $cover_id);
 
     # Add an additional cover page for other eBook readers.
@@ -255,7 +255,7 @@ sub add_cover
       . qq[<style type="text/css"> img { max-width: 100%; }</style>\n]
       . qq[</head>\n]
       . qq[<body>\n]
-      . qq[    <img alt="" src="../images/cover.jpg" />\n]
+      . qq[    <img alt="Modern Perl" src="../images/cover.png" />\n]
       . qq[</body>\n]
       . qq[</html>\n\n];
 

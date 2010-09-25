@@ -112,11 +112,11 @@ C<can()> method on the package name:
 
 =end programlisting
 
-Note that C<$pkg> must be a valid invocant; wrap the method call in an C<eval>
-block if you have any doubts about its validity.  Beware that a function
-implemented in terms of C<AUTOLOAD()> (L<autoload>) may report the wrong answer
-if the function's package does not also override C<can()> correctly.  This is a
-bug in the other package.
+Perl will throw an exception unless C<$pkg> is a valid invocant; wrap the
+method call in an C<eval> block if you have any doubts about its validity.
+Beware that a function implemented in terms of C<AUTOLOAD()> (L<autoload>) may
+report the wrong answer if the function's package does not also override
+C<can()> correctly.  This is a bug in the other package.
 
 You may use this technique to determine if a module's C<import()> has imported
 a function into the current namespace:

@@ -545,10 +545,10 @@ explicitly mark that it performs the role:
 
 X<roles; composition>
 
-That single line has two functions.  First, it tells Moose to note that the
-class performs the named role.  Second, it composes the role into the class.
-This process checks that the class I<somehow> provides all of the required
-methods and all of the required attributes without potential collisions.
+That single line has two functions.  First, it tells Moose that the class
+performs the named role.  Second, it composes the role into the class.  This
+process checks that the class I<somehow> provides all of the required methods
+and all of the required attributes without potential collisions.
 
 The C<Cat> class provides C<name()> and C<diet()> methods as accessors to named
 attributes.  It also declares its own C<age()> method.

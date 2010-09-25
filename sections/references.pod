@@ -80,7 +80,7 @@ dereferencing:
     sub reverse_in_place
     {
         my $name_ref = shift;
-        reverse B<$$name>;
+        B<$$name_ref>   = reverse B<$$name_ref>;
     }
 
     my $name = 'Blabby';
@@ -108,8 +108,8 @@ messy:
 
     sub reverse_in_place
     {
-        my $name_ref = shift;
-        reverse B<${ $name }>;
+        my $name_ref   = shift;
+        B<${ $name_ref }> = reverse B<${ $name_ref }>;
     }
 
 =end programlisting
@@ -377,9 +377,8 @@ a function:
 X<function sigil>
 X<sigils; &>
 
-Note that you must use the I<function sigil> (C<&>) with the name of the
-function.  If you leave this off, you will take a reference to whatever the
-function itself returns.
+Without the the I<function sigil> (C<&>), you will take a reference to the
+function's return value or values.
 
 You may also create anonymous functions:
 

@@ -197,8 +197,8 @@ X<greedy quantifiers>
 X<quantifiers; greedy>
 
 The C<+> and C<*> quantifiers by themselves are I<greedy quantifiers>; they
-match as many times as possible.  This is particularly pernicious when using
-the tempting-but-troublesome "match any amount of anything" pattern C<.*>:
+match as much of the input string as possible.  This is particularly pernicious
+when matching "any amount of anything" with C<.*>:
 
 =begin programlisting
 
@@ -211,11 +211,10 @@ the tempting-but-troublesome "match any amount of anything" pattern C<.*>:
 
 =end programlisting
 
-The problem is more obvious when you expect to match a short portion of a
-string.  Greediness always tries to match as much of the input string as
-possible I<first>, backing off only when it's obvious that the match will not
-succeed.  Thus you may not be able to fit all of the results into the four
-boxes in 7 Down if you go looking for "loam" with:
+Greedy quantifiers always try to match as much of the input string as possible
+I<first>, backing off only when it's obvious that the match will not succeed.
+You may not be able to fit all of the results into the four boxes in 7 Down if
+you go looking for "loam" with:
 
 =begin programlisting
 
@@ -226,6 +225,50 @@ boxes in 7 Down if you go looking for "loam" with:
 You'll get C<Alabama>, C<Belgium>, and C<Bethlehem> for starters.  The soil
 might be nice there, but they're all too long--and the matches start in the
 middle of the words.
+
+Turn a greedy quantifier into a non-greedy quantifier by appending the C<?>
+quantifier:
+
+=begin programlisting
+
+    my $minimal_greedy_match = qr/hot.*?meal/;
+
+=end programlisting
+
+When given a non-greedy quantifier, the regular expression engine will prefer
+the I<shortest> possible potential match, and will increase the number of
+characters identified by the C<.*?> token combination only if the current
+number fails to match.  Because C<*> matches zero or more times, the minimal
+potential match for this token combination is zero characters:
+
+=begin programlisting
+
+    say 'Found a hot meal' if 'ilikeahotmeal' =~ /$minimal_greedy_match/;
+
+=end programlisting
+
+Use the C<+> quantifier to match one or more items:
+
+=begin programlisting
+
+    my $minimal_greedy_at_least_one = qr/hot.+?meal/;
+
+    unlike( 'ilikeahotmeal', $minimal_greedy_at_least_one );
+
+    like( 'i like a hot meal', $minimal_greedy_at_least_one );
+
+=end programlisting
+
+The C<?> quantifier modifier also applies to the C<?> (zero or one matches)
+quantifier as well as the range quantifiers.  In every case, it causes the
+regex to match as little of the input as possible.
+
+The greedy modifiers C<.+> and C<.*> are tempting but dangerous.  If you write
+regular expression with greedy matches, test them thoroughly with a
+comprehensive and automated test suite with representative data to lessen the
+possibility of unpleasant surprises.
+
+=head1 Regex Anchors
 
 X<regex anchors>
 X<anchors; start of string>
@@ -243,8 +286,8 @@ the string:
 
 X<anchors; end of string>
 
-Similarly, the I<end of line string anchor> (C<\Z>) ensures that any match will
-I<end> at the end of the string.
+The I<end of line string anchor> (C<\Z>) ensures that any match will I<end> at
+the end of the string.
 
 =begin programlisting
 
@@ -255,9 +298,9 @@ I<end> at the end of the string.
 
 X<word boundary metacharacter>
 
-If you're not fortunate enough to have a Unix word dictionary file available,
-the I<word boundary metacharacter> (C<\b>) matches only at the boundary between
-a word character (C<\w>) and a non-word character (C<\W>):
+The I<word boundary metacharacter> (C<\b>) matches only at the boundary between
+a word character (C<\w>) and a non-word character (C<\W>).  Thus to find
+C<loam> but not C<Belgium>, use the anchored regex:
 
 =begin programlisting
 
@@ -271,52 +314,6 @@ Like Perl, there's more than one way to write a regular expression.  Consider
 choosing the most expressive and maintainable one.
 
 =end sidebar
-
-Sometimes you can't anchor a regular expression.  In those cases, you can turn
-a greedy quantifier into a non-greedy quantifier by appending the C<?>
-quantifier:
-
-=begin programlisting
-
-    my $minimal_greedy_match = qr/hot.*?meal/;
-
-=end programlisting
-
-In this case, the regular expression engine will prefer the I<shortest>
-possible potential match, increasing the number of characters identified by the
-C<.*?> token combination only if the current number fails to match.  Because
-C<*> matches zero or more times, the minimal potential match for this token
-combination is zero characters:
-
-=begin programlisting
-
-    say 'Found a hot meal' if 'ilikeahotmeal' =~ /$minimal_greedy_match/;
-
-=end programlisting
-
-If this isn't what you want, use the C<+> quantifier to match one or more
-items:
-
-=begin programlisting
-
-    my $minimal_greedy_at_least_one = qr/hot.+?meal/;
-
-    unlike( 'ilikeahotmeal', $minimal_greedy_at_least_one );
-
-    like( 'i like a hot meal', $minimal_greedy_at_least_one );
-
-=end programlisting
-
-The C<?> quantifier modifier also applies to the C<?> (zero or one matches)
-quantifier as well as the range quantifiers.  In every case, it causes the
-regex to match as few times as possible.
-
-In general, the greedy modifiers C<.+> and C<.*> are tempting but dangerous
-tools.  For simple programs which need little maintenance, they may be quick
-and easy to write, but non-greedy matching seems to match human expectations
-better.  If you find yourself writing a lot of regular expression with greedy
-matches, test them thoroughly with a comprehensive and automated test suite
-with representative data to lessen the possibility of unpleasant surprises.
 
 =head1 Metacharacters
 
