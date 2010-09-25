@@ -122,5 +122,5 @@ than keeping old code working.  Fortunately, you can learn and use both
 languages (and they interoperate to an ever-improving degree).
 
 This book discusses Perl 5.  To learn more about Perl 6, see
-U<http://perl6.org/>, try Rakudo (U<http://www.rakudo.org/>, and refer to the
+U<http://perl6.org/>, try Rakudo (U<http://www.rakudo.org/>), and refer to the
 book I<Using Perl 6>, also published by Onyx Neon Press.
