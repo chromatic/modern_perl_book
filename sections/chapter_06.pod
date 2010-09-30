@@ -1,5 +1,7 @@
 =head0 Regular Expressions and Matching
 
+Z<regex>
+
 X<regular expressions>
 X<regex>
 X<regexp>

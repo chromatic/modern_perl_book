@@ -61,8 +61,8 @@ other arguments:
 
 =end programlisting
 
-Perl's regular expression facilities (L<regular_expressions>) can also operate
-on C<$_> to perform matches, substitutions, and transliterations:
+Perl's regular expression facilities (L<regex>) can also operate on C<$_> to
+perform matches, substitutions, and transliterations:
 
 =begin programlisting
 
