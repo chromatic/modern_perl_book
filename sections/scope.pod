@@ -282,7 +282,7 @@ variables used other places in your code.
 
 =head2 State Scope
 
-Z<state>
+Z<state_scope>
 
 X<state>
 X<scope; state>
