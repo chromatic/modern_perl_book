@@ -36,13 +36,10 @@ to questions and answers and other discussions about Perl programming.  It
 celebrated its tenth anniversary in December 2009, making it one of the longest-
 lasting web communities dedicated to any programming language.
 
-X<use Perl;>
 X<blogs.perl.org>
 
-Several community sites offer news and commentary.  The oldest is
-U<http://use.perl.org/>; it has offered custom journals for many years.
-Several well-known Perl hackers write there.  U<http://blogs.perl.org/> is a
-newer community site dedicated to blogging about Perl.
+Several community sites offer news and commentary.  U<http://blogs.perl.org/>
+is a community site where many well known developers post.
 
 X<Enlightened Perl Organization>
 
