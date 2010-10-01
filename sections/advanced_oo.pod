@@ -2,7 +2,7 @@
 
 Z<advanced_oo>
 
-Creating and using objects in Perl 5 with Moose (L<moose>) is easy.
+Creating and using objects in Perl 5 with Moose (L<Moose>) is easy.
 I<Designing> good object systems is not.  Additional capabilities for
 abstraction also offer possibilities for obfuscation.  Only practical
 experience can help you understand the most important design techniques... but
