@@ -524,8 +524,8 @@ the filehandle, which closes the file.
 
 You don't have to understand the details of how all of this works.  You only
 need to understand that your actions in taking references and passing them
-around affect how Perl manages memory.  (Though see L<circular_references> for
-one caveat.)
+around affect how Perl manages memory--with one caveat
+(L<circular_references>).
 
 =head3 References and Functions
 

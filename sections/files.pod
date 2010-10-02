@@ -210,8 +210,8 @@ If you're not reading I<textual> data--instead reading I<binary> data--use
 C<binmode> on the filehandle before reading from or writing to it.  This
 keyword tells Perl to treat all of the filehandle's data as pure data.  Perl
 will not modify it in any fashion, as it might for platform portability.
-Although Unix-like platforms tend not to need C<binmode> in this case, portable
-programs use it anyway.  See L<unicode> for other features of C<binmode>.
+Although Unix-like platforms may not to I<need> C<binmode> in this case,
+portable programs use it anyway (L<unicode>).
 
 =head3 Writing to Files
 
@@ -288,13 +288,13 @@ serves as a line counter.
 X<variables; $.>
 X<$.>
 
-C<readline> uses the current contents of C<$/> as the line-ending sequence (see
-example in L<dynamic_scope>).  The value of this variable defaults to the most
-appropriate line-ending character sequence for text files on your current
-platform.  In truth, the word I<line> is a misnomer.  You can set C<$/> to
-contain any sequence of charactersN<... but never a regular expression, because
-Perl 5 does not support that.>.  This is useful for highly-structured data in
-which you want to read a I<record> at a time.
+C<readline> uses the current contents of C<$/> as the line-ending sequence.
+The value of this variable defaults to the most appropriate line-ending
+character sequence for text files on your current platform.  In truth, the word
+I<line> is a misnomer.  You can set C<$/> to contain any sequence of
+charactersN<... but never a regular expression, because Perl 5 does not support
+that.>.  This is useful for highly-structured data in which you want to read a
+I<record> at a time.
 
 X<variables; $|>
 X<$|>

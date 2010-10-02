@@ -9,8 +9,8 @@ I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
 functions, packages, classes, and even filehandles have names.  These names all
 start with a letter or an underscore.  They may optionally include any
 combination of letters, numbers, and underscores.  When the C<utf8> pragma
-(L<pragmas>, L<unicode>) is in effect, you may use any valid UTF-8 characters
-in identifiers.  These are all valid Perl identifiers:
+(L<unicode>) is in effect, you may use any valid UTF-8 characters in
+identifiers.  These are all valid Perl identifiers:
 
 =begin programlisting
 

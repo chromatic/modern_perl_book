@@ -46,11 +46,10 @@ X<sigils>
 In Perl 5, the sigil of the variable in a declaration determines the type of
 the variable, whether scalar, array, or hash.  The sigil of the variable used
 to access the variable determines the type of access to its value.  Sigils on
-variables vary depending on what you do to the variable.  For example, you
-declare an array as C<@values>.  You access the first element--a single
-value--of the array with C<$values[0]>.  You access a list of values from the
-array with C<@values[ @indices ]>.  See the arrays (L<arrays>) and hashes
-(L<hashes>) sections for more.
+variables vary depending on what you do to the variable.  For example, declare
+an array as C<@values>.  Access the first element--a single value--of the array
+with C<$values[0]>.  Access a list of values from the array with C<@values[
+@indices ]>.
 
 =head2 Anonymous Variables
 

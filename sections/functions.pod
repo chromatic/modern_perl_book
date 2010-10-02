@@ -33,8 +33,7 @@ exist, then delay its definition:
 =begin sidebar
 
 You do not have to declare Perl 5 functions before you use them, except in the
-special case where they modify I<how> the parser parses them.  See
-L<attributes>.
+special case where they modify I<how> the parser parses them (L<attributes>).
 
 =end sidebar
 
@@ -71,7 +70,7 @@ You can, of course, pass multiple I<types> of arguments to a function:
 
 =end programlisting
 
-... though see the L<references> section for more details.
+... though Perl 5's default parameter handling sometimes surprises novices.
 
 =head1 Function Parameters
 
@@ -300,7 +299,7 @@ that:
 =end programlisting
 
 ... at the expense of some clarity.  The same principle applies when assigning
-to an array as a parameter, of course.  See L<references> for ways to avoid
+to an array as a parameter, of course.  Use references (L<references>) to avoid
 flattening and slurping when passing aggregate parameters.
 
 =head2 Aliasing
@@ -508,9 +507,9 @@ function, when you want to indicate that the calling code is wrong somehow:
 
 Defensive programming often benefits from checking types and values of
 arguments for appropriateness before performing further processing.  By
-default, Perl 5 provides few built-in mechanisms for doing so (and don't expect
-L<prototypes> to help). You can check that the I<number> of parameters passed
-to a function is correct by evaluating C<@_> in scalar context:
+default, Perl 5 provides few built-in mechanisms for doing so.  To check that
+the I<number> of parameters passed to a function is correct, evaluate C<@_> in
+scalar context:
 
 =begin programlisting
 
@@ -525,13 +524,12 @@ to a function is correct by evaluating C<@_> in scalar context:
 =end programlisting
 
 Type checking is more difficult, because of Perl's operator-oriented type
-conversions (see L<context_philosophy>).  In cases where you need more
-strictness, consider the CPAN module C<Params::Validate>.
+conversions (L<context_philosophy>).  In cases where you need more strictness,
+consider the CPAN module C<Params::Validate>.
 
 =head1 Advanced Functions
 
-Functions may seem simple, but you can do much, much more with them (see
-L<closures> and L<anonymous_functions> for more details).
+Functions may seem simple, but you can do much, much more with them.
 
 =head2 Context Awareness
 
@@ -794,8 +792,8 @@ X<functions; pitfalls>
 X<functions; misfeatures>
 
 Not all features of Perl 5 functions are always helpful.  In particular,
-L<prototypes> rarely do what you mean.  They have their uses, but you can avoid
-them outside of a few cases.
+prototypes (L<prototypes>) rarely do what you mean.  They have their uses, but
+you can avoid them outside of a few cases.
 
 X<functions; Perl 4>
 X<functions; Perl 1>

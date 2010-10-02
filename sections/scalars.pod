@@ -12,14 +12,14 @@ provides scalar context.
 
 Scalars may be lexical, package, or global (L<globals>) variables.  You may
 only declare lexical or package variables.  The names of scalar variables must
-conform to the L<names> guidelines.  Scalar variables always use the leading
-dollar-sign (C<$>) sigil (L<sigils>).
+conform to standard variable naming guidelines (L<names>).  Scalar variables
+always use the leading dollar-sign (C<$>) sigil (L<sigils>).
 
 =begin sidebar
 
 The converse is not I<universally> true; the scalar sigil applied to an
-operation on an aggregate variable determines the amount type accessed through
-that operation (L<arrays>, L<hashes>).
+operation on an aggregate variable--an array or a hash--determines the amount
+type accessed through that operation.
 
 =end sidebar
 

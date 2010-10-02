@@ -122,8 +122,8 @@ interesting conditions in which Perl may find your program.  A few may be
 unhelpful in specific conditions.  For example, the C<recursion> warning will
 occur if Perl detects that a function has called itself more than a hundred
 times.  If you are confident in your ability to write recursion-ending
-conditions, you may disable this warning within the scope of the recursion.
-(Alternately see L<tail_calls>.)
+conditions, you may disable this warning within the scope of the recursion
+(though tail calls may be better; L<tail_calls>).
 
 If you're generating code (L<code_generation>) or locally redefining symbols,
 you may wish to disable the C<redefine> warnings.

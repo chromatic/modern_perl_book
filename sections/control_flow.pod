@@ -394,9 +394,9 @@ C<undef>--evaluates to true in boolean context.
 =begin sidebar
 
 The C<Want> module available from the CPAN allows you to detect boolean context
-within your own functions.  The core C<overloading> pragma (L<overloading>,
-L<pragmas>) allows you to specify what your own data types produce when
-evaluated in a boolean context.
+within your own functions.  The core C<overloading> pragma (L<overloading>)
+allows you to specify what your own data types produce when evaluated in a
+boolean context.
 
 =end sidebar
 
@@ -425,8 +425,8 @@ executes a statement or block until it has consumed that list:
 
 This example uses the range operator to produce a list of integers from one to
 ten inclusive.  The C<foreach> directive loops over them, setting the topic
-variable (C<$_>; see L<default_scalar_variable>) to each in turn.  Perl
-executes the block for each integer and prints the squares of the integers.
+variable C<$_> (L<default_scalar_variable>) to each in turn.  Perl executes the
+block for each integer and prints the squares of the integers.
 
 =begin sidebar
 

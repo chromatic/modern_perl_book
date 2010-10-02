@@ -240,9 +240,9 @@ in the case of complex multiple inheritance hierarchies, the important
 difference is that method resolution will visit all children of a parent before
 visiting the parent.
 
-While other techniques (such as L<roles> and Moose method modifiers) allow you
-to avoid multiple inheritance, the C<mro> pragma can help avoid surprising
-behavior with method dispatch.  Enable it in your class with:
+While other techniques such as roles (L<roles>) and Moose method modifiers
+allow you to avoid multiple inheritance, the C<mro> pragma can help avoid
+surprising behavior with method dispatch.  Enable it in your class with:
 
 =begin programlisting
 
@@ -264,8 +264,7 @@ X<methods; AUTOLOAD>
 If there is no applicable method in the invocant's class or any of its
 superclasses, Perl 5 will next look for an C<AUTOLOAD> function in every class
 according to the selected method resolution order.  Perl will invoke any
-C<AUTOLOAD> it finds to provide or decline the desired method.  See L<autoload>
-for more details.
+C<AUTOLOAD> (L<autoload>) it finds to provide or decline the desired method.
 
 As you might expect, this can get quite complex in the face of multiple
 inheritance and multiple potential C<AUTOLOAD> targets.

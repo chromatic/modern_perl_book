@@ -63,8 +63,8 @@ X<principle of least astonishment>
 In general, Perl programmers can expect Perl to do what you mean; this is the
 notion of I<DWIM>--I<do what I mean>.  You may also see this mentioned as the
 I<principle of least astonishment>.  Given a cursory understanding of Perl
-(especially its L<context_philosophy>), it should be possible to read a single
-unfamiliar Perl expression and understand its intent.
+(especially context; L<context_philosophy>), it should be possible to read a
+single unfamiliar Perl expression and understand its intent.
 
 X<baby Perl>
 

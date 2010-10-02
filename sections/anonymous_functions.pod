@@ -9,7 +9,7 @@ An I<anonymous function> is a function without a name.  It behaves like a named
 function--you can invoke it, pass arguments to it, return values from it, copy
 references to it--it can do anything a named function can do.  The difference
 is that it has no name.  You always deal with anonymous functions by reference
-(see L<references> and L<function_references>).
+(L<function_references>).
 
 =head2 Declaring Anonymous Functions
 

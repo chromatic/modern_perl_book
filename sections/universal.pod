@@ -52,11 +52,11 @@ for example) or with code that does not use roles (L<roles>).
 X<UNIVERSAL::can>
 X<can()>
 
-The C<can()> method takes the string containing the name of a method (though
-see L<method_sub_equivalence> for a disclaimer).  It returns a reference to the
-function which implements that method, if it exists.  Otherwise, it returns
-false.  You may call this on a class, an object, or the name of a package.  In
-the latter case, it returns a reference to a function, not a method.
+The C<can()> method takes the string containing the name of a method.  It
+returns a reference to the function which implements that method, if it exists.
+Otherwise, it returns false.  You may call this on a class, an object, or the
+name of a package.  In the latter case, it returns a reference to a function,
+not a method.
 
 Given a class named C<SpiderMonkey> with a method named C<screech>, you can get
 a reference to the method with:
@@ -90,7 +90,7 @@ a specific function in a similar way:
 =end programlisting
 
 You can (and should) override C<can()> in your own code if you use
-C<AUTOLOAD()>.  See L<autoload_drawbacks> for a longer explanation.
+C<AUTOLOAD()> (L<autoload_drawbacks>).
 
 =begin sidebar
 

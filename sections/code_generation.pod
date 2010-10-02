@@ -298,7 +298,7 @@ X<meta object protocol>
 Unlike installing function references to populate namespaces and to create
 methods, there's no simple built-in way to create classes in Perl 5.
 Fortunately, a mature and powerful distribution is available from the CPAN to
-do just this.  C<Clas::MOP> is the library which makes C<Moose> (L<moose>)
+do just this.  C<Class::MOP> is the library which makes C<Moose> (L<moose>)
 possible.  It provides a I<meta object protocol>--a mechanism for creating and
 manipulating an object system in terms of itself.
 

@@ -188,10 +188,9 @@ Even Perl 5 keywords get the autoquoting treatment:
 
 =end programlisting
 
-The unary plus (L<unary_coercions>; L<numeric_operators>) turns what would be a
-bareword (C<shift>) subject to autoquoting rules into an expression.  As this
-implies, you can use an arbitrary expression--not only a function call--as the
-key of a hash:
+The unary plus (L<unary_coercions>) turns what would be a bareword (C<shift>)
+subject to autoquoting rules into an expression.  As this implies, you can use
+an arbitrary expression--not only a function call--as the key of a hash:
 
 =begin programlisting
 

@@ -28,7 +28,7 @@ the addition operation becomes a single unit which must evaluate fully before
 multiplication can occur.
 
 In case of a tie--where two operators have the same precedence--other factors
-(L<fixity> and L<associativity>) break the tie.
+such as fixity (L<fixity>) and associativity (L<associativity>) break the tie.
 
 C<perldoc perlop> contains a table of precedence.  Almost no one has this table
 memorized.  The best way to manage precedence is to keep your expressions
