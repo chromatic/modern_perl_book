@@ -799,7 +799,7 @@ the I<zero-width negative look-behind assertion>:
 
 =begin programlisting
 
-    my $middle_cat = qr/(?<!^>cat/;
+    my $middle_cat = qr/(?<!^)cat/;
 
 =end programlisting
 
