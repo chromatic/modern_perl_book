@@ -65,7 +65,7 @@ single quote:
 =begin sidebar
 
 Any other backslash appears literally in the string, but if two backslashes are
-next to each other, the first one will escape the the second one.
+next to each other, the first one will escape the second one.
 
 =begin programlisting
 

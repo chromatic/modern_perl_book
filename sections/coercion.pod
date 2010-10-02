@@ -78,7 +78,7 @@ from a string.
 The strings C<Inf> and C<Infinity> represent the infinite value and behave as
 numbers, in the sense that numifying them does not produce the "Argument isn't
 numeric" warning.  The string C<NaN> represents the concept "not a number".
-Unless you're a mathemetician, you may not care.
+Unless you're a mathematician, you may not care.
 
 =end sidebar
 
