@@ -21,6 +21,21 @@ You can learn this too.
 
 =head1 Running Modern Perl
 
+=begin sidebar
+
+The Modern::Perl module is available from the CPAN.  Install it yourself or
+replace it with:
+
+=begin programlisting
+
+    use strict;
+    use warnings;
+    use 5.010;
+
+=end programlisting
+
+=end sidebar
+
 Unless otherwise mentioned, code snippets always assume the basic skeleton of a
 program:
 
@@ -34,21 +49,6 @@ program:
     ...
 
 =end programlisting
-
-=begin sidebar
-
-The Modern::Perl module is available from the CPAN.  You can install it
-yourself or replace it with:
-
-=begin programlisting
-
-    use strict;
-    use warnings;
-    use 5.010;
-
-=end programlisting
-
-=end sidebar
 
 Other code snippets use testing functions such as C<ok()>, C<like()>, and
 C<is()> (L<testing>).  That skeleton program is:
