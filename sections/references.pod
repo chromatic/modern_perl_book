@@ -377,7 +377,7 @@ a function:
 X<function sigil>
 X<sigils; &>
 
-Without the the I<function sigil> (C<&>), you will take a reference to the
+Without the I<function sigil> (C<&>), you will take a reference to the
 function's return value or values.
 
 You may also create anonymous functions:

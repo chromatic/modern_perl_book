@@ -28,7 +28,7 @@ Likewise, certain contexts make it clear that you expect a numeric value, a
 string value, or a value that's either true or false.
 
 Context can be tricky if you try to write or read Perl code as a series of
-single expressions which stand apart from from their environments.  You may
+single expressions which stand apart from their environments.  You may
 find yourself slapping your forehead after a long debugging session when you
 discover that your assumptions about context were incorrect.  However, if you're
 cognizant of contexts, they can make your code clearer, more concise, and more
@@ -131,7 +131,7 @@ contain.  Both calls to C<some_expensive_operation()> occur in list context:
 
 C<expensive_operation> is in list context, because it's assigned to a
 hash, and hash assignments take a list of key/value pairs, which causes any
-expressions in that hash assignment to be evaulated in list context.
+expressions in that hash assignment to be evaluated in list context.
 
 X<operators; scalar>
 X<scalar>
