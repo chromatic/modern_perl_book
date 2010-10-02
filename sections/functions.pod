@@ -794,8 +794,8 @@ X<functions; pitfalls>
 X<functions; misfeatures>
 
 Not all features of Perl 5 functions are always helpful.  In particular,
-L<prototypes> rarely do what you mean.  They have their uses, but you can avoid
-them outside of a few cases.
+prototypes (L<prototypes>) rarely do what you mean.  They have their uses,
+but you can avoid them outside of a few cases.
 
 X<functions; Perl 4>
 X<functions; Perl 1>
