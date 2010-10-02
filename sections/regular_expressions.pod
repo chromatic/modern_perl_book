@@ -346,7 +346,7 @@ characters (in a Unicode sense--L<unicode>) and the underscore:
 
 =begin programlisting
 
-        next unless $word =~ B</lB<\w\w>m/>;
+        next unless $word =~ /lB<\w\w>m/;
 
 =end programlisting
 
