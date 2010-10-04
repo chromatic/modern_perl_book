@@ -380,7 +380,7 @@ you to use Unicode characters in strings as well in identifiers:
 To I<write> this code, your text editor must understand UTF-8 and you must save
 the file with the appropriate encoding.
 
-X<escapes; \x{}>
+X<escaping; \x{}>
 X<\x{}>
 
 You may also use the Unicode escape sequence to represent character encodings.
@@ -401,7 +401,7 @@ These escapes interpolate only within double-quoted strings.
 
 X<charnames pragma>
 X<pragmas; charnames>
-X<escapes; \N{}>
+X<escaping; \N{}>
 X<\N{}>
 
 Some Unicode characters have names.  Though these are more verbose, they can be

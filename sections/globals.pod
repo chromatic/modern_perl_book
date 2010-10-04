@@ -87,11 +87,11 @@ within the scope of this namespace.
 =begin sidebar
 
 X<$&>
-X<globals; $&>
+X<global variables; $&>
 X<$`>
-X<globals; $`>
+X<global variables; $`>
 X<$'>
-X<globals; $'>
+X<global variables; $'>
 
 Three regex-related super globals (C<$&>, C<$`>, and C<$'>) impose a global
 performance penalty for I<all> regular expressions within a program.  If you

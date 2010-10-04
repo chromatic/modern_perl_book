@@ -355,8 +355,6 @@ Z<function_references>
 
 X<function references>
 X<references; functions>
-X<subroutine references>
-X<references; subroutines>
 X<functions; first-class>
 X<first-class functions>
 

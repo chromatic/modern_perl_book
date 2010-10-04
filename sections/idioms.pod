@@ -228,7 +228,7 @@ C<sort>, and then remove them in the leftmost C<map>.
 Z<easy_file_slurping>
 
 X<local; $/>
-X<globals; $/>
+X<global variables; $/>
 
 Perl 5's magic global variables are truly global in many cases.  It's all too
 easy to clobber their values elsewhere, unless you use C<local> everywhere.

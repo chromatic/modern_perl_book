@@ -2,7 +2,6 @@
 
 Z<functions>
 
-X<subroutines; declaration>
 X<functions; declaration>
 
 Use the C<sub> keyword to declare a function:
@@ -39,7 +38,6 @@ special case where they modify I<how> the parser parses them (L<attributes>).
 
 =head1 Invoking Functions
 
-X<subroutines; invoking>
 X<functions; invoking>
 
 To invoke a function, mention its name and pass an optional list of arguments:

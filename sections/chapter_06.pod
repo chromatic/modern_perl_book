@@ -4,8 +4,7 @@ Z<regex>
 
 X<regular expressions>
 X<regex>
-X<regexp>
-X<regular expression engine>
+X<regex; engine>
 
 Perl's powerful ability to manipulate text comes in part from its inclusion of
 a computing concept known as I<regular expressions>.  A regular expression
