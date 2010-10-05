@@ -425,6 +425,7 @@ like undeclared barewords and C<strict> would complain.
 
 =head1 Reporting Errors
 
+Z<reporting_errors>
 X<caller>
 
 Within a function, you can get information about the context of the call with
@@ -581,9 +582,9 @@ X<functions; call frame>
 Every call to a function in Perl creates a new I<call frame>.  This is an
 internal data structure which represents the call itself: in effect, incoming
 parameters, the point to which to return, and all of the control of the program
-leading up to the point of the call.  As well, it captures the lexical
-environment of the specific and current invocation of the function.  This means
-that a function can I<recur>; it can call itself.
+leading up to the point of the call.  It also captures the lexical environment
+of the specific and current invocation of the function.  This means that a
+function can I<recur>; it can call itself.
 
 Recursion is a deceptively simple concept, but it can seem daunting if you
 haven't encountered it before.  Consider a case where you want to find an
@@ -794,8 +795,8 @@ you can avoid them outside of a few cases.
 X<functions; Perl 4>
 X<functions; Perl 1>
 
-As well, Perl 5 still supports old-style invocations of functions, carried over
-from older versions of Perl.  While you may now invoke Perl functions by name,
+Perl 5 still supports old-style invocations of functions, carried over from
+older versions of Perl.  While you may now invoke Perl functions by name,
 previous versions of Perl required you to invoke them with a leading ampersand
 (C<&>) character.  Perl 1 required you to use the C<do> keyword:
 

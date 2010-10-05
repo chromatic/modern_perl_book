@@ -41,7 +41,8 @@ X<Regexp>
 X<IO>
 X<CODE>
 
-Built-in types are C<SCALAR>, C<ARRAY>, C<HASH>, C<Regexp>, C<IO>, and C<CODE>.
+Perl 5's core types are C<SCALAR>, C<ARRAY>, C<HASH>, C<Regexp>, C<IO>, and
+C<CODE>.
 
 You can override C<isa()> in your own classes.  This can be useful when working
 with mock objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN,
@@ -52,8 +53,8 @@ for example) or with code that does not use roles (L<roles>).
 X<UNIVERSAL::can>
 X<can()>
 
-The C<can()> method takes the string containing the name of a method.  It
-returns a reference to the function which implements that method, if it exists.
+The C<can()> method takes a string containing the name of a method.  It returns
+a reference to the function which implements that method, if it exists.
 Otherwise, it returns false.  You may call this on a class, an object, or the
 name of a package.  In the latter case, it returns a reference to a function,
 not a method.
@@ -73,7 +74,9 @@ a reference to the method with:
 =end programlisting
 
 Given a plugin-style architecture, you can test to see if a package implements
-a specific function in a similar way:
+a specific function in a similar way.  The C<UNIVERSAL::require> module adds a
+C<require()> method to the C<UNIVERSAL> namespace to invert the sense of the
+C<require> keyword:
 
 =begin programlisting
 
@@ -89,6 +92,9 @@ a specific function in a similar way:
 
 =end programlisting
 
+... though in larger programs, use C<Module::Pluggable> to handle this busy
+work for you.
+
 You can (and should) override C<can()> in your own code if you use
 C<AUTOLOAD()> (L<autoload_drawbacks>).
 
@@ -97,8 +103,8 @@ C<AUTOLOAD()> (L<autoload_drawbacks>).
 There is I<one> known case where calling C<UNIVERSAL::can()> as a function and
 not a method is not incorrect: to determine whether a class exists in Perl 5.
 If C<UNIVERSAL::can( $classname, 'can' )> returns true, someone somewhere has
-defined a class of the name C<$classname>.  Alternately, C<Moose>'s
-introspection is much more powerful and easier to use.
+defined a class of the name C<$classname>--though consider using instead
+C<Moose>'s introspection.
 
 =end sidebar
 
@@ -135,9 +141,9 @@ X<DOES()>
 
 The C<DOES()> method is new in Perl 5.10.0.  It exists to support the use of
 roles (L<roles>) in programs.  Pass it an invocant and the name of a role, and
-the method will return true if the appropriate class somehow does that role.
-(The class may do so through inheritance, through delegation, through
-composition, through role application, or any other mechanism.)
+the method will return true if the appropriate class somehow does that
+role--whether through inheritance, delegation, composition, role application,
+or any other mechanism.
 
 The default implementation of C<DOES()> falls back to C<isa()>, because
 inheritance is one mechanism by which a class may do a role.  Given a
@@ -152,8 +158,7 @@ C<Cappuchin>:
 =end programlisting
 
 You can (and should) override C<DOES()> in your own code if you manually
-provide a role or other allomorphic behavior.  Alternately, use C<Moose> and
-don't worry about the details.
+provide a role or other allomorphic behavior.
 
 =head2 Extending UNIVERSAL
 
@@ -167,10 +172,6 @@ Jore's C<UNIVERSAL::ref> distribution makes the nearly-useless C<ref()>
 operator usable.  The C<UNIVERSAL::can> and C<UNIVERSAL::isa> distributions can
 help you find and eliminate old idioms which prevent good uses of polymorphism
 (though see C<Perl::Critic> for a different approach with other advantages).
-
-The C<UNIVERSAL::require> module adds useful behavior to help load modules and
-classes at runtime--though using a distribution such as C<Module::Pluggable> is
-safer and less invasive.
 
 Outside of very carefully controlled code and very specific, very pragmatic
 situations, there's no reason to put code in C<UNIVERSAL> directly.  There are

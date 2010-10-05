@@ -59,7 +59,7 @@ loading C<Modern::Perl> effectively does:
 
 =begin programlisting
 
-    $INC{'Modern/Perl.pm'} =>
+    $INC{'Modern/Perl.pm'} =
         '/path/to/perl/lib/site_perl/5.12.1/Modern/Perl.pm';
 
 =end programlisting
@@ -153,8 +153,8 @@ available as C<%MonkeyGrinder::>.
 
 You I<can> test the existence of specific symbol names within a symbol table
 with the C<exists> operator (or manipulate the symbol table to I<add> or
-I<remove>) symbols, if you like).  Yet be aware that certain changes to the
-Perl 5 core have modified what exists by default in each typeglob entry.  In
+I<remove> symbols, if you like).  Yet be aware that certain changes to the Perl
+5 core have modified what exists by default in each typeglob entry.  In
 particular, earlier versions of Perl 5 have always provided a default scalar
 variable for every typeglob created, while modern versions of Perl 5 do not.
 

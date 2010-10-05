@@ -79,7 +79,7 @@ C<$call_sign-->.
 =end sidebar
 
 This string increment operation turns C<a> into C<b> and C<z> into C<aa>,
-respecting character set and case.  As well, C<ZZ9> becomes C<AA0>, but C<ZZ09>
+respecting character set and case.  While C<ZZ9> becomes C<AA0>, C<ZZ09>
 becomes C<ZZ10>--numbers wrap around but do not carry to alphabetic components.
 
 X<stringification>

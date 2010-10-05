@@ -209,8 +209,10 @@ functions usable throughout the system:
 
 =end programlisting
 
-Anyone now can use this module and, optionally, import any or all of the three
-exported functions.  You may also export variables:
+Any other code now can use this module and, optionally, import any or all of
+the three exported functionsN<... though I<C<use>ing> the module in any code is
+sufficient to allow any other code to invoke its functions by their
+fully-qualified names.>.  You may also export variables:
 
 =begin programlisting
 
@@ -238,7 +240,7 @@ C<@EXPORT_OK>:
 
 ... so that any C<use StrangeMonkey::Utilities;> will import both functions.
 Be aware that specifying symbols to import will I<not> import default symbols.
-As well, you can load a module without importing any symbols by providing an
+You can also load a module without importing any symbols by providing an
 explicit empty list:
 
 =begin programlisting
@@ -261,7 +263,7 @@ package with their fully-qualified names:
 
 Perl 5 does not require you to use modules, nor packages, nor namespaces.  You
 may put all of your code in a single F<.pl> file, or in multiple F<.pl> files
-you C<do> or C<require> as necessary.  You have the flexibility to manage your
+you C<require> as necessary.  You have the flexibility to manage your
 code in the most appropriate way, given your development style, the formality
 and risk and reward of the project, your experience, and your comfort with Perl
 5 deployment.

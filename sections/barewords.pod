@@ -51,7 +51,8 @@ X<packages; bareword names>
 
 Package names in Perl 5 are barewords in a sense.  Good naming conventions for
 packages (initial caps) help prevent unwanted surprises, but the parser uses a
-heuristic to determine whether C<< Package->method() >> means to call a
+complex heuristic based on the code it's already compiled within the current
+namespace to determine whether C<< Package->method() >> means to call a
 function named C<Package()> and then call the C<method()> method on its results
 or whether to treat C<Package> as the name of a package.  You can disambiguate
 this with the postfix package separator (C<::>), but that's rare and admittedly

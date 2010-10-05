@@ -32,11 +32,11 @@ dispatch system allows you to customize what happens when normal lookup fails.
 X<eval string>
 X<operators; eval>
 
-The simplestN<At least I<conceptually>....> technique to generate code is to
-build a string containing a snippet of valid Perl and compile it with the
-C<eval> string operator.  Unlike the exception-catching C<eval> block operator,
-C<eval> string compiles the contents of the string within the current scope,
-including the current package and lexical bindings.
+The simplest code generation technique code is to build a string containing a
+snippet of valid Perl and compile it with the string C<eval> operator.  Unlike
+the exception-catching block C<eval> operator, string C<eval> compiles the
+contents of the string within the current scope, including the current package
+and lexical bindings.
 
 A common use for this technique is providing a fallback if you can't (or don't
 want to) load an optional dependency:
@@ -87,8 +87,8 @@ but not others:
 
 =end programlisting
 
-Woe to you who forget a backslash!  Good luck convincing your syntax
-highlighter what's happening!  Worse yet, each invocation of C<eval> string
+Woe to those who forget a backslash!  Good luck convincing your syntax
+highlighter what's happening!  Worse yet, each invocation of string C<eval>
 builds a new data structure representing the entire code.  Compiling code isn't
 free, either--cheaper than performing IO, perhaps, but not free.
 
@@ -128,8 +128,8 @@ without requiring additional evaluation:
 
 This code avoids unpleasant quoting issues and runs more quickly, as there's
 only one compilation stage, no matter how many accessors you create.  It even
-uses less memory by reusing the I<same> compiled code for the bodies of the two
-functions.  All that differs is the binding to the C<$attrname> lexical.  In a
+uses less memory by sharing the compiled code between all instances of the
+closure.  All that differs is the binding to the C<$attrname> lexical.  In a
 long-running process, or with a lot of accessors, this technique can be very
 useful.
 
@@ -150,16 +150,17 @@ Installing into symbol tables is reasonably easy, if ugly:
 
 =end programlisting
 
-The odd splatty hash looking syntax refers to a symbol in the current I<symbol
-table>, which is the place in the current namespace which contains
-globally-accessible symbols such as package globals, functions, and methods.
-Assigning a reference to a symbol table entry installs or replaces the
-appropriate entry.  To promote an anonymous function to a method, assign that
-function reference to the appropriate entry in the symbol table.
+The odd syntax of an asterisk deferencing a hash refers to a symbol in the
+current I<symbol table>, which is the place in the current namespace which
+contains globally-accessible symbols such as package globals, functions, and
+methods.  Assigning a reference to a symbol table entry installs or replaces
+the appropriate entry.  To promote an anonymous function to a method, assign
+that function reference to the appropriate entry in the symbol table.
 
-This operation is a symbolic reference, so it's necessary to disable C<strict>
-reference checking for the operation.  Many programs have a subtle bug in
-similar code, as they assign and generate in a single line:
+This operation refers to a symbol with a string, not a literal variable name,
+so it's a symbolic reference and it's necessary to disable C<strict> reference
+checking for the operation.  Many programs have a subtle bug in similar code,
+as they assign and generate in a single line:
 
 =begin programlisting
 
@@ -193,14 +194,15 @@ rather than through a symbolic reference:
 
 =end programlisting
 
-This does not violate strictures, but it does produce a "used only once"
-warning unless you explicitly suppress it within the scope.
+Assigning directly to the glob does not violate strictures, but mentioning each
+glob only once I<does> produce a "used only once" warning unless you explicitly
+suppress it within the scope.
 
 =end sidebar
 
 =head2 Compile-time Manipulation
 
-Unlike code written explicitly as code, code generated through C<eval> string
+Unlike code written explicitly as code, code generated through string C<eval>
 gets compiled at runtime.  Where you might expect a normal function to be
 available throughout the lifetime of your program, a generated function might
 not be available when you expect it.
@@ -301,7 +303,7 @@ do just this.  C<Class::MOP> is the library which makes C<Moose> (L<moose>)
 possible.  It provides a I<meta object protocol>--a mechanism for creating and
 manipulating an object system in terms of itself.
 
-Rather than writing your own fragile C<eval> string code or trying to poke into
+Rather than writing your own fragile string C<eval> code or trying to poke into
 symbol tables manually, you can manipulate the entities and abstractions of
 your program with objects and methods.
 

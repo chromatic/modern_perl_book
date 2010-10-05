@@ -164,7 +164,7 @@ To take a reference to a declared array, use the reference operator:
 =end programlisting
 
 Now C<$cards_ref> contains a reference to the array.  Any modifications made
-through C<$cards_ref> will modify C<@cards> as well, and vice versa.
+through C<$cards_ref> will modify C<@cards> and vice versa.
 
 X<array references; dereferencing>
 

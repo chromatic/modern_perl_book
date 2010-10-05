@@ -348,6 +348,8 @@ X<Test::MockModule>
 X<Test::WWW::Mechanize>
 X<Test::Database>
 X<Test::Class>
+X<Test::Differences>
+X<Test::Deep>
 X<Devel::Cover>
 
 =over 4
@@ -365,10 +367,16 @@ databases.
 
 =item * C<Test::Class> offers an alternate mechanism for organizing test
 suites.  It allows you to create classes in which specific methods group tests.
-You can inherit from test classes just as your code classes inherit from each
+you can inherit from test classes just as your code classes inherit from each
 other.  This is an excellent way to reduce duplication in test suites.  See the
-C<Test::Class> series written by Curtis Poe at
-U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
+c<Test::Class> series written by Curtis Poe at
+u<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
+
+=item * C<Test::Differences> tests strings and data structures for equality and
+displays any differences in its diagnostics.
+
+=item * C<Test::Deep> tests the equivalence of nested data structures
+(L<nested_data_structures>).
 
 =item * C<Devel::Cover> analyzes the execution of your test suite to report on
 the amount of your code your tests actually exercises.  In general, the more

@@ -105,15 +105,14 @@ X<IO::Handle>
 
 For the limited case of filehandle operations, the dative use is so prevalent
 that you can use the indirect invocation approach if you surround your intended
-invocant with curly brackets.  Alternately, consider loading the core
-C<IO::Handle> module which allows you to make IO operations by calling methods
-on filehandle objects (such as lexical filehandles).
+invocant with curly brackets.  Another option is to use the core C<IO::Handle>
+module which adds IO methods to lexical filehandles.
 
 =begin sidebar
 
-For supreme paranoia, you may disambiguate class method calls further by
-appending C<::> to the end of class names, such as C<< CGI::->new() >>.  Very
-little code does this in practice, however.
+For supreme paranoia, disambiguate class method calls further by appending
+C<::> to the end of class names, such as C<< CGI::->new() >>.  Very little code
+does this in practice, however.
 
 =end sidebar
 
