@@ -78,8 +78,8 @@ X<control flow directives; unless>
 X<postfix unless>
 X<postfix expressions; unless>
 
-The C<unless> directive is a negated form of C<if>.  Perl will perform the
-requested action when the conditional expression evaluates to I<false>:
+The C<unless> directive is a negated form of C<if>.  Perl will evaluate the
+following statement when the conditional expression evaluates to I<false>:
 
 =begin programlisting
 
@@ -271,14 +271,15 @@ Again, weigh the benefits of clarity versus the benefits of conciseness.
 
 =head3 Short Circuiting
 
+Z<short_circuiting>
 X<short circuiting behavior>
 X<short circuiting>
 
-Perl performs a type of behavior known as I<short-circuiting> when it
-encounters complex expressions--expressions composed of multiple evaluated
-expressions.  If Perl can determine that a complex expression would succeed or
-fail as a whole without evaluating every subexpression, it will not evaluate
-subsequent subexpressions.  This is most obvious with an example:
+Perl exhibits I<short-circuiting> behavior when it encounters complex
+expressions--expressions composed of multiple evaluated expressions.  If Perl
+can determine that a complex expression would succeed or fail as a whole
+without evaluating every subexpression, it will not evaluate subsequent
+subexpressions.  This is most obvious with an example:
 
 =begin programlisting
 
@@ -501,8 +502,9 @@ X<aliasing>
 X<aliasing; foreach>
 X<aliasing; iteration>
 
-The C<for> loop performs I<aliasing> of the iterator variable to the values in
-the iteration such that you can modify values in place during iteration:
+The C<for> loop I<aliases> the iterator variable to the values in the iteration
+such that any modifications to the value of the iterator modifies the iterated
+value in place:
 
 =begin programlisting
 
@@ -725,9 +727,8 @@ this code is also an infinite loop:
 
 X<destructive update>
 
-To prevent such an infinite C<while> loop, you must perform a I<destructive
-update> of the C<@values> array by modifying the array with each loop
-iteration:
+To prevent such an infinite C<while> loop, use a I<destructive update> of the
+C<@values> array by modifying the array with each loop iteration:
 
 =begin programlisting
 
@@ -741,8 +742,8 @@ iteration:
 X<until loop>
 X<loops; until>
 
-The I<until> loop performs the opposite test as the C<while> loop.  Iteration
-continues while the loop conditional expression evaluates to false:
+The I<until> loop reverses the sense of the test of the C<while> loop.
+Iteration continues while the loop conditional expression evaluates to false:
 
 =begin programlisting
 
@@ -1015,10 +1016,11 @@ X<continue>
 
 The C<continue> construct behaves like the third subexpression of a C<for>
 loop; Perl executes its block for each iteration of the loop, even when you
-exit an iteration with C<next>.  You may use it with a C<while>, C<until>,
-C<with>, or C<for> loop.  Examples of C<continue> are rare, but it's useful any
-time you want to guarantee that something occurs for every iteration of the loop
-regardless of how that iteration ends:
+exit an iteration with C<next>N<The Perl equivalent to C's C<continue> in is
+C<next>.>.  You may use it with a C<while>, C<until>, C<with>, or C<for> loop.
+Examples of C<continue> are rare, but it's useful any time you want to
+guarantee that something occurs for every iteration of the loop regardless of
+how that iteration ends:
 
 =begin programlisting
 
@@ -1194,7 +1196,7 @@ C<log_and_greet_person()>.  Returning directly from C<greet_person()> to the
 caller of C<log_and_greet_person()> is an optimization known as I<tailcall
 optimization>.
 
-Perl 5 will not detect cases where it could perform this optimization
+Perl 5 will not detect cases where it could apply this optimization
 automatically.
 
 =begin sidebar

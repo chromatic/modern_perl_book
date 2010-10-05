@@ -37,7 +37,7 @@ ambiguities in Perl 5.
 =head2 Bareword Indirect Invocations
 
 One problem is that the name of the method is a bareword (L<barewords>).  The
-parser must perform several heuristics to determine the proper interpretation.
+parser must apply several heuristics to determine the proper interpretation.
 While these heuristics are well-tested and I<almost> always correct, their
 failure modes are confusing.  Worse, they're fragile in the face of the
 I<order> of compilation and module loading.
@@ -106,8 +106,8 @@ X<IO::Handle>
 For the limited case of filehandle operations, the dative use is so prevalent
 that you can use the indirect invocation approach if you surround your intended
 invocant with curly brackets.  Alternately, consider loading the core
-C<IO::Handle> module which allows you to perform IO operations by calling
-methods on filehandle objects (such as lexical filehandles).
+C<IO::Handle> module which allows you to make IO operations by calling methods
+on filehandle objects (such as lexical filehandles).
 
 =begin sidebar
 

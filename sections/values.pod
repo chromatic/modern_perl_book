@@ -24,14 +24,18 @@ meaningless if they couldn't accurately contain the data itself--the values.
 
 X<strings>
 
-A I<string> is a piece of data with no particular formatting, no particular
-contents, and no other meaning to the program.  It could be your name.  It
-could be the contents of an image file read from your hard drive.  It could be
-the Perl program itself.  A string has no meaning to the program until you give
-it meaning.  A string is a fixed amount of data delineated by quotes of some
-form, yet Perl strings can grow or shrink as you add to or remove from them.
+A I<string> is a piece of textual or binary data with no particular formatting,
+no particular contents, and no other meaning to the program.  It could be your
+name.  It could be the contents of an image file read from your hard drive.  It
+could be the Perl program itself.  A string has no meaning to the program until
+you give it meaning.  Perl strings can grow or shrink as you add to or remove
+from them.
 
-The most common string delimiters are single and double quotes:
+X<strings; delimiters>
+
+To represent a string in your program, you must surround it with a pair of
+quoting characters.  The most common I<string delimiters> are single and double
+quotes:
 
 =begin programlisting
 
@@ -64,15 +68,15 @@ single quote:
 
 =begin sidebar
 
-Any other backslash appears literally in the string, but if two backslashes are
-next to each other, the first one will escape the second one.
+Any other backslash appears literally in the string, but given two adjacent
+backslashes, the first will escape the second:
 
 =begin programlisting
 
-    is('Modern B<\> Perl', 'Modern B<\\> Perl', 'single quotes backslash escaping');
+    is('Modern B<\> Perl', 'Modern B<\\> Perl',
+        'single quotes backslash escaping');
 
 =end programlisting
-
 
 =end sidebar
 
@@ -90,6 +94,11 @@ For example, you may encode non-printable characters in the string:
     my $backspace = "B<\b>";
 
 =end programlisting
+
+This demonstrates a useful principle: the syntax of a string may vary.  You can
+represent a tab within a string with the C<\t> escape or by typing a tab
+directly.  As Perl runs, both strings behave the same way, even though the
+specific representation of the string may differ in the source code.
 
 A string declaration may cross logical newlines, such that these two strings
 are equivalent:
@@ -112,7 +121,7 @@ X<strings; interpolation>
 
 You may also I<interpolate> the value of a scalar variable or the values of an
 array within a double-quoted string, such that the contents of the variable
-become part of the string as if you'd performed a concatenation operation
+become part of the string as if you'd written a concatenation operation
 directly:
 
 =begin programlisting
@@ -143,9 +152,9 @@ X<qq>
 X<operators; qq>
 
 If you find that hideously ugly, you may use an alternate I<quoting operator>.
-The C<q> operator performs single quoting, while the C<qq> operator performs
-double quoting.  In each case, you may choose your own delimiter for the
-string.  The character immediately following the operator determines the
+The C<q> operator indicates single quoting, while the C<qq> operator provides
+double quoting behavior.  In each case, you may choose your own delimiter for
+the string.  The character immediately following the operator determines the
 beginning and end of the string.  If the character is the opening character of
 a balanced pair--such as opening and closing braces--the closing character will
 be the final delimiter.  Otherwise, the character itself will be both the
@@ -238,7 +247,7 @@ X<codepoint>
 =item Sequences of Unicode characters
 
 The Unicode character set contains characters from the scripts of most
-languages, and various other symbols.  Each character has a I<codepoint>, a own
+languages, and various other symbols.  Each character has a I<codepoint>, a
 unique number which identifies it in the Unicode character set.
 
 =item Sequences of octets
@@ -260,10 +269,9 @@ grief.
 =end sidebar
 
 Unicode strings and binary strings look very similar.  They each have a
-C<length()>, and you can perform standard string operations on them such as
-concatenation, splicing, and regular expression processing.  Any string which
-is not purely binary data is textual data, and should be a sequence of Unicode
-characters.
+C<length()>, and they support standard string operations such as concatenation,
+splicing, and regular expression processing.  Any string which is not purely
+binary data is textual data, and should be a sequence of Unicode characters.
 
 However, because of how your operating system represents data on disk or from
 users or over the network--as sequences of octets--Perl can't know if the data
@@ -282,7 +290,7 @@ X<Latin-1>
 A Unicode string is a sequence of octets which represent a sequence of
 characters.  A I<Unicode encoding> maps octet sequences to characters.  Some
 encodings, such as UTF-8, can encode all of the characters in the Unicode
-character set.  Others, represent a subset of Unicode characters.  For example,
+character set.  Others represent a subset of Unicode characters.  For example,
 ASCII encodes plain English text with no accented characters and Latin-1 can
 represent text in most languages which use the Latin alphabet.
 
@@ -297,9 +305,8 @@ X<IO layers>
 One source of Unicode input is filehandles (L<files>).  If you tell Perl that a
 specific filehandle works with encoded text, Perl can convert the data to
 Unicode strings automatically.  To do this, add a IO layer to the mode of the
-C<open> builtin.  An I<IO layer> wraps around input or output and performs some
-sort of conversion of the data.  In this case, the C<:utf8> layer performs
-decoding of UTF-8 data:
+C<open> builtin.  An I<IO layer> wraps around input or output and converts the
+data.  In this case, the C<:utf8> layer decodes UTF-8 data:
 
 =begin programlisting
 
@@ -537,8 +544,8 @@ X<numbers>
 X<integers>
 X<floating-point values>
 
-Perl also supports numbers, both integers and floating-point values.  They
-support scientific notation as well as binary, octal, and hexadecimal
+Perl also supports numbers, both integers and floating-point values.  You may
+write them in scientific notation as well as binary, octal, and hexadecimal
 representations:
 
 =begin programlisting
@@ -561,7 +568,7 @@ X<underscore>
 
 =begin sidebar
 
-Even though you can represent floating-point values explicitly in Perl 5 with
+Even though you can write floating-point values explicitly in Perl 5 with
 perfect accuracy, Perl 5 stores them internally in a binary format.  Comparing
 floating-point values is sometimes imprecise in specific ways; consult
 C<perldoc perlnumber> for more details.

@@ -56,9 +56,8 @@ The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
 returns the result of evaluating the operation.
 
 You may use anonymous functions in place of function references.  To Perl,
-they're equivalent.  Nothing I<necessitates> the use of anonymous functions to
-perform these mathematical operations, but for functions this short, there's
-little drawback to writing them this way.
+they're equivalent.  Nothing I<necessitates> the use of anonymous functions,
+but for functions this short, there's little drawback to writing them this way.
 
 You may rewrite C<%dispatch> as:
 

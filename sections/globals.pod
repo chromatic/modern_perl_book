@@ -182,11 +182,11 @@ or socket or terminal which should not block waiting for input.
 system call.  In numeric context, this corresponds to C's C<errno> value, where
 anything other than zero indicates some kind of error.  In string context,
 returns the appropriate system error string.  Localize this variable before
-performing a system call (implicitly or explicitly) to avoid overwriting the
-appropriate value for other code elsewhere.
-Many places within Perl 5 itself make system calls without your knowledge.  The
-value of this variable can change out from under you, so copy it I<immediately>
-after making such a call yourself.
+making a system call (implicitly or explicitly) to avoid overwriting the
+appropriate value for other code elsewhere.  Many places within Perl 5 itself
+make system calls without your knowledge.  The value of this variable can
+change out from under you, so copy it I<immediately> after making such a call
+yourself.
 
 =row
 

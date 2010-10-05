@@ -314,4 +314,4 @@ which inherits from a class which contains its own C<AUTOLOAD()>.  This is
 almost never what you intend.  The problem compounds in several ways: mixing
 functions and methods in a single namespace is often a design flaw, inheritance
 and C<AUTOLOAD()> get complex very quickly, and reasoning about code when you
-don't know what methods objects can perform is difficult.
+don't know what methods objects provide is difficult.

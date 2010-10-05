@@ -42,10 +42,9 @@ value in a variable can change.  This code is legal:
 Yet even though this is I<legal>, it can be confusing.  Choose descriptive and
 unique names for your variables to avoid this confusion.
 
-The type context of evaluation of a scalar may cause Perl to perform a coercion
-of the value of that scalar (L<coercion>).  For example, you may treat the
-contents of a scalar as a string, even if you didn't explicitly assign it a
-string:
+The type context of evaluation of a scalar may cause Perl to coerce of the
+value of that scalar (L<coercion>).  For example, you may treat the contents of
+a scalar as a string, even if you didn't explicitly assign it a string:
 
 =begin programlisting
 
@@ -54,7 +53,7 @@ string:
 
 =end programlisting
 
-You may also perform mathematical operations on strings:
+You may also use mathematical operations on strings:
 
 =begin programlisting
 

@@ -52,9 +52,9 @@ X<void context>
 X<context; void>
 
 Suppose you have a function (L<functions>) called C<some_expensive_operation()>
-which performs an expensive calculation and can produce many, many results.  If
-you call the function on its own and never use its return value, you've called
-the function in I<void context>:
+which uses an expensive calculation to produce many results.  If you call the
+function on its own and never use its return value, you've called the function
+in I<void context>:
 
 =begin programlisting
 
@@ -106,10 +106,10 @@ C<some_expensive_operation()> calculates all of the tasks you have to do around
 the house, sorted in order of their priority.  If you have only time to do one
 task, you can call the function in scalar context to get a useful task--perhaps
 not necessarily the most important, but important enough without having to go
-through your whole task list.  In list context, the function can perform all of
-the sorting and searching and comparison and give you an exhaustive list in the
-proper order.  If you want all of that work, but only have time for a couple of
-tasks, you can use a one or two-element list.
+through your whole task list.  In list context, the function can sort and
+search and compare to produce an exhaustive list in the proper order.  If you
+want all of that work, but only have time for a couple of tasks, you can use a
+one or two-element list.
 
 =end sidebar
 

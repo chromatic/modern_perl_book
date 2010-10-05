@@ -1,7 +1,7 @@
 =head0 The Perl Philosophy
 
 Perl is a language for getting things done.  It's flexible, forgiving, and
-malleable.  In the hands of a capable programmer, it can perform almost any
+malleable.  In the hands of a capable programmer, it can accomplish almost any
 task, from one-liner calculations and automations to multi-programmer,
 multi-year projects and everything in between.
 

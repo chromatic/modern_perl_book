@@ -100,9 +100,9 @@ string.  The simplest quantifier is the I<zero or one quantifier>, or C<?>:
 
 Any atom in a regular expression followed by the C<?> character means "match
 zero or one of this atom."  This regular expression matches if there are zero
-C<a> characters immediately following a C<c> character and immediately
-preceding a C<t> character.  It also matches if there is one and only one C<a>
-character between the C<c> and C<t> characters.
+C<a> or one characters immediately following a C<c> character and immediately
+preceding a C<t> character I<and also> matches if there is one and only one
+C<a> character between the C<c> and C<t> characters.
 
 X<regex quantifiers; one or more>
 
@@ -198,7 +198,7 @@ X<quantifiers; greedy>
 
 The C<+> and C<*> quantifiers by themselves are I<greedy quantifiers>; they
 match as much of the input string as possible.  This is particularly pernicious
-when matching "any amount of anything" with C<.*>:
+when matching the "zero or more non-newline characters" pattern of C<.*>:
 
 =begin programlisting
 
@@ -218,7 +218,7 @@ you go looking for "loam" with:
 
 =begin programlisting
 
-    my $seven_down = qr/l${letters_only}*m/;
+    my $seven_down = qr/l$letters_only*m/;
 
 =end programlisting
 
@@ -247,7 +247,7 @@ potential match for this token combination is zero characters:
 
 =end programlisting
 
-Use the C<+> quantifier to match one or more items:
+Use C<+?> to match one or more items non-greedily:
 
 =begin programlisting
 
@@ -263,7 +263,7 @@ The C<?> quantifier modifier also applies to the C<?> (zero or one matches)
 quantifier as well as the range quantifiers.  In every case, it causes the
 regex to match as little of the input as possible.
 
-The greedy modifiers C<.+> and C<.*> are tempting but dangerous.  If you write
+The greedy patterns C<.+> and C<.*> are tempting but dangerous.  If you write
 regular expression with greedy matches, test them thoroughly with a
 comprehensive and automated test suite with representative data to lessen the
 possibility of unpleasant surprises.
@@ -511,7 +511,7 @@ the string in the magic variable C<%+>: a hash where the key is the name of the
 capture buffer and the value is the portion of the string which matched the
 buffer's regex.
 
-Parentheses are special to Perl 5 regular expressions; by default they perform
+Parentheses are special to Perl 5 regular expressions; by default they exhibit
 the same grouping behavior as parentheses do in regular Perl code.  They also
 enclose one or more atoms to capture whatever portion of the matched string
 they match.  To use literal parentheses in a regular expression, you must
@@ -709,7 +709,7 @@ quantifier as a quantifier.  Instead, it will parse the regex as C<\*\* ALERT
 =begin note
 
 Be cautious when processing regular expressions from untrusted user input.
-It's possible to craft a malicious regular expression which can perform an
+It's possible to craft a malicious regular expression which can produce an
 effective denial-of-service attack against your program.
 
 =end note
@@ -814,7 +814,7 @@ after a space character with the I<zero-width positive look-behind assertion>:
 =end programlisting
 
 ... where the construct C<< (?<=...) >> contains the fixed-width pattern.  This
-approach can be useful when performing a global regex match with the C<\G>
+approach can be useful when combining a global regex match with the C<\G>
 modifier, but it's an advanced feature you likely won't use often.
 
 =head1 Regex Modifiers
@@ -916,7 +916,7 @@ C</x> modifier can still improve your code.
 X</g>
 X<regex; global match>
 
-The C</g> modifier performs a regex globally throughout a string.  This makes
+The C</g> modifier matches a regex globally throughout a string.  This makes
 sense when used with a substitution:
 
 =begin programlisting
@@ -969,6 +969,6 @@ unfortunate protagonist's name with:
 =end programlisting
 
 You may add as many C</e> modifiers as you like to a substitution.  Each
-additional occurrence of this modifier will perform another evaluation of the
+additional occurrence of this modifier will cause another evaluation of the
 result of the expression, though only Perl golfers tend to use C</ee> or
 anything more complex.

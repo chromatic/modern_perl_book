@@ -504,10 +504,9 @@ function, when you want to indicate that the calling code is wrong somehow:
 =head2 Validating Arguments
 
 Defensive programming often benefits from checking types and values of
-arguments for appropriateness before performing further processing.  By
-default, Perl 5 provides few built-in mechanisms for doing so.  To check that
-the I<number> of parameters passed to a function is correct, evaluate C<@_> in
-scalar context:
+arguments for appropriateness before further execution.  By default, Perl 5
+provides few built-in mechanisms for doing so.  To check that the I<number> of
+parameters passed to a function is correct, evaluate C<@_> in scalar context:
 
 =begin programlisting
 
@@ -757,12 +756,11 @@ with no functional changes (yet more clarity and improved performance):
 X<goto>
 X<functions; goto>
 
-If you really I<must> perform your own manual tail call elimination, a special
-form of the C<goto> keyword exists.  Unlike the form which can often lead to
-spaghetti code, the C<goto> function form replaces the current function call
-with a call to another function.  You may use a function by name or by
-reference.  You must always set C<@_> yourself manually, if you want to pass
-different arguments:
+If you really I<must> eliminate tail calls, use a special form of the C<goto>
+keyword.  Unlike the form which can often lead to spaghetti code, the C<goto>
+function form replaces the current function call with a call to another
+function.  You may use a function by name or by reference.  You must always set
+C<@_> yourself manually, if you want to pass different arguments:
 
 =begin programlisting
 
@@ -815,10 +813,10 @@ previous versions of Perl required you to invoke them with a leading ampersand
 =end programlisting
 
 While they're visually noisy, with vestigial syntax, the leading ampersand form
-performs other behavior which can occasionally surprise you.  First, it
-disables prototype checking (as if that often mattered).  Second, if you do not
-pass arguments explicitly, it I<implicitly> passes the contents of C<@_>
-unmodified.  Both can lead to surprising behavior.
+has other beaviors which can occasionally surprise you.  First, it disables
+prototype checking (as if that often mattered).  Second, if you do not pass
+arguments explicitly, it I<implicitly> passes the contents of C<@_> unmodified.
+Both can lead to surprising behavior.
 
 A final pitfall comes from leaving the parentheses off of function calls.  The
 Perl 5 parser uses several heuristics to resolve ambiguity of barewords and the

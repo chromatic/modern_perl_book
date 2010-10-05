@@ -6,11 +6,11 @@ X<testing>
 X<tests>
 
 I<Testing> is the process of writing and running automated verifications that
-your software performs as intended, in whole or in part.  At its heart, this is
+your software behaves as intended, in whole or in part.  At its heart, this is
 an automation of a process you've performed countless times already: write a
 bit of code, run it, and see if it works.  The difference is in the
-I<automation>.  Rather than performing these manual steps and relying on humans
-to do everything perfectly every time, let the computer handle the repetition.
+I<automation>.  Rather than relying on humans to perform each manual check
+perfectly every time, let the computer handle the repetition.
 
 Perl 5 provides great tools to help you write good and useful automated tests.
 
@@ -227,7 +227,7 @@ X<cmp_ok()>
 X<testing; cmp_ok()>
 X<Test::More; cmp_ok()>
 
-Both C<is()> and C<isnt()> perform I<string comparisons> with the Perl 5
+Both C<is()> and C<isnt()> apply I<string comparisons> with the Perl 5
 operators C<eq> and C<ne>.  This almost always does the right thing, but for
 complex values such as objects with overloading (L<overloading>) or dual vars
 (L<dualvars>), you may prefer explicit comparison testing.  The C<cmp_ok()>
@@ -258,8 +258,8 @@ C<isa_ok()>:
 
 C<isa_ok()> provides its own diagnostic message on failure.
 
-C<can_ok()> verifies that a class or object can perform the requested method
-(or methods):
+C<can_ok()> verifies that a class or object can do the requested method (or
+methods):
 
 =begin programlisting
 

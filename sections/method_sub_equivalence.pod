@@ -65,8 +65,8 @@ X<UNIVERSAL; can()>
 X<can()>
 
 Perl has one circumstance where this behavior may seem necessary.  If you force
-method resolution without performing dispatch, how do you invoke the resulting
-method reference?
+method resolution without dispatch, how do you invoke the resulting method
+reference?
 
 =begin programlisting
 
@@ -126,9 +126,9 @@ callable as either.
 
 The core C<CGI> module is a prime offender.  Its functions manually inspect
 C<@_> to determine whether the first argument is a likely invocant.  If so,
-they perform particular manipulations to make sure that any object state the
-function needs to access is available.  If the first argument is not a likely
-invocant, the function must consult global data elsewhere.
+they ensure that any object state the function needs to access is available.
+If the first argument is not a likely invocant, the function must consult
+global data elsewhere.
 
 As with all heuristics, there are corner cases.  It's difficult to predict
 exactly which invocants are potentially valid for a given method, especially

@@ -541,8 +541,8 @@ X<Cwd>
 Perl also allows you to change its notion of the current directory.  By
 default, this is the active directory from where you launched the program.  The
 core C<Cwd> module allows you to determine this.  The keyword C<chdir> attempts
-to change the current working directory.  This can be useful for performing
-file manipulations with relative--not absolute--paths.
+to change the current working directory.  This can be useful for manipulating
+files with relative--not absolute--paths.
 
 =end sidebar
 

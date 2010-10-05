@@ -66,9 +66,9 @@ X<invocant>
 
 A I<method> is a function associated with a class.  It resembles a
 fully-qualified function call in a superficial sense, but it differs in two
-important ways.  First, a method call always has an I<invocant> on which to
-perform the method.  In the case of creating the two C<Cat> objects, the name
-of the class (C<Cat>) is the invocant:
+important ways.  First, a method call always has an I<invocant> on which to the
+method operates.  In the case of creating the two C<Cat> objects, the name of
+the class (C<Cat>) is the invocant:
 
 =begin programlisting
 
@@ -159,6 +159,17 @@ To define object attributes, describe them as part of the class:
     }
 
 =end programlisting
+
+=begin sidebar
+
+That C<has> line may look very different from other Perl 5 code.  C<has()> is a
+function which declares an attribute.  The first argument is the name of the
+attribute, in this case C<'name'>.  The C<< is => 'ro' >> pair of arguments
+declares that this attribute is C<r>ead C<o>nly, so you cannot modify it after
+you've set it.  Finally, the C<< isa => 'Str' >> pair declares that the value
+of this attribute can only be a C<str>ing.  This will all become clear soon.
+
+=end sidebar
 
 In English, that line of code means "C<Cat> objects have a C<name> attribute.
 It's readable but not writable, and it's a string."  That single line of code
@@ -300,21 +311,21 @@ though Moose does not enforce any particular philosophy in this area.
 =end sidebar
 
 Now that individual objects can have their own instance data, the value of
-object orientation may be more obvious.  An object is a bookmark for the data
-it contains as well as the behavior appropriate to that data.  An object is a
-collection of named data and behaviors.  A class is the description of the data
-and behaviors that instances of that class possess.
+object orientation may be more obvious.  An object is a group of related data
+as well as behaviors appropriate for that data.  A class is the description of
+the data and behaviors that instances of that class possess.
 
 =head2 Encapsulation
 
 X<encapsulation>
 
-Moose allows you to declare I<which> attributes class instances possess as well
-as how to treat those attributes.  The examples shown so far do not describe
-I<how> to store those attributes.  This information is available if you really
-need it, but the declarative approach can actually improve your programs.  In
-this way, Moose encourages I<encapsulation>, or hiding the internal details of
-an object from external uses of that object.
+Moose allows you to declare I<which> attributes class instances possess (a cat
+has a name) as well as the attributes of those attributes (you cannot change a
+cat's name).  By default, Moose does not permit you to describe how an object
+I<stores> its attributes; Moose decides that for you.  This information is
+available if you really need it, but the declarative approach can actually
+improve your programs.  In this way, Moose encourages I<encapsulation>: hiding
+the internal details of an object from external users of that object.
 
 Consider a change to the age of a C<Cat>; instead of requesting that directly
 from the constructor, calculate the age of a C<Cat> based on the year of its
@@ -431,8 +442,7 @@ It's obvious (in context) that you can pass a C<Cat> object to this function
 and get sane results.  It's less obvious that you can pass other types of
 objects and get sane results.  This is an important object orientation property
 called I<polymorphism>, where you can substitute an object of one class for an
-object of another class if they provide the same external interface in the same
-way.
+object of another class if they provide the same external interface.
 
 X<genericity>
 
@@ -449,19 +459,18 @@ classes before allowing a program to substitute instances of one class for
 another.  Perl 5 provides ways to enforce these checks, but it does not require
 them.  Its default ad-hoc system lets you treat any two instances with methods
 of the same name as equivalent enough.  Some people call this I<duck typing>,
-in the theory that any object which can C<quack()> is sufficiently duck-like
-that you can treat it as a duck.
+arguing that any object which can C<quack()> is sufficiently duck-like that you
+can treat it as a duck.
 
 =end sidebar
 
 The benefit of the genericity in C<show_vital_stats()> is that neither the
-specific I<type> nor the implementation of the object provided matters.  Any
+specific type nor the implementation of the object provided matters.  Any
 invocant is valid if it supports three methods, C<name()>, C<age()>, and
 C<diet()> which take no arguments and each return something which can
 concatenate in a string context.  You may have a hundred different classes in
-your code, none of which have any obvious relationship between each other, but
-if they conform to this expectation of behavior, they will work with this
-method.
+your code, none of which have any obvious relationships, but they will work
+with this method if they conform to this expectated behavior.
 
 This is an improvement over writing specific functions to extract and display
 this information for even a fraction of those hundred classes.  This genericity
@@ -499,16 +508,16 @@ While a class is primarily a mechanism for organizing behaviors and state into
 a template for objects, a role is primarily a mechanism for organizing
 behaviors and state into a named collection.
 
-In short, a role is something a class does.
+A role is something a class does.
 
 The difference between some sort of C<Animal>--with a C<name()>, an C<age()>,
 and a preferred C<diet()>--and C<Cheese>--which can C<age()> in storage--may be
-that the C<Animal> performs a C<LivingBeing> role, while the C<Cheese> performs
-a C<Storable> role.
+that the C<Animal> does the C<LivingBeing> role, while the C<Cheese> does the
+C<Storable> role.
 
 While you I<could> check that every object passed into C<show_vital_stats()> is
 an instance of C<Animal>, you lose some genericity that way.  Instead, check
-that the object I<performs> the C<LivingBeing> role:
+that the object I<does> the C<LivingBeing> role:
 
 =begin programlisting
 
@@ -522,9 +531,9 @@ that the object I<performs> the C<LivingBeing> role:
 
 =end programlisting
 
-Anything which performs this role must supply the C<name()>, C<age()>, and
+Anything which does this role must supply the C<name()>, C<age()>, and
 C<diet()> methods.  This does not happen automatically; the C<Cat> class must
-explicitly mark that it performs the role:
+explicitly mark that it does the role:
 
 =begin programlisting
 
@@ -545,10 +554,10 @@ explicitly mark that it performs the role:
 
 X<roles; composition>
 
-That single line has two functions.  First, it tells Moose that the class
-performs the named role.  Second, it composes the role into the class.  This
-process checks that the class I<somehow> provides all of the required methods
-and all of the required attributes without potential collisions.
+That single line has two functions.  First, it tells Moose that the class does
+the named role.  Second, it I<composes> the role into the class.  This process
+checks that the class I<somehow> provides all of the required methods and all
+of the required attributes without potential collisions.
 
 The C<Cat> class provides C<name()> and C<diet()> methods as accessors to named
 attributes.  It also declares its own C<age()> method.
@@ -599,7 +608,7 @@ role:
 =end programlisting
 
 Moving this code out of the C<Cat> class into a separate role makes it
-available to other classes.  Now C<Cat> can perform both roles:
+available to other classes.  Now C<Cat> can compose both roles:
 
 =begin programlisting
 
@@ -619,11 +628,17 @@ X<roles; allomorphism>
 
 The implementation of the C<age()> method supplied by the
 C<CalculateAgeFromBirthYear> satisfies the requirement of the C<LivingBeing>
-role, and the composition succeeds.  Checking that objects perform the
-C<LivingBeing> role remains unchanged, regardless of I<how> objects perform
-this role.  A class could choose to provide its own C<age()> method or obtain
-it from another role; that doesn't matter.  All that matters is that it
-contains one.  This is I<allomorphism>.
+role, and the composition succeeds.  Checking that objects do the
+C<LivingBeing> role remains unchanged, regardless of I<how> objects do this
+role.  A class could choose to provide its own C<age()> method or obtain it
+from another role; that doesn't matter.  All that matters is that it contains
+one.  This is I<allomorphism>.
+
+Pervasive use of allomorphism in your designs can reduce the size of your
+classes and allow you to share more code between classes.  It also allows more
+flexibility in your design by naming specific collections of behaviors so that
+you can test the capabilities of objects and classes and not their
+implementations.
 
 =head3 Roles and DOES()
 
@@ -748,15 +763,15 @@ X<multiple inheritance>
 X<objects; inheritance>
 X<objects; multiple inheritance>
 
-Method dispatch order is easy to understand in the case of single-parent
-inheritance.  When a class has multiple parents (I<multiple inheritance>),
-dispatch is less obvious.  By default, Perl 5 provides a depth-first strategy
-of method resolution.  It searches the class of the I<first> named parent and
-all of its parents recursively before searching the classes of the subsequent
-named parents.  This behavior is often confusing; avoid using multiple
-inheritance until you understand it and have exhausted all other alternatives.
-See C<perldoc mro> for more details about method resolution and dispatch
-strategies.
+I<Method dispatch order> (sometimes written I<method resolution order>) is easy
+to understand in the case of single-parent inheritance.  When a class has
+multiple parents (I<multiple inheritance>), dispatch is less obvious.  By
+default, Perl 5 provides a depth-first strategy of method resolution.  It
+searches the class of the I<first> named parent and all of its parents
+recursively before searching the classes of the subsequent named parents.  This
+behavior is often confusing; avoid using multiple inheritance until you
+understand it and have exhausted all other alternatives.  See C<perldoc mro>
+for more details about method resolution and dispatch strategies.
 
 =head3 Inheritance and Methods
 
@@ -774,7 +789,7 @@ extinguish:
 
         extends 'LightSource';
 
-        sub extinguish {};
+        sub extinguish {}
     }
 
 =end programlisting
