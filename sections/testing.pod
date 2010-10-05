@@ -174,9 +174,11 @@ convenient functions to ensure that your code behaves as you intend.
 X<is()>
 X<testing; is()>
 X<Test::More; is()>
+X<operators; eq>
 
-The C<is()> function compares two values.  If they match, the test passes.
-Otherwise, the test fails and provides a relevant diagnostic message:
+The C<is()> function compares two values using the C<eq> operator.  If the
+values are equal, the test passes.  Otherwise, the test fails and provides a
+relevant diagnostic message:
 
 =begin programlisting
 
@@ -218,10 +220,12 @@ clarity.
 X<isnt()>
 X<testing; isnt()>
 X<Test::More; isnt()>
+X<operators; ne>
 
 C<Test::More> provides a corresponding C<isnt()> function which passes if the
-provided values are not equal.  Otherwise, it behaves the same way as C<is()>
-with respect to scalar context and comparison types.
+provided values are not equal (according to the C<ne> operator).  Otherwise, it
+behaves the same way as C<is()> with respect to scalar context and comparison
+types.
 
 X<cmp_ok()>
 X<testing; cmp_ok()>
