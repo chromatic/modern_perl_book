@@ -18,7 +18,7 @@ X<operators; regex bind>
 X<operators; negated regex bind>
 X<operators; =~>
 X<operators; !~>
-X<regular expressions; atom>
+X<regex; atom>
 X<atom>
 
 The match operator (C<//> or, more formally, C<m//>) contains a regular
@@ -37,8 +37,8 @@ the match succeeds.
 =head1 The qr// Operator and Regex Combinations
 
 X<operators; qr//>
-X<regular expressions; qr//>
-X<regular expressions; first-class>
+X<regex; qr//>
+X<regex; first-class>
 
 Regexes are first-class entities in modern Perl when created with the C<qr//>
 operator:
@@ -74,7 +74,7 @@ You may interpolate and combine them into larger and more complex patterns:
 
 =head1 Quantifiers
 
-X<regular expressions; quantifiers>
+X<regex; quantifiers>
 X<operators; index>
 
 Regular expressions are far more powerful than previous examples have
@@ -100,9 +100,9 @@ string.  The simplest quantifier is the I<zero or one quantifier>, or C<?>:
 
 Any atom in a regular expression followed by the C<?> character means "match
 zero or one of this atom."  This regular expression matches if there are zero
-C<a> characters immediately following a C<c> character and immediately
-preceding a C<t> character.  It also matches if there is one and only one C<a>
-character between the C<c> and C<t> characters.
+C<a> or one characters immediately following a C<c> character and immediately
+preceding a C<t> character I<and also> matches if there is one and only one
+C<a> character between the C<c> and C<t> characters.
 
 X<regex quantifiers; one or more>
 
@@ -198,7 +198,7 @@ X<quantifiers; greedy>
 
 The C<+> and C<*> quantifiers by themselves are I<greedy quantifiers>; they
 match as much of the input string as possible.  This is particularly pernicious
-when matching "any amount of anything" with C<.*>:
+when matching the "zero or more non-newline characters" pattern of C<.*>:
 
 =begin programlisting
 
@@ -218,7 +218,7 @@ you go looking for "loam" with:
 
 =begin programlisting
 
-    my $seven_down = qr/l${letters_only}*m/;
+    my $seven_down = qr/l$letters_only*m/;
 
 =end programlisting
 
@@ -247,7 +247,7 @@ potential match for this token combination is zero characters:
 
 =end programlisting
 
-Use the C<+> quantifier to match one or more items:
+Use C<+?> to match one or more items non-greedily:
 
 =begin programlisting
 
@@ -263,7 +263,7 @@ The C<?> quantifier modifier also applies to the C<?> (zero or one matches)
 quantifier as well as the range quantifiers.  In every case, it causes the
 regex to match as little of the input as possible.
 
-The greedy modifiers C<.+> and C<.*> are tempting but dangerous.  If you write
+The greedy patterns C<.+> and C<.*> are tempting but dangerous.  If you write
 regular expression with greedy matches, test them thoroughly with a
 comprehensive and automated test suite with representative data to lessen the
 possibility of unpleasant surprises.
@@ -317,8 +317,8 @@ choosing the most expressive and maintainable one.
 
 =head1 Metacharacters
 
-X<regular expressions; metacharacters>
-X<regular expressions; .>
+X<regex; metacharacters>
+X<regex; .>
 
 Regular expressions get more powerful as atoms get more general.  For example,
 the C<.> character in a regular expression means "match any character except a
@@ -336,7 +336,7 @@ which might match 7 Down ("Rich soil") in a crossword puzzle, you might write:
 
 =end programlisting
 
-X<regular expressions; \w>
+X<regex; \w>
 
 Of course, if your list of potential matches were anything other than a list of
 words, this metacharacter could cause false positives, as it also matches
@@ -350,7 +350,7 @@ characters (in a Unicode sense--L<unicode>) and the underscore:
 
 =end programlisting
 
-X<regular expressions; \d>
+X<regex; \d>
 
 The C<\d> metacharacter matches digits--not just 0-9 as you expect, but any
 Unicode digit:
@@ -363,7 +363,7 @@ Unicode digit:
 
 =end programlisting
 
-X<regular expressions; \s>
+X<regex; \s>
 
 Use the C<\s> metacharacter to match whitespace, whether a literal space, a tab
 character, a carriage return, a form-feed, or a newline:
@@ -374,9 +374,9 @@ character, a carriage return, a form-feed, or a newline:
 
 =end programlisting
 
-X<regular expressions; \W>
-X<regular expressions; \D>
-X<regular expressions; \S>
+X<regex; \W>
+X<regex; \D>
+X<regex; \S>
 
 These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
@@ -511,7 +511,7 @@ the string in the magic variable C<%+>: a hash where the key is the name of the
 capture buffer and the value is the portion of the string which matched the
 buffer's regex.
 
-Parentheses are special to Perl 5 regular expressions; by default they perform
+Parentheses are special to Perl 5 regular expressions; by default they exhibit
 the same grouping behavior as parentheses do in regular Perl code.  They also
 enclose one or more atoms to capture whatever portion of the matched string
 they match.  To use literal parentheses in a regular expression, you must
@@ -673,7 +673,7 @@ which represent something different than their literal characters.  Square
 brackets always denote a character class and parentheses group and optionally
 capture pattern fragments.
 
-X<escape>
+X<escaping>
 X<metacharacters; escaping>
 
 To match a I<literal> instance of a metacharacter, I<escape> it with a backslash
@@ -709,7 +709,7 @@ quantifier as a quantifier.  Instead, it will parse the regex as C<\*\* ALERT
 =begin note
 
 Be cautious when processing regular expressions from untrusted user input.
-It's possible to craft a malicious regular expression which can perform an
+It's possible to craft a malicious regular expression which can produce an
 effective denial-of-service attack against your program.
 
 =end note
@@ -814,15 +814,14 @@ after a space character with the I<zero-width positive look-behind assertion>:
 =end programlisting
 
 ... where the construct C<< (?<=...) >> contains the fixed-width pattern.  This
-approach can be useful when performing a global regex match with the C<\G>
+approach can be useful when combining a global regex match with the C<\G>
 modifier, but it's an advanced feature you likely won't use often.
 
 =head1 Regex Modifiers
 
-X<regex modifiers>
-X<regular expressions; modifiers>
+X<regex; modifiers>
 X</i>
-X<regular expressions; case-insensitive>
+X<regex; case-insensitive>
 
 The regular expression operators allow several modifiers to change the behavior
 of matches.  These modifiers appear at the end of the match, substitution, and
@@ -862,13 +861,13 @@ You may also disable specific modifiers by preceding them with C<->:
 =end programlisting
 
 X</m>
-X<regular expressions; multiline>
+X<regex; multiline>
 
 The multiline operator, C</m>, allows the C<^> and C<$> anchors match at any
 start of line or end of line within the string.
 
 X</s>
-X<regular expressions; single line>
+X<regex; single line>
 
 The C</s> modifier treats the source string as a single line such that the C<.>
 metacharacter matches the newline character.  Damian Conway suggests a mnemonic
@@ -876,7 +875,7 @@ that C</m> modifies the behavior of I<multiple> regex metacharacters, while
 C</s> modifies the behavior of a I<single> regex metacharacter.
 
 X</x>
-X<regular expressions; extended readability>
+X<regex; extended readability>
 
 The C</x> modifier allows you to embed additional whitespace and comments
 within patterns without changing their meaning.  With this modifier in effect,
@@ -915,9 +914,9 @@ readability.  Even if you compose regexes together from compiled fragments, the
 C</x> modifier can still improve your code.
 
 X</g>
-X<regular expressions; global match>
+X<regex; global match>
 
-The C</g> modifier performs a regex globally throughout a string.  This makes
+The C</g> modifier matches a regex globally throughout a string.  This makes
 sense when used with a substitution:
 
 =begin programlisting
@@ -952,7 +951,7 @@ available string to match.  The use of lookahead assertions can become very
 important here, as they do not consume the available string to match.
 
 X</e>
-X<regular expressions; substitution evaluation>
+X<regex; substitution evaluation>
 
 The C</e> modifier allows you to write arbitrary Perl 5 code on the right side
 of a substitution operation.  If the match succeeds, the regex engine will run
@@ -970,6 +969,6 @@ unfortunate protagonist's name with:
 =end programlisting
 
 You may add as many C</e> modifiers as you like to a substitution.  Each
-additional occurrence of this modifier will perform another evaluation of the
+additional occurrence of this modifier will cause another evaluation of the
 result of the expression, though only Perl golfers tend to use C</ee> or
 anything more complex.

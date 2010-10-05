@@ -20,14 +20,14 @@ The C<strict> pragma (L<pragmas>) allows you to forbid (or re-enable) various
 language constructs which offer power but also the potential for accidental
 abuse.
 
-C<strict> performs three functions: forbidding symbolic references, requiring
+C<strict> provides three features: forbidding symbolic references, requiring
 variable declarations, and forbidding the use of undeclared barewords
 (L<barewords>).  While the occasional use of symbolic references is necessary
-to perform symbol-table manipulation and exporting (barring the use of helper
-modules, such as C<Moose>), the use of a variable as a variable name offers the
-possibility of subtle errors of action at a distance--or, worse, the
-possibility of poorly-validated user input manipulating internal-only data for
-malicious purposes.
+to manipulate symbol tables (barring the use of helper modules, such as
+C<Moose>), the use of a variable as a variable name offers the possibility of
+subtle errors of action at a distance--or, worse, the possibility of
+poorly-validated user input manipulating internal-only data for malicious
+purposes.
 
 Requiring variable declarations helps to prevent typos in variable names and
 encourages proper scoping of lexical variables.  It's much easier to see the

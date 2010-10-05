@@ -14,14 +14,14 @@ in the system.
 C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
 systems, but many useful programs do not use objects pervasively, and many
 useful programs do not use C<Class::MOP>.  Several idioms (L<idioms>) exist for
-performing reflection effectively in the absence of such a formal system.
+using reflection effectively in the absence of such a formal system.
 
 =head2 Checking that a Package Exists
 
 To check that a package exists somewhere in the system--that is, if some code
 somewhere has executed a C<package> directive with a given name--check that the
-package inherits from C<UNIVERSAL> by testing that the package can perform the
-C<can()> method:
+package inherits from C<UNIVERSAL> by testing that the package somehow provides
+the C<can()> method:
 
 =begin programlisting
 
@@ -42,7 +42,7 @@ and easier to understand.
 Because Perl 5 makes no strong distinction between packages and classes, the
 same technique for checking the existence of a package works for checking that
 a class exists.  There is no generic way for determining if a package is a
-class.  You I<can> check that the package C<can()> perform C<new()>, but there
+class.  You I<can> check that the package C<can()> provide C<new()>, but there
 is no guarantee that any C<new()> found is a method, nor a constructor.
 
 =head2 Checking that a Module Has Loaded
@@ -133,8 +133,8 @@ function exists, but this mechanism is simpler and easier to explain.
 =head2 Checking that a Method Exists
 
 There is no generic way to determine whether a given function is a function or
-a method.  Some functions perform dual duty as both functions and methods;
-though this is overly complex and usually a mistake, it is an allowed feature.
+a method.  Some functions behave as both functions and methods; though this is
+overly complex and usually a mistake, it is an allowed feature.
 
 =head2 Rooting Around in Symbol Tables
 

@@ -135,12 +135,12 @@ X<DOES()>
 
 The C<DOES()> method is new in Perl 5.10.0.  It exists to support the use of
 roles (L<roles>) in programs.  Pass it an invocant and the name of a role, and
-the method will return true if the appropriate class somehow performs that
-role.  (The class may do so through inheritance, through delegation, through
+the method will return true if the appropriate class somehow does that role.
+(The class may do so through inheritance, through delegation, through
 composition, through role application, or any other mechanism.)
 
 The default implementation of C<DOES()> falls back to C<isa()>, because
-inheritance is one mechanism by which a class may perform a role.  Given a
+inheritance is one mechanism by which a class may do a role.  Given a
 C<Cappuchin>:
 
 =begin programlisting

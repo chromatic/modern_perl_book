@@ -48,7 +48,7 @@ X<right associative>
 The I<associativity> of an operator governs whether it evaluates from left to
 right or right to left.  Addition is left associative, such that C<2 + 3 + 4>
 evaluates C<2 + 3> first, then adds C<4> to the result.  Exponentiation is
-right associative, such that C<2 ** 3 ** 4> performs C<3 ** 4> first, then
+right associative, such that C<2 ** 3 ** 4> evaluates C<3 ** 4> first, then
 raises C<2> to the 81st power.
 
 Simplifying complex expressions and using parentheses to demonstrate your

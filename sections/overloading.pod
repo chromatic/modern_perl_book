@@ -99,8 +99,8 @@ with function references provided directly, a child class I<must> override the
 parent's overloaded behavior by using C<overload> directly.
 
 Parent classes can allow their descendents more flexibility by specifying the
-I<name> of a method to call to perform the overloading, rather than hard-coding
-a function reference:
+I<name> of a method to call to implement the overloading, rather than
+hard-coding a function reference:
 
 =begin programlisting
 

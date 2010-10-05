@@ -12,7 +12,7 @@ together into classes of related behaviors.
 
 Perl 5's default object system is minimal.  It's very flexible--you can build
 almost any other object system you want on top of it--but it provides little
-assistance for performing the most common tasks simply and easily.
+assistance for the most common tasks.
 
 L<moose>
 

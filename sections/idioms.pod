@@ -219,7 +219,7 @@ transform it back into your preferred form for modification.
 This transformation is simple.  Consider the case where calculating the right
 value to sort is expensive in time or memory, such as calculating a
 cryptographic hash for a large file.  In that case, the Schwartzian transform
-is also useful because you can perform those expensive operations once (in the
+is also useful because you can execute those expensive operations once (in the
 rightmost C<map>), compare them repeatedly from a de facto cache in the
 C<sort>, and then remove them in the leftmost C<map>.
 
@@ -228,7 +228,7 @@ C<sort>, and then remove them in the leftmost C<map>.
 Z<easy_file_slurping>
 
 X<local; $/>
-X<globals; $/>
+X<global variables; $/>
 
 Perl 5's magic global variables are truly global in many cases.  It's all too
 easy to clobber their values elsewhere, unless you use C<local> everywhere.
@@ -254,9 +254,9 @@ within the block, this evaluates to the value of the assignment, or the
 contents of the file.  Even though C<$/> immediately reverts to its previous
 state at the end of the block, C<$file> now contains the contents of the file.
 
-The second example is similar, except that it performs no assignment and merely
-returns the single line read from the filehandle.  You may see either example;
-they both work the same way in this case.
+The second example contains no assignment and merely returns the single line
+read from the filehandle.  You may see either example; they both work the same
+way in this case.
 
 This can be useful (and, admittedly, maddening for people unfamiliar with this
 particular combination of Perl 5 features) if you don't have C<File::Slurp>
@@ -337,8 +337,8 @@ used all of the modules and pragmas you need:
 
 =end programlisting
 
-Calling C<main()> I<before> performing anything else in the program forces you
-to be explicit about initialization and order of compilation.  It also helps to
+Calling C<main()> I<before> anything else in the program forces you to be
+explicit about initialization and order of compilation.  It also helps to
 remind you to encapsulate the behavior of your program into functions and
 modules.  (It works nicely with files which can be programs and
 libraries--L<controlled_execution>.)
@@ -438,7 +438,7 @@ characters to create a useful username for a system account.  You can write:
 =end programlisting
 
 Unlike the previous example, this one reads right to left.  First, assign the
-value of C<$name> to C<$normalized_name>.  Then, perform the transliteration on
+value of C<$name> to C<$normalized_name>.  Then, transliterate
 C<$normalized_name>N<The parentheses here affect the precedence so that the
 assignment happens first.>.  The assignment expression evaluates to the
 I<variable> C<$normalized_name>.  This technique works on all sorts of in-place

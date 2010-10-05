@@ -126,12 +126,12 @@ without requiring additional evaluation:
 
 =end programlisting
 
-This code avoids unpleasant quoting issues.  It also performs better, as
-there's only one compilation stage, no matter how many accessors you create.
-It even uses less memory by reusing the I<same> compiled code for the bodies of
-the two functions.  All that differs is the binding to the C<$attrname>
-lexical.  In a long-running process, or with a lot of accessors, this technique
-can be very useful.
+This code avoids unpleasant quoting issues and runs more quickly, as there's
+only one compilation stage, no matter how many accessors you create.  It even
+uses less memory by reusing the I<same> compiled code for the bodies of the two
+functions.  All that differs is the binding to the C<$attrname> lexical.  In a
+long-running process, or with a lot of accessors, this technique can be very
+useful.
 
 X<closures; installing into symbol table>
 X<symbol tables>
@@ -159,8 +159,7 @@ function reference to the appropriate entry in the symbol table.
 
 This operation is a symbolic reference, so it's necessary to disable C<strict>
 reference checking for the operation.  Many programs have a subtle bug in
-similar code, as they perform the assignment and the generation in a single
-step:
+similar code, as they assign and generate in a single line:
 
 =begin programlisting
 
@@ -353,7 +352,7 @@ after you've created it:
 
 =end programlisting
 
-... and you can perform introspection on the metaclass:
+... and you can inspect the metaclass:
 
 =begin programlisting
 

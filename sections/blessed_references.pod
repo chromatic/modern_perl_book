@@ -129,8 +129,8 @@ Within the body of the class, methods can access hash elements directly:
 
 Yet so can any code outside of the class.  This violates encapsulation--in
 particular, it means that you can never change the object's internal
-representation without breaking external code or performing hacks--so it's
-safer to provide accessor methods:
+representation without breaking external code or perpetuating ugly hacks--so
+it's safer to provide accessor methods:
 
 =begin programlisting
 

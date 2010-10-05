@@ -9,9 +9,9 @@ X<operators; ~~>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
 if they match each other.  The fuzziness of the definition demonstrates the
-smartness of the operator: the type of comparison performed depends on the type
-of both operands.  You've seen this behavior before, as C<given>
-(L<given_when>) performs an implicit smart match.
+smartness of the operator: the type of comparison depends on the type of both
+operands.  You've seen this behavior before, as C<given> (L<given_when>)
+performs an implicit smart match.
 
 =begin sidebar
 
@@ -29,12 +29,12 @@ The smart match operator is an infix operator:
 
 =end programlisting
 
-The type of comparison performed generally depends first on the type of the
-right operand and then on the left operand.  For example, if the right operand
-is a scalar with a numeric component, the comparison will use numeric equality.
-If the right operand is a regex, the comparison will use a grep or a pattern
-match.  If the right operand is an array, the comparison will perform a grep or
-a recursive smart match.  If the right operand is a hash, the comparison will
+The type of comparison generally depends first on the type of the right operand
+and then on the left operand.  For example, if the right operand is a scalar
+with a numeric component, the comparison will use numeric equality.  If the
+right operand is a regex, the comparison will use a grep or a pattern match.
+If the right operand is an array, the comparison will perform a grep or a
+recursive smart match.  If the right operand is a hash, the comparison will
 check the existence of one or more keys.
 
 For example:

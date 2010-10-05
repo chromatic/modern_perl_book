@@ -135,10 +135,8 @@ X<short-circuiting>
 The logical operators treat their operands in a boolean context.  The C<&&> and
 C<and> operators test that both expressions are logically true, while the C<||>
 and C<or> operators test that either expression is true.  All four are infix
-operators.  All four perform I<short-circuiting> behavior: if the evaluation of
-one expression will make the entire expression false, Perl will not evaluate
-the other expression.  The word forms of these operators have lower precedence
-than the symbolic forms.
+operators.  All four exhibit I<short-circuiting> behavior
+(L<short_circuiting>).
 
 The defined-or operator, C<//>, tests the I<definedness> of its operand.
 Unlike C<||> which tests the truthiness of its operand, C<//> evaluates to a
@@ -169,8 +167,8 @@ The C<!> and C<not> operators return the logical opposite of the boolean value
 of their operands.  C<not> has a lower precedence than C<!>.  These are prefix
 operators.
 
-The C<xor> operator is an infix operator which performs the exclusive or of its
-operands.
+The C<xor> operator is an infix operator which evaluates to the exclusive-or of
+its operands.
 
 =head2 Bitwise Operators
 
@@ -199,8 +197,8 @@ X<<< >>= >>>
 The bitwise operators treat their operands numerically at the bit level.  These
 are uncommon in most Perl 5 programs.  They consist of left shift (C<< << >>),
 right shift (C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and bitwise xor
-(C<^>), as well as their in-place variants (C<&=>, C<|=>, C<^=>, C<< <<= >>,
-and C<< >>= >>).
+(C<^>), as well as their in-place variants (C<< <<= >>, C<< >>= >>, C<&=>,
+C<|=>, and C<^=>).
 
 =head2 Special Operators
 
