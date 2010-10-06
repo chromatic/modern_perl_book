@@ -341,7 +341,7 @@ information.
 
 =begin sidebar
 
-If you're using Perl 5.12 or newer, C<IO::File> has superseded C<FileHandle>.
+C<IO::File> has superseded C<FileHandle> in Perl 5.12.
 
 =end sidebar
 
