@@ -646,7 +646,7 @@ value> warning:
 =head2 The Empty List
 
 X<empty list>
-X<()>
+X<(); empty list>
 
 When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list.  When evaluated in scalar context, this evaluates to

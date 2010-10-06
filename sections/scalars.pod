@@ -10,6 +10,9 @@ value, a filehandle, or a reference--but it is always a single value.  Scalar
 values and scalar context have a deep connection; assigning to a scalar
 provides scalar context.
 
+X<$; sigil>
+X<sigils; $>
+
 Scalars may be lexical, package, or global (L<globals>) variables.  You may
 only declare lexical or package variables.  The names of scalar variables must
 conform to standard variable naming guidelines (L<names>).  Scalar variables
@@ -121,8 +124,8 @@ number.
 
 X<boolean>
 X<scalars; boolean values>
-X<boolean true>
-X<boolean false>
+X<boolean; true>
+X<boolean; false>
 X<strings; true>
 X<strings; false>
 X<numbers; true>

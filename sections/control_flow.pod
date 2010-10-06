@@ -368,10 +368,9 @@ circuiting can help you to avoid errors and warnings:
 =head2 Context for Conditional Directives
 
 X<context; conditional>
-X<truth>
-X<boolean truth>
-X<true value>
-X<false value>
+X<boolean; true>
+X<true>
+X<false>
 
 The conditional directives--C<if>, C<unless>, and the ternary conditional
 operator--all evaluate an expression in boolean context
@@ -1167,7 +1166,7 @@ references, arbitrary comparison expressions, and even code references.
 =head2 Tailcalls
 
 Z<tailcalls>
-X<tailcalls>
+X<tailcall>
 X<goto>
 
 A I<tailcall> occurs when the last expression within a function is a call to
@@ -1186,8 +1185,7 @@ value of the inner function:
 
 =end programlisting
 
-X<optimization; tailcalls>
-X<tailcall optimization>
+X<optimization; tailcall>
 
 In this circumstance, returning from C<greet_person()> directly to the caller
 of C<log_and_greet_person()> is more efficient than returning to

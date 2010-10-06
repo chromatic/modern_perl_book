@@ -285,8 +285,8 @@ X<$.>
 For every line read, Perl 5 increments the value of the variable C<$.>, which
 serves as a line counter.
 
-X<variables; $.>
-X<$.>
+X<variables; $/>
+X<$/>
 
 C<readline> uses the current contents of C<$/> as the line-ending sequence.
 The value of this variable defaults to the most appropriate line-ending

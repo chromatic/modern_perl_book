@@ -374,6 +374,8 @@ a function:
 
 X<function sigil>
 X<sigils; &>
+X<&; sigil>
+X<sigils; &>
 
 Without the I<function sigil> (C<&>), you will take a reference to the
 function's return value or values.
