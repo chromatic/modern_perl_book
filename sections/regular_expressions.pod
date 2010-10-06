@@ -804,8 +804,8 @@ the I<zero-width negative look-behind assertion>:
 =end programlisting
 
 ... where the construct C<< (?<!...) >> contains the fixed-width pattern.
-Alternately, you could express that the C<cat> must always occur immediately
-after a space character with the I<zero-width positive look-behind assertion>:
+Otherwise you could express that the C<cat> must always occur immediately after
+a space character with the I<zero-width positive look-behind assertion>:
 
 =begin programlisting
 

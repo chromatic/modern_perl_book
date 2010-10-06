@@ -15,8 +15,6 @@ improve the effectiveness of your practice by following a few guidelines.
 
 L<style>
 
-L<files>
-
 L<exceptions>
 
 L<pragmas>

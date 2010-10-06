@@ -56,10 +56,11 @@ with C<$values[0]>.  Access a list of values from the array with C<@values[
 X<anonymous variables>
 X<variables; anonymous>
 
-Perl 5 variables do not I<need> names; Perl can allocate storage space for
-variables without storing them in lexical pads or symbol tables.  These are
-I<anonymous> variables.  The only way to access them is by reference
-(L<references>).
+Perl 5 variables do not I<need> names; Perl manages variables just fine without
+caring about how you refer to them.  Variables created without literal names in
+your source code (such as C<$apple>, C<@boys>, C<%cheeseburgers>) are
+I<anonymous> variables.  The only way to access anonymous variables is by
+reference (L<references>).
 
 =head2 Variables, Types, and Coercion
 

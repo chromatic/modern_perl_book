@@ -108,6 +108,11 @@ developer:
 configuration-free use of the public CPAN.  It fulfills 90% of your needs to
 find and install modules.
 
+=item * C<App::perlbrew> helps you to manage multiple installations of Perl 5.
+This is very useful to use a newer version than the system version or to
+isolate distributions you've installed for one application from distributions
+you've installed for another.
+
 =item * C<CPAN::Mini> and the C<cpanmini> command allow you to create your own
 (private) mirror of the public CPAN.  You can inject your own distributions
 into this repository and manage which versions of the public modules are

@@ -53,12 +53,11 @@ altogether.
 
 X<methods; calling as functions (avoid)>
 
-If C<$o> were I<not> an C<Order> object, but instead a subclass or allomorph
-(L<roles>) of C<Order> which overrode C<calculate_price()>, the
-method-as-a-function call would call the I<wrong> method.  As well, if the
-internal implementation of C<calculate_price()> were to change--perhaps
-inherited from elsewhere or delegated through C<AUTOLOAD()>--the caller might
-break.
+If C<$o> were instead a subclass or allomorph (L<roles>) of C<Order> which
+overrode C<calculate_price()>, the method-as-a-function call would call the
+I<wrong> method.  If the internal implementation of C<calculate_price()> were
+to change--perhaps inherited from elsewhere or delegated through
+C<AUTOLOAD()>--the caller might break.
 
 X<methods; calling with references>
 X<UNIVERSAL; can()>

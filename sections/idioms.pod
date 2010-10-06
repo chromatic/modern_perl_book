@@ -38,7 +38,7 @@ X<arguments; named>
 X<signatures>
 X<MooseX::MultiMethods>
 
-Without a module such as C<signatures> or C<MooseX::Multimethods>, Perl 5's
+Without a module such as C<signatures> or C<MooseX::MultiMethods>, Perl 5's
 argument passing mechanism is simple: all arguments flatten into a single list
 accessible through C<@_> (L<function_parameters>).  While this simplicity is
 occasionally too simple--named parameters can be very useful at times--it does
@@ -174,6 +174,27 @@ C<sort> takes the list of anonymous arrays and compares their second elements
     my @sorted_pairs = sort { $a->[1] cmp $b->[1] } @pairs;
 
 =end programlisting
+
+X<$a>
+X<$b>
+X<keywords; sort>
+
+The block provided to C<sort> takes its arguments in two package-scoped
+(L<scope>) variables C<$a> and C<$b>N<See C<perldoc -f sort> for an extensive
+discussion of the implications of this scoping.>.  You do not have to declare
+these variables; they are always available in your current package.  The
+C<sort> block takes its arguments two at a time; the first becomes the contents
+of C<$a> and the second the contents of C<$b>.  If C<$a> should come before
+C<$b> in the results, the block must return -1.  If both values are
+sufficiently equal in the sorting terms, the block must return 0.  Finally, if
+C<$a> should come after C<$b> in the results, the block should return 1.  Any
+other return values are errors.
+
+X<operators; cmp>
+X<< operators; <=> >>
+
+The C<cmp> operator performs string comparisons and the C<< <=> >> performs
+numeric comparisons.
 
 Given C<@sorted_pairs>, a second C<map> operation converts the data structure
 to a more usable form:

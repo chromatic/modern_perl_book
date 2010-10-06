@@ -140,7 +140,7 @@ you can handle the exception or if you should rethrow it:
 
 Copy C<$@> to C<$exception> to avoid the possibility of subsequent code
 clobbering the global variable C<$@>.  You never know what else has used
-an C<eval> block elsewhere and reset $@.
+an C<eval> block elsewhere and reset C<$@>.
 
 =end sidebar
 

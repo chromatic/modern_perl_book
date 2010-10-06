@@ -71,7 +71,7 @@ arguments to the pragma to control its behavior at a finer level:
 
 =begin programlisting
 
-    # require variable declaration; prohibit bareword function names
+    # require variable declarations; prohibit bareword function names
     use strict qw( subs vars );
 
 =end programlisting

@@ -51,8 +51,8 @@ That is, you could check the arity of a function (L<arity>) with:
 
 ... and anyone who reads the error message will receive the filename and line
 number of the I<calling> code, not C<only_two_arguments()>.  Similarly,
-C<Carp>'s C<cluck()> produces an entire backtrace of all function points up to
-its call.
+C<Carp>'s C<cluck()> produces an entire backtrace of all function calls up to
+the current function.
 
 X<Carp; verbose>
 
@@ -65,8 +65,8 @@ C<Carp>'s verbose mode throughout the entire program:
 
 =end programlisting
 
-This changes all C<croak()> calls to produce C<confess()>'s behavior and all
-C<carp()> calls to C<cluck()>'s behavior.
+This changes all C<carp()> (and C<croak()>--L<reporting_errors>) calls to
+include a backtrace.
 
 =head2 Enabling and Disabling Warnings
 
@@ -118,7 +118,7 @@ scope.
 
 C<perldoc perllexwarn> lists all of the warnings categories your version of
 Perl 5 understands with the C<warnings> pragma.  Most of them represent truly
-interesting conditions in which Perl may find your program.  A few may be
+interesting conditions which Perl may find in your program.  A few may be
 unhelpful in specific conditions.  For example, the C<recursion> warning will
 occur if Perl detects that a function has called itself more than a hundred
 times.  If you are confident in your ability to write recursion-ending
@@ -176,6 +176,8 @@ into C<$SIG{__WARN__}>:
         local $SIG{__WARN__} = sub { $warning .= shift };
 
         # do something risky
+        ...
+
         say "Caught warning:\n$warning" if $warning;
     }
 
@@ -218,28 +220,11 @@ C<warnings::register> pragma:
 This will create a new warnings category named after the package (in this case,
 C<Scary::Monkey>).  Users can enable it explicitly with C<use warnings
 'Scary::Monkey'> or disable it explicitly with C<no warnings 'Scary::Monkey'>.
-To report a warning, use the C<warnings::warn()> function in conjunction with
-C<warnings::enabled()>:
+Use C<warnings::enabled()> to test if the calling lexical scope has the given
+warning category enabled.  Use C<warnings::warnif()> to produce a warning only
+if warnings are in effect.
 
-=begin programlisting
-
-    package Scary::Monkey;
-
-    use warnings::register;
-
-    B<sub import>
-    B<{>
-        B<warnings::warn( __PACKAGE__ . ' used with empty import list' )>
-            B<if @_ == 0 && warnings::enabled();>
-    B<}>
-
-    1;
-
-=end programlisting
-
-If C<warnings::enabled()> is true, then the calling lexical scope has this
-warning enabled.  You can also report warnings for an existing warnings
-category, such as the use of deprecated constructs:
+For example, to produce a warning in the C<deprecated> category:
 
 =begin programlisting
 
@@ -257,8 +242,5 @@ category, such as the use of deprecated constructs:
     1;
 
 =end programlisting
-
-The C<warnings::warnif()> function checks the named warnings category and
-reports the error if it's active.
 
 See C<perldoc perllexwarn> for more details.

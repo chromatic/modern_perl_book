@@ -82,7 +82,7 @@ reference:
 
 =end programlisting
 
-Where classes built with Moose define their own object attributes
+Whereas classes built with Moose define their own object attributes
 declaratively, Perl 5's default OO is lax.  A class representing basketball
 players which stores jersey number and position might use a constructor like:
 
@@ -173,12 +173,14 @@ C<$joel> as an invocant.
 X<@ISA>
 X<variables; @ISA>
 
-Moose classes store their inheritance information in a metamodel.  Each class
-of a blessed reference stores information about its parents in a package global
-variable named C<@ISA>.  The method dispatcher looks in a class's C<@ISA> to
-find the names of parent classes in which to search for the appropriate method.
-Thus, an C<InjuredPlayer> class might contain C<Player> in its C<@ISA>.  You
-could write this relationship as:
+Moose classes store their inheritance information in a metamodel which provides
+additional abilities on top of Perl 5's default OO system.
+
+In the default system, every class stores information about its parents in a
+package global variable named C<@ISA>.  The method dispatcher looks in a
+class's C<@ISA> to find the names of parent classes in which to search for the
+appropriate method.  Thus, an C<InjuredPlayer> class might contain C<Player> in
+its C<@ISA>.  You could write this relationship as:
 
 =begin programlisting
 

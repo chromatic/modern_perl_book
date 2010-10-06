@@ -109,7 +109,7 @@ Besides files, you can open filehandles to scalars:
 
 =begin programlisting
 
-    use autodie;
+    use autodie;  # L<autodie>
 
     my $captured_output;
     open my $fh, '>', \$captured_output;
@@ -557,6 +557,9 @@ takes two operands, the old name of the file and the new name:
     use autodie;
 
     rename 'death_star.txt', 'carbon_sink.txt';
+
+    # or if you're stylish:
+    rename 'death_star.txt' => 'carbon_sink.txt';
 
 =end programlisting
 
