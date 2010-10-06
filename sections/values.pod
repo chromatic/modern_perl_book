@@ -759,7 +759,7 @@ context (for a single element) or list context (for a slice):
     # enable say and other features (see preface)
     use Modern::Perl;
 
-    # you do not need to understand this all
+    # you do not need to understand this
     sub context
     {
         my $context = wantarray();
