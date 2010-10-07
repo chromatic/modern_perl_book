@@ -230,7 +230,7 @@ Surround a list of values or expressions with square brackets:
 =end programlisting
 
 This array reference behaves the same as named array references, except that
-anonymous array references I<always> create a new reference, while taking a
+the anonymous array brackets I<always> create a new reference, while taking a
 reference to a named array always refers to the I<same> array with regard to
 scoping.  That is to say:
 
@@ -257,8 +257,8 @@ scoping.  That is to say:
 =end programlisting
 
 ... neither C<$sunday_ref> nor C<$monday_ref> contains a dessert.  Within the
-square braces used to create the anonymous array reference, the C<@meals> array
-flattens in list context.
+square braces used to create the anonymous array, the C<@meals> array flattens
+in list context.
 
 =head3 Hash References
 

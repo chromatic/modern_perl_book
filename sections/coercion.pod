@@ -23,8 +23,9 @@ X<truthiness>
 Boolean coercion occurs when you test the I<truthiness> of a valueN<Truthiness
 is like truthfulness if you squint and say "Yeah, that's true, but....">, such
 as in a C<if> or C<while> condition.  Numeric 0 is false.  The undefined value
-is false.  The empty string is false, and so is the string C<'0'>.  The strings
-C<'0.0'> and C<'0e'> are I<true>, however.
+is false.  The empty string is false, and so is the string C<'0'>.  Strings
+which may be I<numerically> equal to zero (such as C<'0.0'>, C<'0e'>, and C<'0
+but true'>) are I<true>, however.
 
 All other values are true, including the idiomatic string C<'0 but true'>.  In
 the case of a scalar with both string and numeric portions (L<dualvars>), Perl
