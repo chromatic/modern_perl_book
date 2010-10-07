@@ -66,7 +66,7 @@ X<invocant>
 
 A I<method> is a function associated with a class.  It resembles a
 fully-qualified function call in a superficial sense, but it differs in two
-important ways.  First, a method call always has an I<invocant> on which to the
+important ways.  First, a method call always has an I<invocant> on which the
 method operates.  In the case of creating the two C<Cat> objects, the name of
 the class (C<Cat>) is the invocant:
 
@@ -470,7 +470,7 @@ invocant is valid if it supports three methods, C<name()>, C<age()>, and
 C<diet()> which take no arguments and each return something which can
 concatenate in a string context.  You may have a hundred different classes in
 your code, none of which have any obvious relationships, but they will work
-with this method if they conform to this expectated behavior.
+with this method if they conform to this expected behavior.
 
 This is an improvement over writing specific functions to extract and display
 this information for even a fraction of those hundred classes.  This genericity
@@ -575,8 +575,8 @@ C<LivingBeing> role and C<Cheese> objects should not:
 
 =begin programlisting
 
-    say 'Alive!' if $fluffy->does('LivingBeing');
-    say 'Moldy!' if $cheese->does('LivingBeing');
+    say 'Alive!' if $fluffy->DOES('LivingBeing');
+    say 'Moldy!' if $cheese->DOES('LivingBeing');
 
 =end programlisting
 
@@ -955,9 +955,9 @@ X<Devel::Declare>
 The C<MooseX::Declare> extension from the CPAN uses a clever module called
 C<Devel::Declare> to add new syntax to Perl 5, specifically for Moose.  The
 C<class>, C<role>, and C<method> keywords reduce the amount of boilerplate
-necessary to write good OO code in Perl 5.  Note specifically the declarative
-nature of this example, as well as the now unnecessary C<my $self = shift;>
-line at the start of the C<age> method.
+necessary to write good object oriented code in Perl 5.  Note specifically the
+declarative nature of this example, as well as the now unnecessary C<my $self =
+shift;> line at the start of the C<age> method.
 
 =begin sidebar
 

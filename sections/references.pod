@@ -533,8 +533,8 @@ When you use references as arguments to functions, document your intent
 carefully.  Modifying the values of a reference from within a function may
 surprise calling code, which expects no modifications.
 
-If you need to commit a destructive operation on the contents of a reference
-without affecting the reference itself, copy its values to a new variable:
+If you need to commit a modify the contents of a reference without affecting
+the reference itself, copy its values to a new variable:
 
 =begin programlisting
 
