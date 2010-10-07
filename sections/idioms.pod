@@ -12,7 +12,7 @@ them--and they're not quite large enough that you can encapsulate them away
 behind functions and methods.  Instead, they're mannerisms.  They're ways of
 writing Perl with a Perlish accent.
 
-=head2 The Object as $self
+=head2 The Object as C<$self>
 
 X<$self>
 X<variables; $self>
