@@ -261,7 +261,8 @@ select between alternative I<variables>, not only values:
 
 =begin programlisting
 
-    push @{ rand() > 0.5 ? \@red_team : \@blue_team }, Player->new();
+    push @{ rand() > 0.5 ? \@red_team : \@blue_team },
+         Player->new();
 
 =end programlisting
 
@@ -368,10 +369,9 @@ circuiting can help you to avoid errors and warnings:
 =head2 Context for Conditional Directives
 
 X<context; conditional>
-X<truth>
-X<boolean truth>
-X<true value>
-X<false value>
+X<boolean; true>
+X<true>
+X<false>
 
 The conditional directives--C<if>, C<unless>, and the ternary conditional
 operator--all evaluate an expression in boolean context
@@ -382,11 +382,12 @@ Empty hashes and arrays evaluate to false.
 
 Perl 5 has no single true value, nor a single false value.  Any number that
 evaluates to 0 is false.  This includes C<0>, C<0.0>, C<0e0>, C<0x0>, and so
-on.  The empty string (C<''>) and C<"0"> evaluate to false, but the strings
-C<"0.0">, C<"0e0">, and so on do not.  The idiom C<"0 but true"> evaluates to 0
-in numeric context but evaluates to true, thanks to its string contents.  Both
-the empty list and C<undef> evaluate to false.  Empty arrays and hashes return
-the number 0 in scalar context, so they evaluate to false in boolean context.
+on.  The empty string (C<''>) and C<'0'> evaluate to false, but the strings
+C<'0.0'>, C<'0e0'>, and so on do not.  The idiom C<'0 but true'> evaluates to 0
+in numeric context but evaluates to true in boolean context, thanks to its
+string contents.  Both the empty list and C<undef> evaluate to false.  Empty
+arrays and hashes return the number 0 in scalar context, so they evaluate to
+false in boolean context.
 
 An array which contains a single element--even C<undef>--evaluates to true in
 boolean context.  A hash which contains any elements--even a key and a value of
@@ -1167,7 +1168,7 @@ references, arbitrary comparison expressions, and even code references.
 =head2 Tailcalls
 
 Z<tailcalls>
-X<tailcalls>
+X<tailcall>
 X<goto>
 
 A I<tailcall> occurs when the last expression within a function is a call to
@@ -1186,8 +1187,7 @@ value of the inner function:
 
 =end programlisting
 
-X<optimization; tailcalls>
-X<tailcall optimization>
+X<optimization; tailcall>
 
 In this circumstance, returning from C<greet_person()> directly to the caller
 of C<log_and_greet_person()> is more efficient than returning to

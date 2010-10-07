@@ -9,7 +9,7 @@ obfuscated, or bizarre fashion as you prefer.  Maintainability is a concern of
 good programmers, but the developers of Perl itself don't presume to dictate
 what I<you> find most maintainable.
 
-X<bareword>
+X<barewords>
 
 Perl's parser understands the built-in Perl keywords and operators; it knows
 that C<bless()> means you're making objects (L<blessed_references>).  These are

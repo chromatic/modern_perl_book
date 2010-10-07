@@ -9,6 +9,8 @@ I<first-class> data structures, which means that Perl 5 provides a separate
 data type at the language level.  Arrays support indexed access; that is, you
 can access individual members of the array by integer indexes.
 
+X<@ sigil>
+
 The C<@> sigil denotes an array.  To declare an array:
 
 =begin programlisting
@@ -21,6 +23,8 @@ The C<@> sigil denotes an array.  To declare an array:
 
 X<variant sigils>
 X<sigils; variance>
+X<$; sigil>
+X<sigils; $>
 
 I<Accessing> an individual element of an array in Perl 5 requires the scalar
 sigil.  Perl 5 (and you) can recognize that C<$cats[0]> refers to the C<@cats>
@@ -70,6 +74,9 @@ from the number of elements of the array (because array indexes start at 0):
         . 'and my last cat has an index of $last_index.'
 
 =end programlisting
+
+X<$#; sigil>
+X<sigils; $#>
 
 You can also use the special variable form of the array to find the last index;
 replace the C<@> array sigil with the slightly more unwieldy C<$#>:
@@ -178,6 +185,8 @@ version of C<my @items>.  Prefer the latter.
 
 X<array slice>
 X<slices; array>
+X<@; sigil>
+X<sigils; @>
 
 You can also access elements of an array in list context with a construct known
 as an I<array slice>.  Unlike scalar access of an array element, this indexing

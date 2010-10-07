@@ -150,12 +150,18 @@ Installing into symbol tables is reasonably easy, if ugly:
 
 =end programlisting
 
-The odd syntax of an asterisk deferencing a hash refers to a symbol in the
-current I<symbol table>, which is the place in the current namespace which
-contains globally-accessible symbols such as package globals, functions, and
-methods.  Assigning a reference to a symbol table entry installs or replaces
-the appropriate entry.  To promote an anonymous function to a method, assign
-that function reference to the appropriate entry in the symbol table.
+X<*; sigil>
+X<sigils; *>
+X<typeglob>
+
+The odd syntax of an asteriskN<Think of it as a I<typeglob sigil>, where a
+I<typeglob> is the Perl hacker jargon for "symbol table".> deferencing a hash
+refers to a symbol in the current I<symbol table>, which is the place in the
+current namespace which contains globally-accessible symbols such as package
+globals, functions, and methods.  Assigning a reference to a symbol table entry
+installs or replaces the appropriate entry.  To promote an anonymous function
+to a method, assign that function reference to the appropriate entry in the
+symbol table.
 
 This operation refers to a symbol with a string, not a literal variable name,
 so it's a symbolic reference and it's necessary to disable C<strict> reference

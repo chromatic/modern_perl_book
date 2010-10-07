@@ -20,7 +20,7 @@ identifiers.  These are all valid Perl identifiers:
 
     sub anAwkwardName3;
 
-    # with C<use utf8;> enabled
+    # with use utf8; enabled
     package Ingy::DE<ouml>t::Net;
 
 =end programlisting

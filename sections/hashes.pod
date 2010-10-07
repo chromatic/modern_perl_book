@@ -21,6 +21,8 @@ big container full of key/value pairs.
 =head2 Declaring Hashes
 
 X<hashes; declaring>
+X<%; sigil>
+X<sigils; %>
 
 A hash has the C<%> sigil.  Declare a lexical hash with:
 
@@ -43,6 +45,9 @@ You can assign and access individual elements of a hash:
     $favorite_flavors{Annette} = 'French vanilla';
 
 =end programlisting
+
+X<$; sigil>
+X<sigils; $>
 
 Hashes use the scalar sigil C<$> when accessing individual elements and curly
 braces C<{ }> for string indexing.
@@ -398,6 +403,9 @@ You may retrieve multiple values from a hash with a slice:
     my @buyer_addresses = @addresses{ @buyers };
 
 =end programlisting
+
+X<@; sigil>
+X<sigils; @>
 
 As with array slices, the sigil of the hash changes to indicate list context.
 You can still tell that C<%addresses> is a hash by the use of the curly braces

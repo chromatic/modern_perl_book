@@ -704,8 +704,8 @@ implementations support automatic tail call elimination.
 
 =end sidebar
 
-X<tail calls>
-X<functions; tail calls>
+X<tailcall>
+X<functions; tailcall>
 
 A I<tail call> is a call to a function which directly returns that function's
 results.  The lines:
@@ -794,6 +794,8 @@ you can avoid them outside of a few cases.
 
 X<functions; Perl 4>
 X<functions; Perl 1>
+X<&; sigil>
+X<sigils; &>
 
 Perl 5 still supports old-style invocations of functions, carried over from
 older versions of Perl.  While you may now invoke Perl functions by name,

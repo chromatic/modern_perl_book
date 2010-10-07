@@ -4,7 +4,7 @@ Z<smart_match>
 
 X<smart match>
 X<operators; smart match>
-X<~~>
+X<~~; operator>
 X<operators; ~~>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
