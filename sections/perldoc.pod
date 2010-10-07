@@ -23,9 +23,13 @@ Strawberry Perl provide a link in your Start menu to the documentation.
 The default behavior of C<perldoc> is to display the documentation for a named
 module or a specific section of the core documentation:
 
+=begin screen
+
     $ B<perldoc List::Util>
     $ B<perldoc perltoc>
     $ B<perldoc Moose::Manual>
+
+=end screen
 
 The first example extracts documentation written for the C<List::Util> module
 and displays it in a form appropriate for your screen.  Community standards for
