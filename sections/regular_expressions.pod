@@ -103,7 +103,7 @@ string.  The simplest quantifier is the I<zero or one quantifier>, or C<?>:
 
 Any atom in a regular expression followed by the C<?> character means "match
 zero or one of this atom."  This regular expression matches if there are zero
-C<a> or one characters immediately following a C<c> character and immediately
+or one C<a> characters immediately following a C<c> character and immediately
 preceding a C<t> character I<and also> matches if there is one and only one
 C<a> character between the C<c> and C<t> characters.
 
@@ -220,17 +220,18 @@ when matching the "zero or more non-newline characters" pattern of C<.*>:
 Greedy quantifiers always try to match as much of the input string as possible
 I<first>, backing off only when it's obvious that the match will not succeed.
 You may not be able to fit all of the results into the four boxes in 7 Down if
-you go looking for "loam" with:
+look for "loam" withN<Assume that C<$letters_only> is a regular expression
+which matches only letter characters (L<character_classes>).>:
 
 =begin programlisting
 
-    my $seven_down = qr/l$letters_only*m/;
+    my $seven_down   = qr/l$letters_only*m/;
 
 =end programlisting
 
-You'll get C<Alabama>, C<Belgium>, and C<Bethlehem> for starters.  The soil
-might be nice there, but they're all too long--and the matches start in the
-middle of the words.
+This will match C<Alabama>, C<Belgium>, and C<Bethlehem> before it reaches
+C<loam>.  The soil might be nice there, but those words are all too long--and
+the matches start in the middle of the words.
 
 X<?; regex metacharacter>
 
@@ -404,6 +405,7 @@ The regex engine treats all metacharacters as atoms.
 
 =head1 Character Classes
 
+Z<character_classes>
 X<character classes>
 
 If the range of allowed characters in these four groups isn't specific enough,
@@ -428,7 +430,8 @@ the regex.
 =end sidebar
 
 If the characters in your character set form a contiguous range, you can use
-the hyphen character (C<->) as a shortcut to express that range.
+the hyphen character (C<->) as a shortcut to express that range.  Now it's
+possible to define the C<$letters_only> regex:
 
 =begin programlisting
 

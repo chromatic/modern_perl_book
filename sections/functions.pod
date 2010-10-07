@@ -816,7 +816,7 @@ previous versions of Perl required you to invoke them with a leading ampersand
 =end programlisting
 
 While they're visually noisy, with vestigial syntax, the leading ampersand form
-has other beaviors which can occasionally surprise you.  First, it disables
+has other behaviors which can occasionally surprise you.  First, it disables
 prototype checking (as if that often mattered).  Second, if you do not pass
 arguments explicitly, it I<implicitly> passes the contents of C<@_> unmodified.
 Both can lead to surprising behavior.

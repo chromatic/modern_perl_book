@@ -28,8 +28,7 @@ A I<string> is a piece of textual or binary data with no particular formatting,
 no particular contents, and no other meaning to the program.  It could be your
 name.  It could be the contents of an image file read from your hard drive.  It
 could be the Perl program itself.  A string has no meaning to the program until
-you give it meaning.  Perl strings can grow or shrink as you add to or remove
-from them.
+you give it meaning.
 
 X<strings; delimiters>
 
@@ -45,6 +44,14 @@ quotes:
 =end programlisting
 
 X<strings; single-quoted>
+
+=begin sidebar
+
+Perl strings do not have a fixed length after you declare them.  Perl allows
+you to manipulate and modify strings as necessary and will handle all relevant
+memory management for you.
+
+=end sidebar
 
 Characters in a I<single-quoted string> represent themselves literally, with
 two exceptions.  You may embed a single quote inside a single-quoted string by
@@ -95,10 +102,10 @@ For example, you may encode non-printable characters in the string:
 
 =end programlisting
 
-This demonstrates a useful principle: the syntax of a string may vary.  You can
-represent a tab within a string with the C<\t> escape or by typing a tab
-directly.  As Perl runs, both strings behave the same way, even though the
-specific representation of the string may differ in the source code.
+This demonstrates a useful principle: the syntax used to declare a string may
+vary.  You can represent a tab within a string with the C<\t> escape or by
+typing a tab directly.  As Perl runs, both strings behave the same way, even
+though the specific representation of the string may differ in the source code.
 
 A string declaration may cross logical newlines, such that these two strings
 are equivalent:
