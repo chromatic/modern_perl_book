@@ -81,7 +81,7 @@ list, or using it in a list, evaluates the function in I<list context>:
 =begin programlisting
 
     my @all_results        = some_expensive_operation();
-    my ($single_element)   = some_expensive_operation();
+    my B<(>$single_elementB<)>   = some_expensive_operation();
     process_list_of_results( some_expensive_operation() );
 
 =end programlisting
@@ -129,23 +129,23 @@ contain.  Both calls to C<some_expensive_operation()> occur in list context:
 
 =end programlisting
 
-C<expensive_operation> is in list context, because it's assigned to a
-hash, and hash assignments take a list of key/value pairs, which causes any
-expressions in that hash assignment to be evaluated in list context.
+The latter example often surprises novice programmers who expect scalar context
+for the call.  C<expensive_operation> occurs is in list context, because its
+results are assigned to a hash.  Hash assignments take a list of key/value
+pairs, which causes any the evaluation of any expressions in that list to occur
+in list context.
 
 X<builtins; C<scalar>>
 X<C<scalar>>
 
-The latter example often surprises novice programmers who expect scalar context
-for the call; instead, it is list context, because that is the context the hash
-assignment provides.  Use the C<scalar> operator to impose scalar context:
+Use the C<scalar> operator to impose scalar context:
 
 =begin programlisting
 
     my %results =
     (
         cheap_operation     => $cheap_operation_results,
-        expensive_operation => scalar some_expensive_operation(),
+        expensive_operation => B<scalar> some_expensive_operation(),
     );
 
 =end programlisting
