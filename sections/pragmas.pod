@@ -44,7 +44,7 @@ which ignores scoping, but that would be unneighborly.
 
 =end sidebar
 
-Just as lexical declarations affect inner scopes, so do pragmas maintain their
+Just as lexical declarations affect inner scopes, so pragmas maintain their
 effects on inner scopes:
 
 =begin programlisting
