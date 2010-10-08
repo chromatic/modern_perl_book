@@ -133,8 +133,8 @@ diagnose an odd situation when it occurs.
 Z<dualvars>
 
 X<coercion; dualvars>
-X<dualvar()>
-X<Scalar::Util>
+X<C<dualvar()>>
+X<C<Scalar::Util>>
 X<dualvar>
 
 The caching of string and numeric values allows for the use of a

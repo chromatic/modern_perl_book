@@ -4,8 +4,8 @@ Z<smart_match>
 
 X<smart match>
 X<operators; smart match>
-X<~~; operator>
-X<operators; ~~>
+X<C<~~>; smart match operator>
+X<operators; C<~~>>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
 if they match each other.  The fuzziness of the definition demonstrates the

@@ -14,8 +14,8 @@ writing Perl with a Perlish accent.
 
 =head2 The Object as C<$self>
 
-X<$self>
-X<variables; $self>
+X<C<$self>>
+X<variables; C<$self>>
 X<objects; invocant>
 X<methods; invocant>
 
@@ -35,8 +35,8 @@ of the invocant by default.
 
 X<parameters; named>
 X<arguments; named>
-X<signatures>
-X<MooseX::MultiMethods>
+X<C<signatures>>
+X<C<MooseX::MultiMethods>>
 
 Without a module such as C<signatures> or C<MooseX::MultiMethods>, Perl 5's
 argument passing mechanism is simple: all arguments flatten into a single list
@@ -110,8 +110,10 @@ variable-length lists provides countless opportunities to manipulate data
 effectively.
 
 X<Schwartzian transform>
-X<map; Schwartzian transform>
-X<sort; Schwartzian transform>
+X<C<map>; Schwartzian transform>
+X<C<sort>; Schwartzian transform>
+X<C<map>>
+X<C<sort>>
 
 The I<Schwartzian transform> is an elegant demonstration of that principle as
 an idiom handily borrowed from the Lisp family of languages.
@@ -175,9 +177,9 @@ C<sort> takes the list of anonymous arrays and compares their second elements
 
 =end programlisting
 
-X<$a>
-X<$b>
-X<keywords; sort>
+X<C<$a>>
+X<C<$b>>
+X<builtins; C<sort>>
 
 The block provided to C<sort> takes its arguments in two package-scoped
 (L<scope>) variables C<$a> and C<$b>N<See C<perldoc -f sort> for an extensive
@@ -190,7 +192,7 @@ sufficiently equal in the sorting terms, the block must return 0.  Finally, if
 C<$a> should come after C<$b> in the results, the block should return 1.  Any
 other return values are errors.
 
-X<operators; cmp>
+X<operators; C<cmp>>
 X<< operators; <=> >>
 
 The C<cmp> operator performs string comparisons and the C<< <=> >> performs
@@ -248,8 +250,10 @@ C<sort>, and then remove them in the leftmost C<map>.
 
 Z<easy_file_slurping>
 
-X<local; $/>
-X<global variables; $/>
+X<C<local>>
+X<C<$/>>
+X<files; slurping>
+X<global variables; C<$/>>
 
 Perl 5's magic global variables are truly global in many cases.  It's all too
 easy to clobber their values elsewhere, unless you use C<local> everywhere.
@@ -297,9 +301,8 @@ to test functions in a standalone program or when you wish to make a module
 users can run directly.  All you need to do is to discover I<how> Perl began to
 execute a piece of code.  For this, use C<caller>.
 
-X<caller>
-X<operators; caller>
-X<call frame>
+X<C<caller>>
+X<builtins; C<caller>>
 
 C<caller>'s single optional argument is the number of call frames which to
 report.  (A I<call frame> is the bookkeeping information which represents a

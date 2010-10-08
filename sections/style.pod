@@ -2,7 +2,6 @@ Z<style>
 
 =head1 Writing Maintainable Perl
 
-X<maintenance>
 X<maintainability>
 
 The easier your program is to understand and to modify, the better.  This is

@@ -48,8 +48,8 @@ is no guarantee that any C<new()> found is a method, nor a constructor.
 
 =head2 Checking that a Module Has Loaded
 
-X<%INC>
-X<@INC>
+X<C<%INC>>
+X<C<@INC>>
 
 If you know the name of a module, you can check that Perl believes it has
 loaded that module from disk by looking in the C<%INC> hash.  This hash

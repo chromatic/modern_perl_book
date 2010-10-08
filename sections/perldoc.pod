@@ -58,7 +58,7 @@ Asked Questions about Perl 5.  Skimming these questions is invaluable.
 
 =end sidebar
 
-X<perldoc; -q>
+X<perldoc; C<-q> (search perlfaq)>
 
 The C<perldoc> utility has many more abilities (see C<perldoc perldoc>).  Two
 of the most useful are the C<-q> and the C<-f> flags.  The C<-q> flag takes a
@@ -67,7 +67,7 @@ Thus C<perldoc -q sort> returns three questions: I<How do I sort an array by
 (anything)?>, I<How do I sort a hash (optionally by value instead of key)?>,
 and I<How can I always keep my hash sorted?>.
 
-X<perldoc; -f>
+X<perldoc; C<-f> (search perlfunc)>
 
 The C<-f> flag displays the core documentation for a builtin Perl function.
 C<perldoc -f sort> explains the behavior of the C<sort> operator.  If you don't
@@ -91,8 +91,8 @@ other POD tools such as C<podchecker>, which validates the form of your POD,
 and C<Pod::Webserver>, which displays local POD as HTML through a minimal
 webserver, will handle valid POD correctly.
 
-X<perldoc; -l>
-X<perldoc; -m>
+X<perldoc; C<-l> (list path to POD)>
+X<perldoc; C<-m> (show raw POD)>
 
 C<perldoc> has other uses.  With the C<-l> command-line flag, it displays the
 I<path> to the documentation file rather than the contents of the

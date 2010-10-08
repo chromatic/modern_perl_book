@@ -55,7 +55,7 @@ function in C<@_> directly.  You may manipulate these arguments as you like:
 
 =end programlisting
 
-X<$AUTOLOAD>
+X<C<$AUTOLOAD>>
 
 The I<name> of the undefined function is available in the pseudo-global
 variable C<$AUTOLOAD>:
@@ -106,8 +106,8 @@ You have other options.
 
 =head2 Redispatching Methods in AUTOLOAD()
 
-X<AUTOLOAD; redispatch>
-X<AUTOLOAD; delegation>
+X<C<AUTOLOAD>; redispatch>
+X<C<AUTOLOAD>; delegation>
 X<OO; delegation>
 X<delegation>
 X<OO; proxying>
@@ -145,7 +145,7 @@ proxied object, passing the given arguments.
 
 =head2 Generating Code in AUTOLOAD()
 
-X<AUTOLOAD; code installation>
+X<C<AUTOLOAD>; code installation>
 
 That double-dispatch trick is useful, but it is slower than necessary.  Every
 method call on the proxy must go through normal dispatch and fail, then end up
@@ -190,7 +190,7 @@ violation to care, but it's also an encapsulation violation to let the details
 of I<how> an object provides a method to leak out into the wider world.
 
 X<tailcall>
-X<goto; tailcall>
+X<C<goto>; tailcall>
 
 Another idiom is to use a tailcall (L<tailcalls>) to I<replace> the current
 invocation of C<AUTOLOAD()> from C<caller()>'s memory with a call to the
@@ -219,9 +219,9 @@ C<caller()>, so it looks like the generated method was simply called directly.
 
 Z<autoload_drawbacks>
 
-X<AUTOLOAD; drawbacks>
-X<UNIVERSAL::can>
-X<can()>
+X<C<AUTOLOAD>; drawbacks>
+X<C<UNIVERSAL::can>>
+X<C<can()>>
 X<subs>
 X<pragmas; subs>
 X<functions; predeclaration>

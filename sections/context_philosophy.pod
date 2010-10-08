@@ -133,8 +133,8 @@ C<expensive_operation> is in list context, because it's assigned to a
 hash, and hash assignments take a list of key/value pairs, which causes any
 expressions in that hash assignment to be evaluated in list context.
 
-X<operators; scalar>
-X<scalar>
+X<builtins; C<scalar>>
+X<C<scalar>>
 
 The latter example often surprises novice programmers who expect scalar context
 for the call; instead, it is list context, because that is the context the hash

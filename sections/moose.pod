@@ -26,7 +26,8 @@ as well as its specific behaviors.
 =head2 Classes
 
 X<classes>
-X<package>
+X<C<package>>
+X<builtins; C<package>>
 
 A class in Perl 5 stores class data.  By default, Perl 5 classes use packages
 to provide namespaces:
@@ -141,10 +142,8 @@ thinking.
 
 =head2 Attributes
 
-X<attributes (objects)>
+X<attributes; objects>
 X<objects; attributes>
-X<instance data>
-X<state>
 X<objects; state>
 
 Every object in Perl 5 is unique.  Objects can contain I<attributes>, or
@@ -152,8 +151,7 @@ private data associated with each object.  You may also hear this described as
 I<instance data> or I<state>.
 
 X<attributes; typed>
-X<attributes; ro>
-X<attributes; read only>
+X<attributes; C<ro> (read only)>
 
 To define object attributes, describe them as part of the class:
 
@@ -265,10 +263,7 @@ makes the intent of your code most clear.
 
 =end sidebar
 
-X<attributes; rw>
-X<attributes; read-write>
-
-X<mutator>
+X<attributes; C<rw> (read-write)>
 X<methods; mutator>
 
 If you mark an attribute as readable I<and> writable (with C<< is => rw >>),
@@ -663,8 +658,8 @@ U<http://www.modernperlbooks.com/mt/2009/04/the-why-of-perl-roles.html>.
 
 =head3 Roles and DOES()
 
-X<DOES()>
-X<Moose; DOES()>
+X<C<DOES()>>
+X<Moose; C<DOES()>>
 
 Applying a role to a class means that the class and its instances will return
 true when you call the C<DOES()> method on them:
@@ -759,9 +754,9 @@ of light:
 
 =end programlisting
 
-X<Moose; extends>
+X<Moose; C<extends>>
 
-The C<extends> syntax takes a list of class names to use as parents of the
+The C<extends> function takes a list of class names to use as parents of the
 current class.  The C<+> at the start of the C<candle_power> attribute name
 indicates that the current class extends or overrides the declaration of the
 attribute.  In this case, the super candle overrides the default value of the
@@ -797,6 +792,7 @@ for more details about method resolution and dispatch strategies.
 =head3 Inheritance and Methods
 
 X<Moose; override method>
+X<Moose; C<override>>
 
 You may override methods in subclasses.  Imagine a light that you cannot
 extinguish:
@@ -871,8 +867,8 @@ C<perldoc Moose::Manual::MethodModifiers>.
 
 =head3 Inheritance and isa()
 
-X<isa()>
-X<Moose; isa()>
+X<C<isa()>>
+X<Moose; C<isa()>>
 
 Inheriting from a parent class means that the child class and all of its
 instances will return true when you call the C<isa()> method on them:
@@ -886,7 +882,7 @@ instances will return true when you call the C<isa()> method on them:
 
 =head2 Moose and Perl 5 OO
 
-X<moose; versus Perl 5 OO>
+X<Moose; compared to default Perl 5 OO>
 
 Moose provides many features you'd otherwise have to build for yourself with
 the default object orientation of Perl 5.  While you I<can> build everything
@@ -898,8 +894,8 @@ active development by an attentive and talented community.
 X<metaprogramming>
 X<Moose; MOP>
 X<Moose; metaprogramming>
-X<Class::MOP>
-X<Class::MOP::Class>
+X<C<Class::MOP>>
+X<C<Class::MOP::Class>>
 
 By default, with Moose objects you do not have to worry about constructors and
 destructors, accessors, and encapsulation.  Moose objects can extend and
@@ -970,8 +966,8 @@ This is valid Perl 5 code:
 
 =end programlisting
 
-X<MooseX::Declare>
-X<Devel::Declare>
+X<C<MooseX::Declare>>
+X<C<Devel::Declare>>
 
 The C<MooseX::Declare> extension from the CPAN uses a clever module called
 C<Devel::Declare> to add new syntax to Perl 5, specifically for Moose.  The

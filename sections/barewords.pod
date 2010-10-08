@@ -11,7 +11,7 @@ what I<you> find most maintainable.
 
 X<barewords>
 
-Perl's parser understands the built-in Perl keywords and operators; it knows
+Perl's parser understands the builtin Perl keywords and operators; it knows
 that C<bless()> means you're making objects (L<blessed_references>).  These are
 rarely ambiguous... but Perl programmers can add complexity to parsing by using
 I<barewords>.  A bareword is an identifier without a sigil or other attached
@@ -71,13 +71,13 @@ ugly:
 
 =end programlisting
 
-X<BEGIN>
-X<DESTROY>
-X<AUTOLOAD>
-X<INIT>
-X<UNITCHECK>
-X<CHECK>
-X<END>
+X<C<BEGIN>>
+X<C<DESTROY>>
+X<C<AUTOLOAD>>
+X<C<INIT>>
+X<C<UNITCHECK>>
+X<C<CHECK>>
+X<C<END>>
 
 The special named code blocks provide their own types of barewords.
 C<AUTOLOAD>, C<BEGIN>, C<CHECK>, C<DESTROY>, C<END>, C<INIT>, and C<UNITCHECK>
@@ -163,10 +163,10 @@ these hash values as strings.  The C<strict 'subs'> pragma makes the parser
 give an error in this situation.
 
 X<barewords; sort functions>
-X<sort>
-X<operators; sort>
+X<C<sort>>
+X<builtins; C<sort>>
 
-Finally, the built-in C<sort> operator can take as its second argument the
+Finally, the builtin C<sort> operator can take as its second argument the
 I<name> of a function to use for sorting.  Instead provide a I<reference> to
 the function to use for sorting to avoid the use of barewords:
 

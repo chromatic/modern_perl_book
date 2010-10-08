@@ -35,7 +35,6 @@ have a hash full of data that you want to pass to a function to update or to
 delete a key/value pair, creating and returning a new hash for each change
 could be troublesome (to say nothing of inefficient).
 
-X<reference>
 X<references>
 
 Perl 5 provides a mechanism by which you can refer to a value without making a
@@ -47,13 +46,11 @@ first-class data type.
 
 =head3 Scalar References
 
-X<references; operator>
-X<operators; reference>
-X<operators; \>
-X<reference operator>
+X<operators; C<\>>
+X<reference; C<\>>
 
 X<references; scalar>
-X<scalar references>
+X<scalars; references>
 
 The reference operator is the backslash (C<\>).  In scalar context, it creates
 a single reference which refers to another value.  In list context, it creates
@@ -67,7 +64,6 @@ previous example:
 
 =end programlisting
 
-X<dereference>
 X<dereferencing>
 X<references; dereferencing>
 
@@ -134,7 +130,7 @@ locations if its garbage collector has reclaimed an unreferenced reference.
 
 =head3 Array References
 
-X<array references>
+X<arrays; references>
 X<references; arrays>
 
 You can also create references to arrays, or I<array references>.  This is
@@ -152,8 +148,6 @@ useful for several reasons:
 
 =back
 
-X<array references; creating>
-
 To take a reference to a declared array, use the reference operator:
 
 =begin programlisting
@@ -166,8 +160,6 @@ To take a reference to a declared array, use the reference operator:
 Now C<$cards_ref> contains a reference to the array.  Any modifications made
 through C<$cards_ref> will modify C<@cards> and vice versa.
 
-X<array references; dereferencing>
-
 You may access the entire array as a whole with the C<@> sigil, whether to
 flatten the array into a list or count the number of elements it contains:
 
@@ -178,10 +170,8 @@ flatten the array into a list or count the number of elements it contains:
 
 =end programlisting
 
-X<references; dereferencing arrow>
-X<< -> >>
-X<< operators; -> >>
-X<operators; dereferencing arrow>
+X<<< C<< -E<gt> >>; dereferencing arrow >>>
+X<<< operators; C<< -E<gt> >> >>>
 
 You may also access individual elements by using the dereferencing arrow
 (C<< -> >>):
@@ -217,7 +207,6 @@ In this case, you I<may> omit the curly braces, but the visual grouping they
 (and the whitespace) provide only helps readability in this case.
 
 X<references; anonymous arrays>
-X<anonymous arrays>
 X<arrays; anonymous>
 
 You may also create anonymous arrays in place without using named arrays.
@@ -262,7 +251,7 @@ in list context.
 
 =head3 Hash References
 
-X<hash references>
+X<hashes; references>
 X<references; hashes>
 
 To create a I<hash reference>, use the reference operator on a named hash:
@@ -353,10 +342,10 @@ parentheses for a named hash and curly brackets for an anonymous hash.
 
 Z<function_references>
 
-X<function references>
+X<functions; references>
 X<references; functions>
 X<functions; first-class>
-X<first-class functions>
+X<functions; first-class>
 
 Perl 5 supports I<first-class functions>.  A function is a data type just as is
 an array or hash, at least when you use I<function references>.  This feature
@@ -372,10 +361,9 @@ a function:
 
 =end programlisting
 
-X<function sigil>
-X<sigils; &>
-X<&; sigil>
-X<sigils; &>
+X<functions; sigil>
+X<sigils; C<&>>
+X<C<&>; sigil>
 
 Without the I<function sigil> (C<&>), you will take a reference to the
 function's return value or values.
@@ -434,7 +422,7 @@ syntax; it has implications for implicit argument passing.
 
 Z<lexical_filehandles>
 
-X<filehandle references>
+X<filehandles; references>
 X<references; filehandles>
 
 Filehandles can be references as well.  When you use C<open>'s (and
@@ -506,8 +494,7 @@ the file opened in this inner scope:
 
 =end programlisting
 
-X<reference counting>
-X<references; counts>
+X<references; reference counting>
 
 Perl 5 uses a memory management technique known as I<reference counting>.
 Every value in the program has an attached counter.  Perl increases this
@@ -543,8 +530,8 @@ the reference itself, copy its values to a new variable:
 
 =end programlisting
 
-X<Storable>
-X<dclone; Storable>
+X<C<Storable>>
+X<C<dclone()>>
 
 This is only necessary in a few cases, but it's good policy to be explicit in
 those cases to avoid surprises for the callers.  If your references are more

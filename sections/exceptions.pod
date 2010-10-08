@@ -35,13 +35,12 @@ open the file, something has gone wrong.  Use C<die> to throw an exception:
 
 =end programlisting
 
-X<die>
-X<keywords; die>
+X<C<die>>
+X<builtins; C<die>>
 X<exceptions; throwing>
-X<exceptions; die>
-X<$@>
-X<global variables; $@>
-X<exceptions; $@>
+X<exceptions; C<die>>
+X<C<$@>>
+X<exceptions; C<$@>>
 
 C<die()> sets the global variable C<$@> to its argument and immediately exits
 the current function I<without returning anything>.  If the calling function
@@ -69,10 +68,8 @@ administrator that something has gone wrong.  Yet many other exceptions should
 not be fatal; good programs can recover from them, or at least save their
 state and exit more cleanly.
 
-X<keywords; eval>
-X<keywords; eval block>
-X<eval>
-X<eval; block>
+X<builtins; C<eval>>
+X<C<eval>; block>
 
 To catch an exception, use the block form of the C<eval> operator:
 
@@ -146,7 +143,7 @@ an C<eval> block elsewhere and reset C<$@>.
 
 Rethrow an exception by calling C<die()> again, passing C<$@>.
 
-X<die; object>
+X<C<die>; object>
 X<exceptions; exception objects>
 
 You may find the idea of using regular expressions against the value of C<$@>

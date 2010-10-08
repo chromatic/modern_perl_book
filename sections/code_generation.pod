@@ -29,8 +29,8 @@ dispatch system allows you to customize what happens when normal lookup fails.
 
 =head2 eval
 
-X<eval string>
-X<operators; eval>
+X<C<eval>; string>
+X<builtins; C<eval>>
 
 The simplest code generation technique code is to build a string containing a
 snippet of valid Perl and compile it with the string C<eval> operator.  Unlike
@@ -150,8 +150,8 @@ Installing into symbol tables is reasonably easy, if ugly:
 
 =end programlisting
 
-X<*; sigil>
-X<sigils; *>
+X<C<*>; sigil>
+X<sigils; C<*>>
 X<typeglob>
 
 The odd syntax of an asteriskN<Think of it as a I<typeglob sigil>, where a
@@ -213,7 +213,7 @@ gets compiled at runtime.  Where you might expect a normal function to be
 available throughout the lifetime of your program, a generated function might
 not be available when you expect it.
 
-X<BEGIN>
+X<C<BEGIN>>
 
 Force Perl to run code--to generate other code--during the compilation stage by
 wrapping it in a C<BEGIN> block.  When the Perl 5 parser encounters a block
@@ -258,8 +258,8 @@ In practical terms, the difference between writing:
 
 ... is primarily one of maintainability.
 
-X<BEGIN; implicit>
-X<modules; implicit BEGIN>
+X<C<BEGIN>; implicit>
+X<modules; implicit C<BEGIN>>
 
 Within a module, any code outside of functions executes when you C<use> it,
 because of the implicit C<BEGIN> Perl adds around the C<require> and C<import>

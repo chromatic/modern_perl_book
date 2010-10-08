@@ -16,7 +16,7 @@ exhaustive list of such variables.
 =head2 Managing Super Globals
 
 X<super globals; managing>
-X<local>
+X<C<local>>
 
 The best approach to managing the global behavior of these super globals is to
 avoid using them.  When you must use them, use C<local> in the smallest
@@ -45,7 +45,7 @@ change the value of C<$/> within the C<do> block.
 Not all cases of using super globals are this easy to guard, but this often
 works.
 
-X<eval>
+X<C<eval>>
 X<exceptions; catching>
 
 Other times you need to I<read> the value of a super global and hope that no
@@ -86,12 +86,12 @@ within the scope of this namespace.
 
 =begin sidebar
 
-X<$&>
-X<global variables; $&>
-X<$`>
-X<global variables; $`>
-X<$'>
-X<global variables; $'>
+X<C<$&>>
+X<global variables; C<$&>>
+X<C<$`>>
+X<global variables; C<$`>>
+X<C<$'>>
+X<global variables; C<$'>>
 
 Three regex-related super globals (C<$&>, C<$`>, and C<$'>) impose a global
 performance penalty for I<all> regular expressions within a program.  If you
@@ -113,10 +113,10 @@ globals.  Several exist for special circumstances you're unlikely to encounter.
 While C<perldoc perlvar> is the canonical documentation for most of these
 variables, some deserve special mention.
 
-X<$/>
-X<global variables; $/>
-X<$INPUT_RECORD_SEPARATOR>
-X<global variables; $INPUT_RECORD_SEPARATOR>
+X<C<$/>>
+X<global variables; C<$/>>
+X<C<$INPUT_RECORD_SEPARATOR>>
+X<global variables; C<$INPUT_RECORD_SEPARATOR>>
 
 =over 4
 
@@ -128,20 +128,20 @@ read the entire file into memory.  If you set this value to a I<reference> to
 an integer, Perl will try to read that many I<bytes> per record (so beware of
 Unicode concerns).
 
-X<$.>
-X<global variables; $.>
-X<$INPUT_LINE_NUMBER>
-X<global variables; $INPUT_LINE_NUMBER>
+X<C<$.>>
+X<global variables; C<$.>>
+X<C<$INPUT_LINE_NUMBER>>
+X<global variables; C<$INPUT_LINE_NUMBER>>
 
 =item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the current line (more
 accurately, I<record>) number read from the most recently-accessed filehandle.
 You can read from this variable, but writing to it has no effect.  Localizing
 this variable will localize the filehandle to which it refers.
 
-X<$|>
-X<global variables; $|>
-X<$OUTPUT_AUTOFLUSH>
-X<global variables; $OUTPUT_AUTOFLUSH>
+X<C<$|>>
+X<global variables; C<$|>>
+X<C<$OUTPUT_AUTOFLUSH>>
+X<global variables; C<$OUTPUT_AUTOFLUSH>>
 
 =item * C<$|> (C<$OUTPUT_AUTOFLUSH>) is the boolean value of this variable
 governs whether Perl will flush everything written to the currently selected
@@ -149,15 +149,15 @@ filehandle immediately or only when Perl's buffer is full.  Unbuffered output
 is useful when writing to a pipe or socket or terminal which should not block
 waiting for input.
 
-X<@ARGV>
-X<global variables; @ARGV>
+X<C<@ARGV>>
+X<global variables; C<@ARGV>>
 
 =item * C<@ARGV> contains the command-line arguments passed to the program.
 
-X<$!>
-X<global variables; $!>
-X<$ERRNO>
-X<global variables; $ERRNO>
+X<C<$!>>
+X<global variables; C<$!>>
+X<C<$ERRNO>>
+X<global variables; C<$ERRNO>>
 
 =item * C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result
 of the I<most recent> system call.  In numeric context, this corresponds to C's
@@ -169,57 +169,57 @@ Perl 5 itself make system calls without your knowledge.  The value of this
 variable can change out from under you, so copy it I<immediately> after making
 such a call yourself.
 
-X<$">
-X<global variables; $">
-X<$LIST_SEPARATOR>
-X<global variables; $LIST_SEPARATOR>
+X<C<$">>
+X<global variables; C<$">>
+X<C<$LIST_SEPARATOR>>
+X<global variables; C<$LIST_SEPARATOR>>
 
 =item * C<$"> (C<$LIST_SEPARATOR>) is a string used to separate array and list
 elements interpolated into a string.
 
-X<%+>
-X<global variables; %+>
+X<C<%+>>
+X<global variables; C<%+>>
 
 =item * C<%+> contains named captures from successful regular expression
 matches (L<named_captures>).
 
-X<$@>
-X<global variables; $@>
-X<$EVAL_ERROR>
-X<global variables; $EVAL_ERROR>
+X<C<$@>>
+X<global variables; C<$@>>
+X<C<$EVAL_ERROR>>
+X<global variables; C<$EVAL_ERROR>>
 
 =item * C<$@> (C<$EVAL_ERROR>) contains the value thrown from the most recent
 exception (L<catching_exceptions>).
 
-X<$0>
-X<global variables; $0>
-X<$PROGRAM_NAME>
-X<global variables; $PROGRAM_NAME>
+X<C<$0>>
+X<global variables; C<$0>>
+X<C<$PROGRAM_NAME>>
+X<global variables; C<$PROGRAM_NAME>>
 
 =item * C<$0> (C<$PROGRAM_NAME>) contains the name of the program currently
 executing.  You may modify this value on some Unix-like platforms to change the
 name of the program as it appears to other programs on the system, such as
 C<ps> or C<top>.
 
-X<$$>
-X<global variables; $$>
-X<$PID>
-X<global variables; $PID>
+X<C<$$>>
+X<global variables; C<$$>>
+X<C<$PID>>
+X<global variables; C<$PID>>
 
 =item * C<$$> (C<$PID>) contains the process id of the currently running
 instance of the program, as the operating system understands it.  This will
 vary between C<fork()>ed programs and may vary between threads in the same
 program.
 
-X<@INC>
-X<global variables; $@INC>
+X<C<@INC>>
+X<global variables; C<@INC>>
 
 =item * C<@INC> holds a list of filesystem paths in which Perl will look for
 files to load with C<use> or C<require>.  See C<perldoc -f require> for other
 items this array can contain.
 
-X<%SIG>
-X<global variables; $%SIG>
+X<C<%SIG>>
+X<global variables; C<%SIG>>
 
 =item * C<%SIG> maps OS and low-level Perl signals to function references
 used to handle those signals.  Trap the standard Ctrl-C interrupt by catching

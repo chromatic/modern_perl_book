@@ -23,10 +23,10 @@ program--depending on the values of arbitrarily complex expressions.
 
 =head2 Branching Directives
 
-X<if>
-X<control flow directives; if>
-X<postfix if>
-X<postfix expressions; if>
+X<C<if>>
+X<control flow directives; C<if>>
+X<postfix C<if>>
+X<postfix expressions; C<if>>
 
 The C<if> directive evaluates a conditional expression and performs the
 associated action only when the conditional expression evaluates to a I<true>
@@ -73,10 +73,10 @@ add clarityN<It may also argue against using the postfix form.>:
 
 =end programlisting
 
-X<unless>
-X<control flow directives; unless>
-X<postfix unless>
-X<postfix expressions; unless>
+X<C<unless>>
+X<control flow directives; C<unless>>
+X<postfix C<unless>>
+X<postfix expressions; C<unless>>
 
 The C<unless> directive is a negated form of C<if>.  Perl will evaluate the
 following statement when the conditional expression evaluates to I<false>:
@@ -120,8 +120,8 @@ validation in functions (L<postfix_parameter_validation>):
 C<unless> can be difficult to read with multiple conditions; this is one reason
 it appears rarely in its block form.
 
-X<else>
-X<control flow directives; else>
+X<C<else>>
+X<control flow directives; C<else>>
 
 The block forms of C<if> and C<unless> both work with the C<else> directive,
 which provides code to run when the conditional expression does not evaluate to
@@ -185,8 +185,8 @@ negative assertions with regard to the comparison operators you use:
 The double negative implied by the presence of the C<else> block argues against
 this particular phrasing.
 
-X<elsif>
-X<control flow directives; elsif>
+X<C<elsif>>
+X<control flow directives; C<elsif>>
 
 One or more C<elsif> directives may follow an C<if> block form and may precede
 any single C<else>.  You may use as many C<elsif> blocks as you like, but you
@@ -408,10 +408,10 @@ Z<looping_directives>
 
 Perl also provides several directives for looping and iteration.
 
-X<foreach>
-X<for>
-X<looping directives; for>
-X<looping directives; foreach>
+X<C<foreach>>
+X<C<for>>
+X<looping directives; C<for>>
+X<looping directives; C<foreach>>
 
 The I<foreach>-style loop evaluates an expression which produces a list and
 executes a statement or block until it has consumed that list:
@@ -500,7 +500,7 @@ a lexical:
 
 X<iteration aliasing>
 X<aliasing>
-X<aliasing; foreach>
+X<aliasing; C<foreach>>
 X<aliasing; iteration>
 
 The C<for> loop I<aliases> the iterator variable to the values in the iteration
@@ -576,8 +576,8 @@ alias C<$_> to the variable:
 
 X<iterator scoping>
 X<scope; iterator>
-X<my $_>
-X<$_; lexical>
+X<C<my $_>>
+X<C<$_>; lexical>
 
 Iterator scoping with the topic variable provides one common source of
 confusion.  In this case, C<some_function()> modifies C<$_> on purpose.  If
@@ -622,7 +622,7 @@ through C<$_>.
 
 =head2 The C-Style For Loop
 
-X<for loop>
+X<C<for> loop>
 
 The C-style I<for loop> allows the programmer to manage iteration manually:
 
@@ -700,8 +700,8 @@ All three subexpressions are optional.  You may write an infinite loop with:
 
 =head2 While and Until
 
-X<while loop>
-X<loops; while>
+X<C<while> loop>
+X<loops; C<while>>
 
 A I<while> loop continues until the loop conditional expression evaluates to a
 boolean false value.  An infinite loop is much clearer when written:
@@ -740,8 +740,8 @@ C<@values> array by modifying the array with each loop iteration:
 
 =end programlisting
 
-X<until loop>
-X<loops; until>
+X<C<until> loop>
+X<loops; C<until>>
 
 The I<until> loop reverses the sense of the test of the C<while> loop.
 Iteration continues while the loop conditional expression evaluates to false:
@@ -822,8 +822,8 @@ event loop for a GUI program or network server may be:
 
 =end programlisting
 
-X<do; looping>
-X<looping; do>
+X<C<do>; looping>
+X<looping; C<do>>
 
 For more complex expressions, use a C<do> block:
 
@@ -923,7 +923,7 @@ Sometimes you need to break out of a loop before you have exhausted the
 iteration conditions.  Perl 5's standard control mechanisms--exceptions and
 C<return>--work, but you may also use I<loop control> statements.
 
-X<next>
+X<C<next>>
 
 The I<next> statement restarts the loop at its next iteration.  Use it when
 you've done all you need to in the current iteration.  To loop over lines in a
@@ -940,7 +940,7 @@ character C<#>, you might write:
 
 =end programlisting
 
-X<last>
+X<C<last>>
 
 The I<last> statement ends the loop immediately.  To finish processing a file
 once you've seen the ending delimiter, you might write:
@@ -956,7 +956,7 @@ once you've seen the ending delimiter, you might write:
 
 =end programlisting
 
-X<redo>
+X<C<redo>>
 
 The I<redo> statement restarts the current iteration without evaluating the
 conditional again.  This can be useful in those few cases where you want to
@@ -1013,7 +1013,7 @@ functions for clarity.
 
 =head2 Continue
 
-X<continue>
+X<C<continue>>
 
 The C<continue> construct behaves like the third subexpression of a C<for>
 loop; Perl executes its block for each iteration of the loop, even when you
@@ -1042,7 +1042,7 @@ how that iteration ends:
 
 Z<given_when>
 
-X<given>
+X<C<given>>
 
 The C<given> construct is a feature new to Perl 5.10.  It assigns the value of
 an expression to the topic variable and introduces a block:
@@ -1088,7 +1088,7 @@ modification:
 
 =end programlisting
 
-X<when>
+X<C<when>>
 
 X<topicalization>
 X<topicalize>
@@ -1169,7 +1169,7 @@ references, arbitrary comparison expressions, and even code references.
 
 Z<tailcalls>
 X<tailcall>
-X<goto>
+X<C<goto>>
 
 A I<tailcall> occurs when the last expression within a function is a call to
 another function--the return value of the outer function is the return

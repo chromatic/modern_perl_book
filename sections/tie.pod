@@ -2,9 +2,8 @@
 
 Z<tie>
 
-X<tie>
-X<keywords; tie>
-X<tying>
+X<C<tie>>
+X<builtins; C<tie>>
 
 Overloading (L<overloading>) lets you give classes custom behavior for specific
 types of coercions and accesses.  A similar mechanism exists for making classes

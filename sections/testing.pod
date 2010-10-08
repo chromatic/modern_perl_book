@@ -16,9 +16,9 @@ Perl 5 provides great tools to help you write good and useful automated tests.
 
 =head2 Test::More
 
-X<Test::More>
-X<ok()>
-X<testing; ok()>
+X<C<Test::More>>
+X<C<ok()>>
+X<testing; C<ok()>>
 
 Perl testing begins with the core module C<Test::More> and its C<ok()>
 function.  C<ok()> takes two parameters, a boolean value and a string
@@ -41,8 +41,7 @@ isolate individual features to understand what doesn't work as you intended and
 what ceases to work after you make changes in the future.
 
 X<testing; plan>
-X<test plan>
-X<Test::More; plan()>
+X<C<plan()>>
 
 This snippet isn't a complete test script, however.  C<Test::More> and related
 modules require the use of a I<test plan>, which represents the number of
@@ -101,8 +100,7 @@ output:
 
 =end screen
 
-X<TAP>
-X<test anything protocol>
+X<TAP (Test Anything Protocol)>
 X<testing; TAP>
 
 This format adheres to a standard of test output called I<TAP>, the I<Test
@@ -110,9 +108,9 @@ Anything Protocol> (U<http://testanything.org/>).  As part of this protocol,
 failed tests produce diagnostic messages.  This is a tremendous aid to
 debugging.
 
-X<Test::Harness>
-X<prove>
-X<testing; prove>
+X<C<Test::Harness>>
+X<C<prove>>
+X<testing; C<prove>>
 X<testing; running tests>
 
 The output of a test file containing multiple assertions (especially multiple
@@ -171,10 +169,9 @@ this true or false?", reducing everything to that boolean condition is tedious
 and offers few diagnostic possibilities.  C<Test::More> provides several other
 convenient functions to ensure that your code behaves as you intend.
 
-X<is()>
-X<testing; is()>
-X<Test::More; is()>
-X<operators; eq>
+X<C<is()>>
+X<testing; C<is()>>
+X<operators; C<eq>>
 
 The C<is()> function compares two values using the C<eq> operator.  If the
 values are equal, the test passes.  Otherwise, the test fails and provides a
@@ -217,19 +214,17 @@ explicitly evaluating the array in scalar context:
 ... though some people prefer to write C<scalar @cousins> for the sake of
 clarity.
 
-X<isnt()>
-X<testing; isnt()>
-X<Test::More; isnt()>
-X<operators; ne>
+X<C<isnt()>>
+X<testing; C<isnt()>>
+X<operators; C<ne>>
 
 C<Test::More> provides a corresponding C<isnt()> function which passes if the
 provided values are not equal (according to the C<ne> operator).  Otherwise, it
 behaves the same way as C<is()> with respect to scalar context and comparison
 types.
 
-X<cmp_ok()>
-X<testing; cmp_ok()>
-X<Test::More; cmp_ok()>
+X<C<cmp_ok()>>
+X<testing; C<cmp_ok()>>
 
 Both C<is()> and C<isnt()> apply I<string comparisons> with the Perl 5
 operators C<eq> and C<ne>.  This almost always does the right thing, but for
@@ -244,9 +239,8 @@ function allows you to specify your own comparison operator:
 
 =end programlisting
 
-X<isa_ok()>
-X<testing; isa_ok()>
-X<Test::More; isa_ok()>
+X<C<isa_ok()>>
+X<testing; C<isa_ok()>>
 
 Classes and objects provide their own interesting ways to interact with tests.
 Test that a class or object extends another class (L<inheritance>) with
@@ -296,8 +290,8 @@ C<Test::More> has several more test functions, but these are the most useful.
 
 =head2 Organizing Tests
 
-X<testing; .t files>
-X<testing; t/ directory>
+X<testing; F<.t> files>
+X<testing; F<t/> directory>
 
 The standard CPAN approach for organizing tests is to create a F<t/> directory
 containing one or more programs ending with the F<.t> suffix.  All of the CPAN
@@ -332,9 +326,8 @@ changes have no unintended global effects.
 
 =head2 Other Testing Modules
 
-X<Test::Builder>
-X<testing; modules>
-X<testing; Test::Builder>
+X<C<Test::Builder>>
+X<testing; C<Test::Builder>>
 
 C<Test::More> relies on a testing backend known as C<Test::Builder>.  The
 latter module manages the test plan and coordinates the test output into TAP.
@@ -342,15 +335,15 @@ This design allows multiple test modules to share the same C<Test::Builder>
 backend.  Consequently, the CPAN has hundreds of test modules available--and
 they can all work together in the same program.
 
-X<Test::Exception>
-X<Test::MockObject>
-X<Test::MockModule>
-X<Test::WWW::Mechanize>
-X<Test::Database>
-X<Test::Class>
-X<Test::Differences>
-X<Test::Deep>
-X<Devel::Cover>
+X<C<Test::Exception>>
+X<C<Test::MockObject>>
+X<C<Test::MockModule>>
+X<C<Test::WWW::Mechanize>>
+X<C<Test::Database>>
+X<C<Test::Class>>
+X<C<Test::Differences>>
+X<C<Test::Deep>>
+X<C<Devel::Cover>>
 
 =over 4
 

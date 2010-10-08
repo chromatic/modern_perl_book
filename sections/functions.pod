@@ -76,7 +76,7 @@ Z<function_parameters>
 
 X<parameters>
 X<functions; parameters>
-X<@_>
+X<C<@_>>
 X<parameter flattening>
 X<flattening>
 X<parameters; flattening>
@@ -426,7 +426,8 @@ like undeclared barewords and C<strict> would complain.
 =head1 Reporting Errors
 
 Z<reporting_errors>
-X<caller>
+X<C<caller>>
+X<builtins; C<caller>>
 
 Within a function, you can get information about the context of the call with
 the C<caller> operator.  If passed no arguments, it returns a three element
@@ -474,9 +475,9 @@ function and the context of the call:
 
 =end programlisting
 
-X<Carp>
-X<Carp; croak>
-X<Carp; carp>
+X<C<Carp>>
+X<C<Carp>; C<croak>>
+X<C<Carp>; C<carp>>
 
 The standard C<Carp> module uses this technique to great effect for reporting
 errors and throwing warnings in functions; its C<croak()> throws an exception
@@ -532,8 +533,8 @@ Functions may seem simple, but you can do much, much more with them.
 =head2 Context Awareness
 
 X<context>
-X<wantarray>
-X<keywords; wantarray>
+X<C<wantarray>>
+X<builtins; C<wantarray>>
 
 Perl 5's builtins know whether you've invoked them in void, scalar, or list
 context.  So too can your functions know their calling contexts.  The
@@ -754,8 +755,9 @@ with no functional changes (yet more clarity and improved performance):
 
 =end programlisting
 
-X<goto>
-X<functions; goto>
+X<C<goto>>
+X<functions; C<goto>>
+X<builtins; C<goto>>
 
 If you really I<must> eliminate tail calls, use a special form of the C<goto>
 keyword.  Unlike the form which can often lead to spaghetti code, the C<goto>
@@ -785,7 +787,6 @@ The comparative cleanliness of the CPAN versions is obvious.
 
 =head1 Pitfalls and Misfeatures
 
-X<functions; pitfalls>
 X<functions; misfeatures>
 
 Not all features of Perl 5 functions are always helpful.  In particular,
@@ -794,8 +795,8 @@ you can avoid them outside of a few cases.
 
 X<functions; Perl 4>
 X<functions; Perl 1>
-X<&; sigil>
-X<sigils; &>
+X<C<&>; sigil>
+X<sigils; C<&>>
 
 Perl 5 still supports old-style invocations of functions, carried over from
 older versions of Perl.  While you may now invoke Perl functions by name,

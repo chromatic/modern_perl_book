@@ -25,9 +25,7 @@ Java-style constructor calls:
 These syntaxes are equivalent in behavior, except when they're not.
 
 X<indirect object notation>
-X<indirect objects>
 X<dative notation>
-X<dative>
 
 The first form is the indirect object form (more precisely, the I<dative>
 case), where the verb (the method) precedes the noun to which it refers (the
@@ -101,7 +99,7 @@ construct an object, call the constructor method on the class name directly:
 
 =end programlisting
 
-X<IO::Handle>
+X<C<IO::Handle>>
 
 For the limited case of filehandle operations, the dative use is so prevalent
 that you can use the indirect invocation approach if you surround your intended
@@ -116,12 +114,9 @@ does this in practice, however.
 
 =end sidebar
 
-X<Perl::Critic::Policy::Dynamic::NoIndirect; CPAN modules>
-X<Perl::Critic::Policy::Dynamic::NoIndirect>
-X<Perl::Critic; CPAN modules>
-X<Perl::Critic>
-X<indirect; CPAN modules>
-X<indirect>
+X<C<Perl::Critic>>
+X<C<Perl::Critic::Policy::Dynamic::NoIndirect>>
+X<C<indirect>>
 
 The CPAN module C<Perl::Critic::Policy::Dynamic::NoIndirect> (a plugin for
 C<Perl::Critic>) can identify indirect invocations during code reviews.  The

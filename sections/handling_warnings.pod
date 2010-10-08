@@ -11,8 +11,8 @@ warnings--and Perl supports this.
 
 Z<producing_warnings>
 
-X<keywords; warn>
-X<warn>
+X<builtins; C<warn>>
+X<C<warn>>
 
 Use the C<warn> keyword to emit a warning:
 
@@ -26,11 +26,11 @@ C<warn> prints a list of values to the STDERR filehandle (L<filehandle>).  Perl
 will append the filename and line number on which the C<warn> call occurred
 unless the last element of the list ends in a newline.
 
-X<Carp>
-X<Carp; carp()>
-X<Carp; cluck()>
-X<Carp; croak()>
-X<Carp; confess()>
+X<C<Carp>>
+X<C<Carp>; C<carp()>>
+X<C<Carp>; C<cluck()>>
+X<C<Carp>; C<croak()>>
+X<C<Carp>; C<confess()>>
 
 The core C<Carp> module offers other mechanisms to produce warnings.  Its
 C<carp()> function reports a warning from the perspective of the calling code.
@@ -54,7 +54,7 @@ number of the I<calling> code, not C<only_two_arguments()>.  Similarly,
 C<Carp>'s C<cluck()> produces an entire backtrace of all function calls up to
 the current function.
 
-X<Carp; verbose>
+X<C<Carp>; verbose>
 
 To track down weird warnings or exceptions throughout your system, enable
 C<Carp>'s verbose mode throughout the entire program:
@@ -71,8 +71,8 @@ use Carp instead of C<warn> or C<die> to save debugging time.
 
 =head2 Enabling and Disabling Warnings
 
-X<-w>
-X<command-line arguments; -w>
+X<C<-w>>
+X<command-line arguments; C<-w>>
 
 Lexical encapsulation of warnings is as important as lexical encapsulation of
 variables.  Older code may use the C<-w> command-line argument to enable
@@ -91,10 +91,10 @@ warnings.
 
 =begin sidebar
 
-X<-W>
-X<command-line arguments; -W>
-X<-X>
-X<command-line arguments; -X>
+X<C<-W>>
+X<command-line arguments; C<-W>>
+X<C<-X>>
+X<command-line arguments; C<-X>>
 
 The C<-W> flag enables warnings throughout the program unilaterally, regardless
 of lexical enabling or disabling through the C<warnings> pragma.  The C<-X>
@@ -103,8 +103,8 @@ common.
 
 =end sidebar
 
-X<$^W>
-X<global variables; $^W>
+X<C<$^W>>
+X<global variables; C<$^W>>
 
 All of C<-w>, C<-W>, and C<-X> affect the value of the global variable C<$^W>.
 Code written before the C<warnings> pragma (Perl 5.6.0 in spring 2000) may
@@ -159,9 +159,7 @@ deprecated constructs:
 
 =head2 Catching Warnings
 
-X<signal handlers; __WARN__>
-X<__WARN__>
-X<$SIG{__WARN__}>
+X<C<$SIG{__WARN__}>>
 X<warnings; catching>
 
 Just as you can catch exceptions, so you can catch warnings.  The C<%SIG>
