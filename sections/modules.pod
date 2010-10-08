@@ -61,11 +61,11 @@ the file.  Maintenance concerns highly recommend that convention, however.
 
 =head2 Using and Importing
 
-X<use>
-X<keywords; use>
-X<import()>
-
 Z<import>
+
+X<C<use>>
+X<builtins; C<use>>
+X<C<import()>>
 
 When you load a module with the C<use> keyword, Perl loads it from disk, then
 calls its C<import()> method, passing any arguments you provided.  This occurs
@@ -85,7 +85,8 @@ arguments of symbols (usually functions) to make available in the calling
 namespace.  This is not a strong requirement; pragmas (L<pragmas>) such as
 C<strict> use arguments to change their behavior instead of exporting symbols.
 
-X<no>
+X<C<no>>
+X<builtins; C<no>>
 X<unimporting>
 
 The C<no> keyword calls a module's C<unimport()> method, if it exists, passing
@@ -164,8 +165,6 @@ give an error message.  They are truly optional.
 =end sidebar
 
 X<modules; case-sensitivity>
-X<importing; case-sensitivity>
-X<namespaces; case-sensitivity>
 X<case-sensitivity>
 
 Perl 5's C<use> and C<require> are case-sensitive, even if the underlying

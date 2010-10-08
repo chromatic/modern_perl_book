@@ -21,8 +21,8 @@ big container full of key/value pairs.
 =head2 Declaring Hashes
 
 X<hashes; declaring>
-X<%; sigil>
-X<sigils; %>
+X<C<%>; sigil>
+X<sigils; C<%>>
 
 A hash has the C<%> sigil.  Declare a lexical hash with:
 
@@ -46,8 +46,8 @@ You can assign and access individual elements of a hash:
 
 =end programlisting
 
-X<$; sigil>
-X<sigils; $>
+X<C<$>; sigil>
+X<sigils; C<$>>
 
 Hashes use the scalar sigil C<$> when accessing individual elements and curly
 braces C<{ }> for string indexing.
@@ -64,11 +64,13 @@ You may assign a list of keys and values to a hash in a single expression:
 =end programlisting
 
 X<fat comma>
+X<<< C<< => >> >>>
+X<<< operators; C<< => >> >>>
 
 If you assign an odd number of elements to the hash, you will receive a warning
 that the results are not what you anticipated.  It's often more obvious to use
-the I<fat comma> operator to associate values with keys, as it makes the
-required pairing more visible.  Compare:
+the I<fat comma> operator (C<< => >>) to associate values with keys, as it
+makes the required pairing more visible.  Compare:
 
 =begin programlisting
 
@@ -108,8 +110,7 @@ function:
 =end programlisting
 
 The key of the hash will be C<name> and not C<Leonardo>.  If you intend to call
-the function to get the key, disambiguate your intent by making the call
-explicit:
+the function to get the key, make the function call explicit:
 
 =begin programlisting
 
@@ -138,7 +139,6 @@ it's somewhat more rare.>:
 
 =head2 Hash Indexing
 
-X<hashes; accessing values>
 X<hashes; values>
 
 Because a hash is an aggregate, you can access individual values with an
@@ -228,9 +228,9 @@ stringified version of that object instead of the object itself:
 
 =head2 Hash Key Existence
 
-X<exists>
-X<operators; exists>
-X<hashes; exists>
+X<C<exists>>
+X<builtins; C<exists>>
+X<hashes; C<exists>>
 
 The C<exists> operator returns a boolean value to indicate whether a hash
 contains the given key:
@@ -264,8 +264,8 @@ may exist with a value even if that value evaluates to a boolean false
 Second, with nested data structures, C<exists> avoids autovivifying
 (L<autovivification>) the value.
 
-X<defined>
-X<operators; defined>
+X<C<defined>>
+X<builtins; C<defined>>
 
 The corresponding operator for hash values is C<defined>.  If a hash key
 exists, its value may be C<undef>.  Check that with C<defined>:
@@ -282,9 +282,9 @@ exists, its value may be C<undef>.  Check that with C<defined>:
 
 =head2 Accessing Hash Keys and Values
 
-X<keys>
-X<hashes; keys>
-X<operators; keys>
+X<C<keys>>
+X<hashes; C<keys>>
+X<builtins; C<keys>>
 
 Hashes are aggregate variables, but they behave slightly differently from
 arrays.  In particular, you can iterate over the keys of a hash, the values, of
@@ -300,9 +300,9 @@ keys of the hash:
 
 =end programlisting
 
-X<values>
-X<hashes; values>
-X<operators; values>
+X<C<values>>
+X<hashes; C<values>>
+X<builtins; C<values>>
 
 The C<values> operator returns a list of values of the hash:
 
@@ -315,9 +315,9 @@ The C<values> operator returns a list of values of the hash:
 
 =end programlisting
 
-X<each>
-X<hashes; each>
-X<operators; each>
+X<C<each>>
+X<hashes; C<each>>
+X<builtins; C<each>>
 
 The C<each> operator returns a list of two-element lists of the key and the
 value:
@@ -404,8 +404,8 @@ You may retrieve multiple values from a hash with a slice:
 
 =end programlisting
 
-X<@; sigil>
-X<sigils; @>
+X<C<@>; sigil>
+X<sigils; C<@>>
 
 As with array slices, the sigil of the hash changes to indicate list context.
 You can still tell that C<%addresses> is a hash by the use of the curly braces
@@ -514,7 +514,6 @@ creates a value (C<undef>) and immediately increments it to one, as the
 numification of undef produces the value 0.
 
 X<hashes; caching>
-X<hashes; orcish maneuver>
 X<orcish maneuver>
 
 A variant of this strategy works very well for caching, where you might want to
@@ -537,7 +536,8 @@ fetch:
 =end programlisting
 
 X<defined-or>
-X<operators; //>
+X<C<//>>
+X<operators; C<//>>
 X<operators; defined-or>
 
 This I<orcish maneuver>N<Or-cache, if you like puns.> returns the value from
@@ -620,7 +620,6 @@ Z<locked_hashes>
 X<locked hashes>
 
 X<hashes; locked>
-X<hashes; locking>
 
 One drawback of hashes is that their keys are barewords which offer little typo
 protection (especially compared to the function and variable name protection

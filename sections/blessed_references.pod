@@ -15,8 +15,8 @@ combine to form the simple--though effective--basic object system:
 
 =back
 
-X<bless>
-X<operators; bless>
+X<C<bless>>
+X<operators; C<bless>>
 
 You've already seen the first two rules with Moose.  The third rule is new.
 The C<bless> keyword associates the name of a class with a reference, such that
@@ -27,8 +27,8 @@ resolution.  That sounds more complicated than it is.
 
 Though these rules explain Perl 5's underlying object system, they are somewhat
 more minimal in practice than may be practical, especially for larger projects.
-In particular, they offer few facilities for metaprogramming (using APIs to
-manipulate the program itself).
+In particular, they offer few facilities for metaprogramming
+(L<code_generation>).
 
 Moose (L<moose>) is a better choice for serious, modern Perl programs larger
 than a couple of hundred lines, but you will likely encounter bare-bones Perl 5
@@ -170,8 +170,7 @@ inherits from another class, Perl looks in the parent class (and so on and so
 on) until it finds a C<number> method.  If one exists, Perl calls it with
 C<$joel> as an invocant.
 
-X<@ISA>
-X<variables; @ISA>
+X<C<@ISA>>
 
 Moose classes store their inheritance information in a metamodel which provides
 additional abilities on top of Perl 5's default OO system.
@@ -209,8 +208,8 @@ X<pragmas; base>
 
 =begin sidebar
 
-Perl 5.10 added C<parent> to supersede the C<base> pragma added in Perl
-5.004_4.  If you can't use Moose, use C<parent>.
+Perl 5.10 added C<parent> to supersede the C<base> pragma.  If you can't use
+Moose, use C<parent>.
 
 =end sidebar
 
@@ -259,9 +258,9 @@ you likely never need to use this.
 
 =head2 AUTOLOAD
 
-X<AUTOLOAD>
-X<objects; AUTOLOAD>
-X<methods; AUTOLOAD>
+X<C<AUTOLOAD>>
+X<objects; C<AUTOLOAD>>
+X<methods; C<AUTOLOAD>>
 
 If there is no applicable method in the invocant's class or any of its
 superclasses, Perl 5 will next look for an C<AUTOLOAD> function in every class

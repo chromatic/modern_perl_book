@@ -10,8 +10,8 @@ available for all other classes and objects.
 
 =head2 The isa() Method
 
-X<UNIVERSAL::isa>
-X<isa()>
+X<C<UNIVERSAL::isa>>
+X<C<isa()>>
 
 The C<isa()> method takes a string containing the name of a class or the name
 of a built-in type.  You can call it as a class method or an instance method on
@@ -34,12 +34,12 @@ Given an object C<$pepper>, a hash reference blessed into the C<Monkey> class
 
 =end programlisting
 
-X<SCALAR>
-X<ARRAY>
-X<HASH>
-X<Regexp>
-X<IO>
-X<CODE>
+X<C<SCALAR>>
+X<C<ARRAY>>
+X<C<HASH>>
+X<C<Regexp>>
+X<C<IO>>
+X<C<CODE>>
 
 Perl 5's core types are C<SCALAR>, C<ARRAY>, C<HASH>, C<Regexp>, C<IO>, and
 C<CODE>.
@@ -50,8 +50,8 @@ for example) or with code that does not use roles (L<roles>).
 
 =head2 The can() Method
 
-X<UNIVERSAL::can>
-X<can()>
+X<C<UNIVERSAL::can>>
+X<C<can()>>
 
 The C<can()> method takes a string containing the name of a method.  It returns
 a reference to the function which implements that method, if it exists.
@@ -110,8 +110,8 @@ C<Moose>'s introspection.
 
 =head2 The VERSION() Method
 
-X<UNIVERSAL::VERSION>
-X<VERSION()>
+X<C<UNIVERSAL::VERSION>>
+X<C<VERSION()>>
 
 The C<VERSION()> method is available to all packages, classes, and objects.  It
 returns the value of the C<$VERSION> variable for the appropriate package or
@@ -136,8 +136,8 @@ so.
 
 =head2 The DOES() Method
 
-X<UNIVERSAL::DOES>
-X<DOES()>
+X<C<UNIVERSAL::DOES>>
+X<C<DOES()>>
 
 The C<DOES()> method is new in Perl 5.10.0.  It exists to support the use of
 roles (L<roles>) in programs.  Pass it an invocant and the name of a role, and

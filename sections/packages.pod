@@ -15,9 +15,9 @@ sense, a package and a namespace are equivalent; the package represents the
 source code and the namespace represents the entity created when Perl parses
 that codeN<This distinction may be subtle.>.
 
-X<keywords; package>
+X<builtins; C<package>>
 
-The C<package> keyword declares a package and a namespace:
+The C<package> builtin declares a package and a namespace:
 
 =begin programlisting
 
@@ -44,7 +44,7 @@ program or even in a F<.pm> file on disk, the current package will be the
 C<main> package.
 
 X<packages; version>
-X<$VERSION>
+X<C<$VERSION>>
 
 Besides a package name (C<main> or C<MyCode> or any other allowable
 identifier), a package has a version and three implicit methods, C<VERSION()>,
@@ -76,8 +76,8 @@ In 5.10 and earlier, the simplest way to declare the version of a package is:
 
 =end programlisting
 
-X<UNIVERSAL>
-X<VERSION()>
+X<C<UNIVERSAL>>
+X<C<VERSION()>>
 
 The C<VERSION()> method is available to every package; they inherit it from the
 C<UNIVERSAL> base class.  It returns the value of C<$VERSION>.  You may
@@ -103,7 +103,6 @@ already exist and causes the parser to put all subsequent package global
 symbols (global variables and functions) into that namespace.
 
 X<namespaces; open>
-X<open namespaces>
 
 Perl has I<open namespaces>.  You can add functions or variables to a namespace
 at any point, either with a new package declaration:
@@ -144,7 +143,6 @@ Perl 5 packages are so open that you can add to them at any time during
 compilation or run time, or from separate files.  Of course, that can be
 confusing, so avoid it when possible.
 
-X<multi-level namespaces>
 X<namespaces; multi-level>
 
 Namespaces can have as many levels as you like for organizational purposes.

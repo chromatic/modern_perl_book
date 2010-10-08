@@ -138,6 +138,8 @@ structure will create intermediary hashes, keyed appropriately:
 =end programlisting
 
 X<autovivification>
+X<C<autovivification>>
+X<pragmas; C<autovivification>>
 
 This behavior is I<autovivification>, and it's more often useful than it isn't.
 Its benefit is in reducing the initialization code of nested data structures.
@@ -178,7 +180,7 @@ The complexity of Perl 5's dereferencing syntax combined with the potential for
 confusion with multiple levels of references can make debugging nested data
 structures difficult.  Two good options exist for visualizing them.
 
-X<Data::Dumper>
+X<C<Data::Dumper>>
 
 The core module C<Data::Dumper> can stringify values of arbitrary complexity
 into Perl 5 code:
@@ -207,7 +209,6 @@ Z<circular_references>
 
 X<circular references>
 X<memory management; circular references>
-X<memory management>
 X<garbage collection>
 
 Perl 5's memory management system of reference counting (L<reference_counts>)
@@ -235,7 +236,7 @@ exist, and it can't manage the lifespan of these entities.
 
 X<references; weak>
 X<weak references>
-X<Scalar::Util>
+X<C<Scalar::Util>>
 
 You must either break the reference count manually yourself (by clearing the
 children of C<$alice> and C<$robert> or the parents of C<$cianne>), or take

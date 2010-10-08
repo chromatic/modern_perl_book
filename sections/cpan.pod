@@ -71,8 +71,8 @@ Distributions also have historical versions available on the CPAN, ratings,
 annotations for the documentation, and other useful information.  All of this
 is available from U<http://search.cpan.org/>.
 
-X<CPAN.pm>
-X<CPANPLUS>
+X<C<CPAN.pm>>
+X<C<CPANPLUS>>
 
 Modern Perl installations include two clients to connect to, search, download,
 build, test, and install CPAN distributions, CPAN.pm and CPANPLUS.  They behave
@@ -97,9 +97,7 @@ To install a distribution:
 
 =end programlisting
 
-X<Eric Wilhelm>
-X<CPAN.pm; configuration>
-X<CPAN.pm; troubleshooting>
+X<C<CPAN.pm>>
 
 Eric Wilhelm's excellent tutorial on configuring CPAN.pm
 (U<http://learnperl.scratchcomputing.com/tutorials/configuration/>) is worth

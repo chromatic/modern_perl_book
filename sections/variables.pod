@@ -65,10 +65,8 @@ reference (L<references>).
 =head2 Variables, Types, and Coercion
 
 X<variables; types>
-X<types; containers>
-X<types; variables>
-X<container type>
-X<value type>
+X<variables; container type>
+X<variables; value type>
 
 A variable in Perl 5 represents two things: the value (a dollar value, a list
 of pizza toppings, a group of guitar shops and their phone numbers) and the

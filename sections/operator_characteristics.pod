@@ -57,7 +57,7 @@ memorizing the associativity of the mathematic operators is worthwhile.
 
 =begin sidebar
 
-X<B::Deparse>
+X<C<B::Deparse>>
 X<precedence; disambiguation>
 X<associativity; disambiguation>
 
@@ -135,18 +135,18 @@ X<fixity; postcircumfix>
 
 An operator's I<fixity> is its position relative to its operands:
 
-X<.; infix operator>
-X<.=; infix operator>
-X<..; infix operator>
-X<...; infix operator>
-X<=~; infix operator>
-X<!~; infix operator>
-X<|; infix operator>
-X<||; infix operator>
-X<//; infix operator>
-X<|=; infix operator>
-X<||=; infix operator>
-X<//=; infix operator>
+X<C<.>; infix operator>
+X<C<.=>; infix operator>
+X<C<..>; infix operator>
+X<C<...>; infix operator>
+X<C<=~>; infix operator>
+X<C<!~>; infix operator>
+X<C<|>; infix operator>
+X<C<||>; infix operator>
+X<C<//>; infix operator>
+X<C<|=>; infix operator>
+X<C<||=>; infix operator>
+X<C<//=>; infix operator>
 
 =over 4
 
@@ -154,33 +154,33 @@ X<//=; infix operator>
 operators are infix operators, such as the multiplication operator in C<$length
 * $width>.
 
-X<\; prefix operator>
-X<~; prefix operator>
-X<++; prefix operator>
-X<--; prefix operator>
-X<+; prefix operator>
-X<-; prefix operator>
-X<!; prefix operator>
-X<!!; prefix operator>
+X<C<\>; prefix operator>
+X<C<~>; prefix operator>
+X<C<++>; prefix operator>
+X<C<-->; prefix operator>
+X<C<+>; prefix operator>
+X<C<->; prefix operator>
+X<C<!>; prefix operator>
+X<C<!!>; prefix operator>
 
 =item I<Prefix> operators appear before their operators and I<postfix>
 operators appear after.  These operators tend to be unary, such as mathematic
 negation (C<-$x>), boolean negation (C<!$y>), and postfix increment (C<$z++>).
 
-X<(); circumfix operator>
-X<{}; circumfix operator>
-X<[]; circumfix operator>
-X<//; circumfix operator>
-X<``; circumfix operator>
-X<''; circumfix operator>
-X<""; circumfix operator>
+X<C<()>; circumfix operator>
+X<C<{}>; circumfix operator>
+X<C<[]>; circumfix operator>
+X<C<//>; circumfix operator>
+X<C<``>; circumfix operator>
+X<C<''>; circumfix operator>
+X<C<"">; circumfix operator>
 
 =item I<Circumfix> operators surround their operands.  Examples include the
 anonymous hash constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
 
-X<(); postcircumfix operator>
-X<{}; postcircumfix operator>
-X<[]; postcircumfix operator>
+X<C<()>; postcircumfix operator>
+X<C<{}>; postcircumfix operator>
+X<C<[]>; postcircumfix operator>
 
 =item I<Postcircumfix> operators follow certain operands and surround others,
 as in the case of hash or array element access (C<$hash{ ...  }> and C<$array[

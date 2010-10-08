@@ -72,7 +72,7 @@ The Catalyst web framework also uses attributes to determine the visibility and 
 
 X<pragmas; attributes>
 X<attributes.pm>
-X<Attribute::Handlers>
+X<C<Attribute::Handlers>>
 
 Attributes do have their drawbacks:
 

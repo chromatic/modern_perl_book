@@ -10,11 +10,18 @@ clean, maintainable, powerful, and succinct Perl 5 code is very different from
 Perl 5.000.  The default behaviors sometimes get in the way; fortunately,
 better behaviors are available.
 
+X<C<Task::Kensho>>
+
+The CPAN (L<cpan>) contains many modules and pragmas designed to make your work
+simpler, more correct, and more enjoyableN<See C<Task::Kensho> to start.>.  As
+you improve as a Perl programmer, you will have many opportunities to use (and
+even to create) such code in the right circumstances.  For now, use these
+pragmas and modules regularly in your own code.
+
 =head2 The strict Pragma
 
-X<strict>
-X<modules; strict>
-X<pragmas; strict>
+X<C<strict>>
+X<pragmas; C<strict>>
 
 The C<strict> pragma (L<pragmas>) allows you to forbid (or re-enable) various
 language constructs which offer power but also the potential for accidental
@@ -98,8 +105,8 @@ objects as they are--behave as objects should behave.
 =head2 The autodie Pragma
 
 Z<autodie>
-X<autodie>
-X<pragmas; autodie>
+X<C<autodie>>
+X<pragmas; C<autodie>>
 
 Perl 5's default error checking is parsimonious.  If you're not careful to
 check the return value of every C<open()> call, for example, you could try to

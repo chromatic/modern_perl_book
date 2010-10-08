@@ -170,7 +170,7 @@ pollute their namespaces.
 
 =begin sidebar
 
-X<CPAN::Mini>
+X<C<CPAN::Mini>>
 X<cpanmini>
 
 The C<CPAN::Mini> distribution from the CPAN allows you to create your own

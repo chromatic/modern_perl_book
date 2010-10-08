@@ -51,7 +51,7 @@ Though in this simple case, they produce the same output, the latter violates
 the encapsulation of objects in subtle ways.  It avoids method lookup
 altogether.
 
-X<methods; calling as functions (avoid)>
+X<methods; avoid calling as functions>
 
 If C<$o> were instead a subclass or allomorph (L<roles>) of C<Order> which
 overrode C<calculate_price()>, the method-as-a-function call would call the
@@ -60,8 +60,8 @@ to change--perhaps inherited from elsewhere or delegated through
 C<AUTOLOAD()>--the caller might break.
 
 X<methods; calling with references>
-X<UNIVERSAL; can()>
-X<can()>
+X<C<UNIVERSAL>; C<can()>>
+X<C<can()>>
 
 Perl has one circumstance where this behavior may seem necessary.  If you force
 method resolution without dispatch, how do you invoke the resulting method
@@ -115,8 +115,8 @@ If you use this form of invocation, limit the scope of the references.
 
 =head2 Callee-side
 
-X<methods; callable as functions (avoid)>
-X<functions; callable as methods (avoid)>
+X<methods; avoid calling as functions>
+X<functions; avoid calling as methods>
 
 Because Perl 5 makes no distinction between functions and methods at the point
 of declaration and because it's I<possible> (however inadvisable) to invoke a

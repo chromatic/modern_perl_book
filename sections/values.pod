@@ -6,7 +6,6 @@ Effective Perl programs depend on the accurate representation and manipulation
 of values.
 
 X<variables>
-X<variables>
 
 Computer programs contain I<variables>: containers which hold I<values>.
 Values are the actual data the programs manipulate.  While it's easy to explain
@@ -152,11 +151,11 @@ I<escaping> it (that is, preceding it with a leading backslash):
 
 =end programlisting
 
-X<quoting operators>
-X<q>
-X<operators; q>
-X<qq>
-X<operators; qq>
+X<operators; quoting>
+X<C<q>>
+X<operators; C<q>>
+X<C<qq>>
+X<operators; C<qq>>
 
 If you find that hideously ugly, you may use an alternate I<quoting operator>.
 The C<q> operator indicates single quoting, while the C<qq> operator provides
@@ -306,7 +305,8 @@ outputs of your program, you will avoid many problems.
 
 =head3 Unicode in Your Filehandles
 
-X<open>
+X<C<open>>
+X<builtins; C<open>>
 X<IO layers>
 
 One source of Unicode input is filehandles (L<files>).  If you tell Perl that a
@@ -325,8 +325,8 @@ data.  In this case, the C<:utf8> layer decodes UTF-8 data:
 
 =end programlisting
 
-X<binmode>
-X<builtins; binmode>
+X<C<binmode>>
+X<builtins; C<binmode>>
 
 You may also modify an existing filehandle with C<binmode>, whether for input
 or output:
@@ -347,9 +347,9 @@ Unicode characters.
 
 =head3 Unicode in Your Data
 
-X<Encode>
-X<Encode; decode()>
-X<Encode; encode()>
+X<C<Encode>>
+X<C<decode()>>
+X<C<encode()>>
 
 The core module C<Encode> provides a function named C<decode()> to
 convert a scalar containing data in a known format to a Unicode string.
@@ -372,8 +372,8 @@ to the desired output encoding:
 
 =head3 Unicode in Your Programs
 
-X<pragmas; utf8>
-X<utf8>
+X<pragmas; C<utf8>>
+X<C<utf8>>
 X<encoding>
 
 You may include Unicode characters in your programs in three ways.  The easiest
@@ -394,8 +394,8 @@ you to use Unicode characters in strings as well in identifiers:
 To I<write> this code, your text editor must understand UTF-8 and you must save
 the file with the appropriate encoding.
 
-X<escaping; \x{}>
-X<\x{}>
+X<strings; C<\x{}>>
+X<C<\x{}>; escape sequence for character encodings>
 
 You may also use the Unicode escape sequence to represent character encodings.
 The syntax C<\x{}> represents a single character; place the hex form of the
@@ -413,10 +413,10 @@ These escapes interpolate only within double-quoted strings.
 
 =end sidebar
 
-X<charnames pragma>
-X<pragmas; charnames>
-X<escaping; \N{}>
-X<\N{}>
+X<C<charnames>>
+X<pragmas; C<charnames>>
+X<strings; C<\N{}>>
+X<C<\N{}>; escape sequence for named character encodings>
 
 Some Unicode characters have names.  Though these are more verbose, they can be
 clearer to read than Unicode numbers.  You must use the C<charnames> pragma to
@@ -597,9 +597,8 @@ invisible characters; your readers may not.  These are equivalent:
 
 Consider the most readable alternative, however.
 
-X<Scalar::Util>
-X<looks_like_number>
-X<Scalar::Util; looks_like_number>
+X<C<Scalar::Util>>
+X<C<looks_like_number()>>
 
 Because of coercion (L<coercion>), Perl programmers rarely have to worry about
 converting text read from outside the program to numbers.  Perl will treat
@@ -609,7 +608,7 @@ something really does look like a number.  The core module C<Scalar::Util>
 contains a function named C<looks_like_number> which returns a true value if
 Perl will consider the given argument numeric.
 
-X<Regexp::Common>
+X<C<Regexp::Common>>
 
 The C<Regexp::Common> module from the CPAN also provides several well-tested
 regular expressions to identify valid I<types> (whole number, integer,
@@ -618,6 +617,7 @@ floating-point value) of numeric values.
 =head2 Undef
 
 X<undef>
+X<C<undef>>
 
 Perl 5 has a value which represents an unassigned, undefined, and unknown
 value: C<undef>.  Declared but undefined scalar variables contain C<undef>:
@@ -629,7 +629,7 @@ value: C<undef>.  Declared but undefined scalar variables contain C<undef>:
 
 =end programlisting
 
-X<undef; coercions>
+X<C<undef>; coercions>
 
 C<undef> evaluates to false in boolean context.  Interpolating C<undef> into a
 string--or evaluating it in a string context--produces an C<uninitialized
@@ -653,7 +653,7 @@ value> warning:
 =head2 The Empty List
 
 X<empty list>
-X<(); empty list>
+X<C<()>; empty list>
 
 When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list.  When evaluated in scalar context, this evaluates to
@@ -718,9 +718,8 @@ lists.  Where present, the parentheses in these examples group expressions to
 change the I<precedence> of those expressions (L<precedence>).
 
 X<operators; range>
-X<operators; ..>
-X<..>
-X<range operator>
+X<operators; C<..>>
+X<C<..>; range operator>
 
 You may use the range operator to create lists of literals in a compact form:
 
@@ -731,9 +730,8 @@ You may use the range operator to create lists of literals in a compact form:
 
 =end programlisting
 
-X<qw()>
-X<operators; qw()>
-X<qw() operator>
+X<operators; C<qw()>>
+X<C<qw()>; quote words operator>
 
 ... and you may use the C<qw()> operator to split a literal string on
 whitespace to produce a list of strings:

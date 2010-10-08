@@ -14,8 +14,8 @@ Other linguistic features include default variables--essentially pronouns.
 Z<default_scalar_variable>
 
 X<default scalar variable>
-X<variables; $_>
-X<$_>
+X<< variables; C<$_> >>
+X<< C<$_> >>
 
 The I<default scalar variable> (also called the I<topic variable>), C<$_>, is
 the best example of a linguistic shortcut in Perl.  It's most notable in its
@@ -76,18 +76,18 @@ match, substitute, and transliterate:
 
 =end programlisting
 
-X<chr>
-X<keywords; chr>
-X<ord>
-X<keywords; ord>
-X<lc>
-X<keywords; lc>
-X<length>
-X<keywords; length>
-X<reverse>
-X<keywords; reverse>
-X<uc>
-X<keywords; uc>
+X<C<chr>>
+X<builtins; C<chr>>
+X<C<ord>>
+X<builtins; C<ord>>
+X<C<lc>>
+X<builtins; C<lc>>
+X<C<length>>
+X<builtins; C<length>>
+X<C<reverse>>
+X<builtins; C<reverse>>
+X<C<uc>>
+X<builtins; C<uc>>
 
 Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
 C<reverse>, and C<uc>) work on the default scalar variable if you do not
@@ -185,8 +185,8 @@ Use C<$_> as you would the word "it" in formal writing: sparingly, in small and 
 =head2 The Default Array Variables
 
 X<default array variables>
-X<variables; @_>
-X<@_>
+X<variables; C<@_>>
+X<C<@_>>
 
 While Perl has a single implicit scalar variable, it has two implicit array
 variables.  Perl passes arguments to functions in an array named C<@_>.  Array
@@ -214,8 +214,8 @@ pronoun I<they> or I<them>.  I<Unlike> C<$_>, Perl automatically localizes
 C<@_> for you when you call other functions.  The array operators C<shift> and
 C<pop> operate on C<@_> with no other operands provided.
 
-X<variables; @ARGV>
-X<@ARGV>
+X<variables; C<@ARGV>>
+X<C<@ARGV>>
 
 Outside of all functions, the default array variable C<@ARGV> contains the
 command-line arguments to the program.  The same array operators which use

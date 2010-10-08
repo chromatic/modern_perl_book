@@ -10,8 +10,8 @@ value, a filehandle, or a reference--but it is always a single value.  Scalar
 values and scalar context have a deep connection; assigning to a scalar
 provides scalar context.
 
-X<$; sigil>
-X<sigils; $>
+X<C<$>; sigil>
+X<sigils; C<$>>
 
 Scalars may be lexical, package, or global (L<globals>) variables.  You may
 only declare lexical or package variables.  The names of scalar variables must
@@ -105,12 +105,10 @@ C<$authors> is still useful as a reference, but C<$stringy_ref> is a string
 with no connection to the reference and C<$numeric_ref> is a number with no
 connection to the reference.
 
-
-X<Scalar::Util>
+X<C<Scalar::Util>>
 X<dualvars>
-X<dualvar(); Scalar::Util>
-X<looks_like_number()>
-X<looks_like_number;Scalar::Util>
+X<C<dualvar()>>
+X<C<looks_like_number()>>
 
 All of these coercions and operations are possible because Perl 5 scalars can
 contain numeric parts as well as string parts.  The internal data structure
@@ -140,7 +138,7 @@ Be careful that the I<strings> C<'0.0'> and C<'0e0'> are true; this is one
 place where Perl 5 makes a distinction between what looks like a number and
 what really is a number.
 
-X<undef>
+X<C<undef>>
 
 One other value is always false: C<undef>.  This is the value of uninitialized
 variables as well as a value in its own right.

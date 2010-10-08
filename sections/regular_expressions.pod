@@ -12,14 +12,12 @@ The simplest regexes are simple substring patterns:
 =end programlisting
 
 X<operators; match>
-X<operators; //>
-X<operators; m//>
-X<operators; regex bind>
-X<operators; negated regex bind>
-X<operators; =~>
-X<=~; operator>
-X<operators; !~>
-X<!~; operator>
+X<operators; C<//>>
+X<operators; C<m//>>
+X<operators; C<=~>>
+X<C<=~>; regex bind>
+X<operators; <!~>>
+X<C<!~>; negated regex bind>
 X<regex; atom>
 X<atom>
 
@@ -38,9 +36,9 @@ the match succeeds.
 
 =head1 The qr// Operator and Regex Combinations
 
-X<operators; qr//>
-X<qr//; operator>
-X<regex; qr//>
+X<operators; C<qr//>>
+X<C<qr//>>
+X<regex; C<qr//>>
 X<regex; first-class>
 
 Regexes are first-class entities in modern Perl when created with the C<qr//>
@@ -78,11 +76,11 @@ You may interpolate and combine them into larger and more complex patterns:
 =head1 Quantifiers
 
 X<regex; quantifiers>
-X<operators; index>
+X<builtins; C<index>>
 
 Regular expressions are far more powerful than previous examples have
 demonstrated; you can search for a literal substring within a string with the
-C<index> operator.  Using the regex engine for that is like flying your
+C<index> builtin.  Using the regex engine for that is like flying your
 autonomous combat helicopter to the corner store to buy spare cheese.
 
 X<regex quantifiers>
@@ -108,7 +106,7 @@ preceding a C<t> character I<and also> matches if there is one and only one
 C<a> character between the C<c> and C<t> characters.
 
 X<regex quantifiers; one or more>
-X<+; regex metacharacter>
+X<C<+>; one or more regex metacharacter>
 
 The I<one or more quantifier>, or C<+>, matches only if there is at least one
 of the preceding atom in the appropriate place in the string to match:
@@ -130,7 +128,7 @@ There is no theoretical limit to the number of quantified atoms which can
 match.
 
 X<quantifiers; zero or more>
-X<*; regex metacharacter>
+X<C<*>; zero or more regex metacharacter>
 
 The I<zero or more quantifier> is C<*>; it matches if there are zero or more
 instances of the quantified atom in the string to match:
@@ -154,7 +152,7 @@ from using the C<?> and C<+> quantifiers far more than the C<*> quantifier, as
 they avoid expensive backtracking and express your intent more clearly.
 
 X<numeric quantifiers>
-X<{}; regex metacharacters>
+X<C<{}>; regex metacharacters>
 
 Finally, you can specify the number of times an atom may match with I<numeric
 quantifiers>. C<{n}> means that a match must occur exactly I<n> times.
@@ -233,7 +231,7 @@ This will match C<Alabama>, C<Belgium>, and C<Bethlehem> before it reaches
 C<loam>.  The soil might be nice there, but those words are all too long--and
 the matches start in the middle of the words.
 
-X<?; regex metacharacter>
+X<C<?>; zero or one regex metacharacter>
 
 Turn a greedy quantifier into a non-greedy quantifier by appending the C<?>
 quantifier:
@@ -281,7 +279,7 @@ possibility of unpleasant surprises.
 
 X<regex anchors>
 X<anchors; start of string>
-X<\A; regex metacharacter>
+X<C<\A>; start of string regex metacharacter>
 
 I<Regex anchors> force a match at a specific position in a string.  The I<start
 of string anchor> (C<\A>) ensures that any match will start at the beginning of
@@ -295,7 +293,7 @@ the string:
 =end programlisting
 
 X<anchors; end of string>
-X<\Z; regex metacharacter>
+X<C<\Z>; end of string regex metacharacter>
 
 The I<end of line string anchor> (C<\Z>) ensures that any match will I<end> at
 the end of the string.
@@ -308,7 +306,7 @@ the end of the string.
 =end programlisting
 
 X<word boundary metacharacter>
-X<\b; regex metacharacter>
+X<C<\b>; word boundary regex metacharacter>
 
 The I<word boundary metacharacter> (C<\b>) matches only at the boundary between
 a word character (C<\w>) and a non-word character (C<\W>).  Thus to find
@@ -330,8 +328,8 @@ choosing the most expressive and maintainable one.
 =head1 Metacharacters
 
 X<regex; metacharacters>
-X<regex; .>
-X<.; regex metacharacter>
+X<regex; C<.>>
+X<C<.>; anything but newline regex metacharacter>
 
 Regular expressions get more powerful as atoms get more general.  For example,
 the C<.> character in a regular expression means "match any character except a
@@ -349,8 +347,8 @@ which might match 7 Down ("Rich soil") in a crossword puzzle, you might write:
 
 =end programlisting
 
-X<regex; \w>
-X<\w; regex metacharacter>
+X<regex; C<\w>>
+X<C<\w>; alphanumeric regex metacharacter>
 
 Of course, if your list of potential matches were anything other than a list of
 words, this metacharacter could cause false positives, as it also matches
@@ -364,8 +362,8 @@ characters (in a Unicode sense--L<unicode>) and the underscore:
 
 =end programlisting
 
-X<regex; \d>
-X<\d; regex metacharacter>
+X<regex; C<\d>>
+X<C<\d>; digit regex metacharacter>
 
 The C<\d> metacharacter matches digits--not just 0-9 as you expect, but any
 Unicode digit:
@@ -378,8 +376,8 @@ Unicode digit:
 
 =end programlisting
 
-X<regex; \s>
-X<\s; regex metacharacter>
+X<regex; C<\s>>
+X<C<\s>; whitespace regex metacharacter>
 
 Use the C<\s> metacharacter to match whitespace, whether a literal space, a tab
 character, a carriage return, a form-feed, or a newline:
@@ -390,12 +388,12 @@ character, a carriage return, a form-feed, or a newline:
 
 =end programlisting
 
-X<regex; \W>
-X<regex; \D>
-X<regex; \S>
-X<\W; regex metacharacter>
-X<\D; regex metacharacter>
-X<\S; regex metacharacter>
+X<regex; C<\W>>
+X<regex; C<\D>>
+X<regex; C<\S>>
+X<C<\W>; non-alphanumeric regex metacharacter>
+X<C<\D>; non-digit regex metacharacter>
+X<C<\S>; non-whitespace regex metacharacter>
 
 These three metacharacters have negated forms.  To match any character
 I<except> a word character, use C<\W>.  To match a non-digit character, use
@@ -498,9 +496,8 @@ them.
 =head2 Named Captures
 
 Z<named_captures>
-X<captures>
-X<named captures>
-X<captures; named>
+X<regex; captures>
+X<regex; named captures>
 
 Given a string, C<$contact_info>, which contains contact information, you can
 apply the C<$phone_number> regular expression and I<capture> any matches into a
@@ -540,8 +537,8 @@ preface them with a backslash, just as in the C<$area_code> variable.
 
 =head2 Numbered Captures
 
-X<numbered captures>
-X<captures; numbered>
+X<regex; numbered captures>
+X<regex; captures>
 
 Named captures are new in Perl 5.10, but captures have existed in Perl for many
 years.  You may encounter I<numbered captures> as well:
@@ -555,8 +552,10 @@ years.  You may encounter I<numbered captures> as well:
 
 =end programlisting
 
-X<$1;; regex metacharacter>
-X<$2;; regex metacharacter>
+C<regex; C<$1>>
+C<regex; C<$2>>
+X<C<$1>; regex metacharacter>
+X<C<$2>; regex metacharacter>
 
 The parentheses enclose the fragment to capture, but there is no regex
 metacharacter giving the I<name> of the capture.  Instead, Perl stores the
@@ -633,9 +632,8 @@ This still matches, but consider a more specific pattern:
 
 =end programlisting
 
-X<alternation>
-X<regex alternation>
-X<|; regex metacharacter>
+X<regex; alternation>
+X<C<|>; alternation regex metacharacter>
 
 Some regexes need to match one thing or another.  Use the I<alternation>
 metacharacter (C<|>) to do so:
@@ -667,8 +665,8 @@ Alternations always include the I<entire> fragment to the nearest regex
 delimiter, whether the start or end of the pattern, an enclosing parenthesis,
 another alternation character, or a square bracket.
 
-X<non-capturing groups>
-X<(); regex metacharacters>
+X<regex; C<()>>
+X<C<()>; capturing regex metacharacters>
 
 To reduce confusion, use named fragments in variables (C<$rice|$beans>) or
 grouping alternation candidates in I<non-capturing groups>:
@@ -692,7 +690,7 @@ C<(?-xism:rice|beans)>.
 
 =head1 Other Escape Sequences
 
-X<regex metacharacters>
+X<regex; metacharacters>
 X<metacharacters; regex>
 
 Perl interprets several characters in regular expressions as I<metacharacters>,
@@ -701,7 +699,7 @@ brackets always denote a character class and parentheses group and optionally
 capture pattern fragments.
 
 X<escaping>
-X<metacharacters; escaping>
+X<regex; escaping metacharacters>
 
 To match a I<literal> instance of a metacharacter, I<escape> it with a backslash
 (C<\>).  Thus C<\(> refers to a single left parenthesis and C<\]> refers to a
@@ -712,7 +710,7 @@ Other useful metacharacters that often need escaping are the pipe character
 (C<|>) and the dollar sign (C<$>).  Don't forget about the quantifiers either:
 C<*>, C<+>, and C<?> also qualify.
 
-X<metacharacters; disabling>
+X<regex; disabling metacharacters>
 
 To avoid escaping everything (and worrying about forgetting to escape
 interpolated values), use the I<metacharacter disabling characters>.  The C<\Q>
@@ -743,15 +741,14 @@ effective denial-of-service attack against your program.
 
 =head1 Assertions
 
-X<regex assertions>
+X<regex; assertions>
 
 The regex anchors (C<\A> and C<\Z>) are a form of I<regex assertion>, which
 requires that a condition is present but doesn't actually match a character in
 the string.  That is, the regex C<qr/\A/> will I<always> match, no matter what
 the string contains.  The metacharacters C<\b> and C<\B> are also assertions.
 
-X<regex assertions; zero-width>
-X<zero-width assertions>
+X<regex; zero-width assertion>
 
 I<Zero-width assertions> match a I<pattern>, not just a condition in the
 string.  Most importantly, they do not consume the portion of the pattern that
@@ -764,8 +761,7 @@ boundary assertion:
 
 =end programlisting
 
-X<regex assertions; zero-width negative look-ahead>
-X<zero-width negative look-ahead assertion>
+X<regex; zero-width negative look-ahead assertion>
 
 ... but if you want to find a non-disastrous feline, you might use a
 I<zero-width negative look-ahead assertion>:
@@ -779,8 +775,7 @@ I<zero-width negative look-ahead assertion>:
 The construct C<(?!...)> matches the phrase C<cat> only if the phrase
 C<astrophe> does not immediately follow.
 
-X<regex assertions; zero-width positive look-ahead>
-X<zero-width positive look-ahead assertion>
+X<regex; zero-width positive look-ahead assertion>
 
 The I<zero-width positive look-ahead assertion>:
 
@@ -812,10 +807,8 @@ Because the assertion is zero-width, it consumes none of the source string.
 Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
 capture would only capture the C<cat> portion of the source string.
 
-X<regex assertions; zero-width positive look-behind>
-X<zero-width positive look-behind assertion>
-X<regex assertions; zero-width negative look-behind>
-X<zero-width negative look-behind assertion>
+X<regex; zero-width positive look-behind assertion>
+X<regex; zero-width negative look-behind assertion>
 
 Zero-width look-behind assertions also exist.  Unlike the look-ahead
 assertions, the patterns of these assertions must have fixed widths; you may
@@ -847,7 +840,8 @@ modifier, but it's an advanced feature you likely won't use often.
 =head1 Regex Modifiers
 
 X<regex; modifiers>
-X</i; regex modifier>
+X<regex; C</i> modifier>
+X<C</i>; case-insensitive regex modifier>
 X<regex; case-insensitive>
 
 The regular expression operators allow several modifiers to change the behavior
@@ -887,13 +881,15 @@ You may also disable specific modifiers by preceding them with C<->:
 
 =end programlisting
 
-X</m; regex modifier>
+X<C</m>; multiline regex modifier>
+X<regex; C</m> modifier>
 X<regex; multiline>
 
 The multiline operator, C</m>, allows the C<^> and C<$> anchors match at any
 start of line or end of line within the string.
 
-X</s; regex modifier>
+X<C</s>; single line regex modifier>
+X<regex; C</s> modifier>
 X<regex; single line>
 
 The C</s> modifier treats the source string as a single line such that the C<.>
@@ -901,7 +897,8 @@ metacharacter matches the newline character.  Damian Conway suggests a mnemonic
 that C</m> modifies the behavior of I<multiple> regex metacharacters, while
 C</s> modifies the behavior of a I<single> regex metacharacter.
 
-X</x; regex modifier>
+X<C</x>; extended readability regex modifier>
+X<regex; C</x> modifier>
 X<regex; extended readability>
 
 The C</x> modifier allows you to embed additional whitespace and comments
@@ -940,8 +937,9 @@ This regex isn't I<simple>, but comments and whitespace improve its
 readability.  Even if you compose regexes together from compiled fragments, the
 C</x> modifier can still improve your code.
 
-X</g; regex modifier>
+X<C</g>; global match regex modifier>
 X<regex; global match>
+X<regex; C</g> modifier>
 
 The C</g> modifier matches a regex globally throughout a string.  This makes
 sense when used with a substitution:
@@ -954,8 +952,9 @@ sense when used with a substitution:
 
 =end programlisting
 
-X<\G; regex metacharacter>
-X<regexes; global match anchor>
+X<C<\G>; global match anchor regex metacharacter>
+X<regex; C<\G> anchor>
+X<regex; global match anchor>
 
 When used with a match--not a substitution--the C<\G> metacharacter allows you
 to process a string within a loop one chunk at a time.  C<\G> matches at the
@@ -977,7 +976,8 @@ ended with a greedy match such as C<.*>, the next match will have less
 available string to match.  The use of lookahead assertions can become very
 important here, as they do not consume the available string to match.
 
-X</e; regex modifier>
+X<C</e>; substitution evaluation regex modifier>
+X<regex; C</e> modifier>
 X<regex; substitution evaluation>
 
 The C</e> modifier allows you to write arbitrary Perl 5 code on the right side

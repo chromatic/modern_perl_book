@@ -169,7 +169,8 @@ closures accidentally.
 =head3 Our Scope
 
 Z<our>
-X<our>
+X<C<our>>
+X<builtins; C<our>>
 X<package scope>
 
 Within a given scope, you may declare an alias to a package variable with the
@@ -225,7 +226,8 @@ calling context.  Consider the example:
 The program begins by declaring an C<our> variable, C<$scope>, as well as three
 functions.  It ends by assigning to C<$scope> and calling C<main()>.
 
-X<local>
+X<C<local>>
+X<builtins; C<local>>
 
 Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,
 then C<local>izes the variable.  This changes the visibility of the symbol
@@ -259,14 +261,14 @@ table.  You can inspect and modify this symbol table from Perl; this is how
 importing works (L<importing>).  This is also why you may only C<local>ize
 global and package global variables and never lexical variables.
 
-X<$/>
-X<magic variables; $/>
-X<$!>
-X<magic variables; $!>
-X<$@>
-X<magic variables; $@>
-X<$|>
-X<magic variables; $|>
+X<C<$/>>
+X<magic variables; C<$/>>
+X<C<$!>>
+X<magic variables; C<$!>>
+X<C<$@>>
+X<magic variables; C<$@>>
+X<C<$|>>
+X<magic variables; C<$|>>
 
 It's common to C<local>ize several magic variables.  For example, C<$/>, the
 input record separator, governs how much data a C<readline> operation will read
@@ -284,7 +286,8 @@ variables used other places in your code.
 
 Z<state_scope>
 
-X<state>
+X<C<state>>
+X<builtins; C<state>>
 X<scope; state>
 
 A final type of scope is new as of Perl 5.10.  This is the scope of the

@@ -10,17 +10,22 @@ several principles can guide you.
 
 =head2 Favor Composition Over Inheritance
 
-Novice OO designs often overuse inheritance.  It's common to see class
-hierarchies which try to model all of the behavior for entities within the
-system in a single class.  This adds a conceptual overhead to understanding the
-system, because you have to understand the hierarchy, and it adds technical
-weight to every class, because conflicting responsibilities and methods may get
-in the way of necessary behaviors or future modifications.
+Novice OO designs often overuse inheritance for two reasons: to reuse as much
+code as possible and to exploit as much polymorphism as possible.  It's common
+to see class hierarchies which try to model all of the behavior for entities
+within the system in a single class.  This adds a conceptual overhead to
+understanding the system, because you have to understand the hierarchy.  It
+adds technical weight to every class, because conflicting responsibilities and
+methods may obstruct necessary behaviors or future modifications.
+
+X<OO; is-a>
+X<OO; has-a>
 
 The encapsulation provided by classes offers better ways to organize code.  You
 don't have to inherit from superclasses to provide behavior to users of
 objects.  A C<Car> object does not have to inherit from a C<Vehicle::Wheeled>
-object; it can contain several C<Wheel> objects as instance attributes.
+object (an I<is-a relationship>); it can contain several C<Wheel> objects as
+instance attributes (a I<has-a relationship>).
 
 Decomposing complex classes into smaller, focused entities (whether classes or
 roles) improves encapsulation and reduces the possibility that any one class or

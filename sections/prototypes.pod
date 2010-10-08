@@ -41,8 +41,8 @@ behavior of the C<push> operator, which takes an array and a list.  While Perl
 site, the Perl 5 parser knows that a call to C<push> must effectively pass the
 array as a single unit so that C<push> can operate on the array in place.
 
-X<prototype>
-X<keywords; prototype>
+X<C<prototype>>
+X<builtins; C<prototype>>
 
 The builtin C<prototype> takes the name of a function and returns a string
 representing its prototype.  To see the prototype of a built-in keyword, use
@@ -145,10 +145,9 @@ prototypes.
 As long as code maintainers do not confuse them for full function signatures,
 prototypes have a few valid uses.
 
-X<overriding core keywords>
-X<overriding; keywords>
-X<pragmas; subs>
-X<subs pragma>
+X<builtins; overriding>
+X<pragmas; C<subs>>
+X<C<subs>>
 
 First, they are often necessary to emulate and override built-in keywords with
 user-defined functions.  You must first check that you I<can> override the
@@ -185,18 +184,16 @@ knows it should substitute the calculated value of pi whenever it
 encounters a bareword or parenthesized call to C<PI> in the rest of the source
 code (with respect to scoping and visibility).
 
-X<constant pragma>
-X<pragmas; constant>
-X<Readonly module>
-X<modules; Readonly>
+X<C<constant>>
+X<pragmas; C<constant>>
+X<C<Readonly>>
 
 Rather than defining constants directly, the core C<constant> pragma handles
 the details for you and may be clearer to read.  If you want to interpolate
 constants into strings, the C<Readonly> module from the CPAN may be more
 useful.
 
-X<Test::Exception module>
-X<modules; Test::Exception>
+X<C<Test::Exception>>
 
 The final reason to use a prototype is to extend Perl's syntax to operate on
 anonymous functions as blocks.  The CPAN module C<Test::Exception> uses this to
