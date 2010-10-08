@@ -959,7 +959,7 @@ X<regex; global match anchor>
 When used with a match--not a substitution--the C<\G> metacharacter allows you
 to process a string within a loop one chunk at a time.  C<\G> matches at the
 position where the most recent match ended.  To process a poorly-encoded file
-full of American numbers in logical chunks, you might write:
+full of American telephone numbers in logical chunks, you might write:
 
 =begin programlisting
 
