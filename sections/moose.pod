@@ -3,13 +3,12 @@
 Z<moose>
 X<moose>
 
-Moose is a more complete object system for Perl 5.  It builds on the existing
-Perl 5 system, and provides simpler defaults, better integration, and advanced
-features from several other languages, including Smalltalk, Common Lisp, and
-Perl 6.  It's still worth learning the default Perl 5 object system, if only to
-write very simple programs where Moose is inappropriate or to maintain legacy
-code, but Moose is currently the best way to write object-oriented code in
-modern Perl 5.
+Moose is a powerful and complete object system for Perl 5.  It builds on the
+existing Perl 5 system to provide simpler defaults, better integration, and
+advanced features from languages such as Smalltalk, Common Lisp, and Perl 6.
+It's still worth learning the default Perl 5 object system--especially when you
+have existing code to maintain--but Moose is the best way to write object
+oriented code in modern Perl 5.
 
 X<object orientation>
 X<object oriented programming>
@@ -18,10 +17,10 @@ X<OOP>
 X<objects>
 X<classes>
 
-I<Object orientation>, or I<object oriented programming>, is a way of managing
-programs by categorizing their components into discrete, unique entities.
-These are I<objects>.  In Moose terms, each object is an instance of a
-I<class>, which serves as a template to describe any data the object contains
+I<Object orientation> (OO), or I<object oriented programming> (OOP), is a way
+of managing programs by categorizing their components into discrete, unique
+entities.  These are I<objects>.  In Moose terms, each object is an instance of
+a I<class>, which serves as a template to describe any data the object contains
 as well as its specific behaviors.
 
 =head2 Classes
@@ -29,8 +28,8 @@ as well as its specific behaviors.
 X<classes>
 X<package>
 
-A class in Perl 5 stores class data.  It may have a name.  By default, Perl 5
-classes use packages to provide namespaces:
+A class in Perl 5 stores class data.  By default, Perl 5 classes use packages
+to provide namespaces:
 
 =begin programlisting
 
@@ -67,12 +66,14 @@ X<invocant>
 A I<method> is a function associated with a class.  It resembles a
 fully-qualified function call in a superficial sense, but it differs in two
 important ways.  First, a method call always has an I<invocant> on which the
-method operates.  In the case of creating the two C<Cat> objects, the name of
-the class (C<Cat>) is the invocant:
+method operates.  When you create an object, the I<name> of the class is the
+invocant.  When you call a method on an instance, that instance is the
+invocant:
 
 =begin programlisting
 
     my $fuzzy = B<Cat>->new();
+    B<$fuzzy>->sleep_on_keyboard();
 
 =end programlisting
 
@@ -115,20 +116,28 @@ eaten yet:
 
 =end programlisting
 
+X<instance method>
+X<methods; instance>
 X<class method>
 X<methods; class>
 
-By convention, invocants in Perl methods are lexical variables named C<$self>,
-but this is merely pervasive convention.  The example implementation of
-C<meow()> does not use the invocant, so it's irrelevant once method dispatch
-has completed.  In that sense, C<meow()> is like C<new()>; you can safely use
-the name of the class (C<Cat>) as its invocant.  This is a I<class method>:
+By pervasive convention, methods store their invocants in lexical variables
+named C<$self>.  Methods which access invocant data are I<instance methods>,
+because they depend on the presence of an appropriate invocant to work
+correctly.  Methods (such as C<meow()>) which do not access instance data are
+I<class methods>, as you can use the name of the class as an invocant.
+Constructors are also class methods.  For example:
 
 =begin programlisting
 
     Cat->meow() for 1 .. 3;
 
 =end programlisting
+
+Class methods can help you organize your code into namespaces without requiring
+you to import (L<importing>) functions, but a design which relies heavily on
+class methods for anything other than constructors may be the sign of muddled
+thinking.
 
 =head2 Attributes
 
@@ -327,9 +336,9 @@ available if you really need it, but the declarative approach can actually
 improve your programs.  In this way, Moose encourages I<encapsulation>: hiding
 the internal details of an object from external users of that object.
 
-Consider a change to the age of a C<Cat>; instead of requesting that directly
-from the constructor, calculate the age of a C<Cat> based on the year of its
-birth:
+Consider how you might change the way C<Cat> handles ages.  Instead of
+requiring a static value for an age passed to the constructor, pass in the year
+of the cat's birth and calculate the age as needed:
 
 =begin programlisting
 
@@ -409,11 +418,12 @@ for each object, including a hash or array reference.
 =head3 Polymorphism
 
 A program which deals with one type of data and one type of behavior on that
-data benefits little from the use of objects.  A well-designed object-oriented
-program should be capable of managing many types of data.  When well designed
-classes encapsulate specific details of objects into the appropriate places,
-something curious happens to the rest of the program: it has the opportunity to
-become I<less> specific.
+data receives few benefits from the use of object.  Encapsulation is useful, to
+be sure--but the real power of object orientation is not solely in
+encapsulation.  A well designed OO program can manage many types of data.  When
+well designed classes encapsulate specific details of objects into the
+appropriate places, something curious happens to the rest of the program: it
+has the opportunity to become I<less> specific.
 
 In other words, moving the specifics of the details of what the program knows
 about individual C<Cat>s (the attributes) and what the program knows that
@@ -502,11 +512,14 @@ Sometimes it's useful to know I<what> an object does.  In other words, you need 
 
 Z<roles>
 
-A I<role> is a named collection of behavior and state.  A class is like a role,
-with the vital difference that you can instantiate a class, but not a role.
-While a class is primarily a mechanism for organizing behaviors and state into
-a template for objects, a role is primarily a mechanism for organizing
-behaviors and state into a named collection.
+A I<role> is a named collection of behavior and stateN<See the Perl 6 design
+documents on roles at U<http://feather.perl6.nl/syn/S14.html> and research on
+traits in Smalltalk at U<http://scg.unibe.ch/research/traits> for copious
+details.>.  A class is like a role, with the vital difference that you can
+instantiate a class, but not a role.  While a class is primarily a mechanism
+for organizing behaviors and state into a template for objects, a role is
+primarily a mechanism for organizing behaviors and state into a named
+collection.
 
 A role is something a class does.
 
@@ -640,6 +653,14 @@ flexibility in your design by naming specific collections of behaviors so that
 you can test the capabilities of objects and classes and not their
 implementations.
 
+=begin sidebar
+
+For details about roles versus other design techniques such as mixins, multiple
+inheritance, and monkeypatching, see
+U<http://www.modernperlbooks.com/mt/2009/04/the-why-of-perl-roles.html>.
+
+=end sidebar
+
 =head3 Roles and DOES()
 
 X<DOES()>
@@ -742,19 +763,18 @@ X<Moose; extends>
 
 The C<extends> syntax takes a list of class names to use as parents of the
 current class.  The C<+> at the start of the C<candle_power> attribute name
-indicates that the current class extends the declaration of the attribute.  In
-this case, the super candle overrides the default value of the light source, so
-any new C<SuperCandle> created has a light value of 100 candles.  The other
-attribute and both methods are available on C<SuperCandle> instances; when you
-invoke C<light> or C<extinguish> on such an instance, Perl will look in
-C<LightSource::SuperCandle> for the method, then in the list of parents of the
-class. Ultimately it finds them in C<LightSource>.
+indicates that the current class extends or overrides the declaration of the
+attribute.  In this case, the super candle overrides the default value of the
+light source, so any new C<SuperCandle> created has a light value of 100
+candles.  The other attribute and both methods are available on C<SuperCandle>
+instances; when you invoke C<light> or C<extinguish> on such an instance, Perl
+will look in C<LightSource::SuperCandle> for the method, then in the list of
+parents of the class. Ultimately it finds them in C<LightSource>.
 
 X<Moose; attribute inheritance>
 
-Attribute inheritance works in a similar fashion, except that the act of
-I<constructing> the instance makes all of the appropriate attributes available
-in the proper fashion (see C<perldoc Class::MOP>).
+Attribute inheritance works in a similar way (see C<perldoc Class::MOP> for
+details).
 
 X<methods; resolution>
 X<method resolution order>
@@ -762,11 +782,12 @@ X<methods; dispatch order>
 X<multiple inheritance>
 X<objects; inheritance>
 X<objects; multiple inheritance>
+X<MRO>
 
-I<Method dispatch order> (sometimes written I<method resolution order>) is easy
-to understand in the case of single-parent inheritance.  When a class has
-multiple parents (I<multiple inheritance>), dispatch is less obvious.  By
-default, Perl 5 provides a depth-first strategy of method resolution.  It
+I<Method dispatch order> (sometimes written I<method resolution order> or
+I<MRO>) is easy to understand in the case of single-parent inheritance.  When a
+class has multiple parents (I<multiple inheritance>), dispatch is less obvious.
+By default, Perl 5 provides a depth-first strategy of method resolution.  It
 searches the class of the I<first> named parent and all of its parents
 recursively before searching the classes of the subsequent named parents.  This
 behavior is often confusing; avoid using multiple inheritance until you
@@ -799,9 +820,9 @@ nothing.  Perl's method dispatch system will find this method and will not look
 for any methods of this name in any of the parent classes.
 
 Sometimes an overridden method needs behavior from its parent as well.  The
-C<override> command tells Moose that the subclass deliberately overrides the
-named method.  The C<super()> function is available to dispatch from the
-overriding method to the overridden method:
+C<override> command tells Moose (and everyone else reading the code) that the
+subclass deliberately overrides the named method.  The C<super()> function is
+available to dispatch from the overriding method to the overridden method:
 
 =begin programlisting
 
@@ -961,8 +982,8 @@ shift;> line at the start of the C<age> method.
 
 =begin sidebar
 
-The Perl 5 core provides support for C<Devel::Declare> as of Perl 5.12, but the
-module is not a core module.
+As of Perl 5.12, the Perl 5 core explicitly supports C<Devel::Declare>, but the
+module is not a core module and it works with earlier versions of Perl 5.
 
 =end sidebar
 

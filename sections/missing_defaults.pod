@@ -10,6 +10,14 @@ clean, maintainable, powerful, and succinct Perl 5 code is very different from
 Perl 5.000.  The default behaviors sometimes get in the way; fortunately,
 better behaviors are available.
 
+X<Task::Kensho>
+
+The CPAN (L<cpan>) contains many modules and pragmas designed to make your work
+simpler, more correct, and more enjoyableN<See C<Task::Kensho> to start.>.  As
+you improve as a Perl programmer, you will have many opportunities to use (and
+even to create) such code in the right circumstances.  For now, use these
+pragmas and modules regularly in your own code.
+
 =head2 The strict Pragma
 
 X<strict>

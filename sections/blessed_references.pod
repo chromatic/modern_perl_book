@@ -27,8 +27,8 @@ resolution.  That sounds more complicated than it is.
 
 Though these rules explain Perl 5's underlying object system, they are somewhat
 more minimal in practice than may be practical, especially for larger projects.
-In particular, they offer few facilities for metaprogramming (using APIs to
-manipulate the program itself).
+In particular, they offer few facilities for metaprogramming
+(L<code_generation>).
 
 Moose (L<moose>) is a better choice for serious, modern Perl programs larger
 than a couple of hundred lines, but you will likely encounter bare-bones Perl 5
@@ -209,8 +209,8 @@ X<pragmas; base>
 
 =begin sidebar
 
-Perl 5.10 added C<parent> to supersede the C<base> pragma added in Perl
-5.004_4.  If you can't use Moose, use C<parent>.
+Perl 5.10 added C<parent> to supersede the C<base> pragma.  If you can't use
+Moose, use C<parent>.
 
 =end sidebar
 

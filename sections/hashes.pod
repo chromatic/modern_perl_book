@@ -108,8 +108,7 @@ function:
 =end programlisting
 
 The key of the hash will be C<name> and not C<Leonardo>.  If you intend to call
-the function to get the key, disambiguate your intent by making the call
-explicit:
+the function to get the key, make the function call explicit:
 
 =begin programlisting
 

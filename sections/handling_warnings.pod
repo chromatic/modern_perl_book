@@ -66,7 +66,8 @@ C<Carp>'s verbose mode throughout the entire program:
 =end programlisting
 
 This changes all C<carp()> (and C<croak()>--L<reporting_errors>) calls to
-include a backtrace.
+include a backtrace.  When you organize your code into modules (L<modules>),
+use Carp instead of C<warn> or C<die> to save debugging time.
 
 =head2 Enabling and Disabling Warnings
 

@@ -27,12 +27,15 @@ Even so, barewords are permissible in several places in Perl 5 for good reason.
 
 X<barewords; pros>
 X<hashes; bareword keys>
+X<C<+>; unary operator>
 
 Hash keys in Perl 5 are barewords.  These are usually not ambiguous because
 their use as keys is sufficient for the parser to identify them as the
 equivalent of single-quoted strings.  Yet be aware that attempting to evaluate
-a function call or a built-in operator (such as C<shift>) to I<produce> a hash
-key may not do what you expect, unless you disambiguate.
+a function call or a builtin operator (such as C<shift>) to I<produce> a hash
+key may not do what you expect, unless you disambiguate by providing arguments,
+using function argument parentheses, or prepending unary plus to force the
+evaluation of the builtin rather than its interpretation as a string:
 
 =begin programlisting
 
@@ -42,7 +45,7 @@ key may not do what you expect, unless you disambiguate.
     # the value produced by shift is the key
     my $value = $items{B<shift @_>}
 
-    # unary plus is also sufficient to disambiguate
+    # unary plus uses the keyword shift
     my $value = $items{B<+>shift};
 
 =end programlisting

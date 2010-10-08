@@ -13,8 +13,9 @@ in the system.
 
 C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
 systems, but many useful programs do not use objects pervasively, and many
-useful programs do not use C<Class::MOP>.  Several idioms (L<idioms>) exist for
-using reflection effectively in the absence of such a formal system.
+useful programs do not use C<Class::MOP>.  Several idioms exist for using
+reflection effectively in the absence of such a formal system.  These are the
+most common.
 
 =head2 Checking that a Package Exists
 
@@ -81,8 +82,8 @@ within C<%INC>:
 
 Nothing prevents other code from manipulating C<%INC> itself.  Depending on
 your paranoia level, you may check the path and the expected contents of the
-package yourself, but modules with good reasons for manipulating this variable
-(such as C<Test::MockObject> or C<Test::MockModule>) may do so.  Code which
+package yourself.  Some modules (such as C<Test::MockObject> or
+C<Test::MockModule>) manipulate C<%INC> for good reasons.  Code which
 manipulates C<%INC> for poor reasons deserves replacing.
 
 =head2 Checking the Version of a Module
