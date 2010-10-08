@@ -83,7 +83,8 @@ C<$call_sign-->.
 
 This string increment operation turns C<a> into C<b> and C<z> into C<aa>,
 respecting character set and case.  While C<ZZ9> becomes C<AA0>, C<ZZ09>
-becomes C<ZZ10>--numbers wrap around but do not carry to alphabetic components.
+becomes C<ZZ10>--numbers wrap around while there are more significant places to
+increment, as on a vehicle odometer.
 
 X<stringification>
 X<numification>

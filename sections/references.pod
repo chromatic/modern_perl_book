@@ -46,6 +46,8 @@ first-class data type.
 
 =head3 Scalar References
 
+Z<scalar_references>
+
 X<operators; C<\>>
 X<reference; C<\>>
 
@@ -129,6 +131,8 @@ locations if its garbage collector has reclaimed an unreferenced reference.
 =end sidebar
 
 =head3 Array References
+
+Z<array_references>
 
 X<arrays; references>
 X<references; arrays>
@@ -250,6 +254,8 @@ square braces used to create the anonymous array, the C<@meals> array flattens
 in list context.
 
 =head3 Hash References
+
+Z<hash_references>
 
 X<hashes; references>
 X<references; hashes>
@@ -533,7 +539,7 @@ the reference itself, copy its values to a new variable:
 X<C<Storable>>
 X<C<dclone()>>
 
-This is only necessary in a few cases, but it's good policy to be explicit in
-those cases to avoid surprises for the callers.  If your references are more
-complex (L<nested_data_structures>), consider the use of the core module
-C<Storable> and its C<dclone> (I<deep cloning>) function.
+This is only necessary in a few cases, but explicit cloning helps avoid nasty
+surprises for the calling code.  If your references are more complex--if you
+use nested data structures--consider the use of the core module C<Storable> and
+its C<dclone> (I<deep cloning>) function.

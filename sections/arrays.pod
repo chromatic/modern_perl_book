@@ -375,7 +375,7 @@ containing the numbers one through 30, inclusive.  Remember that parentheses do
 not I<create> lists in these circumstances--they only group expressions.
 
 The solution to this flattening behavior is the same for passing arrays to
-functions and for creating nested arrays (L<references>).
+functions and for creating nested arrays (L<array_references>).
 
 =head2 Array Interpolation
 
