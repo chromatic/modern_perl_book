@@ -650,6 +650,21 @@ value> warning:
 
 =end screen
 
+X<C<defined>>
+X<builtins; C<defined>>
+
+The C<defined> builtin returns a true value if its operand is a defined value
+(anything other than C<undef>):
+
+=begin programlisting
+
+    my $status = 'suffering from a cold';
+
+    say B<defined> $status;
+    say B<defined> undef;
+
+=end programlisting
+
 =head2 The Empty List
 
 X<empty list>

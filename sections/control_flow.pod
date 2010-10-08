@@ -147,7 +147,7 @@ of each other:
 
 =begin programlisting
 
-    B<unless> ($name eq 'Bob')
+    unless ($name eq 'Bob')
     {
         say "I don't know you.";
         shun_user();
@@ -361,7 +361,7 @@ circuiting can help you to avoid errors and warnings:
 
 =begin programlisting
 
-    if (exists $barbeque{pork} and $barbeque{pork} eq 'shoulder') { ... }
+    if (defined $barbeque and $barbeque eq 'pork shoulder') { ... }
 
 =end programlisting
 
