@@ -406,9 +406,9 @@ X<files; hidden>
 
 The curious regular expression in this example skips so-called I<hidden files>
 on Unix and Unix-like systems, where a leading dot prevents them from appearing
-in directory listings by default.  It also skips the first two files returned
-from every C<readdir> invocation, specifically C<.> and C<..>.  These two files
-represent the current directory and the parent directory, respectively.
+in directory listings by default.  It also skips two special files returned
+from every C<readdir> invocation, specifically C<.> and C<..>, which represent
+the current directory and the parent directory, respectively.
 
 X<files; relative paths>
 X<files; absolute paths>
