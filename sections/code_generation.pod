@@ -32,7 +32,7 @@ dispatch system allows you to customize what happens when normal lookup fails.
 X<C<eval>; string>
 X<builtins; C<eval>>
 
-The simplest code generation technique code is to build a string containing a
+The simplest code generation technique is to build a string containing a
 snippet of valid Perl and compile it with the string C<eval> operator.  Unlike
 the exception-catching block C<eval> operator, string C<eval> compiles the
 contents of the string within the current scope, including the current package

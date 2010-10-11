@@ -536,7 +536,7 @@ fetch:
 =end programlisting
 
 X<defined-or>
-X<C<//>>
+X<C<//>; infix operator>
 X<operators; C<//>>
 X<operators; defined-or>
 

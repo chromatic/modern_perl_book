@@ -85,6 +85,7 @@ autonomous combat helicopter to the corner store to buy spare cheese.
 
 X<regex quantifiers>
 X<regex quantifiers; zero or one>
+X<C<?>; zero or one regex quantifier>
 
 Regular expressions get more powerful through the use of I<regex quantifiers>,
 which allow you to specify how often a regex component may appear in a matching
@@ -106,7 +107,7 @@ preceding a C<t> character I<and also> matches if there is one and only one
 C<a> character between the C<c> and C<t> characters.
 
 X<regex quantifiers; one or more>
-X<C<+>; one or more regex metacharacter>
+X<C<+>; one or more regex quantifier>
 
 The I<one or more quantifier>, or C<+>, matches only if there is at least one
 of the preceding atom in the appropriate place in the string to match:
@@ -128,7 +129,7 @@ There is no theoretical limit to the number of quantified atoms which can
 match.
 
 X<quantifiers; zero or more>
-X<C<*>; zero or more regex metacharacter>
+X<C<*>; zero or more regex quantifier>
 
 The I<zero or more quantifier> is C<*>; it matches if there are zero or more
 instances of the quantified atom in the string to match:
@@ -152,7 +153,7 @@ from using the C<?> and C<+> quantifiers far more than the C<*> quantifier, as
 they avoid expensive backtracking and express your intent more clearly.
 
 X<numeric quantifiers>
-X<C<{}>; regex metacharacters>
+X<C<{}>; regex numeric quantifier>
 
 Finally, you can specify the number of times an atom may match with I<numeric
 quantifiers>. C<{n}> means that a match must occur exactly I<n> times.
@@ -231,7 +232,8 @@ This will match C<Alabama>, C<Belgium>, and C<Bethlehem> before it reaches
 C<loam>.  The soil might be nice there, but those words are all too long--and
 the matches start in the middle of the words.
 
-X<C<?>; zero or one regex metacharacter>
+X<C<?>; zero or one regex quantifier>
+X<C<*?>; non-greedy zero or one regex quantifier>
 
 Turn a greedy quantifier into a non-greedy quantifier by appending the C<?>
 quantifier:
@@ -254,6 +256,8 @@ potential match for this token combination is zero characters:
 
 =end programlisting
 
+X<C<+?>; non-greedy one or more regex quantifier>
+
 Use C<+?> to match one or more items non-greedily:
 
 =begin programlisting
@@ -265,6 +269,8 @@ Use C<+?> to match one or more items non-greedily:
     like( 'i like a hot meal', $minimal_greedy_at_least_one );
 
 =end programlisting
+
+X<C<??>; non-greedy zero or one regex quantifier>
 
 The C<?> quantifier modifier also applies to the C<?> (zero or one matches)
 quantifier as well as the range quantifiers.  In every case, it causes the
@@ -388,16 +394,19 @@ character, a carriage return, a form-feed, or a newline:
 
 =end programlisting
 
-X<regex; C<\W>>
+X<regex; C<\B>>
 X<regex; C<\D>>
 X<regex; C<\S>>
-X<C<\W>; non-alphanumeric regex metacharacter>
+X<regex; C<\W>>
+X<C<\B>; non-word boundary regex metacharacter>
 X<C<\D>; non-digit regex metacharacter>
 X<C<\S>; non-whitespace regex metacharacter>
+X<C<\W>; non-alphanumeric regex metacharacter>
 
-These three metacharacters have negated forms.  To match any character
-I<except> a word character, use C<\W>.  To match a non-digit character, use
-C<\D>.  To match anything but whitespace, use C<\S>.
+These metacharacters have negated forms.  To match any character I<except> a
+word character, use C<\W>.  To match a non-digit character, use C<\D>.  To
+match anything but whitespace, use C<\S>.  To match a non-word boundary, use
+C<\B>.
 
 The regex engine treats all metacharacters as atoms.
 
@@ -405,6 +414,7 @@ The regex engine treats all metacharacters as atoms.
 
 Z<character_classes>
 X<character classes>
+X<C<[]>; character class regex metacharacters>
 
 If the range of allowed characters in these four groups isn't specific enough,
 you can specify your own I<character classes> by enclosing them in square
@@ -426,6 +436,8 @@ unknown variable or interpolates the contents of an existing C<$vowelst> into
 the regex.
 
 =end sidebar
+
+X<C<->; character class range regex metacharacter>
 
 If the characters in your character set form a contiguous range, you can use
 the hyphen character (C<->) as a shortcut to express that range.  Now it's
@@ -453,6 +465,8 @@ class:
     my $line_characters = qr/[|=\-_]/;
 
 =end programlisting
+
+X<C<^>; negation of character class regex metacharacter>
 
 Just as the word and digit class metacharacters (C<\w> and C<\d>) have
 negations, so too you can negate a character class.  Use the caret (C<^>) as
@@ -498,6 +512,7 @@ them.
 Z<named_captures>
 X<regex; captures>
 X<regex; named captures>
+X<<< C<<(?<>)>>; regex named capture >>>
 
 Given a string, C<$contact_info>, which contains contact information, you can
 apply the C<$phone_number> regular expression and I<capture> any matches into a
@@ -677,6 +692,8 @@ grouping alternation candidates in I<non-capturing groups>:
 
 =end programlisting
 
+X<C<(?:)>; non-capturing regex group>
+
 The C<(?:)> sequence groups a series of atoms but suppresses capturing
 behavior.  In this case, it groups three alternatives.
 
@@ -698,6 +715,7 @@ which represent something different than their literal characters.  Square
 brackets always denote a character class and parentheses group and optionally
 capture pattern fragments.
 
+X<C<\>; regex escaping metacharacter>
 X<escaping>
 X<regex; escaping metacharacters>
 
@@ -705,11 +723,14 @@ To match a I<literal> instance of a metacharacter, I<escape> it with a backslash
 (C<\>).  Thus C<\(> refers to a single left parenthesis and C<\]> refers to a
 single right square bracket.  C<\.> refers to a literal period character
 instead of the "match anything but an explicit newline character" atom.
+X<C<\Q>; disable metacharacters regex metacharacter>
 
 Other useful metacharacters that often need escaping are the pipe character
 (C<|>) and the dollar sign (C<$>).  Don't forget about the quantifiers either:
 C<*>, C<+>, and C<?> also qualify.
 
+X<C<\Q>; disable metacharacters regex metacharacter>
+X<C<\E>; reenable metacharacters regex metacharacter>
 X<regex; disabling metacharacters>
 
 To avoid escaping everything (and worrying about forgetting to escape
@@ -762,6 +783,7 @@ boundary assertion:
 =end programlisting
 
 X<regex; zero-width negative look-ahead assertion>
+X<C<(?!...)>; zero-width negative look-ahead regex assertion>
 
 ... but if you want to find a non-disastrous feline, you might use a
 I<zero-width negative look-ahead assertion>:
@@ -776,6 +798,7 @@ The construct C<(?!...)> matches the phrase C<cat> only if the phrase
 C<astrophe> does not immediately follow.
 
 X<regex; zero-width positive look-ahead assertion>
+X<C<(?=...)>; zero-width positive look-ahead regex assertion>
 
 The I<zero-width positive look-ahead assertion>:
 
@@ -807,6 +830,8 @@ Because the assertion is zero-width, it consumes none of the source string.
 Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
 capture would only capture the C<cat> portion of the source string.
 
+X<C<(?<!...)>; zero-width negative look-behind regex assertion>
+X<C<(?<=...)>; zero-width positive look-behind regex assertion>
 X<regex; zero-width positive look-behind assertion>
 X<regex; zero-width negative look-behind assertion>
 
@@ -884,6 +909,8 @@ You may also disable specific modifiers by preceding them with C<->:
 X<C</m>; multiline regex modifier>
 X<regex; C</m> modifier>
 X<regex; multiline>
+X<C<^>; start of line regex metacharacter>
+X<C<$>; end of line regex metacharacter>
 
 The multiline operator, C</m>, allows the C<^> and C<$> anchors match at any
 start of line or end of line within the string.

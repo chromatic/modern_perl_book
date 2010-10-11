@@ -11,6 +11,8 @@ has loaded and compiled the module successfully.
 
 There are no other requirements, only strong conventions.
 
+X<C<::>; package name separator>
+
 Packages correspond to files on disk in that when you load a module with C<use>
 or C<require>'s bareword form, Perl splits the package name on double-colons
 (C<::>) and turns the components of the package name into a file path.  Thus:

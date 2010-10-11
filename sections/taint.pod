@@ -21,6 +21,7 @@ guidelines.
 
 X<C<-T>>
 X<command-line arguments; C<-T>>
+X<C<%ENV>>
 
 To enable taint mode, launch your program with the C<-T> flag.  You can use
 this flag on the C<#!> line of a program only if you make the program

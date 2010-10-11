@@ -146,7 +146,7 @@ C<perldoc perlfaq5> includes working code for many common IO tasks.
 
 X<C<readline>>
 X<builtins; C<readline>>
-X<<< C<< <> >> >>>
+X<<< C<< <> >>; circumfix readline operator >>>
 X<<< operators; C<< <> >> >>>
 
 =head3 Reading from Files

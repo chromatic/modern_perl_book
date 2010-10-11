@@ -61,6 +61,10 @@ other arguments:
 
 =end programlisting
 
+X<C<s///>; subsitution operator>
+X<C<m//>; match operator>
+X<C<tr//>; transliteration operator>
+
 Perl's regular expression facilities (L<regex>) can also operate on C<$_> to
 match, substitute, and transliterate:
 

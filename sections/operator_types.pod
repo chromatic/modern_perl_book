@@ -154,6 +154,8 @@ is especially useful for setting default parameter values:
 
 =end programlisting
 
+X<C<?:>; ternary conditional operator>
+
 The ternary conditional operator, C<?:>, takes three operands.  It evaluates
 the first in boolean context and evaluates to the second if the first is true
 and the third otherwise:
