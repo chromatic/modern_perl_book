@@ -282,7 +282,7 @@ X<hashes; C<keys>>
 X<builtins; C<keys>>
 
 Hashes are aggregate variables, but they behave slightly differently from
-arrays.  In particular, you can iterate over the keys of a hash, the values, of
+arrays.  In particular, you can iterate over the keys of a hash, the values of
 a hash, or pairs of keys and values.  The C<keys> operator returns a list of
 keys of the hash:
 
