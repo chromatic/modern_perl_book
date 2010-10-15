@@ -2,7 +2,7 @@
 
 Z<modules>
 
-X<module>
+X<modules>
 
 A I<module> is a package contained in its own file and loadable with C<use> or
 C<require>.  A module must be valid Perl 5 code.  It must end with an
@@ -65,7 +65,6 @@ the file.  Maintenance concerns highly recommend that convention, however.
 
 Z<import>
 
-X<C<use>>
 X<builtins; C<use>>
 X<C<import()>>
 
@@ -87,7 +86,6 @@ arguments of symbols (usually functions) to make available in the calling
 namespace.  This is not a strong requirement; pragmas (L<pragmas>) such as
 C<strict> use arguments to change their behavior instead of exporting symbols.
 
-X<C<no>>
 X<builtins; C<no>>
 X<unimporting>
 

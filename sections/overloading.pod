@@ -25,7 +25,7 @@ operations, and even assignment.
 X<overloading; boolean>
 X<overloading; numeric>
 X<overloading; string>
-X<C<overload>>
+X<C<overload> pragma>
 X<pragmas; C<overload>>
 
 The most useful are often the most common: stringification, numification, and

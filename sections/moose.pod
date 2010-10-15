@@ -10,11 +10,9 @@ It's still worth learning the default Perl 5 object system--especially when you
 have existing code to maintain--but Moose is the best way to write object
 oriented code in modern Perl 5.
 
-X<object orientation>
-X<object oriented programming>
 X<OO>
-X<OOP>
 X<objects>
+X<OO; classes>
 X<classes>
 
 I<Object orientation> (OO), or I<object oriented programming> (OOP), is a way
@@ -26,7 +24,6 @@ as well as its specific behaviors.
 =head2 Classes
 
 X<classes>
-X<C<package>>
 X<builtins; C<package>>
 
 A class in Perl 5 stores class data.  By default, Perl 5 classes use packages
@@ -42,7 +39,6 @@ to provide namespaces:
 
 =end programlisting
 
-X<instance>
 X<OO; instances>
 
 This C<Cat> class appears to do nothing, but Moose does a lot of work to define
@@ -61,8 +57,8 @@ reference, an arrow calls a method on an object or class.
 
 =head2 Methods
 
-X<method>
-X<invocant>
+X<OO; methods>
+X<OO; invocants>
 
 A I<method> is a function associated with a class.  It resembles a
 fully-qualified function call in a superficial sense, but it differs in two
@@ -80,6 +76,8 @@ invocant:
 
 X<dispatch>
 X<method dispatch>
+X<OO; dispatch>
+X<OO; method dispatch>
 
 Second, a method call always involves a I<dispatch> strategy.  The dispatch
 strategy describes how the object system decides I<which> method to call.  This
@@ -117,10 +115,12 @@ eaten yet:
 
 =end programlisting
 
-X<instance method>
-X<methods; instance>
 X<class method>
+X<instance method>
+X<OO; class methods>
+X<OO; instance methods>
 X<methods; class>
+X<methods; instance>
 
 By pervasive convention, methods store their invocants in lexical variables
 named C<$self>.  Methods which access invocant data are I<instance methods>,
@@ -143,8 +143,8 @@ thinking.
 =head2 Attributes
 
 X<attributes; objects>
-X<objects; attributes>
-X<objects; state>
+X<OO; attributes>
+X<OO; state>
 
 Every object in Perl 5 is unique.  Objects can contain I<attributes>, or
 private data associated with each object.  You may also hear this described as
@@ -265,6 +265,7 @@ makes the intent of your code most clear.
 
 X<attributes; C<rw> (read-write)>
 X<methods; mutator>
+X<OO; mutator methods>
 
 If you mark an attribute as readable I<and> writable (with C<< is => rw >>),
 Moose will create a I<mutator> method--a method you can use to change the value
@@ -322,6 +323,7 @@ the data and behaviors that instances of that class possess.
 =head2 Encapsulation
 
 X<encapsulation>
+X<OO; encapsulation>
 
 Moose allows you to declare I<which> attributes class instances possess (a cat
 has a name) as well as the attributes of those attributes (you cannot change a
@@ -442,6 +444,7 @@ object:
 =end programlisting
 
 X<polymorphism>
+X<OO; polymorphism>
 
 It's obvious (in context) that you can pass a C<Cat> object to this function
 and get sane results.  It's less obvious that you can pass other types of
@@ -450,6 +453,7 @@ called I<polymorphism>, where you can substitute an object of one class for an
 object of another class if they provide the same external interface.
 
 X<genericity>
+X<OO; genericity>
 
 Any object of any class which provides the C<name()>, C<age()>, and C<diet()>
 accessors will work with this function.  The function is sufficiently generic
@@ -458,6 +462,7 @@ that any object which respects this interface is a valid parameter.
 =begin sidebar
 
 X<duck typing>
+X<OO; duck typing>
 
 Some languages and environments require a formal relationship between two
 classes before allowing a program to substitute instances of one class for
@@ -506,6 +511,7 @@ Sometimes it's useful to know I<what> an object does.  In other words, you need 
 =head2 Roles
 
 Z<roles>
+X<roles>
 
 A I<role> is a named collection of behavior and stateN<See the Perl 6 design
 documents on roles at U<http://feather.perl6.nl/syn/S14.html> and research on
@@ -675,6 +681,7 @@ true when you call the C<DOES()> method on them:
 Z<inheritance>
 
 X<inheritance>
+X<OO; inheritance>
 X<Moose; inheritance>
 
 Another feature of Perl 5's object system is I<inheritance>, where one class
@@ -791,7 +798,7 @@ for more details about method resolution and dispatch strategies.
 
 =head3 Inheritance and Methods
 
-X<Moose; override method>
+X<Moose; overriding methods>
 X<Moose; C<override>>
 
 You may override methods in subclasses.  Imagine a light that you cannot
@@ -933,9 +940,6 @@ You can even see which classes extend a given class:
 
 See C<perldoc Class::MOP::Class> for more information about metaclass
 operations and C<perldoc Class::MOP> for Moose metaprogramming information.
-
-X<metaprogramming; MOP>
-X<MOP>
 
 Moose and its I<meta-object protocol> (or MOP) offers the possibility of a
 better syntax for declaring and working with classes and objects in Perl 5.

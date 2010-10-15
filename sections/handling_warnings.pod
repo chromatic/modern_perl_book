@@ -71,7 +71,7 @@ use Carp instead of C<warn> or C<die> to save debugging time.
 
 =head2 Enabling and Disabling Warnings
 
-X<C<-w>>
+X<C<-w>; enable warnings command-line argument>
 X<command-line arguments; C<-w>>
 
 Lexical encapsulation of warnings is as important as lexical encapsulation of
@@ -81,8 +81,8 @@ attempted to suppress warnings.  It's all or nothing.  If you have the
 wherewithal to eliminate warnings and potential warnings throughout the entire
 codebase, this can be useful.
 
-X<warnings>
-X<pragmas; warnings>
+X<C<warnings>>
+X<pragmas; C<warnings>>
 
 The modern approach is to use the C<warnings> pragma.  The presence of C<use
 warnings;> or an equivalentN<Such as C<use Modern::Perl;>> in code indicates
@@ -91,9 +91,9 @@ warnings.
 
 =begin sidebar
 
-X<C<-W>>
+X<C<-W>; enable warnings command-line argument>
 X<command-line arguments; C<-W>>
-X<C<-X>>
+X<C<-X>; disable warnings command-line argument>
 X<command-line arguments; C<-X>>
 
 The C<-W> flag enables warnings throughout the program unilaterally, regardless

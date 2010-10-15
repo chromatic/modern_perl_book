@@ -19,7 +19,7 @@ insecurely--Perl will throw a fatal exception.
 C<perldoc perlsec> explains taint mode in copious detail among other security
 guidelines.
 
-X<C<-T>>
+X<C<-T>; taint command-line argument>
 X<command-line arguments; C<-T>>
 X<C<%ENV>>
 
@@ -119,7 +119,7 @@ Taint mode is all or nothing.  It's either on or off.  This sometimes leads
 people to use permissive patterns to untaint data, and gives the illusion of
 security.  Review untainting carefully.
 
-X<C<-t>>
+X<C<-t>; enable baby taint command-line argument>
 X<command-line arguments; C<-t>>
 
 Unfortunately, not all modules handle tainted data appropriately.  This is a

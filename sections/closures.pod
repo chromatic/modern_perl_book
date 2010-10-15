@@ -20,7 +20,7 @@ You can read it online at U<http://hop.perl.plover.com/>.
 
 =head2 Creating Closures
 
-X<closure>
+X<closures>
 X<functions; closures>
 
 A I<closure> is a function that closes over an outer lexical environment.

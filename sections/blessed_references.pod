@@ -15,8 +15,8 @@ combine to form the simple--though effective--basic object system:
 
 =back
 
-X<C<bless>>
-X<operators; C<bless>>
+X<OO; C<bless>>
+X<builtins; C<bless>>
 
 You've already seen the first two rules with Moose.  The third rule is new.
 The C<bless> keyword associates the name of a class with a reference, such that
@@ -36,10 +36,8 @@ OO in existing code.
 
 =end sidebar
 
-X<constructor>
-X<OO; constructor>
-
-X<class method>
+X<OO; constructors>
+X<OO; class methods>
 X<methods; class>
 
 The default Perl 5 object constructor is a method which creates and blesses a
@@ -66,7 +64,6 @@ It's possible, but inadvisable, to hard-code the name of a class directly.  The
 parametric constructor allows reuse of the method through inheritance,
 delegation, or exporting.
 
-X<instance data>
 X<OO; instance data>
 
 The type of reference makes no difference when invoking methods on the object.
@@ -152,7 +149,7 @@ thing with regard to encapsulation as well as genericity.
 =head2 Method Lookup and Inheritance
 
 X<method dispatch>
-X<objects; methods>
+X<OO; methods>
 
 Besides instance data, the other part of objects is method dispatch.  Given an
 object (a blessed reference), a method call of the form:
@@ -171,6 +168,7 @@ on) until it finds a C<number> method.  If one exists, Perl calls it with
 C<$joel> as an invocant.
 
 X<C<@ISA>>
+X<OO; C<@ISA>>
 
 Moose classes store their inheritance information in a metamodel which provides
 additional abilities on top of Perl 5's default OO system.
@@ -189,8 +187,8 @@ its C<@ISA>.  You could write this relationship as:
 
 =end programlisting
 
-X<parent>
-X<pragmas; parent>
+X<C<parent> pragma>
+X<pragmas; C<parent>>
 
 Many existing Perl 5 projects do this, but it's easier and simpler to use the
 C<parent> pragma instead:
@@ -203,8 +201,8 @@ C<parent> pragma instead:
 
 =end programlisting
 
-X<base>
-X<pragmas; base>
+X<C<base> pragma>
+X<pragmas; C<base>>
 
 =begin sidebar
 
@@ -214,7 +212,7 @@ Moose, use C<parent>.
 =end sidebar
 
 X<multiple inheritance>
-X<objects; inheritance>
+X<OO; inheritance>
 
 You may inherit from multiple parent classes:
 
@@ -232,8 +230,8 @@ both C<Player> and C<Hospital::Patient>, a method call on an C<InjuredPlayer>
 instance will dispatch first to C<InjuredPlayer>, then C<Player>, then any of
 C<Player>'s parents before dispatching in C<Hospital::Patient>.
 
-X<mro>
-X<pragmas; mro>
+X<C<mro> pragma>
+X<pragmas; C<mro>>
 
 Perl 5.10 added a pragma called C<mro> which allows you to use a different
 method resolution scheme called C3.  While the specific details can get complex
@@ -259,7 +257,7 @@ you likely never need to use this.
 =head2 AUTOLOAD
 
 X<C<AUTOLOAD>>
-X<objects; C<AUTOLOAD>>
+X<OO; C<AUTOLOAD>>
 X<methods; C<AUTOLOAD>>
 
 If there is no applicable method in the invocant's class or any of its

@@ -49,7 +49,7 @@ first-class data type.
 Z<scalar_references>
 
 X<operators; C<\>>
-X<reference; C<\>>
+X<references; C<\> operator>
 
 X<references; scalar>
 X<scalars; references>
@@ -350,7 +350,6 @@ Z<function_references>
 
 X<functions; references>
 X<references; functions>
-X<functions; first-class>
 X<functions; first-class>
 
 Perl 5 supports I<first-class functions>.  A function is a data type just as is

@@ -2,7 +2,7 @@
 
 Z<scalars>
 
-X<scalar>
+X<scalars>
 
 Perl 5's fundamental data type is the I<scalar>, which represents a single,
 discrete value.  That value may be a string, an integer, a floating point

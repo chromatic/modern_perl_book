@@ -6,7 +6,7 @@ Perl 5's extension mechanism is modules (L<modules>).  Most modules provide
 functions to call or they define classes (L<moose>), but some modules instead
 influence the behavior of the language itself.
 
-X<pragma>
+X<pragmas>
 X<modules; pragmas>
 
 A module which influences the behavior of the compiler is a I<pragma>.  By

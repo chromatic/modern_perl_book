@@ -41,7 +41,6 @@ behavior of the C<push> operator, which takes an array and a list.  While Perl
 site, the Perl 5 parser knows that a call to C<push> must effectively pass the
 array as a single unit so that C<push> can operate on the array in place.
 
-X<C<prototype>>
 X<builtins; C<prototype>>
 
 The builtin C<prototype> takes the name of a function and returns a string
@@ -147,7 +146,7 @@ prototypes have a few valid uses.
 
 X<builtins; overriding>
 X<pragmas; C<subs>>
-X<C<subs>>
+X<C<subs> pragma>
 
 First, they are often necessary to emulate and override built-in keywords with
 user-defined functions.  You must first check that you I<can> override the
@@ -184,7 +183,7 @@ knows it should substitute the calculated value of pi whenever it
 encounters a bareword or parenthesized call to C<PI> in the rest of the source
 code (with respect to scoping and visibility).
 
-X<C<constant>>
+X<C<constant> pragma>
 X<pragmas; C<constant>>
 X<C<Readonly>>
 

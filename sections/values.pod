@@ -152,9 +152,9 @@ I<escaping> it (that is, preceding it with a leading backslash):
 =end programlisting
 
 X<operators; quoting>
-X<C<q>>
+X<C<q>; single quoting operator>
 X<operators; C<q>>
-X<C<qq>>
+X<C<qq>; double quoting operator>
 X<operators; C<qq>>
 
 If you find that hideously ugly, you may use an alternate I<quoting operator>.
@@ -237,7 +237,7 @@ contents will determine the resulting value (L<coercion>).
 =head2 Unicode and Strings
 
 Z<unicode>
-X<unicode>
+X<Unicode>
 
 I<Unicode> is a system for representing characters in the world's written
 languages.  While most English text uses a character set of only 127 characters
@@ -373,7 +373,7 @@ to the desired output encoding:
 =head3 Unicode in Your Programs
 
 X<pragmas; C<utf8>>
-X<C<utf8>>
+X<C<utf8> pragma>
 X<encoding>
 
 You may include Unicode characters in your programs in three ways.  The easiest
@@ -413,7 +413,7 @@ These escapes interpolate only within double-quoted strings.
 
 =end sidebar
 
-X<C<charnames>>
+X<C<charnames> pragma>
 X<pragmas; C<charnames>>
 X<strings; C<\N{}>>
 X<C<\N{}>; escape sequence for named character encodings>
@@ -616,7 +616,6 @@ floating-point value) of numeric values.
 
 =head2 Undef
 
-X<undef>
 X<C<undef>>
 
 Perl 5 has a value which represents an unassigned, undefined, and unknown
@@ -650,7 +649,6 @@ value> warning:
 
 =end screen
 
-X<C<defined>>
 X<builtins; C<defined>>
 
 The C<defined> builtin returns a true value if its operand is a defined value

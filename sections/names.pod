@@ -58,9 +58,9 @@ X<variables; names>
 X<scalar variables>
 X<variables; scalars>
 X<scalars>
-X<array variables>
+X<arrays>
 X<variables; arrays>
-X<hash variables>
+X<hashes>
 X<variables; hashes>
 
 I<Variable names> always have a leading sigil which indicates the type of the
@@ -113,7 +113,7 @@ In the latter two lines, using a scalar element of an aggregate as an I<lvalue>
 scalar context (L<context_philosophy>) on the I<rvalue> (the value assigned, on
 the right side of the C<=> character).
 
-X<slicing>
+X<slices>
 
 Similarly, accessing multiple elements of a hash or an array--an operation
 known as I<slicing>--uses the at symbol (C<@>) as the leading sigil and

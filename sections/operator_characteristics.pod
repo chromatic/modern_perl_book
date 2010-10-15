@@ -41,9 +41,9 @@ see the first rule again.
 Z<associativity>
 X<associativity>
 X<associativity; left>
-X<left associative>
+X<left associativity>
 X<associativity; right>
-X<right associative>
+X<right associativity>
 
 The I<associativity> of an operator governs whether it evaluates from left to
 right or right to left.  Addition is left associative, such that C<2 + 3 + 4>

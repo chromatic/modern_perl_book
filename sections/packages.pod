@@ -1,8 +1,8 @@
 =head2 Packages
 
 Z<packages>
-X<package>
-X<namespace>
+X<packages>
+X<namespaces>
 
 A I<namespace> in Perl is a mechanism which associates and encapsulates various
 named entities within a named category.  It's like your family name or a brand
@@ -43,7 +43,7 @@ explicitly, whether in a one-liner on a command-line or in a standalone Perl
 program or even in a F<.pm> file on disk, the current package will be the
 C<main> package.
 
-X<packages; version>
+X<packages; versions>
 X<C<$VERSION>>
 
 Besides a package name (C<main> or C<MyCode> or any other allowable
@@ -97,6 +97,7 @@ method:
 =head3 Packages and Namespaces
 
 X<namespaces>
+X<packages; namespaces>
 
 Every C<package> declaration creates a new namespace if that namespace does not
 already exist and causes the parser to put all subsequent package global

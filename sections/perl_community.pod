@@ -82,7 +82,7 @@ U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
 
 X<TPF>
 X<The Perl Foundation>
-X<TPF wiki>
+X<TPF; wiki>
 X<websites; TPF wiki>
 
 The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all

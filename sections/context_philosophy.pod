@@ -62,6 +62,7 @@ in I<void context>:
 
 =end programlisting
 
+X<context; scalar>
 X<scalar context>
 
 Assigning the function's return value to a single element evaluates the
@@ -74,6 +75,7 @@ function in I<scalar context>:
 =end programlisting
 
 X<list context>
+X<context; list>
 
 Assigning the results of calling the function to an array (L<arrays>) or a
 list, or using it in a list, evaluates the function in I<list context>:
@@ -136,7 +138,6 @@ pairs, which causes any the evaluation of any expressions in that list to occur
 in list context.
 
 X<builtins; C<scalar>>
-X<C<scalar>>
 
 Use the C<scalar> operator to impose scalar context:
 

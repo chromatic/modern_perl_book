@@ -2,7 +2,6 @@
 
 Z<anonymous_functions>
 
-X<anonymous function>
 X<functions; anonymous>
 
 An I<anonymous function> is a function without a name.  It behaves like a named

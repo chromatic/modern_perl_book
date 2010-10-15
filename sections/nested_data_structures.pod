@@ -138,7 +138,7 @@ structure will create intermediary hashes, keyed appropriately:
 =end programlisting
 
 X<autovivification>
-X<C<autovivification>>
+X<C<autovivification> pragma>
 X<pragmas; C<autovivification>>
 
 This behavior is I<autovivification>, and it's more often useful than it isn't.

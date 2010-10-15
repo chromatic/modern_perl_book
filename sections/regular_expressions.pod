@@ -16,7 +16,7 @@ X<operators; C<//>>
 X<operators; C<m//>>
 X<operators; C<=~>>
 X<C<=~>; regex bind>
-X<operators; <!~>>
+X<operators; C<!~>>
 X<C<!~>; negated regex bind>
 X<regex; atom>
 X<atom>
@@ -37,7 +37,7 @@ the match succeeds.
 =head1 The qr// Operator and Regex Combinations
 
 X<operators; C<qr//>>
-X<C<qr//>>
+X<C<qr//>; compile regex operator>
 X<regex; C<qr//>>
 X<regex; first-class>
 
@@ -83,8 +83,8 @@ demonstrated; you can search for a literal substring within a string with the
 C<index> builtin.  Using the regex engine for that is like flying your
 autonomous combat helicopter to the corner store to buy spare cheese.
 
-X<regex quantifiers>
-X<regex quantifiers; zero or one>
+X<regex; quantifiers>
+X<regex; zero or one quantifier>
 X<C<?>; zero or one regex quantifier>
 
 Regular expressions get more powerful through the use of I<regex quantifiers>,
@@ -106,7 +106,7 @@ or one C<a> characters immediately following a C<c> character and immediately
 preceding a C<t> character I<and also> matches if there is one and only one
 C<a> character between the C<c> and C<t> characters.
 
-X<regex quantifiers; one or more>
+X<regex; one or more quantifier>
 X<C<+>; one or more regex quantifier>
 
 The I<one or more quantifier>, or C<+>, matches only if there is at least one
@@ -283,7 +283,7 @@ possibility of unpleasant surprises.
 
 =head1 Regex Anchors
 
-X<regex anchors>
+X<regex; anchors>
 X<anchors; start of string>
 X<C<\A>; start of string regex metacharacter>
 
@@ -512,7 +512,7 @@ them.
 Z<named_captures>
 X<regex; captures>
 X<regex; named captures>
-X<<< C<<(?<>)>>; regex named capture >>>
+X<<< C<< (?<>) >>; regex named capture >>>
 
 Given a string, C<$contact_info>, which contains contact information, you can
 apply the C<$phone_number> regular expression and I<capture> any matches into a
@@ -980,7 +980,7 @@ sense when used with a substitution:
 =end programlisting
 
 X<C<\G>; global match anchor regex metacharacter>
-X<regex; C<\G> anchor>
+X<regex; C<\G>>
 X<regex; global match anchor>
 
 When used with a match--not a substitution--the C<\G> metacharacter allows you

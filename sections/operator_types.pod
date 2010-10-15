@@ -309,7 +309,7 @@ X<operators; comma>
 X<operators; C<,>>
 X<C<,>; operator>
 X<<< operators; C<< =E<gt> >> >>>
-X<<< C<< =E<gt> >>; operator >>>
+X<<< C<< =E<gt> >>; fat comma operator >>>
 
 The I<comma> operator (C<,>) is an infix operator.  In scalar context it
 evaluates its left operand then returns the value produced by evaluating its

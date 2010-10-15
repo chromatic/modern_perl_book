@@ -16,7 +16,7 @@ exhaustive list of such variables.
 =head2 Managing Super Globals
 
 X<super globals; managing>
-X<C<local>>
+X<builtins; C<local>>
 
 The best approach to managing the global behavior of these super globals is to
 avoid using them.  When you must use them, use C<local> in the smallest
@@ -70,7 +70,7 @@ Copy C<$@> I<immediately> to preserve its contents.
 
 =head2 English Names
 
-X<english>
+X<C<English>>
 
 The core C<English> module provides verbose names for the punctuation-heavy
 super globals.  Import them into a namespace with:

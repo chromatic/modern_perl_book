@@ -250,7 +250,7 @@ C<sort>, and then remove them in the leftmost C<map>.
 
 Z<easy_file_slurping>
 
-X<C<local>>
+X<builtins; C<local>>
 X<C<$/>>
 X<files; slurping>
 X<global variables; C<$/>>
@@ -301,7 +301,6 @@ to test functions in a standalone program or when you wish to make a module
 users can run directly.  All you need to do is to discover I<how> Perl began to
 execute a piece of code.  For this, use C<caller>.
 
-X<C<caller>>
 X<builtins; C<caller>>
 
 C<caller>'s single optional argument is the number of call frames which to

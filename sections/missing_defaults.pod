@@ -105,7 +105,7 @@ objects as they are--behave as objects should behave.
 =head2 The autodie Pragma
 
 Z<autodie>
-X<C<autodie>>
+X<C<autodie> pragma>
 X<pragmas; C<autodie>>
 
 Perl 5's default error checking is parsimonious.  If you're not careful to

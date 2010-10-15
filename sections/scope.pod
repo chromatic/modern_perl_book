@@ -169,9 +169,9 @@ closures accidentally.
 =head3 Our Scope
 
 Z<our>
-X<C<our>>
 X<builtins; C<our>>
-X<package scope>
+X<packages; scope>
+X<scope; packages>
 
 Within a given scope, you may declare an alias to a package variable with the
 C<our> keyword.  Like C<my>, C<our> enforces lexical scoping--of the alias.
@@ -226,7 +226,6 @@ calling context.  Consider the example:
 The program begins by declaring an C<our> variable, C<$scope>, as well as three
 functions.  It ends by assigning to C<$scope> and calling C<main()>.
 
-X<C<local>>
 X<builtins; C<local>>
 
 Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,

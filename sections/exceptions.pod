@@ -35,9 +35,9 @@ open the file, something has gone wrong.  Use C<die> to throw an exception:
 
 =end programlisting
 
-X<C<die>>
 X<builtins; C<die>>
 X<exceptions; throwing>
+X<exceptions; throwing strings>
 X<exceptions; C<die>>
 X<C<$@>>
 X<exceptions; C<$@>>
@@ -143,13 +143,14 @@ an C<eval> block elsewhere and reset C<$@>.
 
 Rethrow an exception by calling C<die()> again, passing C<$@>.
 
-X<C<die>; object>
-X<exceptions; exception objects>
+X<exceptions; throwing objects>
 
 You may find the idea of using regular expressions against the value of C<$@>
 distasteful; you can also use an I<object> with C<die>.  Admittedly, this is
 rare.  C<$@> I<can> contain any arbitrary reference, but in practice it seems
 to be 95% strings and 5% objects.
+
+X<exceptions; custom classes with C<Exception::Class>>
 
 As an alternative to writing your own exception system, see the CPAN
 distribution C<Exception::Class>.
@@ -157,6 +158,8 @@ distribution C<Exception::Class>.
 =head2 Exception Caveats
 
 Z<exception_caveats>
+
+X<exceptions; caveats>
 
 Using C<$@> correctly can be tricky; the global nature of the variable leaves
 it open to several subtle flaws:
@@ -175,6 +178,9 @@ false
 value when you do not expect it
 
 =back
+
+X<exceptions; handling safely with C<Try::Tiny>>
+X<C<Try::Tiny>>
 
 Writing a perfectly safe and sane exception handler is difficult.  The
 C<Try::Tiny> distribution from the CPAN is short, easy to install, easy to

@@ -1,4 +1,4 @@
-=head0 Preface
+=head0 *Preface
 
 Perl turns 23 years old later this year.  The language has gone from a simple
 tool for system administration somewhere between shell scripting and C
@@ -34,6 +34,13 @@ replace it with:
 
 =end programlisting
 
+X<C<feature>>
+
+With these lines in every example program, Perl will warn you of dubious
+constructs and typos and will enable new features of Perl 5.10 through the
+C<feature> pragma (L<pragmas>).  For now, assume these lines are always
+present.  You will understand them soon.
+
 =end sidebar
 
 Unless otherwise mentioned, code snippets always assume the basic skeleton of a
@@ -66,11 +73,11 @@ C<is()> (L<testing>).  That skeleton program is:
 
 =end programlisting
 
-The examples in this book assume you're using Perl 5.10.0 or newer; ideally at
-least Perl 5.10.1.  Many examples will work on older versions of Perl 5 with
-modest changes, but you will have more difficulty with anything older than
-5.10.0.  This book also describes (but does not I<require> the use of) features
-found in Perl 5.12.
+The examples in this book work best with Perl 5.10.0 or newer; ideally at least
+Perl 5.10.1.  Many examples will work on older versions of Perl 5 with modest
+changes, but you will have more difficulty with anything older than 5.10.0.
+This book also describes (but does not I<require> the use of) features found in
+Perl 5.12.
 
 You can often install a new version of Perl yourself.  Windows users, download
 Strawberry Perl from U<http://www.strawberryperl.com/>.  Users of other

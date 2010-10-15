@@ -56,8 +56,7 @@ copyright and licensing information.
 
 =back
 
-X<kwalitee>
-X<CPANTS>
+X<CPAN; CPANTS>
 
 Additionally, a well-formed distribution must contain a unique name and single
 version number (often taken from its primary module).  Any well-formed
@@ -102,25 +101,38 @@ run tests and to interpret and report their results.
 In addition, several non-core CPAN modules make your life easier as a
 developer:
 
+X<CPAN; C<App::cpanminus>>
+
 =over 4
 
 =item * C<App::cpanminus> is a new utility which provides almost
 configuration-free use of the public CPAN.  It fulfills 90% of your needs to
 find and install modules.
 
+X<C<App::perlbrew>>
+
 =item * C<App::perlbrew> helps you to manage multiple installations of Perl 5.
 This is very useful to use a newer version than the system version or to
 isolate distributions you've installed for one application from distributions
 you've installed for another.
+
+X<CPAN; C<CPAN::Mini>>
+X<CPAN; C<cpanmini>>
 
 =item * C<CPAN::Mini> and the C<cpanmini> command allow you to create your own
 (private) mirror of the public CPAN.  You can inject your own distributions
 into this repository and manage which versions of the public modules are
 available in your organization.
 
+X<C<Dist::Zilla>>
+X<C<Module::Build>>
+X<C<ExtUtils::MakeMaker>>
+
 =item * C<Dist::Zilla> is a toolkit for managing distributions by automating
-away common tasks.  It can replace the use of C<Module::Build> or
+away common tasks.  It can replace the direct use of C<Module::Build> or
 C<ExtUtils::MakeMaker> in many cases.
+
+X<CPAN; C<Test::Reporter>>
 
 =item * C<Test::Reporter> allows you to report the results of running the
 automated test suites of distributions you install, giving their authors more
@@ -167,13 +179,3 @@ symbols and default exports; allow people to use only what they need and do not
 pollute their namespaces.
 
 =back
-
-=begin sidebar
-
-X<C<CPAN::Mini>>
-X<cpanmini>
-
-The C<CPAN::Mini> distribution from the CPAN allows you to create your own
-local mirror of the CPAN into which you can inject your own distributions.
-
-=end sidebar

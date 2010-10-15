@@ -2,7 +2,7 @@
 
 Z<universal>
 
-X<UNIVERSAL>
+X<C<UNIVERSAL>>
 
 Perl 5 provides a special package which is the ancestor of all other packages
 in a very object-oriented way.  The C<UNIVERSAL> package provides a few methods

@@ -3,7 +3,6 @@
 Z<testing>
 
 X<testing>
-X<tests>
 
 I<Testing> is the process of writing and running automated verifications that
 your software behaves as intended, in whole or in part.  At its heart, this is

@@ -70,8 +70,8 @@ The Catalyst web framework also uses attributes to determine the visibility and 
 
 =head2 Drawbacks of Attributes
 
-X<pragmas; attributes>
-X<attributes.pm>
+X<pragmas; C<attributes>>
+X<C<attributes> pragma>
 X<C<Attribute::Handlers>>
 
 Attributes do have their drawbacks:

@@ -36,7 +36,7 @@ to true in boolean context.
 =head2 String Coercion
 
 X<coercion; string>
-X<stringify>
+X<stringification>
 
 String coercion occurs when using string operators such as comparisons (C<eq>
 and C<cmp>, for example), concatenation, C<split>, C<substr>, and regular
@@ -56,7 +56,7 @@ a number into individual digits:
 
 Z<numeric_coercion>
 X<coercion; numeric>
-X<numify>
+X<numification>
 
 Numeric coercion occurs when using numeric comparison operators (such as C<==>
 and C<< <=> >>), when performing mathematic operations, and when using a value
@@ -135,7 +135,7 @@ Z<dualvars>
 X<coercion; dualvars>
 X<C<dualvar()>>
 X<C<Scalar::Util>>
-X<dualvar>
+X<dualvars>
 
 The caching of string and numeric values allows for the use of a
 rare-but-useful feature known as a I<dualvar>, or a value that has divergent

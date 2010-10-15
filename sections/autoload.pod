@@ -189,7 +189,7 @@ far.  This may be an issue; certainly you can argue that it's an encapsulation
 violation to care, but it's also an encapsulation violation to let the details
 of I<how> an object provides a method to leak out into the wider world.
 
-X<tailcall>
+X<tailcalls>
 X<C<goto>; tailcall>
 
 Another idiom is to use a tailcall (L<tailcalls>) to I<replace> the current
@@ -222,8 +222,8 @@ Z<autoload_drawbacks>
 X<C<AUTOLOAD>; drawbacks>
 X<C<UNIVERSAL::can>>
 X<C<can()>>
-X<subs>
-X<pragmas; subs>
+X<C<subs> pragma>
+X<pragmas; C<subs>>
 X<functions; predeclaration>
 
 C<AUTOLOAD()> can be a useful tool in certain circumstances, but it can be

@@ -2,7 +2,6 @@
 
 Z<tie>
 
-X<C<tie>>
 X<builtins; C<tie>>
 
 Overloading (L<overloading>) lets you give classes custom behavior for specific

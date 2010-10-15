@@ -2,7 +2,6 @@
 
 Z<arrays>
 X<arrays>
-X<first-class>
 
 Perl 5 I<arrays> are data structures which store zero or more scalars.  They're
 I<first-class> data structures, which means that Perl 5 provides a separate
@@ -10,6 +9,7 @@ data type at the language level.  Arrays support indexed access; that is, you
 can access individual members of the array by integer indexes.
 
 X<C<@> sigil>
+X<sigils; C<@>>
 
 The C<@> sigil denotes an array.  To declare an array:
 
@@ -21,8 +21,7 @@ The C<@> sigil denotes an array.  To declare an array:
 
 =head2 Array Elements
 
-X<variant sigils>
-X<sigils; variance>
+X<sigils; variant>
 X<C<$>; sigil>
 X<sigils; C<$>>
 
@@ -183,7 +182,7 @@ version of C<my @items>.  Prefer the latter.
 
 =head2 Array Slices
 
-X<array slice>
+X<arrays; slices>
 X<slices; array>
 X<C<@>; sigil>
 X<sigils; C<@>>
@@ -247,9 +246,9 @@ Managing array indices can be a hassle.  Because Perl 5 can expand or contract
 arrays as necessary, the language also provides several operations to treat
 arrays as stacks, queues, and the like.
 
-X<C<push>>
+X<arrays; C<push>>
+X<arrays; C<pop>>
 X<builtins; C<push>>
-X<C<pop>>
 X<builtins; C<pop>>
 
 The C<push> and C<pop> operators add and remove elements from the tail of the
@@ -272,9 +271,9 @@ argument is a list of values.  You may only C<pop> one argument at a time.
 C<push> returns the updated number of elements in the array.  C<pop> returns
 the removed element.
 
-X<C<shift>>
+X<arrays; C<shift>>
+X<arrays; C<unshift>>
 X<builtins; C<shift>>
-X<C<unshift>>
 X<builtins; C<unshift>>
 
 Similarly, C<unshift> and C<shift> add elements to and remove an element from
@@ -302,7 +301,7 @@ context.
 
 =end sidebar
 
-X<C<splice>>
+X<arrays; C<splice>>
 X<builtins; C<splice>>
 
 C<splice> is another important--if less frequently used--array operator.  It
@@ -313,7 +312,7 @@ its equivalences with C<push>, C<pop>, C<shift>, and C<unshift>.
 
 Arrays often contain elements to process in a loop (L<looping_directives>).
 
-X<C<each>>
+X<arrays; C<each>>
 X<builtins; C<each>>
 
 As of Perl 5.12, you can use C<each> to iterate over an array by index and
@@ -379,7 +378,7 @@ functions and for creating nested arrays (L<array_references>).
 
 =head2 Array Interpolation
 
-X<array interpolation>
+X<arrays; interpolation>
 X<interpolation; arrays>
 X<C<$">>
 X<C<$LIST_SEPARATOR>>

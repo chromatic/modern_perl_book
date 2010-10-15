@@ -15,7 +15,6 @@ Use the C<sub> keyword to declare a function:
 Now C<greet_me()> is available for invocation anywhere else within the program,
 provided that the symbol--the function's name--is visible.
 
-X<forward declaration>
 X<functions; forward declaration>
 
 You do not have to I<define> a function at the point you declare it.  You may
@@ -77,8 +76,6 @@ Z<function_parameters>
 X<parameters>
 X<functions; parameters>
 X<C<@_>>
-X<parameter flattening>
-X<flattening>
 X<parameters; flattening>
 
 Inside the function, all parameters exist in a single array, C<@_>.  If C<$_>
@@ -276,7 +273,7 @@ remove it from the end of C<@_>):
 =head2 Slurping
 
 Z<parameter_slurping>
-X<parameter slurping>
+X<parameters; slurping>
 
 As with any lvalue assignment to an aggregate, assigning to C<%pets> within the
 function I<slurps> all of the remaining values from C<@_>.  If the C<$type>
@@ -302,7 +299,7 @@ flattening and slurping when passing aggregate parameters.
 
 =head2 Aliasing
 
-X<parameter aliasing>
+X<parameters; aliasing>
 X<functions; aliasing parameters>
 
 One useful feature of C<@_> can surprise the unwary: it contains aliases to the
@@ -426,7 +423,6 @@ like undeclared barewords and C<strict> would complain.
 =head1 Reporting Errors
 
 Z<reporting_errors>
-X<C<caller>>
 X<builtins; C<caller>>
 
 Within a function, you can get information about the context of the call with
@@ -476,8 +472,8 @@ function and the context of the call:
 =end programlisting
 
 X<C<Carp>>
-X<C<Carp>; C<croak>>
-X<C<Carp>; C<carp>>
+X<C<Carp>; C<croak()>>
+X<C<Carp>; C<carp()>>
 
 The standard C<Carp> module uses this technique to great effect for reporting
 errors and throwing warnings in functions; its C<croak()> throws an exception
@@ -690,8 +686,6 @@ C<Deep recursion on subroutine>.  The limit is 100 recursive calls, which can
 be too few in certain circumstances but too many in others.  Disable this
 warning with C<no warnings 'recursion'> in the scope of the recursive call.
 
-X<functions; tail call elimination>
-
 Because each call to a function requires a new call frame, as well as space for
 the call to store its own lexical values, highly-recursive code can use more
 memory than iterative code.  A feature called I<tail call elimination> can
@@ -705,7 +699,7 @@ implementations support automatic tail call elimination.
 
 =end sidebar
 
-X<tailcall>
+X<tailcalls>
 X<functions; tailcall>
 
 A I<tail call> is a call to a function which directly returns that function's

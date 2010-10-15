@@ -11,7 +11,10 @@ file manipulation.
 =head2 Input and Output
 
 Z<filehandle>
-X<filehandle>
+X<filehandles>
+X<filehandles; C<STDIN>>
+X<filehandles; C<STDERR>>
+X<filehandles; C<STDOUT>>
 X<C<STDIN>>
 X<C<STDERR>>
 X<C<STDOUT>>
@@ -44,7 +47,6 @@ perldata> describes this feature in more detail.
 
 =end sidebar
 
-X<C<open>>
 X<builtins; C<open>>
 
 Besides the standard filehandles, you can open your own filehandles with the
@@ -136,7 +138,6 @@ problems?"> when interpolating untrusted input into the second operand.  You
 can safely replace the two-argument form of open with the three-argument form
 in every case without any loss of feature.
 
-X<C<sysopen>>
 X<builtins; C<sysopen>>
 
 C<perldoc perlopentut> offers far more details about more exotic uses of
@@ -144,7 +145,6 @@ C<open>, including its ability to launch and control other processes, as well
 as the use of C<sysopen> for finer-grained control over input and output.
 C<perldoc perlfaq5> includes working code for many common IO tasks.
 
-X<C<readline>>
 X<builtins; C<readline>>
 X<<< C<< <> >>; circumfix readline operator >>>
 X<<< operators; C<< <> >> >>>
@@ -169,7 +169,6 @@ at a time in a C<while()> loop:
 =end programlisting
 
 X<builtins; C<eof>>
-X<C<eof>>
 
 In scalar context, C<readline> iterates through the lines available through the
 filehandle until it reaches the end of the file (C<eof()>).  Each iteration
@@ -179,7 +178,6 @@ variable used for iteration, such that only the end of file condition ends the
 loop.
 
 X<builtins; C<chomp>>
-X<C<chomp>>
 
 Every line read from C<readline> includes the character or characters which
 mark the end of a line.  In most cases, this is a platform-specific sequence
@@ -203,7 +201,6 @@ With everything all together, the cleanest way to read from files in Perl 5 is:
 
 =end programlisting
 
-X<C<binmode>>
 X<builtins; C<binmode>>
 
 If you're not reading I<textual> data--instead reading I<binary> data--use
@@ -215,9 +212,7 @@ portable programs use it anyway (L<unicode>).
 
 =head3 Writing to Files
 
-X<C<print>>
 X<builtins; C<print>>
-X<C<say>>
 X<builtins; C<say>>
 
 Given a filehandle open for output, you may C<print> or C<say> to it:
@@ -254,7 +249,6 @@ also uses any value of C<$\> as the final argument to C<print> or C<say>.
 
 =head3 Closing Files
 
-X<C<close>>
 X<builtins; C<close>>
 
 When you've finished working with a file, you may C<close> it explicitly or
@@ -347,7 +341,6 @@ C<IO::File> has superseded C<FileHandle> in Perl 5.12.
 
 =head2 Directories and Paths
 
-X<C<opendir>>
 X<builtins; C<opendir>>
 
 You may also manipulate directories and file paths with Perl 5.  Working with
@@ -363,7 +356,6 @@ a directory handle with C<opendir>:
 
 =end programlisting
 
-X<C<readdir>>
 X<builtins; C<readdir>>
 
 The keyword to read from a directory is C<readdir>.  As with C<readline>, you
@@ -420,7 +412,6 @@ C<drink>, and C<be_monkey> and I<not> F<tasks/eat>, F<tasks/drink>, and
 F<task/be_monkey>.  In contrast, an I<absolute> path is a path fully qualified
 to its filesystem.
 
-X<C<closedir>>
 X<builtins; C<closedir>>
 
 Close a directory handle by letting it go out of scope or with the C<closedir>
@@ -490,7 +481,7 @@ information.
 
 =head2 File Manipulation
 
-X<C<-X>>
+X<C<-X>; file test operators>
 X<operators; C<-X>>
 
 Besides reading and writing files, you can also manipulate them as you would
@@ -498,7 +489,7 @@ directly from a command line or a file manager.  The C<-X> file test operators
 can give you information about the attributes of files and directories on your
 system.  For example, to test that a file exists:
 
-X<C<-e>>
+X<C<-e>; file exists operator>
 X<operators; C<-e>>
 
 =begin programlisting
@@ -511,10 +502,10 @@ The C<-e> operator has a single operand, the name of a file or a file or
 directory handle.  If the file exists, the expression will evaluate to a true
 value.  C<perldoc -f -X> lists all other file tests; the most popular are:
 
-X<C<-d>>
-X<C<-f>>
-X<C<-r>>
-X<C<-z>>
+X<C<-d>; directory test operator>
+X<C<-f>; file test operator>
+X<C<-r>; readable file test operator>
+X<C<-z>; non-empty file test operator>
 X<operators; C<-d>>
 X<operators; C<-f>>
 X<operators; C<-r>>
@@ -538,7 +529,6 @@ with C<perldoc -f -r>, for example.
 
 =begin sidebar
 
-X<C<chdir>>
 X<builtins; C<chdir>>
 X<C<Cwd>>
 
@@ -550,7 +540,6 @@ files with relative--not absolute--paths.
 
 =end sidebar
 
-X<C<rename>>
 X<builtins; C<rename>>
 
 The C<rename> keyword can rename a file or move it between directories.  It
@@ -568,7 +557,6 @@ takes two operands, the old name of the file and the new name:
 =end programlisting
 
 X<C<File::Copy>>
-X<C<unlink>>
 X<builtins; C<unlink>>
 X<files; copying>
 X<files; moving>

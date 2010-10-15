@@ -152,7 +152,7 @@ Installing into symbol tables is reasonably easy, if ugly:
 
 X<C<*>; sigil>
 X<sigils; C<*>>
-X<typeglob>
+X<typeglobs>
 
 The odd syntax of an asteriskN<Think of it as a I<typeglob sigil>, where a
 I<typeglob> is the Perl hacker jargon for "symbol table".> deferencing a hash
@@ -296,10 +296,9 @@ from attempting to invoke the C<require()> method on the undefined value.
 
 Z<class_mop>
 
-X<Class::MOP>
+X<C<Class::MOP>>
 X<Moose>
 X<objects; meta object protocol>
-X<MOP>
 X<meta object protocol>
 
 Unlike installing function references to populate namespaces and to create
