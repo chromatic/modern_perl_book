@@ -1,7 +1,4 @@
-Please add yourself to this file in alphabetical order in this format:
-
-N: <name>
-E: <email address>
+Please add yourself to this file.
 
 N: chromatic
 E: chromatic@wgz.org
@@ -60,7 +57,7 @@ E: sam@vilain.net
 N: Colin Wetherbee
 E: cww@cpan.org
 
-N: Dan Scott (dbs on Github)
+N: Dan Scott
 E: dan@coffeecode.net
 
 N: Shlomi Fish
@@ -150,14 +147,11 @@ E: castaway@desert-island.me.uk
 N: David Yingling
 E: deeelwy@yahoo.com
 
-N: Marko Zagožen
-E:-?
+N: Marko Zagozen
+E: ?
 
 N: Alexander Scott-Johns
 E: alexander.scott.johns@googlemail.com
-
-N: Matthias Bloch
-E: matthias.bloch@puffin.ch
 
 N: Larry Wall
 E: larry@wall.org
