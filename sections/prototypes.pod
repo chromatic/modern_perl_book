@@ -44,8 +44,8 @@ array as a single unit so that C<push> can operate on the array in place.
 X<builtins; C<prototype>>
 
 The builtin C<prototype> takes the name of a function and returns a string
-representing its prototype.  To see the prototype of a built-in keyword, use
-the C<CORE::> form:
+representing its prototype.  To see the prototype of a builtin, use the
+C<CORE::> form:
 
 =begin programlisting
 
@@ -148,11 +148,11 @@ X<builtins; overriding>
 X<pragmas; C<subs>>
 X<C<subs> pragma>
 
-First, they are often necessary to emulate and override built-in keywords with
+First, they are often necessary to emulate and override builtins with
 user-defined functions.  You must first check that you I<can> override the
-built-in keyword by checking that C<prototype> does not return C<undef>.  Once
-you know the prototype of the keyword, use a forward declaration of a function
-with the same name as the core keyword:
+builtin by checking that C<prototype> does not return C<undef>.  Once you know
+the prototype of the builtin, use a forward declaration of a function with the
+same name as the core builtin:
 
 =begin programlisting
 
@@ -244,9 +244,9 @@ You can use this API without the prototype.  It's slightly less attractive:
 
 =end programlisting
 
-A sparing use of function prototypes to remove the need for the C<sub>
-keyword is reasonable.  Few other uses of prototypes are compelling enough to
-overcome their drawbacks.
+A sparing use of function prototypes to remove the need for the C<sub> builtin
+is reasonable.  Few other uses of prototypes are compelling enough to overcome
+their drawbacks.
 
 =begin sidebar
 

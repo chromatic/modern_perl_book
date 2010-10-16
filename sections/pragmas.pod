@@ -76,8 +76,9 @@ arguments to the pragma to control its behavior at a finer level:
 =end programlisting
 
 X<pragmas; disabling>
+X<builtins; C<no>>
 
-Within a scope you may disable all or part of a pragma with the C<no> keyword:
+Within a scope you may disable all or part of a pragma with the C<no> builtin:
 
 =begin programlisting
 
@@ -117,7 +118,7 @@ X<pragmas; C<utf8>>
 X<pragmas; C<autodie>>
 
 =item * the C<autodie> pragma (new in 5.10.1) enables automatic error checking
-of system calls and keywords, reducing the need for manual error checking
+of system calls and builtins, reducing the need for manual error checking
 
 X<pragmas; C<constant>>
 

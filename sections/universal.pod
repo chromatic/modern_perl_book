@@ -73,10 +73,12 @@ a reference to the method with:
 
 =end programlisting
 
+X<builtins; C<require>>
+
 Given a plugin-style architecture, you can test to see if a package implements
 a specific function in a similar way.  The C<UNIVERSAL::require> module adds a
 C<require()> method to the C<UNIVERSAL> namespace to invert the sense of the
-C<require> keyword:
+C<require> builtin:
 
 =begin programlisting
 

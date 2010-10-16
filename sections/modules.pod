@@ -68,7 +68,7 @@ Z<import>
 X<builtins; C<use>>
 X<C<import()>>
 
-When you load a module with the C<use> keyword, Perl loads it from disk, then
+When you load a module with the C<use> builtin, Perl loads it from disk, then
 calls its C<import()> method, passing any arguments you provided.  This occurs
 at compilation time:
 
@@ -89,7 +89,7 @@ C<strict> use arguments to change their behavior instead of exporting symbols.
 X<builtins; C<no>>
 X<unimporting>
 
-The C<no> keyword calls a module's C<unimport()> method, if it exists, passing
+The C<no> builtin calls a module's C<unimport()> method, if it exists, passing
 any arguments.  While it's possible to remove exported symbols, it's more
 common to disable specific features of pragmas and other modules which
 introduce new behaviors through C<import()>:

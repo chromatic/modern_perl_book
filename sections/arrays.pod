@@ -398,7 +398,7 @@ is C<$LIST_SEPARATOR>.  Thus:
 
 Temporarily localizing and assigning another value to C<$"> for debugging
 purposes is very handyN<Due credit goes to Mark-Jason Dominus for demonstrating
-this example several years ago>:
+this example several years ago.>:
 
 =begin programlisting
 

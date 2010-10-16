@@ -62,9 +62,9 @@ Additionally, a well-formed distribution must contain a unique name and single
 version number (often taken from its primary module).  Any well-formed
 distribution you download from the public CPAN should conform to these
 standards.  (The CPANTS service evaluates the kwaliteeN<Quality is difficult to
-measure with heuristics.  Kwalitee is the automatable relative of quality.> of
-all CPAN distributions and recommends improvements to make them easier to
-install and to manage.)
+measure with heuristics.  Kwalitee is the machine measurable relative of
+quality.> of all CPAN distributions and recommends improvements to make them
+easier to install and to manage.)
 
 =head2 CPAN Tools for Managing Distributions
 
@@ -87,8 +87,8 @@ mentioned earlier.
 
 =item * C<ExtUtils::MakeMaker> is an older, legacy tool which C<Module::Build>
 intends to replace.  It is still in wide use, though it is in maintenance mode
-and receives only the most critical bugfixes.  It works with the F<Makefile.PL>
-file mentioned earlier.
+and receives only the most critical bug fixes.  It works with the
+F<Makefile.PL> file mentioned earlier.
 
 =item * C<Test::More> (L<testing>) is the basic and most widely used testing
 module used to write automated tests for Perl software.

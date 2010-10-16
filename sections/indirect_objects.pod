@@ -74,7 +74,11 @@ variable I<seems> obvious, but it is not:
 
 =end programlisting
 
-C<print>, C<close>, and C<say>--all keywords which operate on
+X<builtins; C<print>>
+X<builtins; C<close>>
+X<builtins; C<say>>
+
+C<print>, C<close>, and C<say>--all builtins which operate on
 filehandles--operate in an indirect fashion.  This was fine when filehandles
 were package globals, but lexical filehandles (L<lexical_filehandles>) make the
 indirect object syntax problems obvious.  In the previous example, Perl will

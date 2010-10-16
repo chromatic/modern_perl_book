@@ -12,9 +12,8 @@ warnings--and Perl supports this.
 Z<producing_warnings>
 
 X<builtins; C<warn>>
-X<C<warn>>
 
-Use the C<warn> keyword to emit a warning:
+Use the C<warn> builtin to emit a warning:
 
 =begin programlisting
 

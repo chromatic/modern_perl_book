@@ -61,8 +61,9 @@ form does not.  The conditional expression may also be complex:
 
 =end programlisting
 
-... though in this case, parenthesization of the expression in postfix form may
-add clarityN<It may also argue against using the postfix form.>:
+... though in this case, adding parentheses to the postfix conditional
+expression may add clarity, though the I<need> to add parentheses may argue
+against using the postfix form.
 
 =begin programlisting
 
@@ -421,7 +422,10 @@ block for each integer and prints the squares of the integers.
 
 =begin sidebar
 
-Perl treats the keywords C<foreach> and C<for> interchangeably.  The remainder
+X<builtins; C<for>>
+X<builtins; C<foreach>>
+
+Perl treats the builtins C<foreach> and C<for> interchangeably.  The remainder
 of the syntax of the loop determines the behavior of the loop.  Though
 experienced Perl programmers tend to refer to the loop with automatic iteration
 as a C<foreach> loop, you can use C<for> safely and clearly any place you might
@@ -587,8 +591,8 @@ this can be troublesome:
 
 =end programlisting
 
-If you I<must> use C<$_> rather than a named variable, lexicalize the topic
-variable with C<my $_>:
+If you I<must> use C<$_> rather than a named variable, make the topic variable
+lexical with C<my $_>:
 
 =begin programlisting
 
@@ -776,8 +780,10 @@ the file.
 
 =begin sidebar
 
+X<builtins; C<chomp>>
+
 One common mistake is to forget to remove the line-ending characters from each
-line; use the C<chomp> keyword to do so.
+line; use the C<chomp> builtin to do so.
 
 =end sidebar
 
@@ -1051,7 +1057,7 @@ in scalar context, and always assigns to the topic variable:
 
 =end programlisting
 
-C<given> also lexicalizes the topic variable to prevent accidental
+C<given> also makes the topic variable lexical to prevent accidental
 modification:
 
 =begin programlisting
@@ -1074,10 +1080,9 @@ modification:
 X<builtins; C<when>>
 X<topicalization>
 
-By itself, this feature may seem less than useful.  In combination with
-C<when>, it is very useful.  Use C<given> to I<topicalize> a value.  Within the
-associated block, multiple C<when> statements match the topic against
-expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper,
+C<given> is most useful when combined with C<when>.  C<given> I<topicalizes> a
+value within a block so that multiple C<when> statements can match the topic
+against expressions using I<smart-match> semantics.  To write the Rock, Paper,
 Scissors game:
 
 =begin programlisting
@@ -1181,8 +1186,8 @@ automatically.
 =begin sidebar
 
 Heavily recursive code (L<recursion>), especially mutually recursive code, can
-quickly consume a lot of memory.  Using tailcalls reduces the memory needed for
-internal bookkeeping of control flow, which can make otherwise expensive
-algorithms tractable.
+consume a lot of memory.  Tailcalls reduce the memory needed for internal
+bookkeeping of control flow, which can make otherwise expensive algorithms
+tractable.
 
 =end sidebar

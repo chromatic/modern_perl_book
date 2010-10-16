@@ -7,7 +7,7 @@ X<builtins; C<tie>>
 Overloading (L<overloading>) lets you give classes custom behavior for specific
 types of coercions and accesses.  A similar mechanism exists for making classes
 act like built-in types (scalars, arrays, and hashes), but with more specific
-behaviors.  This mechanism uses the C<tie> keyword; it is I<tying>.
+behaviors.  This mechanism uses the C<tie> builtin; it is I<tying>.
 
 The original use of C<tie> was to produce a hash stored on disk, rather than in
 memory.  This allowed the use of dbm files from Perl, as well as the ability to
@@ -49,7 +49,7 @@ of the file to which to tie the array.
 
 The tying function resembles a constructor: C<TIESCALAR>, C<TIEARRAY()>,
 C<TIEHASH()>, or C<TIEHANDLE()> for scalars, arrays, hashes, and filehandles
-respectively.  These functions return a new object which the C<tie()> keyword
+respectively.  These functions return a new object which the C<tie()> builtin
 returns as well.  Most people ignore it.
 
 The C<tied()> operator returns the same object when used on a tied variable and

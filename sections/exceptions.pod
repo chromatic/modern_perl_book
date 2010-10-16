@@ -121,7 +121,7 @@ value before you attempt to catch an exception:
 X<exceptions; rethrowing>
 
 You may check the string value of C<$@> against expected exceptions to see if
-you can handle the exception or if you should rethrow it:
+you can handle the exception or if you should throw it again:
 
 =begin programlisting
 

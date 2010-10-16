@@ -118,6 +118,8 @@ C<for> iterating over a list:
 
 =end programlisting
 
+X<builtins; C<map>>
+
 ... or C<map> transforming a list:
 
 =begin programlisting
@@ -126,6 +128,8 @@ C<for> iterating over a list:
     say for @squares;
 
 =end programlisting
+
+X<builtins; C<grep>>
 
 ... or C<grep> filtering a list:
 

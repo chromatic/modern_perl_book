@@ -50,7 +50,7 @@ X<Planet Perl Iron Man>
 X<websites; Planet Perl>
 X<websites; Planet Perl Iron Man>
 
-Other sites aggregate the Perl-related musings of Perl hackers, including
+Other sites aggregate the musings of Perl hackers, including
 U<http://perlsphere.net/>, U<http://planet.perl.org/>, and
 U<http://ironman.enlightenedperl.org/>.  The latter is part of an initiative
 from the Enlightened Perl Organization (U<http://enlightenedperl.org/>) to
@@ -93,10 +93,11 @@ X<gitpan>
 X<websites; gitpan>
 
 Many Perl hackers use Github (U<http://github.com/>) to host their
-projectsN<...  including the drafts of this book at
+projectsN<...  including the sources of this book at
 U<http://github.com/chromatic/modern_perl_book/>>.  One particularly notable
-page on Github is Gitpan, which hosts Git repositories chronicling the complete
-history of every distribution on the CPAN.  See U<http://github.com/gitpan/>.
+page on Github is Gitpan (U<http://github.com/gitpan/>), which hosts Git
+repositories chronicling the complete history of every distribution on the
+CPAN.
 
 =head1 Events
 

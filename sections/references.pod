@@ -381,7 +381,9 @@ You may also create anonymous functions:
 
 =end programlisting
 
-The use of the C<sub> keyword I<without> a name compiles the function as
+X<builtins; C<sub>>
+
+The use of the C<sub> builtin I<without> a name compiles the function as
 normal, but does not install it in the current namespace.  The only way to
 access this function is through the reference.
 

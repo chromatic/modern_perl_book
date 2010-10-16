@@ -87,13 +87,13 @@ types:
 
 =end programlisting
 
-Perl won't get confused, but people reading the code will.
+Perl won't get confused, but people reading the code might.
 
 X<variant sigils>
 
 Perl 5 uses I<variant sigils>, where the sigil on a variable may change
-depending on what you do with it.  For example, to access a (scalar) element of
-an array or a hash, the sigil changes to the dollar sign (C<$>) character:
+depending on what you do with it.  For example, to access an element of an
+array or a hash, the sigil changes to the scalar sigil (C<$>):
 
 =begin programlisting
 

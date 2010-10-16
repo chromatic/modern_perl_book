@@ -12,10 +12,12 @@ is that it has no name.  You always deal with anonymous functions by reference
 
 =head2 Declaring Anonymous Functions
 
+X<builtins; C<sub>>
+
 You may never declare an anonymous function on its own; you must construct it
 and assign it to a variable, invoke it immediately, or pass it as an argument
 to a function, either explicitly or implicitly.  Explicit creation uses the
-C<sub> keyword with no name:
+C<sub> builtin with no name:
 
 =begin programlisting
 

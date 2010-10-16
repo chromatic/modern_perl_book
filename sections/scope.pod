@@ -174,7 +174,7 @@ X<packages; scope>
 X<scope; packages>
 
 Within a given scope, you may declare an alias to a package variable with the
-C<our> keyword.  Like C<my>, C<our> enforces lexical scoping--of the alias.
+C<our> builtin.  Like C<my>, C<our> enforces lexical scoping--of the alias.
 The fully-qualified name is available everywhere, but the lexical alias is
 visible only within its scope.
 
@@ -291,7 +291,7 @@ X<builtins; C<state>>
 X<scope; state>
 
 A final type of scope is new as of Perl 5.10.  This is the scope of the
-C<state> keyword.  State scope resembles lexical scope in that it declares a
+C<state> builtin.  State scope resembles lexical scope in that it declares a
 lexical variable, but the value of that variable gets initialized I<once>, and
 then persists:
 

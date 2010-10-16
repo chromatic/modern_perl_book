@@ -112,8 +112,8 @@ effectively.
 X<Schwartzian transform>
 X<C<map>; Schwartzian transform>
 X<C<sort>; Schwartzian transform>
-X<C<map>>
-X<C<sort>>
+X<builtins; C<map>>
+X<builtins; C<sort>>
 
 The I<Schwartzian transform> is an elegant demonstration of that principle as
 an idiom handily borrowed from the Lisp family of languages.
@@ -193,7 +193,7 @@ C<$a> should come after C<$b> in the results, the block should return 1.  Any
 other return values are errors.
 
 X<operators; C<cmp>>
-X<< operators; <=> >>
+X<< operators; C<< <=> >> >>
 
 The C<cmp> operator performs string comparisons and the C<< <=> >> performs
 numeric comparisons.

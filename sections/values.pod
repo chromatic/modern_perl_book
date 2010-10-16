@@ -397,21 +397,16 @@ the file with the appropriate encoding.
 X<strings; C<\x{}>>
 X<C<\x{}>; escape sequence for character encodings>
 
-You may also use the Unicode escape sequence to represent character encodings.
-The syntax C<\x{}> represents a single character; place the hex form of the
-character's Unicode number within the curly brackets:
+Within double-quoted strings you may also use the Unicode escape sequence to
+represent character encodings.  The syntax C<\x{}> represents a single
+character; place the hex form of the character's Unicode number within the
+curly brackets:
 
 =begin programlisting
 
     my $escaped_thorn = "\x{00FE}";
 
 =end programlisting
-
-=begin sidebar
-
-These escapes interpolate only within double-quoted strings.
-
-=end sidebar
 
 X<C<charnames> pragma>
 X<pragmas; C<charnames>>
@@ -464,11 +459,11 @@ character.
 
 =end programlisting
 
-If C<$name> contains an English name such as C<Alice> you will never notice any
+If C<$name> contains an English name such as I<Alice> you will never notice any
 problem, because the Latin-1 representation is the same as the UTF-8
 representation.
 
-If, on the other hand, C<$name> contains a name like C<JosE<eacute>>, C<$name>
+If, on the other hand, C<$name> contains a name like I<JosE<eacute>>, C<$name>
 can contain several possible values:
 
 =over 4
@@ -491,7 +486,7 @@ The string literal has several possible scenarios:
 
 =over 4
 
-=item ASCII string literal
+=item * It is an ASCII string literal and contains octets.
 
 =begin programlisting
 
@@ -499,9 +494,8 @@ The string literal has several possible scenarios:
 
 =end programlisting
 
-The string literal contains octets.
-
-=item Latin-1 string literal with no explicit encoding, such as:
+=item * It is a Latin-1 string literal with no explicit encoding and contains
+octets.
 
 =begin programlisting
 
@@ -511,7 +505,8 @@ The string literal contains octets.
 
 The string literal contains octets.
 
-=item Non ASCII string literal with the C<utf8> or C<encoding> pragma:
+=item * It is a non-ASCII string literal with the C<utf8> or C<encoding> pragma
+in effect and contains Unicode characters.
 
 =begin programlisting
 
@@ -519,8 +514,6 @@ The string literal contains octets.
     my $hello = "KuirabE<aacute>, ";
 
 =end programlisting
-
-The string literal contains Unicode characters.
 
 =back
 
@@ -539,8 +532,9 @@ If only one of the values is a Unicode string, Perl will decode the other as
 Latin-1 data. If this is not the correct encoding, the resulting Unicode
 characters will be wrong.  For example, if the user input were UTF-8 data and
 the string literal were a Unicode string, the name will be incorrectly decoded
-into five Unicode characters C<JosE<Atilde>E<copy>> instead of C<JosE<eacute>>
-because the UTF-8 data means something else when decoded as Latin-1 data.
+into five Unicode characters to form I<JosE<Atilde>E<copy>> (I<sic>) instead of
+I<JosE<eacute>> because the UTF-8 data means something else when decoded as
+Latin-1 data.
 
 See C<perldoc perluniintro> for a far more detailed explanation of  Unicode,
 encodings, and how to manage incoming and outgoing data in a Unicode world.

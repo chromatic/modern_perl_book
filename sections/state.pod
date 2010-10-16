@@ -53,9 +53,10 @@ parlor.  Every hundredth person gets free sprinkles:
 =end programlisting
 
 X<state>
+X<builtins; C<state>>
 
 This approach I<works>, but creating a new lexical scope for a single function
-introduces more accidental complexity than is necessary.  The C<state> keyword
+introduces more accidental complexity than is necessary.  The C<state> builtin
 allows you to declare a lexically scoped variable with a value that persists
 between invocations:
 

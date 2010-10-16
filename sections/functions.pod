@@ -3,8 +3,9 @@
 Z<functions>
 
 X<functions; declaration>
+X<builtins; C<sub>>
 
-Use the C<sub> keyword to declare a function:
+Use the C<sub> builtin to declare a function:
 
 =begin programlisting
 
@@ -346,7 +347,7 @@ modification at any point, you may do this even if the namespace does not yet
 exist, or if you have already declared functions in that namespace.
 
 You may only declare one function of the same name per namespace. Otherwise
-Perl 5 wil warn you about subroutine redefinition.  If you're certain you want
+Perl 5 will warn you about subroutine redefinition.  If you're certain you want
 to I<replace> an existing function, disable this warning with C<no warnings
 'redefine'>.
 
@@ -372,8 +373,9 @@ of importing and exporting (L<exporting>).
 Z<importing>
 
 X<functions; importing>
+X<builtins; C<use>>
 
-When loading a module with the C<use> keyword (L<modules>), Perl automatically
+When loading a module with the C<use> builtin (L<modules>), Perl automatically
 calls a method named C<import()> on the provided package name.  Modules with
 procedural interfaces can provide their own C<import()> which makes some or all
 defined symbols available in the calling package's namespace.  Any arguments
@@ -413,7 +415,7 @@ is equivalent to:
 
 =end programlisting
 
-Be aware that the C<use> keyword adds an implicit C<BEGIN> block around these
+Be aware that the C<use> builtin adds an implicit C<BEGIN> block around these
 statements so that the C<import()> call happens I<immediately> after the parser
 has compiled the entire statement.  This ensures that any imported symbols are
 visible when compiling the rest of the program.  Otherwise, any functions
@@ -534,7 +536,7 @@ X<builtins; C<wantarray>>
 
 Perl 5's builtins know whether you've invoked them in void, scalar, or list
 context.  So too can your functions know their calling contexts.  The
-misnamedN<See C<perldoc -f wantarray> to verify.> C<wantarray> keyword returns
+misnamedN<See C<perldoc -f wantarray> to verify.> C<wantarray> builtin returns
 C<undef> to signify void context, a false value to signify scalar context, and
 a true value to signify list context.
 
@@ -754,7 +756,7 @@ X<functions; C<goto>>
 X<builtins; C<goto>>
 
 If you really I<must> eliminate tail calls, use a special form of the C<goto>
-keyword.  Unlike the form which can often lead to spaghetti code, the C<goto>
+builtin.  Unlike the form which can often lead to spaghetti code, the C<goto>
 function form replaces the current function call with a call to another
 function.  You may use a function by name or by reference.  You must always set
 C<@_> yourself manually, if you want to pass different arguments:
@@ -791,11 +793,12 @@ X<functions; Perl 4>
 X<functions; Perl 1>
 X<C<&>; sigil>
 X<sigils; C<&>>
+X<builtins; C<do>>
 
 Perl 5 still supports old-style invocations of functions, carried over from
 older versions of Perl.  While you may now invoke Perl functions by name,
 previous versions of Perl required you to invoke them with a leading ampersand
-(C<&>) character.  Perl 1 required you to use the C<do> keyword:
+(C<&>) character.  Perl 1 required you to use the C<do> builtin:
 
 =begin programlisting
 
@@ -838,5 +841,5 @@ until Perl produces warnings about comparing a non-number (the test
 description, which it cannot convert into a number) with the element in the
 array.
 
-This is admittedly an extreme case, but it is a case where proper
-parenthesization can clarify code and make subtle bugs obvious to the reader.
+This is admittedly an extreme case, but it is a case where proper use of
+parentheses can clarify code and make subtle bugs obvious to the reader.

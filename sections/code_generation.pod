@@ -18,7 +18,7 @@ X<code generation>
 
 I<Metaprogramming> (or I<code generation>)--writing programs which write
 programs--is another abstraction technique.  It can be as clear as exploiting
-higher-order programming capabilities or it can be a rathole down which you
+higher-order programming capabilities or it can be a rat hole down which you
 find yourself confused and frightened.  The techniques are powerful and useful,
 however--and some of them form the basis of powerful tools such as Moose
 (L<moose>).

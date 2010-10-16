@@ -40,7 +40,7 @@ You can assign and access individual elements of a hash:
 =begin programlisting
 
     my %favorite_flavors;
-    $favorite_flavors{Gabi}    = 'Mint chocolate chip';
+    $favorite_flavors{Gabi}    = 'Raspberry chocolate';
     $favorite_flavors{Annette} = 'French vanilla';
 
 =end programlisting
@@ -56,7 +56,7 @@ You may assign a list of keys and values to a hash in a single expression:
 =begin programlisting
 
     my %favorite_flavors = (
-        'Gabi',    'Mint chocolate chip',
+        'Gabi',    'Raspberry chocolate',
         'Annette', 'French vanilla',
     );
 
@@ -68,7 +68,7 @@ X<<< operators; C<< => >> >>>
 If you assign an odd number of elements to the hash, you will receive a warning
 that the results are not what you anticipated.  It's often more obvious to use
 the I<fat comma> operator (C<< => >>) to associate values with keys, as it
-makes the required pairing more visible.  Compare:
+makes the pairing more visible.  Compare:
 
 =begin programlisting
 
@@ -174,7 +174,7 @@ autoquoting behavior is so well established in Perl 5 culture that it's better
 to reserve the quotes for extraordinary circumstances, where they broadcast
 your intention to do something different.
 
-Even Perl 5 keywords get the autoquoting treatment:
+Even Perl 5 builtins get the autoquoting treatment:
 
 =begin programlisting
 

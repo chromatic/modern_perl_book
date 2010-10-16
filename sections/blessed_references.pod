@@ -19,7 +19,7 @@ X<OO; C<bless>>
 X<builtins; C<bless>>
 
 You've already seen the first two rules with Moose.  The third rule is new.
-The C<bless> keyword associates the name of a class with a reference, such that
+The C<bless> builtin associates the name of a class with a reference, such that
 any method invocation performed on that reference uses the associated class for
 resolution.  That sounds more complicated than it is.
 
