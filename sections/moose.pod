@@ -717,7 +717,7 @@ Consider a C<LightSource> class which provides two public attributes
         has 'candle_power', is      => 'ro', isa     => 'Int',
                             default => 1;
         has 'enabled',      is      => 'ro', isa     => 'Bool',
-                            default => 0,    _writer => '_set_enabled';
+                            default => 0,    writer  => '_set_enabled';
 
         sub light
         {
@@ -736,7 +736,7 @@ Consider a C<LightSource> class which provides two public attributes
 
 =begin sidebar
 
-The C<_writer> option to the C<enabled> attribute creates a private accessor
+The C<writer> option to the C<enabled> attribute creates a private accessor
 usable within the class to set the value.
 
 =end sidebar
