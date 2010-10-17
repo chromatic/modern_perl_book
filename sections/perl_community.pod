@@ -11,8 +11,8 @@ projects.  If you're new to Perl, the Perl beginners mailing list is a friendly
 place to ask novice questions and get accurate and helpful answers.  See
 U<http://beginners.perl.org/>.
 
-An important subdomain of note is U<http://dev.perl.org/>, a central site for
-core development of Perl 5, Perl 6N<The main Perl 6 site is
+An important domain of note is U<http://dev.perl.org/>, a central site for core
+development of Perl 5, Perl 6N<The main Perl 6 site is
 U<http://www.perl6.org/>>, and even Perl 1.
 
 X<perl.com>
@@ -126,7 +126,7 @@ X<IRC; #catalyst>
 X<IRC; #perl-help>
 X<IRC; #perl>
 
-When Perl mongers aren't at local meetups or conferences or workshops, many
+When Perl mongers aren't at local meetings or conferences or workshops, many
 collaborate and chat online through IRC, a textual group chat system from the
 early days of the Internet.  Many of the most popular and useful Perl projects
 have their own IRC channels, such as I<#moose> or I<#catalyst>.

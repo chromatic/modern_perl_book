@@ -54,9 +54,9 @@ X<C<@INC>>
 If you know the name of a module, you can check that Perl believes it has
 loaded that module from disk by looking in the C<%INC> hash.  This hash
 corresponds to C<@INC>; when Perl 5 loads code with C<use> or C<require>, it
-stores an entry in C<%INC> where the key is the pathified name of the module to
-load and the value is the full path on disk to that module.  In other words,
-loading C<Modern::Perl> effectively does:
+stores an entry in C<%INC> where the key is the file path of the module to load
+and the value is the full path on disk to that module.  In other words, loading
+C<Modern::Perl> effectively does:
 
 =begin programlisting
 
@@ -149,8 +149,8 @@ a filehandle, and a function.  Perl 5 uses typeglobs internally when it looks
 up these variables.
 
 You can access a symbol table as a hash by appending double-colons to the name
-of the package.  For example, the symbol table for the MonkeyGrinder package is
-available as C<%MonkeyGrinder::>.
+of the package.  For example, the symbol table for the C<MonkeyGrinder> package
+is available as C<%MonkeyGrinder::>.
 
 You I<can> test the existence of specific symbol names within a symbol table
 with the C<exists> operator (or manipulate the symbol table to I<add> or

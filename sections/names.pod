@@ -46,8 +46,8 @@ $waffleiron>.
 Perl's dynamic nature makes it possible to refer to entities with names
 generated at runtime or provided as input to a program.  These are I<symbolic
 lookups>.  You get more flexibility this way at the expense of some safety.  In
-particular, invoking functions or methods indirectly or looking up namespaced
-symbols lets you bypass Perl's parser, which is the only part of Perl that
+particular, invoking functions or methods indirectly or looking up symbols in a
+namespace lets you bypass Perl's parser, which is the only part of Perl that
 enforces these grammatical rules.  Be aware that doing so can produce confusing
 code; a hash (L<hashes>) or nested data structure (L<nested_data_structures>)
 is often clearer.
@@ -77,9 +77,9 @@ character:
 
 =end programlisting
 
-These sigils offer a sort of namespacing for the variables, where it's possible
-(though often confusing) to have variables of the same name but different
-types:
+In one sense, these sigils offer namespaces of the variables, where it's
+possible (though often confusing) to have variables of the same name but
+different types:
 
 =begin programlisting
 

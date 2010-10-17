@@ -140,9 +140,9 @@ operators.  All four exhibit I<short-circuiting> behavior
 (L<short_circuiting>).
 
 The defined-or operator, C<//>, tests the I<definedness> of its operand.
-Unlike C<||> which tests the truthiness of its operand, C<//> evaluates to a
-true value if its operand evaluates to a numeric zero or the empty string.  This
-is especially useful for setting default parameter values:
+Unlike C<||> which tests the truth value of its operand, C<//> evaluates to a
+true value if its operand evaluates to a numeric zero or the empty string.
+This is especially useful for setting default parameter values:
 
 =begin programlisting
 

@@ -258,8 +258,8 @@ may exist with a value even if that value evaluates to a boolean false
 
 =end programlisting
 
-Second, with nested data structures, C<exists> avoids autovivifying
-(L<autovivification>) the value.
+Second, with nested data structures, C<exists> avoids autovivification
+(L<autovivification>).
 
 X<builtins; C<defined>>
 
@@ -484,7 +484,7 @@ set.
 X<hashes; counting items>
 
 Hashes are also useful for counting elements, such as a list of IP addresses in
-a logfile:
+a log file:
 
 =begin programlisting
 
@@ -503,7 +503,7 @@ The initial value of a hash value is C<undef>.  The postincrement operator
 (C<++>) treats that as zero.  This in-place modification of the value
 increments an existing value for that key.  If no value exists for that key, it
 creates a value (C<undef>) and immediately increments it to one, as the
-numification of undef produces the value 0.
+numification of C<undef> produces the value 0.
 
 X<hashes; caching>
 X<orcish maneuver>

@@ -169,7 +169,7 @@ particular data set presents no such problem, but code defensively.
 =end sidebar
 
 C<sort> takes the list of anonymous arrays and compares their second elements
-(the names) with a stringwise comparison:
+(the names) as strings:
 
 =begin programlisting
 
@@ -323,7 +323,7 @@ program (with C<perl path/to/Module.pm> instead of C<use Module;>).
 
 Checking the eighth element of the list returned from C<caller> in list context
 may be more accurate in most cases, but it's rare.  This value is true if the
-call frame represents C<use> or C<require> and undef otherwise.
+call frame represents C<use> or C<require> and C<undef> otherwise.
 
 =end sidebar
 
@@ -452,7 +452,7 @@ context, a successful regex match returns a list of all captures, and Perl
 assigns the first one to C<$first_name>.
 
 Now imagine if you want to modify the name, perhaps removing all non-word
-characters to create a useful username for a system account.  You can write:
+characters to create a useful user name for a system account.  You can write:
 
 =begin programlisting
 

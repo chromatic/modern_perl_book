@@ -10,7 +10,7 @@ act like built-in types (scalars, arrays, and hashes), but with more specific
 behaviors.  This mechanism uses the C<tie> builtin; it is I<tying>.
 
 The original use of C<tie> was to produce a hash stored on disk, rather than in
-memory.  This allowed the use of dbm files from Perl, as well as the ability to
+memory.  This allowed the use of DBM files from Perl, as well as the ability to
 access files larger than could fit in memory.  The core module C<Tie::File>
 provides a similar system by which to handle data files too large to fit in
 memory.

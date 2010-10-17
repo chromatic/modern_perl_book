@@ -88,8 +88,8 @@ Perl 5's documentation system is I<POD>, or I<Plain Old Documentation>.
 C<perldoc perlpod> describes how POD works.  The C<perldoc> utility will
 display the POD in any Perl module you create and install for your project, and
 other POD tools such as C<podchecker>, which validates the form of your POD,
-and C<Pod::Webserver>, which displays local POD as HTML through a minimal
-webserver, will handle valid POD correctly.
+and C<Pod::Webserver>, which displays local POD as HTML through a minimal web
+server, will handle valid POD correctly.
 
 X<perldoc; C<-l> (list path to POD)>
 X<perldoc; C<-m> (show raw POD)>
