@@ -35,7 +35,7 @@ for the desire to write too-clever code.
 =end sidebar
 
 The original intent of prototypes was to allow users to define their own
-functions which behaved like (certain) built-in operators.  Consider the
+functions which behaved like (certain) builtin operators.  Consider the
 behavior of the C<push> operator, which takes an array and a list.  While Perl
 5 would normally flatten the array and list into a single list at the call
 site, the Perl 5 parser knows that a call to C<push> must effectively pass the

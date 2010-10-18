@@ -118,7 +118,6 @@ through the data structure to that piece if it does not exist:
 =begin programlisting
 
     my @aoaoaoa;
-
     $aoaoaoa[0][0][0][0] = 'nested deeply';
 
 =end programlisting
@@ -132,7 +131,6 @@ structure will create intermediary hashes, keyed appropriately:
 =begin programlisting
 
     my %hohoh;
-
     $hohoh{Robot}{Santa}{Claus} = 'mostly harmful';
 
 =end programlisting
@@ -158,8 +156,10 @@ elements in arrays before dereferencing each level of a complex data structure,
 but that can produce tedious, lengthy code which many programmers prefer to
 avoid.
 
+=end sidebar
+
 You may wonder at the contradiction between taking advantage of
-autovivification while enabling C<strictures>.  The question is one of balance.
+autovivification while enabling C<strict>ures.  The question is one of balance.
 is it more convenient to catch errors which change the behavior of your program
 at the expense of disabling those error checks for a few well-encapsulated
 symbolic references?  Is it more convenient to allow data structures to grow
@@ -171,8 +171,6 @@ testing and deploying, you may want to increase strictness to prevent unwanted
 side effects.  Thanks to the lexical scoping of the C<strict> and
 C<autovivification> pragmas, you can enable and disable these behaviors as
 necessary.
-
-=end sidebar
 
 =head2 Debugging Nested Data Structures
 

@@ -167,21 +167,18 @@ To define object attributes, describe them as part of the class:
 
 =end programlisting
 
-=begin sidebar
-
-That C<has> line may look very different from other Perl 5 code.  C<has()> is a
-function which declares an attribute.  The first argument is the name of the
-attribute, in this case C<'name'>.  The C<< is => 'ro' >> pair of arguments
-declares that this attribute is C<r>ead C<o>nly, so you cannot modify it after
-you've set it.  Finally, the C<< isa => 'Str' >> pair declares that the value
-of this attribute can only be a C<str>ing.  This will all become clear soon.
-
-=end sidebar
-
 In English, that line of code means "C<Cat> objects have a C<name> attribute.
-It's readable but not writable, and it's a string."  That single line of code
-creates an accessor method (C<name()>) and allows you to pass a C<name>
-parameter to the constructor:
+It's readable but not writable, and it's a string."  
+
+In Perl and Moose terms, C<has()> is a function which declares an attribute.
+The first argument is the name of the attribute, in this case C<'name'>.  The
+C<< is => 'ro' >> pair of arguments declares that this attribute is C<r>ead
+C<o>nly, so you cannot modify it after you've set it.  Finally, the C<< isa =>
+'Str' >> pair declares that the value of this attribute can only be a
+C<str>ing.  This will all become clear soon.
+
+That single line of code creates an accessor method (C<name()>) and allows you
+to pass a C<name> parameter to the constructor:
 
 =begin programlisting
 
@@ -291,29 +288,18 @@ of an attribute:
 
 =end programlisting
 
-Trying to use a C<ro> accessor as a mutator will throw an exception:
+Trying to use a C<ro> accessor as a mutator will throw the exception C<Cannot
+assign a value to a read-only accessor at ...>.
 
-=begin screen
-
-Cannot assign a value to a read-only accessor at ....
-
-=end screen
-
-=begin sidebar
-
-When should you use C<ro> and when C<rw>?  It's a matter of design,
-convenience, and purity.  One school of thought (L<immutability>) suggests
-making all instance data C<ro> and passing all relevant data into the
-constructor.  In the C<Cat> example, C<age()> might still be an accessor, but
-the constructor could take the I<year> of the cat's birth and calculate the age
-itself based on the current year, rather than relying on someone to update the
-age of all cats manually.
-
-This approach helps to consolidate all validation code and helps to ensure that
-all created objects have valid data.  These are design goals worth considering,
-though Moose does not enforce any particular philosophy in this area.
-
-=end sidebar
+Using C<ro> or C<rw> is a matter of design, convenience, and purity.  Moose
+does not enforce any particular philosophy in this area.  One school of thought
+(L<immutability>) suggests making all instance data C<ro> and passing all
+relevant data into the constructor.  In the C<Cat> example, C<age()> might
+still be an accessor, but the constructor could take the I<year> of the cat's
+birth and calculate the age itself based on the current year, rather than
+relying on someone to update the age of all cats manually.  This approach helps
+to consolidate all validation code and helps to ensure that all created objects
+have valid data.
 
 Now that individual objects can have their own instance data, the value of
 object orientation may be more obvious.  An object is a group of related data
@@ -361,14 +347,13 @@ While the syntax for I<creating> C<Cat> objects has changed, the syntax for
 I<using> C<Cat> objects has not.  The C<age()> method does the same thing it
 has always done, at least as far as all code outside of the C<Cat> class
 understands.  I<How> it does that has changed, but that is a detail internal to
-the C<Cat> class--encapsulated within that class itself.
+the C<Cat> class and encapsulated within that class itself.
 
 =begin sidebar
 
-The old syntax for I<creating> C<Cat> objects could remain in place; customize
-the generated C<Cat> constructor to allow passing an C<age> parameter and
-calculate C<birth_year> appropriately from that.  See C<perldoc
-Moose::Manual::Attributes>.
+Retain the old syntax for I<creating> C<Cat> objects by customizing the
+generated C<Cat> constructor to allow passing an C<age> parameter.  Calculate
+C<birth_year> from that.  See C<perldoc Moose::Manual::Attributes>.
 
 =end sidebar
 
@@ -402,15 +387,10 @@ object gets that default value instead.  Now you can create a kitten:
 
 =end programlisting
 
-... and that kitten will have an age of C<0> until next year.
-
-=begin sidebar
-
-You can also use a simple value, such as a number or string, as a default
-value.  Use a function reference when you need to calculate something unique
-for each object, including a hash or array reference.
-
-=end sidebar
+... and that kitten will have an age of C<0> until next year.  You can also use
+a simple value, such as a number or string, as a default value.  Use a function
+reference when you need to calculate something unique for each object,
+including a hash or array reference.
 
 =head3 Polymorphism
 
@@ -493,8 +473,8 @@ Of course, the mere existence of a method called C<name()> or C<age()> does not
 by itself imply the behavior of that object.  A C<Dog> object may have an
 C<age()> which is an accessor such that you can discover C<$rodney> is 8 but
 C<$lucky> is 3.  A C<Cheese> object may have an C<age()> method that lets you
-control how long to stow C<$cheddar> so that it becomes sharp; in other words,
-C<age()> may be an accessor in one class but not in another:
+control how long to stow C<$cheddar> to sharpen it.  In other words, C<age()>
+may be an accessor in one class but not in another:
 
 =begin programlisting
 
@@ -506,7 +486,8 @@ C<age()> may be an accessor in one class but not in another:
 
 =end programlisting
 
-Sometimes it's useful to know I<what> an object does.  In other words, you need to understand its type.
+Sometimes it's useful to know I<what> an object does.  You need to understand
+its type.
 
 =head2 Roles
 
@@ -584,8 +565,8 @@ methods.
 
 =end sidebar
 
-Now all C<Cat> instances will return true when queried if they provide the
-C<LivingBeing> role and C<Cheese> objects should not:
+Now all C<Cat> instances will return a true value when queried if they provide
+the C<LivingBeing> role and C<Cheese> objects should not:
 
 =begin programlisting
 
@@ -603,7 +584,7 @@ role:
 =begin programlisting
 
     {
-        package CalculateAgeFromBirthYear;
+        package CalculateAge::From::BirthYear;
 
         use Moose::Role;
 
@@ -633,7 +614,7 @@ available to other classes.  Now C<Cat> can compose both roles:
     has 'name', is => 'ro', isa => 'Str';
     has 'diet', is => 'rw';
 
-    B<with 'LivingBeing', 'CalculateAgeFromBirthYear';>
+    B<with 'LivingBeing', 'CalculateAge::From::BirthYear';>
 
 =end programlisting
 
@@ -641,7 +622,7 @@ X<allomorphism>
 X<roles; allomorphism>
 
 The implementation of the C<age()> method supplied by the
-C<CalculateAgeFromBirthYear> satisfies the requirement of the C<LivingBeing>
+C<CalculateAge::From::BirthYear> satisfies the requirement of the C<LivingBeing>
 role, and the composition succeeds.  Checking that objects do the
 C<LivingBeing> role remains unchanged, regardless of I<how> objects do this
 role.  A class could choose to provide its own C<age()> method or obtain it
@@ -654,13 +635,13 @@ flexibility in your design by naming specific collections of behaviors so that
 you can test the capabilities of objects and classes and not their
 implementations.
 
-=begin sidebar
+X<OO; mixins>
+X<OO; multiple inheritance>
+X<OO; monkeypatching>
 
-For details about roles versus other design techniques such as mixins, multiple
-inheritance, and monkeypatching, see
+For a length comparison of roles and other design techniques such as mixins,
+multiple inheritance, and monkeypatching, see
 U<http://www.modernperlbooks.com/mt/2009/04/the-why-of-perl-roles.html>.
-
-=end sidebar
 
 =head3 Roles and DOES()
 
@@ -878,7 +859,7 @@ X<C<isa()>>
 X<Moose; C<isa()>>
 
 Inheriting from a parent class means that the child class and all of its
-instances will return true when you call the C<isa()> method on them:
+instances will return a true value when you call the C<isa()> method on them:
 
 =begin programlisting
 
@@ -951,7 +932,7 @@ This is valid Perl 5 code:
 
     B<role> LivingBeing { requires qw( name age diet ) }
 
-    B<role> CalculateAgeFromBirthYear
+    B<role> CalculateAge::From::BirthYear
     {
         has 'birth_year', is => 'ro', isa => 'Int',
                           default => sub { (localtime)[5] + 1900 };
@@ -962,7 +943,7 @@ This is valid Perl 5 code:
         }
     }
 
-    B<class Cat with LivingBeing with CalculateAgeFromBirthYear>
+    B<class Cat with LivingBeing with CalculateAge::From::BirthYear>
     {
         has 'name', is => 'ro', isa => 'Str';
         has 'diet', is => 'rw';
@@ -990,7 +971,7 @@ module is not a core module and it works with earlier versions of Perl 5.
 One drawback of this approach is that you must be able to install CPAN modules
 (or a custom Perl 5 distribution such as Strawberry Perl or Strawberry Perl
 Professional which may include them for you), but in comparison to Perl 5's
-built-in object orientation, the advantage in cleanliness and simplicity of
-Moose should be obvious.
+core object orientation, the advantage in cleanliness and simplicity of Moose
+should be obvious.
 
 See C<perldoc Moose::Manual> for more information on using Moose.

@@ -18,23 +18,17 @@ combine to form the simple--though effective--basic object system:
 X<OO; C<bless>>
 X<builtins; C<bless>>
 
-You've already seen the first two rules with Moose.  The third rule is new.
+You've already seen the first two rules (L<moose>).  The third rule is new.
 The C<bless> builtin associates the name of a class with a reference, such that
 any method invocation performed on that reference uses the associated class for
 resolution.  That sounds more complicated than it is.
 
-=begin sidebar
-
-Though these rules explain Perl 5's underlying object system, they are somewhat
-more minimal in practice than may be practical, especially for larger projects.
-In particular, they offer few facilities for metaprogramming
-(L<code_generation>).
-
-Moose (L<moose>) is a better choice for serious, modern Perl programs larger
-than a couple of hundred lines, but you will likely encounter bare-bones Perl 5
-OO in existing code.
-
-=end sidebar
+The result is a minimal but working system, though its minimalism can be
+impractical for larger projects.  In particular, the default object system
+offers only partial and akward facilities for metaprogramming
+(L<code_generation>).  Moose is a better choice for serious, modern Perl
+programs larger than a couple of hundred lines, but you will likely encounter
+bare-bones Perl 5 OO in existing code.
 
 X<OO; constructors>
 X<OO; class methods>
@@ -233,7 +227,7 @@ C<Player>'s parents before dispatching in C<Hospital::Patient>.
 X<C<mro> pragma>
 X<pragmas; C<mro>>
 
-Perl 5.10 added a pragma called C<mro> which allows you to use a different
+Perl 5.10 also added a pragma called C<mro> which allows you to use a different
 method resolution scheme called C3.  While the specific details can get complex
 in the case of complex multiple inheritance hierarchies, the important
 difference is that method resolution will visit all children of a parent before
@@ -299,6 +293,8 @@ arguments to it you like, but it's safest to reuse C<@_>.
 
 =begin sidebar
 
+X<C<SUPER>>
+
 Beware that this dispatcher relies on the package into which the overridden
 method was originally compiled when redispatching to a parent method.  This is
 a long-standing misfeature retained for the sake of backwards compatibility.
@@ -330,6 +326,8 @@ Do not mix functions and methods in the same class.
 
 Use a single F<.pm> file for each class, unless the class is a small,
 self-contained helper used from a single place.
+
+X<C<Any::Moose>>
 
 Consider using Moose and C<Any::Moose> instead of bare-bones Perl 5 OO; they
 can interact with vanilla classes and objects with ease, alleviate almost of

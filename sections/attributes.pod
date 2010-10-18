@@ -34,6 +34,8 @@ C<hidden> and C<ScienceProject>, if they exist for the appropriate type
 exist, Perl will throw a compile-time exception.  These handlers could do
 I<anything>.
 
+X<C<Test::Class>>
+
 Attributes may include a list of parameters; Perl treats them as a list of
 constant strings, even if they may resemble other values, such as numbers or
 variables.  The C<Test::Class> module from the CPAN uses such parametric
@@ -64,6 +66,8 @@ implementation.
 
 =begin sidebar
 
+X<Catalyst>
+
 The Catalyst web framework also uses attributes to determine the visibility and behavior of methods within web applications.
 
 =end sidebar
@@ -83,7 +87,7 @@ pragma) has listed its interface as experimental for many years.  Damian
 Conway's core module C<Attribute::Handlers> simplifies their implementation.
 Prefer it to C<attributes> whenever possible.
 
-=item * Any module which declares attribute handlers must I<inherit> from
+=item * Modules which declare attribute handlers must I<inherit> from
 C<Attribute::Handlers> to make the handlers visible to all packages which use
 themN<You I<could> also store them in C<UNIVERSAL>, but that is global
 pollution and worse design.>.  This is due to the implementation of attributes
@@ -93,11 +97,13 @@ in Perl 5 itself.
 inopportune for projects which themselves manipulate the order of parsing and
 compilation, such as mod_perl.
 
-=item * Any arguments provided to attributes are a list of constant strings.
+=item * Arguments provided to attributes are only strings.
 C<Attribute::Handlers> performs some data conversion, but you may have to
 disable it occasionally.
 
 =back
+
+X<C<Memoize>>
 
 The worst feature of attributes is their propensity to produce weird syntactic
 action at a distance.  Given a snippet of code with attributes, can you predict
@@ -107,7 +113,7 @@ variable somewhere, your expectations of the destruction of its contents may be
 wrong, unless you read the documentation very carefully.  Likewise, a handler
 may wrap a function in another function and replace it in the symbol table
 without your knowledge--consider a C<:memoize> attribute which automatically
-invokes the C<Memoize> module.
+invokes the core C<Memoize> module.
 
 Complex features can produce compact and idiomatic code.  Perl allows
 developers to experiment with multiple designs to find the best representation

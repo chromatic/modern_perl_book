@@ -183,7 +183,6 @@ X<C<{}>; postcircumfix operator>
 X<C<[]>; postcircumfix operator>
 
 =item I<Postcircumfix> operators follow certain operands and surround others,
-as in the case of hash or array element access (C<$hash{ ...  }> and C<$array[
-... ]>).
+as with hash or array element access (C<$hash{ ...  }> and C<$array[ ... ]>).
 
 =back

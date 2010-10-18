@@ -1,4 +1,4 @@
-=head1 Functions
+=head1 Declaring Functions
 
 Z<functions>
 
@@ -54,7 +54,7 @@ To invoke a function, mention its name and pass an optional list of arguments:
 
 You can I<often> omit parameter-grouping parentheses if your program runs
 correctly with the C<strict> pragma enabled, but they provide clarity to the
-parser and, more importantly, the reader.
+parser and, more importantly, human readers.
 
 =end sidebar
 
@@ -116,10 +116,10 @@ elements by index:
 
 =end programlisting
 
-You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and use list
-slices on C<@_>. Inside a function, the C<shift> and C<pop> operators operate
-on C<@_> implicitly in the same way that they operate on C<@ARGV> outside of
-any function:
+You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>.
+Inside a function, the C<shift> and C<pop> operators operate on C<@_>
+implicitly in the same way that they operate on C<@ARGV> outside of any
+function:
 
 =begin programlisting
 
@@ -188,10 +188,10 @@ rest to another function:
 
     sub delegated_method
     {
-        my $self = shift;
+        my $self = B<shift>;
         say 'Calling delegated_method()'
 
-        $self->delegate->delegated_method( @_ );
+        $self->delegate->delegated_method( B<@_> );
     }
 
 =end programlisting
@@ -241,7 +241,7 @@ essentially as the more explicit assignment to C<%pet_names_and_types> does.
 
 This is often useful, but you must be clear about your intentions if you pass
 some arguments as scalars and others as flattened lists.  If you wish to make a
-C<show_pets_of_type()> function, where one parameter is the I<type> of pet to
+C<show_pets_of_type()> function, where one parameter is the type of pet to
 display, you must pass that type as the I<first> parameter (or use C<pop> to
 remove it from the end of C<@_>):
 
@@ -325,7 +325,7 @@ behavior is easiest to demonstrate with an example:
 If you modify an element of C<@_> directly, you will modify the original
 parameter directly.  Be cautious.
 
-=head1 Namespaces
+=head1 Functions and Namespaces
 
 Every function lives in a namespace.  Functions in an undeclared
 namespace--that is, functions not declared after an explicit C<package ...>
@@ -565,6 +565,9 @@ clearly indicate their expected uses and return values.
 
 =begin sidebar
 
+X<C<Want>>
+X<C<Contextual::Return>>
+
 With that said, Robin Houston's C<Want> and Damian Conway's
 C<Contextual::Return> distributions from the CPAN offer many possibilities for
 writing powerful and usable interfaces.
@@ -579,27 +582,24 @@ X<call frame>
 X<functions; call frame>
 
 Every call to a function in Perl creates a new I<call frame>.  This is an
-internal data structure which represents the call itself: in effect, incoming
-parameters, the point to which to return, and all of the control of the program
-leading up to the point of the call.  It also captures the lexical environment
-of the specific and current invocation of the function.  This means that a
-function can I<recur>; it can call itself.
+internal data structure which represents the data for the call itself: incoming
+parameters, the point to which to return, and all of the other call frames up
+to the current point.  It also captures the lexical environment of the specific
+and current invocation of the function.  This means that a function can
+I<recur>; it can call itself.
 
 Recursion is a deceptively simple concept, but it can seem daunting if you
-haven't encountered it before.  Consider a case where you want to find an
-element in a sorted array.  You I<could> iterate through every element of the
-array individually, looking for the target, but on average, you'll have to look
-at half of the elements of the array every time.
+haven't encountered it before.  Suppose you want to find an element in a sorted
+array.  You I<could> iterate through every element of the array individually,
+looking for the target, but on average, you'll have to examine half of the
+elements of the array.
 
-Another approach is to divide the array in half.  Pick the element at the
-midpoint, compare, then see if you have to divide the lower half or the upper
-half and continue.  You can write this algorithm with a loop yourself, or you
-could let Perl manage all of the state and tracking necessary with a recursive
-algorithm.  That might look something like:
+Another approach is to halve the array, pick the element at the midpoint,
+compare, then repeated with either the lower or upper half.  You can write this
+in a loop yourself or you could let Perl manage all of the state and tracking
+necessary with a recursive function something like:
 
 =begin programlisting
-
-    use Modern::Perl;
 
     use Test::More tests => 8;
 
@@ -643,8 +643,8 @@ algorithm.  That might look something like:
 =end programlisting
 
 This isn't necessarily the best algorithm for searching a sorted list, but it
-demonstrates recursion.  Again, you I<can> write this code in a procedural way;
-but some algorithms are much clearer recursively.
+demonstrates recursion.  Again, you I<can> write this code in a procedural way,
+but some algorithms are much clearer when written recursively.
 
 =head2 Lexicals
 
@@ -722,6 +722,8 @@ results.  The lines:
 are candidates for tail call elimination.  This elimination avoids returning to
 the current call and then returning to the parent call.  Instead, it returns to
 the parent call directly.
+
+X<C<Sub::Call::Tail>>
 
 Perl 5 supports manual tail call elimination, but Yuval Kogman's
 C<Sub::Call::Tail> is worth exploring if you find yourself with highly
@@ -813,11 +815,11 @@ previous versions of Perl required you to invoke them with a leading ampersand
 
 =end programlisting
 
-While they're visually noisy, with vestigial syntax, the leading ampersand form
-has other behaviors which can occasionally surprise you.  First, it disables
-prototype checking (as if that often mattered).  Second, if you do not pass
-arguments explicitly, it I<implicitly> passes the contents of C<@_> unmodified.
-Both can lead to surprising behavior.
+While the vestigial syntax is visual clutter, the leading ampersand form has
+other surprising behaviors.  First, it disables prototype checking (as if that
+often mattered).  Second, if you do not pass arguments explicitly, it
+I<implicitly> passes the contents of C<@_> unmodified.  Both can lead to
+surprising behavior.
 
 A final pitfall comes from leaving the parentheses off of function calls.  The
 Perl 5 parser uses several heuristics to resolve ambiguity of barewords and the

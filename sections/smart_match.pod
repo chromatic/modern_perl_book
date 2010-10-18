@@ -17,9 +17,12 @@ performs an implicit smart match.
 
 See the "Smart matching in detail" section of C<perldoc perlsyn> for far more
 detail.  Some of the semantics of smart match have changed between Perl 5.10.0
-and Perl 5.10.1, so when possible, use smart matching only in 5.10.1 and newer.
+and Perl 5.10.1, so when possible, use smart matching only after 5.10.1.
 
 =end sidebar
+
+X<operators; C<~~>>
+X<C<~~>; smart match operator>
 
 The smart match operator is an infix operator:
 

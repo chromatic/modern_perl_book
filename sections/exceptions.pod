@@ -151,6 +151,7 @@ rare.  C<$@> I<can> contain any arbitrary reference, but in practice it seems
 to be 95% strings and 5% objects.
 
 X<exceptions; custom classes with C<Exception::Class>>
+X<C<Exception::Class>>
 
 As an alternative to writing your own exception system, see the CPAN
 distribution C<Exception::Class>.

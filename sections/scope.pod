@@ -19,10 +19,8 @@ X<scope; lexical>
 
 The most common form of scoping in modern Perl is lexical scoping.  The Perl
 compiler resolves this scope during compilation.  This scope is visible as you
-I<read> a program.
-
-To create a new lexical scope, create a block delimited by curly braces.  This
-block can be a bare block, the block of a loop construct, the block of a C<sub>
+I<read> a program.  A block delimited by curly braces creates a new scope,
+whether a bare block, the block of a loop construct, the block of a C<sub>
 declaration, an C<eval> block, or any other non-quoting block:
 
 =begin programlisting
@@ -109,10 +107,11 @@ outer scope hides, or I<shadows>, the outer lexical:
 
 =end programlisting
 
-This program prints C<Edward> and then C<Jacob>.  Even though redeclaring a
-lexical variable with the same name and type in a single lexical scope produces
-a warning message, shadowing a lexical in a nested scope does not; this is a
-feature of lexical shadowing.
+This program prints C<Edward> and then C<Jacob>N<Family members and not
+vampires, if you must know.>.  Even though redeclaring a lexical variable with
+the same name and type in a single lexical scope produces a warning message,
+shadowing a lexical in a nested scope does not; this is a feature of lexical
+shadowing.
 
 =begin sidebar
 

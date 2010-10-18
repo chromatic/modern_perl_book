@@ -156,7 +156,7 @@ This is especially useful for setting default parameter values:
 
 X<C<?:>; ternary conditional operator>
 
-The ternary conditional operator, C<?:>, takes three operands.  It evaluates
+The ternary conditional operator (C<?:>) takes three operands.  It evaluates
 the first in boolean context and evaluates to the second if the first is true
 and the third otherwise:
 
@@ -228,13 +228,13 @@ such that C<a> increments to C<b>, C<zz> to C<aaa>, and C<a9> to C<b0>.
     $num++;
     $str++;
     is( $num,   2, 'numeric autoincrement should stay numeric' );
-    is( $str, 'b', 'string autoincrement should stay string' );
+    is( $str, 'b', 'string autoincrement should stay string'   );
 
     no warnings 'numeric';
     $num += $str;
     $str++;
 
-    is( $num, 2, 'adding $str to $num should add numeric value of $str' );
+    is( $num, 2, 'adding $str to $num should add numeric value of $str'   );
     is( $str, 1, '... but $str should now autoincrement its numeric part' );
 
 =end programlisting

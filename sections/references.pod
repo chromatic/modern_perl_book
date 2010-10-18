@@ -40,9 +40,9 @@ X<references>
 Perl 5 provides a mechanism by which you can refer to a value without making a
 copy of that value.  Any changes made to that I<reference> will update the
 value in place, such that I<all> references to that value will see the new
-value.  A reference is a first-class, built-in scalar data type in Perl 5.
-It's not a string, an array, or a hash.  It's a scalar which refers to another
-first-class data type.
+value.  A reference is a first-class scalar data type in Perl 5.  It's not a
+string, an array, or a hash.  It's a scalar which refers to another first-class
+data type.
 
 =head3 Scalar References
 
@@ -193,8 +193,8 @@ an array named C<@cards_ref> from which you wish to access a single element.
 =begin sidebar
 
 An alternate syntax is available, where you prepend another scalar sigil to the
-array reference.  It's shorter, but somewhat less readable, to write
-C<< my $first_card = B<$$cards_ref[0]>; >>.
+array reference.  It's shorter, if less readable, to write C<< my $first_card =
+B<$$cards_ref[0]>; >>.
 
 =end sidebar
 
@@ -250,8 +250,8 @@ scoping.  That is to say:
 =end programlisting
 
 ... neither C<$sunday_ref> nor C<$monday_ref> contains a dessert.  Within the
-square braces used to create the anonymous array, the C<@meals> array flattens
-in list context.
+square braces used to create the anonymous array, list context flattens the
+C<@meals> array.
 
 =head3 Hash References
 
@@ -327,7 +327,7 @@ You may create anonymous hashes in place with curly braces:
     my $food_ref = B<{>
         'birthday cake' => 'la torta de cumpleaE<ntilde>os',
         candy           => 'dulces',
-        cupcake         => 'pancuecitos',
+        cupcake         => 'bizcochito',
         'ice cream'     => 'helado',
     B<}>;
 

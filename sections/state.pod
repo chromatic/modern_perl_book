@@ -100,14 +100,13 @@ counter example:
 
 ... though there are few obvious benefits to this approach.
 
-=begin sidebar
+=head1 State versus Psuedo-State
 
 Perl 5.10 deprecated a technique from previous versions of Perl by which you
 could effectively emulate C<state>.  Using a postfix conditional which evaluates
 to false with a C<my> declaration avoids I<reinitializing> a lexical variable
 to C<undef> or its initialized value.  In effect, a named function can close
 over its previous lexical scope by abusing a quirk of implementation.
-
 
 Any use of a postfix conditional expression modifying a lexical variable
 declaration now produces a deprecation warning.  It's too easy to write
@@ -126,5 +125,3 @@ you encounter it:
     }
 
 =end programlisting
-
-=end sidebar

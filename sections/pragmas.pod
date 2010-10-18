@@ -133,6 +133,9 @@ as C<$VERSION> or those for exporting (L<exporting>) and manual OO
 
 =back
 
+X<C<autobox>>
+X<C<perl5i>>
+
 Several useful pragmas exist on the CPAN as well.  Two worth exploring in
 detail are C<autobox>, which enables object-like behavior for Perl 5's core
 types (scalars, references, arrays, and hashes) and C<perl5i>, which combines
@@ -141,10 +144,6 @@ two pragmas may not belong yet in your production code without extensive
 testing and thoughtful consideration, but they demonstrate the power and
 utility of pragmas.
 
-=begin sidebar
-
 Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
 code.  C<perldoc perlpragma> explains how to do so, while the explanation of
 C<$^H> in C<perldoc perlvar> explains how the feature works.
-
-=end sidebar

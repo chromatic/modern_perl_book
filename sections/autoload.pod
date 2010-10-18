@@ -227,13 +227,11 @@ X<pragmas; C<subs>>
 X<functions; predeclaration>
 
 C<AUTOLOAD()> can be a useful tool in certain circumstances, but it can be
-difficult to use properly.  Consider other techniques, such as C<Moose> and
-other abstractions, instead.
-
-The naE<iuml>ve approach to generating methods at runtime means that the
-C<can()> method will not report the right information about the capabilities of
-objects and classes.  You can solve this in several ways; one of the easiest is
-to predeclare all functions you plan to AUTOLOAD with the C<subs> pragma:
+difficult to use properly.  The naE<iuml>ve approach to generating methods at
+runtime means that the C<can()> method will not report the right information
+about the capabilities of objects and classes.  You can solve this in several
+ways; one of the easiest is to predeclare all functions you plan to
+C<AUTOLOAD()> with the C<subs> pragma:
 
 =begin programlisting
 
@@ -294,7 +292,7 @@ altogether:
 
 =begin sidebar
 
-Special methods such as C<import()>, C<unimport()>, and C<VERSION()> never go
+The special methods C<import()>, C<unimport()>, and C<VERSION()> never go
 through C<AUTOLOAD()>.
 
 =end sidebar

@@ -86,13 +86,17 @@ work best when you organize your code as if you were to distribute it on the
 CPAN.  Adopt the standard approaches to writing, documenting, packaging,
 testing, and distributing your code, to take advantage of these tools.
 
+X<C<Perl::Critic>>
+X<C<Perl::Tidy>>
+X<C<CPAN::Mini>>
+
 Similarly, CPAN distributions such as C<Perl::Critic> and C<Perl::Tidy> and
 C<CPAN::Mini> can make your work simpler and easier.
 
 =item * I<Read code.>  Join in a mailing list such as the Perl Beginners list
-(U<http://learn.perl.org/faq/beginners.html>), sign up for PerlMonks
+(U<http://learn.perl.org/faq/beginners.html>), browse PerlMonks
 (U<http://perlmonks.org/>), and otherwise immerse yourself in the Perl
-Community (U<http://www.perl.org/community.html> has copious links).  You'll
+CommunityN<See U<http://www.perl.org/community.html> for more links.>.  You'll
 have plenty of opportunities to see how other people solve their problems, good
 and bad.  Learn from the good (it's often obvious) and the bad (to see what to
 avoid).

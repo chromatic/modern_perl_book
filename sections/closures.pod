@@ -12,6 +12,8 @@ You know everything you need to know to understand closures.
 
 =begin sidebar
 
+X<I<Higher Order Perl>>
+
 Mark Jason Dominus's I<Higher Order Perl> is the canonical reference on
 first-class functions, closures, and the amazing things you can do with them.
 You can read it online at U<http://hop.perl.plover.com/>.
@@ -120,6 +122,8 @@ will go unshared when the outer function destroys its first lexical
 environmentN<If that's confusing to you, imagine the implementation.>.
 
 =begin sidebar
+
+X<C<PadWalker>>
 
 The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone
 who uses it and breaks your code earns the right to fix any concomitant bugs
@@ -276,6 +280,8 @@ to emulate with closures:
     };
 
 =end programlisting
+
+X<C<Sub::Install>>
 
 Now instead of calling C<make_sundae()>, you can invoke
 C<< $make_cart_sundae->() >> and pass only the interesting arguments, without

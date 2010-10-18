@@ -500,12 +500,8 @@ to extract an address or an American telephone number from a string:
 
 =end programlisting
 
-=begin sidebar
-
-Parentheses in regular expressions are metacharacters; C<$area_code> escapes
-them.
-
-=end sidebar
+Note the escaping of the parentheses within C<$area_code>; this will become
+obvious in a moment.
 
 =head2 Named Captures
 
@@ -537,7 +533,7 @@ simple when you can recognize it as a single chunk:
 =end programlisting
 
 The parentheses enclose the entire capture.  The C<< ?< name > >> construct
-must follow the left parenthesis.  It provides a name for the capture buffer.
+provides a name for the capture buffer and must follow the left parenthesis.
 The rest of the construct within the parentheses is a regular expression.  If
 and when the regex matches this fragment, Perl stores the captured portion of
 the string in the magic variable C<%+>: a hash where the key is the name of the
@@ -675,10 +671,10 @@ match.  Be careful about what you interpret as a regex fragment, however:
 =end programlisting
 
 It's possible to interpret the pattern C<rice|beans> as meaning C<ric>,
-followed by either C<e> or C<b>, followed by C<eans>--but that's incorrect.
-Alternations always include the I<entire> fragment to the nearest regex
-delimiter, whether the start or end of the pattern, an enclosing parenthesis,
-another alternation character, or a square bracket.
+followed by either C<e> or C<b>, followed by C<eans>--but alternations always
+include the I<entire> fragment to the nearest regex delimiter, whether the
+start or end of the pattern, an enclosing parenthesis, another alternation
+character, or a square bracket.
 
 X<regex; C<()>>
 X<C<()>; capturing regex metacharacters>
@@ -898,7 +894,8 @@ You may also embed regex modifiers within a pattern:
 The C<(?i)> syntax enables case-insensitive matching only for its enclosing
 group: in this case, the entire C<feline> capture group.  You may use multiple
 modifiers with this form (provided they make sense for a portion of a pattern).
-You may also disable specific modifiers by preceding them with C<->:
+You may also disable specific modifiers by preceding them with the minus
+character (C<->):
 
 =begin programlisting
 
@@ -912,7 +909,7 @@ X<regex; multiline>
 X<C<^>; start of line regex metacharacter>
 X<C<$>; end of line regex metacharacter>
 
-The multiline operator, C</m>, allows the C<^> and C<$> anchors match at any
+The multiline operator, C</m>, allows the C<^> and C<$> anchors to match at any
 start of line or end of line within the string.
 
 X<C</s>; single line regex modifier>
@@ -920,9 +917,9 @@ X<regex; C</s> modifier>
 X<regex; single line>
 
 The C</s> modifier treats the source string as a single line such that the C<.>
-metacharacter matches the newline character.  Damian Conway suggests a mnemonic
-that C</m> modifies the behavior of I<multiple> regex metacharacters, while
-C</s> modifies the behavior of a I<single> regex metacharacter.
+metacharacter matches the newline character.  Damian Conway suggests the
+mnemonic that C</m> modifies the behavior of I<multiple> regex metacharacters,
+while C</s> modifies the behavior of a I<single> regex metacharacter.
 
 X<C</x>; extended readability regex modifier>
 X<regex; C</x> modifier>
