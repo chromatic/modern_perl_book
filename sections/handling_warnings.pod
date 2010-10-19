@@ -83,10 +83,9 @@ codebase, this can be useful.
 X<C<warnings>>
 X<pragmas; C<warnings>>
 
-The modern approach is to use the C<warnings> pragma.  The presence of C<use
-warnings;> or an equivalentN<Such as C<use Modern::Perl;>> in code indicates
-that the authors intended that normal operation of the code should not produce
-warnings.
+The modern approach is to use the C<warnings> pragmaN<...or an equivalent such
+as C<use Modern::Perl;>.>, which indicates the intent of the author of the code
+that normal operation should not produce warnings.
 
 =begin sidebar
 
@@ -215,14 +214,14 @@ C<warnings::register> pragma:
 
 =end programlisting
 
-This will create a new warnings category named after the package (in this case,
-C<Scary::Monkey>).  Users can enable it explicitly with C<use warnings
-'Scary::Monkey'> or disable it explicitly with C<no warnings 'Scary::Monkey'>.
+This will create a new warnings category named after the package
+C<Scary::Monkey>.  Enable these warnings with C<use warnings 'Scary::Monkey'>
+and disable them with C<no warnings 'Scary::Monkey'>.
+
 Use C<warnings::enabled()> to test if the calling lexical scope has the given
 warning category enabled.  Use C<warnings::warnif()> to produce a warning only
-if warnings are in effect.
-
-For example, to produce a warning in the C<deprecated> category:
+if warnings are in effect.  For example, to produce a warning in the
+C<deprecated> category:
 
 =begin programlisting
 
@@ -232,9 +231,9 @@ For example, to produce a warning in the C<deprecated> category:
 
     B<sub import>
     B<{>
-        B<warnings::warnif( 'deprecated',
-            'empty imports from ' . __PACKAGE__ . ' are now deprecated' )
-            unless @_;>
+        B<warnings::warnif( 'deprecated',>
+            B<'empty imports from ' . __PACKAGE__ . ' are now deprecated' )>
+            B<unless @_;>
     B<}>
 
     1;

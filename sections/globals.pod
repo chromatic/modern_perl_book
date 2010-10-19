@@ -24,8 +24,6 @@ possible scope to constrain any modifications.  You are still susceptible to
 any changes code you I<call> makes to those globals, but you reduce the
 likelihood of surprising code I<outside> of your scope.
 
-=begin sidebar
-
 Workarounds exist for some of this global behavior, but many of these variables
 have existed since Perl 1 and will continue as part of Perl 5 throughout its
 lifetime.  As the easy file slurping idiom (L<easy_file_slurping>)
@@ -66,8 +64,6 @@ C<$@>:
 
 Copy C<$@> I<immediately> to preserve its contents.
 
-=end sidebar
-
 =head2 English Names
 
 X<C<English>>
@@ -83,8 +79,6 @@ super globals.  Import them into a namespace with:
 
 Subsequently you can use the verbose names documented in C<perldoc perlvar>
 within the scope of this namespace.
-
-=begin sidebar
 
 X<C<$&>>
 X<global variables; C<$&>>
@@ -102,8 +96,6 @@ behavior for backwards-compatibility concerns.
 Modern Perl programs should use the C<@-> variable as a replacement for the
 terrible three.
 
-=end sidebar
-
 =head2 Useful Super Globals
 
 X<super globals; useful>
@@ -117,26 +109,28 @@ X<C<$/>>
 X<global variables; C<$/>>
 X<C<$INPUT_RECORD_SEPARATOR>>
 X<global variables; C<$INPUT_RECORD_SEPARATOR>>
+X<C<readline>>
 
 =over 4
 
 =item * C<$/> (or C<$INPUT_RECORD_SEPARATOR> from the C<English> pragma) is a
 string of zero or more characters which denotes the end of a record when
-reading input a line at a time.  By default, this is your platform-specific
-newline character sequence.  If you undefine this value, Perl will attempt to
-read the entire file into memory.  If you set this value to a I<reference> to
-an integer, Perl will try to read that many I<bytes> per record (so beware of
-Unicode concerns).
+reading input a line at a timeN<Yes, C<readline()> should more accurately be
+C<readrecord()>, but the name has stuck by now.>.  By default, this is your
+platform-specific newline character sequence.  If you undefine this value, Perl
+will attempt to read the entire file into memory.  If you set this value to a
+I<reference> to an integer, Perl will try to read that many I<bytes> per record
+(so beware of Unicode concerns).
 
 X<C<$.>>
 X<global variables; C<$.>>
 X<C<$INPUT_LINE_NUMBER>>
 X<global variables; C<$INPUT_LINE_NUMBER>>
 
-=item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the current line (more
-accurately, I<record>) number read from the most recently-accessed filehandle.
-You can read from this variable, but writing to it has no effect.  Localizing
-this variable will localize the filehandle to which it refers.
+=item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of current record
+read from the most recently-accessed filehandle.  You can read from this
+variable, but writing to it has no effect.  Localizing this variable will
+localize the filehandle to which it refers.
 
 X<C<$|>>
 X<global variables; C<$|>>
@@ -231,6 +225,7 @@ about signals and especially safe signals.
 =head2 Alternatives to Super Globals
 
 X<super globals; alternatives>
+X<C<Try::Tiny>>
 
 The worst culprits for action at a distance relate to IO and exceptional
 conditions.  Using C<Try::Tiny> (L<exception_caveats>) will help insulate you
@@ -238,9 +233,11 @@ from the tricky semantics of proper exception handling.  C<local>izing and
 copying the value of C<$!> can help you avoid strange behaviors when Perl makes
 implicit system calls.
 
-You can use methods on lexical filehandles (L<lexical_filehandles>) rather than
-IO-related super globals by C<use>ing C<IO::Handle>.  In place of C<select>ing
-a filehandle, then manipulating C<$|>, call the C<autoflush()> method on the
-lexical filehandle directly.  Use the C<input_line_number()> method to get the
-equivalent of C<$.> for that specific filehandle.  See the C<IO::Handle>
-documentation for other appropriate methods.
+X<C<IO::Handle>>
+
+C<IO::Handle> allows you to call methods on filehandles
+(L<lexical_filehandles>) to replace the manipulation of IO-related super
+globals.  Call the C<autoflush()> method on a lexical filehandle instead of
+C<select>ing the filehandle, then manipulating C<$|>.  Use the
+C<input_line_number()> method to get the equivalent of C<$.> for that specific
+filehandle.  See the C<IO::Handle> documentation for other appropriate methods.

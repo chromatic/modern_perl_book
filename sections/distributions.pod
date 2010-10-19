@@ -61,15 +61,16 @@ X<CPAN; CPANTS>
 Additionally, a well-formed distribution must contain a unique name and single
 version number (often taken from its primary module).  Any well-formed
 distribution you download from the public CPAN should conform to these
-standards.  (The CPANTS service evaluates the kwaliteeN<Quality is difficult to
-measure with heuristics.  Kwalitee is the machine measurable relative of
-quality.> of all CPAN distributions and recommends improvements to make them
-easier to install and to manage.)
+standards--and the CPANTS service evaluates the kwaliteeN<Quality is difficult
+to measure with heuristics.  Kwalitee is the machine measurable relative of
+quality.> of all CPAN distributions and recommends packaging improvements.
 
 =head2 CPAN Tools for Managing Distributions
 
 The Perl 5 core includes several tools to manage distributions--not just
 installing them from the CPAN, but developing and managing your own:
+
+X<C<CPAN>>
 
 =over 4
 
@@ -77,21 +78,32 @@ installing them from the CPAN, but developing and managing your own:
 distributions from the public CPAN, you can point it to your own repository
 instead of or in addition to the public repository.
 
+X<C<CPANPLUS>>
+
 =item * C<CPANPLUS> is an alternate CPAN client with a different design
 approach.  It does some things better than C<CPAN.pm>, but they are largely
 equivalent at this point.  Use whichever you prefer.
 
+X<C<Module::Build>>
+
 =item * C<Module::Build> is a pure-Perl tool suite for configuring, building,
 installing, and testing distributions.  It works with the F<Build.PL> file
 mentioned earlier.
+
+X<C<ExtUtils::MakeMaker>>
 
 =item * C<ExtUtils::MakeMaker> is an older, legacy tool which C<Module::Build>
 intends to replace.  It is still in wide use, though it is in maintenance mode
 and receives only the most critical bug fixes.  It works with the
 F<Makefile.PL> file mentioned earlier.
 
+X<C<Test::More>>
+
 =item * C<Test::More> (L<testing>) is the basic and most widely used testing
 module used to write automated tests for Perl software.
+
+X<C<Test::Harness>>
+X<C<prove>>
 
 =item * C<Test::Harness> and C<prove> (L<running_tests>) are the tools used to
 run tests and to interpret and report their results.
@@ -101,7 +113,7 @@ run tests and to interpret and report their results.
 In addition, several non-core CPAN modules make your life easier as a
 developer:
 
-X<CPAN; C<App::cpanminus>>
+X<C<App::cpanminus>>
 
 =over 4
 
@@ -129,8 +141,8 @@ X<C<Module::Build>>
 X<C<ExtUtils::MakeMaker>>
 
 =item * C<Dist::Zilla> is a toolkit for managing distributions by automating
-away common tasks.  It can replace the direct use of C<Module::Build> or
-C<ExtUtils::MakeMaker> in many cases.
+away common tasks.  While it can use either C<Module::Build> or
+C<ExtUtils::MakeMaker>, it can replace I<your> use of them directly.
 
 X<CPAN; C<Test::Reporter>>
 

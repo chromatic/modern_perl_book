@@ -10,6 +10,8 @@ good programmers, but the developers of Perl itself don't presume to dictate
 what I<you> find most maintainable.
 
 X<barewords>
+X<C<strict> pragma>
+X<pragmas; C<strict>>
 
 Perl's parser understands the builtin Perl builtins and operators; it knows
 that C<bless()> means you're making objects (L<blessed_references>).  These are
@@ -166,9 +168,9 @@ X<barewords; sort functions>
 X<C<sort>>
 X<builtins; C<sort>>
 
-Finally, the builtin C<sort> operator can take as its second argument the
-I<name> of a function to use for sorting.  Instead provide a I<reference> to
-the function to use for sorting to avoid the use of barewords:
+Finally, the C<sort> builtin can take as its second argument the I<name> of a
+function to use for sorting.  Instead provide a I<reference> to the function to
+use for sorting to avoid the use of barewords:
 
 =begin programlisting
 

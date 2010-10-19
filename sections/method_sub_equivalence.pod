@@ -56,10 +56,10 @@ altogether.
 X<methods; avoid calling as functions>
 
 If C<$o> were instead a subclass or allomorph (L<roles>) of C<Order> which
-overrode C<calculate_price()>, the method-as-a-function call would call the
-I<wrong> method.  If the internal implementation of C<calculate_price()> were
-to change--perhaps inherited from elsewhere or delegated through
-C<AUTOLOAD()>--the caller might break.
+overrode C<calculate_price()>, calling the method as a function would produce
+the wrong behavior.  Any change to the implementation of C<calculate_price()>,
+such as a modification of inheritance or delegation through
+C<AUTOLOAD()>--might break calling code.
 
 X<methods; calling with references>
 X<C<UNIVERSAL>; C<can()>>
@@ -134,10 +134,9 @@ global data elsewhere.
 As with all heuristics, there are corner cases.  It's difficult to predict
 exactly which invocants are potentially valid for a given method, especially
 when considering that users can create their own subclasses.  The documentation
-burden is also greater--the explanation of a combined procedural and object
-interface must reflect the dichotomy of the code--as is the potential for
-misuse.  What happens when one part of the project uses the procedural
-interface and another uses the object interface?
+burden is also greater, given the need to explain the dichotomy of the code and
+the desire to avoid misuse.  What happens when one part of the project uses the
+procedural interface and another uses the object interface?
 
 Providing separate procedural and object interfaces to a library may be
 justifiable.  Some designs make some techniques more useful than others.

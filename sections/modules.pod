@@ -44,20 +44,17 @@ Finally:
 =end programlisting
 
 ... causes Perl to search for a relative file path named
-F<StrangeMonkey/UI/Mobile.pm> in every directory in C<@INC>.  In other words,
-if you want to load your module C<StrangeMonkey::Test::Stress>, you must have a
-file named F<StrangeMonkey/Test/Stress.pm> reachable from some directory in
-C<@INC>.
+F<StrangeMonkey/UI/Mobile.pm> in every directory in C<@INC>.  There is no
+I<technical> requirement that the file at that location contain any C<package>
+declaration, let alone a C<package> declaration of
+C<StrangeMonkey::UI::Mobile>.  Maintenance concerns highly recommend that
+convention, however.
+
+=begin sidebar
 
 C<perldoc -l Module::Name> will print the full path to the relevant F<.pm>
 file, provided that the I<documentation> for that module exists in the F<.pm>
 file.
-
-=begin sidebar
-
-There is no I<technical> requirement that the file at that location contain any
-C<package> declaration, let alone a C<package> declaration matching the name of
-the file.  Maintenance concerns highly recommend that convention, however.
 
 =end sidebar
 
@@ -67,6 +64,9 @@ Z<import>
 
 X<builtins; C<use>>
 X<C<import()>>
+X<C<CGI>>
+X<C<feature> pragma>
+X<pragmas; C<feature>>
 
 When you load a module with the C<use> builtin, Perl loads it from disk, then
 calls its C<import()> method, passing any arguments you provided.  This occurs
@@ -170,10 +170,10 @@ X<case-sensitivity>
 Perl 5's C<use> and C<require> are case-sensitive, even if the underlying
 filesystem is not.  While Perl knows the difference between C<strict> and
 C<Strict>, your combination of operating system and file system may not.  If
-you were to write C<use Strict;>, a case-sensitive filesystem would not find
-F<strict.pm>.  A case-insensitive filesystem would find F<Strict.pm>.  However,
-when Perl tries to call C<< Strict->import() >> on the loaded module, nothing
-will happen because the package name is C<strict>.
+you were to write C<use Strict;>, Perl would not find F<strict.pm> on a
+case-sensitive filesystem.  With a case-insensitive filesystem, Perl will
+happily load F<Strict.pm>, but will try to call C<< Strict->import() >>.
+Nothing will happen, because F<strict.pm> declares a package named C<strict>.
 
 Portable programs are strict about case even if they don't have to be.
 
@@ -209,7 +209,7 @@ functions usable throughout the system:
 =end programlisting
 
 Any other code now can use this module and, optionally, import any or all of
-the three exported functionsN<... though I<C<use>ing> the module in any code is
+the three exported functionsN<... though I<using> the module in any code is
 sufficient to allow any other code to invoke its functions by their
 fully-qualified names.>.  You may also export variables:
 
@@ -220,6 +220,8 @@ fully-qualified names.>.  You may also export variables:
 =end programlisting
 
 =begin sidebar
+
+X<C<Sub::Exporter>>
 
 The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
 without using package globals.  It also offers more powerful options.  However,
@@ -267,9 +269,8 @@ code in the most appropriate way, given your development style, the formality
 and risk and reward of the project, your experience, and your comfort with Perl
 5 deployment.
 
-Yet a good rule of thumb from experienced Perl 5 programmers is that a project
-with more than a couple of hundred lines of code receives multiple benefits
-from the process of creating modules.
+Even so, a project with more than a couple of hundred lines of code receives
+multiple benefits from module organization:
 
 =over 4
 

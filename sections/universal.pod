@@ -106,7 +106,7 @@ There is I<one> known case where calling C<UNIVERSAL::can()> as a function and
 not a method is not incorrect: to determine whether a class exists in Perl 5.
 If C<UNIVERSAL::can( $classname, 'can' )> returns true, someone somewhere has
 defined a class of the name C<$classname>--though consider using instead
-C<Moose>'s introspection.
+Moose's introspection.
 
 =end sidebar
 
@@ -168,12 +168,17 @@ It's tempting to store other methods in C<UNIVERSAL> to make it available to
 all other classes and objects in Perl 5.  Avoid this temptation; this global
 behavior can have subtle side effects because it is unconstrained.
 
+X<C<UNIVERSAL::ref>>
+X<C<UNIVERSAL::isa>>
+X<C<UNIVERSAL::can>>
+X<C<Perl::Critic>>
+
 With that said, occasional abuse of C<UNIVERSAL> for I<debugging> purposes and
 to fix improper default behavior may be excusable.  For example, Joshua ben
 Jore's C<UNIVERSAL::ref> distribution makes the nearly-useless C<ref()>
 operator usable.  The C<UNIVERSAL::can> and C<UNIVERSAL::isa> distributions can
-help you find and eliminate old idioms which prevent good uses of polymorphism
-(though see C<Perl::Critic> for a different approach with other advantages).
+help you debug anti-polymorphism bugs (L<method_sub_equivalence>), while
+C<Perl::Critic> can detect thoseN<... and many, many other.> problems.
 
 Outside of very carefully controlled code and very specific, very pragmatic
 situations, there's no reason to put code in C<UNIVERSAL> directly.  There are

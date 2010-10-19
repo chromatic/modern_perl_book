@@ -291,17 +291,16 @@ C<Test::More> has several more test functions, but these are the most useful.
 
 X<testing; F<.t> files>
 X<testing; F<t/> directory>
+X<C<Module::Build>>
+X<C<ExtUtils::MakeMaker>>
 
-The standard CPAN approach for organizing tests is to create a F<t/> directory
-containing one or more programs ending with the F<.t> suffix.  All of the CPAN
-distribution management tools (and the CPAN infrastructure itself) understand
-this system.  By default, when you build a distribution with C<Module::Build>
-or C<ExtUtils::MakeMaker>, the testing step runs all of the F<t/*.t> files,
-summarizes their output, and succeeds or fails on the results of the test suite
-as a whole.
-
-There are no concrete guidelines on how to manage the contents of individual
-F<.t> files, though two strategies are popular:
+CPAN's infrastructure and ecosystem expects distributions to include a F<t/>
+containing one or more test files named with the F<.t> suffix.  By default,
+when you build a distribution with C<Module::Build> or C<ExtUtils::MakeMaker>,
+the testing step runs all of the F<t/*.t> files, summarizes their output, and
+succeeds or fails on the results of the test suite as a whole.  There are no
+concrete guidelines on how to manage the contents of individual F<.t> files,
+though two strategies are popular:
 
 =over 4
 
@@ -361,8 +360,8 @@ databases.
 suites.  It allows you to create classes in which specific methods group tests.
 You can inherit from test classes just as your code classes inherit from each
 other.  This is an excellent way to reduce duplication in test suites.  See the
-c<Test::Class> series written by Curtis Poe at
-u<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
+C<Test::Class> series written by Curtis Poe at
+U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
 
 =item * C<Test::Differences> tests strings and data structures for equality and
 displays any differences in its diagnostics.

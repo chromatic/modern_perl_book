@@ -149,11 +149,11 @@ values.  Sorting the values of the hash in string order is easy:
 
 =end programlisting
 
-... but that loses the association of names with extensions.  Instead, use the
-Schwartzian transform to transform the data before and after sorting it to
-preserve the necessary information.  First, convert the hash into a list of
-data structures which contain the vital information in sortable fashion.  In
-this case, convert the hash pairs into two-element anonymous arrays:
+... but that loses the association of names with extensions.  The Schwartzian
+transform can perform the sorting while preserving the necessary information.
+First, convert the hash into a list of data structures which contain the vital
+information in sortable fashion.  In this case, convert the hash pairs into
+two-element anonymous arrays:
 
 =begin programlisting
 
@@ -283,6 +283,8 @@ The second example contains no assignment and merely returns the single line
 read from the filehandle.  You may see either example; they both work the same
 way in this case.
 
+X<C<File::Slurp>>
+
 This can be useful (and, admittedly, maddening for people unfamiliar with this
 particular combination of Perl 5 features) if you don't have C<File::Slurp>
 installed from the CPAN.
@@ -369,6 +371,9 @@ libraries--L<controlled_execution>.)
 =head2 Postfix Parameter Validation
 
 Z<postfix_parameter_validation>
+
+X<C<Params::Validate>>
+X<C<MooseX::Params::Validate>>
 
 Even if you don't use a CPAN module such as C<Params::Validate> or
 C<MooseX::Params::Validate> to verify that the parameters your functions

@@ -115,18 +115,12 @@ hard-coding a function reference:
 
 =end programlisting
 
-Child classes can override only the specified methods without having to use
-C<overload> directly themselves.
-
-=begin sidebar
-
-The use of method names produces more flexible code, but developers use code
-references much more often.  In this case, use whatever your developer team
-decides as a code standard.
-
-=end sidebar
+Child classes do not have to use C<overload> themselves; they can merely
+override the appropriate C<get_*> methods.  This is often more flexible.
 
 =head2 Uses of Overloading
+
+X<C<IO::All>>
 
 Overloading may seem like a tempting tool to use to produce symbolic shortcuts
 for new operations.  The C<IO::All> CPAN distribution pushes this idea to its

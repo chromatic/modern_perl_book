@@ -16,12 +16,11 @@ objects, and--perhaps--higher-order functions and closures.
 X<metaprogramming>
 X<code generation>
 
-I<Metaprogramming> (or I<code generation>)--writing programs which write
-programs--is another abstraction technique.  It can be as clear as exploiting
-higher-order programming capabilities or it can be a rat hole down which you
-find yourself confused and frightened.  The techniques are powerful and useful,
-however--and some of them form the basis of powerful tools such as Moose
-(L<moose>).
+Writing programs to write programs for you--I<metaprogramming> or I<code
+generation>)--offers greater possibilities for abstraction.  This can be as
+clear as exploiting higher-order programming capabilities or a rat hole down
+which you find yourself confused and frightened.  The techniques are powerful
+and useful.  For example, they form the basis of Moose (L<moose>).
 
 The C<AUTOLOAD> technique (L<autoload>) for missing functions and methods
 demonstrates this technique in a constrained form; Perl 5's function and method
@@ -155,13 +154,16 @@ X<sigils; C<*>>
 X<typeglobs>
 
 The odd syntax of an asteriskN<Think of it as a I<typeglob sigil>, where a
-I<typeglob> is the Perl hacker jargon for "symbol table".> deferencing a hash
-refers to a symbol in the current I<symbol table>, which is the place in the
-current namespace which contains globally-accessible symbols such as package
-globals, functions, and methods.  Assigning a reference to a symbol table entry
-installs or replaces the appropriate entry.  To promote an anonymous function
-to a method, assign that function reference to the appropriate entry in the
-symbol table.
+I<typeglob> is Perl jargon for "symbol table".> deferencing a hash refers to a
+symbol in the current I<symbol table>, which is the place in the current
+namespace which contains globally-accessible symbols such as package globals,
+functions, and methods.  Assigning a reference to a symbol table entry installs
+or replaces the appropriate entry.  To promote an anonymous function to a
+method, assign that function reference to the appropriate entry in the symbol
+table.
+
+X<C<strict> pragma>
+X<pragmas; C<strict>>
 
 This operation refers to a symbol with a string, not a literal variable name,
 so it's a symbolic reference and it's necessary to disable C<strict> reference
@@ -185,8 +187,6 @@ This example disables strictures for the outer block as well as the inner
 block, the body of the function itself.  Only the assignment violates strict
 reference checking, so disable strictures for that operation alone.
 
-=begin sidebar
-
 If the name of the method is a string literal in your source code, rather than
 the contents of a variable, you can assign to the relevant symbol directly
 rather than through a symbolic reference:
@@ -204,9 +204,9 @@ Assigning directly to the glob does not violate strictures, but mentioning each
 glob only once I<does> produce a "used only once" warning unless you explicitly
 suppress it within the scope.
 
-=end sidebar
-
 =head2 Compile-time Manipulation
+
+X<builtins; C<eval>>
 
 Unlike code written explicitly as code, code generated through string C<eval>
 gets compiled at runtime.  Where you might expect a normal function to be
@@ -304,7 +304,7 @@ X<meta object protocol>
 Unlike installing function references to populate namespaces and to create
 methods, there's no simple default way to create classes in Perl 5.
 Fortunately, a mature and powerful distribution is available from the CPAN to
-do just this.  C<Class::MOP> is the library which makes C<Moose> (L<moose>)
+do just this.  C<Class::MOP> is the library which makes Moose (L<moose>)
 possible.  It provides a I<meta object protocol>--a mechanism for creating and
 manipulating an object system in terms of itself.
 
@@ -369,5 +369,4 @@ after you've created it:
 =end programlisting
 
 You can similarly create and manipulate and introspect attributes and methods
-with C<Class::MOP::Attribute> and C<Class::MOP::Method>.  This metaobject
-protocol and the flexibility it affords powers Moose (L<moose>).
+with C<Class::MOP::Attribute> and C<Class::MOP::Method>.

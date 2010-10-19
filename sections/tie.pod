@@ -15,12 +15,12 @@ access files larger than could fit in memory.  The core module C<Tie::File>
 provides a similar system by which to handle data files too large to fit in
 memory.
 
-The class to which you C<tie> a variable must conform to a specific,
-well-documented interface for the specific data type.  C<perldoc perltie> is
-the primary source of information about these interfaces, though the core
-modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> are more
-useful in practice.  Inherit from them to start, and override only those
-specific methods you need to modify.
+The class to which you C<tie> a variable must conform to a defined interface
+for the specific data type.  C<perldoc perltie> is the primary source of
+information about these interfaces, though the core modules C<Tie::StdScalar>,
+C<Tie::StdArray>, and C<Tie::StdHash> are more useful in practice.  Inherit
+from them to start, and override only those specific methods you need to
+modify.
 
 =begin sidebar
 
@@ -47,15 +47,15 @@ the class into which to tie it, and C<@args> is an optional list of arguments
 required for the tying function.  In the case of C<Tie::File>, this is the name
 of the file to which to tie the array.
 
-The tying function resembles a constructor: C<TIESCALAR>, C<TIEARRAY()>,
-C<TIEHASH()>, or C<TIEHANDLE()> for scalars, arrays, hashes, and filehandles
-respectively.  These functions return a new object which the C<tie()> builtin
-returns as well.  Most people ignore it.
+X<builtins; C<tie>>
+X<builtins; C<tied>>
 
-The C<tied()> operator returns the same object when used on a tied variable and
-C<undef> otherwise.  Again, few people use that object.  Instead, they check
-the boolean value of this object when they use C<tied()> to determine
-whether the given variable is tied.
+Tying functions resemble constructors: C<TIESCALAR>, C<TIEARRAY()>,
+C<TIEHASH()>, or C<TIEHANDLE()> for scalars, arrays, hashes, and filehandles
+respectively.  Each function returns a new object which represents the tied
+variable.  Both the C<tie> and C<tied> builtins return this object, but most
+people ignore it in favor of checking its boolification to determine whether a
+given variable is tied.
 
 =head2 Implementing Tied Variables
 
