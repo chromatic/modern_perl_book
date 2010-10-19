@@ -244,15 +244,13 @@ You can use this API without the prototype.  It's slightly less attractive:
 
 =end programlisting
 
+X<builtins; C<sort>>
+
 A sparing use of function prototypes to remove the need for the C<sub> builtin
-is reasonable.  Few other uses of prototypes are compelling enough to overcome
-their drawbacks.
+is reasonable.  Another is when defining a custom function to use with
+C<sort>N<Ben Tilly suggested this example.>.  Declare this function with a
+prototype of C<($$)> and Perl will pass its arguments in C<@_> rather than the
+package globals C<$a> and C<$b>.  This is a rare case, but it can save you time
+debugging.
 
-=begin sidebar
-
-Ben Tilly suggests a fourth: when defining a custom function to use with
-C<sort>.  Declare this function with a prototype of C<($$)> and Perl will pass
-its arguments in C<@_> rather than the package globals C<$a> and C<$b>.  This
-is a rare case, but it can save you time debugging.
-
-=end sidebar
+Few other uses of prototypes are compelling enough to overcome their drawbacks.
