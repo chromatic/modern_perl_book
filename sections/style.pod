@@ -32,11 +32,11 @@ tells a story, and every word you use effectively can help you remember that
 story when you must later maintain the code.
 
 =item * I<Avoid unnecessary cleverness.>  Novices sometimes mistake cleverness
-for conciseness.  Concise code avoids unnecessary structure or complexity.
-Clever code sometimes prefers its own cleverness to simplicity.  Perl offers
-many approaches to solve similar problems.  Often one form is more readable.
-Sometimes one form is faster, or simpler.  Usually one is more obvious in
-context.
+for concision.  Concise code avoids unnecessary complexity.  Clever code
+sometimes prefers its own cleverness to simplicity.  Perl offers many
+approaches to solve similar problems.  One form may be more readable to your
+team.  Another may be faster.  A third may be simpler.  Where possible,
+optimize for obviousness first.
 
 You can't always avoid the dark corners of Perl, and some problems require
 cleverness to solve effectively.  Only good taste and experience will help you

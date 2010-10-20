@@ -62,9 +62,8 @@ escaping the quote with a leading backlash:
 
 =end programlisting
 
-If a backslash occurs at the end of the string, escape it with another
-backslash, because the Perl parser thinks you are trying to escape the trailing
-single quote:
+You must also escape any backslash at the end of the string to avoid escaping
+the closing delimiter and producing a syntax error:
 
 =begin programlisting
 

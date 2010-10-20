@@ -235,9 +235,11 @@ hash as an argument produces a list of key/value pairs:
 =end programlisting
 
 The C<show_pets()> function works because the C<%pet_names_and_types> hash
-flattens into the list C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat',
-'Petunia', 'cat'>. The hash assignment inside the function C<show_pets()> works
-essentially as the more explicit assignment to C<%pet_names_and_types> does.
+flattens into a list.  The order of the pairs within that flattened list will
+vary, but pairs will always appear in that list with the key first immediately
+followed by the value.  The hash assignment inside the function C<show_pets()>
+works essentially as the more explicit assignment to C<%pet_names_and_types>
+does.
 
 This is often useful, but you must be clear about your intentions if you pass
 some arguments as scalars and others as flattened lists.  If you wish to make a

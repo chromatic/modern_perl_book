@@ -171,12 +171,11 @@ at a time in a C<while()> loop:
 
 X<builtins; C<eof>>
 
-In scalar context, C<readline> iterates through the lines available through the
-filehandle until it reaches the end of the file (C<eof()>).  Each iteration
-returns the next line.  After reaching the end of the file, each iteration
-returns C<undef>.  This C<while> idiom explicitly checks the definedness of the
-variable used for iteration, such that only the end of file condition ends the
-loop.
+In scalar context, C<readline> iterates through the lines of the file until it
+reaches the end of the file (C<eof()>).  Each iteration returns the next line.
+After reaching the end of the file, each iteration returns C<undef>.  This
+C<while> idiom explicitly checks the definedness of the variable used for
+iteration, such that only the end of file condition ends the loop.
 
 X<builtins; C<chomp>>
 

@@ -5,10 +5,10 @@ Z<perl_community>
 X<perl.org>
 X<websites; perl.org>
 
-Perl's homepage is U<http://www.perl.org/>.  This site hosts documentation,
-source code, tutorials, mailing lists, and several important community
-projects.  If you're new to Perl, the Perl beginners mailing list is a friendly
-place to ask novice questions and get accurate and helpful answers.  See
+Perl's homepage at U<http://www.perl.org/> hosts documentation, source code,
+tutorials, mailing lists, and several important community projects.  If you're
+new to Perl, the Perl beginners mailing list is a friendly place to ask novice
+questions and get accurate and helpful answers.  See
 U<http://beginners.perl.org/>.
 
 An important domain of note is U<http://dev.perl.org/>, a central site for core
@@ -76,8 +76,8 @@ Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
 X<Perl 5 Porters>
 X<p5p>
 
-The Perl 5 Porters (also known as I<p5p>) mailing list is the central point for
-Perl 5 development discussion.  See
+The Perl 5 Porters (or I<p5p>) mailing list is the focal point of the
+development of Perl 5 itself.  See
 U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
 
 X<TPF>
@@ -94,10 +94,9 @@ X<websites; gitpan>
 
 Many Perl hackers use Github (U<http://github.com/>) to host their
 projectsN<...  including the sources of this book at
-U<http://github.com/chromatic/modern_perl_book/>>.  One particularly notable
-page on Github is Gitpan (U<http://github.com/gitpan/>), which hosts Git
-repositories chronicling the complete history of every distribution on the
-CPAN.
+U<http://github.com/chromatic/modern_perl_book/>>.  See especially Gitpan
+(U<http://github.com/gitpan/>), which hosts Git repositories chronicling the
+complete history of every distribution on the CPAN.
 
 =head1 Events
 

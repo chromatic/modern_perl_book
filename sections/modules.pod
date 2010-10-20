@@ -43,7 +43,7 @@ Finally:
 
 =end programlisting
 
-... causes Perl to search for a relative file path named
+... causes Perl to search for a relative file path of
 F<StrangeMonkey/UI/Mobile.pm> in every directory in C<@INC>.  There is no
 I<technical> requirement that the file at that location contain any C<package>
 declaration, let alone a C<package> declaration of

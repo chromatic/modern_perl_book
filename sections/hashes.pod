@@ -258,8 +258,8 @@ may exist with a value even if that value evaluates to a boolean false
 
 =end programlisting
 
-Second, with nested data structures, C<exists> avoids autovivification
-(L<autovivification>).
+Second, C<exists> avoids autovivification (L<autovivification>) within with
+nested data structures.
 
 X<builtins; C<defined>>
 

@@ -283,8 +283,8 @@ to emulate with closures:
 
 X<C<Sub::Install>>
 
-Now instead of calling C<make_sundae()>, you can invoke
-C<< $make_cart_sundae->() >> and pass only the interesting arguments, without
-worrying about forgetting the invariants or passing them incorrectlyN<You can
-even use C<Sub::Install> from the CPAN to install this function into your
-namespace directly.>.
+Instead of calling C<make_sundae()> directly, you can invoke the function
+reference in C<$make_cart_sundae> and pass only the interesting arguments,
+without worrying about forgetting the invariants or passing them
+incorrectlyN<You can even use C<Sub::Install> from the CPAN to import this
+function into another namespace directly.>.

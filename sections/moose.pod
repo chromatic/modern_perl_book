@@ -293,12 +293,12 @@ assign a value to a read-only accessor at ...>.
 
 Using C<ro> or C<rw> is a matter of design, convenience, and purity.  Moose
 does not enforce any particular philosophy in this area.  One school of thought
-(L<immutability>) suggests making all instance data C<ro> and passing all
-relevant data into the constructor.  In the C<Cat> example, C<age()> might
-still be an accessor, but the constructor could take the I<year> of the cat's
-birth and calculate the age itself based on the current year, rather than
-relying on someone to update the age of all cats manually.  This approach helps
-to consolidate all validation code and helps to ensure that all created objects
+suggests making all instance data C<ro> and passing all relevant data into the
+constructor (L<immutability>).  In the C<Cat> example, C<age()> might still be
+an accessor, but the constructor could take the I<year> of the cat's birth and
+calculate the age itself based on the current year, rather than relying on
+someone to update the age of all cats manually.  This approach helps to
+consolidate all validation code and helps to ensure that all created objects
 have valid data.
 
 Now that individual objects can have their own instance data, the value of
@@ -427,10 +427,10 @@ X<polymorphism>
 X<OO; polymorphism>
 
 It's obvious (in context) that you can pass a C<Cat> object to this function
-and get sane results.  It's less obvious that you can pass other types of
-objects and get sane results.  This is an important object orientation property
-called I<polymorphism>, where you can substitute an object of one class for an
-object of another class if they provide the same external interface.
+and get sane results.  You can do the same with other types of objects.  This
+is an important object orientation property called I<polymorphism>, where you
+can substitute an object of one class for an object of another class if they
+provide the same external interface.
 
 X<genericity>
 X<OO; genericity>
@@ -639,7 +639,7 @@ X<OO; mixins>
 X<OO; multiple inheritance>
 X<OO; monkeypatching>
 
-For a length comparison of roles and other design techniques such as mixins,
+For a lengthy comparison of roles and other design techniques such as mixins,
 multiple inheritance, and monkeypatching, see
 U<http://www.modernperlbooks.com/mt/2009/04/the-why-of-perl-roles.html>.
 

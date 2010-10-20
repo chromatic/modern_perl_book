@@ -148,8 +148,8 @@ proxied object, passing the given arguments.
 X<C<AUTOLOAD>; code installation>
 
 That double-dispatch trick is useful, but it is slower than necessary.  Every
-method call on the proxy must go through normal dispatch and fail, then end up
-in C<AUTOLOAD()>.  You can instead install new methods into the proxy class as
+method call on the proxy must fail normal dispatch to end up in C<AUTOLOAD()>.
+Pay that penalty only once by installing new methods into the proxy class as
 the program needs them:
 
 =begin programlisting
@@ -174,12 +174,11 @@ the program needs them:
 
 =end programlisting
 
-The body of the previous C<AUTOLOAD()> has become an anonymous function.  The
-code creates a closure (L<closures>) bound over the I<name> of the undefined
-method.  Then it installs that closure in the appropriate symbol table so that
-all subsequent dispatch to that method will find the created closure and will
-avoid C<AUTOLOAD()>.  Finally, it invokes the method directly and returns the
-result.
+The body of the previous C<AUTOLOAD()> has become an anonymous function--in
+fact, a closure (L<closures>) bound over the I<name> of the undefined method.
+Installing that closure in the appropriate symbol table allows all subsequent
+dispatch to that method to find the created closure (and avoid C<AUTOLOAD()>).
+This code finally invokes the method directly and returns the result.
 
 Though this approach is cleaner and almost always more transparent than
 handling the behavior directly in C<AUTOLOAD()>, the code I<called> by

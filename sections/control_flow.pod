@@ -443,8 +443,7 @@ Like C<if> and C<unless>, the C<for> loop has a postfix form:
 
 Similar suggestions apply for clarity and complexity.
 
-You may provide a variable to which to assign the values of the expression in
-place of the topic variable:
+A C<for> loop may use a named variable instead of the topic:
 
 =begin programlisting
 
@@ -455,10 +454,10 @@ place of the topic variable:
 
 =end programlisting
 
-If you do so, Perl will not set the topic variable (C<$_>) to the iterated
-values.  Note also that the scope of the variable C<$i> is only valid I<within>
-the loop.  If you have declared a lexical C<$i> in an outer scope, that value
-will remain outside the loop:
+In this case, Perl will not set the topic variable (C<$_>) to the iterated
+values.  As well, the scope of the variable C<$i> is only valid I<within> the
+loop.  If you have declared a lexical C<$i> in an outer scope, its value will
+persist outside the loop:
 
 =begin programlisting
 
@@ -474,7 +473,8 @@ will remain outside the loop:
 =end programlisting
 
 This localization occurs even if you do not redeclare the iteration variable as
-a lexical:
+a lexicalN<... but I<do> declare your iteration variables as lexicals to reduce
+their scope.>:
 
 =begin programlisting
 

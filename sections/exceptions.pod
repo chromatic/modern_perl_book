@@ -225,8 +225,7 @@ likely exceptions occur for:
 
 =item * Modifying a read-only value
 
-=item * Performing the wrong operation on the wrong type of reference
-(L<references>)
+=item * Performing an invalid operation on a reference (L<references>)
 
 =back
 

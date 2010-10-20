@@ -161,10 +161,10 @@ X<C<$SIG{__WARN__}>>
 X<warnings; catching>
 
 Just as you can catch exceptions, so you can catch warnings.  The C<%SIG>
-variable holds handlers for all sorts of signals Perl or your operating system
-might throw.  It also includes two slots for signal handlers for Perl 5
-exceptions and warnings.  To catch a warning, install an anonymous function
-into C<$SIG{__WARN__}>:
+variableN<See C<perldoc perlvar>.> holds handlers for all sorts of signals Perl
+or your operating system might throw.  It also includes two slots for signal
+handlers for Perl 5 exceptions and warnings.  To catch a warning, install an
+anonymous function into C<$SIG{__WARN__}>:
 
 =begin programlisting
 
@@ -185,12 +185,6 @@ Admittedly, this technique is less useful than disabling warnings
 lexically--but it can come to good use in test modules such as
 C<Test::Warnings> from the CPAN, where the actual text of the warning is
 important.
-
-=begin sidebar
-
-C<perldoc perlvar> discusses C<%SIG> in more detail.
-
-=end sidebar
 
 =head2 Registering Your Own Warnings
 

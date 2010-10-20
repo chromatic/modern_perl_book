@@ -99,9 +99,9 @@ To install a distribution:
 
 X<CPAN; C<CPAN.pm>>
 
-Eric Wilhelm's excellent tutorial on configuring CPAN.pm
-(U<http://learnperl.scratchcomputing.com/tutorials/configuration/>) is worth
-reading twice, especially its section on troubleshooting.
+Eric Wilhelm's tutorial on configuring
+CPAN.pmN<U<http://learnperl.scratchcomputing.com/tutorials/configuration/>>
+includes a great troubleshooting section.
 
 =begin sidebar
 
