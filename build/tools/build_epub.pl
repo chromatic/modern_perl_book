@@ -255,7 +255,7 @@ sub add_cover
       . qq[<style type="text/css"> img { max-width: 100%; }</style>\n]
       . qq[</head>\n]
       . qq[<body>\n]
-      . qq[    <img alt="Modern Perl" src="../images/cover.png" />\n]
+      . qq[<p><img alt="Modern Perl" src="../images/cover.png" /></p>\n]
       . qq[</body>\n]
       . qq[</html>\n\n];
 
@@ -318,6 +318,9 @@ sub start_Document
     $self->emit('nowrap');
 }
 
+# Override Pod::PseudoPod::HTML open Z<> generated <a> tags.
+sub start_Z { $_[0]{'scratch'} .= '<a id="' }
+
 # Override Pod::PseudoPod::HTML close Z<> generated <a> tags.
 sub end_Z { $_[0]{'scratch'} .= '"/>' }
 
@@ -354,6 +357,22 @@ sub _end_head
     (my $chapter = $_[0]{source_filename}) =~ s/^.*chapter_(\d+).*$/chapter_$1/;
 
     push @{$_[0]{'to_index'}}, [$h, $id, $text, $chapter];
+}
+
+# Override Pod::PseudoPod::HTML U<> to prevent deprecated <font> tag.
+sub start_U { $_[0]{'scratch'} .= '<span class="url">' if $_[0]{'css_tags'} }
+sub end_U   { $_[0]{'scratch'} .= '</span>' if $_[0]{'css_tags'} }
+
+# Override Pod::PseudoPod::HTML N<> to prevent deprecated <font> tag.
+sub start_N {
+  my ($self) = @_;
+  $self->{'scratch'} .= '<span class="footnote">' if ($self->{'css_tags'});
+  $self->{'scratch'} .= ' (footnote: '; 
+}
+sub end_N {
+  my ($self) = @_;
+  $self->{'scratch'} .= ')'; 
+  $self->{'scratch'} .= '</span>' if $self->{'css_tags'};
 }
 
 __END__
