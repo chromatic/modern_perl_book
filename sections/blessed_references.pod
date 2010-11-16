@@ -25,7 +25,7 @@ resolution.  That sounds more complicated than it is.
 
 The result is a minimal but working system, though its minimalism can be
 impractical for larger projects.  In particular, the default object system
-offers only partial and akward facilities for metaprogramming
+offers only partial and awkward facilities for metaprogramming
 (L<code_generation>).  Moose is a better choice for serious, modern Perl
 programs larger than a couple of hundred lines, but you will likely encounter
 bare-bones Perl 5 OO in existing code.
