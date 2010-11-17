@@ -100,7 +100,7 @@ counter example:
 
 ... though there are few obvious benefits to this approach.
 
-=head1 State versus Psuedo-State
+=head1 State versus Pseudo-State
 
 Perl 5.10 deprecated a technique from previous versions of Perl by which you
 could effectively emulate C<state>.  Using a postfix conditional which evaluates
