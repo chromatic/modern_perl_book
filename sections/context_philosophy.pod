@@ -123,7 +123,7 @@ contain.  Both calls to C<find_chores()> occur in list context:
 =end programlisting
 
 The latter example often surprises novice programmers who expect scalar context
-for the call.  C<expensive_operation> occurs is in list context, because its
+for the call.  C<expensive_operation> occurs in list context, because its
 results are assigned to a hash.  Hash assignments take a list of key/value
 pairs, which causes any the evaluation of any expressions in that list to occur
 in list context.
