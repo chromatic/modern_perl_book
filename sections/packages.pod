@@ -1,8 +1,8 @@
 =head2 Packages
 
 Z<packages>
-X<package>
-X<namespace>
+X<packages>
+X<namespaces>
 
 A I<namespace> in Perl is a mechanism which associates and encapsulates various
 named entities within a named category.  It's like your family name or a brand
@@ -15,9 +15,9 @@ sense, a package and a namespace are equivalent; the package represents the
 source code and the namespace represents the entity created when Perl parses
 that codeN<This distinction may be subtle.>.
 
-X<keywords; package>
+X<builtins; C<package>>
 
-The C<package> keyword declares a package and a namespace:
+The C<package> builtin declares a package and a namespace:
 
 =begin programlisting
 
@@ -43,8 +43,8 @@ explicitly, whether in a one-liner on a command-line or in a standalone Perl
 program or even in a F<.pm> file on disk, the current package will be the
 C<main> package.
 
-X<packages; version>
-X<$VERSION>
+X<packages; versions>
+X<C<$VERSION>>
 
 Besides a package name (C<main> or C<MyCode> or any other allowable
 identifier), a package has a version and three implicit methods, C<VERSION()>,
@@ -76,8 +76,8 @@ In 5.10 and earlier, the simplest way to declare the version of a package is:
 
 =end programlisting
 
-X<UNIVERSAL>
-X<VERSION()>
+X<C<UNIVERSAL>>
+X<C<VERSION()>>
 
 The C<VERSION()> method is available to every package; they inherit it from the
 C<UNIVERSAL> base class.  It returns the value of C<$VERSION>.  You may
@@ -97,14 +97,13 @@ method:
 =head3 Packages and Namespaces
 
 X<namespaces>
+X<packages; namespaces>
 
-Every C<package> declaration causes Perl to perform two tasks.  It creates a
-new namespace if that namespace does not already exist.  It also tells the
-parser to put all subsequent package global symbols (global variables and
-functions) into that namespace.
+Every C<package> declaration creates a new namespace if that namespace does not
+already exist and causes the parser to put all subsequent package global
+symbols (global variables and functions) into that namespace.
 
 X<namespaces; open>
-X<open namespaces>
 
 Perl has I<open namespaces>.  You can add functions or variables to a namespace
 at any point, either with a new package declaration:
@@ -145,7 +144,6 @@ Perl 5 packages are so open that you can add to them at any time during
 compilation or run time, or from separate files.  Of course, that can be
 confusing, so avoid it when possible.
 
-X<multi-level namespaces>
 X<namespaces; multi-level>
 
 Namespaces can have as many levels as you like for organizational purposes.

@@ -2,12 +2,14 @@
 
 Z<arrays>
 X<arrays>
-X<first-class>
 
 Perl 5 I<arrays> are data structures which store zero or more scalars.  They're
 I<first-class> data structures, which means that Perl 5 provides a separate
 data type at the language level.  Arrays support indexed access; that is, you
 can access individual members of the array by integer indexes.
+
+X<C<@> sigil>
+X<sigils; C<@>>
 
 The C<@> sigil denotes an array.  To declare an array:
 
@@ -19,8 +21,9 @@ The C<@> sigil denotes an array.  To declare an array:
 
 =head2 Array Elements
 
-X<variant sigils>
-X<sigils; variance>
+X<sigils; variant>
+X<C<$>; sigil>
+X<sigils; C<$>>
 
 I<Accessing> an individual element of an array in Perl 5 requires the scalar
 sigil.  Perl 5 (and you) can recognize that C<$cats[0]> refers to the C<@cats>
@@ -70,6 +73,9 @@ from the number of elements of the array (because array indexes start at 0):
         . 'and my last cat has an index of $last_index.'
 
 =end programlisting
+
+X<C<$#>; sigil>
+X<sigils; C<$#>>
 
 You can also use the special variable form of the array to find the last index;
 replace the C<@> array sigil with the slightly more unwieldy C<$#>:
@@ -176,8 +182,10 @@ version of C<my @items>.  Prefer the latter.
 
 =head2 Array Slices
 
-X<array slice>
+X<arrays; slices>
 X<slices; array>
+X<C<@>; sigil>
+X<sigils; C<@>>
 
 You can also access elements of an array in list context with a construct known
 as an I<array slice>.  Unlike scalar access of an array element, this indexing
@@ -238,10 +246,10 @@ Managing array indices can be a hassle.  Because Perl 5 can expand or contract
 arrays as necessary, the language also provides several operations to treat
 arrays as stacks, queues, and the like.
 
-X<push>
-X<builtins; push>
-X<pop>
-X<builtins; pop>
+X<arrays; C<push>>
+X<arrays; C<pop>>
+X<builtins; C<push>>
+X<builtins; C<pop>>
 
 The C<push> and C<pop> operators add and remove elements from the tail of the
 array, respectively:
@@ -263,10 +271,10 @@ argument is a list of values.  You may only C<pop> one argument at a time.
 C<push> returns the updated number of elements in the array.  C<pop> returns
 the removed element.
 
-X<shift>
-X<builtins; shift>
-X<unshift>
-X<builtins; unshift>
+X<arrays; C<shift>>
+X<arrays; C<unshift>>
+X<builtins; C<shift>>
+X<builtins; C<unshift>>
 
 Similarly, C<unshift> and C<shift> add elements to and remove an element from
 the start of an array:
@@ -293,8 +301,8 @@ context.
 
 =end sidebar
 
-X<splice>
-X<builtins; splice>
+X<arrays; C<splice>>
+X<builtins; C<splice>>
 
 C<splice> is another important--if less frequently used--array operator.  It
 removes and replaces elements from an array given an offset, a length of a list
@@ -302,11 +310,10 @@ slice, and replacements.  Both replacing and removing are optional; you may
 omit either behavior.  The C<perlfunc> description of C<splice> demonstrates
 its equivalences with C<push>, C<pop>, C<shift>, and C<unshift>.
 
-Arrays often contain elements to process in a loop; see L<looping_directives>
-for more detail about Perl 5 control flow and array processing.
+Arrays often contain elements to process in a loop (L<looping_directives>).
 
-X<each>
-X<builtins; each>
+X<arrays; C<each>>
+X<builtins; C<each>>
 
 As of Perl 5.12, you can use C<each> to iterate over an array by index and
 value:
@@ -367,14 +374,14 @@ containing the numbers one through 30, inclusive.  Remember that parentheses do
 not I<create> lists in these circumstances--they only group expressions.
 
 The solution to this flattening behavior is the same for passing arrays to
-functions and for creating nested arrays (L<references>).
+functions and for creating nested arrays (L<array_references>).
 
 =head2 Array Interpolation
 
-X<array interpolation>
+X<arrays; interpolation>
 X<interpolation; arrays>
-X<$">
-X<$LIST_SEPARATOR>
+X<C<$">>
+X<C<$LIST_SEPARATOR>>
 
 Arrays interpolate in double quoted strings as a list of the stringification of
 each item separated by the current value of the magic global C<$">.  The
@@ -391,7 +398,7 @@ is C<$LIST_SEPARATOR>.  Thus:
 
 Temporarily localizing and assigning another value to C<$"> for debugging
 purposes is very handyN<Due credit goes to Mark-Jason Dominus for demonstrating
-this example several years ago>:
+this example several years ago.>:
 
 =begin programlisting
 

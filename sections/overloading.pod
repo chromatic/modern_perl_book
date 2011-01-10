@@ -25,12 +25,13 @@ operations, and even assignment.
 X<overloading; boolean>
 X<overloading; numeric>
 X<overloading; string>
-X<overload>
-X<pragmas; overload>
+X<C<overload> pragma>
+X<pragmas; C<overload>>
 
 The most useful are often the most common: stringification, numification, and
 boolification.  The C<overload> pragma allows you to associate a function with
-an overloadable operation.  Here's a class which overloads boolean evaluation:
+an operation you can overload.  Here's a class which overloads boolean
+evaluation:
 
 =begin programlisting
 
@@ -98,9 +99,9 @@ behavior in one of two ways.  If the parent class uses overloading as shown,
 with function references provided directly, a child class I<must> override the
 parent's overloaded behavior by using C<overload> directly.
 
-Parent classes can allow their descendents more flexibility by specifying the
-I<name> of a method to call to perform the overloading, rather than hard-coding
-a function reference:
+Parent classes can allow their descendants more flexibility by specifying the
+I<name> of a method to call to implement the overloading, rather than
+hard-coding a function reference:
 
 =begin programlisting
 
@@ -114,18 +115,12 @@ a function reference:
 
 =end programlisting
 
-Child classes can override only the specified methods without having to use
-C<overload> directly themselves.
-
-=begin sidebar
-
-The use of method names produces more flexible code, but developers use code
-references much more often.  In this case, use whatever your developer team
-decides as a code standard.
-
-=end sidebar
+Child classes do not have to use C<overload> themselves; they can merely
+override the appropriate C<get_*> methods.  This is often more flexible.
 
 =head2 Uses of Overloading
+
+X<C<IO::All>>
 
 Overloading may seem like a tempting tool to use to produce symbolic shortcuts
 for new operations.  The C<IO::All> CPAN distribution pushes this idea to its

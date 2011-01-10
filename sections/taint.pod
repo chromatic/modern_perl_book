@@ -9,7 +9,6 @@ understanding and can help you avoid subtle mistakes.
 =head2 Using Taint Mode
 
 X<taint>
-X<taint mode>
 
 A feature called I<taint mode> or I<taint> adds a small amount of metadata to
 all data which comes from sources outside of your program.  Any data derived
@@ -20,7 +19,9 @@ insecurely--Perl will throw a fatal exception.
 C<perldoc perlsec> explains taint mode in copious detail among other security
 guidelines.
 
-X<-T>
+X<C<-T>; taint command-line argument>
+X<command-line arguments; C<-T>>
+X<C<%ENV>>
 
 To enable taint mode, launch your program with the C<-T> flag.  You can use
 this flag on the C<#!> line of a program only if you make the program
@@ -38,8 +39,8 @@ includes any command-line arguments, environment variables, and data from
 system calls.  Even operations such as reading from a directory handle (opened
 with C<opendir()>) produces tainted data.
 
-X<Scalar::Util>
-X<tainted()>
+X<C<Scalar::Util>>
+X<C<tainted()>>
 X<taint; checking>
 
 The C<tainted()> function from the core module C<Scalar::Util> returns true if
@@ -103,7 +104,7 @@ its insecurity.
 If this environment variable contained the current working directory, or if it
 contained relative directories, or if the directories specified had
 world-writable permissions, a clever attacker could hijack system calls to
-perform insecure operations.
+perpetrate insecure operations.
 
 =end sidebar
 
@@ -118,7 +119,8 @@ Taint mode is all or nothing.  It's either on or off.  This sometimes leads
 people to use permissive patterns to untaint data, and gives the illusion of
 security.  Review untainting carefully.
 
-X<-t>
+X<C<-t>; enable baby taint command-line argument>
+X<command-line arguments; C<-t>>
 
 Unfortunately, not all modules handle tainted data appropriately.  This is a
 bug which CPAN authors should take seriously.  If you have to make legacy code

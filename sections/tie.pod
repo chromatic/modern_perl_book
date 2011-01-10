@@ -2,34 +2,32 @@
 
 Z<tie>
 
-X<tie>
-X<keywords; tie>
-X<tying>
+X<builtins; C<tie>>
 
 Overloading (L<overloading>) lets you give classes custom behavior for specific
-types of coercions and accesses.  A similar mechanism exists for making
-variables act like built-in types (scalars, arrays, and hashes), but with more
-specific behaviors.  This mechanism uses the C<tie> keyword; it is I<tying>.
+types of coercions and accesses.  A similar mechanism exists for making classes
+act like built-in types (scalars, arrays, and hashes), but with more specific
+behaviors.  This mechanism uses the C<tie> builtin; it is I<tying>.
 
 The original use of C<tie> was to produce a hash stored on disk, rather than in
-memory.  This allowed the use of dbm files from Perl, as well as the ability to
+memory.  This allowed the use of DBM files from Perl, as well as the ability to
 access files larger than could fit in memory.  The core module C<Tie::File>
 provides a similar system by which to handle data files too large to fit in
 memory.
 
-The class to which you C<tie> a variable must conform to a specific,
-well-documented interface for the specific data type.  C<perldoc perltie> is
-the primary source of information about these interfaces, though the core
-modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> are more
-useful in practice.  Inherit from them to start, and override only those
-specific methods you need to modify.
+The class to which you C<tie> a variable must conform to a defined interface
+for the specific data type.  C<perldoc perltie> is the primary source of
+information about these interfaces, though the core modules C<Tie::StdScalar>,
+C<Tie::StdArray>, and C<Tie::StdHash> are more useful in practice.  Inherit
+from them to start, and override only those specific methods you need to
+modify.
 
 =begin sidebar
 
-The documentation and implementations of these parent classes are in the
-C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> modules.  Consequently you must
-also C<use Tie::Scalar> if you want to inherit from C<Tie::StdScalar>.  If
-C<tie()> hasn't confused you, the organization of this code might.
+C<Tie::Scalar>, C<Tie::Array>, and C<Tie::Hash> define the necessary interfaces
+to tie scalars, arrays, and hashes, but C<Tie::StdScalar>, C<Tie::StdArray>,
+and C<Tie::StdHash> provide the default implementations.  If C<tie()> hasn't
+confused you, the organization of this code might.
 
 =end sidebar
 
@@ -49,22 +47,22 @@ the class into which to tie it, and C<@args> is an optional list of arguments
 required for the tying function.  In the case of C<Tie::File>, this is the name
 of the file to which to tie the array.
 
-The tying function resembles a constructor: C<TIESCALAR>, C<TIEARRAY()>,
-C<TIEHASH()>, or C<TIEHANDLE()> for scalars, arrays, hashes, and filehandles
-respectively.  These functions return a new object which the C<tie()> keyword
-returns as well.  Most people ignore it.
+X<builtins; C<tie>>
+X<builtins; C<tied>>
 
-The C<tied()> operator returns the same object when used on a tied variable and
-C<undef> otherwise.  Again, few people use that object.  Instead, they check
-the boolean value of this object when they use C<tied()> to determine
-whether the given variable is tied.
+Tying functions resemble constructors: C<TIESCALAR>, C<TIEARRAY()>,
+C<TIEHASH()>, or C<TIEHANDLE()> for scalars, arrays, hashes, and filehandles
+respectively.  Each function returns a new object which represents the tied
+variable.  Both the C<tie> and C<tied> builtins return this object, but most
+people ignore it in favor of checking its boolification to determine whether a
+given variable is tied.
 
 =head2 Implementing Tied Variables
 
 To implement the class of a tied variable, inherit from a core module such as
 C<Tie::StdScalar>, then override the specific methods for the operations you
 want to change.  In the case of a tied scalar, you probably need to override
-C<FETCH> and C<STORE>, may need to override C<TIESCALAR()>, and probably can
+C<FETCH> and C<STORE>, may need to override C<TIESCALAR()>, and can often
 ignore C<DESTROY()>.
 
 You can create a class which logs all reads from and writes to a scalar with

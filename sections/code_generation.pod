@@ -16,12 +16,11 @@ objects, and--perhaps--higher-order functions and closures.
 X<metaprogramming>
 X<code generation>
 
-I<Metaprogramming> (or I<code generation>)--writing programs which write
-programs--is another abstraction technique.  It can be as clear as exploiting
-higher-order programming capabilities or it can be a rathole down which you
-find yourself confused and frightened.  The techniques are powerful and useful,
-however--and some of them form the basis of powerful tools such as Moose
-(L<moose>).
+Writing programs to write programs for you--I<metaprogramming> or I<code
+generation>)--offers greater possibilities for abstraction.  This can be as
+clear as exploiting higher-order programming capabilities or a rat hole down
+which you find yourself confused and frightened.  The techniques are powerful
+and useful.  For example, they form the basis of Moose (L<moose>).
 
 The C<AUTOLOAD> technique (L<autoload>) for missing functions and methods
 demonstrates this technique in a constrained form; Perl 5's function and method
@@ -29,14 +28,14 @@ dispatch system allows you to customize what happens when normal lookup fails.
 
 =head2 eval
 
-X<eval string>
-X<operators; eval>
+X<C<eval>; string>
+X<builtins; C<eval>>
 
-The simplestN<At least I<conceptually>....> technique to generate code is to
-build a string containing a snippet of valid Perl and compile it with the
-C<eval> string operator.  Unlike the exception-catching C<eval> block operator,
-C<eval> string compiles the contents of the string within the current scope,
-including the current package and lexical bindings.
+The simplest code generation technique is to build a string containing a
+snippet of valid Perl and compile it with the string C<eval> operator.  Unlike
+the exception-catching block C<eval> operator, string C<eval> compiles the
+contents of the string within the current scope, including the current package
+and lexical bindings.
 
 A common use for this technique is providing a fallback if you can't (or don't
 want to) load an optional dependency:
@@ -87,8 +86,8 @@ but not others:
 
 =end programlisting
 
-Woe to you who forget a backslash!  Good luck convincing your syntax
-highlighter what's happening!  Worse yet, each invocation of C<eval> string
+Woe to those who forget a backslash!  Good luck convincing your syntax
+highlighter what's happening!  Worse yet, each invocation of string C<eval>
 builds a new data structure representing the entire code.  Compiling code isn't
 free, either--cheaper than performing IO, perhaps, but not free.
 
@@ -126,12 +125,12 @@ without requiring additional evaluation:
 
 =end programlisting
 
-This code avoids unpleasant quoting issues.  It also performs better, as
-there's only one compilation stage, no matter how many accessors you create.
-It even uses less memory by reusing the I<same> compiled code for the bodies of
-the two functions.  All that differs is the binding to the C<$attrname>
-lexical.  In a long-running process, or with a lot of accessors, this technique
-can be very useful.
+This code avoids unpleasant quoting issues and runs more quickly, as there's
+only one compilation stage, no matter how many accessors you create.  It even
+uses less memory by sharing the compiled code between all instances of the
+closure.  All that differs is the binding to the C<$attrname> lexical.  In a
+long-running process, or with a lot of accessors, this technique can be very
+useful.
 
 X<closures; installing into symbol table>
 X<symbol tables>
@@ -150,17 +149,26 @@ Installing into symbol tables is reasonably easy, if ugly:
 
 =end programlisting
 
-The odd splatty hash looking syntax refers to a symbol in the current I<symbol
-table>, which is the place in the current namespace which contains
-globally-accessible symbols such as package globals, functions, and methods.
-Assigning a reference to a symbol table entry installs or replaces the
-appropriate entry.  To promote an anonymous function to a method, assign that
-function reference to the appropriate entry in the symbol table.
+X<C<*>; sigil>
+X<sigils; C<*>>
+X<typeglobs>
 
-This operation is a symbolic reference, so it's necessary to disable C<strict>
-reference checking for the operation.  Many programs have a subtle bug in
-similar code, as they perform the assignment and the generation in a single
-step:
+The odd syntax of an asteriskN<Think of it as a I<typeglob sigil>, where a
+I<typeglob> is Perl jargon for "symbol table".> deferencing a hash refers to a
+symbol in the current I<symbol table>, which is the place in the current
+namespace which contains globally-accessible symbols such as package globals,
+functions, and methods.  Assigning a reference to a symbol table entry installs
+or replaces the appropriate entry.  To promote an anonymous function to a
+method, assign that function reference to the appropriate entry in the symbol
+table.
+
+X<C<strict> pragma>
+X<pragmas; C<strict>>
+
+This operation refers to a symbol with a string, not a literal variable name,
+so it's a symbolic reference and it's necessary to disable C<strict> reference
+checking for the operation.  Many programs have a subtle bug in similar code,
+as they assign and generate in a single line:
 
 =begin programlisting
 
@@ -179,8 +187,6 @@ This example disables strictures for the outer block as well as the inner
 block, the body of the function itself.  Only the assignment violates strict
 reference checking, so disable strictures for that operation alone.
 
-=begin sidebar
-
 If the name of the method is a string literal in your source code, rather than
 the contents of a variable, you can assign to the relevant symbol directly
 rather than through a symbolic reference:
@@ -194,19 +200,20 @@ rather than through a symbolic reference:
 
 =end programlisting
 
-This does not violate strictures, but it does produce a "used only once"
-warning unless you explicitly suppress it within the scope.
-
-=end sidebar
+Assigning directly to the glob does not violate strictures, but mentioning each
+glob only once I<does> produce a "used only once" warning unless you explicitly
+suppress it within the scope.
 
 =head2 Compile-time Manipulation
 
-Unlike code written explicitly as code, code generated through C<eval> string
+X<builtins; C<eval>>
+
+Unlike code written explicitly as code, code generated through string C<eval>
 gets compiled at runtime.  Where you might expect a normal function to be
 available throughout the lifetime of your program, a generated function might
 not be available when you expect it.
 
-X<BEGIN>
+X<C<BEGIN>>
 
 Force Perl to run code--to generate other code--during the compilation stage by
 wrapping it in a C<BEGIN> block.  When the Perl 5 parser encounters a block
@@ -251,8 +258,8 @@ In practical terms, the difference between writing:
 
 ... is primarily one of maintainability.
 
-X<BEGIN; implicit>
-X<modules; implicit BEGIN>
+X<C<BEGIN>; implicit>
+X<modules; implicit C<BEGIN>>
 
 Within a module, any code outside of functions executes when you C<use> it,
 because of the implicit C<BEGIN> Perl adds around the C<require> and C<import>
@@ -289,20 +296,19 @@ from attempting to invoke the C<require()> method on the undefined value.
 
 Z<class_mop>
 
-X<Class::MOP>
+X<C<Class::MOP>>
 X<Moose>
 X<objects; meta object protocol>
-X<MOP>
 X<meta object protocol>
 
 Unlike installing function references to populate namespaces and to create
-methods, there's no simple built-in way to create classes in Perl 5.
+methods, there's no simple default way to create classes in Perl 5.
 Fortunately, a mature and powerful distribution is available from the CPAN to
-do just this.  C<Clas::MOP> is the library which makes C<Moose> (L<moose>)
+do just this.  C<Class::MOP> is the library which makes Moose (L<moose>)
 possible.  It provides a I<meta object protocol>--a mechanism for creating and
 manipulating an object system in terms of itself.
 
-Rather than writing your own fragile C<eval> string code or trying to poke into
+Rather than writing your own fragile string C<eval> code or trying to poke into
 symbol tables manually, you can manipulate the entities and abstractions of
 your program with objects and methods.
 
@@ -353,7 +359,7 @@ after you've created it:
 
 =end programlisting
 
-... and you can perform introspection on the metaclass:
+... and you can inspect the metaclass:
 
 =begin programlisting
 
@@ -363,5 +369,4 @@ after you've created it:
 =end programlisting
 
 You can similarly create and manipulate and introspect attributes and methods
-with C<Class::MOP::Attribute> and C<Class::MOP::Method>.  This metaobject
-protocol and the flexibility it affords powers Moose (L<moose>).
+with C<Class::MOP::Attribute> and C<Class::MOP::Method>.

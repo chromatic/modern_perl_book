@@ -9,8 +9,8 @@ I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
 functions, packages, classes, and even filehandles have names.  These names all
 start with a letter or an underscore.  They may optionally include any
 combination of letters, numbers, and underscores.  When the C<utf8> pragma
-(L<pragmas>, L<unicode>) is in effect, you may use any valid UTF-8 characters
-in identifiers.  These are all valid Perl identifiers:
+(L<unicode>) is in effect, you may use any valid UTF-8 characters in
+identifiers.  These are all valid Perl identifiers:
 
 =begin programlisting
 
@@ -20,7 +20,7 @@ in identifiers.  These are all valid Perl identifiers:
 
     sub anAwkwardName3;
 
-    # with C<use utf8;> enabled
+    # with use utf8; enabled
     package Ingy::DE<ouml>t::Net;
 
 =end programlisting
@@ -46,8 +46,8 @@ $waffleiron>.
 Perl's dynamic nature makes it possible to refer to entities with names
 generated at runtime or provided as input to a program.  These are I<symbolic
 lookups>.  You get more flexibility this way at the expense of some safety.  In
-particular, invoking functions or methods indirectly or looking up namespaced
-symbols lets you bypass Perl's parser, which is the only part of Perl that
+particular, invoking functions or methods indirectly or looking up symbols in a
+namespace lets you bypass Perl's parser, which is the only part of Perl that
 enforces these grammatical rules.  Be aware that doing so can produce confusing
 code; a hash (L<hashes>) or nested data structure (L<nested_data_structures>)
 is often clearer.
@@ -58,9 +58,9 @@ X<variables; names>
 X<scalar variables>
 X<variables; scalars>
 X<scalars>
-X<array variables>
+X<arrays>
 X<variables; arrays>
-X<hash variables>
+X<hashes>
 X<variables; hashes>
 
 I<Variable names> always have a leading sigil which indicates the type of the
@@ -77,9 +77,9 @@ character:
 
 =end programlisting
 
-These sigils offer a sort of namespacing for the variables, where it's possible
-(though often confusing) to have variables of the same name but different
-types:
+In one sense, these sigils offer namespaces of the variables, where it's
+possible (though often confusing) to have variables of the same name but
+different types:
 
 =begin programlisting
 
@@ -87,13 +87,13 @@ types:
 
 =end programlisting
 
-Perl won't get confused, but people reading the code will.
+Perl won't get confused, but people reading the code might.
 
 X<variant sigils>
 
 Perl 5 uses I<variant sigils>, where the sigil on a variable may change
-depending on what you do with it.  For example, to access a (scalar) element of
-an array or a hash, the sigil changes to the dollar sign (C<$>) character:
+depending on what you do with it.  For example, to access an element of an
+array or a hash, the sigil changes to the scalar sigil (C<$>):
 
 =begin programlisting
 
@@ -113,7 +113,7 @@ In the latter two lines, using a scalar element of an aggregate as an I<lvalue>
 scalar context (L<context_philosophy>) on the I<rvalue> (the value assigned, on
 the right side of the C<=> character).
 
-X<slicing>
+X<slices>
 
 Similarly, accessing multiple elements of a hash or an array--an operation
 known as I<slicing>--uses the at symbol (C<@>) as the leading sigil and
@@ -147,11 +147,11 @@ variables and functions.
 
 While the standard naming rules apply to package names, by convention
 user-defined packages all start with uppercase letters.  The Perl core reserves
-lowercase package names for built-in pragmas (L<pragmas>), such as C<strict>
-and C<warnings>.  This is a policy enforced by community guidelines instead of
-Perl itself.
+lowercase package names for core pragmas (L<pragmas>), such as C<strict> and
+C<warnings>.  This is a policy enforced by community guidelines instead of Perl
+itself.
 
-Namespaces do not nest in Perl 5.  The relationship between between
+Namespaces do not nest in Perl 5.  The relationship between
 C<Some::Package> and C<Some::Package::Refinement> is only a storage mechanism,
 with no further implications on the relationships between parent and child or
 sibling packages.  When Perl looks up a symbol in C<Some::Package::Refinement>,

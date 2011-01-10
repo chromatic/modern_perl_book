@@ -55,7 +55,7 @@ function in C<@_> directly.  You may manipulate these arguments as you like:
 
 =end programlisting
 
-X<$AUTOLOAD>
+X<C<$AUTOLOAD>>
 
 The I<name> of the undefined function is available in the pseudo-global
 variable C<$AUTOLOAD>:
@@ -106,8 +106,8 @@ You have other options.
 
 =head2 Redispatching Methods in AUTOLOAD()
 
-X<AUTOLOAD; redispatch>
-X<AUTOLOAD; delegation>
+X<C<AUTOLOAD>; redispatch>
+X<C<AUTOLOAD>; delegation>
 X<OO; delegation>
 X<delegation>
 X<OO; proxying>
@@ -145,11 +145,11 @@ proxied object, passing the given arguments.
 
 =head2 Generating Code in AUTOLOAD()
 
-X<AUTOLOAD; code installation>
+X<C<AUTOLOAD>; code installation>
 
 That double-dispatch trick is useful, but it is slower than necessary.  Every
-method call on the proxy must go through normal dispatch and fail, then end up
-in C<AUTOLOAD()>.  You can instead install new methods into the proxy class as
+method call on the proxy must fail normal dispatch to end up in C<AUTOLOAD()>.
+Pay that penalty only once by installing new methods into the proxy class as
 the program needs them:
 
 =begin programlisting
@@ -174,12 +174,11 @@ the program needs them:
 
 =end programlisting
 
-The body of the previous C<AUTOLOAD()> has become an anonymous function.  The
-code creates a closure (L<closures>) bound over the I<name> of the undefined
-method.  Then it installs that closure in the appropriate symbol table so that
-all subsequent dispatch to that method will find the created closure and will
-avoid C<AUTOLOAD()>.  Finally, it invokes the method directly and returns the
-result.
+The body of the previous C<AUTOLOAD()> has become an anonymous function--in
+fact, a closure (L<closures>) bound over the I<name> of the undefined method.
+Installing that closure in the appropriate symbol table allows all subsequent
+dispatch to that method to find the created closure (and avoid C<AUTOLOAD()>).
+This code finally invokes the method directly and returns the result.
 
 Though this approach is cleaner and almost always more transparent than
 handling the behavior directly in C<AUTOLOAD()>, the code I<called> by
@@ -189,8 +188,8 @@ far.  This may be an issue; certainly you can argue that it's an encapsulation
 violation to care, but it's also an encapsulation violation to let the details
 of I<how> an object provides a method to leak out into the wider world.
 
-X<tailcall>
-X<goto; tailcall>
+X<tailcalls>
+X<C<goto>; tailcall>
 
 Another idiom is to use a tailcall (L<tailcalls>) to I<replace> the current
 invocation of C<AUTOLOAD()> from C<caller()>'s memory with a call to the
@@ -219,21 +218,19 @@ C<caller()>, so it looks like the generated method was simply called directly.
 
 Z<autoload_drawbacks>
 
-X<AUTOLOAD; drawbacks>
-X<UNIVERSAL::can>
-X<can()>
-X<subs>
-X<pragmas; subs>
+X<C<AUTOLOAD>; drawbacks>
+X<C<UNIVERSAL::can>>
+X<C<can()>>
+X<C<subs> pragma>
+X<pragmas; C<subs>>
 X<functions; predeclaration>
 
 C<AUTOLOAD()> can be a useful tool in certain circumstances, but it can be
-difficult to use properly.  Consider other techniques, such as C<Moose> and
-other abstractions, instead.
-
-The naE<iuml>ve approach to generating methods at runtime means that the
-C<can()> method will not report the right information about the capabilities of
-objects and classes.  You can solve this in several ways; one of the easiest is
-to predeclare all functions you plan to AUTOLOAD with the C<subs> pragma:
+difficult to use properly.  The naE<iuml>ve approach to generating methods at
+runtime means that the C<can()> method will not report the right information
+about the capabilities of objects and classes.  You can solve this in several
+ways; one of the easiest is to predeclare all functions you plan to
+C<AUTOLOAD()> with the C<subs> pragma:
 
 =begin programlisting
 
@@ -294,7 +291,7 @@ altogether:
 
 =begin sidebar
 
-Special methods such as C<import()>, C<unimport()>, and C<VERSION()> never go
+The special methods C<import()>, C<unimport()>, and C<VERSION()> never go
 through C<AUTOLOAD()>.
 
 =end sidebar
@@ -314,4 +311,4 @@ which inherits from a class which contains its own C<AUTOLOAD()>.  This is
 almost never what you intend.  The problem compounds in several ways: mixing
 functions and methods in a single namespace is often a design flaw, inheritance
 and C<AUTOLOAD()> get complex very quickly, and reasoning about code when you
-don't know what methods objects can perform is difficult.
+don't know what methods objects provide is difficult.

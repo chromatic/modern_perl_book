@@ -20,7 +20,7 @@ system for redistributable, reusable Perl code.  It's one of--if not
 I<the>--largest archives of libraries of code in the world.
 
 X<distribution>
-X<module>
+X<modules>
 
 CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
 code.  A single distribution can contain one or more I<modules>, or
@@ -34,8 +34,8 @@ is often simpler than doing so manually.
 
 The CPAN I<adds> hundreds of registered contributors and thousands of indexed
 modules in hundreds of distributions every month.  Those numbers do not take
-into account updates.  In late August 2010, search.cpan.org reported 8396
-uploaders, 85146 modules, and 20824 distributions.
+into account updates.  At printing time in October 2010, search.cpan.org
+reported 8465 uploaders, 86470 modules, and 21116 distributions.
 
 =end sidebar
 
@@ -71,8 +71,8 @@ Distributions also have historical versions available on the CPAN, ratings,
 annotations for the documentation, and other useful information.  All of this
 is available from U<http://search.cpan.org/>.
 
-X<CPAN.pm>
-X<CPANPLUS>
+X<CPAN; C<CPAN.pm>>
+X<CPAN; C<CPANPLUS>>
 
 Modern Perl installations include two clients to connect to, search, download,
 build, test, and install CPAN distributions, CPAN.pm and CPANPLUS.  They behave
@@ -97,13 +97,11 @@ To install a distribution:
 
 =end programlisting
 
-X<Eric Wilhelm>
-X<CPAN.pm; configuration>
-X<CPAN.pm; troubleshooting>
+X<CPAN; C<CPAN.pm>>
 
-Eric Wilhelm's excellent tutorial on configuring CPAN.pm
-(U<http://learnperl.scratchcomputing.com/tutorials/configuration/>) is worth
-reading twice, especially its section on troubleshooting.
+Eric Wilhelm's tutorial on configuring
+CPAN.pmN<U<http://learnperl.scratchcomputing.com/tutorials/configuration/>>
+includes a great troubleshooting section.
 
 =begin sidebar
 
@@ -124,7 +122,7 @@ sound and graphics libraries and wrappers for shared libraries on your system.
 Modern Perl without the CPAN is just another language.  Modern Perl with the
 CPAN is amazing.
 
-=begin sidebar
+=head2 CPAN Management Tools
 
 Serious Perl developers often manage their own Perl library paths or even full
 installations.  Several projects help to make this possible.
@@ -161,5 +159,3 @@ for more details.
 All three distributions projects tend to assume a Unix-like environment (such
 as a GNU/Linux distribution or even Mac OS X). Windows users, see the Padre
 all-in-one download (U<http://padre.perlide.org/download.html>).
-
-=end sidebar

@@ -17,6 +17,8 @@ L<testing>
 
 L<handling_warnings>
 
+L<files>
+
 L<modules>
 
 L<distributions>
