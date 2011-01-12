@@ -30,7 +30,7 @@ copies of every value before you did anything to them which could possibly
 cause changes, you'd write lots of extra, unnecessary code to defend against
 well-meaning but incorrect modifications.
 
-Other times it's useful to modify a value in place sometimes as well.  If you
+Sometimes it's useful to modify a value in place as well.  If you
 have a hash full of data that you want to pass to a function to update or to
 delete a key/value pair, creating and returning a new hash for each change
 could be troublesome (to say nothing of inefficient).
