@@ -15,31 +15,23 @@ combine to form the simple--though effective--basic object system:
 
 =back
 
-X<bless>
-X<operators; bless>
+X<OO; C<bless>>
+X<builtins; C<bless>>
 
-You've already seen the first two rules with Moose.  The third rule is new.
-The C<bless> keyword associates the name of a class with a reference, such that
+You've already seen the first two rules (L<moose>).  The third rule is new.
+The C<bless> builtin associates the name of a class with a reference, such that
 any method invocation performed on that reference uses the associated class for
 resolution.  That sounds more complicated than it is.
 
-=begin sidebar
+The result is a minimal but working system, though its minimalism can be
+impractical for larger projects.  In particular, the default object system
+offers only partial and akward facilities for metaprogramming
+(L<code_generation>).  Moose is a better choice for serious, modern Perl
+programs larger than a couple of hundred lines, but you will likely encounter
+bare-bones Perl 5 OO in existing code.
 
-Though these rules explain Perl 5's underlying object system, they are somewhat
-more minimal in practice than may be practical, especially for larger projects.
-In particular, they offer few facilities for metaprogramming (using APIs to
-manipulate the program itself).
-
-Moose (L<moose>) is a better choice for serious, modern Perl programs larger
-than a couple of hundred lines, but you will likely encounter bare-bones Perl 5
-OO in existing code.
-
-=end sidebar
-
-X<constructor>
-X<OO; constructor>
-
-X<class method>
+X<OO; constructors>
+X<OO; class methods>
 X<methods; class>
 
 The default Perl 5 object constructor is a method which creates and blesses a
@@ -66,7 +58,6 @@ It's possible, but inadvisable, to hard-code the name of a class directly.  The
 parametric constructor allows reuse of the method through inheritance,
 delegation, or exporting.
 
-X<instance data>
 X<OO; instance data>
 
 The type of reference makes no difference when invoking methods on the object.
@@ -82,7 +73,7 @@ reference:
 
 =end programlisting
 
-Where classes built with Moose define their own object attributes
+Whereas classes built with Moose define their own object attributes
 declaratively, Perl 5's default OO is lax.  A class representing basketball
 players which stores jersey number and position might use a constructor like:
 
@@ -129,8 +120,8 @@ Within the body of the class, methods can access hash elements directly:
 
 Yet so can any code outside of the class.  This violates encapsulation--in
 particular, it means that you can never change the object's internal
-representation without breaking external code or performing hacks--so it's
-safer to provide accessor methods:
+representation without breaking external code or perpetuating ugly hacks--so
+it's safer to provide accessor methods:
 
 =begin programlisting
 
@@ -152,7 +143,7 @@ thing with regard to encapsulation as well as genericity.
 =head2 Method Lookup and Inheritance
 
 X<method dispatch>
-X<objects; methods>
+X<OO; methods>
 
 Besides instance data, the other part of objects is method dispatch.  Given an
 object (a blessed reference), a method call of the form:
@@ -170,15 +161,17 @@ inherits from another class, Perl looks in the parent class (and so on and so
 on) until it finds a C<number> method.  If one exists, Perl calls it with
 C<$joel> as an invocant.
 
-X<@ISA>
-X<variables; @ISA>
+X<C<@ISA>>
+X<OO; C<@ISA>>
 
-Moose classes store their inheritance information in a metamodel.  Each class
-of a blessed reference stores information about its parents in a package global
-variable named C<@ISA>.  The method dispatcher looks in a class's C<@ISA> to
-find the names of parent classes in which to search for the appropriate method.
-Thus, an C<InjuredPlayer> class might contain C<Player> in its C<@ISA>.  You
-could write this relationship as:
+Moose classes store their inheritance information in a metamodel which provides
+additional abilities on top of Perl 5's default OO system.
+
+In the default system, every class stores information about its parents in a
+package global variable named C<@ISA>.  The method dispatcher looks in a
+class's C<@ISA> to find the names of parent classes in which to search for the
+appropriate method.  Thus, an C<InjuredPlayer> class might contain C<Player> in
+its C<@ISA>.  You could write this relationship as:
 
 =begin programlisting
 
@@ -188,8 +181,8 @@ could write this relationship as:
 
 =end programlisting
 
-X<parent>
-X<pragmas; parent>
+X<C<parent> pragma>
+X<pragmas; C<parent>>
 
 Many existing Perl 5 projects do this, but it's easier and simpler to use the
 C<parent> pragma instead:
@@ -202,18 +195,18 @@ C<parent> pragma instead:
 
 =end programlisting
 
-X<base>
-X<pragmas; base>
+X<C<base> pragma>
+X<pragmas; C<base>>
 
 =begin sidebar
 
-Perl 5.10 added C<parent> to supersede the C<base> pragma added in Perl
-5.004_4.  If you can't use Moose, use C<parent>.
+Perl 5.10 added C<parent> to supersede the C<base> pragma.  If you can't use
+Moose, use C<parent>.
 
 =end sidebar
 
 X<multiple inheritance>
-X<objects; inheritance>
+X<OO; inheritance>
 
 You may inherit from multiple parent classes:
 
@@ -231,18 +224,18 @@ both C<Player> and C<Hospital::Patient>, a method call on an C<InjuredPlayer>
 instance will dispatch first to C<InjuredPlayer>, then C<Player>, then any of
 C<Player>'s parents before dispatching in C<Hospital::Patient>.
 
-X<mro>
-X<pragmas; mro>
+X<C<mro> pragma>
+X<pragmas; C<mro>>
 
-Perl 5.10 added a pragma called C<mro> which allows you to use a different
+Perl 5.10 also added a pragma called C<mro> which allows you to use a different
 method resolution scheme called C3.  While the specific details can get complex
 in the case of complex multiple inheritance hierarchies, the important
 difference is that method resolution will visit all children of a parent before
 visiting the parent.
 
-While other techniques (such as L<roles> and Moose method modifiers) allow you
-to avoid multiple inheritance, the C<mro> pragma can help avoid surprising
-behavior with method dispatch.  Enable it in your class with:
+While other techniques such as roles (L<roles>) and Moose method modifiers
+allow you to avoid multiple inheritance, the C<mro> pragma can help avoid
+surprising behavior with method dispatch.  Enable it in your class with:
 
 =begin programlisting
 
@@ -257,15 +250,14 @@ you likely never need to use this.
 
 =head2 AUTOLOAD
 
-X<AUTOLOAD>
-X<objects; AUTOLOAD>
-X<methods; AUTOLOAD>
+X<C<AUTOLOAD>>
+X<OO; C<AUTOLOAD>>
+X<methods; C<AUTOLOAD>>
 
 If there is no applicable method in the invocant's class or any of its
 superclasses, Perl 5 will next look for an C<AUTOLOAD> function in every class
 according to the selected method resolution order.  Perl will invoke any
-C<AUTOLOAD> it finds to provide or decline the desired method.  See L<autoload>
-for more details.
+C<AUTOLOAD> (L<autoload>) it finds to provide or decline the desired method.
 
 As you might expect, this can get quite complex in the face of multiple
 inheritance and multiple potential C<AUTOLOAD> targets.
@@ -301,6 +293,8 @@ arguments to it you like, but it's safest to reuse C<@_>.
 
 =begin sidebar
 
+X<C<SUPER>>
+
 Beware that this dispatcher relies on the package into which the overridden
 method was originally compiled when redispatching to a parent method.  This is
 a long-standing misfeature retained for the sake of backwards compatibility.
@@ -332,6 +326,8 @@ Do not mix functions and methods in the same class.
 
 Use a single F<.pm> file for each class, unless the class is a small,
 self-contained helper used from a single place.
+
+X<C<Any::Moose>>
 
 Consider using Moose and C<Any::Moose> instead of bare-bones Perl 5 OO; they
 can interact with vanilla classes and objects with ease, alleviate almost of

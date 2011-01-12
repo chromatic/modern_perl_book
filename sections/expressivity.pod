@@ -25,7 +25,7 @@ techniques can impede maintainability and comprehensibility.  You can write
 good code or you can make a mess.  The choice is yoursN<... but be kind to
 other people, if you must make a mess.>.
 
-Where other languages might suggest that one enforced way to perform any
+Where other languages might suggest that one enforced way to write any
 operation is the right solution, Perl allows you to optimize for your most
 important criteria.  Within the realm of your own problems, you can choose from
 several good approaches--but be mindful of readability and future
@@ -53,7 +53,7 @@ little.  For example, adding two scalars together with a numeric operator
 must treat both scalars as numeric values to produce a numeric result.  No
 matter what the contents of C<$first_num> and C<$second_num>, Perl will coerce
 them to numeric values (L<numeric_coercion>) without requiring the user or
-programmer to perform this conversion manually.  You've expressed your intent
+programmer to specify this conversion manually.  You've expressed your intent
 to treat them as numbers by choosing a numeric operator (L<numeric_operators>),
 so Perl happily handles the rest.
 
@@ -63,8 +63,8 @@ X<principle of least astonishment>
 In general, Perl programmers can expect Perl to do what you mean; this is the
 notion of I<DWIM>--I<do what I mean>.  You may also see this mentioned as the
 I<principle of least astonishment>.  Given a cursory understanding of Perl
-(especially its L<context_philosophy>), it should be possible to read a single
-unfamiliar Perl expression and understand its intent.
+(especially context; L<context_philosophy>), it should be possible to read a
+single unfamiliar Perl expression and understand its intent.
 
 X<baby Perl>
 

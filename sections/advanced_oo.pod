@@ -10,17 +10,25 @@ several principles can guide you.
 
 =head2 Favor Composition Over Inheritance
 
-Novice OO designs often overuse inheritance.  It's common to see class
-hierarchies which try to model all of the behavior for entities within the
-system in a single class.  This adds a conceptual overhead to understanding the
-system, because you have to understand the hierarchy, and it adds technical
-weight to every class, because conflicting responsibilities and methods may get
-in the way of necessary behaviors or future modifications.
+X<OO: composition>
+X<OO; inheritance>
+
+Novice OO designs often overuse inheritance for two reasons: to reuse as much
+code as possible and to exploit as much polymorphism as possible.  It's common
+to see class hierarchies which try to model all of the behavior for entities
+within the system in a single class.  This adds a conceptual overhead to
+understanding the system, because you have to understand the hierarchy.  It
+adds technical weight to every class, because conflicting responsibilities and
+methods may obstruct necessary behaviors or future modifications.
+
+X<OO; is-a>
+X<OO; has-a>
 
 The encapsulation provided by classes offers better ways to organize code.  You
 don't have to inherit from superclasses to provide behavior to users of
 objects.  A C<Car> object does not have to inherit from a C<Vehicle::Wheeled>
-object; it can contain several C<Wheel> objects as instance attributes.
+object (an I<is-a relationship>); it can contain several C<Wheel> objects as
+instance attributes (a I<has-a relationship>).
 
 Decomposing complex classes into smaller, focused entities (whether classes or
 roles) improves encapsulation and reduces the possibility that any one class or
@@ -28,6 +36,8 @@ role will grow to do too much.  Smaller, simpler, and better encapsulated
 entities are easier to understand, test, and maintain.
 
 =head2 Single Responsibility Principle
+
+X<OO; single responsibility principle>
 
 When you design your object system, model the problem in terms of
 responsibilities, or reasons why each specific entity may need to change.  For
@@ -44,19 +54,23 @@ of class-specific data and behaviors and reduce coupling between classes.
 
 =head2 Don't Repeat Yourself
 
+X<DRY>
+
 Complexity and duplication complicate development and maintenance activities.
 The DRY principle (Don't Repeat Yourself) is a reminder to seek out and to
 eliminate duplication within the system.  Duplication exists in many forms, in
-data as well as in code.  If you find yourself repeating configuration
-information, user data, and other artifacts within your system; instead, find a
-canonical, single representation of that information, then generate all of the
-other artifacts from that representation.
+data as well as in code.  Instead of repeating configuration information, user
+data, and other artifacts within your system, find a single, canonical
+representation of that information from which you can generate all of the other
+artifacts.
 
 This principle helps to reduce the possibility that important parts of your
 system can get unsynchronized, and helps you to find the optimal representation
 of the system and its data.
 
 =head2 Liskov Substitution Principle
+
+X<OO; Liskov Substitution Principle>
 
 The Liskov substitution principle suggests that subtypes of a given type
 (specializations of a class or role or subclasses of a class) should be
@@ -65,11 +79,11 @@ receive or expanding the types of data they produce.  In other words, they
 should be as general as or more general at what they expect and as specific as
 or more specific about what they produce.
 
-The easiest way to understand this is to imagine two classes, C<Dessert> and
-C<PecanPie>, in which the latter subclasses the former.  If the classes follow
-the Liskov substitution principle, you can replace every use of C<Dessert>
-objects with C<PecanPie> objects in the test suite, and everything should
-passN<See Reg Braithwaite's "IS-STRICTLY-EQUIVALENT-TO-A" for more details,
+Imagine two classes, C<Dessert> and C<PecanPie>. The latter subclasses the
+former.  If the classes follow the Liskov substitution principle, you can
+replace every use of C<Dessert> objects with C<PecanPie> objects in the test
+suite, and everything should passN<See Reg Braithwaite's
+"IS-STRICTLY-EQUIVALENT-TO-A" for more details,
 U<http://weblog.raganwald.com/2008/04/is-strictly-equivalent-to.html>.>.
 
 =head2 Subtypes and Coercions
@@ -86,11 +100,16 @@ behaves.  You can use these type annotations to verify that the data on which
 you want to work in specific functions or methods is appropriate and even to
 specify mechanisms by which to coerce data of one type to data of another type.
 
+X<C<Moose::Util::TypeConstraints>>
+X<C<MooseX::Types>>
+
 See C<Moose::Util::TypeConstraints> and C<MooseX::Types> for more information.
 
 =head2 Immutability
 
 Z<immutability>
+
+X<OO; immutability>
 
 A common pattern among programmers new to object orientation is to treat
 objects as if they were bundles of records which use methods to get and set

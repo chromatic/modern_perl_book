@@ -35,25 +35,24 @@ have a hash full of data that you want to pass to a function to update or to
 delete a key/value pair, creating and returning a new hash for each change
 could be troublesome (to say nothing of inefficient).
 
-X<reference>
 X<references>
 
 Perl 5 provides a mechanism by which you can refer to a value without making a
 copy of that value.  Any changes made to that I<reference> will update the
 value in place, such that I<all> references to that value will see the new
-value.  A reference is a first-class, built-in scalar data type in Perl 5.
-It's not a string, an array, or a hash.  It's a scalar which refers to another
-first-class data type.
+value.  A reference is a first-class scalar data type in Perl 5.  It's not a
+string, an array, or a hash.  It's a scalar which refers to another first-class
+data type.
 
 =head3 Scalar References
 
-X<references; operator>
-X<operators; reference>
-X<operators; \>
-X<reference operator>
+Z<scalar_references>
+
+X<operators; C<\>>
+X<references; C<\> operator>
 
 X<references; scalar>
-X<scalar references>
+X<scalars; references>
 
 The reference operator is the backslash (C<\>).  In scalar context, it creates
 a single reference which refers to another value.  In list context, it creates
@@ -67,7 +66,6 @@ previous example:
 
 =end programlisting
 
-X<dereference>
 X<dereferencing>
 X<references; dereferencing>
 
@@ -134,7 +132,9 @@ locations if its garbage collector has reclaimed an unreferenced reference.
 
 =head3 Array References
 
-X<array references>
+Z<array_references>
+
+X<arrays; references>
 X<references; arrays>
 
 You can also create references to arrays, or I<array references>.  This is
@@ -152,8 +152,6 @@ useful for several reasons:
 
 =back
 
-X<array references; creating>
-
 To take a reference to a declared array, use the reference operator:
 
 =begin programlisting
@@ -164,9 +162,7 @@ To take a reference to a declared array, use the reference operator:
 =end programlisting
 
 Now C<$cards_ref> contains a reference to the array.  Any modifications made
-through C<$cards_ref> will modify C<@cards> as well, and vice versa.
-
-X<array references; dereferencing>
+through C<$cards_ref> will modify C<@cards> and vice versa.
 
 You may access the entire array as a whole with the C<@> sigil, whether to
 flatten the array into a list or count the number of elements it contains:
@@ -178,10 +174,8 @@ flatten the array into a list or count the number of elements it contains:
 
 =end programlisting
 
-X<references; dereferencing arrow>
-X<< -> >>
-X<< operators; -> >>
-X<operators; dereferencing arrow>
+X<<< C<< -E<gt> >>; dereferencing arrow >>>
+X<<< operators; C<< -E<gt> >> >>>
 
 You may also access individual elements by using the dereferencing arrow
 (C<< -> >>):
@@ -199,8 +193,8 @@ an array named C<@cards_ref> from which you wish to access a single element.
 =begin sidebar
 
 An alternate syntax is available, where you prepend another scalar sigil to the
-array reference.  It's shorter, but somewhat less readable, to write
-C<< my $first_card = B<$$cards_ref[0]>; >>.
+array reference.  It's shorter, if less readable, to write C<< my $first_card =
+B<$$cards_ref[0]>; >>.
 
 =end sidebar
 
@@ -217,7 +211,6 @@ In this case, you I<may> omit the curly braces, but the visual grouping they
 (and the whitespace) provide only helps readability in this case.
 
 X<references; anonymous arrays>
-X<anonymous arrays>
 X<arrays; anonymous>
 
 You may also create anonymous arrays in place without using named arrays.
@@ -230,7 +223,7 @@ Surround a list of values or expressions with square brackets:
 =end programlisting
 
 This array reference behaves the same as named array references, except that
-anonymous array references I<always> create a new reference, while taking a
+the anonymous array brackets I<always> create a new reference, while taking a
 reference to a named array always refers to the I<same> array with regard to
 scoping.  That is to say:
 
@@ -257,12 +250,14 @@ scoping.  That is to say:
 =end programlisting
 
 ... neither C<$sunday_ref> nor C<$monday_ref> contains a dessert.  Within the
-square braces used to create the anonymous array reference, the C<@meals> array
-flattens in list context.
+square braces used to create the anonymous array, list context flattens the
+C<@meals> array.
 
 =head3 Hash References
 
-X<hash references>
+Z<hash_references>
+
+X<hashes; references>
 X<references; hashes>
 
 To create a I<hash reference>, use the reference operator on a named hash:
@@ -332,7 +327,7 @@ You may create anonymous hashes in place with curly braces:
     my $food_ref = B<{>
         'birthday cake' => 'la torta de cumpleaE<ntilde>os',
         candy           => 'dulces',
-        cupcake         => 'pancuecitos',
+        cupcake         => 'bizcochito',
         'ice cream'     => 'helado',
     B<}>;
 
@@ -353,12 +348,9 @@ parentheses for a named hash and curly brackets for an anonymous hash.
 
 Z<function_references>
 
-X<function references>
+X<functions; references>
 X<references; functions>
-X<subroutine references>
-X<references; subroutines>
 X<functions; first-class>
-X<first-class functions>
 
 Perl 5 supports I<first-class functions>.  A function is a data type just as is
 an array or hash, at least when you use I<function references>.  This feature
@@ -374,10 +366,11 @@ a function:
 
 =end programlisting
 
-X<function sigil>
-X<sigils; &>
+X<functions; sigil>
+X<sigils; C<&>>
+X<C<&>; sigil>
 
-Without the the I<function sigil> (C<&>), you will take a reference to the
+Without the I<function sigil> (C<&>), you will take a reference to the
 function's return value or values.
 
 You may also create anonymous functions:
@@ -388,7 +381,9 @@ You may also create anonymous functions:
 
 =end programlisting
 
-The use of the C<sub> keyword I<without> a name compiles the function as
+X<builtins; C<sub>>
+
+The use of the C<sub> builtin I<without> a name compiles the function as
 normal, but does not install it in the current namespace.  The only way to
 access this function is through the reference.
 
@@ -401,9 +396,9 @@ You may invoke the function reference with the dereferencing arrow:
 
 =end programlisting
 
-Think of the empty parentheses as performing an invocation dereferencing
-operation in the same way that square brackets perform an indexed lookup and
-curly brackets perform a hash lookup.  You may pass arguments to the function
+Think of the empty parentheses as denoting an invocation dereferencing
+operation in the same way that square brackets indicate an indexed lookup and
+curly brackets cause a hash lookup.  You may pass arguments to the function
 within the parentheses:
 
 =begin programlisting
@@ -413,7 +408,7 @@ within the parentheses:
 =end programlisting
 
 You may also use function references as methods with objects (L<moose>); this
-is most useful when you've already performed a method lookup:
+is most useful when you've already looked up the method:
 
 =begin programlisting
 
@@ -434,7 +429,7 @@ syntax; it has implications for implicit argument passing.
 
 Z<lexical_filehandles>
 
-X<filehandle references>
+X<filehandles; references>
 X<references; filehandles>
 
 Filehandles can be references as well.  When you use C<open>'s (and
@@ -506,8 +501,7 @@ the file opened in this inner scope:
 
 =end programlisting
 
-X<reference counting>
-X<references; counts>
+X<references; reference counting>
 
 Perl 5 uses a memory management technique known as I<reference counting>.
 Every value in the program has an attached counter.  Perl increases this
@@ -524,8 +518,8 @@ the filehandle, which closes the file.
 
 You don't have to understand the details of how all of this works.  You only
 need to understand that your actions in taking references and passing them
-around affect how Perl manages memory.  (Though see L<circular_references> for
-one caveat.)
+around affect how Perl manages memory--with one caveat
+(L<circular_references>).
 
 =head3 References and Functions
 
@@ -533,8 +527,8 @@ When you use references as arguments to functions, document your intent
 carefully.  Modifying the values of a reference from within a function may
 surprise calling code, which expects no modifications.
 
-If you need to perform a destructive operation on the contents of a reference
-without affecting the reference itself, copy its values to a new variable:
+If you need to modify the contents of a reference without affecting the
+reference itself, copy its values to a new variable:
 
 =begin programlisting
 
@@ -543,10 +537,10 @@ without affecting the reference itself, copy its values to a new variable:
 
 =end programlisting
 
-X<Storable>
-X<dclone; Storable>
+X<C<Storable>>
+X<C<dclone()>>
 
-This is only necessary in a few cases, but it's good policy to be explicit in
-those cases to avoid surprises for the callers.  If your references are more
-complex (L<nested_data_structures>), consider the use of the core module
-C<Storable> and its C<dclone> (I<deep cloning>) function.
+This is only necessary in a few cases, but explicit cloning helps avoid nasty
+surprises for the calling code.  If your references are more complex--if you
+use nested data structures--consider the use of the core module C<Storable> and
+its C<dclone> (I<deep cloning>) function.

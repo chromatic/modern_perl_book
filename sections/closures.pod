@@ -12,6 +12,8 @@ You know everything you need to know to understand closures.
 
 =begin sidebar
 
+X<I<Higher Order Perl>>
+
 Mark Jason Dominus's I<Higher Order Perl> is the canonical reference on
 first-class functions, closures, and the amazing things you can do with them.
 You can read it online at U<http://hop.perl.plover.com/>.
@@ -20,7 +22,7 @@ You can read it online at U<http://hop.perl.plover.com/>.
 
 =head2 Creating Closures
 
-X<closure>
+X<closures>
 X<functions; closures>
 
 A I<closure> is a function that closes over an outer lexical environment.
@@ -121,6 +123,8 @@ environmentN<If that's confusing to you, imagine the implementation.>.
 
 =begin sidebar
 
+X<C<PadWalker>>
+
 The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone
 who uses it and breaks your code earns the right to fix any concomitant bugs
 without your help.
@@ -169,14 +173,14 @@ element.  It delays computation until absolutely necessary.
 
 If all you ever need to do is to calculate Fibonacci numbers, this approach may
 seem overly complex.  Consider, however, that the function C<gen_fib()> can
-become amazingly generic: it initializes an array as a cache, performs some
+become amazingly generic: it initializes an array as a cache, executes some
 custom code to populate arbitrary elements of the cache, and returns the
 calculated or cached value.  If you extract the behavior which calculates
-Fibonacci values, you can use this code to perform all sorts of cached, lazy
-iterator behaviors.
+Fibonacci values, you can use this code to provide other code with
+a lazily-iterated cache.
 
-In other words, you can extract a function, C<generate_caching_closure()>, and
-rewrite C<gen_fib()> in terms of that function:
+Extract the function C<generate_caching_closure()>, and rewrite C<gen_fib()> in
+terms of that function:
 
 =begin programlisting
 
@@ -277,8 +281,10 @@ to emulate with closures:
 
 =end programlisting
 
-Now instead of calling C<make_sundae()>, you can invoke
-C<< $make_cart_sundae->() >> and pass only the interesting arguments, without
-worrying about forgetting the invariants or passing them incorrectlyN<You can
-even use C<Sub::Install> from the CPAN to install this function into your
-namespace directly.>.
+X<C<Sub::Install>>
+
+Instead of calling C<make_sundae()> directly, you can invoke the function
+reference in C<$make_cart_sundae> and pass only the interesting arguments,
+without worrying about forgetting the invariants or passing them
+incorrectlyN<You can even use C<Sub::Install> from the CPAN to import this
+function into another namespace directly.>.

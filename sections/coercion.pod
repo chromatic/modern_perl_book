@@ -10,9 +10,10 @@ If you treat a number as a string, Perl will do its best to convert that number
 into a string (and vice versa).  This process is I<coercion>.
 
 X<DWIM>
+X<dwimmery>
 
-By design, Perl attempts to do what you mean (I<DWIM> stands for I<do what I
-mean>), though you must be specific about your intentions.
+By design, Perl attempts to do what you meanN<Called I<DWIM> for I<do what I
+mean> or I<dwimmery>.>, though you must be specific about your intentions.
 
 =head2 Boolean Coercion
 
@@ -23,8 +24,9 @@ X<truthiness>
 Boolean coercion occurs when you test the I<truthiness> of a valueN<Truthiness
 is like truthfulness if you squint and say "Yeah, that's true, but....">, such
 as in a C<if> or C<while> condition.  Numeric 0 is false.  The undefined value
-is false.  The empty string is false, and so is the string C<'0'>.  The strings
-C<'0.0'> and C<'0e'> are I<true>, however.
+is false.  The empty string is false, and so is the string C<'0'>.  Strings
+which may be I<numerically> equal to zero (such as C<'0.0'>, C<'0e'>, and C<'0
+but true'>) but which are I<not> C<'0'> are I<true>.
 
 All other values are true, including the idiomatic string C<'0 but true'>.  In
 the case of a scalar with both string and numeric portions (L<dualvars>), Perl
@@ -35,7 +37,7 @@ to true in boolean context.
 =head2 String Coercion
 
 X<coercion; string>
-X<stringify>
+X<stringification>
 
 String coercion occurs when using string operators such as comparisons (C<eq>
 and C<cmp>, for example), concatenation, C<split>, C<substr>, and regular
@@ -55,7 +57,7 @@ a number into individual digits:
 
 Z<numeric_coercion>
 X<coercion; numeric>
-X<numify>
+X<numification>
 
 Numeric coercion occurs when using numeric comparison operators (such as C<==>
 and C<< <=> >>), when performing mathematic operations, and when using a value
@@ -78,7 +80,7 @@ from a string.
 The strings C<Inf> and C<Infinity> represent the infinite value and behave as
 numbers, in the sense that numifying them does not produce the "Argument isn't
 numeric" warning.  The string C<NaN> represents the concept "not a number".
-Unless you're a mathemetician, you may not care.
+Unless you're a mathematician, you may not care.
 
 =end sidebar
 
@@ -111,12 +113,12 @@ Z<cached_coercions>
 
 X<coercion; cached>
 
-Perl 5's internal storage mechanism for values allows each value to have a
-stringification and a numificationN<This is a simplification, but the gory
-details are truly gory.>.  Stringifying a numeric value does not replace the
-numeric value with a string.  Instead, it I<attaches> a stringified value to
-the value in addition to the numeric value.  The same sort of operation happens
-when numifying a string value.
+Perl 5's internal representation of values stores both a string value and a
+numeric valueN<This is a simplification, but the gory details are truly gory.>.
+Stringifying a numeric value does not replace the numeric value with a string.
+Instead, it I<attaches> a stringified value to the value in addition to the
+numeric value.  The same sort of operation happens when numifying a string
+value.
 
 You almost never need to know that this happens--perhaps once or twice a
 decade, if anecdotal evidence is admissible.
@@ -132,9 +134,9 @@ diagnose an odd situation when it occurs.
 Z<dualvars>
 
 X<coercion; dualvars>
-X<dualvar()>
-X<Scalar::Util>
-X<dualvar>
+X<C<dualvar()>>
+X<C<Scalar::Util>>
+X<dualvars>
 
 The caching of string and numeric values allows for the use of a
 rare-but-useful feature known as a I<dualvar>, or a value that has divergent

@@ -2,21 +2,22 @@
 
 Z<anonymous_functions>
 
-X<anonymous function>
 X<functions; anonymous>
 
 An I<anonymous function> is a function without a name.  It behaves like a named
 function--you can invoke it, pass arguments to it, return values from it, copy
 references to it--it can do anything a named function can do.  The difference
 is that it has no name.  You always deal with anonymous functions by reference
-(see L<references> and L<function_references>).
+(L<function_references>).
 
 =head2 Declaring Anonymous Functions
+
+X<builtins; C<sub>>
 
 You may never declare an anonymous function on its own; you must construct it
 and assign it to a variable, invoke it immediately, or pass it as an argument
 to a function, either explicitly or implicitly.  Explicit creation uses the
-C<sub> keyword with no name:
+C<sub> builtin with no name:
 
 =begin programlisting
 
@@ -56,9 +57,8 @@ The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
 returns the result of evaluating the operation.
 
 You may use anonymous functions in place of function references.  To Perl,
-they're equivalent.  Nothing I<necessitates> the use of anonymous functions to
-perform these mathematical operations, but for functions this short, there's
-little drawback to writing them this way.
+they're equivalent.  Nothing I<necessitates> the use of anonymous functions,
+but for functions this short, there's little drawback to writing them this way.
 
 You may rewrite C<%dispatch> as:
 
@@ -154,6 +154,8 @@ The C<__ANON__> in the second line of output demonstrates that the anonymous
 function has no name that Perl can identify.  Even though this can be difficult
 to debug, there are ways around this anonymity.
 
+X<C<Sub::Identify>>
+
 The CPAN module C<Sub::Identify> provides a handful of functions useful to
 inspect the names of functions, given references to them.  C<sub_name()> is the
 most immediately obvious:
@@ -171,6 +173,8 @@ most immediately obvious:
     main();
 
 =end programlisting
+
+X<C<Sub::Name>>
 
 As you might imagine, the lack of identifying information complicates debugging
 anonymous functions.  The CPAN module C<Sub::Name> can help.  Its C<subname()>
@@ -207,6 +211,8 @@ C<pseudo-anonymous>.
 =head2 Implicit Anonymous Functions
 
 X<anonymous functions; implicit>
+
+X<C<Test::Exception>>
 
 All of these anonymous function declarations have been explicit.  Perl 5 allows
 implicit anonymous functions through the use of prototypes (L<prototypes>).

@@ -15,32 +15,32 @@ Z<numeric_operators>
 
 X<operators; numeric>
 X<operators; arithmetic>
-X<operators; +>
-X<+>
-X<operators; ->
-X<->
-X<operators; *>
-X<*>
-X<operators; />
-X</>
-X<operators; **>
-X<**>
-X<operators; %>
-X<%>
-X<operators; +=>
-X<+=>
-X<operators; -=>
-X<-=>
-X<operators; *=>
-X<*=>
-X<operators; /=>
-X</=>
-X<operators; **=>
-X<**=>
-X<operators; %=>
-X<%=>
-X<operators; -->
-X<-->
+X<operators; C<+>>
+X<C<+>; numeric operator>
+X<operators; C<->>
+X<C<->; numeric operator>
+X<operators; C<*>>
+X<C<*>; numeric operator>
+X<operators; C</>>
+X<C</>; numeric operator>
+X<operators; C<**>>
+X<C<**>; numeric operator>
+X<operators; C<%>>
+X<C<%>; numeric operator>
+X<operators; C<+=>>
+X<C<+=>; numeric operator>
+X<operators; C<-=>>
+X<C<-=>; numeric operator>
+X<operators; C<*=>>
+X<C<*=>; numeric operator>
+X<operators; C</=>>
+X<C</=>; numeric operator>
+X<operators; C<**=>>
+X<C<**=>; numeric operator>
+X<operators; C<%=>>
+X<C<%=>; numeric operator>
+X<operators; C<-->>
+X<C<-->; numeric operator>
 
 The numeric operators impose numeric contexts on their operands.  They consist
 of the standard arithmetic operators such as addition (C<+>), subtraction
@@ -51,20 +51,21 @@ C<%=>), and auto-decrement (C<-->), whether postfix or prefix.
 While the auto-increment operator may seem like a numeric operator, it has
 special string behavior (L<auto_increment_operator>).
 
-X<operators; ==>
-X<==>
-X<operators; !=>
-X<!=>
-X<< operators; E<gt> >>
-X<< E<gt> >>
-X<< operators; E<lt> >>
-X<< E<lt> >>
-X<< operators; E<gt>= >>
-X<< E<gt>= >>
-X<< operators; E<lt>= >>
-X<< E<lt>= >>
-X<< operators; E<lt>=E<gt> >>
-X<< E<lt>=E<gt> >>
+X<operators; C<==>>
+X<operators; C<!=>>
+X<<< operators; C<< E<lt> >> >>>
+X<<< operators; C<< E<gt> >> >>>
+X<<< operators; C<< E<lt>= >> >>>
+X<<< operators; C<< E<gt>= >> >>>
+X<<< operators; C<< E<lt>=E<gt> >> >>>
+
+X<C<!=>; numeric comparison operator>
+X<C<==>; numeric comparison operator>
+X<<< C<< E<gt> >>; numeric comparison operator >>>
+X<<< C<< E<lt> >>; numeric comparison operator >>>
+X<<< C<< E<gt>= >>; numeric comparison operator >>>
+X<<< C<< E<lt>= >>; numeric comparison operator >>>
+X<<< C<< E<lt>=E<gt> >>; numeric comparison operator >>>
 
 Several comparison operators impose numeric contexts upon their operands.
 These are numeric equality (C<==>), numeric inequality (C<!=>), greater than
@@ -76,31 +77,31 @@ These are numeric equality (C<==>), numeric inequality (C<!=>), greater than
 
 X<operators; string>
 X<strings; operators>
-X<operators; =~>
-X<=~>
-X<operators; !~>
-X<!~>
-X<operators; .>
-X<.>
+X<operators; C<=~>>
+X<C<=~>; string operator>
+X<operators; C<!~>>
+X<C<!~>; string operator>
+X<operators; C<.>>
+X<C<.>; string operator>
 
 The string operators impose string contexts on their operands.  They consist
 of the positive and negative regular expression binding operators (C<=~> and
 C<!~>, respectively), and the concatenation operator (C<.>).
 
-X<operators; eq>
-X<eq>
-X<operators; ne>
-X<ne>
-X<operators; gt>
-X<gt>
-X<operators; lt>
-X<lt>
-X<operators; ge>
-X<ge>
-X<operators; le>
-X<le>
-X<operators; cmp>
-X<cmp>
+X<operators; C<eq>>
+X<operators; C<ne>>
+X<operators; C<gt>>
+X<operators; C<lt>>
+X<operators; C<ge>>
+X<operators; C<le>>
+X<operators; C<cmp>>
+X<C<eq>; string comparison operator>
+X<C<ne>; string comparison operator>
+X<C<gt>; string comparison operator>
+X<C<lt>; string comparison operator>
+X<C<ge>; string comparison operator>
+X<C<le>; string comparison operator>
+X<C<cmp>; string comparison operator>
 
 Several comparison operators impose string contexts upon their operands.
 These are string equality (C<eq>), string inequality (C<ne>), greater than
@@ -110,40 +111,38 @@ equal to (C<le>), and the string sort comparison operator (C<cmp>).
 =head2 Logical Operators
 
 X<operators; logical>
-X<operators; &&>
-X<&&>
-X<operators; and>
-X<and>
-X<operators; ||>
-X<||>
-X<operators; or>
-X<or>
-X<operators; //>
-X<//>
+X<operators; C<&&>>
+X<operators; C<and>>
+X<operators; C<||>>
+X<operators; C<or>>
+X<operators; C<//>>
+X<operators; C<?:>>
+X<operators; C<!>>
+X<operators; C<not>>
+X<operators; C<xor>>
+X<C<&&>; logical operator>
+X<C<and>; logical operator>
+X<C<||>; logical operator>
+X<C<or>; logical operator>
+X<C<//>; logical operator>
+X<C<?:>; logical operator>
+X<C<!>; logical operator>
+X<C<not>; logical operator>
+X<C<xor>; logical operator>
 X<operators; defined-or>
-X<defined-or>
-X<operators; ?:>
-X<?:>
-X<operators; !>
-X<!>
-X<operators; not>
-X<not>
-X<operators; xor>
-X<xor>
+X<defined-or; logical operator>
 X<short-circuiting>
 
 The logical operators treat their operands in a boolean context.  The C<&&> and
 C<and> operators test that both expressions are logically true, while the C<||>
 and C<or> operators test that either expression is true.  All four are infix
-operators.  All four perform I<short-circuiting> behavior: if the evaluation of
-one expression will make the entire expression false, Perl will not evaluate
-the other expression.  The word forms of these operators have lower precedence
-than the symbolic forms.
+operators.  All four exhibit I<short-circuiting> behavior
+(L<short_circuiting>).
 
 The defined-or operator, C<//>, tests the I<definedness> of its operand.
-Unlike C<||> which tests the truthiness of its operand, C<//> evaluates to a
-true value if its operand evaluates to a numeric zero or the empty string.  This
-is especially useful for setting default parameter values:
+Unlike C<||> which tests the truth value of its operand, C<//> evaluates to a
+true value if its operand evaluates to a numeric zero or the empty string.
+This is especially useful for setting default parameter values:
 
 =begin programlisting
 
@@ -155,7 +154,9 @@ is especially useful for setting default parameter values:
 
 =end programlisting
 
-The ternary conditional operator, C<?:>, takes three operands.  It evaluates
+X<C<?:>; ternary conditional operator>
+
+The ternary conditional operator (C<?:>) takes three operands.  It evaluates
 the first in boolean context and evaluates to the second if the first is true
 and the third otherwise:
 
@@ -169,38 +170,40 @@ The C<!> and C<not> operators return the logical opposite of the boolean value
 of their operands.  C<not> has a lower precedence than C<!>.  These are prefix
 operators.
 
-The C<xor> operator is an infix operator which performs the exclusive or of its
-operands.
+The C<xor> operator is an infix operator which evaluates to the exclusive-or of
+its operands.
 
 =head2 Bitwise Operators
 
 X<operators; bitwise>
-X<< operators; E<lt>E<lt> >>
-X<< E<lt>E<lt> >>
-X<< operators; E<gt>E<gt> >>
-X<< E<gt>E<gt> >>
-X<operators; &>
-X<&>
-X<operators; |>
-X<|>
-X<operators; ^>
-X<^>
-X<operators; &=>
-X<&=>
-X<operators; |=>
-X<|=>
-X<operators; ^=>
-X<^=>
-X<< operators; <<= >>
-X<< <<= >>
-X<<< operators; >>= >>>
-X<<< >>= >>>
+X<<< operators; C<< E<lt>E<lt> >> >>>
+X<<< operators; C<< E<gt>E<gt> >> >>>
+X<operators; C<&>>
+X<operators; C<|>>
+X<operators; C<^>>
+X<operators; C<&=>>
+X<operators; C<|=>>
+X<operators; C<^=>>
+X<<< operators; C<< E<lt>E<lt>= >> >>>
+X<<< operators; C<< E<gt>E<gt>= >> >>>
+
+X<<< C<< E<lt>E<lt> >>; bitwise operator >>>
+X<<< C<< E<gt>E<gt> >>; bitwise operator >>>
+
+X<C<&>; bitwise operator>
+X<C<|>; bitwise operator>
+X<C<^>; bitwise operator>
+X<C<&=>; bitwise operator>
+X<C<|=>; bitwise operator>
+X<C<^=>; bitwise operator>
+X<<< C<< E<lt>E<lt>= >>; bitwise operator >>>
+X<<< C<< E<gt>E<gt>= >>; bitwise operator >>>
 
 The bitwise operators treat their operands numerically at the bit level.  These
 are uncommon in most Perl 5 programs.  They consist of left shift (C<< << >>),
 right shift (C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and bitwise xor
-(C<^>), as well as their in-place variants (C<&=>, C<|=>, C<^=>, C<< <<= >>,
-and C<< >>= >>).
+(C<^>), as well as their in-place variants (C<< <<= >>, C<< >>= >>, C<&=>,
+C<|=>, and C<^=>).
 
 =head2 Special Operators
 
@@ -208,7 +211,8 @@ Z<auto_increment_operator>
 
 X<operators; auto-increment>
 X<auto-increment>
-X<operators; ++>
+X<operators; C<++>>
+X<C<++>; auto-increment operator>
 
 The auto-increment operator has a special case.  If anything has ever used a
 variable in a numeric context (L<cached_coercions>), it increments the numeric
@@ -224,20 +228,20 @@ such that C<a> increments to C<b>, C<zz> to C<aaa>, and C<a9> to C<b0>.
     $num++;
     $str++;
     is( $num,   2, 'numeric autoincrement should stay numeric' );
-    is( $str, 'b', 'string autoincrement should stay string' );
+    is( $str, 'b', 'string autoincrement should stay string'   );
 
     no warnings 'numeric';
     $num += $str;
     $str++;
 
-    is( $num, 2, 'adding $str to $num should add numeric value of $str' );
+    is( $num, 2, 'adding $str to $num should add numeric value of $str'   );
     is( $str, 1, '... but $str should now autoincrement its numeric part' );
 
 =end programlisting
 
 X<operators; repetition>
-X<operators; x>
-X<x>
+X<operators; C<x>>
+X<C<x>; repetition operator>
 
 The repetition operator (C<x>) is an infix operator.  In list context, its
 behavior changes based on its first operand.  When given a list, it evaluates
@@ -267,8 +271,8 @@ For example:
 
 X<operators; range>
 X<range>
-X<operators; ..>
-X<..>
+X<operators; C<..>>
+X<C<..>; range operator>
 
 The I<range> operator (C<..>) is an infix operator which produces a list of
 items in list context:
@@ -285,6 +289,7 @@ ranges.
 
 X<operators; flip-flop>
 X<flip-flop>
+X<C<..>; flip-flop operator>
 
 In boolean context, the range operator becomes the I<flip-flop> operator.  This
 operator returns a false value if its left operand is false, then it returns a
@@ -301,10 +306,10 @@ pedantically formatted email with:
 =end programlisting
 
 X<operators; comma>
-X<operators; ,>
-X<,>
-X<< operators; => >>
-X<< => >>
+X<operators; C<,>>
+X<C<,>; operator>
+X<<< operators; C<< =E<gt> >> >>>
+X<<< C<< =E<gt> >>; fat comma operator >>>
 
 The I<comma> operator (C<,>) is an infix operator.  In scalar context it
 evaluates its left operand then returns the value produced by evaluating its
@@ -312,4 +317,4 @@ right operand.  In list context, it evaluates both operands in left-to-right
 order.
 
 The fat comma operator (C<< => >>) behaves the same way, except that it
-automatically quotes any bareword used as its left operand (see L<hashes>).
+automatically quotes any bareword used as its left operand (L<hashes>).

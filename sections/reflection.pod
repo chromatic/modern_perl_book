@@ -13,15 +13,16 @@ in the system.
 
 C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
 systems, but many useful programs do not use objects pervasively, and many
-useful programs do not use C<Class::MOP>.  Several idioms (L<idioms>) exist for
-performing reflection effectively in the absence of such a formal system.
+useful programs do not use C<Class::MOP>.  Several idioms exist for using
+reflection effectively in the absence of such a formal system.  These are the
+most common.
 
 =head2 Checking that a Package Exists
 
 To check that a package exists somewhere in the system--that is, if some code
 somewhere has executed a C<package> directive with a given name--check that the
-package inherits from C<UNIVERSAL> by testing that the package can perform the
-C<can()> method:
+package inherits from C<UNIVERSAL> by testing that the package somehow provides
+the C<can()> method:
 
 =begin programlisting
 
@@ -42,24 +43,24 @@ and easier to understand.
 Because Perl 5 makes no strong distinction between packages and classes, the
 same technique for checking the existence of a package works for checking that
 a class exists.  There is no generic way for determining if a package is a
-class.  You I<can> check that the package C<can()> perform C<new()>, but there
+class.  You I<can> check that the package C<can()> provide C<new()>, but there
 is no guarantee that any C<new()> found is a method, nor a constructor.
 
 =head2 Checking that a Module Has Loaded
 
-X<%INC>
-X<@INC>
+X<C<%INC>>
+X<C<@INC>>
 
 If you know the name of a module, you can check that Perl believes it has
 loaded that module from disk by looking in the C<%INC> hash.  This hash
 corresponds to C<@INC>; when Perl 5 loads code with C<use> or C<require>, it
-stores an entry in C<%INC> where the key is the pathified name of the module to
-load and the value is the full path on disk to that module.  In other words,
-loading C<Modern::Perl> effectively does:
+stores an entry in C<%INC> where the key is the file path of the module to load
+and the value is the full path on disk to that module.  In other words, loading
+C<Modern::Perl> effectively does:
 
 =begin programlisting
 
-    $INC{'Modern/Perl.pm'} =>
+    $INC{'Modern/Perl.pm'} =
         '/path/to/perl/lib/site_perl/5.12.1/Modern/Perl.pm';
 
 =end programlisting
@@ -81,8 +82,8 @@ within C<%INC>:
 
 Nothing prevents other code from manipulating C<%INC> itself.  Depending on
 your paranoia level, you may check the path and the expected contents of the
-package yourself, but modules with good reasons for manipulating this variable
-(such as C<Test::MockObject> or C<Test::MockModule>) may do so.  Code which
+package yourself.  Some modules (such as C<Test::MockObject> or
+C<Test::MockModule>) manipulate C<%INC> for good reasons.  Code which
 manipulates C<%INC> for poor reasons deserves replacing.
 
 =head2 Checking the Version of a Module
@@ -133,8 +134,8 @@ function exists, but this mechanism is simpler and easier to explain.
 =head2 Checking that a Method Exists
 
 There is no generic way to determine whether a given function is a function or
-a method.  Some functions perform dual duty as both functions and methods;
-though this is overly complex and usually a mistake, it is an allowed feature.
+a method.  Some functions behave as both functions and methods; though this is
+overly complex and usually a mistake, it is an allowed feature.
 
 =head2 Rooting Around in Symbol Tables
 
@@ -148,13 +149,13 @@ a filehandle, and a function.  Perl 5 uses typeglobs internally when it looks
 up these variables.
 
 You can access a symbol table as a hash by appending double-colons to the name
-of the package.  For example, the symbol table for the MonkeyGrinder package is
-available as C<%MonkeyGrinder::>.
+of the package.  For example, the symbol table for the C<MonkeyGrinder> package
+is available as C<%MonkeyGrinder::>.
 
 You I<can> test the existence of specific symbol names within a symbol table
 with the C<exists> operator (or manipulate the symbol table to I<add> or
-I<remove>) symbols, if you like).  Yet be aware that certain changes to the
-Perl 5 core have modified what exists by default in each typeglob entry.  In
+I<remove> symbols, if you like).  Yet be aware that certain changes to the Perl
+5 core have modified what exists by default in each typeglob entry.  In
 particular, earlier versions of Perl 5 have always provided a default scalar
 variable for every typeglob created, while modern versions of Perl 5 do not.
 

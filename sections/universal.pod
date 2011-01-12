@@ -2,7 +2,7 @@
 
 Z<universal>
 
-X<UNIVERSAL>
+X<C<UNIVERSAL>>
 
 Perl 5 provides a special package which is the ancestor of all other packages
 in a very object-oriented way.  The C<UNIVERSAL> package provides a few methods
@@ -10,8 +10,8 @@ available for all other classes and objects.
 
 =head2 The isa() Method
 
-X<UNIVERSAL::isa>
-X<isa()>
+X<C<UNIVERSAL::isa>>
+X<C<isa()>>
 
 The C<isa()> method takes a string containing the name of a class or the name
 of a built-in type.  You can call it as a class method or an instance method on
@@ -34,14 +34,15 @@ Given an object C<$pepper>, a hash reference blessed into the C<Monkey> class
 
 =end programlisting
 
-X<SCALAR>
-X<ARRAY>
-X<HASH>
-X<Regexp>
-X<IO>
-X<CODE>
+X<C<SCALAR>>
+X<C<ARRAY>>
+X<C<HASH>>
+X<C<Regexp>>
+X<C<IO>>
+X<C<CODE>>
 
-Built-in types are C<SCALAR>, C<ARRAY>, C<HASH>, C<Regexp>, C<IO>, and C<CODE>.
+Perl 5's core types are C<SCALAR>, C<ARRAY>, C<HASH>, C<Regexp>, C<IO>, and
+C<CODE>.
 
 You can override C<isa()> in your own classes.  This can be useful when working
 with mock objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN,
@@ -49,14 +50,14 @@ for example) or with code that does not use roles (L<roles>).
 
 =head2 The can() Method
 
-X<UNIVERSAL::can>
-X<can()>
+X<C<UNIVERSAL::can>>
+X<C<can()>>
 
-The C<can()> method takes the string containing the name of a method (though
-see L<method_sub_equivalence> for a disclaimer).  It returns a reference to the
-function which implements that method, if it exists.  Otherwise, it returns
-false.  You may call this on a class, an object, or the name of a package.  In
-the latter case, it returns a reference to a function, not a method.
+The C<can()> method takes a string containing the name of a method.  It returns
+a reference to the function which implements that method, if it exists.
+Otherwise, it returns false.  You may call this on a class, an object, or the
+name of a package.  In the latter case, it returns a reference to a function,
+not a method.
 
 Given a class named C<SpiderMonkey> with a method named C<screech>, you can get
 a reference to the method with:
@@ -72,8 +73,12 @@ a reference to the method with:
 
 =end programlisting
 
+X<builtins; C<require>>
+
 Given a plugin-style architecture, you can test to see if a package implements
-a specific function in a similar way:
+a specific function in a similar way.  The C<UNIVERSAL::require> module adds a
+C<require()> method to the C<UNIVERSAL> namespace to invert the sense of the
+C<require> builtin:
 
 =begin programlisting
 
@@ -89,23 +94,26 @@ a specific function in a similar way:
 
 =end programlisting
 
+... though in larger programs, use C<Module::Pluggable> to handle this busy
+work for you.
+
 You can (and should) override C<can()> in your own code if you use
-C<AUTOLOAD()>.  See L<autoload_drawbacks> for a longer explanation.
+C<AUTOLOAD()> (L<autoload_drawbacks>).
 
 =begin sidebar
 
 There is I<one> known case where calling C<UNIVERSAL::can()> as a function and
 not a method is not incorrect: to determine whether a class exists in Perl 5.
 If C<UNIVERSAL::can( $classname, 'can' )> returns true, someone somewhere has
-defined a class of the name C<$classname>.  Alternately, C<Moose>'s
-introspection is much more powerful and easier to use.
+defined a class of the name C<$classname>--though consider using instead
+Moose's introspection.
 
 =end sidebar
 
 =head2 The VERSION() Method
 
-X<UNIVERSAL::VERSION>
-X<VERSION()>
+X<C<UNIVERSAL::VERSION>>
+X<C<VERSION()>>
 
 The C<VERSION()> method is available to all packages, classes, and objects.  It
 returns the value of the C<$VERSION> variable for the appropriate package or
@@ -130,17 +138,17 @@ so.
 
 =head2 The DOES() Method
 
-X<UNIVERSAL::DOES>
-X<DOES()>
+X<C<UNIVERSAL::DOES>>
+X<C<DOES()>>
 
 The C<DOES()> method is new in Perl 5.10.0.  It exists to support the use of
 roles (L<roles>) in programs.  Pass it an invocant and the name of a role, and
-the method will return true if the appropriate class somehow performs that
-role.  (The class may do so through inheritance, through delegation, through
-composition, through role application, or any other mechanism.)
+the method will return true if the appropriate class somehow does that
+role--whether through inheritance, delegation, composition, role application,
+or any other mechanism.
 
 The default implementation of C<DOES()> falls back to C<isa()>, because
-inheritance is one mechanism by which a class may perform a role.  Given a
+inheritance is one mechanism by which a class may do a role.  Given a
 C<Cappuchin>:
 
 =begin programlisting
@@ -152,8 +160,7 @@ C<Cappuchin>:
 =end programlisting
 
 You can (and should) override C<DOES()> in your own code if you manually
-provide a role or other allomorphic behavior.  Alternately, use C<Moose> and
-don't worry about the details.
+provide a role or other allomorphic behavior.
 
 =head2 Extending UNIVERSAL
 
@@ -161,16 +168,17 @@ It's tempting to store other methods in C<UNIVERSAL> to make it available to
 all other classes and objects in Perl 5.  Avoid this temptation; this global
 behavior can have subtle side effects because it is unconstrained.
 
+X<C<UNIVERSAL::ref>>
+X<C<UNIVERSAL::isa>>
+X<C<UNIVERSAL::can>>
+X<C<Perl::Critic>>
+
 With that said, occasional abuse of C<UNIVERSAL> for I<debugging> purposes and
 to fix improper default behavior may be excusable.  For example, Joshua ben
 Jore's C<UNIVERSAL::ref> distribution makes the nearly-useless C<ref()>
 operator usable.  The C<UNIVERSAL::can> and C<UNIVERSAL::isa> distributions can
-help you find and eliminate old idioms which prevent good uses of polymorphism
-(though see C<Perl::Critic> for a different approach with other advantages).
-
-The C<UNIVERSAL::require> module adds useful behavior to help load modules and
-classes at runtime--though using a distribution such as C<Module::Pluggable> is
-safer and less invasive.
+help you debug anti-polymorphism bugs (L<method_sub_equivalence>), while
+C<Perl::Critic> can detect thoseN<... and many, many other.> problems.
 
 Outside of very carefully controlled code and very specific, very pragmatic
 situations, there's no reason to put code in C<UNIVERSAL> directly.  There are

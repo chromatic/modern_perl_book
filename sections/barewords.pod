@@ -9,14 +9,16 @@ obfuscated, or bizarre fashion as you prefer.  Maintainability is a concern of
 good programmers, but the developers of Perl itself don't presume to dictate
 what I<you> find most maintainable.
 
-X<bareword>
+X<barewords>
+X<C<strict> pragma>
+X<pragmas; C<strict>>
 
-Perl's parser understands the built-in Perl keywords and operators; it knows
+Perl's parser understands the builtin Perl builtins and operators; it knows
 that C<bless()> means you're making objects (L<blessed_references>).  These are
 rarely ambiguous... but Perl programmers can add complexity to parsing by using
 I<barewords>.  A bareword is an identifier without a sigil or other attached
 disambiguation as to its intended syntactical function.  Because there's no
-Perl 5 keyword C<curse>, the literal word C<curse> appearing in source code is
+Perl 5 builtin C<curse>, the literal word C<curse> appearing in source code is
 ambiguous.  Did you intend to use a variable C<$curse> or to call a function
 C<curse()>?  The C<strict> pragma warns about use of such ambiguous barewords
 for good reason.
@@ -27,12 +29,15 @@ Even so, barewords are permissible in several places in Perl 5 for good reason.
 
 X<barewords; pros>
 X<hashes; bareword keys>
+X<C<+>; unary operator>
 
 Hash keys in Perl 5 are barewords.  These are usually not ambiguous because
 their use as keys is sufficient for the parser to identify them as the
 equivalent of single-quoted strings.  Yet be aware that attempting to evaluate
-a function call or a built-in operator (such as C<shift>) to I<produce> a hash
-key may not do what you expect, unless you disambiguate.
+a function call or a builtin operator (such as C<shift>) to I<produce> a hash
+key may not do what you expect, unless you disambiguate by providing arguments,
+using function argument parentheses, or prepending unary plus to force the
+evaluation of the builtin rather than its interpretation as a string:
 
 =begin programlisting
 
@@ -42,7 +47,7 @@ key may not do what you expect, unless you disambiguate.
     # the value produced by shift is the key
     my $value = $items{B<shift @_>}
 
-    # unary plus is also sufficient to disambiguate
+    # unary plus uses the builtin shift
     my $value = $items{B<+>shift};
 
 =end programlisting
@@ -51,7 +56,8 @@ X<packages; bareword names>
 
 Package names in Perl 5 are barewords in a sense.  Good naming conventions for
 packages (initial caps) help prevent unwanted surprises, but the parser uses a
-heuristic to determine whether C<< Package->method() >> means to call a
+complex heuristic based on the code it's already compiled within the current
+namespace to determine whether C<< Package->method() >> means to call a
 function named C<Package()> and then call the C<method()> method on its results
 or whether to treat C<Package> as the name of a package.  You can disambiguate
 this with the postfix package separator (C<::>), but that's rare and admittedly
@@ -67,17 +73,17 @@ ugly:
 
 =end programlisting
 
-X<BEGIN>
-X<DESTROY>
-X<AUTOLOAD>
-X<INIT>
-X<UNITCHECK>
-X<CHECK>
-X<END>
+X<C<BEGIN>>
+X<C<DESTROY>>
+X<C<AUTOLOAD>>
+X<C<INIT>>
+X<C<UNITCHECK>>
+X<C<CHECK>>
+X<C<END>>
 
 The special named code blocks provide their own types of barewords.
 C<AUTOLOAD>, C<BEGIN>, C<CHECK>, C<DESTROY>, C<END>, C<INIT>, and C<UNITCHECK>
-I<declare> functions, but they do not need the C<sub> keyword to do so.  You
+I<declare> functions, but they do not need the C<sub> builtin to do so.  You
 may be familiar with the idiom of writing C<BEGIN> without C<sub>:
 
 =begin programlisting
@@ -159,12 +165,12 @@ these hash values as strings.  The C<strict 'subs'> pragma makes the parser
 give an error in this situation.
 
 X<barewords; sort functions>
-X<sort>
-X<operators; sort>
+X<C<sort>>
+X<builtins; C<sort>>
 
-Finally, the built-in C<sort> operator can take as its second argument the
-I<name> of a function to use for sorting.  Instead provide a I<reference> to
-the function to use for sorting to avoid the use of barewords:
+Finally, the C<sort> builtin can take as its second argument the I<name> of a
+function to use for sorting.  Instead provide a I<reference> to the function to
+use for sorting to avoid the use of barewords:
 
 =begin programlisting
 

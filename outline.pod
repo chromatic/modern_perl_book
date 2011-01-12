@@ -104,7 +104,7 @@ numification/stringification, magical auto-increment.
 L<arrays> *
 
 Make it clear that arrays and lists are very different things.  Discuss
-distinction between indexes and length?  Avoid $# altogether?  (Don't have to
+distinction between indexes and length?  Avoid C<$#> altogether?  (Don't have to
 be comprehensive, just clear.)
 
 C<$var1, $var2, $var3> -- why arrays are useful
@@ -393,7 +393,7 @@ Features that don't work quite right but you can't quite avoid.
 
 =head3 Reference Syntax
 
-Don't double $$, collapse multiple arrows, use braces copiously.
+Don't double C<$$>, collapse multiple arrows, use braces copiously.
 
 =head3 Barewords
 

@@ -23,13 +23,10 @@ program--depending on the values of arbitrarily complex expressions.
 
 =head2 Branching Directives
 
-X<if>
-X<control flow directives; if>
-X<postfix if>
-X<postfix expressions; if>
+X<control flow directives; C<if>>
 
 The C<if> directive evaluates a conditional expression and performs the
-associated action only when the conditional expression evaluates to a true
+associated action only when the conditional expression evaluates to a I<true>
 value:
 
 =begin programlisting
@@ -64,8 +61,9 @@ form does not.  The conditional expression may also be complex:
 
 =end programlisting
 
-... though in this case, parenthesization of the expression in postfix form may
-add clarityN<It may also argue against using the postfix form.>:
+... though in this case, adding parentheses to the postfix conditional
+expression may add clarity, though the I<need> to add parentheses may argue
+against using the postfix form.
 
 =begin programlisting
 
@@ -73,13 +71,10 @@ add clarityN<It may also argue against using the postfix form.>:
 
 =end programlisting
 
-X<unless>
-X<control flow directives; unless>
-X<postfix unless>
-X<postfix expressions; unless>
+X<control flow directives; C<unless>>
 
-The C<unless> directive is a negated form of C<if>.  Perl will perform the
-requested action when the conditional expression evaluates to I<false>:
+The C<unless> directive is a negated form of C<if>.  Perl will evaluate the
+following statement when the conditional expression evaluates to I<false>:
 
 =begin programlisting
 
@@ -120,8 +115,7 @@ validation in functions (L<postfix_parameter_validation>):
 C<unless> can be difficult to read with multiple conditions; this is one reason
 it appears rarely in its block form.
 
-X<else>
-X<control flow directives; else>
+X<control flow directives; C<else>>
 
 The block forms of C<if> and C<unless> both work with the C<else> directive,
 which provides code to run when the conditional expression does not evaluate to
@@ -147,7 +141,7 @@ of each other:
 
 =begin programlisting
 
-    B<unless> ($name eq 'Bob')
+    unless ($name eq 'Bob')
     {
         say "I don't know you.";
         shun_user();
@@ -185,8 +179,7 @@ negative assertions with regard to the comparison operators you use:
 The double negative implied by the presence of the C<else> block argues against
 this particular phrasing.
 
-X<elsif>
-X<control flow directives; elsif>
+X<control flow directives; C<elsif>>
 
 One or more C<elsif> directives may follow an C<if> block form and may precede
 any single C<else>.  You may use as many C<elsif> blocks as you like, but you
@@ -261,7 +254,8 @@ select between alternative I<variables>, not only values:
 
 =begin programlisting
 
-    push @{ rand() > 0.5 ? \@red_team : \@blue_team }, Player->new();
+    push @{ rand() > 0.5 ? \@red_team : \@blue_team },
+         Player->new();
 
 =end programlisting
 
@@ -271,14 +265,14 @@ Again, weigh the benefits of clarity versus the benefits of conciseness.
 
 =head3 Short Circuiting
 
-X<short circuiting behavior>
-X<short circuiting>
+Z<short_circuiting>
+X<short-circuiting>
 
-Perl performs a type of behavior known as I<short-circuiting> when it
-encounters complex expressions--expressions composed of multiple evaluated
-expressions.  If Perl can determine that a complex expression would succeed or
-fail as a whole without evaluating every subexpression, it will not evaluate
-subsequent subexpressions.  This is most obvious with an example:
+Perl exhibits I<short-circuiting> behavior when it encounters complex
+expressions--expressions composed of multiple evaluated expressions.  If Perl
+can determine that a complex expression would succeed or fail as a whole
+without evaluating every subexpression, it will not evaluate subsequent
+subexpressions.  This is most obvious with an example:
 
 =begin programlisting
 
@@ -304,7 +298,7 @@ This example prints:
 =begin screen
 
     ok 1 - first subexpression
-    ok 2 - first subexpression
+    ok 2 - second subexpression
     Both true!
 
 =end screen
@@ -359,7 +353,7 @@ circuiting can help you to avoid errors and warnings:
 
 =begin programlisting
 
-    if (exists $barbeque{pork} and $barbeque{pork} eq 'shoulder') { ... }
+    if (defined $barbeque and $barbeque eq 'pork shoulder') { ... }
 
 =end programlisting
 
@@ -367,10 +361,9 @@ circuiting can help you to avoid errors and warnings:
 =head2 Context for Conditional Directives
 
 X<context; conditional>
-X<truth>
-X<boolean truth>
-X<true value>
-X<false value>
+X<boolean; true>
+X<true>
+X<false>
 
 The conditional directives--C<if>, C<unless>, and the ternary conditional
 operator--all evaluate an expression in boolean context
@@ -381,11 +374,12 @@ Empty hashes and arrays evaluate to false.
 
 Perl 5 has no single true value, nor a single false value.  Any number that
 evaluates to 0 is false.  This includes C<0>, C<0.0>, C<0e0>, C<0x0>, and so
-on.  The empty string (C<''>) and C<"0"> evaluate to false, but the strings
-C<"0.0">, C<"0e0">, and so on do not.  The idiom C<"0 but true"> evaluates to 0
-in numeric context but evaluates to true, thanks to its string contents.  Both
-the empty list and C<undef> evaluate to false.  Empty arrays and hashes return
-the number 0 in scalar context, so they evaluate to false in boolean context.
+on.  The empty string (C<''>) and C<'0'> evaluate to false, but the strings
+C<'0.0'>, C<'0e0'>, and so on do not.  The idiom C<'0 but true'> evaluates to 0
+in numeric context but evaluates to true in boolean context, thanks to its
+string contents.  Both the empty list and C<undef> evaluate to false.  Empty
+arrays and hashes return the number 0 in scalar context, so they evaluate to
+false in boolean context.
 
 An array which contains a single element--even C<undef>--evaluates to true in
 boolean context.  A hash which contains any elements--even a key and a value of
@@ -394,9 +388,9 @@ C<undef>--evaluates to true in boolean context.
 =begin sidebar
 
 The C<Want> module available from the CPAN allows you to detect boolean context
-within your own functions.  The core C<overloading> pragma (L<overloading>,
-L<pragmas>) allows you to specify what your own data types produce when
-evaluated in a boolean context.
+within your own functions.  The core C<overloading> pragma (L<overloading>)
+allows you to specify what your own data types produce when evaluated in a
+boolean context.
 
 =end sidebar
 
@@ -406,10 +400,8 @@ Z<looping_directives>
 
 Perl also provides several directives for looping and iteration.
 
-X<foreach>
-X<for>
-X<looping directives; for>
-X<looping directives; foreach>
+X<looping directives; C<for>>
+X<looping directives; C<foreach>>
 
 The I<foreach>-style loop evaluates an expression which produces a list and
 executes a statement or block until it has consumed that list:
@@ -425,12 +417,15 @@ executes a statement or block until it has consumed that list:
 
 This example uses the range operator to produce a list of integers from one to
 ten inclusive.  The C<foreach> directive loops over them, setting the topic
-variable (C<$_>; see L<default_scalar_variable>) to each in turn.  Perl
-executes the block for each integer and prints the squares of the integers.
+variable C<$_> (L<default_scalar_variable>) to each in turn.  Perl executes the
+block for each integer and prints the squares of the integers.
 
 =begin sidebar
 
-Perl treats the keywords C<foreach> and C<for> interchangeably.  The remainder
+X<builtins; C<for>>
+X<builtins; C<foreach>>
+
+Perl treats the builtins C<foreach> and C<for> interchangeably.  The remainder
 of the syntax of the loop determines the behavior of the loop.  Though
 experienced Perl programmers tend to refer to the loop with automatic iteration
 as a C<foreach> loop, you can use C<for> safely and clearly any place you might
@@ -448,8 +443,7 @@ Like C<if> and C<unless>, the C<for> loop has a postfix form:
 
 Similar suggestions apply for clarity and complexity.
 
-You may provide a variable to which to assign the values of the expression in
-place of the topic variable:
+A C<for> loop may use a named variable instead of the topic:
 
 =begin programlisting
 
@@ -460,10 +454,10 @@ place of the topic variable:
 
 =end programlisting
 
-If you do so, Perl will not set the topic variable (C<$_>) to the iterated
-values.  Note also that the scope of the variable C<$i> is only valid I<within>
-the loop.  If you have declared a lexical C<$i> in an outer scope, that value
-will remain outside the loop:
+In this case, Perl will not set the topic variable (C<$_>) to the iterated
+values.  As well, the scope of the variable C<$i> is only valid I<within> the
+loop.  If you have declared a lexical C<$i> in an outer scope, its value will
+persist outside the loop:
 
 =begin programlisting
 
@@ -479,7 +473,8 @@ will remain outside the loop:
 =end programlisting
 
 This localization occurs even if you do not redeclare the iteration variable as
-a lexical:
+a lexicalN<... but I<do> declare your iteration variables as lexicals to reduce
+their scope.>:
 
 =begin programlisting
 
@@ -496,13 +491,13 @@ a lexical:
 
 =head2 Iteration and Aliasing
 
-X<iteration aliasing>
+X<iteration; aliasing>
 X<aliasing>
-X<aliasing; foreach>
 X<aliasing; iteration>
 
-The C<for> loop performs I<aliasing> of the iterator variable to the values in
-the iteration such that you can modify values in place during iteration:
+The C<for> loop I<aliases> the iterator variable to the values in the iteration
+such that any modifications to the value of the iterator modifies the iterated
+value in place:
 
 =begin programlisting
 
@@ -571,10 +566,10 @@ alias C<$_> to the variable:
 
 =head2 Iteration and Scoping
 
-X<iterator scoping>
+X<iteration; scoping>
 X<scope; iterator>
-X<my $_>
-X<$_; lexical>
+X<C<my $_>>
+X<C<$_>; lexical>
 
 Iterator scoping with the topic variable provides one common source of
 confusion.  In this case, C<some_function()> modifies C<$_> on purpose.  If
@@ -596,8 +591,8 @@ this can be troublesome:
 
 =end programlisting
 
-If you I<must> use C<$_> rather than a named variable, lexicalize the topic
-variable with C<my $_>:
+If you I<must> use C<$_> rather than a named variable, make the topic variable
+lexical with C<my $_>:
 
 =begin programlisting
 
@@ -619,7 +614,7 @@ through C<$_>.
 
 =head2 The C-Style For Loop
 
-X<for loop>
+X<loops; C<for>>
 
 The C-style I<for loop> allows the programmer to manage iteration manually:
 
@@ -697,8 +692,7 @@ All three subexpressions are optional.  You may write an infinite loop with:
 
 =head2 While and Until
 
-X<while loop>
-X<loops; while>
+X<loops; C<while>>
 
 A I<while> loop continues until the loop conditional expression evaluates to a
 boolean false value.  An infinite loop is much clearer when written:
@@ -725,9 +719,8 @@ this code is also an infinite loop:
 
 X<destructive update>
 
-To prevent such an infinite C<while> loop, you must perform a I<destructive
-update> of the C<@values> array by modifying the array with each loop
-iteration:
+To prevent such an infinite C<while> loop, use a I<destructive update> of the
+C<@values> array by modifying the array with each loop iteration:
 
 =begin programlisting
 
@@ -738,11 +731,10 @@ iteration:
 
 =end programlisting
 
-X<until loop>
-X<loops; until>
+X<loops; C<until>>
 
-The I<until> loop performs the opposite test as the C<while> loop.  Iteration
-continues while the loop conditional expression evaluates to false:
+The I<until> loop reverses the sense of the test of the C<while> loop.
+Iteration continues while the loop conditional expression evaluates to false:
 
 =begin programlisting
 
@@ -788,8 +780,10 @@ the file.
 
 =begin sidebar
 
+X<builtins; C<chomp>>
+
 One common mistake is to forget to remove the line-ending characters from each
-line; use the C<chomp> keyword to do so.
+line; use the C<chomp> builtin to do so.
 
 =end sidebar
 
@@ -820,8 +814,7 @@ event loop for a GUI program or network server may be:
 
 =end programlisting
 
-X<do; looping>
-X<looping; do>
+X<loops; C<do>>
 
 For more complex expressions, use a C<do> block:
 
@@ -845,7 +838,6 @@ less powerful.
 
 =head2 Loops within Loops
 
-X<nested loops>
 X<loops; nested>
 
 You may nest loops within other loops:
@@ -915,13 +907,13 @@ overlooked option):
 
 =head2 Loop Control
 
-X<loop control>
+X<loops; control>
 
 Sometimes you need to break out of a loop before you have exhausted the
 iteration conditions.  Perl 5's standard control mechanisms--exceptions and
 C<return>--work, but you may also use I<loop control> statements.
 
-X<next>
+X<loops; C<next>>
 
 The I<next> statement restarts the loop at its next iteration.  Use it when
 you've done all you need to in the current iteration.  To loop over lines in a
@@ -938,7 +930,7 @@ character C<#>, you might write:
 
 =end programlisting
 
-X<last>
+X<loops; C<last>>
 
 The I<last> statement ends the loop immediately.  To finish processing a file
 once you've seen the ending delimiter, you might write:
@@ -954,7 +946,7 @@ once you've seen the ending delimiter, you might write:
 
 =end programlisting
 
-X<redo>
+X<loops; C<redo>>
 
 The I<redo> statement restarts the current iteration without evaluating the
 conditional again.  This can be useful in those few cases where you want to
@@ -982,7 +974,6 @@ implement a silly file parser that joins lines which end with a backslash with:
 
 ... though that's a contrived example.
 
-X<labels>
 X<loops; labels>
 
 Nested loops can make the use of these loop control statements ambiguous.  In
@@ -1011,14 +1002,15 @@ functions for clarity.
 
 =head2 Continue
 
-X<continue>
+X<loops; C<continue>>
 
 The C<continue> construct behaves like the third subexpression of a C<for>
 loop; Perl executes its block for each iteration of the loop, even when you
-exit an iteration with C<next>.  You may use it with a C<while>, C<until>,
-C<with>, or C<for> loop.  Examples of C<continue> are rare, but it's useful any
-time you want to guarantee that something occurs for every iteration of the loop
-regardless of how that iteration ends:
+exit an iteration with C<next>N<The Perl equivalent to C's C<continue> is
+C<next>.>.  You may use it with a C<while>, C<until>, C<with>, or C<for> loop.
+Examples of C<continue> are rare, but it's useful any time you want to
+guarantee that something occurs for every iteration of the loop regardless of
+how that iteration ends:
 
 =begin programlisting
 
@@ -1039,7 +1031,7 @@ regardless of how that iteration ends:
 
 Z<given_when>
 
-X<given>
+X<builtins; C<given>>
 
 The C<given> construct is a feature new to Perl 5.10.  It assigns the value of
 an expression to the topic variable and introduces a block:
@@ -1065,7 +1057,7 @@ in scalar context, and always assigns to the topic variable:
 
 =end programlisting
 
-C<given> also lexicalizes the topic variable to prevent accidental
+C<given> also makes the topic variable lexical to prevent accidental
 modification:
 
 =begin programlisting
@@ -1085,15 +1077,12 @@ modification:
 
 =end programlisting
 
-X<when>
-
+X<builtins; C<when>>
 X<topicalization>
-X<topicalize>
 
-By itself, this feature may seem less than useful.  In combination with
-C<when>, it is very useful.  Use C<given> to I<topicalize> a value.  Within the
-associated block, multiple C<when> statements match the topic against
-expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper,
+C<given> is most useful when combined with C<when>.  C<given> I<topicalizes> a
+value within a block so that multiple C<when> statements can match the topic
+against expressions using I<smart-match> semantics.  To write the Rock, Paper,
 Scissors game:
 
 =begin programlisting
@@ -1166,7 +1155,7 @@ references, arbitrary comparison expressions, and even code references.
 
 Z<tailcalls>
 X<tailcalls>
-X<goto>
+X<builtins; C<goto>>
 
 A I<tailcall> occurs when the last expression within a function is a call to
 another function--the return value of the outer function is the return
@@ -1184,9 +1173,6 @@ value of the inner function:
 
 =end programlisting
 
-X<optimization; tailcalls>
-X<tailcall optimization>
-
 In this circumstance, returning from C<greet_person()> directly to the caller
 of C<log_and_greet_person()> is more efficient than returning to
 C<log_and_greet_person()> and immediately returning I<from>
@@ -1194,14 +1180,14 @@ C<log_and_greet_person()>.  Returning directly from C<greet_person()> to the
 caller of C<log_and_greet_person()> is an optimization known as I<tailcall
 optimization>.
 
-Perl 5 will not detect cases where it could perform this optimization
+Perl 5 will not detect cases where it could apply this optimization
 automatically.
 
 =begin sidebar
 
 Heavily recursive code (L<recursion>), especially mutually recursive code, can
-quickly consume a lot of memory.  Using tailcalls reduces the memory needed for
-internal bookkeeping of control flow, which can make otherwise expensive
-algorithms tractable.
+consume a lot of memory.  Tailcalls reduce the memory needed for internal
+bookkeeping of control flow, which can make otherwise expensive algorithms
+tractable.
 
 =end sidebar
