@@ -563,8 +563,8 @@ years.  You may encounter I<numbered captures> as well:
 
 =end programlisting
 
-C<regex; C<$1>>
-C<regex; C<$2>>
+X<regex; C<$1>>
+X<regex; C<$2>>
 X<C<$1>; regex metacharacter>
 X<C<$2>; regex metacharacter>
 
