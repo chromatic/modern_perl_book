@@ -20,7 +20,68 @@ local *Text::Wrap::wrap;
 my @chapters          = get_chapter_list();
 my $anchors           = get_anchors(@chapters);
 my $table_of_contents = [];
+my %entries;
 
+sub Pod::PseudoPod::HTML::begin_X
+{
+    my $self = shift;
+    $self->emit();
+}
+
+sub Pod::PseudoPod::HTML::end_X
+{
+    my $self   = shift;
+    my $anchor = get_anchor_for_index($self->{file}, delete $self->{scratch});
+
+    $self->{scratch} = qq|<a name="$anchor" />|;
+    $self->emit();
+}
+
+sub get_anchor_for_index
+{
+    my ($file, $index) = @_;
+
+    $index =~ s/^(<[pa][^>]*>)+//g;
+    $index =~ s/^\s+//g;
+
+    my @paths = split /; /, $index;
+
+    return get_index_entry( $file, @paths );
+}
+
+sub get_index_entry
+{
+    my ($file, $name) = splice @_, 0, 2;
+    my $key           = clean_name( $name );
+    my $entry         = $entries{$key} ||= IndexEntry->new( name => $name );
+
+    if (@_)
+    {
+        my $subname    = shift;
+        my $subkey     = clean_name( $subname );
+        my $subentries = $entry->subentries();
+        $entry         = $subentries->{$subkey}
+                     ||= IndexEntry->new( name => $subname );
+
+        $key .= '__' . $subkey;
+    }
+
+    my $locations = $entry->locations();
+    (my $anchor   = $key . '_' . @$locations) =~ tr/ //d;
+
+    push @$locations, [ $file, $anchor ];
+
+    return $anchor;
+}
+
+sub clean_name
+{
+    my $name = shift;
+    $name    =~ s/<[^>]+>//g;
+    $name    =~ tr/ \\/_/;
+    $name    =~ s/([^A-Za-z0-9_])/ord($1)/eg;
+    return 'i' . $name;
+}
 
 sub Pod::PseudoPod::HTML::end_L
 {
@@ -39,9 +100,10 @@ sub Pod::PseudoPod::HTML::end_L
 
 for my $chapter (@chapters)
 {
-
     my $out_fh = get_output_fh($chapter);
     my $parser = Pod::PseudoPod::HTML->new();
+
+    $parser->nix_X_codes(0);
 
     # Set a default heading id for <h?> headings.
     # TODO. Starts at 2 for debugging. Change later.
@@ -58,12 +120,15 @@ for my $chapter (@chapters)
     $parser->no_errata_section(1);
     $parser->complain_stderr(1);
 
+    my ($file) = $chapter =~ /(chapter_\d+)./;
+    $parser->{file} = $file . '.xhtml';
+
     $parser->parse_file($chapter);
 
     push @$table_of_contents, @{$parser->{to_index}};
 }
 
-
+generate_index(\%entries);
 generate_ebook();
 
 exit;
@@ -74,7 +139,7 @@ sub get_anchors
 
     for my $chapter (@_)
     {
-        my ($file) = $chapter =~ /(chapter_\d+)./;
+        my ($file)   = $chapter =~ /(chapter_\d+)./;
         my $contents = slurp($chapter);
 
         while ($contents =~ /^=head\d (.*?)\n\nZ<(.*?)>/mg)
@@ -112,6 +177,67 @@ sub get_output_fh
     return $fh;
 }
 
+sub generate_index
+{
+    my $entries = shift;
+    my $fh      = get_output_fh( 'index.pod' );
+    my @sorted  = sort { $a cmp $b } keys %$entries;
+
+print $fh <<'END_HEADER';
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Index</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="stylesheet" href="../styles/style.css" type="text/css"/>
+</head>
+
+<body>
+END_HEADER
+
+    print_index( $fh, \%entries, \@sorted );
+
+print $fh <<'END_FOOTER';
+</body>
+</html>
+END_FOOTER
+
+}
+
+sub print_index
+{
+    my ($fh, $entries, $sorted) = @_;
+
+    print $fh "<ul>\n";
+    for my $top (@$sorted)
+    {
+        my $entry = $entries->{$top};
+
+        my $i    = 1;
+        my $name = $entry->name;
+        my $locs = join ",\n",
+            map { my ($f, $l)= @$_; qq|<a href="$f#$l">| . $i++ . '</a>' }
+            @{ $entry->locations };
+
+        print $fh "<li>$name\n$locs\n";
+
+        my $subentries = $entry->subentries;
+        if (%$subentries)
+        {
+            my @subkeys = sort { $a cmp $b } keys %$subentries;
+
+            print_index( $fh, $subentries, \@subkeys );
+        }
+        print $fh "</li>\n";
+    }
+
+    print $fh "</ul>\n";
+}
+
 
 ##############################################################################
 #
@@ -121,7 +247,6 @@ sub get_output_fh
 #
 sub generate_ebook
 {
-
     # Create EPUB object
     my $epub = EBook::EPUB->new();
 
@@ -139,11 +264,12 @@ sub generate_ebook
     # Add package content: stylesheet, font, xhtml
     $epub->copy_stylesheet('./build/html/style.css', 'styles/style.css');
 
-
     for my $chapter (@chapters)
     {
         my $name = (splitpath $chapter )[-1];
         $name =~ s/\.pod/\.xhtml/;
+
+        system( qw( tidy -m -utf8 -asxhtml -wrap 0 ), "./build/xhtml/$name" );
 
         $epub->copy_xhtml('./build/xhtml/' . $name,
                           'text/' . $name,
@@ -355,5 +481,18 @@ sub _end_head
 
     push @{$_[0]{'to_index'}}, [$h, $id, $text, $chapter];
 }
+
+package IndexEntry;
+
+sub new
+{
+    my ($class, %args) = @_;
+    bless { locations => [], subentries => {}, %args }, $class;
+}
+
+sub name       { $_[0]{name}       }
+sub locations  { $_[0]{locations}  }
+sub subentries { $_[0]{subentries} }
+
 
 __END__
