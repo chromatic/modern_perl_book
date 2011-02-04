@@ -69,8 +69,8 @@ from the number of elements of the array (because array indexes start at 0):
     my $first_index = 0;
     my $last_index  = @cats - 1;
 
-    say   'My first cat has an index of $first_index, '
-        . 'and my last cat has an index of $last_index.'
+    say   "My first cat has an index of $first_index, "
+        . "and my last cat has an index of $last_index."
 
 =end programlisting
 
@@ -85,8 +85,8 @@ replace the C<@> array sigil with the slightly more unwieldy C<$#>:
     my $first_index = 0;
     B<my $last_index  = $#cats;>
 
-    say   'My first cat has an index of $first_index, '
-        . 'and my last cat has an index of $last_index.'
+    say   "My first cat has an index of $first_index, "
+        . "and my last cat has an index of $last_index."
 
 =end programlisting
 
