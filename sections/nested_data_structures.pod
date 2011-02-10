@@ -103,6 +103,20 @@ this construct.  Sometimes using temporary variables can clarify:
 
 =end programlisting
 
+X<aliasing>
+
+You can also use C<for>'s implicit aliasing to C<$_> to avoid the use of an
+intermediate reference:
+
+=begin programlisting
+
+    my ($entree, $side) = @{ $_ }{qw( entree side )} for $meals{breakfast};
+
+=end programlisting
+
+... though clarity should be a concern.
+
+
 C<perldoc perldsc>, the data structures cookbook, gives copious examples of how
 to use the various types of data structures available in Perl.
 
