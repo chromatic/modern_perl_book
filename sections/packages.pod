@@ -1,4 +1,4 @@
-=head2 Packages
+=head1 Packages
 
 Z<packages>
 X<packages>
@@ -94,7 +94,7 @@ method:
 
 =end programlisting
 
-=head3 Packages and Namespaces
+=head2 Packages and Namespaces
 
 X<namespaces>
 X<packages; namespaces>

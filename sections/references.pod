@@ -1,4 +1,4 @@
-=head2 References
+=head1 References
 
 Z<references>
 
@@ -44,7 +44,7 @@ value.  A reference is a first-class scalar data type in Perl 5.  It's not a
 string, an array, or a hash.  It's a scalar which refers to another first-class
 data type.
 
-=head3 Scalar References
+=head2 Scalar References
 
 Z<scalar_references>
 
@@ -130,7 +130,7 @@ locations if its garbage collector has reclaimed an unreferenced reference.
 
 =end sidebar
 
-=head3 Array References
+=head2 Array References
 
 Z<array_references>
 
@@ -253,7 +253,7 @@ scoping.  That is to say:
 square braces used to create the anonymous array, list context flattens the
 C<@meals> array.
 
-=head3 Hash References
+=head2 Hash References
 
 Z<hash_references>
 
@@ -344,7 +344,7 @@ parentheses for a named hash and curly brackets for an anonymous hash.
 
 =end sidebar
 
-=head3 Function References
+=head2 Function References
 
 Z<function_references>
 
@@ -425,7 +425,7 @@ syntax; it has implications for implicit argument passing.
 
 =end sidebar
 
-=head3 Filehandle References
+=head2 Filehandle References
 
 Z<lexical_filehandles>
 
@@ -472,7 +472,7 @@ Besides the benefit of using lexical scope instead of package or global scope,
 lexical filehandles allow you to manage the lifespan of filehandles.  This is a
 nice feature of how Perl 5 manages memory and scopes.
 
-=head3 Reference Counts
+=head2 Reference Counts
 
 Z<reference_counts>
 
@@ -521,7 +521,7 @@ need to understand that your actions in taking references and passing them
 around affect how Perl manages memory--with one caveat
 (L<circular_references>).
 
-=head3 References and Functions
+=head2 References and Functions
 
 When you use references as arguments to functions, document your intent
 carefully.  Modifying the values of a reference from within a function may
