@@ -292,9 +292,10 @@ X<flip-flop>
 X<C<..>; flip-flop operator>
 
 In boolean context, the range operator becomes the I<flip-flop> operator.  This
-operator returns a false value if its left operand is false, then it returns a
-true value while its right operand is true.  Thus you could quote the body of a
-pedantically formatted email with:
+operator returns a false value until its left operand is true, then it stays
+true until its right operand is true, after which it is false again until the
+left operand is true again.  Thus you could quote the body of a pedantically
+formatted email with:
 
 =begin programlisting
 
