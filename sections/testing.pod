@@ -334,6 +334,7 @@ backend.  Consequently, the CPAN has hundreds of test modules available--and
 they can all work together in the same program.
 
 X<C<Test::Exception>>
+X<C<Test::Fatal>>
 X<C<Test::MockObject>>
 X<C<Test::MockModule>>
 X<C<Test::WWW::Mechanize>>
@@ -346,7 +347,8 @@ X<C<Devel::Cover>>
 =over 4
 
 =item * C<Test::Exception> provides functions to ensure that your code throws
-(and does not throw) exceptions appropriately.
+(and does not throw) exceptions appropriately. C<Test::Fatal> is a newer module
+with the same purpose.
 
 =item * C<Test::MockObject> and C<Test::MockModule> allow you to test difficult
 interfaces by I<mocking> (emulating but producing different results).

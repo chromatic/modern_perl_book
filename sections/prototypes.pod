@@ -193,14 +193,16 @@ constants into strings, the C<Readonly> module from the CPAN may be more
 useful.
 
 X<C<Test::Exception>>
+X<C<Test::Fatal>>
 
 The final reason to use a prototype is to extend Perl's syntax to operate on
 anonymous functions as blocks.  The CPAN module C<Test::Exception> uses this to
-good effect to provide a nice API with delayed computation.  Its C<throws_ok()>
-function takes three arguments: a block of code to run, a regular expression
-to match against the string of the exception, and an optional description of
-the test.  Suppose that you want to test Perl 5's exception message when
-attempting to invoke a method on an undefined value:
+good effect to provide a nice API with delayed computationN<C<Test::Fatal> is a
+newer alternative which may prove more popular in the future.>.  Its
+C<throws_ok()> function takes three arguments: a block of code to run, a
+regular expression to match against the string of the exception, and an
+optional description of the test.  Suppose that you want to test Perl 5's
+exception message when attempting to invoke a method on an undefined value:
 
 =begin programlisting
 
