@@ -86,6 +86,12 @@ package yourself.  Some modules (such as C<Test::MockObject> or
 C<Test::MockModule>) manipulate C<%INC> for good reasons.  Code which
 manipulates C<%INC> for poor reasons deserves replacing.
 
+X<C<Class::Load>>
+
+The C<Class::Load> module from the CPAN provides a function named
+C<is_class_loaded()> which can give better answers than checking C<%INC>
+directly.
+
 =head2 Checking the Version of a Module
 
 There is no guarantee that a given module provides a version.  Even so, all
