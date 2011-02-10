@@ -381,7 +381,7 @@ sub add_cover
       . qq[<style type="text/css"> img { max-width: 100%; }</style>\n]
       . qq[</head>\n]
       . qq[<body>\n]
-      . qq[    <img alt="Modern Perl" src="../images/cover.png" />\n]
+      . qq[    <p><img alt="Modern Perl" src="../images/cover.png" /></p>\n]
       . qq[</body>\n]
       . qq[</html>\n\n];
 
@@ -445,7 +445,25 @@ sub start_Document
 }
 
 # Override Pod::PseudoPod::HTML close Z<> generated <a> tags.
-sub end_Z { $_[0]{'scratch'} .= '"/>' }
+sub start_Z { $_[0]{'scratch'} .= '<a id="' }
+sub end_Z   { $_[0]{'scratch'} .= '"/>' }
+
+# Override Pod::PseudoPod::HTML U<> to prevent deprecated <font> tag.
+sub start_U { $_[0]{'scratch'} .= '<span class="url">' if $_[0]{'css_tags'} }
+sub end_U   { $_[0]{'scratch'} .= '</span>' if $_[0]{'css_tags'} }
+
+# Override Pod::PseudoPod::HTML N<> to prevent deprecated <font> tag.
+sub start_N {
+  my ($self) = @_;
+  $self->{'scratch'} .= '<span class="footnote">' if ($self->{'css_tags'});
+  $self->{'scratch'} .= ' (footnote: ';
+}
+
+sub end_N {
+  my ($self) = @_;
+  $self->{'scratch'} .= ')';
+  $self->{'scratch'} .= '</span>' if $self->{'css_tags'};
+}
 
 # Override Pod::PseudoPod::HTML to escape all XML entities.
 sub handle_text { $_[0]{'scratch'} .= encode_entities($_[1]); }
