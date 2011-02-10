@@ -56,15 +56,21 @@ named C<$VERSION>.  By convention, versions tend to be a series of integers
 separated by dots, as in C<1.23> or C<1.1.10>, where each segment is an
 integer, but there's little beyond convention.
 
+X<version numbers>
+
 Perl 5.12 introduced a new syntax intended to simplify version numbers.  If you
 can write code that does not need to run on earlier versions of Perl 5, you can
-avoid a lot of unnecessary complexity:
+avoid a lot of unnecessary complexity. Be aware that these version numbers must
+have a leading C<v> character and at least three integer components separated
+by periods:
 
 =begin programlisting
 
-    package MyCode 1.2.1;
+    package MyCode v1.2.1;
 
 =end programlisting
+
+See C<perldoc version::Internals> for more details about strict version numbers.
 
 In 5.10 and earlier, the simplest way to declare the version of a package is:
 
