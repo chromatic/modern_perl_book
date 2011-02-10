@@ -95,10 +95,21 @@ method:
 
     my $version = Some::Plugin->VERSION();
 
-    die "Your plugin $version is too old"
-        unless $version > 2;
+=end programlisting
+
+If you provide a version number as an argument, this method will throw an
+exception unless the version of the module is equal to or greater than the
+argument:
+
+=begin programlisting
+
+    # require at least 2.1
+    Some::Plugin->VERSION( 2.1 );
 
 =end programlisting
+
+    die "Your plugin $version is too old"
+        unless $version > 2;
 
 =head2 Packages and Namespaces
 
