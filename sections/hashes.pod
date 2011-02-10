@@ -459,7 +459,31 @@ meaningless to Perl programs.  You can safely ignore it.
 In list context, a hash evaluates to a list of key/value pairs similar to what
 you receive from the C<each> operator.  However, you I<cannot> iterate over
 this list the same way you can iterate over the list produced by C<each>, as
-the loop will loop forever, unless the hash is empty.
+the loop will loop forever, unless the hash is empty:
+
+=begin programlisting
+
+    # infinite loop
+    while (my ($key, $value) = %hash)
+    {
+        ...
+    }
+
+=end programlisting
+
+You I<can> loop over the list of keys and values with a C<for> loop, but the
+iterator variable will get a key on one iteration and its value on the next,
+and so forth, because Perl will flatten the hash into a single list of
+interleaved keys and values:
+
+=begin programlisting
+
+    for (%hash)
+    {
+        ...
+    }
+
+=end programlisting
 
 =head2 Hash Idioms
 
