@@ -479,7 +479,16 @@ You can even open filehandles to directories and files:
 =end programlisting
 
 Both C<Path::Class::Dir> and C<Path::Class::File> offer further useful
-behaviors.
+behaviors--though beware that if you use a C<Path::Class> object of some kind
+with other Perl 5 code such as an operator or function which expects a string
+containing a file path, you need to stringify the object yourself. This is a
+persistent but minor annoyance.
+
+=begin programlisting
+
+    my $contents = read_from_filename( "$lunch" );
+
+=end programlisting
 
 =head2 File Manipulation
 
