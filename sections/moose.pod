@@ -539,7 +539,7 @@ explicitly mark that it does the role:
     has 'name',        is => 'ro', isa => 'Str';
     has 'diet',        is => 'rw', isa => 'Str';
     has 'birth_year',  is => 'ro', isa => 'Int',
-                       default => (localtime)[5] + 1900;
+                       default => sub { (localtime)[5] + 1900 };
 
     B<with 'LivingBeing';>
 
