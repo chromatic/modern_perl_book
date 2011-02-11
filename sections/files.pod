@@ -312,8 +312,8 @@ X<C<FileHandle>>
 X<C<FileHandle>; C<autoflush()>>
 
 In lieu of the global variable, use the C<autoflush()> method on a lexical
-filehandle.  Be sure to load C<FileHandle> first, as you cannot call methods on
-lexical filehandles otherwise:
+filehandle.  Be sure to load C<FileHandle> first, as you cannot call the
+methods it provides on lexical filehandles otherwise:
 
 =begin programlisting
 
@@ -330,11 +330,13 @@ lexical filehandles otherwise:
 X<C<FileHandle>; C<input_line_number()>>
 X<C<FileHandle>; C<input_record_separator()>>
 X<C<IO::Handle>>
+X<C<IO::Seekable>>
 
 Once you have loaded C<FileHandle>, you may also use its C<input_line_number()>
 and C<input_record_separator()> methods instead of C<$.> and C<$/>
-respectively.  See C<perldoc FileHandle> and C<perldoc IO::Handle> for more
-information.
+respectively.  To use the C<seek()> method on filehandles, load
+C<IO::Seekable>, and so on.  See C<perldoc FileHandle>, C<perldoc IO::Handle>,
+and C<perldoc IO::Seekable> for more information.
 
 =begin sidebar
 
