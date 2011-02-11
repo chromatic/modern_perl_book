@@ -93,8 +93,8 @@ sub Pod::PseudoPod::HTML::end_L
         $self->{scratch} .=
             '<a href="'
           . $anchors->{$link}[0]
-          . "#$link\">"
-          . $anchors->{$link}[1] . '</a>';
+          . '#' . $link . '">'
+          . $anchors->{$link}[1] . "</a>($link)";
     }
 }
 
@@ -268,8 +268,9 @@ sub generate_ebook
     {
         my $name = (splitpath $chapter )[-1];
         $name =~ s/\.pod/\.xhtml/;
+        my $file = "./build/xhtml/$name";
 
-        system( qw( tidy -m -utf8 -asxhtml -wrap 0 ), "./build/xhtml/$name" );
+        system( qw( tidy -q -m -utf8 -asxhtml -wrap 0 ), $file );
 
         $epub->copy_xhtml('./build/xhtml/' . $name,
                           'text/' . $name,
@@ -445,7 +446,7 @@ sub start_Document
 }
 
 # Override Pod::PseudoPod::HTML close Z<> generated <a> tags.
-sub start_Z { $_[0]{'scratch'} .= '<a id="' }
+sub start_Z { $_[0]{'scratch'} .= '<div id="' }
 sub end_Z   { $_[0]{'scratch'} .= '"/>' }
 
 # Override Pod::PseudoPod::HTML U<> to prevent deprecated <font> tag.
