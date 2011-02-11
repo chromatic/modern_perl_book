@@ -9,7 +9,7 @@ Perl's homepage at U<http://www.perl.org/> hosts documentation, source code,
 tutorials, mailing lists, and several important community projects.  If you're
 new to Perl, the Perl beginners mailing list is a friendly place to ask novice
 questions and get accurate and helpful answers.  See
-U<http://beginners.perl.org/>.
+U<http://learn.perl.org/faq/beginners.html>.
 
 An important domain of note is U<http://dev.perl.org/>, a central site for core
 development of Perl 5, Perl 6N<The main Perl 6 site is
