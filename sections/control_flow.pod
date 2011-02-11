@@ -1005,12 +1005,12 @@ functions for clarity.
 X<loops; C<continue>>
 
 The C<continue> construct behaves like the third subexpression of a C<for>
-loop; Perl executes its block for each iteration of the loop, even when you
-exit an iteration with C<next>N<The Perl equivalent to C's C<continue> is
-C<next>.>.  You may use it with a C<while>, C<until>, C<with>, or C<for> loop.
-Examples of C<continue> are rare, but it's useful any time you want to
-guarantee that something occurs for every iteration of the loop regardless of
-how that iteration ends:
+loop; Perl executes its block before subsequent iterations of a loop, whether
+due to normal loop repetition or premature re-iteration from C<next>N<The Perl
+equivalent to C's C<continue> is C<next>.>.  You may use it with a C<while>,
+C<until>, C<with>, or C<for> loop.  Examples of C<continue> are rare, but it's
+useful any time you want to guarantee that something occurs for every iteration
+of the loop regardless of how that iteration ends:
 
 =begin programlisting
 
@@ -1026,6 +1026,9 @@ how that iteration ends:
     }
 
 =end programlisting
+
+Be aware that a C<continue> block does I<not> execute when control flow leaves
+a loop due to C<last> or C<redo>.
 
 =head2 Given/When
 
