@@ -30,10 +30,11 @@ sub Pod::PseudoPod::HTML::begin_X
 
 sub Pod::PseudoPod::HTML::end_X
 {
-    my $self   = shift;
-    my $anchor = get_anchor_for_index($self->{file}, delete $self->{scratch});
+    my $self    = shift;
+    my $scratch = delete $self->{scratch};
+    my $anchor  = get_anchor_for_index($self->{file}, $scratch);
 
-    $self->{scratch} = qq|<a name="$anchor" />|;
+    $self->{scratch} = qq|<div id="$anchor" />|;
     $self->emit();
 }
 
@@ -447,7 +448,7 @@ sub start_Document
 
 # Override Pod::PseudoPod::HTML close Z<> generated <a> tags.
 sub start_Z { $_[0]{'scratch'} .= '<div id="' }
-sub end_Z   { $_[0]{'scratch'} .= '"/>' }
+sub end_Z   { $_[0]{'scratch'} .= '"/>'; $_[0]->emit() }
 
 # Override Pod::PseudoPod::HTML U<> to prevent deprecated <font> tag.
 sub start_U { $_[0]{'scratch'} .= '<span class="url">' if $_[0]{'css_tags'} }
