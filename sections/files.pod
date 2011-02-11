@@ -40,10 +40,11 @@ X<C<__END__>>
 
 The special C<DATA> filehandle represents the current file.  When Perl finishes
 compiling the file, it leaves the package global C<DATA> available and open at
-the end of the compilation unit.  If you store string data after C<__DATA__> or
-C<__END__>, you can read that from the C<DATA> filehandle.  This is useful for
-short, self-contained programs.  C<perldoc perldata> describes this feature in
-more detail.
+the end of the compilation unit I<if> the file has a C<__DATA__> or C<__END__>
+section at the end.  If you store string data after C<__DATA__> or C<__END__>,
+you can read that from the C<DATA> filehandle.  This is useful for short,
+self-contained programs.  C<perldoc perldata> describes this feature in more
+detail.
 
 =end sidebar
 
