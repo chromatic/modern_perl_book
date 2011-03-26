@@ -273,7 +273,7 @@ sub generate_ebook
 
         $epub->copy_xhtml('./build/xhtml/' . $name,
                           'text/' . $name,
-                          linear => 'no');
+                          linear => 'yes');
     }
 
     # Add Pod headings to table of contents.
