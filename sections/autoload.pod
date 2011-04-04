@@ -124,7 +124,7 @@ from the former.  This is an interesting and effective approach to logging:
     sub new
     {
         my ($class, $proxied) = @_;
-        bless \$class, $proxied;
+        bless \$proxied, $class;
     }
 
     sub AUTOLOAD
