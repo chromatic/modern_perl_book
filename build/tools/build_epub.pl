@@ -274,8 +274,7 @@ sub generate_ebook
         system( qw( tidy -q -m -utf8 -asxhtml -wrap 0 ), $file );
 
         $epub->copy_xhtml('./build/xhtml/' . $name,
-                          'text/' . $name,
-                          linear => 'no');
+                          'text/' . $name );
     }
 
     # Add Pod headings to table of contents.
@@ -396,7 +395,7 @@ sub add_cover
     close $cover_fh;
 
     # Add the cover page to the ePub doc.
-    $epub->copy_xhtml($cover_filename, 'text/cover.xhtml', linear => 'no');
+    $epub->copy_xhtml($cover_filename, 'text/cover.xhtml' );
 
     # Add the cover to the OPF guide.
     my $guide_options = {
