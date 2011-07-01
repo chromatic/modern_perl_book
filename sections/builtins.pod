@@ -1,0 +1,40 @@
+=head0 Builtins
+
+Z<style>
+
+=for author
+
+describe perlfunc, perldoc -f
+note important features:
+    - arguments
+    - context
+    - lvalue/rvalue concerns
+
+This could get large.  Here are several divisions of useful operators.
+
+(What did I cover elsewhere?)
+
+string funcs
+    - chomp, index, lc, lcfirst, length, reverse, index, substr, tr///
+
+numeric funcs
+    - brief mention should suffice
+
+array funcs
+    - covered in arrays section
+
+list funcs
+    - grep, join, map, qw(), reverse, sort
+
+hash funcs
+    - covered in hashes section
+
+IO funcs
+    - binmode, close, opendir/closedir, print, readdir, say, select
+    - -X, glob
+    - system, fork, exec
+
+time/date handling
+    - time, localtime, gmtime
+
+=end for

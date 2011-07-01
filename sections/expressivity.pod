@@ -1,68 +1,127 @@
-=head3 Expressivity
+=head1 Expressivity
 
 Z<expressivity>
 
-Perl takes many cues from human language.  Larry Wall's studies in linguistics
-informed many of Perl's initial (and ongoing) design decisions.  As with
-natural language, there are many ways to write a Perl program.  You may write
-in a straightforward, top-to-bottom style.  You may write many small and
-independent functions.  You may model your problem with classes and objects.
-You may eschew or embrace advanced features, depending on your project's style,
-the available time to create the program, the expected maintenance burden, or
-even your own personal sense of expression.
+X<Wall, Larry>
+X<Larry Wall>
+
+Before Larry Wall created Perl, he studied linguistics and human languages.
+His experiences continue to influence Perl's design.  There are many ways to
+write a Perl program depending on your project's style, the available time to
+create the program, the expected maintenance burden, or even your own personal
+sense of expression.  You may write in a straightforward, top-to-bottom style.
+You may write many small and independent functions.  You may model your problem
+with classes and objects.  You may eschew or embrace advanced features.
 
 X<TIMTOWTDI>
-Perl hackers have a slogan for this: I<TIMTOWTDI>, or "There's more than one
-way to do it!"
+X<Tim Toady>
+
+Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounced "Tim Toady", or
+"There's more than one way to do it!"
 
 Where this expressivity can provide a large palette with which master craftsman
 can create amazing and powerful edifices, unwise conglomerations of various
-techniques can impede maintainability and comprehensibility.
+techniques can impede maintainability and comprehensibility.  You can write
+good code or you can make a mess.  The choice is yoursN<... but be kind to
+other people, if you must make a mess.>.
 
-Where other languages might suggest that one enforced way to perform any
+Where other languages might suggest that one enforced way to write any
 operation is the right solution, Perl allows you to optimize for your most
 important criteria.  Within the realm of your own problems, you can choose from
-several good approaches -- but be mindful of readability and future
+several good approaches--but be mindful of readability and future
 maintainability.
 
 As a novice to Perl, you may find certain constructs difficult to understand.
-The greater Perl community has discovered and promoted several idioms which,
-taken on their own, offer great power to those who understand them.  Don't
-expect to understand them immediately.  Some of Perl's features interact in
-subtle ways.
+The greater Perl community has discovered and promoted several idioms
+(L<idioms>) which offer great power.  Don't expect to understand them
+immediately.  Some of Perl's features interact in subtle ways.
+
+=begin sidebar
+
+Learning Perl is like learning a second or third spoken language.  You'll learn
+a few words, then string together some sentences, and eventually will be able
+to have small, simple conversations.  Mastery comes with practice, both reading
+and writing.  You don't have to understand all of the details of this chapter
+immediately to be productive with Perl.  Keep these principles in mind as you
+read the rest of this book.
+
+=end sidebar
 
 Another design goal of Perl is to surprise experienced (Perl) programmers very
 little.  For example, adding two scalars together with a numeric operator
-(C<$first_num + $second_num>) is obviously a numeric operation; the result is a
-numeric value and the operator must treat both scalars as numeric values.  No
-matter what the contents of C<$first_num> and C<$second_num>, Perl will convert
-them to numeric values if possible, without requiring the user or programmer to
-perform this conversion manually.N<It's I<possible> to do so to avoid
-ambiguity, but Perl does the right thing>
+(C<$first_num + $second_num>) is obviously a numeric operation; the operator
+must treat both scalars as numeric values to produce a numeric result.  No
+matter what the contents of C<$first_num> and C<$second_num>, Perl will coerce
+them to numeric values (L<numeric_coercion>) without requiring the user or
+programmer to specify this conversion manually.  You've expressed your intent
+to treat them as numbers by choosing a numeric operator (L<numeric_operators>),
+so Perl happily handles the rest.
 
 X<DWIM>
 X<principle of least astonishment>
 
 In general, Perl programmers can expect Perl to do what you mean; this is the
-notion of I<DWIM> -- I<do what I mean>.  You may also see this mentioned as the
+notion of I<DWIM>--I<do what I mean>.  You may also see this mentioned as the
 I<principle of least astonishment>.  Given a cursory understanding of Perl
-(especially its L<context_philosophy>), it should be possible to read a single
-unfamiliar Perl expression and understand its intent.
+(especially context; L<context_philosophy>), it should be possible to read a
+single unfamiliar Perl expression and understand its intent.
 
 X<baby Perl>
 
-If you're new to Perl, don't expect this ability right away.  The flip side of
-Perl's powerful expressivity is that Perl novices can write useful programs
-before they learn all of Perl's powerful features.  The Perl community often
-refers to this as I<baby Perl>.  Though it may sound dismissive, please don't
-take offense; everyone was a novice at one point.  Take the opportunity to
-learn from more experienced programmers and ask for explanations of idioms and
-constructs you don't yet understand.
+If you're new to Perl, you will develop this skill over time.  The flip side of
+Perl's expressivity is that Perl novices can write useful programs before they
+learn all of Perl's powerful features.  The Perl community often refers to this
+as I<baby Perl>.  Though it may sound dismissive, please don't take offense;
+everyone is a novice once.  Take the opportunity to learn from more experienced
+programmers and ask for explanations of idioms and constructs you don't yet
+understand.
+
+=begin sidebar
+
+A Perl novice might multiply a list of numbers by three by writing:
+
+=begin programlisting
+
+    my @tripled;
+    my $count = @numbers;
+
+    for (my $i = 0; $i < $count; $i++)
+    {
+        $tripled[$i] = $numbers[$i] * 3;
+    }
+
+=end programlisting
+
+A Perl adept might write:
+
+=begin programlisting
+
+    my @tripled;
+
+    for my $num (@numbers)
+    {
+        push @tripled, $num * 3;
+    }
+
+=end programlisting
+
+An experienced Perl hacker might write:
+
+=begin programlisting
+
+    my @tripled = map { $_ * 3 } @numbers;
+
+=end programlisting
+
+Experience writing Perl will help you to focus on what you want to do rather
+than how to do it.
+
+=end sidebar
 
 Perl is a language intended to grow with your understanding of programming.  It
 won't punish you for writing simple programs.  It allows you to refine and
 expand programs for clarity, expressivity, reuse, and maintainability.  Take
-advantage of this philosophy.  Ultimately, Perl is a language intended for
-getting your work done, whatever it takes.
+advantage of this philosophy.  It's more important to accomplish your task well
+than to write a conceptually pure and beautiful program.
 
-The rest of this book demonstrates several good ways to use the language to its advantages.
+The rest of this book demonstrates how to use Perl to your advantage.

@@ -1,8 +1,8 @@
-=head3 Modules
+=head1 Modules
 
 Z<modules>
 
-X<module>
+X<modules>
 
 A I<module> is a package contained in its own file and loadable with C<use> or
 C<require>.  A module must be valid Perl 5 code.  It must end with an
@@ -10,6 +10,8 @@ expression which evaluates to a true value so that the Perl 5 parser knows it
 has loaded and compiled the module successfully.
 
 There are no other requirements, only strong conventions.
+
+X<C<::>; package name separator>
 
 Packages correspond to files on disk in that when you load a module with C<use>
 or C<require>'s bareword form, Perl splits the package name on double-colons
@@ -41,31 +43,34 @@ Finally:
 
 =end programlisting
 
-... causes Perl to search for a relative file path named
-F<StrangeMonkey/UI/Mobile.pm> in every directory in C<@INC>.  In other words,
-if you want to be able to load your module C<StrangeMonkey::Test::Stress>, you
-must have a file named F<StrangeMonkey/Test/Stress.pm> reachable from some
-directory in C<@INC>.
+... causes Perl to search for a relative file path of
+F<StrangeMonkey/UI/Mobile.pm> in every directory in C<@INC>.  There is no
+I<technical> requirement that the file at that location contain any C<package>
+declaration, let alone a C<package> declaration of
+C<StrangeMonkey::UI::Mobile>.  Maintenance concerns highly recommend that
+convention, however.
 
 =begin sidebar
 
-There is I<no> technical requirement that the file at that location contain any
-C<package> declaration, let alone a C<package> declaration matching the name of
-the file.  Maintenance concerns highly recommend that convention, however.
+C<perldoc -l Module::Name> will print the full path to the relevant F<.pm>
+file, provided that the I<documentation> for that module exists in the F<.pm>
+file.
 
 =end sidebar
 
-=head4 Using and Importing
-
-X<use>
-X<keywords; use>
-X<import()>
+=head2 Using and Importing
 
 Z<import>
 
-When you load a module with the C<use> keyword, Perl loads it from disk, then
-calls its C<import()> method, passing any arguments you provided to the C<use>
-keyword.  This occurs at compilation time:
+X<builtins; C<use>>
+X<C<import()>>
+X<C<CGI>>
+X<C<feature> pragma>
+X<pragmas; C<feature>>
+
+When you load a module with the C<use> builtin, Perl loads it from disk, then
+calls its C<import()> method, passing any arguments you provided.  This occurs
+at compilation time:
 
 =begin programlisting
 
@@ -78,12 +83,13 @@ keyword.  This occurs at compilation time:
 You do not have to provide an C<import()> method, and you may use it to do
 anything you wish, but the standard API expectation is that it takes a list of
 arguments of symbols (usually functions) to make available in the calling
-namespace.  This is not a strong requirement; pragmas such as C<strict> use any arguments to change their behavior instead of exporting symbols.
+namespace.  This is not a strong requirement; pragmas (L<pragmas>) such as
+C<strict> use arguments to change their behavior instead of exporting symbols.
 
-X<no>
+X<builtins; C<no>>
 X<unimporting>
 
-The C<no> keyword calls a module's C<unimport()> method, if it exists, passing
+The C<no> builtin calls a module's C<unimport()> method, if it exists, passing
 any arguments.  While it's possible to remove exported symbols, it's more
 common to disable specific features of pragmas and other modules which
 introduce new behaviors through C<import()>:
@@ -111,7 +117,11 @@ Effectively:
 
     use Module::Name qw( list of arguments );
 
-    # ... is the same as:
+=end programlisting
+
+... is the same as:
+
+=begin programlisting
 
     BEGIN
     {
@@ -119,22 +129,33 @@ Effectively:
         Module::Name->import( qw( list of arguments ) );
     }
 
-    # ... and:
+=end programlisting
+
+Similarly:
+
+=begin programlisting
 
     no Module::Name qw( list of arguments );
 
-    # ... is the same as:
+=end programlisting
+
+... is the same as:
+
+=begin programlisting
 
     BEGIN
     {
+        require 'Module/Name.pm';
         Module::Name->unimport( qw( list of arguments ) );
     }
 
 =end programlisting
 
-You may call C<import()> and C<unimport()> directly yourself if you have need,
-though it makes little sense to unimport from a pragma directly as they often
-have compilation-time effects.
+... including the C<require> of the module.
+
+You may call C<import()> and C<unimport()> directly, though it makes little
+sense to unimport a pragma outside of a C<BEGIN> block, as they often have
+compilation-time effects.
 
 =begin sidebar
 
@@ -144,30 +165,31 @@ give an error message.  They are truly optional.
 =end sidebar
 
 X<modules; case-sensitivity>
-X<importing; case-sensitivity>
-X<namespaces; case-sensitivity>
 X<case-sensitivity>
 
-Perl 5 is case-sensitive, even if the underlying filesystem is not.  In other
-words, while Perl knows the difference between C<strict> and C<Strict>, your
-combination of operating system and file system may not.  If you were to write
-C<use Strict;>, a case-sensitive filesystem would not find F<strict.pm>.  A
-case-insensitive filesystem would find F<Strict.pm>.  However, when Perl tries
-to call C<< Strict->import() >> on the loaded module, nothing will happen
-because the package name is C<strict>.
+Perl 5's C<use> and C<require> are case-sensitive, even if the underlying
+filesystem is not.  While Perl knows the difference between C<strict> and
+C<Strict>, your combination of operating system and file system may not.  If
+you were to write C<use Strict;>, Perl would not find F<strict.pm> on a
+case-sensitive filesystem.  With a case-insensitive filesystem, Perl will
+happily load F<Strict.pm>, but will try to call C<< Strict->import() >>.
+Nothing will happen, because F<strict.pm> declares a package named C<strict>.
 
-=head4 Exporting
+Portable programs are strict about case even if they don't have to be.
 
+=head2 Exporting
+
+Z<exporting>
 X<exporting>
 
 A module can make certain global symbols available to other packages through a
 process known as I<exporting>.  This is the flip side of passing arguments to
 C<import()> through a C<use> statement.
 
-The standard way of exporting subroutines or variables to other modules is
+The standard way of exporting functions or variables to other modules is
 through the core module C<Exporter>.  C<Exporter> relies on the presence of
-package global variables--C<@EXPORT_OK> in particular--which contain a list of
-symbols to export when requested.
+package global variables--C<@EXPORT_OK> and C<@EXPORT> in particular--which
+contain a list of symbols to export when requested.
 
 Consider a C<StrangeMonkey::Utilities> module which provides several standalone
 functions usable throughout the system:
@@ -186,8 +208,10 @@ functions usable throughout the system:
 
 =end programlisting
 
-Anyone now can use this module and, optionally, import any or all of the three
-exported functions.  You may also export variables:
+Any other code now can use this module and, optionally, import any or all of
+the three exported functionsN<... though I<using> the module in any code is
+sufficient to allow any other code to invoke its functions by their
+fully-qualified names.>.  You may also export variables:
 
 =begin programlisting
 
@@ -197,8 +221,12 @@ exported functions.  You may also export variables:
 
 =begin sidebar
 
-The CPAN module C<Sub::Exporter> provides a nicer interface to export symbols
-without using package globals.  It also offers more powerful options.
+X<C<Sub::Exporter>>
+
+The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
+without using package globals.  It also offers more powerful options.  However,
+C<Exporter> can export variables, while C<Sub::Exporter> only exports
+functions.
 
 =end sidebar
 
@@ -207,13 +235,13 @@ C<@EXPORT_OK>:
 
 =begin programlisting
 
-    our @EXPORT_OK = qw( monkey_dance monkey_sleep );
+    our @EXPORT = qw( monkey_dance monkey_sleep );
 
 =end programlisting
 
 ... so that any C<use StrangeMonkey::Utilities;> will import both functions.
 Be aware that specifying symbols to import will I<not> import default symbols.
-As well, you can load a module without importing any symbols by providing an
+You can also load a module without importing any symbols by providing an
 explicit empty list:
 
 =begin programlisting
@@ -223,33 +251,43 @@ explicit empty list:
 
 =end programlisting
 
-=head4 Organizing Code with Modules
+Regardless of any import lists, you can always call functions in another
+package with their fully-qualified names:
 
-Perl 5 does not require you to use modules.  It does not require you to use
-packages and namespaces.  You may put all of your code in a single F<.pl> file
-(or in multiple F<.pl> files you C<do> or C<require> as necessary).  You have
-the flexibility to manage your code in the most appropriate way, given your
-development style, the formality and risk and reward of the project, your
-experience, and your comfort with Perl 5 deployment.
+=begin programlisting
 
-Yet a good rule of thumb from experienced Perl 5 programmers is that a project
-with more than a couple of hundred lines of code receives multiple benefits
-from the process of creating modules.
+    StrangeMonkey::Utilities::screech();
+
+=end programlisting
+
+=head2 Organizing Code with Modules
+
+Perl 5 does not require you to use modules, nor packages, nor namespaces.  You
+may put all of your code in a single F<.pl> file, or in multiple F<.pl> files
+you C<require> as necessary.  You have the flexibility to manage your
+code in the most appropriate way, given your development style, the formality
+and risk and reward of the project, your experience, and your comfort with Perl
+5 deployment.
+
+Even so, a project with more than a couple of hundred lines of code receives
+multiple benefits from module organization:
 
 =over 4
 
-=item * Modules help to enforce a logical separation between distinct entities in the system.
+=item * Modules help to enforce a logical separation between distinct entities
+in the system.
 
 =item * Modules provide an API boundary, whether procedural or OO.
 
 =item * Modules suggest a natural organization of source code.
 
-=item * The Perl 5 ecosystem has many tools devoted to creating, maintaining, organizing, and deploying modules and distributions.
+=item * The Perl 5 ecosystem has many tools devoted to creating, maintaining,
+organizing, and deploying modules and distributions.
 
 =item * Modules provide a mechanism of code reuse.
 
 =back
 
 Even if you do not use an object-oriented approach, modeling every distinct
-entity in your system (or every distinct responsibility) with its own module
-keeps related code together and separate code apart.
+entity or responsibility in your system with its own module keeps related code
+together and separate code separate.

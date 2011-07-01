@@ -1,55 +1,75 @@
-=head3 Implicit Ideas
+=head1 Implicit Ideas
 
 Z<implicit_ideas>
 
-Like many spoken languages, Perl provides shortcuts to use where conciseness is
-appropriate.  One such implicit idea is the notion of L<context>, where both
-the compiler and a programmer reading the code can understand the expected
-number of results or the type of an operation from existing information without
-adding explicit additional information to disambiguate.
+Like many spoken languages, Perl provides linguistic shortcuts.  Context is one
+such feature: both the compiler and a programmer reading the code can
+understand the expected number of results or the type of an operation from
+existing information without requiring additional information to disambiguate.
 
-=head4 The Default Scalar Variable
+Other linguistic features include default variables--essentially pronouns.
 
-X<default scalar variable>
-X<variables; $_>
-X<$_>
+=head2 The Default Scalar Variable
 
-The best example of such features is the default scalar variable, C<$_>.  It's
-most notable in its I<absence>: many of Perl's built in operations perform
-their work on the contents of C<$_> in the absence of an explicit other
-variable.  You can still use C<$_> as the variable, but it's unnecessary.
+Z<default_scalar_variable>
+
+X<default variables; scalar>
+X<default variables; C<$_>>
+X<< variables; C<$_> >>
+X<< C<$_>; default scalar variable >>
+
+The I<default scalar variable> (also called the I<topic variable>), C<$_>, is
+the best example of a linguistic shortcut in Perl.  It's most notable in its
+I<absence>: many of Perl's builtin operations work on the contents of C<$_> in
+the absence of an explicit variable.  You can still use C<$_> as the variable,
+but it's often unnecessary.
 
 For example, the C<chomp> operator removes any trailing newline sequence from
 the given string:
+
+=begin programlisting
 
     my $uncle = "Bob\n";
     say "'$uncle'";
     chomp $uncle;
     say "'$uncle'";
 
+=end programlisting
+
 Without an explicit variable, C<chomp> removes the trailing newline sequence
-from C<$_>.  Thus, if C<$_> contains the string C<Jim\n>, these two lines of
-code are equivalent:
+from C<$_>.  These two lines of code are equivalent:
+
+=begin programlisting
 
     chomp $_;
     chomp;
 
+=end programlisting
+
+C<$_> has the same function in Perl as the pronoun I<it> in English.  Read the
+first line as "C<chomp> I<it>" and the second as "C<chomp>".  Perl understands
+what you mean when you don't explain what to chomp; Perl will always chomp
+I<it>.
+
 Similarly, the C<say> and C<print> builtins operate on C<$_> in the absence of
 other arguments:
 
-    print;  # prints $_
-    say;    # prints $_ with a trailing newline
+=begin programlisting
 
-=begin sidebar
+    print;  # prints $_ to the currently selected filehandle
+    say;    # prints $_ to the currently selected filehandle
+            # with a trailing newline
 
-If you use the three-argument form of C<open> and C<say>, where the first
-argument is a filehandle to which to print, you cannot omit C<$_>; Perl will
-interpret this as the two-argument form of both functions.
+=end programlisting
 
-=end sidebar
+X<C<s///>; subsitution operator>
+X<C<m//>; match operator>
+X<C<tr//>; transliteration operator>
 
-Perl's regular expression facilities can also operate on C<$_>, performing
-matches, substitutions, and transliterations:
+Perl's regular expression facilities (L<regex>) can also operate on C<$_> to
+match, substitute, and transliterate:
+
+=begin programlisting
 
     $_ = 'My name is Paquito';
     say if /My name is/;
@@ -59,16 +79,23 @@ matches, substitutions, and transliterations:
     tr/A-Z/a-z/;
     say;
 
-=for author
+=end programlisting
 
-Check how many other string functions this includes?
+X<builtins; C<chr>>
+X<builtins; C<ord>>
+X<builtins; C<lc>>
+X<builtins; C<length>>
+X<builtins; C<reverse>>
+X<builtins; C<uc>>
 
-=end for
+Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
+C<reverse>, and C<uc>) work on the default scalar variable if you do not
+provide an alternative.
 
-Many (most?) of Perl's scalar operators work on the default scalar variable if you do not provide an alternative.
+Perl's looping directives (L<looping_directives>) also set C<$_>, such as
+C<for> iterating over a list:
 
-Perl's looping constructs also set C<$_>.  For example, iterating over a list
-with C<for>:
+=begin programlisting
 
     say "#B<$_>" for 1 .. 10;
 
@@ -77,7 +104,11 @@ with C<for>:
         say "#B<$_>";
     }
 
+=end programlisting
+
 ... or C<while>:
+
+=begin programlisting
 
     while (<STDIN>)
     {
@@ -85,23 +116,36 @@ with C<for>:
         say scalar reverse;
     }
 
-... or transforming a list through the use of C<map>:
+=end programlisting
+
+X<builtins; C<map>>
+
+... or C<map> transforming a list:
+
+=begin programlisting
 
     my @squares = map { B<$_> * B<$_> } 1 .. 10;
     say for @squares;
 
-=begin sidebar
+=end programlisting
 
-Note that C<sort> does not set C<$_>, as it must process the elements of its
-list two at a time.
+X<builtins; C<grep>>
 
-=end sidebar
+... or C<grep> filtering a list:
 
-Be careful, however.  If you call subroutines within code that uses C<$_>
-whether implicitly or explicitly, they may overwrite the value of C<$_>.
-Similarly, if you write a subroutine which uses C<$_>, you may clobber a caller
-subroutine's use of C<$_>.  Perl 5.10 allows you to use C<my> to declare C<$_>
-as a lexical variable, which prevents this clobbering behavior.
+=begin programlisting
+
+    say 'Brunch time!' if grep { /pancake mix/ } @pantry;
+
+=end programlisting
+
+If you call functions within code that uses C<$_> whether implicitly or
+explicitly, they may overwrite the value of C<$_>.  Similarly, if you write a
+function which uses C<$_>, you may clobber a caller function's use of
+C<$_>.  Perl 5.10 allows you to use C<my> to declare C<$_> as a lexical
+variable, which prevents this clobbering behavior.  Be wise.
+
+=begin programlisting
 
     while (<STDIN>)
     {
@@ -113,34 +157,47 @@ as a lexical variable, which prevents this clobbering behavior.
         say "Munged  : $munged";
     }
 
-In the previous code snippet, if C<calculate_value()> or any other subroutine
-it happened to call changed C<$_>, it would remain changed throughout the
-C<while> loop.  Adding a C<my> declaration would prevent that behavior:
+=end programlisting
+
+In this example, if C<calculate_value()> or any other function it happened to
+call changed C<$_>, it would remain changed throughout the C<while> loop.
+Adding a C<my> declaration prevents that behavior:
+
+=begin programlisting
 
     while (my $_ = <STDIN>)
     {
         ...
     }
 
-Of course, using a named lexical there might be just as clear.
+=end programlisting
 
-=for author
+Of course, using a named lexical can be just as clear:
 
-Talk about aliasing and modification in place?  That's not part of using C<$_>,
-however -- more about iteration.
+=begin programlisting
 
-=end for
+    while (my $line = <STDIN>)
+    {
+        ...
+    }
 
-=head4 The Default Array Variables
+=end programlisting
 
-X<default array variables>
-X<variables; @_>
-X<@_>
+Use C<$_> as you would the word "it" in formal writing: sparingly, in small and well-defined scopes.
 
-Another default variable is available inside Perl subroutines; this is C<@_>.
-Perl passes arguments to subroutines in this array.  Array-manipulations
-operations performed inside subroutines affect this array by default.  Thus,
-these two snippets of code are equivalent:
+=head2 The Default Array Variables
+
+X<default variables; array>
+X<default variables; C<@_>>
+X<variables; C<@_>>
+X<C<@_>>
+
+While Perl has a single implicit scalar variable, it has two implicit array
+variables.  Perl passes arguments to functions in an array named C<@_>.  Array
+manipulation operations (L<arrays>) inside functions affect this array by
+default.  Thus, these two snippets of code are equivalent:
+
+=begin programlisting
 
     sub foo
     {
@@ -154,27 +211,31 @@ these two snippets of code are equivalent:
         ...
     }
 
-I<Unlike> C<$_>, Perl automatically localizes C<@_> for you when you call other
-subroutine.
+=end programlisting
 
-Other array functions such as C<unshift>, C<push>, C<splice>, and C<pop>
-operate on C<@_>.
+Just as C<$_> corresponds to the pronoun I<it>, C<@_> corresponds to the
+pronoun I<they> or I<them>.  I<Unlike> C<$_>, Perl automatically localizes
+C<@_> for you when you call other functions.  The array operators C<shift> and
+C<pop> operate on C<@_> with no other operands provided.
 
-X<variables; @ARGV>
-X<@ARGV>
+X<default variables; C<@ARGV>>
+X<variables; C<@ARGV>>
+X<C<@ARGV>>
 
-Outside of a subroutine, the default array variable is C<@ARGV>.  This array
-represents all command-line arguments to the program.  The same array functions
-which use C<@_> implicitly use C<@ARGV> implicitly in this circumstance.
-Beware that you cannot use C<@_> when you mean C<@ARGV>.
+Outside of all functions, the default array variable C<@ARGV> contains the
+command-line arguments to the program.  The same array operators which use
+C<@_> implicitly I<within> functions use C<@ARGV> implicitly outside of
+functions.  You cannot use C<@_> when you mean C<@ARGV>.
 
 X<null filehandle>
 
-Perl uses C<@ARGV> implicitly in one special case where it does not use C<@_>.
-If you read from the null filehandle C<< <> >>, it will treat every element in
-C<@ARGV> as the I<name> of a file to open and to read.  (If C<@ARGV> is empty,
-Perl will read from standard input.)  Thus you can write a program called
-F<reverse_lines.pl>:
+C<ARGV> has one special case.  If you read from the null filehandle C<< <> >>,
+Perl will treat every element in C<@ARGV> as the I<name> of a file to open for
+reading.  (If C<@ARGV> is empty, Perl will read from standard input.) This
+implicit C<@ARGV> behavior is useful for writing short programs, such as this
+command-line filter which reverses its input:
+
+=begin programlisting
 
     while (<>)
     {
@@ -182,13 +243,26 @@ F<reverse_lines.pl>:
         say scalar reverse;
     }
 
+=end programlisting
+
+=begin sidebar
+
+Why C<scalar>?  C<say> imposes list context on its operands.  C<reverse> passes
+its context on to its operands, treating them as a list in list context and a
+concatenated string in scalar context.  This sounds confusing, because it is.
+Perl 5 arguably should have had different operators for these different
+operations.
+
+=end sidebar
+
 If you run it with a list of files:
+
+=begin screen
 
     $ B<perl reverse_lines.pl encrypted/*.txt>
 
-... the result will be one long stream of output.  If you run it without a list
-of files, you can provide your own standard input by piping in from another
-program or typing directly.
+=end screen
 
-This can be useful for writing short filter programs in Perl, but it is
-behavior to avoid in larger programs.
+... the result will be one long stream of output.  Without any arguments, you
+can provide your own standard input by piping in from another program or typing
+directly.

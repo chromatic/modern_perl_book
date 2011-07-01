@@ -1,15 +1,13 @@
-=head3 C<AUTOLOAD>
+=head1 AUTOLOAD
 
 Z<autoload>
 
-In line with Perl's pragmatic approach, you do not have to define every
-function and method anyone will ever call with a time-consuming (and
-potentially buggy) copy-and-paste approach.  Perl provides a mechanism by which
-you can intercept calls to functions and methods which do not yet exist.  You
-can use this to define only what users of your code actually need or to provide
-interesting error messages and warnings.
+You do not have to define I<every> function and method anyone will ever call.
+Perl provides a mechanism by which you can intercept calls to functions and
+methods which do not yet exist.  You can use this to define only those
+functions you need, or to provide interesting error messages and warnings.
 
-Consider this program:
+Consider the program:
 
 =begin programlisting
 
@@ -22,7 +20,7 @@ Consider this program:
 =end programlisting
 
 When you run it, Perl will throw an exception due to the call to the undefined
-subroutine C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
+function C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 
 =begin programlisting
 
@@ -30,10 +28,10 @@ subroutine C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 
 =end programlisting
 
-Nothing (obvious) happens.  The error has gone away.  The presence of a
+Nothing obvious will happen, except that there is no error.  The presence of a
 function named C<AUTOLOAD()> in a package tells Perl to call that function
 whenever normal dispatch for that function or method fails.  Change the
-C<AUTOLAOD()> to emit a message to demonstrate this:
+C<AUTOLOAD()> to emit a message to demonstrate this:
 
 =begin programlisting
 
@@ -41,7 +39,7 @@ C<AUTOLAOD()> to emit a message to demonstrate this:
 
 =end programlisting
 
-=head4 Basic Features of C<AUTOLOAD>
+=head2 Basic Features of AUTOLOAD
 
 The C<AUTOLOAD()> function receives the arguments passed to the undefined
 function in C<@_> directly.  You may manipulate these arguments as you like:
@@ -57,7 +55,7 @@ function in C<@_> directly.  You may manipulate these arguments as you like:
 
 =end programlisting
 
-X<$AUTOLOAD>
+X<C<$AUTOLOAD>>
 
 The I<name> of the undefined function is available in the pseudo-global
 variable C<$AUTOLOAD>:
@@ -77,8 +75,8 @@ variable C<$AUTOLOAD>:
 
 The C<our> declaration (L<our>) scopes this variable to the body of
 C<AUTOLOAD()>.  The variable contains the fully-qualified name of the undefined
-function as a string.  In this case, the function is C<main::bake_pie>.  A
-common idiom is to remove the package name:
+function.  In this case, the function is C<main::bake_pie>.  A common idiom is
+to remove the package name:
 
 =begin programlisting
 
@@ -106,10 +104,10 @@ Finally, whatever C<AUTOLOAD()> returns, the original call receives:
 So far, these examples have merely intercepted calls to undefined functions.
 You have other options.
 
-=head4 Redispatching Methods in C<AUTOLOAD()>
+=head2 Redispatching Methods in AUTOLOAD()
 
-X<AUTOLOAD; redispatch>
-X<AUTOLOAD; delegation>
+X<C<AUTOLOAD>; redispatch>
+X<C<AUTOLOAD>; delegation>
 X<OO; delegation>
 X<delegation>
 X<OO; proxying>
@@ -126,7 +124,7 @@ from the former.  This is an interesting and effective approach to logging:
     sub new
     {
         my ($class, $proxied) = @_;
-        bless \$class, $proxied;
+        bless \$proxied, $class;
     }
 
     sub AUTOLOAD
@@ -145,14 +143,14 @@ it dereferences the proxied object from a blessed scalar reference, extracts
 the name of the undefined method, then invokes the method of that name on the
 proxied object, passing the given arguments.
 
-=head4 Generating Code in C<AUTOLOAD()>
+=head2 Generating Code in AUTOLOAD()
 
-X<AUTOLOAD; code installation>
+X<C<AUTOLOAD>; code installation>
 
-That double-dispatch trick is useful, but it represents double-dispatch.  Every
-method call on the proxy must go through normal dispatch and fail, then end up
-in C<AUTOLOAD()>.  Fortunately, you can install new methods into the proxy
-class at runtime:
+That double-dispatch trick is useful, but it is slower than necessary.  Every
+method call on the proxy must fail normal dispatch to end up in C<AUTOLOAD()>.
+Pay that penalty only once by installing new methods into the proxy class as
+the program needs them:
 
 =begin programlisting
 
@@ -165,7 +163,7 @@ class at runtime:
             Log::method_call( $name, @_ );
 
             my $self = shift;
-            return $$self->$name( @_ );
+            return $self->$name( @_ );
         }
 
         B<no strict 'refs';>
@@ -176,23 +174,11 @@ class at runtime:
 
 =end programlisting
 
-Instead of executing the body of the previous C<AUTOLOAD()> directly, now it
-becomes an anonymous function.  The code creates a closure (L<closures>) bound
-over the I<name> of the undefined method.  Then it installs that closure in the
-appropriate symbol table so that all subsequent calls to that method will go
-through the closure again as part of normal dispatch, not C<AUTOLOAD()>.
-Finally, it invokes the method directly and returns the result.
-
-=begin sidebar
-
-You can achieve something similar by building a string of code and using
-C<eval()> to compile it directly, but the closure approach is safer and
-simpler--no quoting issues to worry about--and it uses less memory.  Perl 5
-compiles the body of closure I<once>, but binds its closed-over lexicals on
-every invocation of C<AUTOLOAD()>.  The C<eval()> approach recompiles a new
-closure body for every execution.
-
-=end sidebar
+The body of the previous C<AUTOLOAD()> has become an anonymous function--in
+fact, a closure (L<closures>) bound over the I<name> of the undefined method.
+Installing that closure in the appropriate symbol table allows all subsequent
+dispatch to that method to find the created closure (and avoid C<AUTOLOAD()>).
+This code finally invokes the method directly and returns the result.
 
 Though this approach is cleaner and almost always more transparent than
 handling the behavior directly in C<AUTOLOAD()>, the code I<called> by
@@ -202,12 +188,12 @@ far.  This may be an issue; certainly you can argue that it's an encapsulation
 violation to care, but it's also an encapsulation violation to let the details
 of I<how> an object provides a method to leak out into the wider world.
 
-X<tailcall>
-X<goto; tailcall>
+X<tailcalls>
+X<C<goto>; tailcall>
 
-Another idiom is to use a I<tailcall> to replace the current invocation of
-C<AUTOLOAD()> from C<caller()>'s memory with a call to the destination method.
-The syntax for a tailcall is C<goto &$func_ref>:
+Another idiom is to use a tailcall (L<tailcalls>) to I<replace> the current
+invocation of C<AUTOLOAD()> from C<caller()>'s memory with a call to the
+destination method:
 
 =begin programlisting
 
@@ -226,28 +212,25 @@ The syntax for a tailcall is C<goto &$func_ref>:
 
 This has the same effect as invoking C<$method> directly, except that
 C<AUTOLOAD()> will no longer appear in the list of calls available from
-C<caller()>.
+C<caller()>, so it looks like the generated method was simply called directly.
 
-=head4 Drawbacks of C<AUTOLOAD>
+=head2 Drawbacks of AUTOLOAD
 
 Z<autoload_drawbacks>
 
-X<AUTOLOAD; drawbacks>
-X<UNIVERSAL::can>
-X<can()>
-X<subs>
-X<pragmas; subs>
+X<C<AUTOLOAD>; drawbacks>
+X<C<UNIVERSAL::can>>
+X<C<can()>>
+X<C<subs> pragma>
+X<pragmas; C<subs>>
 X<functions; predeclaration>
 
-Of course, a mechanism this powerful must have some subtleties.  C<AUTOLOAD()>
-can be a useful tool in certain circumstances, but it can be difficult to use
-properly.  Consider other techniques, such as using helper modules like
-C<Moose> if you need to abstract away boilerplate code.
-
-The naI<iuml>ve approach to generating methods at runtime means that the
-C<can()> method will not report the right information about the capabilities of
-objects and classes.  You can solve this in several ways; one of the easiest is
-to predeclare all functions you plan to AUTOLOAD with the C<subs> pragma:
+C<AUTOLOAD()> can be a useful tool in certain circumstances, but it can be
+difficult to use properly.  The naE<iuml>ve approach to generating methods at
+runtime means that the C<can()> method will not report the right information
+about the capabilities of objects and classes.  You can solve this in several
+ways; one of the easiest is to predeclare all functions you plan to
+C<AUTOLOAD()> with the C<subs> pragma:
 
 =begin programlisting
 
@@ -290,8 +273,8 @@ You can also provide your own C<can()> to generate the appropriate functions:
 =end programlisting
 
 Depending on the complexity of your needs, you may find it easier to maintain a
-data structure such as a hash, scoped lexically to the package, which contains
-acceptable names of methods to generate.
+data structure such as a package-scoped hash which contains acceptable names of
+methods to generate.
 
 Be aware that certain methods you do not intend to provide may go through
 C<AUTOLOAD()>.  A common culprit is C<DESTROY()>, the destructor of objects.
@@ -306,20 +289,16 @@ altogether:
 
 =end programlisting
 
-=for author
-
-Confirm this.
-
-=end for
-
 =begin sidebar
 
-Special methods such as C<import()>, C<unimport()>, and C<VERSION()> never go
+The special methods C<import()>, C<unimport()>, and C<VERSION()> never go
 through C<AUTOLOAD()>.
 
 =end sidebar
 
-If you mix functions and methods in a single namespace which inherits from another package which provides its own C<AUTOLOAD()>, you may get a strange error message:
+If you mix functions and methods in a single namespace which inherits from
+another package which provides its own C<AUTOLOAD()>, you may get a strange
+error message:
 
 =begin screen
 
@@ -327,9 +306,9 @@ If you mix functions and methods in a single namespace which inherits from anoth
 
 =end screen
 
-This means that you've tried to call a function, but Perl could not find it and
-had to dispatch to an C<AUTOLOAD()> in a parent class.  This is almost never
-what you intend.  The problem compounds in several ways: mixing functions and
-methods in a single namespace is often a sign of a design flaw, inheritance and
-C<AUTOLOAD()> get complex very quickly, and reasoning about code when you don't
-know what methods objects can perform is difficult.
+This occurs when you try to call a function which does not exist in a package
+which inherits from a class which contains its own C<AUTOLOAD()>.  This is
+almost never what you intend.  The problem compounds in several ways: mixing
+functions and methods in a single namespace is often a design flaw, inheritance
+and C<AUTOLOAD()> get complex very quickly, and reasoning about code when you
+don't know what methods objects provide is difficult.

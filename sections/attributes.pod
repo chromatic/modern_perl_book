@@ -3,23 +3,22 @@
 Z<attributes>
 
 Named entities in Perl--variables and functions--can have additional metadata
-attached to them in the form of I<attributes>.  These attributes are names and
-values which form the basis of some rarely-used metaprogramming
-(L<metaprogramming>).
+attached to them in the form of I<attributes>.  Attributes are names (and,
+often, values) which allow certain types of metaprogramming
+(L<code_generation>).
 
 =begin sidebar
 
-Attributes rarely appear in most code.  The mechanism for defining attributes
-can be awkward to use, and it's easy to make a mess with poorly desined
-attributes.  Even so, sometimes they clarify--but use them only when they offer
-compelling benefits of maintainance and clarity.
-
-=head2 Using Attributes
+Declaring attributes can be awkward, and using them effectively is more art
+than science.  They're relatively rare in most programs for good reason, though
+they I<can> offer compelling benefits of maintenance and clarity.
 
 =end sidebar
 
-In its simplest form, an attribute is a colon-preceded identifer attached to
-the declaration of a variable or a function:
+=head2 Using Attributes
+
+In its simplest form, an attribute is a colon-preceded identifier attached to a
+variable or function declaration:
 
 =begin programlisting
 
@@ -29,15 +28,18 @@ the declaration of a variable or a function:
 
 =end programlisting
 
-If attribute handlers named C<hidden> and C<ScienceProject> exist for scalars
-and functions, respectively, they will do something with the declared entities.
-What they do depends on their implementation: they could do almost anything.
-If the appropriate handlers do not exist, Perl will throw a compile-time
-exception.
+These declarations will cause the invocation of attribute handlers named
+C<hidden> and C<ScienceProject>, if they exist for the appropriate type
+(scalars and functions, respectively).  If the appropriate handlers do not
+exist, Perl will throw a compile-time exception.  These handlers could do
+I<anything>.
 
-Attributes may also include a list of parameters; Perl treats them as a list of
-constant strings, even if they may appear like other values.  The
-C<Test::Class> module from the CPAN shows a good use of attributes:
+X<C<Test::Class>>
+
+Attributes may include a list of parameters; Perl treats them as a list of
+constant strings, even if they may resemble other values, such as numbers or
+variables.  The C<Test::Class> module from the CPAN uses such parametric
+arguments to good effect:
 
 =begin programlisting
 
@@ -49,19 +51,22 @@ C<Test::Class> module from the CPAN shows a good use of attributes:
 
 =end programlisting
 
-The C<Test> attribute lets C<Test::Class> record which methods in the classes
-have test assertions it must run, as well as how many assertions exist in the
-plan.  While introspection (L<introspection>) of these classes could discover
-the appropriate methods, given solid heuristics, the approach of using
-attributes to register testing methods is unambiguous.  As well, it can handle
-multiple setup and teardown methods with different names defined in multiple
-classes in an inheritance hierarchy, as the Perl compiler invokes the relevant
-attribute handler during compilation; there are no namespace conflicts against
-which any introspection heuristic must defend.
+The C<Test> attribute identifies methods which include test assertions, and
+optionally identifies the number of assertions the method intends to run.
+While introspection (L<reflection>) of these classes could discover the
+appropriate test methods, given well-designed solid heuristics, the C<:Test>
+attribute makes the code and its intent unambiguous.
 
-You don't have to understand any of this to I<use> attributes effectively.
+The C<setup> and C<teardown> parameters allow test classes to define their own
+support methods without worrying about name clashes or other conflicts due to
+inheritance or other class design concerns.  You I<could> enforce a design
+where all test classes must override methods named C<setup()> and C<teardown()>
+themselves, but the attribute approach gives more flexibility of
+implementation.
 
 =begin sidebar
+
+X<Catalyst>
 
 The Catalyst web framework also uses attributes to determine the visibility and behavior of methods within web applications.
 
@@ -69,46 +74,51 @@ The Catalyst web framework also uses attributes to determine the visibility and 
 
 =head2 Drawbacks of Attributes
 
-Attributes do have their drawbacks.  Implementing them can be difficult.  The
-canonical pragma for producing attributes is C<attributes>, which has listed
-its interface as experimental for many years.  Damian Conway's
-C<Attribute::Handlers> is now a core module which simplifies their
-implementation, and it is indeed simpler to use.  Use it over C<attributes>
-whenever possible.
+X<pragmas; C<attributes>>
+X<C<attributes> pragma>
+X<C<Attribute::Handlers>>
 
-However, the implementation of attributes requires you to I<inherit> from
-C<Attribute::Handlers> to make your attribute handlers visible to all packages
-which use them.  (Otherwise, you can pollute C<UNIVERSAL>, but don't do that.)
+Attributes do have their drawbacks:
 
-Attribute handlers also take effect during C<CHECK> blocks, making them
+=over 4
+
+=item * The canonical pragma for working with attributes (the C<attributes>
+pragma) has listed its interface as experimental for many years.  Damian
+Conway's core module C<Attribute::Handlers> simplifies their implementation.
+Prefer it to C<attributes> whenever possible.
+
+=item * Modules which declare attribute handlers must I<inherit> from
+C<Attribute::Handlers> to make the handlers visible to all packages which use
+themN<You I<could> also store them in C<UNIVERSAL>, but that is global
+pollution and worse design.>.  This is due to the implementation of attributes
+in Perl 5 itself.
+
+=item * Attribute handlers take effect during C<CHECK> blocks, making them
 inopportune for projects which themselves manipulate the order of parsing and
 compilation, such as mod_perl.
 
-Any arguments provided to attributes are a list of constant strings.
+=item * Arguments provided to attributes are only strings.
 C<Attribute::Handlers> performs some data conversion, but you may have to
 disable it occasionally.
 
-The most compelling argument against the use of attributes is their propensity
-to produce weird syntactic action at a distance.  Given a snippet of code with
-attributes, can you predict their effect?  Certainly good and accurate
-documentation helps, but if an innocent-looking declaration on a lexical
-variable stores a reference to that variable somewhere, your expectations of
-the destruction of its contents may be wrong, unless you read the documentation
-very carefully.  Likewise, a handler may wrap a function in another function
-(consider a C<:memoize> attribute which automatically invokes the C<Memoize>
-module) and replace it in the symbol table without your knowledge.
+=back
 
-Complex features can produce compact and idiomatic code.  Perl generously and
-graciously allows developers to experiment with multiple designs to find the
-best representation for their ideas.  Attributes and other advanced Perl
-features can help you solve complex problems, but they can also obfuscate the
-intent of code that could otherwise be simple.  By far, most programs never
-need this feature.
+X<C<Memoize>>
 
-=for author
+The worst feature of attributes is their propensity to produce weird syntactic
+action at a distance.  Given a snippet of code with attributes, can you predict
+their effect?  Good and accurate documentation helps, but if an
+innocent-looking declaration on a lexical variable stores a reference to that
+variable somewhere, your expectations of the destruction of its contents may be
+wrong, unless you read the documentation very carefully.  Likewise, a handler
+may wrap a function in another function and replace it in the symbol table
+without your knowledge--consider a C<:memoize> attribute which automatically
+invokes the core C<Memoize> module.
 
-Should I explain how to use them?  This is almost a feature that, if you can't
-figure out the Attribute::Handlers documentation, you shouldn't use.
+Complex features can produce compact and idiomatic code.  Perl allows
+developers to experiment with multiple designs to find the best representation
+for their ideas.  Attributes and other advanced Perl features can help you
+solve complex problems, but they can also obfuscate the intent of code that
+could otherwise be simple.
 
-=end for
-
+Most programs never need this feature.

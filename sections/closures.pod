@@ -1,25 +1,28 @@
-=head3 Closures
+=head1 Closures
 
 Z<closures>
 
 You've seen how functions work (L<functions>).  You understand how scope works
-(L<scoping>).  You know that every time control flow enters a function, that
+(L<scope>).  You know that every time control flow enters a function, that
 function gets a new environment representing that invocation's lexical scope.
-You can work with subroutine references (L<references>) and anonymous functions
+You can work with function references (L<references>) and anonymous functions
 (L<anonymous_functions>).
 
 You know everything you need to know to understand closures.
 
 =begin sidebar
 
-Mark Jason Dominus's I<Higher Order Perl> is well worth your time to study.  He
-expands on the topics presented here in clever, powerful, and useful ways.
+X<I<Higher Order Perl>>
+
+Mark Jason Dominus's I<Higher Order Perl> is the canonical reference on
+first-class functions, closures, and the amazing things you can do with them.
+You can read it online at U<http://hop.perl.plover.com/>.
 
 =end sidebar
 
-=head4 Creating Closures
+=head2 Creating Closures
 
-X<closure>
+X<closures>
 X<functions; closures>
 
 A I<closure> is a function that closes over an outer lexical environment.
@@ -40,14 +43,14 @@ You've probably already created and used closures without realizing it:
 
 =end programlisting
 
-That's not surprising; it's barely interesting.  I<Of course> the
-C<get_filename()> function can see the C<$filename> lexical.  That's how scope
-works!
+The behavior of this code is unsurprising.  You may not have noticed anything
+special.  I<Of course> the C<get_filename()> function can see the C<$filename>
+lexical.  That's how scope works!  Yet closures can also close over
+I<transient> lexical environments.
 
-Closures get much more interesting when they close over transient lexical
-environments.  Suppose you want to iterate over a list of items without
-managing the iterator yourself.  You can create a function which returns a
-function that, when invoked, will return the next item in the iteration:
+Suppose you want to iterate over a list of items without managing the iterator
+yourself.  You can create a function which returns a function that, when
+invoked, will return the next item in the iteration:
 
 =begin programlisting
 
@@ -69,12 +72,11 @@ function that, when invoked, will return the next item in the iteration:
 
 =end programlisting
 
-A function returning a function is neither new nor surprising, but the behavior
-of the returned anonymous function may be.  Even though C<make_iterator()> has
-returned, the anonymous function still refers to the lexical variables
-C<@items> and C<$count>.  Their values persist.  The anonymous function, stored
-in C<$cousins>, has closed over these values in the lexical environment of its
-creation.  It's a closure.
+Even though C<make_iterator()> has returned, the anonymous function still
+refers to the lexical variables C<@items> and C<$count>.  Their values persist
+(L<reference_counts>).  The anonymous function, stored in C<$cousins>, has
+closed over these values in the specific lexical environment of the specific
+invocation of C<make_iterator()>.
 
 It's easy to demonstrate that the lexical environment is independent between
 calls to C<make_iterator()>:
@@ -95,11 +97,13 @@ Because every invocation of C<make_iterator()> creates a separate lexical
 environment for its lexicals, the anonymous sub it creates and returns closes
 over a unique lexical environment.
 
-Because those lexicals are neither returned directly nor by reference from
-C<make_iterator()>, Perl code cannot access the lexicals directly.  They're
-encapsulated as effectively as any lexical encapsulation.  Multiple closures
-can close over the same lexical variables; this is an idiom used occasionally
-to provide better encapsulation of what would otherwise be a global variable:
+Because C<make_iterator()> does not return these lexicals by value or by
+reference, no other Perl code besides the closure can access them.  They're
+encapsulated as effectively as any other lexical encapsulation.
+
+Multiple closures can close over the same lexical variables; this is an idiom
+used occasionally to provide better encapsulation of what would otherwise be a
+file global variable:
 
 =begin programlisting
 
@@ -112,29 +116,31 @@ to provide better encapsulation of what would otherwise be a global variable:
 
 =end programlisting
 
-... but be aware that you cannot I<nest> named functions, because functions
-have package global scope and any shared lexical variables will go unshared
-when the outer function destroys its first lexical environmentN<If that's
-confusing to you, imagine the implementation.>.
+... but be aware that you cannot I<nest> named functions.  Named functions have
+package global scope.  Any lexical variables shared between nested functions
+will go unshared when the outer function destroys its first lexical
+environmentN<If that's confusing to you, imagine the implementation.>.
 
 =begin sidebar
 
+X<C<PadWalker>>
+
 The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone
-who uses it and breaks your code gets to support your code.
+who uses it and breaks your code earns the right to fix any concomitant bugs
+without your help.
 
 =end sidebar
 
-=head4 Uses of Closures
+=head2 Uses of Closures
 
-The previous example showed how closures can make effective iterators.  This is
-interesting when iterating over a fixed-sized list, but it's more interesting
-when iterating over a list of items too expensive to refer to directly, either
-because it represents data which costs a lot to compute all at once or it's too
-large to fit into memory directly.
+Closures can make effective iterators over fixed-size lists, but they
+demonstrate greater advantages when iterating over a list of items too
+expensive to refer to directly, either because it represents data which costs a
+lot to compute all at once or it's too large to fit into memory directly.
 
-Consider a function to create the Fibonacci series as you need them.  Instead
-of recalculating them recursively, use a cache and lazily create the elements
-you need:
+Consider a function to create the Fibonacci series as you need its elements.
+Instead of recalculating the series recursively, use a cache and lazily create
+the elements you need:
 
 =begin programlisting
 
@@ -153,6 +159,7 @@ you need:
                     $fibs[$calc] = $fibs[$calc - 2] + $fibs[$calc - 1];
                 }
             }
+
             return $fibs[$item];
         }
     }
@@ -164,14 +171,16 @@ I<n>th element of the Fibonacci series.  The function generates all preceding
 values in the series as necessary, caching them, and returning the requested
 element.  It delays computation until absolutely necessary.
 
-There may seem like little benefit to this approach, but consider that the
-behavior of initializing an array as a cache, calculating a new element, and
-returning a requested element is general enough to extract into its own
-function.  The only necessary and custom behavior is how to calculate new
-elements.
+If all you ever need to do is to calculate Fibonacci numbers, this approach may
+seem overly complex.  Consider, however, that the function C<gen_fib()> can
+become amazingly generic: it initializes an array as a cache, executes some
+custom code to populate arbitrary elements of the cache, and returns the
+calculated or cached value.  If you extract the behavior which calculates
+Fibonacci values, you can use this code to provide other code with
+a lazily-iterated cache.
 
-In other words, you can extract a function, C<generate_caching_closure()>, and
-rewrite C<gen_fib()> in terms of that function:
+Extract the function C<generate_caching_closure()>, and rewrite C<gen_fib()> in
+terms of that function:
 
 =begin programlisting
 
@@ -213,18 +222,69 @@ rewrite C<gen_fib()> in terms of that function:
 The program behaves the same way as it did before, but the use of higher order
 functions and closures allows the separation of the cache initialization
 behavior from the calculation of the next number in the Fibonacci series in an
-effective way.
-
-Of course, you have to be familiar with and comfortable using higher order
-functions and closures to benefit from this approach, but it can be useful.  In
-particular, customizing the behavior of code--in this case,
+effective way.  Customizing the behavior of code--in this case,
 C<gen_caching_closure()>--by passing in a higher order function allows
 tremendous flexibility and abstraction.
 
-=for author
+=begin sidebar
 
-Perhaps abstraction with closures?
-    - partial application
-    - need a good example
+In one sense, you can consider the builtins C<map>, C<grep>, and C<sort>
+higher-order functions, especially if you compare them to
+C<gen_caching_closure()>.
 
-=end for
+=end sidebar
+
+=head2 Closures and Partial Application
+
+Z<partial_application>
+
+Closures can do more than abstract away structural details.  They can allow you
+to customize specific behaviors.  In one sense, they can also I<remove>
+unnecessary genericity.  Consider the case of a function which takes several
+parameters:
+
+=begin programlisting
+
+    sub make_sundae
+    {
+        my %args = @_;
+
+        my $ice_cream = get_ice_cream( $args{ice_cream} );
+        my $banana    = get_banana( $args{banana} );
+        my $syrup     = get_syrup( $args{syrup} );
+        ...
+    }
+
+=end programlisting
+
+All of the customization possibilities might work very well in your full-sized
+anchor store in a shopping complex, but if you have a little drive-through ice
+cream cart near the overpass where you only serve French vanilla ice cream on
+Cavendish bananas, every time you call C<make_sundae()> you have to pass
+arguments that never change.
+
+X<partial application>
+
+A technique called I<partial application> binds some arguments to a function
+such that you can fill in the rest at the point of call.  This is easy enough
+to emulate with closures:
+
+=begin programlisting
+
+    my $make_cart_sundae = sub
+    {
+        return make_sundae( @_,
+            ice_cream => 'French Vanilla',
+            banana    => 'Cavendish',
+        );
+    };
+
+=end programlisting
+
+X<C<Sub::Install>>
+
+Instead of calling C<make_sundae()> directly, you can invoke the function
+reference in C<$make_cart_sundae> and pass only the interesting arguments,
+without worrying about forgetting the invariants or passing them
+incorrectlyN<You can even use C<Sub::Install> from the CPAN to import this
+function into another namespace directly.>.

@@ -1,3 +1,20 @@
-=head1 Regular Expressions
+=head0 Style and Efficacy
 
-L<regular_expressions>
+Programming and programming I<well> are related, but distinct skills.  If we
+only wrote programs once and never had to modify or maintain them, if our
+programs never had bugs, if we never had to choose between using more memory or
+taking more time, and if we never had to work with other people, we wouldn't
+have to worry about how well we program.  To program well, you must understand
+the differences between potential solutions based on specific priorities of
+time, resources, and future plans.
+
+Writing Perl well means understanding how Perl works.  It also means developing
+a sense of good taste.  To develop that skill, you must practice writing and
+maintaining code and reading good code.  There are no shortcuts--but you can
+improve the effectiveness of your practice by following a few guidelines.
+
+L<style>
+
+L<exceptions>
+
+L<pragmas>

@@ -1,51 +1,51 @@
-=head3 Pragmas
+=head1 Pragmas
 
 Z<pragmas>
 
-Perl 5's extension mechanism is modules (L<modules>).  Usually modules provide
-functions to call or define classes (L<moose>).  Some modules instead influence
-the behavior of the language itself, whether enabling or disabling errors or
-warnings or changing how code acts within a particular scope.
+Perl 5's extension mechanism is modules (L<modules>).  Most modules provide
+functions to call or they define classes (L<moose>), but some modules instead
+influence the behavior of the language itself.
 
-X<pragma>
+X<pragmas>
 X<modules; pragmas>
 
 A module which influences the behavior of the compiler is a I<pragma>.  By
 convention, pragmas have lower-case names to differentiate them from other
 modules.  You've heard of some before: C<strict> and C<warnings>, for example.
 
+=head2 Pragmas and Scope
+
 X<pragmas; scope>
 
 A pragma works by exporting specific behavior or information into the enclosing
-static scope.  That is, the scope of a pragma is the same as the scope of a
-lexical variable.  (In a way, you can think of lexical variable declaration as
-a sort of pragma with funny syntaxN<Global variable declaration I<can> use the
-C<vars> pragma.>.)  This may be easiest to understand with an example:
+static scope.  The scope of a pragma is the same as the scope of a lexical
+variable.  In a way, you can think of lexical variable declaration as a sort of
+pragma with funny syntax.  Pragma scope is clearer with an example:
 
 =begin programlisting
 
     {
         # $lexical is B<not> visible; strict is B<not> in effect
         {
-            # $lexical B<is> visible; strict B<is> in effect
             use strict;
             my $lexical = 'available here';
+            # $lexical B<is> visible; strict B<is> in effect
             ...
         }
+        # $lexical is again B<not> visible; strict is B<not> in effect
     }
 
 =end programlisting
 
 =begin sidebar
 
-This applies to well-behaved pragmas, of course.  A sufficiently motivated Perl
-guru could implement a pragma which ignores scoping, but that would be
-unneighborly.
+A sufficiently motivated Perl guru could implement a poorly-behaved pragma
+which ignores scoping, but that would be unneighborly.
 
 =end sidebar
 
 Just as lexical declarations affect inner scopes, so do pragmas maintain their
-effects on inner scopes by default:
+effects on inner scopes:
 
 =begin programlisting
 
@@ -60,25 +60,25 @@ effects on inner scopes by default:
 
 =end programlisting
 
-X<pragmas; enabling>
-X<pragmas; customizing>
+=head2 Using Pragmas
 
-As you can see, enabling a pragma looks like using a module.  As with modules,
-you may specify the desired version number of the pragmaN<... though Perl 5
-currently allows you to load versions of the pragma with equal or higher
-version numbers.>, and you may pass a list of arguments to the pragma to
-control its behavior at a finer level:
+X<pragmas; enabling>
+
+Pragmas have the same usage mechanism as modules.  As with modules, you may
+specify the desired version number of the pragma and you may pass a list of
+arguments to the pragma to control its behavior at a finer level:
 
 =begin programlisting
 
-    # require variable declaration; prohibit bareword function names
+    # require variable declarations; prohibit bareword function names
     use strict qw( subs vars );
 
 =end programlisting
 
 X<pragmas; disabling>
+X<builtins; C<no>>
 
-Within a scope you may disable all or part of a pragma with the C<no> keyword:
+Within a scope you may disable all or part of a pragma with the C<no> builtin:
 
 =begin programlisting
 
@@ -92,32 +92,49 @@ Within a scope you may disable all or part of a pragma with the C<no> keyword:
 
 =end programlisting
 
-X<pragmas; useful>
+=head2 Useful Core Pragmas
 
-You may find several pragmas useful.  In the core:
+X<pragmas; useful core pragmas>
+
+Perl 5 includes several useful core pragmas:
+
+X<pragmas; C<strict>>
 
 =over 4
 
 =item * the C<strict> pragma enables compiler checking of symbolic references,
 the use of barewords, and the declaration of variables
 
-=item * the C<warnings> pramga enables optional warnings for deprecated,
+X<pragmas; C<warnings>>
+
+=item * the C<warnings> pragma enables optional warnings for deprecated,
 unintended, and awkward behaviors that are not I<necessarily> errors but may
 produce unwanted behaviors
 
+X<pragmas; C<utf8>>
+
 =item * the C<utf8> pragma enables the use of the UTF-8 encoding of source code
 
+X<pragmas; C<autodie>>
+
 =item * the C<autodie> pragma (new in 5.10.1) enables automatic error checking
-of system calls and keywords, reducing the need for manual error checking
+of system calls and builtins, reducing the need for manual error checking
+
+X<pragmas; C<constant>>
 
 =item * the C<constant> pragma allows you to create compile-time constant
 values (though see C<Readonly> from the CPAN for an alternative)
+
+X<pragmas; C<vars>>
 
 =item * the C<vars> pragma allows you to declare package global variables, such
 as C<$VERSION> or those for exporting (L<exporting>) and manual OO
 (L<blessed_references>)
 
 =back
+
+X<C<autobox>>
+X<C<perl5i>>
 
 Several useful pragmas exist on the CPAN as well.  Two worth exploring in
 detail are C<autobox>, which enables object-like behavior for Perl 5's core
@@ -127,11 +144,6 @@ two pragmas may not belong yet in your production code without extensive
 testing and thoughtful consideration, but they demonstrate the power and
 utility of pragmas.
 
-=for author
-
-Is this ending worthwhile?  What a downer.
-
-=end for
-
-The C<perldoc perlpragma> documentation goes into more detail about how to
-write your own pragmas.  This is a feature introduced with Perl 5.10.
+Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
+code.  C<perldoc perlpragma> explains how to do so, while the explanation of
+C<$^H> in C<perldoc perlvar> explains how the feature works.

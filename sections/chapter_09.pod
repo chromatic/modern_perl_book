@@ -1,1 +1,32 @@
-=head1 Useful Operators
+=head0 Managing Real Programs
+
+Z<writing_real_programs>
+
+Writing simple example programs to solve example problems in a book helps you
+learn a language in the small.  Yet writing real programs requires more than
+learning the syntax of a language, or its design principles, or even how to
+find and use its libraries.
+
+Practical programming requires you to manage code: to organize it, to know that
+it works, to make it robust in the face of errors of logic or intent, and to do
+all of this in a concise, clear, and maintainable fashion.  Fortunately, modern
+Perl provides many tools and techniques to write real programs--from testing to
+the organization of your source code.
+
+L<testing>
+
+L<handling_warnings>
+
+L<files>
+
+L<modules>
+
+L<distributions>
+
+L<universal>
+
+L<code_generation>
+
+L<overloading>
+
+L<taint>

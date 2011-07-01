@@ -1,10 +1,7 @@
-Please add yourself to this file in alphabetical order in this format:
-
-N: <name>
-E: <email address>
+Please add yourself to this file.
 
 N: chromatic
-M: chromatic@wgz.org
+E: chromatic@wgz.org
 
 N: Felipe
 E: fegolac@gmail.com
@@ -17,6 +14,9 @@ E: alexm@cpan.org
 
 N: Bruce Gray
 E: bruce.gray@acm.org
+
+N: John McNamara
+E: jmcnamara@cpan.org
 
 N: Josh McAdams
 E: joshua.mcadams@gmail.com
@@ -32,3 +32,180 @@ E: doug@somethingdoug.com
 
 N: John SJ Anderson
 E: genehack@genehack.org
+
+N: Moritz Lenz
+E: moritz@faui2k3.org
+
+N: Carl Mäsak
+E: cmasak@gmail.com
+
+N: Bryan Summersett
+E: bsummersett@gmail.com
+
+N: Alex Balhatchet
+E: kaoru@slackwise.net
+
+N: Vasily Chekalkin
+E: bacek@bacek.com
+
+N: Tim Heaney
+E: oylenshpeegul@gmail.com
+
+N: Sam Vilain
+E: sam@vilain.net
+
+N: Colin Wetherbee
+E: cww@cpan.org
+
+N: Dan Scott
+E: dan@coffeecode.net
+
+N: Shlomi Fish
+E: shlomif@iglu.org.il
+
+N: Scott Thomson
+E: scott@dearie.me.uk
+
+N: Michael Hind
+E: mike.hind@gmail.com
+
+N: Frank Wiegand
+E: fwie@cpan.org
+
+N: Shawn M Moore
+E: sartak@bestpractical.com
+
+N: Mark A. Stratman
+E: mark@sporkstorms.org
+
+N: Jan Krynicky
+E: Jenda@Krynicky.cz
+
+N: Curtis Jewell
+E: csjewell@cpan.org
+
+N: James E Keenan
+E: jkeenan@cpan.org
+
+N: Yary Hluchan
+E: not.com@gmail.com
+
+N: Yuval Kogman
+E: nothingmuch@woobling.org
+
+N: Chas. Owens
+E: chas.owens@gmail.com
+
+N: John Gabriele
+E: jmg3000@gmail.com
+
+N: Jeff Lavallee
+E: jeff@zeroclue.com
+
+N: Phillip Smith
+E: phillip@communitybandwidth.ca
+
+N: Sawyer X
+E: xsawyerx@cpan.org
+
+N: Paulo Custodio
+E: pscust@cpan.org
+
+N: Jean-Baptiste Mazon
+E: ?
+
+N: ww from PerlMonks
+E: ?
+
+N: Andrew Savige
+E: asavige@cpan.org
+
+N: Matthias Bloch
+E: matthias.bloch@puffin.ch
+
+N: Peter Aronoff
+E: telemachus@arpinum.org
+
+N: Audrey Tang
+E: cpan@audreyt.org
+
+N: Lee Aylward
+E: lee@laylward.com
+
+N: Mark Fowler
+E: mark@twoshortplanks.com
+
+N: Dmitry Chestnykh
+E: dmitry@codingrobots.com
+
+N: harleypig
+E: harleypig@gmail.com
+
+N: Jess Robinson
+E: castaway@desert-island.me.uk
+
+N: David Yingling
+E: deeelwy@yahoo.com
+
+N: Marko Zagozen
+E: ?
+
+N: Alexander Scott-Johns
+E: alexander.scott.johns@googlemail.com
+
+N: Larry Wall
+E: larry@wall.org
+
+N: Gabrielle Roth
+E: gorthx@gmail.com>
+
+N: Mohammed Arafat Kamaal
+E: makamaal.linux@gmail.com
+
+N: Christopher E. Stith
+E: cstith@gmail.com
+
+N: Mike Huffman
+E: mhuffman@aracnet.com
+
+N: E. Choroba
+E: choroba on PerlMonks
+
+N: hbm
+E: hbm on PerlMonks
+
+N: Ask Bjørn Hansen
+E: ask@develooper.com
+
+N: Ævar Arnfjörð Bjarmason
+E: avar@cpan.org
+
+N: Gareth McCaughan
+E: gareth.mccaughan@pobox.com
+
+N: Robert Hicks
+E: rlhicks@wehicks.com
+
+N: Chris Niswander
+E: cnp1@chrisniswander.com
+
+N: Andrew Grangaard
+E: spazm@cpan.org
+
+N: Mark Hindess
+E: soft-cpan@temporalanomaly.com
+
+N: John Bokma
+E: contact@johnbokma.com
+
+N: Lorne Schachter
+E: lorne.schachter@citi.com
+
+N: Dave Rolsky
+E: autarch@urth.org
+
+N: Ben Tilly
+E: btilly@gmail.com
+
+N: Michael Lang
+E: michi@jackal-net.at

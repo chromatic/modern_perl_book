@@ -1,19 +1,26 @@
-=head1 The Perl Language
+=head0 Operators
 
-L<names>
+Z<operators>
+X<operators>
+X<operands>
 
-L<values>
+An accurate, if irreverent, description of Perl is an "operator-oriented
+language".  The interaction of operators with their operands gives Perl its
+expressivity and power.  Understanding Perl requires understanding its
+operators and how they behave.  For the sake of this discussion, a working
+definition of a Perl I<operator> is a series of one or more symbols used as
+part of the syntax of a language.  Each operator operates on zero or more
+I<operands>; this definition is circular, as an operand is a value on which an
+operator operates.
 
-L<control_flow>
+=begin sidebar
 
-L<scalars>
+The most accurate definition of operators is "What's in C<perlop>", but even
+that leaves out some operators in C<perlsyn> and includes builtins.  Don't get
+too attached to a single definition.
 
-L<arrays>
+=end sidebar
 
-L<hashes>
+L<operator_characteristics>
 
-L<coercion>
-
-L<references>
-
-L<packages>
+L<operator_types>

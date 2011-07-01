@@ -1,9 +1,23 @@
-=head1 Functions
+=head0 Objects
 
-L<functions>
+Writing large programs requires more discipline than writing small programs,
+due to the difficulty of managing all of the details of your program
+simultaneously.  Abstraction (finding and exploiting similarities and
+near-similarities) and encapsulation (grouping specific details together and
+accessing them where they belong) are essential to managing this complexity.
 
-L<scope>
+Functions help, but functions by themselves aren't sufficient for the largest
+programs.  Object orientation is a popular technique for grouping functions
+together into classes of related behaviors.
 
-L<anonymous_functions>
+Perl 5's default object system is minimal.  It's very flexible--you can build
+almost any other object system you want on top of it--but it provides little
+assistance for the most common tasks.
 
-L<closures>
+L<moose>
+
+L<blessed_references>
+
+L<reflection>
+
+L<advanced_oo>

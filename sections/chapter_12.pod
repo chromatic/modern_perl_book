@@ -1,17 +1,11 @@
-=head1 Writing Real Programs
+=head0 What's Missing
 
-L<testing>
+Perl 5 isn't perfect, at least as it behaves by default.  Some options are
+available in the core.  More are available from the CPAN.  Experienced Perl
+developers have their own idea of how an ideal Perl 5 should behave, and they
+often use their own configurations very effectively.
 
-L<handling_warnings>
+Novices may not know how Perl can help them write programs better.  A handful
+of core modules will make you much more productive.
 
-L<exceptions>
-
-L<modules>
-
-L<pragmas>
-
-L<distributions>
-
-L<universal>
-
-L<code_generation>
+L<missing_defaults>

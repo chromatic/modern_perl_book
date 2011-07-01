@@ -1,0 +1,105 @@
+=head1 Smart Matching
+
+Z<smart_match>
+
+X<smart match>
+X<operators; smart match>
+X<C<~~>; smart match operator>
+X<operators; C<~~>>
+
+The smart match operator, C<~~>, compares two operands and returns a true value
+if they match each other.  The fuzziness of the definition demonstrates the
+smartness of the operator: the type of comparison depends on the type of both
+operands.  You've seen this behavior before, as C<given> (L<given_when>)
+performs an implicit smart match.
+
+=begin sidebar
+
+See the "Smart matching in detail" section of C<perldoc perlsyn> for far more
+detail.  Some of the semantics of smart match have changed between Perl 5.10.0
+and Perl 5.10.1, so when possible, use smart matching only after 5.10.1.
+
+=end sidebar
+
+X<operators; C<~~>>
+X<C<~~>; smart match operator>
+
+The smart match operator is an infix operator:
+
+=begin programlisting
+
+    say 'They match (somehow)' if $loperand ~~ $roperand;
+
+=end programlisting
+
+The type of comparison generally depends first on the type of the right operand
+and then on the left operand.  For example, if the right operand is a scalar
+with a numeric component, the comparison will use numeric equality.  If the
+right operand is a regex, the comparison will use a grep or a pattern match.
+If the right operand is an array, the comparison will perform a grep or a
+recursive smart match.  If the right operand is a hash, the comparison will
+check the existence of one or more keys.
+
+For example:
+
+=begin programlisting
+
+    # scalar numeric comparison
+    my $x = 10;
+    my $y = 20;
+    say 'Not equal numerically' unless $x ~~ $y;
+
+    # scalar numeric-ish comparison
+    my $x = 10;
+    my $y = '10 little endians';
+    say 'Equal numeric-ishally' if $x ~~ $y;
+
+=end programlisting
+
+... or:
+
+=begin programlisting
+
+    my $needlepat = qr/needle/;
+
+    say 'Pattern match'          if $needle   ~~ $needlepat;
+    say 'Grep through array'     if @haystack ~~ $needlepat;
+    say 'Grep through hash keys' if %hayhash  ~~ $needlepat;
+
+=end programlisting
+
+... or:
+
+=begin programlisting
+
+    say 'Grep through array'                 if $needlepat  ~~ @haystack;
+    say 'Array elements exist as hash keys'  if %hayhash    ~~ @haystack;
+    say 'Array elements smart match'         if @strawstack ~~ @haystack;
+
+=end programlisting
+
+.... or:
+
+=begin programlisting
+
+    say 'Grep through hash keys'            if $needlepat ~~ %hayhash;
+    say 'Array elements exist as hash keys' if @haystack  ~~ %hayhach;
+    say 'Hash keys identical'               if %hayhash   ~~ %haymap;
+
+=end programlisting
+
+These comparisons work correctly if one operand is a I<reference> to the given
+data type.  For example:
+
+=begin programlisting
+
+    say 'Hash keys identical' if %hayhash ~~ \%hayhash;
+
+=end programlisting
+
+You may overload (L<overloading>) the smart match operator on objects.  If you
+do not do so, the smart match operator will throw an exception if you try to
+use an object as an operand.
+
+You may also use other data types such as C<undef> and function references as
+smart match operands.  See the chart in C<perldoc perlsyn> for more details.

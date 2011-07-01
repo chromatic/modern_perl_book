@@ -1,131 +1,165 @@
-=head2 The CPAN
+=head1 The CPAN
 
 Z<cpan>
 
-If you have a problem, chances are someone's already started to solve it and
-uploaded code to the CPAN.  Perl 5 is a pragmatic language.  It'll help you get
-your work done.  Yet the ever-pragmatic Perl community has extended that
-language and made their work available to the world.
+Perl 5 is a pragmatic language.  It'll help you get your work done.  Yet the
+ever-pragmatic Perl community has extended that language and made their work
+available to the world.  If you have a problem to solve, chances are someone's
+already uploaded code to the CPAN for it.
 
-The line between a modern language and its libraries is thin and fuzzy.  Is a
-language only syntax?  Is it the core libraries?  Is it the availability of
-external libraries and the ease at which you can use them within your own
-projects?
+The line between a modern language and its libraries is fuzzy.  Is a language
+only syntax?  Is it the core libraries?  Is it the availability of external
+libraries and the ease at which you can use them within your own projects?
 
 X<CPAN>
 
 Regardless of how you answer those questions for any other language, modern
 Perl programming makes heavy use of the CPAN (U<http://www.cpan.org/>).  The
 CPAN, or Comprehensive Perl Archive Network, is an uploading and mirroring
-system for redistributable, reusable Perl code.  It's one of -- if not I<the>
--- largest archives of libraries of code in the world.
+system for redistributable, reusable Perl code.  It's one of--if not
+I<the>--largest archives of libraries of code in the world.
+
+X<distribution>
+X<modules>
+
+CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
+code.  A single distribution can contain one or more I<modules>, or
+self-contained libraries of Perl code.  Each distribution lives in its own
+namespace on the CPAN and contains its own metadata.  You can build, install,
+test, and update each distribution.  Distributions may depend on other
+distributions.  For this reason, installing distributions through a CPAN client
+is often simpler than doing so manually.
 
 =begin sidebar
 
-In the four months between the outline and first draft of this chapter, the
-CPAN I<added> 500 registered uploaders and 7215 indexed modules in 1561
-distributions.
-
-    - 7258 uploaders/66400 modules/17268 distributions
-    - 7758 uploaders/73615 modules/18829 distributions
+The CPAN I<adds> hundreds of registered contributors and thousands of indexed
+modules in hundreds of distributions every month.  Those numbers do not take
+into account updates.  At printing time in October 2010, search.cpan.org
+reported 8465 uploaders, 86470 modules, and 21116 distributions.
 
 =end sidebar
 
-Several features make the CPAN powerful: almost all of them community
-conventions that have grown up around the system.  Remember, at its heart it's
-merely a distribution service.  When it works for you -- and it often does --
-that's due to the hard work of thousands of volunteers.
-
-X<distribution>
-X<module>
-
-CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
-code.  A single distribution can contain one or more I<modules>, which are
-self-contained libraries of Perl code.  Each distribution lives in its own
-namespace on the CPAN, contains its own metadata, and is buildable,
-installable, updateable, and testable on its own.
-
 X<search.cpan.org>
 
-Many problems you're likely to encounter have stable and available CPAN
-distributions available for your use, modification, and redistribution.  The
-U<http://search.cpan.org/> website is often an effective way to browse
-available distributions.
-
-=for author
-
-I don't like the tone of the following paragraph.  The rhetorical device grates.
-
-=end for
-
-If CPAN is merely a mirroring service, how do you know that any random CPAN
-distribution is usable and useful?  As mentioned earlier, the community
-standards which have grown up around the CPAN tend to improve the quality and
-utility of code.  In particular, CPAN distributions have:
+The CPAN itself is merely a mirroring service.  Authors upload distributions
+containing modules, and the CPAN sends them to mirror sites, from which users
+and CPAN clients download, configure, build, test, and install distributions.
+Yet the CPAN has succeeded because of this simplicity, and because of the
+contributions of thousands of volunteers who've built on this distribution
+system to produce something greater.  In particular, community standards have
+evolved to identify the attributes and characteristics of well-formed CPAN
+distributions.  These include:
 
 =over 4
 
 =item Standards for installation to work with automated CPAN installers.
 
-=item Standards for metadata to describe what each distribution includes and any dependencies of the distribution.
+=item Standards for metadata to describe what each distribution includes and
+any dependencies of the distribution.
 
 =item Standards for documentation and licensing to describe what the
 distribution does and how you may use it.
 
 =back
 
-Several additional services build on the CPAN to provide comprehensive
-automated testing and reporting of every CPAN distribution for adherence to
-packaging and distribution guidelines and correctness of behavior on various
-platforms and versions of Perl.  Every CPAN distribution has its own ticket
-queue on U<http://rt.cpan.org/> for reporting bugs and working with authors.
+Additional CPAN services provide comprehensive automated testing and reporting
+of every CPAN distribution for adherence to packaging and distribution
+guidelines and correctness of behavior on various platforms and versions of
+Perl.  Every CPAN distribution has its own ticket queue on
+U<http://rt.cpan.org/> for reporting bugs and working with authors.
 Distributions also have historical versions available on the CPAN, ratings,
 annotations for the documentation, and other useful information.  All of this
-is available from search.cpan.org.
+is available from U<http://search.cpan.org/>.
 
-X<CPAN.pm>
-X<CPANPLUS>
+X<CPAN; C<CPAN.pm>>
+X<CPAN; C<CPANPLUS>>
 
 Modern Perl installations include two clients to connect to, search, download,
-build, test, and install CPAN distributions, CPAN and CPANPLUS.  They behave
+build, test, and install CPAN distributions, CPAN.pm and CPANPLUS.  They behave
 equivalently; their use is a matter of taste.  This book recommends the use of
-CPAN solely due to its ubiquity.
+CPAN.pm solely due to its ubiquity.
 
-CPAN configuration is largely decision-free.  For any complete installation of
-Perl, you may start the client with:
+If you use a recent version of CPAN.pm (as of this writing, 1.9402 is the
+latest stable release), CPAN.pm configuration is largely decision-free.  For
+any complete installation of Perl, you may start the client with:
+
+=begin programlisting
 
     $ B<cpan>
 
+=end programlisting
+
 To install a distribution:
+
+=begin programlisting
 
     $ B<cpan Modern::Perl>
 
-=for author
+=end programlisting
 
-Need fact-checking; what's the new configuration system?
+X<CPAN; C<CPAN.pm>>
 
-=end for
+Eric Wilhelm's tutorial on configuring
+CPAN.pmN<U<http://learnperl.scratchcomputing.com/tutorials/configuration/>>
+includes a great troubleshooting section.
 
 =begin sidebar
 
 Even though the CPAN client is a core module for the Perl 5 distribution, you
 may also have to install standard development tools such as a C<make> utility
 and possibly a C compiler to install all of the distributions you want.
-Strawberry and Chocolate Perl include such utilities for Windows users.  Mac OS
-X users need their developer tools installed; Unix and Unix-like users, consult
-your local system administrator.
+Windows users, see Strawberry Perl (U<http://strawberryperl.com/>) and
+Strawberry Perl Professional.  Mac OS X users need their developer tools
+installed.  Unix and Unix-like users, consult your local system administrator.
 
 =end sidebar
 
-For all of this configuration, you gain access to over 73,000 individual Perl
-modules in almost 19,000 distributions.  These modules cover everything from
-database access to profiling tools to protocols for almost every network device
-ever created to sound and graphics libraries and wrappers for shared libraries
-on your system.
+For your work setting up a CPAN client and an environment to build and install
+distributions, you get access to libraries for everything from database access
+to profiling tools to protocols for almost every network device ever created to
+sound and graphics libraries and wrappers for shared libraries on your system.
 
-=for author
+Modern Perl without the CPAN is just another language.  Modern Perl with the
+CPAN is amazing.
 
-Where's that link to the CPAN guide?  How about a section about local::lib
-here?
+=head2 CPAN Management Tools
 
-=end for
+Serious Perl developers often manage their own Perl library paths or even full
+installations.  Several projects help to make this possible.
+
+C<App::cpanminus> is a new CPAN client with goals of speed, simplicity, and
+zero configuration.  Installation is as easy as:
+
+=begin programlisting
+
+    $ curl -LO http://xrl.us/cpanm
+    $ chmod +x cpanm
+
+=end programlisting
+
+C<App::perlbrew> is a system to manage and to switch between your own
+installations of multiple versions and configurations of Perl.  Installation is as easy as:
+
+=begin programlisting
+
+    $ curl -LO http://xrl.us/perlbrew
+    $ chmod +x perlbrew
+    $ ./perlbrew install
+    $ perldoc App::perlbrew
+
+=end programlisting
+
+X<CPAN; local::lib>
+X<CPAN; App::local::lib::helper>
+
+The C<local::lib> CPAN distribution allows you to install and to manage
+distributions in your own user directory, rather than for the system as a
+whole.  This is an effective way to maintain CPAN distributions without
+affecting other users.  Installation is somewhat more involved than the
+previous two distributions, though C<App::local::lib::helper> can simplify.
+See U<http://search.cpan.org/perldoc?local::lib> and
+U<http://search.cpan.org/perldoc?App::local::lib::helper> for more details.
+
+All three distributions projects tend to assume a Unix-like environment (such
+as a GNU/Linux distribution or even Mac OS X). Windows users, see the Padre
+all-in-one download (U<http://padre.perlide.org/download.html>).

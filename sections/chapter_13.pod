@@ -1,7 +1,0 @@
-=head1 Perl Idioms
-
-L<autoload>
-
-L<globals>
-
-L<idioms>

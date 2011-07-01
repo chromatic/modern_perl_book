@@ -1,24 +1,11 @@
+=head1 Declaring Functions
+
 Z<functions>
 
-X<function>
-X<subroutine>
-
-A I<function> (or I<subroutine>, though less often) in Perl is a discrete,
-encapsulated unit of behavior.  It may or may not have a name.  It may or may
-not take parameters.  It may or may not return arguments.  It represents a type
-of control flow, where the execution of the program proceeds to another point
-in the source code.
-
-Functions are a prime mechanism for abstraction and encapsulation in Perl 5;
-many of the other mechanisms for abstraction, encapsulation, and re-use build
-on the concepts of the function.
-
-=head2 Declaring Functions
-
-X<subroutines; declaration>
 X<functions; declaration>
+X<builtins; C<sub>>
 
-Use the C<sub> keyword to declare a function:
+Use the C<sub> builtin to declare a function:
 
 =begin programlisting
 
@@ -26,24 +13,34 @@ Use the C<sub> keyword to declare a function:
 
 =end programlisting
 
-Now C<greet_me()> is available for invocation anywhere else within the
-program (with appropriate namespacing or exporting caveats).
+Now C<greet_me()> is available for invocation anywhere else within the program,
+provided that the symbol--the function's name--is visible.
+
+X<functions; forward declaration>
+
+You do not have to I<define> a function at the point you declare it.  You may
+use a I<forward declaration> to tell Perl that you intend for the function to
+exist, then delay its definition:
+
+=begin programlisting
+
+    sub greet_sun;
+
+=end programlisting
+
 
 =begin sidebar
 
 You do not have to declare Perl 5 functions before you use them, except in the
-special case where they modify I<how> the parser parses them.  See
-L<attributes>.
+special case where they modify I<how> the parser parses them (L<attributes>).
 
 =end sidebar
 
-=head2 Invoking Functions
+=head1 Invoking Functions
 
-X<subroutines; invoking>
 X<functions; invoking>
 
-Invoking a subroutine is similar; mention its name and pass a list of
-arguments:
+To invoke a function, mention its name and pass an optional list of arguments:
 
 =begin programlisting
 
@@ -57,7 +54,7 @@ arguments:
 
 You can I<often> omit parameter-grouping parentheses if your program runs
 correctly with the C<strict> pragma enabled, but they provide clarity to the
-parser and, more importantly, the reader -- so it's often wise to include them.
+parser and, more importantly, human readers.
 
 =end sidebar
 
@@ -71,22 +68,22 @@ You can, of course, pass multiple I<types> of arguments to a function:
 
 =end programlisting
 
-... though see the L<references> section for more details.
+... though Perl 5's default parameter handling sometimes surprises novices.
 
-=head2 Function Parameters
+=head1 Function Parameters
 
 Z<function_parameters>
 
 X<parameters>
 X<functions; parameters>
-X<@_>
-X<parameter flattening>
+X<C<@_>>
+X<parameters; flattening>
 
-Inside the subroutine, all parameters come in a single array, C<@_>.  If C<$_>
+Inside the function, all parameters exist in a single array, C<@_>.  If C<$_>
 corresponds to the English word I<it>, C<@_> corresponds to the word I<them>.
-Perl takes care of I<flattening> all incoming parameters into a single list for
-you, but the subroutine itself must unpack all parameters into any variables it
-wishes to use or operate on C<@_> directly:
+Perl I<flattens> all incoming parameters into a single list.  The function
+itself either must unpack all parameters into any variables it wishes to use or
+operate on C<@_> directly:
 
 =begin programlisting
 
@@ -119,9 +116,10 @@ elements by index:
 
 =end programlisting
 
-You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and list slices
-on C<@_>. Inside a function, the C<shift> and C<pop> operators operate on C<@_>
-in the same way that they operate on C<@ARGV> outside of any function:
+You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>.
+Inside a function, the C<shift> and C<pop> operators operate on C<@_>
+implicitly in the same way that they operate on C<@ARGV> outside of any
+function:
 
 =begin programlisting
 
@@ -135,13 +133,12 @@ in the same way that they operate on C<@ARGV> outside of any function:
 
 =begin sidebar
 
-It may seem clearer initially to write C<shift @_>, but the C<shift> assignment
-idiom is so pervasive in Perl 5 culture that it's important to learn the
-shorthand version anyway.
+While writing C<shift @_> may seem clearer initially, taking advantage of the
+implicit operand to C<shift> is idiomatic in Perl 5.
 
 =end sidebar
 
-Do take care that assigning a scalar parameter from C<@_> requires C<shift>,
+Take care that assigning a scalar parameter from C<@_> requires C<shift>,
 indexed access to C<@_>, or lvalue list context parentheses.  Otherwise, Perl 5
 will happily evaluate C<@_> in scalar context for you and assign the number of
 parameters passed:
@@ -156,8 +153,8 @@ parameters passed:
 
 =end programlisting
 
-With more than one parameter, list assignment is often clearer than multiple
-lines of C<shift>.  Compare:
+List assignment of multiple parameters is often clearer than multiple lines of
+C<shift>.  Compare:
 
 =begin programlisting
 
@@ -184,14 +181,36 @@ lines of C<shift>.  Compare:
 
 =end programlisting
 
-While occasionally it's necessary to extract a few parameters from C<@_> and
-pass the rest on to another function, it's often clearest to use C<shift> to
-access a single parameter and list assignment to access multiple parameters.
+Occasionally it's necessary to extract a few parameters from C<@_> and pass the
+rest to another function:
 
-=head3 Flattening
+=begin programlisting
 
-On the caller side, all arguments get flattened into a single list.  Thus
-passing a hash produces a list of key/value pairs:
+    sub delegated_method
+    {
+        my $self = B<shift>;
+        say 'Calling delegated_method()'
+
+        $self->delegate->delegated_method( B<@_> );
+    }
+
+=end programlisting
+
+The dominant practice seems to be to use C<shift> only when your function must
+access a single parameter and list assignment when accessing multiple
+parameters.
+
+=begin sidebar
+
+See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
+modules on the CPAN for declarative parameter handling.
+
+=end sidebar
+
+=head2 Flattening
+
+The flattening of parameters into C<@_> happens on the caller side.  Passing a
+hash as an argument produces a list of key/value pairs:
 
 =begin programlisting
 
@@ -205,10 +224,10 @@ passing a hash produces a list of key/value pairs:
     }
 
     my %pet_names_and_types = (
-        Lucky   = > 'dog',
-        Rodney  = > 'dog',
-        Tuxedo  = > 'cat',
-        Petunia = > 'cat',
+        Lucky   => 'dog',
+        Rodney  => 'dog',
+        Tuxedo  => 'cat',
+        Petunia => 'cat',
     );
 
     show_pets( %pet_names_and_types );
@@ -216,14 +235,17 @@ passing a hash produces a list of key/value pairs:
 =end programlisting
 
 The C<show_pets()> function works because the C<%pet_names_and_types> hash
-flattens into the list C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat',
-'Petunia', 'cat'>. The hash assignment inside the function C<show_pets()> works
-essentially as the more explicit assignment to C<%pet_names_and_types> does.
+flattens into a list.  The order of the pairs within that flattened list will
+vary, but pairs will always appear in that list with the key first immediately
+followed by the value.  The hash assignment inside the function C<show_pets()>
+works essentially as the more explicit assignment to C<%pet_names_and_types>
+does.
 
-This is often useful, but there are limitations to understand.  If you wish to
-make a C<show_pets_of_type()> function, where one parameter is the I<type> of
-pet to display, you must pass that type as the I<first> parameter (or use
-C<pop> to remove it from the end of C<@_>):
+This is often useful, but you must be clear about your intentions if you pass
+some arguments as scalars and others as flattened lists.  If you wish to make a
+C<show_pets_of_type()> function, where one parameter is the type of pet to
+display, you must pass that type as the I<first> parameter (or use C<pop> to
+remove it from the end of C<@_>):
 
 =begin programlisting
 
@@ -239,10 +261,10 @@ C<pop> to remove it from the end of C<@_>):
     }
 
     my %pet_names_and_types = (
-        Lucky   = > 'dog',
-        Rodney  = > 'dog',
-        Tuxedo  = > 'cat',
-        Petunia = > 'cat',
+        Lucky   => 'dog',
+        Rodney  => 'dog',
+        Tuxedo  => 'cat',
+        Petunia => 'cat',
     );
 
     show_pets_by_type( 'dog',   %pet_names_and_types );
@@ -251,10 +273,10 @@ C<pop> to remove it from the end of C<@_>):
 
 =end programlisting
 
-=head3 Slurping
+=head2 Slurping
 
-Z<parameter slurping>
-X<parameter slurping>
+Z<parameter_slurping>
+X<parameters; slurping>
 
 As with any lvalue assignment to an aggregate, assigning to C<%pets> within the
 function I<slurps> all of the remaining values from C<@_>.  If the C<$type>
@@ -274,18 +296,18 @@ that:
 
 =end programlisting
 
-... but clarity might suffer.  The same principle applies when assigning to an
-array as a parameter, of course.  See L<references> for ways to avoid
+... at the expense of some clarity.  The same principle applies when assigning
+to an array as a parameter, of course.  Use references (L<references>) to avoid
 flattening and slurping when passing aggregate parameters.
 
-=head3 Aliasing
+=head2 Aliasing
 
-X<parameter aliasing>
+X<parameters; aliasing>
 X<functions; aliasing parameters>
 
-One remaining feature of C<@_> can be surprising (though useful): it contains
-aliases to the passed-in parameters, at least until you unpack C<@_> into its
-own variables.  This behavior is easiest to demonstrate with an example:
+One useful feature of C<@_> can surprise the unwary: it contains aliases to the
+passed-in parameters, until you unpack C<@_> into its own variables.  This
+behavior is easiest to demonstrate with an example:
 
 =begin programlisting
 
@@ -302,47 +324,15 @@ own variables.  This behavior is easiest to demonstrate with an example:
 
 =end programlisting
 
-If you modify an element of C<@_> directly, you modify the original parameter
-directly.  Be cautious with this.
+If you modify an element of C<@_> directly, you will modify the original
+parameter directly.  Be cautious.
 
-=begin sidebar
+=head1 Functions and Namespaces
 
-See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
-modules on the CPAN for declarative parameter handling.
-
-=end sidebar
-
-=head3 Validating
-
-Defensive programming often benefits from checking types and values of
-arguments for appropriateness before performing further processing.  By
-default, Perl 5 provides few built-in mechanisms for doing so (in some cases,
-L<prototypes> can I<help>, but that's not their primary purpose). You can
-check that the I<number> of parameters passed to a function is correct by
-evaluating C<@_> in scalar context:
-
-=begin programlisting
-
-    sub add_numbers
-    {
-        croak "Expected two numbers, but received: " . @_
-            unless @_ == 2;
-
-        ...
-    }
-
-=end programlisting
-
-Type checking is more difficult, because of Perl's operator-oriented type
-conversions (see L<context>).  In cases where you need more strictness,
-consider the CPAN module C<Params::Validate>.
-
-=head2 Namespaces
-
-Every function lives in a namespace.  Functions in an undeclared namespace --
-that is, functions not declared after an explicit C<package ...> statement --
-live in the C<main> namespace.  You may specify a function's namespace outside
-of the current package at the point of declaration:
+Every function lives in a namespace.  Functions in an undeclared
+namespace--that is, functions not declared after an explicit C<package ...>
+statement--live in the C<main> namespace.  You may specify a function's
+namespace outside of the current package at the point of declaration:
 
 =begin programlisting
 
@@ -353,15 +343,15 @@ of the current package at the point of declaration:
 =end programlisting
 
 Any prefix on the function's name which follows the package naming format
-creates the subroutine and inserts it into that package.  It does not enter the
-current package.  Because Perl 5 packages are open for modification at any
-point, you may do this even if the namespace does not yet exist, or if you have
-already declared functions in that namespace.
+creates the function and inserts the function into the appropriate namespace,
+but not the current namespace.  Because Perl 5 packages are open for
+modification at any point, you may do this even if the namespace does not yet
+exist, or if you have already declared functions in that namespace.
 
-You may only declare one function of the same name per namespace; Perl 5 will
-give a warning about subroutine redefinition if you redefine a function which
-already exists in a namespace.  If you're certain you want to I<replace> the
-existing function, you may disable this warning with C<no warnings 'redefine'>.
+You may only declare one function of the same name per namespace. Otherwise
+Perl 5 will warn you about subroutine redefinition.  If you're certain you want
+to I<replace> an existing function, disable this warning with C<no warnings
+'redefine'>.
 
 You may call functions in other namespaces by using their fully-qualified
 names:
@@ -375,26 +365,24 @@ names:
 =end programlisting
 
 Functions in namespaces are I<visible> outside of those namespaces in the sense
-that you can refer to them directly, but they are only callable by their short
-names from within the namespace in which they are declared--unless you have
-somehow made them available to the current namespace through the processes of
-importing and exporting.
+that you can refer to them directly, but they are only I<callable> by their
+short names from within the namespace in which they are declared--unless you
+have somehow made them available to the current namespace through the processes
+of importing and exporting (L<exporting>).
 
-=head3 Importing
+=head2 Importing
 
 Z<importing>
 
 X<functions; importing>
+X<builtins; C<use>>
 
-When loading a module with the C<use> keyword (see L<modules>), Perl
-automatically calls a method named C<import()> on the provided package name.
-Modules with procedural interfaces can provide their own C<import()> which
-makes some or all defined functions available in the calling package's
-namespace.
-
-You don't have to know this to I<import> functions into your namespace.  When
-loading a module with the C<use> keyword, any arguments after the name of the
-module get passed to the module's C<import()> method.  Thus:
+When loading a module with the C<use> builtin (L<modules>), Perl automatically
+calls a method named C<import()> on the provided package name.  Modules with
+procedural interfaces can provide their own C<import()> which makes some or all
+defined symbols available in the calling package's namespace.  Any arguments
+after the name of the module in the C<use> statement get passed to the module's
+C<import()> method.  Thus:
 
 =begin programlisting
 
@@ -402,16 +390,18 @@ module get passed to the module's C<import()> method.  Thus:
 
 =end programlisting
 
-... loads the F<strict.pm> module, calls C<< strict->import() >>, and passes no arguments to the method, while:
+... loads the F<strict.pm> module and calls C<< strict->import() >> with no
+arguments, while:
 
 =begin programlisting
 
     use strict 'refs';
-    use warnings qw( subs vars );
+    use strict qw( subs vars );
 
 =end programlisting
 
-... loads the F<warning.pm> module, calls C<< warnings->import( 'refs' ) >>, then calls C<< warnings->import( 'subs', vars' ) >>.
+... loads the F<strict.pm> module, calls C<< strict->import( 'refs' ) >>, then
+calls C<< strict->import( 'subs', vars' ) >>.
 
 You may call a module's C<import()> method directly.  The previous code example
 is equivalent to:
@@ -427,76 +417,23 @@ is equivalent to:
 
 =end programlisting
 
-Be aware that the C<use> keyword adds an implicit C<BEGIN> block around these
+Be aware that the C<use> builtin adds an implicit C<BEGIN> block around these
 statements so that the C<import()> call happens I<immediately> after the parser
-has compiled the entire statement.
+has compiled the entire statement.  This ensures that any imported symbols are
+visible when compiling the rest of the program.  Otherwise, any functions
+imported from other modules but not declared in the current file would look
+like undeclared barewords and C<strict> would complain.
 
-=for review
+=head1 Reporting Errors
 
-Discuss unimporting?  In my experience, it's not nearly as well supported as
-importing. (I agree with you, I rarely (okay, never) use it.) (jeremiah)
+Z<reporting_errors>
+X<builtins; C<caller>>
 
-=end for
-
-=head3 Exporting
-
-=for review
-
-Does this belong instead in the Modules chapter?
-
-+1 (jeremiah)
-
-=end for
-
-X<functions; exporting>
-Z<exporting>
-
-The core C<Exporter> module allows you to accomplish this I<exporting> behavior
-without having to understand the details of Perl 5's namespaces and symbol
-tables.
-
-=begin programlisting
-
-    package Extensions::Math;
-
-    B<use Exporter 'import';>
-    B<our @EXPORT_OK = qw( add subtract multiply divide );>
-
-=end programlisting
-
-Begin by C<use>ing the C<Exporter> module, giving it the single parameter
-C<import>.  This tells C<Exporter> to make an C<import()> function available.
-The C<@EXPORT_OK> package global is an array which contains a list of functions
-to export only when the invoking package requests them.  That is, if someone
-writes:
-
-=begin programlisting
-
-    use Extensions::Math 'add';
-
-=end programlisting
-
-... then the function C<Extensions::Math::add()> will be available as C<add()>
-in the current namespace, but C<Extensions::Math::divide()> and the others will
-only be invokable by their fully-qualified names.
-
-=begin sidebar
-
-The CPAN module C<Sub::Exporter> is significantly more powerful in many ways
-than C<Exporter>.  You may prefer its interface.  Be aware that C<Exporter> can
-export symbols other than functions; C<Sub::Exporter> only exports functions.
-
-=end sidebar
-
-=head2 Reporting Errors
-
-X<caller>
-
-Within a subroutine, you can get information about the context of the call with
-the C<caller> operator.  With no arguments, it returns a three-element list
-containing the name of the calling package, the name of the file containing the
-call, and the line number of the package on which the call occurred:
-
+Within a function, you can get information about the context of the call with
+the C<caller> operator.  If passed no arguments, it returns a three element
+list containing the name of the calling package, the name of the file
+containing the call, and the line number of the package on which the call
+occurred:
 
 =begin programlisting
 
@@ -517,26 +454,37 @@ call, and the line number of the package on which the call occurred:
 
 =end programlisting
 
-You may pass a single integer argument to C<caller()>.  If you do, the return
-values will represent the call that number of calls up the call chain.  You get
-more information, including the name of the subroutine, the calling context,
-and more.
+You may pass a single, optional integer argument to C<caller()>.  If provided,
+Perl will look back through the caller of the caller of the caller that many
+times and provide information about that particular call.  In other words, if
+C<show_call_information()> used C<caller(0)>, it would receive information
+about the call from C<main()>.  If it used C<caller(1)>, it would receive
+information about the call from the start of the program.
+
+While providing this optional parameter lets you inspect the callers of
+callers, it also provides more return values, including the name of the
+function and the context of the call:
 
 =begin programlisting
 
     sub show_call_information
     {
-        my ($package, $file, $lineB<, $func>) = caller(B<1>);
+        my ($package, $file, $lineB<, $func>) = caller(B<0>);
         say "Called B<$func> from $package in $file at $line";
     }
 
 =end programlisting
 
-This can be useful.  The standard C<Carp> module uses it to great effect for
-reporting errors and throwing warnings in functions.  You may see C<croak()>
-used to throw exceptions in place of C<die> in library code.  C<croak()> throws
-an exception and reports a stack trace from the perspective of a caller.  The
-C<cluck()> function gives a warning from the perspective of a caller.
+X<C<Carp>>
+X<C<Carp>; C<croak()>>
+X<C<Carp>; C<carp()>>
+
+The standard C<Carp> module uses this technique to great effect for reporting
+errors and throwing warnings in functions; its C<croak()> throws an exception
+reported from the file and line number of its caller.  When used in place of
+C<die> in library code, C<croak()> can throw an exception due to incorrect
+usage from the point of use.  C<Carp>'s C<carp()> function reports a warning
+from the file and line number of its caller (L<producing_warnings>).
 
 This behavior is most useful when validating parameters or preconditions of a
 function, when you want to indicate that the calling code is wrong somehow:
@@ -555,48 +503,105 @@ function, when you want to indicate that the calling code is wrong somehow:
 
 =end programlisting
 
-=head2 Advanced Functions
+=head2 Validating Arguments
+
+Defensive programming often benefits from checking types and values of
+arguments for appropriateness before further execution.  By default, Perl 5
+provides few built-in mechanisms for doing so.  To check that the I<number> of
+parameters passed to a function is correct, evaluate C<@_> in scalar context:
+
+=begin programlisting
+
+    sub add_numbers
+    {
+        croak "Expected two numbers, but received: " . @_
+            unless @_ == 2;
+
+        ...
+    }
+
+=end programlisting
+
+Type checking is more difficult, because of Perl's operator-oriented type
+conversions (L<context_philosophy>).  In cases where you need more strictness,
+consider the CPAN module C<Params::Validate>.
+
+=head1 Advanced Functions
 
 Functions may seem simple, but you can do much, much more with them.
-L<closures> and L<anonymous_functions> show some of these tricks.  There are
-more.
+
+=head2 Context Awareness
+
+X<context>
+X<C<wantarray>>
+X<builtins; C<wantarray>>
+
+Perl 5's builtins know whether you've invoked them in void, scalar, or list
+context.  So too can your functions know their calling contexts.  The
+misnamedN<See C<perldoc -f wantarray> to verify.> C<wantarray> builtin returns
+C<undef> to signify void context, a false value to signify scalar context, and
+a true value to signify list context.
+
+=begin programlisting
+
+    sub context_sensitive
+    {
+        my $context = wantarray();
+        return qw( Called in list context )  if             $context;
+        say       'Called in void context'   unless defined $context;
+        return    'Called in scalar context' unless         $context;
+    }
+
+    context_sensitive();
+    say my $scalar = context_sensitive();
+    say context_sensitive();
+
+=end programlisting
+
+This can be useful for functions which might produce expensive return values to
+avoid doing so in void context.  Some idiomatic functions return a list in list
+context and an array reference in scalar context (or the first element of the
+list).  Even so, there's no single best recommendation for the use or avoidance
+of C<wantarray>; sometimes it's clearer to write separate functions which
+clearly indicate their expected uses and return values.
 
 =begin sidebar
 
-I<Higher Order Perl>, by Mark Jason Dominus, is well worth your time studying.
-See U<http://hop.perl.plover.com/> for ordering information and the free
-version online.
+X<C<Want>>
+X<C<Contextual::Return>>
+
+With that said, Robin Houston's C<Want> and Damian Conway's
+C<Contextual::Return> distributions from the CPAN offer many possibilities for
+writing powerful and usable interfaces.
 
 =end sidebar
 
-=head3 Recursion
+=head2 Recursion
 
+Z<recursion>
 X<recursion>
 X<call frame>
 X<functions; call frame>
 
 Every call to a function in Perl creates a new I<call frame>.  This is an
-internal data structure which represents the call itself: in effect, incoming
-parameters, the point to which to return, and all of the control of the program
-leading up to the point of the call.  As well, it captures the lexical
-environment of the specific and current invocation of the function.  This means
-that a function can I<recur>; it can call itself.
+internal data structure which represents the data for the call itself: incoming
+parameters, the point to which to return, and all of the other call frames up
+to the current point.  It also captures the lexical environment of the specific
+and current invocation of the function.  This means that a function can
+I<recur>; it can call itself.
 
 Recursion is a deceptively simple concept, but it can seem daunting if you
-haven't encountered it before.  Consider a case where you want to find an
-element in a sorted array.  You I<could> iterate through every element of the
-array individually, looking for the target, but on average, you'll have to look
-at half of the elements of the array at once.
+haven't encountered it before.  Suppose you want to find an element in a sorted
+array.  You I<could> iterate through every element of the array individually,
+looking for the target, but on average, you'll have to examine half of the
+elements of the array.
 
-Another approach is to divide the array in half.  Pick the element at the
-midpoint, compare, then see if you have to divide the lower half or the upper
-half and continue.  You can write this algorithm with a loop yourself, or you
-could let Perl manage all of the state and tracking necessary with a recursive
-algorithm.  That might look something like:
+Another approach is to halve the array, pick the element at the midpoint,
+compare, then repeated with either the lower or upper half.  You can write this
+in a loop yourself or you could let Perl manage all of the state and tracking
+necessary with a recursive function something like:
 
 =begin programlisting
-
-    use Modern::Perl;
 
     use Test::More tests => 8;
 
@@ -640,14 +645,14 @@ algorithm.  That might look something like:
 =end programlisting
 
 This isn't necessarily the best algorithm for searching a sorted list, but it
-demonstrates recursion.  Again, you I<can> write this code in a procedural way;
-but some algorithms are much clearer recursively.
+demonstrates recursion.  Again, you I<can> write this code in a procedural way,
+but some algorithms are much clearer when written recursively.
 
-=head3 Lexicals
+=head2 Lexicals
 
 Every new invocation of a function creates its own I<instance> of a lexical
 scope.  In the case of the recursive example, even though the declaration of
-C<elem_exists(>) creates a single scope for the lexicals C<$item>, C<@array>,
+C<elem_exists()> creates a single scope for the lexicals C<$item>, C<@array>,
 C<$midpoint>, and C<$miditem>, every I<call> to C<elem_exists()>, even
 recursively, has separate storage for the values of those lexical variables.
 You can demonstrate that by adding debugging code to the function:
@@ -671,20 +676,19 @@ You can demonstrate that by adding debugging code to the function:
 The output demonstrates that not only can C<elem_exists()> call itself safely,
 but the lexical variables do not interfere with each other.
 
-=head3 Tail Calls
+=head2 Tail Calls
 
 Z<tail_calls>
 X<recursion; guard conditions>
 
 One I<drawback> of recursion is that you must get your return conditions
-correct, lest your function call itself an infinite number of times.  This is
-why the C<elem_exists()> function has several C<return> statements.
+correct, or else your function will call itself an infinite number of times.
+This is why the C<elem_exists()> function has several C<return> statements.
 
-Perl offers a helpful warning when it detects what might be runaway recursion,
-the C<Deep recursion on subroutine> message.  The limit is 100 recursive calls,
-which can be too few in certain circumstances but too many in others.
-
-X<functions; tail call elimination>
+Perl offers a helpful warning when it detects what might be runaway recursion:
+C<Deep recursion on subroutine>.  The limit is 100 recursive calls, which can
+be too few in certain circumstances but too many in others.  Disable this
+warning with C<no warnings 'recursion'> in the scope of the recursive call.
 
 Because each call to a function requires a new call frame, as well as space for
 the call to store its own lexical values, highly-recursive code can use more
@@ -693,16 +697,17 @@ help.
 
 =begin sidebar
 
-To be more specific, tail call elimination may be most obvious when writing
-recursive code, but it can be useful in any case of a tail call.
+Tail call elimination may be most obvious when writing recursive code, but it
+can be useful in any case of a tail call.  Many programming language
+implementations support automatic tail call elimination.
 
 =end sidebar
 
-X<tail calls>
-X<functions; tail calls>
+X<tailcalls>
+X<functions; tailcall>
 
 A I<tail call> is a call to a function which directly returns that function's
-results.  That is, the lines:
+results.  The lines:
 
 =begin programlisting
 
@@ -720,12 +725,12 @@ are candidates for tail call elimination.  This elimination avoids returning to
 the current call and then returning to the parent call.  Instead, it returns to
 the parent call directly.
 
-Perl 5 supports manual tail call elimination, but two recent CPAN modules
-provide a much better syntax (and even better performance).  Yuval Kogman's
-C<Sub::Call::Tail> and C<Sub::Call::Recur> are worth exploring if you find
-yourself with highly recursive code or code that could benefit from tail call
-elimination.  C<Sub::Call::Tail> is appropriate for tail calls of non-recursive
-code:
+X<C<Sub::Call::Tail>>
+
+Perl 5 supports manual tail call elimination, but Yuval Kogman's
+C<Sub::Call::Tail> is worth exploring if you find yourself with highly
+recursive code or code that could benefit from tail call elimination.
+C<Sub::Call::Tail> is appropriate for tail calls of non-recursive code:
 
 =begin programlisting
 
@@ -750,35 +755,15 @@ with no functional changes (yet more clarity and improved performance):
 
 =end programlisting
 
-=for editor
+X<C<goto>>
+X<functions; C<goto>>
+X<builtins; C<goto>>
 
-Sadly, S::C::R 0.0.4 caused infinite loops for me on Perl 5.10.0; I'm not sure
-if this is Yuval's bug or mine.  I asked him.
-
-=end for
-
-Similarly, C<Sub::Call::Recur> is appropriate for recursive calls.  Replace the C<return elem_exists> code with:
-
-=begin programlisting
-
-        # split the array down and recurse
-        B<recur>( $item, @array[0 .. $midpoint] )
-            if $item < $miditem;
-
-        # split the array up and recurse
-        B<recur>( $item, @array[$midpoint + 1 .. $#array] );
-
-=end programlisting
-
-X<goto>
-X<functions; goto>
-
-If you really I<must> perform your own manual tail call elimination, a special
-form of the C<goto> keyword exists.  Unlike the form which can often lead to
-spaghetti code, the C<goto> function form replaces the current subroutine call
-with a call to another subroutine.  You may use a subroutine by name or by
-reference.  You must always set C<@_> yourself manually, if you want to pass
-different arguments:
+If you really I<must> eliminate tail calls, use a special form of the C<goto>
+builtin.  Unlike the form which can often lead to spaghetti code, the C<goto>
+function form replaces the current function call with a call to another
+function.  You may use a function by name or by reference.  You must always set
+C<@_> yourself manually, if you want to pass different arguments:
 
 =begin programlisting
 
@@ -798,46 +783,45 @@ different arguments:
 
 =end programlisting
 
-The comparative cleanliness of the CPAN versions should be obvious.
+The comparative cleanliness of the CPAN versions is obvious.
 
-=head2 Pitfalls and Misfeatures
+=head1 Pitfalls and Misfeatures
 
-X<functions; pitfalls>
 X<functions; misfeatures>
 
 Not all features of Perl 5 functions are always helpful.  In particular,
-L<prototypes> rarely do what you mean.  They have their uses, but you can avoid
-them outside of a few cases.
-
-=for editor
-
-Check the timeline, but I'm pretty sure about this.
-
-=end for
+prototypes (L<prototypes>) rarely do what you mean.  They have their uses, but
+you can avoid them outside of a few cases.
 
 X<functions; Perl 4>
 X<functions; Perl 1>
+X<C<&>; sigil>
+X<sigils; C<&>>
+X<builtins; C<do>>
 
-As well, Perl 5 still supports old-style invocations of functions, carried over
-from older versions of Perl.  While you may now invoke Perl functions by name,
+Perl 5 still supports old-style invocations of functions, carried over from
+older versions of Perl.  While you may now invoke Perl functions by name,
 previous versions of Perl required you to invoke them with a leading ampersand
-(C<&>) character.  Perl 1 required you to use the C<do> keyword as well:
+(C<&>) character.  Perl 1 required you to use the C<do> builtin:
 
 =begin programlisting
 
-    # Perl 4 style; avoid
+    # outdated style; avoid
     my $result = &calculate_result( 52 );
 
-    # Perl 1 style; really truly avoid
+    # Perl 1 style
+    my $result = do calculate_result( 42 );
+
+    # crazy mishmash; really truly avoid
     my $result = do &calculate_result( 42 );
 
 =end programlisting
 
-While they're visually noisy, with vestigial syntax, the leading ampersand form
-performs other behavior which can occasionally surprise you.  First, it
-disables prototype checking (but prototypes are a pitfall often best avoided).
-Second, if you do not pass arguments explicitly, it I<implicitly> passes the
-contents of C<@_> unmodified.  Both can lead to surprising behavior.
+While the vestigial syntax is visual clutter, the leading ampersand form has
+other surprising behaviors.  First, it disables prototype checking (as if that
+often mattered).  Second, if you do not pass arguments explicitly, it
+I<implicitly> passes the contents of C<@_> unmodified.  Both can lead to
+surprising behavior.
 
 A final pitfall comes from leaving the parentheses off of function calls.  The
 Perl 5 parser uses several heuristics to resolve ambiguity of barewords and the
@@ -861,11 +845,5 @@ until Perl produces warnings about comparing a non-number (the test
 description, which it cannot convert into a number) with the element in the
 array.
 
-This is admittedly an extreme case, but it is a case where proper
-parenthesization can clarify code and make subtle bugs obvious to the reader.
-
-=for author
-
-Add C<wantarray()> and Want.pm information?
-
-=end for
+This is admittedly an extreme case, but it is a case where proper use of
+parentheses can clarify code and make subtle bugs obvious to the reader.
