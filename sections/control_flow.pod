@@ -238,7 +238,7 @@ different results:
 
 =begin programlisting
 
-    my $time_suffix = after_noon($time) ? 'morning' : 'afternoon';
+    my $time_suffix = after_noon($time) ? 'afternoon' : 'morning';
 
 =end programlisting
 
