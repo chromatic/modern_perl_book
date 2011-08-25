@@ -2,19 +2,21 @@
 
 body {
   max-width: 800px;
-  margin: 0 auto;
-  font-size: 1.2em;
-  font-family: 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif;
+  margin: 5px auto;
+  font-size: 1em;
+  font-family: serif;
+  text-shadow: 0;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: sans-serif;
+  font-family: 'Verdana', sans-serif;
   margin: 1.2em 0 0.6em 0;
+  text-shadow: 0;
 }
 
 p {
   line-height: 1.5em;
-  margin: 1.6em 0;
+  margin: 1.2em 0;
 }
 
 code {
@@ -81,6 +83,55 @@ div.production
 {
 	font-weight: bold;
 	text-decoration: underline;
+}
+
+div.epigraph p
+{
+    margin: 0;
+    font-size: 0.8em;
+}
+
+div.literal
+{
+    white-space: pre-wrap;
+    line-height: 1.5em;
+}
+
+li
+{
+    margin-top: 0.75em;
+}
+
+div.blockquote
+{
+    line-height: 1.5em;
+    margin-left: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+div.blockquote p
+{
+    padding: 0;
+    margin: 0.5em;
+}
+
+img
+{
+    max-width: 100%;
+}
+
+div.sidebar
+{
+    padding: 1em;
+    border: 1px solid;
+    width: 90%;
+    margin: 0;
+}
+
+hr
+{
+    width: 65%;
 }
 
 -->
