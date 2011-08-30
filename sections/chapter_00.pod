@@ -25,7 +25,7 @@ shorter, faster, more powerful, and easier to maintain than their alternatives.
 
 =begin sidebar
 
-The Modern::Perl module from the CPAN (L<CPAN>) asks Perl to warn of dubious
+The Modern::Perl module from the CPAN (L<cpan>) asks Perl to warn of dubious
 constructs and typos and will enable new features introduced in modern releases
 of Perl 5. Assume every example in this book begins with:
 

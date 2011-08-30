@@ -127,7 +127,7 @@ contain. Both of these calls to C<find_chores()> occur in list context:
 =end programlisting
 
 The latter example often surprises novice programmers who expect scalar context
-for the function call. Initializing a hash (L<hash>) with a list of values
+for the function call. Initializing a hash (L<hashes>) with a list of values
 imposes list context on C<expensive_operation>.
 
 X<builtins; C<scalar>>
