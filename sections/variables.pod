@@ -3,13 +3,13 @@
 Z<variables>
 X<variable>
 
-A I<variable> in Perl is a storage location for a value (L<values>).  You can
-work with values directly, but all but the most trivial code works with
-variables.  A variable is a level of indirection; it's easier to explain the
-Pythagorean theorem in terms of the variables C<a>, C<b>, and C<c> than with
-the side lengths of every right triangle you can imagine.  This may seem basic
-and obvious, but to write robust, well-designed, testable, and composable
-programs, you must identify and exploit points of genericity wherever possible.
+A I<variable> in Perl is a storage location for a value (L<values>). While a
+trivial program can manipulate values directly, most programs work with
+variables to simplify the logic of the code. A variable represents values; it's
+easier to explain the Pythagorean theorem in terms of the variables C<a>, C<b>,
+and C<c> than by intuiting its principle by producing a long list of valid
+values. This concept may seem basic, but effective programming requires you to
+manage the art of balancing the generic and reusable with the specific.
 
 =head2 Variable Scopes
 
@@ -17,22 +17,46 @@ Z<variable_scopes>
 
 X<variables; scope>
 X<scope>
+X<builtins; C<package>>
 
-Variables also have visibility, depending on their scope (L<scope>).  Most of
-the variables you will encounter have lexical scope (L<lexical_scope>).
-Remember that files themselves have their own lexical scopes, such that the
-C<package> declaration on its own does not create a new scope:
+Variables are visible to portions of your program depending on their scope
+(L<scope>). Most of the variables you will encounter have lexical scope
+(L<lexical_scope>). I<Files> themselves provide their own lexical scopes, such
+that the C<package> declaration on its own does not create a new scope:
 
 =begin programlisting
 
     package Store::Toy;
 
-    our $discount = 0.10;
+    my $discount = 0.10;
 
     package Store::Music;
 
-    # $Store::Toy::discount still visible as $discount
+    # $discount still visible
     say "Our current discount is $discount!";
+
+=end programlisting
+
+X<builtins; C<package>; BLOCK>
+
+As of Perl 5.14, you may provide a block to the C<package> declaration. This
+syntax I<does> provide a lexical scope:
+
+=begin programlisting
+
+    package Store::Toy
+    {
+        my $discount = 0.10;
+    }
+
+    package Store::Music
+    {
+        # $discount not available
+    }
+
+    package Store::BoardGame;
+
+    # $discount still not available
 
 =end programlisting
 
@@ -43,24 +67,23 @@ Z<sigils>
 X<variables; sigils>
 X<sigils>
 
-In Perl 5, the sigil of the variable in a declaration determines the type of
-the variable, whether scalar, array, or hash.  The sigil of the variable used
-to access the variable determines the type of access to its value.  Sigils on
-variables vary depending on what you do to the variable.  For example, declare
-an array as C<@values>.  Access the first element--a single value--of the array
-with C<$values[0]>.  Access a list of values from the array with C<@values[
-@indices ]>.
+The sigil of the variable in a declaration determines the type of the variable:
+scalar, array, or hash. The sigil used when accessing a variable varies
+depending on what you do to the variable. For example, you declare an array as
+C<@values>. Access the first element--a single value--of the array with
+C<$values[0]>. Access a list of values from the array with C<@values[ @indices
+]>.
 
 =head2 Anonymous Variables
 
 X<anonymous variables>
 X<variables; anonymous>
 
-Perl 5 variables do not I<need> names; Perl manages variables just fine without
-caring about how you refer to them.  Variables created without literal names in
-your source code (such as C<$apple>, C<@boys>, C<%cheeseburgers>) are
-I<anonymous> variables.  The only way to access anonymous variables is by
-reference (L<references>).
+Perl variables do not I<require> names. Names exist to help you, the
+programmer, keep track of an C<$apple>, C<@barrels>, or C<%cheap_meals>.
+Variables created I<without> literal names in your source code are I<anonymous>
+variables. The only way to access anonymous variables is by reference
+(L<references>).
 
 =head2 Variables, Types, and Coercion
 
@@ -68,21 +91,22 @@ X<variables; types>
 X<variables; container type>
 X<variables; value type>
 
-A variable in Perl 5 represents two things: the value (a dollar value, a list
-of pizza toppings, a group of guitar shops and their phone numbers) and the
-container which stores that value.  Perl 5's type system deals with I<value
-types> and I<container types>.  A variable's value type--whether a value is a
-string or a number, for example--can change.  You may store a string in a
+A variable in Perl 5 represents both a value (a dollar cost, available pizza
+toppings, guitar shops with phone numbers) and the container which stores that
+value. Perl's type system deals with I<value types> and I<container types>.
+While a variable's I<container type>--scalar, array, or hash--cannot change,
+Perl is flexible about a variable's value type. You may store a string in a
 variable in one line, append to that variable a number on the next, and
-reassign a reference to a function (L<function_references>) on the third.  A
-variable's I<container type>--whether it's a scalar, an array, or a
-hash--cannot change.
+reassign a reference to a function (L<function_references>) on the third.
 
-Assigning to a variable may cause coercion (L<coercion>).  The documented way
-to determine the number of entries in an array is to evaluate that array in
-scalar context (L<context_philosophy>).  Because a scalar variable can only
-ever contain a scalar, assigning an array to a scalar imposes scalar context on
-the operation and produces the number of elements in the array:
+Performing an operation on a variable which imposes a specific value type may
+cause coercion (L<coercion>) from the variable's existing value type.
+
+For example, the documented way to determine the number of entries in an array
+is to evaluate that array in scalar context (L<context_philosophy>). Because a
+scalar variable can only ever contain a scalar, assigning an array to a scalar
+imposes scalar context on the operation, and an array evaluated in scalar
+context returns the number of elements in the array:
 
 =begin programlisting
 
@@ -90,5 +114,4 @@ the operation and produces the number of elements in the array:
 
 =end programlisting
 
-The relationship between variable types, sigils, and context is vital to a
-proper understanding of Perl.
+This relationship between variable types, sigils, and context is essential.
