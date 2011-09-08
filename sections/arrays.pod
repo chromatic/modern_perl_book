@@ -171,6 +171,8 @@ freshly-declared arrays start out empty.
 
 =head2 Array Slices
 
+Z<array_slices>
+
 X<arrays; slices>
 X<slices; array>
 X<C<@>; sigil>
