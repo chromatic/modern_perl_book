@@ -4,22 +4,13 @@ Z<operators>
 X<operators>
 X<operands>
 
-An accurate, if irreverent, description of Perl is an "operator-oriented
-language".  The interaction of operators with their operands gives Perl its
-expressivity and power.  Understanding Perl requires understanding its
-operators and how they behave.  For the sake of this discussion, a working
-definition of a Perl I<operator> is a series of one or more symbols used as
-part of the syntax of a language.  Each operator operates on zero or more
-I<operands>; this definition is circular, as an operand is a value on which an
-operator operates.
+Some people call Perl an "operator-oriented language". To understand a Perl
+program, you must understand how its operators interact with their operands.
 
-=begin sidebar
-
-The most accurate definition of operators is "What's in C<perlop>", but even
-that leaves out some operators in C<perlsyn> and includes builtins.  Don't get
-too attached to a single definition.
-
-=end sidebar
+A Perl I<operator> is a series of one or more symbols used as part of the
+syntax of a language. Each operator operates on zero or more I<operands>. Think
+of an operator as a special sort of function the parser understands and its
+operands as arguments.
 
 L<operator_characteristics>
 
