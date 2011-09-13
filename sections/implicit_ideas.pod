@@ -195,15 +195,17 @@ Use C<$_> as you would the word "it" in formal writing: sparingly, in small and 
 
 =head2 The Default Array Variables
 
+Z<default_array_variables>
+
 X<default variables; array>
 X<default variables; C<@_>>
 X<variables; C<@_>>
 X<C<@_>>
 
 Perl also provides two implicit array variables. Perl passes arguments to
-functions in an array named C<@_>. Array manipulation operations (L<arrays>)
-inside functions affect this array by default, so these two snippets of code
-are equivalent:
+functions (L<functions>) in an array named C<@_>. Array manipulation operations
+(L<arrays>) inside functions affect this array by default, so these two
+snippets of code are equivalent:
 
 =begin programlisting
 
