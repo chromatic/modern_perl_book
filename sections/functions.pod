@@ -38,7 +38,7 @@ Forward declarations are only useful in the two rare cases of attributes
 
 X<functions; invoking>
 
-Use postfix (L<postfix>) parentheses and a function's name to invoke that
+Use postfix (L<fixity>) parentheses and a function's name to invoke that
 function and pass an optional list of arguments:
 
 =begin programlisting

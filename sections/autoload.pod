@@ -72,7 +72,7 @@ variable C<$AUTOLOAD>:
 The C<our> declaration (L<our>) scopes this variable to the body of
 C<AUTOLOAD()>. The variable contains the fully-qualified name of the undefined
 function (in this case, C<main::bake_pie>). Remove the package name with a
-regular expression (L<regular_expressions>):
+regular expression (L<regex>):
 
 =begin programlisting
 

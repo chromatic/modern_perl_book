@@ -27,7 +27,7 @@ X<sigils; C<$>>
 
 I<Accessing> an individual element of an array in Perl 5 requires the scalar
 sigil. C<$cats[0]> is an unambiguous use of the C<@cats> array, because postfix
-(L<postfix>) square brackets (C<[]>) always mean indexed access to an array.
+(L<fixity>) square brackets (C<[]>) always mean indexed access to an array.
 
 The first element of an array is at index zero:
 
