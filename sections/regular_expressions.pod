@@ -39,6 +39,21 @@ X<C<!~>; negated regex bind>
 The negated form of the binding operator (C<!~>) evaluates to a true value
 unless the match succeeds.
 
+X<operators; substitution>
+X<operators; C<s///>>
+
+The substitution operator, C<s///>, evaluates its first portion as a regular
+expression to match and the second portion as a substring used to replace the
+matched portion. In other words, to get over your pesky summer allergies:
+
+=begin programlisting
+
+    my $status = 'I feel ill.';
+    $status    =~ s/ill/well/;
+    say $status;
+
+=end programlisting
+
 =head1 The qr// Operator and Regex Combinations
 
 X<operators; C<qr//>>
@@ -590,7 +605,18 @@ substrings:
 
 =end programlisting
 
-In such a simple case, numbered captures are manageable.
+Numbered captures are also useful in simple substitutions, where named captures
+may be more verbose:
+
+=begin programlisting
+
+    my $order = 'Vegan brownies!';
+
+    $order    =~ s/Vegan (\w+)/Vegetarian $1/;
+    # or
+    $order    =~ s/Vegan (?<menuitem>\w+)/Vegetarian $+{menuitem}/;
+
+=end programlisting
 
 =head1 Grouping and Alternation
 
@@ -848,6 +874,18 @@ zero-width positive look-behind assertion I<can> have a variable length:
 
 =end programlisting
 
+C<\K> is surprisingly useful for for certain substitutions which remove the end
+of a pattern:
+
+=begin programlisting
+
+    my $exclamation = 'This is a catastrophe!';
+    $exclamation    =~ s/cat\K\w+!/./;
+
+    like( $exclamation, qr/\bcat\./, "That wasn't so bad!" );
+
+=end programlisting
+
 =head1 Regex Modifiers
 
 X<regex; modifiers>
@@ -911,6 +949,30 @@ The C</s> modifier treats the source string as a single line such that the C<.>
 metacharacter matches the newline character. Damian Conway suggests the
 mnemonic that C</m> modifies the behavior of I<multiple> regex metacharacters,
 while C</s> modifies the behavior of a I<single> regex metacharacter.
+
+X<C</r>; non-destructive substitution modifier>
+X<regex; C</r> modifier>
+X<regex; non-destructive substitution>
+
+The C</r> modifier causes a substitution operation to return the result of the
+substitution, leaving the original string as-is. If the substitution succeeds,
+the result is a modified copy of the original. If the substitution fails
+(because the pattern does not match), the result is an unmodified copy of the
+original:
+
+=begin programlisting
+
+    my $status     = 'I am hungry for pie.';
+    my $newstatus  = $status =~ s/pie/cake/;
+    my $statuscopy = $status =~ s/liver and onions/bratwurst/;
+
+    is( $status, 'I am hungry for pie.',
+        'original string should be unmodified' );
+
+    like( $newstatus,    qr/cake/,      '... someone wants cake'   );
+    unlike( $statuscopy, qr/bratwurst/, '... no German food today' );
+
+=end programlisting
 
 X<C</x>; extended readability regex modifier>
 X<regex; C</x> modifier>
