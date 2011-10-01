@@ -1,17 +1,18 @@
 =head0 Style and Efficacy
 
-Programming and programming I<well> are related, but distinct skills.  If we
-only wrote programs once and never had to modify or maintain them, if our
-programs never had bugs, if we never had to choose between using more memory or
-taking more time, and if we never had to work with other people, we wouldn't
-have to worry about how well we program.  To program well, you must understand
-the differences between potential solutions based on specific priorities of
-time, resources, and future plans.
+Quality matters.
 
-Writing Perl well means understanding how Perl works.  It also means developing
-a sense of good taste.  To develop that skill, you must practice writing and
-maintaining code and reading good code.  There are no shortcuts--but you can
-improve the effectiveness of your practice by following a few guidelines.
+Programs have bugs. Programs need maintenance and expansion. Programs have
+multiple programmers.
+
+Programming well requires us to find a balance between getting the job done and
+allowing us to do so well into the future. We can trade any of time, resources,
+and quality for any other. How well we do that determines our skill as
+pragmatic craftworkers.
+
+Understanding Perl is important. So is cultivating a sense of good taste. The
+only way to do so is to practice maintaining code and reading and writing great
+code. This path has no shortcuts, but this path does have guideposts.
 
 L<style>
 
