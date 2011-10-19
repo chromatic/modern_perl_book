@@ -4,46 +4,39 @@ Z<distributions>
 
 X<distribution>
 
-A I<distribution> is a collection of one or more modules (L<modules>) which
-forms a single redistributable, testable, and installable unit.  Effectively
-it's a collection of module and metadata.
+The easiest way to manage software configuration, building, packaging, testing,
+and installation is to follow the CPAN's distribution conventions. A
+I<distribution> is a collection of metadata and one or more modules
+(L<modules>) which forms a single redistributable, testable, and installable
+unit.
 
-The easiest way to manage software configuration, building, distribution,
-testing, and installation even within your organization is to create
-distributions compatible with the CPAN.  The conventions of the CPAN--how to
-package a distribution, how to resolve its dependencies, where to install
-software, how to verify that it works, how to display documentation, how to
-manage a repository--have all arisen from the rough consensus of thousands of
-contributors working on tens of thousands of projects.
-
-In particular, the copious amount of testing and reporting and dependency
-checking achieved by CPAN developers exceeds the available information and
-quality of work in any other language community.  A distribution built to CPAN
-standards can be tested on several versions of Perl 5 on several different
-hardware platforms within a few hours of its uploading--all without human
-intervention.
+These guidelines--how to package a distribution, how to resolve its
+dependencies, where to install software, how to verify that it works, how to
+display documentation, how to manage a repository--have all arisen from the
+rough consensus of thousands of contributors working on tens of thousands of
+projects. A distribution built to CPAN standards can be tested on several
+versions of Perl 5 on several different hardware platforms within a few hours
+of its uploading, with errors reported automatically to authors--all without
+human intervention.
 
 You may choose never to release any of your code as public CPAN distributions,
-but you can reuse existing CPAN tools and designs as possible.  The combination
-of intelligent defaults and customizability are likely to meet your specific
-needs.
+but you can reuse CPAN tools and conventions.
 
 =head2 Attributes of a Distribution
 
-A distribution obviously includes one or more modules.  It also includes
-several other files and directories:
+Besides one or more modules, a distribution includes several other files and
+directories:
 
 =over 4
 
-=item * F<Build.PL> or F<Makefile.PL>, the program used to configure, build,
-test, bundle, and install the distribution.
+=item * F<Build.PL> or F<Makefile.PL>, a driver program used to configure,
+build, test, bundle, and install the distribution.
 
-=item * F<MANIFEST>, a list of all files contained in the distribution.  This
-helps packaging tools produce an entire tarball and helps to verify that
-recipients of the tarball have all of the necessary files.
+=item * F<MANIFEST>, a list of all files contained in the distribution. This
+helps tools verify that a bundle is complete.
 
-=item * F<META.yml> and/or F<META.json>, a file containing metadata about the distribution and its
-dependencies.
+=item * F<META.yml> and/or F<META.json>, a file containing metadata about the
+distribution and its dependencies.
 
 =item * F<README>, a description of the distribution, its intent, and its
 copyright and licensing information.
@@ -58,44 +51,37 @@ copyright and licensing information.
 
 X<CPAN; CPANTS>
 
-Additionally, a well-formed distribution must contain a unique name and single
-version number (often taken from its primary module).  Any well-formed
-distribution you download from the public CPAN should conform to these
-standards--and the CPANTS service evaluates the kwaliteeN<Quality is difficult
-to measure with heuristics.  Kwalitee is the machine measurable relative of
-quality.> of all CPAN distributions and recommends packaging improvements.
+A well-formed distribution must contain a unique name and single version number
+(often taken from its primary module). Any distribution you download from the
+public CPAN should conform to these standards. The public CPANTS service
+(U<http://cpants.perl.org/>) evaluates each uploaded distribution against
+packaging guidelines and conventions and recommends improvements.
 
 =head2 CPAN Tools for Managing Distributions
 
-The Perl 5 core includes several tools to manage distributions--not just
-installing them from the CPAN, but developing and managing your own:
+The Perl 5 core includes several tools to install, develop, and manage your own
+distributions:
 
 X<C<CPAN>>
+X<C<CPANPLUS>>
 
 =over 4
 
-=item * C<CPAN.pm> is the official CPAN client.  While by default it installs
-distributions from the public CPAN, you can point it to your own repository
+=item * C<CPAN.pm> is the official CPAN client; C<CPANPLUS> is an alternative.
+They are largely equivalent. While by default these clients install
+distributions from the public CPAN, you can point them to your own repository
 instead of or in addition to the public repository.
-
-X<C<CPANPLUS>>
-
-=item * C<CPANPLUS> is an alternate CPAN client with a different design
-approach.  It does some things better than C<CPAN.pm>, but they are largely
-equivalent at this point.  Use whichever you prefer.
 
 X<C<Module::Build>>
 
 =item * C<Module::Build> is a pure-Perl tool suite for configuring, building,
-installing, and testing distributions.  It works with the F<Build.PL> file
-mentioned earlier.
+installing, and testing distributions. It works with F<Build.PL> files.
 
 X<C<ExtUtils::MakeMaker>>
 
-=item * C<ExtUtils::MakeMaker> is an older, legacy tool which C<Module::Build>
-intends to replace.  It is still in wide use, though it is in maintenance mode
-and receives only the most critical bug fixes.  It works with the
-F<Makefile.PL> file mentioned earlier.
+=item * C<ExtUtils::MakeMaker> is a legacy tool which C<Module::Build> intends
+to replace. It is still in wide use, though it is in maintenance mode and
+receives only critical bug fixes. It works with F<Makefile.PL> files.
 
 X<C<Test::More>>
 
@@ -105,28 +91,29 @@ module used to write automated tests for Perl software.
 X<C<Test::Harness>>
 X<C<prove>>
 
-=item * C<Test::Harness> and C<prove> (L<running_tests>) are the tools used to
-run tests and to interpret and report their results.
+=item * C<Test::Harness> and C<prove> (L<running_tests>) run tests and
+interpret and report their results.
 
 =back
 
 In addition, several non-core CPAN modules make your life easier as a
 developer:
 
-X<C<App::cpanminus>>
+X<CPAN; C<App::cpanminus>>
+X<cpanminus>
+X<cpanm>
 
 =over 4
 
-=item * C<App::cpanminus> is a new utility which provides almost
-configuration-free use of the public CPAN.  It fulfills 90% of your needs to
-find and install modules.
+=item * C<App::cpanminus> provides almost configuration-free use of the public
+CPAN. It provides the most common 90% of what a CPAN client needs.
 
-X<C<App::perlbrew>>
+X<CPAN; C<App::perlbrew>>
+X<perlbrew>
 
 =item * C<App::perlbrew> helps you to manage multiple installations of Perl 5.
-This is very useful to use a newer version than the system version or to
-isolate distributions you've installed for one application from distributions
-you've installed for another.
+Install new versions of Perl 5 for testing or production, or to isolate
+applications and their dependencies.
 
 X<CPAN; C<CPAN::Mini>>
 X<CPAN; C<cpanmini>>
@@ -136,13 +123,13 @@ X<CPAN; C<cpanmini>>
 into this repository and manage which versions of the public modules are
 available in your organization.
 
-X<C<Dist::Zilla>>
-X<C<Module::Build>>
+X<CPAN; C<Dist::Zilla>>
+X<CPAN; C<Module::Build>>
 X<C<ExtUtils::MakeMaker>>
 
-=item * C<Dist::Zilla> is a toolkit for managing distributions by automating
-away common tasks.  While it can use either C<Module::Build> or
-C<ExtUtils::MakeMaker>, it can replace I<your> use of them directly.
+=item * C<Dist::Zilla> automates away common distribution tasks tasks. While it
+uses either C<Module::Build> or C<ExtUtils::MakeMaker>, it can replace I<your>
+use of them directly. See U<http://dzil.org/> for an interactive tutorial.
 
 X<CPAN; C<Test::Reporter>>
 
@@ -154,40 +141,41 @@ data on any failures.
 
 =head2 Designing Distributions
 
+X<CPAN; C<Module::Starter>>
+
 The process of designing a distribution could fill a book (see Sam Tregar's
 I<Writing Perl Modules for CPAN>), but a few design principles will help you.
-Start with a utility such as C<Module::Starter> or C<Dist::Zilla> from the
-CPAN.  The initial cost of learning the configuration and rules may seem like a
-steep investment, but the benefit of having everything set up the right way
-(and in the case of C<Dist::Zilla>, I<never> going out of date) relieves you of
-much tedious bookkeeping.
+Start with a utility such as C<Module::Starter> or C<Dist::Zilla>. The initial
+cost of learning the configuration and rules may seem like a steep investment,
+but the benefit of having everything set up the right way (and in the case of
+C<Dist::Zilla>, I<never> going out of date) relieves you of much tedious
+bookkeeping.
 
-Then consider several rules.
+Then consider several rules:
 
 =over 4
 
-=item * I<Each distribution should have a single, well-defined purpose.>  That
-purpose may be to process a particular type of data file or to gather together
-several related distributions into a single installable bundle.  Decomposing
-your software into individual bundles allows you to manage their dependencies
-appropriately and to respect their encapsulation.
+=item * I<Each distribution needs a single, well-defined purpose.> That purpose
+may even include gathering several related distributions into a single
+installable bundle. Decomposing your software into individual distributions
+allows you to manage their dependencies appropriately and to respect their
+encapsulation.
 
-=item * I<Each distribution needs a single version number.>  Version numbers
-must always increase.  The semantic version policy (U<http://semver.org/>) is
+=item * I<Each distribution needs a single version number.> Version numbers
+must always increase. The semantic version policy (U<http://semver.org/>) is
 sane and compatible with the Perl 5 approach.
 
-=item * I<Each distribution should have a well-defined API.>  A comprehensive
+=item * I<Each distribution requires a well-defined API.> A comprehensive
 automated test suite can verify that you maintain this API across versions.  If
 you use a local CPAN mirror to install your own distributions, you can re-use
 the CPAN infrastructure for testing distributions and their dependencies.  You
 get easy access to integration testing across reusable components.
 
 =item * I<Automate your distribution tests and make them repeatable and
-valuable.>  Managing software effectively requires you to know when it works
-and how it fails if it fails.
+valuable.> The CPAN infrastructure supports automated test reporting. Use it!
 
-=item * I<Present an effective and simple interface.>  Avoid the use of global
-symbols and default exports; allow people to use only what they need and do not
+=item * I<Present an effective and simple interface.> Avoid the use of global
+symbols and default exports; allow people to use only what they need. Do not
 pollute their namespaces.
 
 =back

@@ -2,7 +2,7 @@
 
 Z<taint>
 
-Perl gives you tools with which to write programs securely.  These tools are no
+Perl provides tools with which to write secure programs. These tools are no
 substitute for careful thought and planning, but they I<reward> caution and
 understanding and can help you avoid subtle mistakes.
 
@@ -10,34 +10,31 @@ understanding and can help you avoid subtle mistakes.
 
 X<taint>
 
-A feature called I<taint mode> or I<taint> adds a small amount of metadata to
-all data which comes from sources outside of your program.  Any data derived
-from tainted data is also tainted.  You may use tainted data within your
-program, but if you use it to affect the outside world--if you use it
-insecurely--Perl will throw a fatal exception.
+I<Taint mode> (or I<taint>) adds metadata to all data which comes from outside
+of your program. Any data derived from tainted data is also tainted. You may
+use tainted data within your program, but if you use it to affect the outside
+world--if you use it insecurely--Perl will throw a fatal exception.
 
-C<perldoc perlsec> explains taint mode in copious detail among other security
-guidelines.
+C<perldoc perlsec> explains taint mode in copious detail.
 
 X<C<-T>; taint command-line argument>
 X<command-line arguments; C<-T>>
 X<C<%ENV>>
 
-To enable taint mode, launch your program with the C<-T> flag.  You can use
-this flag on the C<#!> line of a program only if you make the program
-executable and do not launch it with C<perl>; if you run it as C<perl
-mytaintedappl.pl> and neglect the C<-T> flag, Perl will exit with an exception.
-By the time Perl encounters the flag on the C<#!> line, it's missed its
-opportunity to taint the environment data which makes up C<%ENV>, for example.
+Launch your program with the C<-T> command-line argument to enable taint mode.
+If you use this argument on the C<#!> line of a program, you must run the
+program directly; if you run it as C<perl mytaintedappl.pl> and neglect the
+C<-T> flag, Perl will exit with an exception.  By the time Perl encounters the
+flag on the C<#!> line, it's missed its opportunity to taint the environment
+data which makes up C<%ENV>, for example.
 
 =head2 Sources of Taint
 
 Taint can come from two places: file input and the program's operating
-environment.  The former is anything you read from a file or collect from users
-in the case of web or network programming.  The latter is more subtle.  This
-includes any command-line arguments, environment variables, and data from
-system calls.  Even operations such as reading from a directory handle (opened
-with C<opendir()>) produces tainted data.
+environment. The former is anything you read from a file or collect from users
+in the case of web or network programming. The latter includes any command-line
+arguments, environment variables, and data from system calls. Even operations
+such as reading from a directory handle produce tainted data.
 
 X<C<Scalar::Util>>
 X<C<tainted()>>
@@ -72,22 +69,21 @@ input consists of a US telephone number, you can untaint it with:
 
 The more specific your pattern is about what you allow, the more secure your
 program can be.  The opposite approach of I<denying> specific items or forms
-runs the risk of overlooking something harmful.  In the case of security, Perl
-prefers that you disallow something that's safe but unexpected than that you
-allow something harmful which appears safe.  Even so, nothing prevents you from
-writing a capture for the entire contents of a variable--but in that case, why
-use taint?
+runs the risk of overlooking something harmful. Far better to disallow
+something that's safe but unexpected than that to allow something harmful which
+appears safe. Even so, nothing prevents you from writing a capture for the
+entire contents of a variable--but in that case, why use taint?
 
 =head2 Removing Taint from the Environment
 
 X<taint; removing sources of>
 
-One source of taint is the superglobal C<%ENV>, which represents environment
-variables for the system.  This data is tainted because forces outside of the
-program's control can manipulate values there.  Any environment variable which
-modifies how Perl or the shell finds files and directories is an attack vector.
-A taint-sensitive program should delete several keys from C<%ENV> and set
-C<$ENV{PATH}> to a specific and well-secured path:
+The superglobal C<%ENV> represents environment variables for the system.  This
+data is tainted because forces outside of the program's control can manipulate
+values there. Any environment variable which modifies how Perl or the shell
+finds files and directories is an attack vector. A taint-sensitive program
+should delete several keys from C<%ENV> and set C<$ENV{PATH}> to a specific and
+well-secured path:
 
 =begin programlisting
 
@@ -104,14 +100,14 @@ its insecurity.
 If this environment variable contained the current working directory, or if it
 contained relative directories, or if the directories specified had
 world-writable permissions, a clever attacker could hijack system calls to
-perpetrate insecure operations.
+perpetrate mischief.
 
 =end sidebar
 
 For similar reasons, C<@INC> does not contain the current working directory
-under taint mode.  Perl will also ignore the C<PERL5LIB> and C<PERLLIB>
-environment variables.  Use the C<lib> pragma or the C<-I> flag to C<perl> if
-you need to add library directories to the program.
+under taint mode. Perl will also ignore the C<PERL5LIB> and C<PERLLIB>
+environment variables. Use the C<lib> pragma or the C<-I> flag to C<perl> to
+add library directories to the program.
 
 =head2 Taint Gotchas
 
