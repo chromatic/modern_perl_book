@@ -40,8 +40,8 @@ X<exceptions; C<$@>>
 
 C<die()> sets the global variable C<$@> to its operand and immediately exits
 the current function I<without returning anything>. This thrown exception will
-continue up the call stack (L<call_stack>) until something catches it. If
-nothing catches the exception, the program will exit with an error.
+continue up the call stack (L<controlled_execution>) until something catches
+it. If nothing catches the exception, the program will exit with an error.
 
 =begin sidebar
 

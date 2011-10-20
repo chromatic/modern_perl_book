@@ -304,7 +304,6 @@ users can run directly.  All you need to do is to discover I<how> Perl began to
 execute a piece of code.  For this, use C<caller>.
 
 X<builtins; C<caller>>
-X<call_stack>
 
 C<caller>'s single optional argument is the number of call frames which to
 report.  (A I<call frame> is the bookkeeping information which represents a

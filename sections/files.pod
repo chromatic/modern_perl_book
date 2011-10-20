@@ -57,8 +57,7 @@ operation. The final operand is the name of the file. If the C<open> fails, the
 C<die> clause will throw an exception, with the contents of C<$!> giving the
 reason why the open failed.
 
-You may also open files for writing, appending, reading and writing, and more
-(L<file_modes_table>).
+You may also open files for writing, appending, reading and writing, and more.
 
 =begin table File Modes
 
