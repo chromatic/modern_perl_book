@@ -16,6 +16,8 @@ they provide no specific ordering of keys.
 
 =head2 Declaring Hashes
 
+Z<declaring_hashes>
+
 X<hashes; declaring>
 X<C<%>; sigil>
 X<sigils; C<%>>
