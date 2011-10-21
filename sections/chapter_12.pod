@@ -1,11 +1,9 @@
 =head0 What's Missing
 
-Perl 5 isn't perfect, at least as it behaves by default.  Some options are
-available in the core.  More are available from the CPAN.  Experienced Perl
-developers have their own idea of how an ideal Perl 5 should behave, and they
-often use their own configurations very effectively.
-
-Novices may not know how Perl can help them write programs better.  A handful
-of core modules will make you much more productive.
+Perl 5 isn't perfect, but it's malleable--in part because no single
+configuration is idea for every programmer and every purpose. Some useful
+behaviors are available as core libraries. More are available from the CPAN.
+Your effectiveness as a Perl programmer depends on you taking advantage of
+these enhancements.
 
 L<missing_defaults>
