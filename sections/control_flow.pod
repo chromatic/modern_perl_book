@@ -986,7 +986,7 @@ The C<continue> construct behaves like the third subexpression of a C<for>
 loop; Perl executes its block before subsequent iterations of a loop, whether
 due to normal loop repetition or premature re-iteration from C<next>N<The Perl
 equivalent to C's C<continue> is C<next>.>. You may use it with a C<while>,
-C<until>, C<with>, or C<for> loop. Examples of C<continue> are rare, but it's
+C<until>, C<when>, or C<for> loop. Examples of C<continue> are rare, but it's
 useful any time you want to guarantee that something occurs with every
 iteration of the loop regardless of how that iteration ends:
 
