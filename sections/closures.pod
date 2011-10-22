@@ -132,7 +132,7 @@ elements you need:
 
     sub gen_fib
     {
-        my @fibs = (0, 1, 1);
+        my @fibs = (0, 1);
 
         return sub
         {
@@ -140,7 +140,7 @@ elements you need:
 
             if ($item >= @fibs)
             {
-                for my $calc ((@fibs - 1) .. $item)
+                for my $calc (@fibs .. $item)
                 {
                     $fibs[$calc] = $fibs[$calc - 2] + $fibs[$calc - 1];
                 }
