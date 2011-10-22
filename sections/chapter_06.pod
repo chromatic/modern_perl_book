@@ -6,19 +6,17 @@ X<regular expressions>
 X<regex>
 X<regex; engine>
 
-Perl's powerful ability to manipulate text comes in part from its inclusion of
-a computing concept known as I<regular expressions>.  A regular expression
-(often shortened to I<regex> or I<regexp>) is a I<pattern> which describes
-characteristics of a string of text.  A I<regular expression engine> interprets
-a pattern and applies it to strings of text to identify those which match.
+Perl's text processing power comes from its use of I<regular expressions>.  A
+regular expression (I<regex> or I<regexp>) is a I<pattern> which describes
+characteristics of a piece of text. A I<regular expression engine> interprets
+patterns and applies them to match or modify pieces of text.
 
-Perl's core documentation describes Perl regular expressions in copious detail;
-see C<perldoc perlretut>, C<perldoc perlre>, and C<perldoc perlreref> for a
-tutorial, the full documentation, and a reference guide, respectively.  Jeffrey
-Friedl's book I<Mastering Regular Expressions> explains the theory and the
-mechanics of how regular expressions work.  Even though those references may
-seem daunting, regular expressions are like Perl--you can do many things with
-only a little knowledge.
+Perl's core documentation--C<perldoc perlretut>, C<perldoc perlreref>, and
+C<perldoc perlre>--includes a regex tutorial, a reference guide, and full
+documentation, respectively. Jeffrey Friedl's book I<Mastering Regular
+Expressions> explains the theory and the mechanics of how regular expressions
+work. While mastering regular expressions is a daunting pursuit, a little
+knowledge will give you great power.
 
 L<regular_expressions>
 

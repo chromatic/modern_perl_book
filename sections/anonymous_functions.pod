@@ -2,28 +2,15 @@
 
 Z<anonymous_functions>
 
-X<anonymous function>
 X<functions; anonymous>
 
-An I<anonymous function> is a function without a name.  It behaves like a named
-function--you can invoke it, pass arguments to it, return values from it, copy
-references to it--it can do anything a named function can do.  The difference
-is that it has no name.  You always deal with anonymous functions by reference
-(L<function_references>).
+An I<anonymous function> is a function without a name. It otherwise behaves
+exactly like a named function--you can invoke it, pass arguments to it, return
+values from it, and copy references to it. Yet the only way to deal with it is
+by reference (L<function_references>).
 
-=head2 Declaring Anonymous Functions
-
-You may never declare an anonymous function on its own; you must construct it
-and assign it to a variable, invoke it immediately, or pass it as an argument
-to a function, either explicitly or implicitly.  Explicit creation uses the
-C<sub> keyword with no name:
-
-=begin programlisting
-
-    my $anon_sub = sub { ... };
-
-=end programlisting
-
+X<functions; dispatch table>
+X<idioms; dispatch table>
 X<dispatch table>
 
 A common Perl 5 idiom known as a I<dispatch table> uses hashes to associate
@@ -33,12 +20,14 @@ input with behavior:
 
     my %dispatch =
     (
-        plus     => sub { $_[0]  + $_[1] },
-        minus    => sub { $_[0]  - $_[1] },
-        times    => sub { $_[0]  * $_[1] },
-        goesinto => sub { $_[0]  / $_[1] },
-        raisedto => sub { $_[0] ** $_[1] },
+        plus     => \&add_two_numbers,
+        minus    => \&subtract_two_numbers,
+        # ... and so on
     );
+
+    sub add_two_numbers      { $_[0] + $_[1] }
+
+    sub subtract_two_numbers { $_[0] - $_[1] }
 
     sub dispatch
     {
@@ -55,44 +44,39 @@ input with behavior:
 The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
 returns the result of evaluating the operation.
 
-You may use anonymous functions in place of function references.  To Perl,
-they're equivalent.  Nothing I<necessitates> the use of anonymous functions,
-but for functions this short, there's little drawback to writing them this way.
+=head2 Declaring Anonymous Functions
 
-You may rewrite C<%dispatch> as:
+X<builtins; C<sub>>
+
+The C<sub> builtin used without a name creates and returns an anonymous
+function. Use this function reference any place you'd use a reference to a
+named function, such as to declare the dispatch table's functions in place:
 
 =begin programlisting
 
     my %dispatch =
     (
-        plus     => \&add_two_numbers,
-        minus    => \&subtract_two_numbers,
-        # ... and so on
+        plus     => sub { $_[0]  + $_[1] },
+        minus    => sub { $_[0]  - $_[1] },
+        times    => sub { $_[0]  * $_[1] },
+        goesinto => sub { $_[0]  / $_[1] },
+        raisedto => sub { $_[0] ** $_[1] },
     );
-
-    sub add_two_numbers      { $_[0] + $_[1] }
-
-    sub subtract_two_numbers { $_[0] - $_[1] }
 
 =end programlisting
 
-... but the decision to do so depends more on maintainability concerns, safety,
-and your team's coding style than any language feature.
-
 =begin sidebar
 
-A benefit of indirection through the dispatch table is that it provides some
-protection against calling functions without verifying that it's safe to call
-those functions.  If your dispatch function blindly assumed that the string
-given as the name of the operator corresponded directly to the name of a
-function to call, a malicious user could conceivably call any function in any
-other namespace by crafting an operator name of
+This dispatch table offers some degree of security; only those functions mapped
+within the table are available for users to call. If your dispatch function
+blindly assumed that the string given as the name of the operator corresponded
+directly to the name of a function to call, a malicious user could conceivably
+call any function in any other namespace by crafting an operator name of
 C<'Internal::Functions::some_malicious_function'>.
 
 =end sidebar
 
-You may also create anonymous functions on the spot when passing them as
-function parameters:
+You may also see anonymous functions passed as function arguments:
 
 =begin programlisting
 
@@ -108,7 +92,7 @@ function parameters:
     }
 
     invoke_anon_function( \&named_func );
-    invoke_anon_function( sub { say 'I am an anonymous function' } );
+    invoke_anon_function( B<sub { say 'I am an anonymous function' }> );
 
 =end programlisting
 
@@ -116,16 +100,12 @@ function parameters:
 
 X<anonymous functions; names>
 
-There is one instance in which you can identify the difference between a
-reference to a named function and an anonymous function--anonymous functions do
-not (normally) have names.  This may sound subtle and silly and obvious, but
-introspection shows the difference:
+Given a reference to a function, you can determine whether the function is
+named or anonymous with introspection:
 
 =begin programlisting
 
     package ShowCaller;
-
-    use Modern::Perl;
 
     sub show_caller
     {
@@ -144,36 +124,26 @@ introspection shows the difference:
 
 =end programlisting
 
+=begin sidebar
+
+X<CPAN; C<Sub::Identify>>
+
+The CPAN module C<Sub::Identify>'s C<sub_name> function simplifies this
+introspection.
+
+=end sidebar
+
 The result may be surprising:
 
     Called from ShowCaller::B<main> in ShowCaller at anoncaller.pl : 20
     Called from ShowCaller::B<__ANON__> in ShowCaller at anoncaller.pl : 17
 
+X<CPAN; C<Sub::Name>>
+
 The C<__ANON__> in the second line of output demonstrates that the anonymous
-function has no name that Perl can identify.  Even though this can be difficult
-to debug, there are ways around this anonymity.
-
-The CPAN module C<Sub::Identify> provides a handful of functions useful to
-inspect the names of functions, given references to them.  C<sub_name()> is the
-most immediately obvious:
-
-=begin programlisting
-
-    use Sub::Identify 'sub_name';
-
-    sub main
-    {
-        say sub_name( \&main );
-        say sub_name( sub {} );
-    }
-
-    main();
-
-=end programlisting
-
-As you might imagine, the lack of identifying information complicates debugging
-anonymous functions.  The CPAN module C<Sub::Name> can help.  Its C<subname()>
-function allows you to attach names to anonymous functions:
+function has no name that Perl can identify. This can complicate debugging.
+The CPAN module C<Sub::Name>'s C<subname()> function allows you to attach names
+to anonymous functions:
 
 =begin programlisting
 
@@ -199,71 +169,61 @@ This program produces:
     __ANON__
 
 Be aware that both references refer to the same underlying anonymous function.
-Calling C<subname()> on C<$anon> and returning into C<$named> modifies that
-function, so any other reference to this function will see the same name
-C<pseudo-anonymous>.
+Using C<subname()> on one reference to a function will modify that anonymous
+function's name such that all other references to it will see the new name.
 
 =head2 Implicit Anonymous Functions
 
 X<anonymous functions; implicit>
 
-All of these anonymous function declarations have been explicit.  Perl 5 allows
-implicit anonymous functions through the use of prototypes (L<prototypes>).
-Though this feature exists nominally to enable programmers to write their own
-syntax such as that for C<map> and C<eval>, an interesting example is the use
-of I<delayed> functions that don't look like functions.  Consider the CPAN
-module C<Test::Exception>:
+X<CPAN; C<Test::Fatal>>
+
+Perl 5 allows the declaration of anonymous functions implicitly through the use
+of prototypes (L<prototypes>). Though this feature exists nominally to enable
+programmers to write their own syntax such as that for C<map> and C<eval>, an
+interesting example is the use of I<delayed> functions that don't look like
+functions. Consider the CPAN module C<Test::Fatal>:
 
 =begin programlisting
 
-    use Test::More tests => 2;
-    use Test::Exception;
+    use Test::More;
+    use Test::Fatal;
 
-    throws_ok { die "I croak!" }
-         qr/I croak/, 'die() should throw an exception';
+    my $croaker = exception { die 'I croak!' };
+    my $liver   = exception { 1 + 1 };
 
-    lives_ok  { 1 + 1 }
-        'simple addition should not';
+    like( $croaker, qr/I croak/, 'die() should throw an exception' );
+    is(   $liver,   undef,       'simple addition should not' );
+
+    done_testing();
 
 =end programlisting
 
-Both C<lives_ok()> and C<throws_ok()> take an anonymous function as their first
-arguments.  This code is equivalent to:
+The function C<exception()> takes an anonymous function as its first argument.
+These calls are equivalent to:
 
 =begin programlisting
 
-    throws_ok( B<sub { die "I croak!" },>
-         qr/I croak/, 'die() should throw an exception' );
-
-    lives_ok( B<sub { 1 + 1 },>
-        'simple addition should not' );
+    my $croaker = exception( sub { die 'I croak!' } );
+    my $liver   = exception( sub { 1 + 1 } );
 
 =end programlisting
 
-... but is slightly easier to read.
+... but are easier to read.
 
-=begin sidebar
-
-Note the I<lack> of a comma following the final curly brace of the implicit
-anonymous function in the implicit version.  This is occasionally a confusing
-wart on otherwise helpful syntax, courtesy of a quirk of the Perl 5 parser.
-
-=end sidebar
-
-The implementation of both functions does not care which mechanism you use to
-pass function references.  You can pass named functions by reference as well:
+This syntax allows you to pass named functions by reference as well:
 
 =begin programlisting
 
-    B<sub croak { die 'I croak!' }>
+    B<sub croaker { die 'I croak!' }>
 
-    B<sub add   { 1 + 1 }>
+    B<sub liver   { 1 + 1 }>
 
-    throws_ok B<\&croak>,
-         qr/I croak/, 'die() should throw an exception';
+    my $croaker = exception \&croaker;
+    my $liver   = exception \&liver;
 
-    lives_ok  B<\&add>,
-        'simple addition should not';
+    like( $croaker, qr/I croak/, 'die() should throw an exception' );
+    is(   $liver,   undef,       'simple addition should not' );
 
 =end programlisting
 
@@ -271,34 +231,39 @@ pass function references.  You can pass named functions by reference as well:
 
 =begin programlisting
 
-    sub croak { die 'I croak!' }
+    B<my $croak_ref = \&croaker;>
+    B<my $live_ref  = \&liver;>
 
-    sub add   { 1 + 1 }
-
-    B<my $croak = \&croak;>
-    B<my $add   = \&add;>
-
-    throws_ok B<$croak>,
-         qr/I croak/, 'die() should throw an exception';
-
-    lives_ok  B<$add>,
-        'simple addition should not';
+    # BUGGY: does not work
+    my $croaker   = exception $croak_ref;
+    my $liver     = exception $live_ref;
 
 =end programlisting
 
 ... because the prototype changes the way the Perl 5 parser interprets this
-code.  It cannot determine with 100% clarity I<what> C<$croak> and C<$add> will
-contain when it evaluates the C<throws_ok()> or C<lives_ok()> calls, so it
-produces an error:
+code. It cannot determine with 100% clarity I<what> C<$croaker> and C<$liver>
+will contain, and so will throw an exception.
 
 =begin screen
 
-    Type of arg 1 to Test::Exception::throws_ok must be block or sub {}
-    (not private variable) at testex.pl line 13,
-    near "'die() should throw an exception';"
+    Type of arg 1 to Test::Fatal::exception must be block or sub {}
+    (not private variable)
 
 =end screen
 
-This feature is occasionally useful despite its drawbacks.  The syntactic
-clarity available by promoting bare blocks to anonymous functions can be
-helpful, but use it sparingly and document the API with care.
+Also be aware that a function which takes an anonymous function as the first of
+multiple arguments cannot have a trailing comma after the function block:
+
+=begin programlisting
+
+    use Test::More;
+    use Test::Fatal 'dies_ok';
+
+    dies_ok { die 'This is my boomstick!' } 'No movie references here';
+
+=end programlisting
+
+This is an occasionally confusing wart on otherwise helpful syntax, courtesy of
+a quirk of the Perl 5 parser. The syntactic clarity available by promoting bare
+blocks to anonymous functions can be helpful, but use it sparingly and document
+the API with care.

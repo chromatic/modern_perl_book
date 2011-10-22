@@ -3,7 +3,7 @@
 Z<indirect_objects>
 
 A constructor in Perl 5 is anything which returns an object; C<new> is not a
-built-in function.  By convention, constructors are class methods named
+builtin operator.  By convention, constructors are class methods named
 C<new()>, but you have the flexibility to choose a different approach to meet
 your needs.  Several old Perl 5 object tutorials promote the use of C++ and
 Java-style constructor calls:
@@ -50,7 +50,7 @@ takes arguments.  The indirect style may resemble:
 
 =end programlisting
 
-... thus making the classname C<Class> look like a function call.  Perl 5
+... thus making the class name C<Class> look like a function call.  Perl 5
 I<can> disambiguate many of these cases, but its heuristics depend on which
 package names the parser has seen at the current point in the parse, which
 barewords it has already resolved (and how it resolved them), and the I<names>
@@ -74,7 +74,11 @@ variable I<seems> obvious, but it is not:
 
 =end programlisting
 
-C<print>, C<close>, and C<say>--all keywords which operate on
+X<builtins; C<print>>
+X<builtins; C<close>>
+X<builtins; C<say>>
+
+C<print>, C<close>, and C<say>--all builtins which operate on
 filehandles--operate in an indirect fashion.  This was fine when filehandles
 were package globals, but lexical filehandles (L<lexical_filehandles>) make the
 indirect object syntax problems obvious.  In the previous example, Perl will

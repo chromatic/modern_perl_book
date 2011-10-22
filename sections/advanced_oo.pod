@@ -3,59 +3,61 @@
 Z<advanced_oo>
 
 Creating and using objects in Perl 5 with Moose (L<moose>) is easy.
-I<Designing> good object systems is not.  Additional capabilities for
-abstraction also offer possibilities for obfuscation.  Only practical
-experience can help you understand the most important design techniques... but
-several principles can guide you.
+I<Designing> good programs is not. You must balance between designing too
+little and too much.  Only practical experience can help you understand the
+most important design techniques, but several principles can guide you.
 
 =head2 Favor Composition Over Inheritance
 
-Novice OO designs often overuse inheritance for two reasons: to reuse as much
-code as possible and to exploit as much polymorphism as possible.  It's common
-to see class hierarchies which try to model all of the behavior for entities
-within the system in a single class.  This adds a conceptual overhead to
-understanding the system, because you have to understand the hierarchy.  It
-adds technical weight to every class, because conflicting responsibilities and
-methods may obstruct necessary behaviors or future modifications.
+X<OO: composition>
+X<OO; inheritance>
+
+Novice OO designs often overuse inheritance to reuse code and to exploit
+polymorphism. The result is a deep class hierarchy with responsibilities
+scattered in the wrong places. Maintaining this code is difficult--who knows
+where to add or edit behavior? What happens when code in one place conflicts
+with code declared elsewhere?
 
 X<OO; is-a>
 X<OO; has-a>
 
-The encapsulation provided by classes offers better ways to organize code.  You
-don't have to inherit from superclasses to provide behavior to users of
-objects.  A C<Car> object does not have to inherit from a C<Vehicle::Wheeled>
-object (an I<is-a relationship>); it can contain several C<Wheel> objects as
-instance attributes (a I<has-a relationship>).
+Inheritance is one tool. It's not the only tool. Although C<Car> may extend
+C<Vehicle::Wheeled> (an I<is-a relationship>), it's likely better for C<Car> to
+I<contain> contain several C<Wheel> objects as instance attributes (a I<has-a
+relationship>).
 
 Decomposing complex classes into smaller, focused entities (whether classes or
 roles) improves encapsulation and reduces the possibility that any one class or
-role will grow to do too much.  Smaller, simpler, and better encapsulated
+role will grow to do too much. Smaller, simpler, and better encapsulated
 entities are easier to understand, test, and maintain.
 
 =head2 Single Responsibility Principle
 
-When you design your object system, model the problem in terms of
-responsibilities, or reasons why each specific entity may need to change.  For
-example, an C<Employee> object may represent specific information about a
-person's name, contact information, and other personal data, while a C<Job>
-object may represent business responsibilities.  A simple design might conflate
-the two into a single entity, but separating them allows the C<Employee> class
-to consider only the problem of managing information specific to who the person
-is and the C<Job> class to represent what the person does.  (Two C<Employees>
-may have a C<Job>-sharing arrangement, for example.)
+X<OO; single responsibility principle>
 
-When each class has a single responsibility, you can improve the encapsulation
-of class-specific data and behaviors and reduce coupling between classes.
+When you design your object system, model the problem in terms of
+responsibilities--the behavior each entity must provide. For example, an
+C<Employee> object may represent specific information about a person's name,
+contact information, and other personal data, while a C<Job> object may
+represent business responsibilities. Separating these entities in terms of
+their responsibilities allows the C<Employee> class to consider only the
+problem of managing information specific to who the person is and the C<Job>
+class to represent what the person does. (Two C<Employees> may have a
+C<Job>-sharing arrangement, for example.)
+
+When each class has a single responsibility, you improve the encapsulation of
+class-specific data and behaviors and reduce coupling between classes.
 
 =head2 Don't Repeat Yourself
 
-Complexity and duplication complicate development and maintenance activities.
-The DRY principle (Don't Repeat Yourself) is a reminder to seek out and to
-eliminate duplication within the system.  Duplication exists in many forms, in
-data as well as in code.  Instead of repeating configuration information, user
-data, and other artifacts within your system, find a single, canonical
-representation of that information from which you can generate all of the other
-artifacts.
+X<DRY>
+
+Complexity and duplication complicate development and maintenance. The DRY
+principle (Don't Repeat Yourself) is a reminder to seek out and to eliminate
+duplication within the system. Duplication exists in data as well as in code.
+Instead of repeating configuration information, user data, and other artifacts
+within your system, create a single, canonical representation of that
+information from which you can generate the other artifacts.
 
 This principle helps to reduce the possibility that important parts of your
 system can get unsynchronized, and helps you to find the optimal representation
@@ -63,18 +65,19 @@ of the system and its data.
 
 =head2 Liskov Substitution Principle
 
-The Liskov substitution principle suggests that subtypes of a given type
-(specializations of a class or role or subclasses of a class) should be
-substitutable for the parent type without narrowing the types of data they
-receive or expanding the types of data they produce.  In other words, they
-should be as general as or more general at what they expect and as specific as
-or more specific about what they produce.
+X<OO; Liskov Substitution Principle>
 
-The easiest way to understand this is to imagine two classes, C<Dessert> and
-C<PecanPie>, in which the latter subclasses the former.  If the classes follow
-the Liskov substitution principle, you can replace every use of C<Dessert>
-objects with C<PecanPie> objects in the test suite, and everything should
-passN<See Reg Braithwaite's "IS-STRICTLY-EQUIVALENT-TO-A" for more details,
+The Liskov substitution principle suggests that you should be able to
+substitute a specialization of a class or a role for the original without
+violating the API of the original.  In other words, an object should be as or
+more general with regard to what it expects and at least as specific about what
+it produces.
+
+Imagine two classes, C<Dessert> and its child class C<PecanPie>. If the
+classes follow the Liskov substitution principle, you can replace every use of
+C<Dessert> objects with C<PecanPie> objects in the test suite, and everything
+should passN<See Reg Braithwaite's "IS-STRICTLY-EQUIVALENT-TO-A" for more
+details,
 U<http://weblog.raganwald.com/2008/04/is-strictly-equivalent-to.html>.>.
 
 =head2 Subtypes and Coercions
@@ -87,9 +90,12 @@ X<coercion>
 
 Moose allows you to declare and use types and extend them through subtypes to
 form ever more specialized descriptions of what your data represents and how it
-behaves.  You can use these type annotations to verify that the data on which
-you want to work in specific functions or methods is appropriate and even to
-specify mechanisms by which to coerce data of one type to data of another type.
+behaves. These type annotations help verify that the data on which you want to
+work in specific functions or methods is appropriate and even to specify
+mechanisms by which to coerce data of one type to data of another type.
+
+X<C<Moose::Util::TypeConstraints>>
+X<C<MooseX::Types>>
 
 See C<Moose::Util::TypeConstraints> and C<MooseX::Types> for more information.
 
@@ -97,21 +103,25 @@ See C<Moose::Util::TypeConstraints> and C<MooseX::Types> for more information.
 
 Z<immutability>
 
-A common pattern among programmers new to object orientation is to treat
-objects as if they were bundles of records which use methods to get and set
-internal values.  While this is simple to implement and easy to understand, it
-can lead to the unfortunate temptation to spread the behavioral
-responsibilities among individual classes throughout the system.
+X<OO; immutability>
 
-The most useful technique to working with objects effectively is to tell them
-what to do, not how to do it.  If you find yourself accessing the instance data
-of objects (even through accessor methods), you may have too much access to the
-responsibilities of the class.
+OO novices often treat objects as if they were bundles of records which use
+methods to get and set internal values. This simple technique leads to the
+unfortunate temptation to spread the object's responsibilities throughout the
+entire system.
+
+With a well designed object, you tell it what to do and not how to do it. As a
+rule of thumb, if you find yourself accessing object instance data (even
+through accessor methods), you may have too much access to an object's
+internals.
 
 One approach to preventing this behavior is to consider objects as immutable.
-Pass in all of the relevant configuration data to their constructors, then
-disallow any modifications of this information from outside the class.  Do not
-expose any methods to mutate instance data.
+Provide the necessary data to their constructors, then disallow any
+modifications of this information from outside the class. Expose no methods to
+mutate instance data. The objects so constructed are always valid after their
+construction and cannot become invalid through external manipulation. This
+takes tremendous discipline to achieve, but the resulting systems are robust,
+testable, and maintainable.
 
 Some designs go as far as to prohibit the modification of instance data
 I<within> the class itself, though this is much more difficult to achieve.

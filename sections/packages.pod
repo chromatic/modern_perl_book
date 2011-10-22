@@ -1,19 +1,17 @@
-=head2 Packages
+=head1 Packages
 
 Z<packages>
-X<package>
-X<namespace>
+X<packages>
+X<namespaces>
 
-A I<namespace> in Perl is a mechanism which associates and encapsulates various
-named entities within a named category.  It's like your family name or a brand
-name, except that it implies no relationship between entities other than
-categorization with that name.  (Such a relationship often exists, but it does
-not have to exist.)
+A Perl I<namespace> associates and encapsulates various named entities within a
+named category, like your family name or a brand name. Unlike a real-world
+name, a namespace implies no direct relationship between entities. Such
+relationships may exist, but do not have to.
 
-A I<package> in Perl 5 is a collection of code in a single namespace.  In a
-sense, a package and a namespace are equivalent; the package represents the
-source code and the namespace represents the entity created when Perl parses
-that codeN<This distinction may be subtle.>.
+A I<package> in Perl 5 is a collection of code in a single namespace. The
+distinction is subtle: the package represents the source code and the namespace
+represents the entity created when Perl parses that code.
 
 X<builtins; C<package>>
 
@@ -32,37 +30,63 @@ The C<package> builtin declares a package and a namespace:
 X<namespaces; fully qualified>
 
 All global variables and functions declared or referred to after the package
-declaration refer to symbols within the C<MyCode> namespace.  With this code as
-written, you can refer to the C<@boxes> variable from the C<main> namespace
-only by its I<fully qualified> name, C<@MyCode::boxes>.  Similarly, you can
-call the C<add_box()> function only by C<MyCode::add_box()>.  A fully qualified
-name includes its complete package name.
+declaration refer to symbols within the C<MyCode> namespace. You can refer to
+the C<@boxes> variable from the C<main> namespace only by its I<fully
+qualified> name, C<@MyCode::boxes>. Similarly, you can call the C<add_box()>
+function only by C<MyCode::add_box()>. A fully qualified name includes a
+complete package name.
 
-The default package is the C<main> package.  If you do not declare a package
-explicitly, whether in a one-liner on a command-line or in a standalone Perl
-program or even in a F<.pm> file on disk, the current package will be the
-C<main> package.
+X<scope; packages>
 
-X<packages; version>
-X<C<$VERSION>>
-
-Besides a package name (C<main> or C<MyCode> or any other allowable
-identifier), a package has a version and three implicit methods, C<VERSION()>,
-C<import()> (L<importing>), and C<unimport()>.  C<VERSION()> returns the
-package's version number.
-
-The package's version is a series of numbers contained in a package global
-named C<$VERSION>.  By convention, versions tend to be a series of integers
-separated by dots, as in C<1.23> or C<1.1.10>, where each segment is an
-integer, but there's little beyond convention.
-
-Perl 5.12 introduced a new syntax intended to simplify version numbers.  If you
-can write code that does not need to run on earlier versions of Perl 5, you can
-avoid a lot of unnecessary complexity:
+The scope of a package continues until the next C<package> declaration or the
+end of the file, whichever comes first. Perl 5.14 enhanced C<package> that you
+may provide a block which explicitly delineates the scope of the declaration:
 
 =begin programlisting
 
-    package MyCode 1.2.1;
+    package Pinball::Wizard
+    {
+        our $VERSION = 1969;
+    }
+
+=end programlisting
+
+The default package is the C<main> package. Without a package declaration, the
+current package is C<main>. This rule applies to one-liners, standalone
+programs, and even F<.pm> files.
+
+X<packages; versions>
+X<C<$VERSION>>
+
+Besides a name, a package has a version and three implicit methods,
+C<VERSION()>, C<import()> (L<importing>), and C<unimport()>.
+
+C<VERSION()> returns the package's version number. This number is a series of
+numbers contained in a package global named C<$VERSION>. By rough convention,
+versions tend to be a series of integers separated by dots, as in C<1.23> or
+C<1.1.10>, where each segment is an integer.
+
+X<version numbers>
+
+Perl 5.12 introduced a new syntax intended to simplify version numbers, as
+documented in C<perldoc version::Internals>. These stricter version numbers
+must have a leading C<v> character and at least three integer components
+separated by periods:
+
+=begin programlisting
+
+    package MyCode v1.2.1;
+
+=end programlisting
+
+With Perl 5.14, the optional block form of a C<package> declaration is:
+
+=begin programlisting
+
+    package Pinball::Wizard v1969.3.7
+    {
+        ...
+    }
 
 =end programlisting
 
@@ -79,49 +103,57 @@ In 5.10 and earlier, the simplest way to declare the version of a package is:
 X<C<UNIVERSAL>>
 X<C<VERSION()>>
 
-The C<VERSION()> method is available to every package; they inherit it from the
-C<UNIVERSAL> base class.  It returns the value of C<$VERSION>.  You may
-override it if you wish, though there are few reasons to do so.  Obtaining the
-version number of a package is easiest through the use of the C<VERSION()>
-method:
+Every package inherits a C<VERSION()> method from the C<UNIVERSAL> base class.
+You may override C<VERSION()>, though there are few reasons to do so. This
+method returns the value of C<$VERSION>:
 
 =begin programlisting
 
     my $version = Some::Plugin->VERSION();
 
-    die "Your plugin $version is too old"
-        unless $version > 2;
+=end programlisting
+
+If you provide a version number as an argument, this method will throw an
+exception unless the version of the module is equal to or greater than the
+argument:
+
+=begin programlisting
+
+    # require at least 2.1
+    Some::Plugin->VERSION( 2.1 );
 
 =end programlisting
 
-=head3 Packages and Namespaces
+    die "Your plugin $version is too old"
+        unless $version > 2;
+
+=head2 Packages and Namespaces
 
 X<namespaces>
+X<packages; namespaces>
 
-Every C<package> declaration creates a new namespace if that namespace does not
-already exist and causes the parser to put all subsequent package global
-symbols (global variables and functions) into that namespace.
+Every C<package> declaration creates a new namespace if necessary and causes
+the parser to put all subsequent package global symbols (global variables and
+functions) into that namespace.
 
 X<namespaces; open>
 
-Perl has I<open namespaces>.  You can add functions or variables to a namespace
+Perl has I<open namespaces>. You can add functions or variables to a namespace
 at any point, either with a new package declaration:
 
 =begin programlisting
 
-    package Pack;
-
-    sub first_sub { ... }
-
-    package main;
+    package Pack
+    {
+        sub first_sub { ... }
+    }
 
     Pack::first_sub();
 
-    package Pack;
-
-    sub second_sub { ... }
-
-    package main;
+    package Pack
+    {
+        sub second_sub { ... }
+    }
 
     Pack::second_sub();
 
@@ -139,30 +171,27 @@ at any point, either with a new package declaration:
 
 =end programlisting
 
-Perl 5 packages are so open that you can add to them at any time during
-compilation or run time, or from separate files.  Of course, that can be
-confusing, so avoid it when possible.
+You can add to a package at any point during compilation or runtime, regardless
+of the current file, though building up a package from multiple separate
+declarations can make code difficult to spelunk.
 
 X<namespaces; multi-level>
 
-Namespaces can have as many levels as you like for organizational purposes.
-These are not hierarchical; there's no technical relationship between
-packages--only a semantic relationship to I<readers> of the code.
-
-It's common to create a top-level namespace for a business or a project.  This
-makes a convenient organizational tool not only for reading code and
-discovering the relationships between components but also to organizing code
-and packages on disk.  Thus:
+Namespaces can have as many levels as your organizational scheme requires,
+though namespaces are not hierarchical. The only relationship between packages
+is semantic, not technical. Many projects and businesses create their own
+top-level namespaces. This reduces the possibility of global conflicts and
+helps to organize code on disk. For example:
 
 =over 4
 
 =item * C<StrangeMonkey> is the project name
 
-=item * C<StrangeMonkey::UI> contains the top-level user interface code
+=item * C<StrangeMonkey::UI> contains top-level user interface code
 
-=item * C<StrangeMonkey::Persistence> contains the top-level data management code
+=item * C<StrangeMonkey::Persistence> contains top-level data management code
 
-=item * C<StrangeMonkey::Test> contains the top-level testing code for the project
+=item * C<StrangeMonkey::Test> contains top-level testing code for the project
 
 =back
 

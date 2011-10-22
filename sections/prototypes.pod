@@ -35,18 +35,17 @@ for the desire to write too-clever code.
 =end sidebar
 
 The original intent of prototypes was to allow users to define their own
-functions which behaved like (certain) built-in operators.  Consider the
+functions which behaved like (certain) builtin operators.  Consider the
 behavior of the C<push> operator, which takes an array and a list.  While Perl
 5 would normally flatten the array and list into a single list at the call
 site, the Perl 5 parser knows that a call to C<push> must effectively pass the
 array as a single unit so that C<push> can operate on the array in place.
 
-X<C<prototype>>
 X<builtins; C<prototype>>
 
 The builtin C<prototype> takes the name of a function and returns a string
-representing its prototype.  To see the prototype of a built-in keyword, use
-the C<CORE::> form:
+representing its prototype.  To see the prototype of a builtin, use the
+C<CORE::> form:
 
 =begin programlisting
 
@@ -147,13 +146,13 @@ prototypes have a few valid uses.
 
 X<builtins; overriding>
 X<pragmas; C<subs>>
-X<C<subs>>
+X<C<subs> pragma>
 
-First, they are often necessary to emulate and override built-in keywords with
+First, they are often necessary to emulate and override builtins with
 user-defined functions.  You must first check that you I<can> override the
-built-in keyword by checking that C<prototype> does not return C<undef>.  Once
-you know the prototype of the keyword, use a forward declaration of a function
-with the same name as the core keyword:
+builtin by checking that C<prototype> does not return C<undef>.  Once you know
+the prototype of the builtin, use a forward declaration of a function with the
+same name as the core builtin:
 
 =begin programlisting
 
@@ -184,7 +183,7 @@ knows it should substitute the calculated value of pi whenever it
 encounters a bareword or parenthesized call to C<PI> in the rest of the source
 code (with respect to scoping and visibility).
 
-X<C<constant>>
+X<C<constant> pragma>
 X<pragmas; C<constant>>
 X<C<Readonly>>
 
@@ -194,14 +193,16 @@ constants into strings, the C<Readonly> module from the CPAN may be more
 useful.
 
 X<C<Test::Exception>>
+X<C<Test::Fatal>>
 
 The final reason to use a prototype is to extend Perl's syntax to operate on
 anonymous functions as blocks.  The CPAN module C<Test::Exception> uses this to
-good effect to provide a nice API with delayed computation.  Its C<throws_ok()>
-function takes three arguments: a block of code to run, a regular expression
-to match against the string of the exception, and an optional description of
-the test.  Suppose that you want to test Perl 5's exception message when
-attempting to invoke a method on an undefined value:
+good effect to provide a nice API with delayed computationN<C<Test::Fatal> is a
+newer alternative which may prove more popular in the future.>.  Its
+C<throws_ok()> function takes three arguments: a block of code to run, a
+regular expression to match against the string of the exception, and an
+optional description of the test.  Suppose that you want to test Perl 5's
+exception message when attempting to invoke a method on an undefined value:
 
 =begin programlisting
 
@@ -245,15 +246,13 @@ You can use this API without the prototype.  It's slightly less attractive:
 
 =end programlisting
 
-A sparing use of function prototypes to remove the need for the C<sub>
-keyword is reasonable.  Few other uses of prototypes are compelling enough to
-overcome their drawbacks.
+X<builtins; C<sort>>
 
-=begin sidebar
+A sparing use of function prototypes to remove the need for the C<sub> builtin
+is reasonable.  Another is when defining a custom function to use with
+C<sort>N<Ben Tilly suggested this example.>.  Declare this function with a
+prototype of C<($$)> and Perl will pass its arguments in C<@_> rather than the
+package globals C<$a> and C<$b>.  This is a rare case, but it can save you time
+debugging.
 
-Ben Tilly suggests a fourth: when defining a custom function to use with
-C<sort>.  Declare this function with a prototype of C<($$)> and Perl will pass
-its arguments in C<@_> rather than the package globals C<$a> and C<$b>.  This
-is a rare case, but it can save you time debugging.
-
-=end sidebar
+Few other uses of prototypes are compelling enough to overcome their drawbacks.

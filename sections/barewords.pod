@@ -10,13 +10,15 @@ good programmers, but the developers of Perl itself don't presume to dictate
 what I<you> find most maintainable.
 
 X<barewords>
+X<C<strict> pragma>
+X<pragmas; C<strict>>
 
-Perl's parser understands the builtin Perl keywords and operators; it knows
+Perl's parser understands the builtin Perl builtins and operators; it knows
 that C<bless()> means you're making objects (L<blessed_references>).  These are
 rarely ambiguous... but Perl programmers can add complexity to parsing by using
 I<barewords>.  A bareword is an identifier without a sigil or other attached
 disambiguation as to its intended syntactical function.  Because there's no
-Perl 5 keyword C<curse>, the literal word C<curse> appearing in source code is
+Perl 5 builtin C<curse>, the literal word C<curse> appearing in source code is
 ambiguous.  Did you intend to use a variable C<$curse> or to call a function
 C<curse()>?  The C<strict> pragma warns about use of such ambiguous barewords
 for good reason.
@@ -45,7 +47,7 @@ evaluation of the builtin rather than its interpretation as a string:
     # the value produced by shift is the key
     my $value = $items{B<shift @_>}
 
-    # unary plus uses the keyword shift
+    # unary plus uses the builtin shift
     my $value = $items{B<+>shift};
 
 =end programlisting
@@ -81,7 +83,7 @@ X<C<END>>
 
 The special named code blocks provide their own types of barewords.
 C<AUTOLOAD>, C<BEGIN>, C<CHECK>, C<DESTROY>, C<END>, C<INIT>, and C<UNITCHECK>
-I<declare> functions, but they do not need the C<sub> keyword to do so.  You
+I<declare> functions, but they do not need the C<sub> builtin to do so.  You
 may be familiar with the idiom of writing C<BEGIN> without C<sub>:
 
 =begin programlisting
@@ -166,9 +168,9 @@ X<barewords; sort functions>
 X<C<sort>>
 X<builtins; C<sort>>
 
-Finally, the builtin C<sort> operator can take as its second argument the
-I<name> of a function to use for sorting.  Instead provide a I<reference> to
-the function to use for sorting to avoid the use of barewords:
+Finally, the C<sort> builtin can take as its second argument the I<name> of a
+function to use for sorting.  Instead provide a I<reference> to the function to
+use for sorting to avoid the use of barewords:
 
 =begin programlisting
 

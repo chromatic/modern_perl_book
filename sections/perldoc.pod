@@ -2,26 +2,30 @@
 
 Z<perldoc>
 
-One of Perl's most useful and least appreciated features is the C<perldoc>
-utility.  This program is part of every complete Perl 5 installationN<You may
-have to install an additional package on a free GNU/Linux distribution or
-another Unix-like system; on Debian and Ubuntu this is C<perl-doc>.>.  It
-displays the documentation of every Perl module installed on the
-system--whether a core module or one installed from the Comprehensive Perl
-Archive Network (CPAN)--as well as thousands of pages of Perl's copious core
-documentation.
+X<perldoc>
+
+Perl has a culture of useful documentation.  The C<perldoc> utility is part of
+every complete Perl 5 installationN<However your Unix-like system may require
+you to install an additional package such as C<perl-doc> on Debian or Ubuntu
+GNU/Linux.> C<perldoc> displays the documentation of every Perl module
+installed on the system--whether a core module or one installed from the
+Comprehensive Perl Archive Network (CPAN)--as well as thousands of pages of
+Perl's copious core documentation.
 
 =begin sidebar
 
-If you prefer an online version, U<http://perldoc.perl.org/> hosts recent
-versions of the Perl documentation.  U<http://search.cpan.org/> displays the
-documentation of every module on the CPAN.  Windows users, both ActivePerl and
-Strawberry Perl provide a link in your Start menu to the documentation.
+X<CPAN>
+X<metacpan>
+
+U<http://perldoc.perl.org/> hosts recent versions of the Perl documentation.
+The U<http://search.cpan.org/> and U<http://metacpan.org/> CPAN indexes provide
+documentation for all CPAN modules. Other Perl 5 distributions such as
+ActivePerl and Strawberry Perl provide local documentation in HTML formats.
 
 =end sidebar
 
-The default behavior of C<perldoc> is to display the documentation for a named
-module or a specific section of the core documentation:
+Use C<perldoc> to read the documentation for a module or part of the core
+documentation:
 
 =begin screen
 
@@ -31,72 +35,75 @@ module or a specific section of the core documentation:
 
 =end screen
 
-The first example extracts documentation written for the C<List::Util> module
-and displays it in a form appropriate for your screen.  Community standards for
-CPAN modules (L<cpan>) suggest that additional libraries use the same
-documentation format and form as core modules, so there's no distinction
-between reading the documentation for a core library such as C<Data::Dumper> or
-one installed from the CPAN.  The standard documentation template includes a
-description of the module, demonstrates sample uses, and then contains a
-detailed explanation of the module and its interface.  While the amount of
-documentation varies by author, the form of the documentation is remarkably
-consistent.
+The first example displays the documentation embedded within the C<List::Util>
+module. The second example displays a pure documentation file, in this case the
+table of contents of the core documentation. The third example displays a pure
+documentation file included as part of a CPAN distribution (L<moose>).
+C<perldoc> hides these details; here's no distinction between reading the
+documentation for a core library such as C<Data::Dumper> or one installed from
+the CPAN.
 
-The second example displays a pure documentation file, in this case the table
-of contents of the core documentation itself.  This file describes each
-individual piece of the core documentation; browse it for a good understanding
-of Perl's breadth.
-
-The third example resembles the second; C<Moose::Manual> is part of the Moose
-CPAN distribution (L<moose>).  It is also purely documentation; it contains no
-code.
+The standard documentation template includes a description of the module,
+demonstrates sample uses, and then contains a detailed explanation of the
+module and its interface. While the amount of documentation varies by author,
+the form of the documentation is remarkably consistent.
 
 =begin sidebar
 
-Similarly, C<perldoc perlfaq> will display the table of contents for Frequently
-Asked Questions about Perl 5.  Skimming these questions is invaluable.
+C<perldoc perltoc> displays the table of contents of the core documentation,
+and C<perldoc perlfaq> displays the table of contents for Frequently Asked
+Questions about Perl 5. Skimming these files will give you a great overview of
+Perl 5.
 
 =end sidebar
 
 X<perldoc; C<-q> (search perlfaq)>
 
-The C<perldoc> utility has many more abilities (see C<perldoc perldoc>).  Two
-of the most useful are the C<-q> and the C<-f> flags.  The C<-q> flag takes a
-keyword or keywords and searches only the Perl FAQ, displaying all results.
-Thus C<perldoc -q sort> returns three questions: I<How do I sort an array by
+The C<perldoc> utility has many more abilities (see C<perldoc perldoc>). The
+C<-q> option searches only the Perl FAQ for any provided keywords. Thus
+C<perldoc -q sort> returns three questions: I<How do I sort an array by
 (anything)?>, I<How do I sort a hash (optionally by value instead of key)?>,
 and I<How can I always keep my hash sorted?>.
 
 X<perldoc; C<-f> (search perlfunc)>
 
-The C<-f> flag displays the core documentation for a builtin Perl function.
-C<perldoc -f sort> explains the behavior of the C<sort> operator.  If you don't
-know the name of the function you want, use C<perldoc perlfunc> to see a list
-of functions.
+The C<-f> option displays the documentation for a builtin Perl function.
+C<perldoc -f sort> explains the behavior of the C<sort> operator. If you don't
+know the name of the function you want, browse the list of available builtins
+in C<perldoc perlfunc>.
+
+X<perldoc; C<-v> (search perlvar)>
+
+The C<-v> option looks up a builtin variable. For example, C<perldoc -v $PID>
+displays the documentation for the variable which contains the current
+program's process id. Depending on your shell, you may have to quote the
+variable appropriately.
 
 =begin sidebar
 
 C<perldoc perlop> and C<perldoc perlsyn> document Perl's symbolic operators and
-syntactic constructs; C<perldoc perldiag> explains the meanings of Perl's
-warning messages.
+syntactic constructs. C<perldoc perldiag> explains the meanings of Perl's
+warning messages. C<perldoc perlvar> lists all of Perl's symbolic variables.
 
 =end sidebar
 
+The C<-l> option causes C<perldoc> to display the I<path> to the documentation
+file rather than the contents of the documentationN<Be aware that a module may
+have a separate F<.pod> file in addition to its F<.pm> file.>.
+
+The C<-m> option displays the entire I<contents> of the module, code and all,
+without performing any special formatting.
+
 X<POD>
+X<POD; C<perldoc>>
+X<POD; C<podchecker>>
+X<POD; C<Pod::Webserver>>
+X<CPAN; C<Pod::Webserver>>
 
 Perl 5's documentation system is I<POD>, or I<Plain Old Documentation>.
-C<perldoc perlpod> describes how POD works.  The C<perldoc> utility will
-display the POD in any Perl module you create and install for your project, and
-other POD tools such as C<podchecker>, which validates the form of your POD,
-and C<Pod::Webserver>, which displays local POD as HTML through a minimal
-webserver, will handle valid POD correctly.
+C<perldoc perlpod> describes how POD works. Other POD tools include
+C<podchecker>, which validates the form of your POD, and C<Pod::Webserver>,
+which displays local POD as HTML through a minimal web server.
 
-X<perldoc; C<-l> (list path to POD)>
-X<perldoc; C<-m> (show raw POD)>
-
-C<perldoc> has other uses.  With the C<-l> command-line flag, it displays the
-I<path> to the documentation file rather than the contents of the
-documentationN<Be aware that a module may have a separate F<.pod> file in
-addition to its F<.pm> file.>.  With the C<-m> flag, it displays the entire
-I<contents> of the module, code and all, without processing any POD
-instructions.
+X<CPAN; C<Pod::PseudoPod>>
+This book uses an extension of POD called C<Pod::PseudoPod>.
