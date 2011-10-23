@@ -876,7 +876,7 @@ zero-width positive look-behind assertion I<can> have a variable length:
 
 =end programlisting
 
-C<\K> is surprisingly useful for for certain substitutions which remove the end
+C<\K> is surprisingly useful for certain substitutions which remove the end
 of a pattern:
 
 =begin programlisting
