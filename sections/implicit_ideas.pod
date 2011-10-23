@@ -63,7 +63,7 @@ arguments:
 
 =end programlisting
 
-X<C<s///>; subsitution operator>
+X<C<s///>; substitution operator>
 X<C<m//>; match operator>
 X<C<tr//>; transliteration operator>
 

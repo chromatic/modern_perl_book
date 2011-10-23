@@ -144,7 +144,7 @@ X<sigils; C<*>>
 X<typeglobs>
 
 The odd syntax of an asteriskN<Think of it as a I<typeglob sigil>, where a
-I<typeglob> is Perl jargon for "symbol table".> deferencing a hash refers to a
+I<typeglob> is Perl jargon for "symbol table".> dereferencing a hash refers to a
 symbol in the current I<symbol table>, which is the portion of the current
 namespace which contains globally-accessible symbols such as package globals,
 functions, and methods. Assigning a reference to a symbol table entry installs

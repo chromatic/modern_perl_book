@@ -466,7 +466,7 @@ builtin.
 
 =head3 Manipulating Paths
 
-Perl 5 offers a Unixy view of your filesystem and will will interpret
+Perl 5 offers a Unixy view of your filesystem and will interpret
 Unix-style paths appropriately for your operating system and filesystem.  In
 other words, if you're using Microsoft Windows, you can use the path F<C:/My
 Documents/Robots/Bender/> just as easily as you can use the path F<C:\My
