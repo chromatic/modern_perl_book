@@ -142,7 +142,7 @@ they exist.
 
 First, they can allow you to override builtins. First check that you I<can>
 override the builtin by examining its prototype in a small test program. Then
-use the C<subs> pragma to tell Perl that you you plan to override a builtin,
+use the C<subs> pragma to tell Perl that you plan to override a builtin,
 and finally declare your override with the correct prototype:
 
 =begin programlisting
