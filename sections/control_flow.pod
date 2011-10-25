@@ -1138,7 +1138,6 @@ references, arbitrary comparison expressions, and even code references.
 
 Z<tailcalls>
 X<tailcalls>
-X<builtins; C<goto>>
 
 A I<tailcall> occurs when the last expression within a function is a call to
 another function--the return value of the outer function is the return
@@ -1162,13 +1161,33 @@ C<log_and_greet_person()> and immediately returning I<from>
 C<log_and_greet_person()>. Returning directly from C<greet_person()> to the
 caller of C<log_and_greet_person()> is a I<tailcall optimization>.
 
-Perl 5 will not detect cases where it could apply this optimization
-automatically.
-
-=begin sidebar
-
 Heavily recursive code (L<recursion>), especially mutually recursive code, can
 consume a lot of memory. Tailcalls reduce the memory needed for internal
 bookkeeping of control flow and can make expensive algorithms tractable.
+Unfortunately, Perl 5 will not detect cases where it could apply this
+optimization automatically.
 
-=end sidebar
+X<builtins; C<goto>>
+
+The builtin C<goto> operator has a form which calls a function as if the
+current function were never called, essentially erasing the bookkeeping for the
+new function call. The syntax is ugly, and confuses people who've heard "Never
+use C<goto>", but it works:
+
+=begin programlisting
+
+    sub log_and_greet_person
+    {
+        B<my ($name) = @_;>
+        log( "Greeting $name" );
+
+        B<goto &greet_person>;
+    }
+
+=end programlisting
+
+This example has two important features. First, C<goto &function_name> or
+C<goto &$function_reference> requires the use of the function sigil (C<&>) so
+that the parser knows to perform a tailcall instead of jumping to a label.
+Second, this form of function call passes the contents of C<@_> implicitly to
+the called function. You may modify C<@_> to change the passed arguments.
