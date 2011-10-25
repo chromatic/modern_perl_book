@@ -963,16 +963,17 @@ I<loop label> to clarify:
 
 =begin programlisting
 
-    OUTER:
+    LINE:
     while (<$fh>)
     {
         chomp;
 
-        INNER:
+        PREFIX:
         for my $prefix (@prefixes)
         {
-            next OUTER unless $prefix;
+            next LINE unless $prefix;
             say "$prefix: $_";
+            # next PREFIX is implicit here
         }
     }
 
