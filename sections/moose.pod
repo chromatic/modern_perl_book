@@ -350,9 +350,9 @@ birth year:
     {
         use Moose;
 
-        has 'name',        is => 'ro', isa => 'Str';
-        has 'diet',        is => 'rw', isa => 'Str';
-        B<< has 'birth_year',  is => 'ro', isa => 'Int', >>
+        has 'name',        is      => 'ro', isa => 'Str';
+        has 'diet',        is      => 'rw', isa => 'Str';
+        B<< has 'birth_year',  is      => 'ro', isa => 'Int', >>
                            B<< default => sub { (localtime)[5] + 1900 }; >>
     }
 
@@ -500,9 +500,9 @@ C<diet()> methods. The C<Cat> class must explicitly mark that it does the role:
     {
         use Moose;
 
-        has 'name',        is => 'ro', isa => 'Str';
-        has 'diet',        is => 'rw', isa => 'Str';
-        has 'birth_year',  is => 'ro', isa => 'Int',
+        has 'name',        is      => 'ro', isa => 'Str';
+        has 'diet',        is      => 'rw', isa => 'Str';
+        has 'birth_year',  is      => 'ro', isa => 'Int',
                            default => sub { (localtime)[5] + 1900 };
 
         B<with 'LivingBeing';>
@@ -908,7 +908,7 @@ This is valid Perl 5 code:
 
     B<role> CalculateAge::From::BirthYear
     {
-        has 'birth_year', is => 'ro', isa => 'Int',
+        has 'birth_year', is      => 'ro', isa => 'Int',
                           default => sub { (localtime)[5] + 1900 };
 
         B<method> age
