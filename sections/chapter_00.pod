@@ -18,9 +18,6 @@ programs which never take advantage of all the language has to offer, the
 global Perl community has invented, borrowed, enhanced, and polished ideas and
 made them available to anyone willing to learn them.
 
-the worldwide Perl 5 community has invented, polished, and discovered are
-shorter, faster, more powerful, and easier to maintain than their alternatives.
-
 =head1 Running Modern Perl
 
 =begin sidebar
