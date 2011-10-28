@@ -754,13 +754,13 @@ for example. Within the fragment bounded by C<\Q> and C<\E>, Perl interpret the
 regex as C<\*\* ALERT \*\*> and attempt to match literal asterisk characters,
 rather than greedy quantifiers.
 
-=begin note
+=begin tip Regex Security
 
 Be cautious when processing regular expressions from untrusted user input. A
 malicious regex master can craft a denial-of-service attack against your
 program.
 
-=end note
+=end tip
 
 =head1 Assertions
 
