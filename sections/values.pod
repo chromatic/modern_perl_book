@@ -14,7 +14,7 @@ your programs.  These values are data--your aunt's name and address, the
 distance between your office and a golf course on the moon, or the weight of
 all cookies you've eaten in the past year. Within your program, the rules
 regarding the format of that data are often strict. Effective programs need
-effective (simple, fast, most compact, most efficnet) ways of representing
+effective (simple, fast, most compact, most efficient) ways of representing
 their data.
 
 =head2 Strings
