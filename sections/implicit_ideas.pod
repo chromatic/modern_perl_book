@@ -115,7 +115,7 @@ X<builtins; C<while>>
 
 =begin programlisting
 
-    while (<STDIN>)
+    while (readline STDIN)
     {
         chomp;
         say scalar reverse;
@@ -155,7 +155,7 @@ to prevent this clobbering behavior:
 
 =begin programlisting
 
-    while (<STDIN>)
+    while (readline STDIN)
     {
         chomp;
 
@@ -173,7 +173,7 @@ clobbering an existing instance of C<$_>:
 
 =begin programlisting
 
-    while (my $_ = <STDIN>)
+    while (my $_ = readline STDIN)
     {
         ...
     }
@@ -184,7 +184,7 @@ Of course, using a named lexical can be just as clear:
 
 =begin programlisting
 
-    while (my $line = <STDIN>)
+    while (my $line = readline STDIN)
     {
         ...
     }
@@ -242,15 +242,16 @@ cannot use C<@_> when you mean C<@ARGV>.
 
 X<null filehandle>
 
-C<ARGV> has one special case. If you read from the null filehandle C<< <> >>,
-Perl will treat every element in C<@ARGV> as the I<name> of a file to open for
-reading. (If C<@ARGV> is empty, Perl will read from standard input.) This
-implicit C<@ARGV> behavior is useful for writing short programs, such as this
-command-line filter which reverses its input:
+C<ARGV> has one special case. If you read from the null filehandle
+(just a bare C<readline>), Perl will treat every element in C<@ARGV>
+as the I<name> of a file to open for reading. (If C<@ARGV> is empty,
+Perl will read from standard input.) This implicit C<@ARGV> behavior
+is useful for writing short programs, such as this command-line filter
+which reverses its input:
 
 =begin programlisting
 
-    while (<>)
+    while (readline)
     {
         chomp;
         say scalar reverse;
