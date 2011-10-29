@@ -22,7 +22,7 @@ X<coercion; boolean>
 X<truthiness>
 
 Boolean coercion occurs when you test the I<truthiness> of a value, such as in
-a C<if> or C<while> condition. Numeric 0, C<undef>, the empty string, and the
+an C<if> or C<while> condition. Numeric 0, C<undef>, the empty string, and the
 string C<'0'> all evaluate as false. All other values--including strings which
 may be I<numerically> equal to zero (such as C<'0.0'>, C<'0e'>, and C<'0 but
 true'>)--evaluate as true.
