@@ -173,7 +173,7 @@ builtin. Like C<my>, C<our> enforces lexical scoping of the alias. The
 fully-qualified name is available everywhere, but the lexical alias is visible
 only within its scope.
 
-C<$our> is most useful with package global variables such as C<$VERSION> and
+C<our> is most useful with package global variables such as C<$VERSION> and
 C<$AUTOLOAD>.
 
 =head2 Dynamic Scope
