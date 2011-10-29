@@ -28,7 +28,7 @@ it allows the unwise or uncautious to make messes. Experience and good taste
 will guide you to write great code. The choice is yours--but be mindful of
 readability and maintainability, especially for those who come after you.
 
-Perl novices often may find certain constructs opaque. Many of the these idioms
+Perl novices often may find certain constructs opaque. Many of these idioms
 (L<idioms>) offer great (if subtle) power. It's okay to avoid them until you're
 comfortable with them.
 
