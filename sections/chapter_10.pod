@@ -1,13 +1,11 @@
 =head0 Perl Beyond Syntax
 
-Perl 5 is a large language, like any language intended to solve problems in the
-real world.  Effective Perl programs require more than mere understanding of
-syntax; you must also begin to understand how Perl's features interact and
-common ways of solving well-understood problems in Perl.
+Baby Perl will only get you so far. Language fluency allows you to use the
+natural patterns and idioms of the language. Effective programmers understand
+how Perl's features interact and combine.
 
-Prepare for the second learning curve of Perl: Perlish thinking. The effective
-use of common patterns of behavior and builtin shortcuts allow you to write
-concise and powerful code.
+Prepare for the second learning curve of Perl: Perlish thinking. The result is
+concise, powerful, and Perlish code.
 
 L<idioms>
 

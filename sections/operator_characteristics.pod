@@ -3,38 +3,37 @@
 Z<operator_characteristics>
 X<operators; characteristics>
 
-Both C<perldoc perlop> and C<perldoc perlsyn> provide voluminous information
-about the behavior of Perl's operators.  Even so, what they I<don't> explain is
-more important to their understanding.  The documentation assumes you have a
-familiarity with several concepts in language design.  These concepts may sound
-imposing at first, but they're straightforward to understand.
-
 Every operator possesses several important characteristics which govern its
 behavior: the number of operands on which it operates, its relationship to
 other operators, and its syntactic possibilities.
+
+C<perldoc perlop> and C<perldoc perlsyn> provide voluminous information about
+Perl's operators, but the documentation assumes you're already familiar with
+some details of how they work. The essential computer science concepts may
+sound imposing at first, but once you get past their names, they're
+straightforward. You already understand them implicitly.
 
 =head2 Precedence
 
 Z<precedence>
 X<precedence>
 
-The I<precedence> of an operator helps determine when Perl should evaluate it
-in an expression.  Evaluation order proceeds from highest to lowest precedence.
-For example, because the precedence of multiplication is higher than the
-precedence of addition, C<7 + 7 * 10> evaluates to C<77>, not C<140>.  You may
-force the evaluation of some operators before others by grouping their
-subexpressions in parentheses; C<(7 + 7) * 10> I<does> evaluate to C<140>, as
-the addition operation becomes a single unit which must evaluate fully before
-multiplication can occur.
+The I<precedence> of an operator governs when Perl should evaluate it in an
+expression. Evaluation order proceeds from highest to lowest precedence.
+Because the precedence of multiplication is higher than the precedence of
+addition, C<7 + 7 * 10> evaluates to C<77>, not C<140>.
 
-In case of a tie--where two operators have the same precedence--other factors
-such as fixity (L<fixity>) and associativity (L<associativity>) break the tie.
+To force the evaluation of some operators before others, group their
+subexpressions in parentheses. In C<(7 + 7) * 10>, grouping the addition into a
+single unit forces its evaluation before the multiplication. The result is
+C<140>.
 
-C<perldoc perlop> contains a table of precedence.  Almost no one has this table
-memorized.  The best way to manage precedence is to keep your expressions
-simple.  The second best way is to use parentheses to clarify precedence in
-complex expressions.  If you find yourself drowning in a sea of parentheses,
-see the first rule again.
+C<perldoc perlop> contains a table of precedence. Read it, understand it, but
+don't bother memorizing it (almost no one does). Spend your time keeping your
+expressions simple, and then add parentheses to clarify your intent.
+
+In cases where two operators have the same precedence, other factors such as
+associativity (L<associativity>) and fixity (L<fixity>) break the tie.
 
 =head2 Associativity
 
@@ -46,14 +45,14 @@ X<associativity; right>
 X<right associativity>
 
 The I<associativity> of an operator governs whether it evaluates from left to
-right or right to left.  Addition is left associative, such that C<2 + 3 + 4>
-evaluates C<2 + 3> first, then adds C<4> to the result.  Exponentiation is
-right associative, such that C<2 ** 3 ** 4> evaluates C<3 ** 4> first, then
-raises C<2> to the 81st power.
+right or right to left. Addition is left associative, such that C<2 + 3 + 4>
+evaluates C<2 + 3> first, then adds C<4> to the result. Exponentiation is right
+associative, such that C<2 ** 3 ** 4> evaluates C<3 ** 4> first, then raises
+C<2> to the 81st power.
 
-Simplifying complex expressions and using parentheses to demonstrate your
-intent is more important than memorizing associativity tables.  Even so,
-memorizing the associativity of the mathematic operators is worthwhile.
+It's worth your time to memorize the precedence and associativity of the common
+mathematical operators, but again simplicity rules the day. Use parentheses to
+make your intentions clear.
 
 =begin sidebar
 
@@ -61,12 +60,14 @@ X<C<B::Deparse>>
 X<precedence; disambiguation>
 X<associativity; disambiguation>
 
-The core C<B::Deparse> module can rewrite snippets of code to demonstrate
-exactly how Perl handles operator precedence and associativity; run C<perl
--MO=Deparse,-p> on a snippet of code.  (The C<-p> flag adds extra grouping
-parentheses which often clarify evaluation order.) Beware that Perl's optimizer
-will simplify mathematical operations as given as examples earlier in this
-section; use variables instead, as in C<$x ** $y ** $z>.
+The core C<B::Deparse> module is an invaluable debugging tool. Run C<perl
+-MO=Deparse,-p> on a snippet of code to see exactly how Perl handles operator
+precedence and associativity. The C<-p> flag adds extra grouping parentheses
+which often clarify evaluation order.
+
+Beware that Perl's optimizer will simplify mathematical operations as given as
+examples earlier in this section; use variables instead, as in C<$x ** $y **
+$z>.
 
 =end sidebar
 
@@ -83,27 +84,23 @@ X<trinary>
 X<listary>
 
 The I<arity> of an operator is the number of operands on which it operates.  A
-I<nullary> operator operates on zero operands.  A I<unary> operator operates on
-one operand.  A I<binary> operator operates on two operands.  A I<trinary>
-operator operates on three operands.  A I<listary> operator operates on a list
-of operands.
-
-There's no single good rule for determining the arity of an operator, other
-than the fact that most operate on two, many, or one operands.  The operator's
-documentation should make this clear.
+I<nullary> operator operates on zero operands. A I<unary> operator operates on
+one operand. A I<binary> operator operates on two operands. A I<trinary>
+operator operates on three operands. A I<listary> operator operates on a list
+of operands. An operator's documentation and examples should make its arity
+clear.
 
 For example, the arithmetic operators are binary operators, and are usually
-left associative.  C<2 + 3 - 4> evaluates C<2 + 3> first; addition and
+left associative. C<2 + 3 - 4> evaluates C<2 + 3> first; addition and
 subtraction have the same precedence, but they're left associative and binary,
 so the proper evaluation order applies the leftmost operator (C<+>) to the
 leftmost two operands (C<2> and C<3>) with the leftmost operator (C<+>), then
 applies the rightmost operator (C<->) to the result of the first operation and
 the rightmost operand (C<4>).
 
-One common source of confusion for Perl novices is the interaction of listary
-operators (especially function calls) with nested expressions.  Using grouping
-parentheses to clarify your intent, yet watch out for confusion in code such
-as:
+Perl novices often find confusion between the interaction of listary
+operators--especially function calls--and nested expressions. Where parentheses
+usually help, beware of the parsing complexity of:
 
 =begin programlisting
 
@@ -112,10 +109,11 @@ as:
 
 =end programlisting
 
-... as Perl 5 happily interprets the parentheses as postcircumfix (L<fixity>)
-operators denoting the arguments to C<say>, not circumfix parentheses grouping
-an expression to change precedence.  In other words, the code prints the value
-C<6> and evaluates to the return value of C<say> multiplied by C<4>.
+... which prints the value C<6> and (probably) evaluates as a whole to C<4>
+(the return value of C<say> multiplied by C<4>). Perl's parser happily
+interprets the parentheses as postcircumfix (L<fixity>) operators denoting the
+arguments to C<say>, not circumfix parentheses grouping an expression to change
+precedence.
 
 =head2 Fixity
 
@@ -150,7 +148,7 @@ X<C<//=>; infix operator>
 
 =over 4
 
-=item I<Infix> operators appear between their operands.  Most mathematical
+=item I<Infix> operators appear between their operands. Most mathematical
 operators are infix operators, such as the multiplication operator in C<$length
 * $width>.
 
@@ -163,9 +161,9 @@ X<C<->; prefix operator>
 X<C<!>; prefix operator>
 X<C<!!>; prefix operator>
 
-=item I<Prefix> operators appear before their operators and I<postfix>
-operators appear after.  These operators tend to be unary, such as mathematic
-negation (C<-$x>), boolean negation (C<!$y>), and postfix increment (C<$z++>).
+=item I<Prefix> operators precede their operators. I<Postfix> operators follow.
+These operators tend to be unary, such as mathematic negation (C<-$x>), boolean
+negation (C<!$y>), and postfix increment (C<$z++>).
 
 X<C<()>; circumfix operator>
 X<C<{}>; circumfix operator>
@@ -175,14 +173,15 @@ X<C<``>; circumfix operator>
 X<C<''>; circumfix operator>
 X<C<"">; circumfix operator>
 
-=item I<Circumfix> operators surround their operands.  Examples include the
-anonymous hash constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
+=item I<Circumfix> operators surround their operands, as with the anonymous
+hash constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
 
 X<C<()>; postcircumfix operator>
 X<C<{}>; postcircumfix operator>
 X<C<[]>; postcircumfix operator>
 
 =item I<Postcircumfix> operators follow certain operands and surround others,
-as with hash or array element access (C<$hash{ ...  }> and C<$array[ ... ]>).
+as seen in hash and array element access (C<$hash{ ...  }> and C<$array[ ...
+]>).
 
 =back

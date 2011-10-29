@@ -2,12 +2,9 @@
 
 Z<operator_types>
 
-Perl's pervasive contexts--especially value contexts
-(L<value_contexts>)--extend to the behavior of its operators.  Perl operators
-provide value contexts to their operands.  Choosing the most appropriate
-operator for a given situation requires you to understand what type of value
-you expect to receive as well as the type of values on which you wish to
-operate.
+Perl operators provide value contexts (L<value_contexts>) to their operands.
+To choose the appropriate operator, understand the values of the operands you
+provide as well as the value you expect to receive.
 
 =head2 Numeric Operators
 
@@ -42,14 +39,14 @@ X<C<%=>; numeric operator>
 X<operators; C<-->>
 X<C<-->; numeric operator>
 
-The numeric operators impose numeric contexts on their operands.  They consist
-of the standard arithmetic operators such as addition (C<+>), subtraction
+Numeric operators impose numeric contexts on their operands. These operators
+are the standard arithmetic operators such as addition (C<+>), subtraction
 (C<->), multiplication (C<*>), division (C</>), exponentiation (C<**>), modulo
 (C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
-C<%=>), and auto-decrement (C<-->), whether postfix or prefix.
+C<%=>), and both postfix and prefix auto-decrement (C<-->).
 
-While the auto-increment operator may seem like a numeric operator, it has
-special string behavior (L<auto_increment_operator>).
+The auto-increment operator has special string behavior
+(L<auto_increment_operator>).
 
 X<operators; C<==>>
 X<operators; C<!=>>
@@ -84,9 +81,9 @@ X<C<!~>; string operator>
 X<operators; C<.>>
 X<C<.>; string operator>
 
-The string operators impose string contexts on their operands.  They consist
-of the positive and negative regular expression binding operators (C<=~> and
-C<!~>, respectively), and the concatenation operator (C<.>).
+String operators impose string contexts on their operands. These operators are
+positive and negative regular expression binding (C<=~> and C<!~>,
+respectively), and concatenation (C<.>).
 
 X<operators; C<eq>>
 X<operators; C<ne>>
@@ -103,10 +100,10 @@ X<C<ge>; string comparison operator>
 X<C<le>; string comparison operator>
 X<C<cmp>; string comparison operator>
 
-Several comparison operators impose string contexts upon their operands.
-These are string equality (C<eq>), string inequality (C<ne>), greater than
-(C<gt>), less than (C<lt>), greater than or equal to (C<ge>), less than or
-equal to (C<le>), and the string sort comparison operator (C<cmp>).
+Several comparison operators impose string contexts upon their operands. These
+are string equality (C<eq>), string inequality (C<ne>), greater than (C<gt>),
+less than (C<lt>), greater than or equal to (C<ge>), less than or equal to
+(C<le>), and the string sort comparison operator (C<cmp>).
 
 =head2 Logical Operators
 
@@ -133,16 +130,15 @@ X<operators; defined-or>
 X<defined-or; logical operator>
 X<short-circuiting>
 
-The logical operators treat their operands in a boolean context.  The C<&&> and
-C<and> operators test that both expressions are logically true, while the C<||>
-and C<or> operators test that either expression is true.  All four are infix
-operators.  All four exhibit I<short-circuiting> behavior
-(L<short_circuiting>).
+Logical operators impose a boolean context on their operands. These operators
+are C<&&>, C<and>, C<||>, and C<or>. All are infix and all exhibit
+I<short-circuiting> behavior (L<short_circuiting>). The word variants have
+lower precedence than their punctuation forms.
 
-The defined-or operator, C<//>, tests the I<definedness> of its operand.
-Unlike C<||> which tests the truth value of its operand, C<//> evaluates to a
-true value if its operand evaluates to a numeric zero or the empty string.
-This is especially useful for setting default parameter values:
+The defined-or operator, C<//>, tests the I<definedness> of its operand. Unlike
+C<||> which tests the I<truth> of its operand, C<//> evaluates to a true value
+even if its operand evaluates to a numeric zero or the empty string. This is
+especially useful for setting default parameter values:
 
 =begin programlisting
 
@@ -156,9 +152,9 @@ This is especially useful for setting default parameter values:
 
 X<C<?:>; ternary conditional operator>
 
-The ternary conditional operator (C<?:>) takes three operands.  It evaluates
-the first in boolean context and evaluates to the second if the first is true
-and the third otherwise:
+The ternary conditional operator (C<?:>) takes three operands. It evaluates the
+first in boolean context and evaluates to the second if the first is true and
+the third otherwise:
 
 =begin programlisting
 
@@ -166,9 +162,8 @@ and the third otherwise:
 
 =end programlisting
 
-The C<!> and C<not> operators return the logical opposite of the boolean value
-of their operands.  C<not> has a lower precedence than C<!>.  These are prefix
-operators.
+The prefix C<!> and C<not> operators return the logical opposite of the boolean
+value of their operands. C<not> is a lower precedence version of C<!>.
 
 The C<xor> operator is an infix operator which evaluates to the exclusive-or of
 its operands.
@@ -199,11 +194,11 @@ X<C<^=>; bitwise operator>
 X<<< C<< E<lt>E<lt>= >>; bitwise operator >>>
 X<<< C<< E<gt>E<gt>= >>; bitwise operator >>>
 
-The bitwise operators treat their operands numerically at the bit level.  These
-are uncommon in most Perl 5 programs.  They consist of left shift (C<< << >>),
-right shift (C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and bitwise xor
-(C<^>), as well as their in-place variants (C<< <<= >>, C<< >>= >>, C<&=>,
-C<|=>, and C<^=>).
+Bitwise operators treat their operands numerically at the bit level. These
+operations are uncommon. They consist of left shift (C<< << >>), right shift
+(C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and bitwise xor (C<^>), as
+well as their in-place variants (C<< <<= >>, C<< >>= >>, C<&=>, C<|=>, and
+C<^=>).
 
 =head2 Special Operators
 
@@ -214,11 +209,11 @@ X<auto-increment>
 X<operators; C<++>>
 X<C<++>; auto-increment operator>
 
-The auto-increment operator has a special case.  If anything has ever used a
-variable in a numeric context (L<cached_coercions>), it increments the numeric
-value of that variable.  If the variable is obviously a string (and has never
-been evaluated in a numeric context), the string value increments with a carry,
-such that C<a> increments to C<b>, C<zz> to C<aaa>, and C<a9> to C<b0>.
+The auto-increment operator has special behavior. When used on a value with a
+numeric component (L<cached_coercions>), the operator increments that numeric
+component. If the value is obviously a string (and has no numeric component),
+the operator increments that string value such that C<a> becomes C<b>, C<zz>
+becomes C<aaa>, and C<a9> becomes C<b0>.
 
 =begin programlisting
 
@@ -243,13 +238,14 @@ X<operators; repetition>
 X<operators; C<x>>
 X<C<x>; repetition operator>
 
-The repetition operator (C<x>) is an infix operator.  In list context, its
-behavior changes based on its first operand.  When given a list, it evaluates
-to that list repeated the number of times specified by its second operand.
-When given a scalar, it produces a string consisting of the string value of
-its first operand concatenated to itself the number of times specified by its
-second operand.  In scalar context, the operator always produces a concatenated
-string repeated appropriately.
+The repetition operator (C<x>) is an infix operator with complex behavior. In
+list context, when given a list, it evaluates to that list repeated the number
+of times specified by its second operand. In list context when given a scalar,
+it produces a string consisting of the string value of its first operand
+concatenated to itself the number of times specified by its second operand.
+
+In scalar context, the operator always produces a concatenated string repeated
+appropriately.
 
 For example:
 
@@ -274,8 +270,7 @@ X<range>
 X<operators; C<..>>
 X<C<..>; range operator>
 
-The I<range> operator (C<..>) is an infix operator which produces a list of
-items in list context:
+The infix I<range> operator (C<..>) produces a list of items in list context:
 
 =begin programlisting
 
@@ -283,18 +278,18 @@ items in list context:
 
 =end programlisting
 
-It can produce simple, incrementing ranges (whether integers or
-autoincrementing strings), but it cannot intuit patterns or more complex
-ranges.
+It can produce simple, incrementing ranges (both as integers or strings), but
+it cannot intuit patterns or more complex ranges.
 
 X<operators; flip-flop>
 X<flip-flop>
 X<C<..>; flip-flop operator>
 
-In boolean context, the range operator becomes the I<flip-flop> operator.  This
-operator returns a false value if its left operand is false, then it returns a
-true value while its right operand is true.  Thus you could quote the body of a
-pedantically formatted email with:
+In boolean context, the range operator becomes the I<flip-flop> operator. This
+operator produces a false value until its left operand is true. That value
+stays true until the right operand is true, after which the value is false
+again until the left operand is true again. Imagine parsing the text of a
+formal letter with:
 
 =begin programlisting
 
@@ -311,10 +306,10 @@ X<C<,>; operator>
 X<<< operators; C<< =E<gt> >> >>>
 X<<< C<< =E<gt> >>; fat comma operator >>>
 
-The I<comma> operator (C<,>) is an infix operator.  In scalar context it
+The I<comma> operator (C<,>) is an infix operator. In scalar context it
 evaluates its left operand then returns the value produced by evaluating its
-right operand.  In list context, it evaluates both operands in left-to-right
+right operand. In list context, it evaluates both operands in left-to-right
 order.
 
-The fat comma operator (C<< => >>) behaves the same way, except that it
-automatically quotes any bareword used as its left operand (L<hashes>).
+The fat comma operator (C<< => >>) also automatically quotes any bareword used
+as its left operand (L<hashes>).

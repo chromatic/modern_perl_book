@@ -6,28 +6,25 @@ X<super globals>
 X<variables; super global>
 
 Perl 5 provides several I<super global variables> that are truly global, not
-restricted to any specific package.  These super globals have two drawbacks.
-First, they're global; any direct or indirect modifications may have effects on
-other parts of the program.  Second, they're terse.  Experienced Perl 5
-programmers have memorized some of them.  Few people have memorized all of
-them.  Only a handful are ever useful.  C<perldoc perlvar> contains the
-exhaustive list of such variables.
+scoped to a package or file. Unfortunately,
+their global availability means that any direct or indirect
+modifications may have effects on other parts of the program--and they're terse.
+Experienced Perl 5 programmers have memorized some of them. Few people
+have memorized all of them. Only a handful are ever useful. C<perldoc
+perlvar> contains the exhaustive list of such variables.
 
 =head2 Managing Super Globals
 
 X<super globals; managing>
 X<builtins; C<local>>
 
-The best approach to managing the global behavior of these super globals is to
-avoid using them.  When you must use them, use C<local> in the smallest
-possible scope to constrain any modifications.  You are still susceptible to
-any changes code you I<call> makes to those globals, but you reduce the
-likelihood of surprising code I<outside> of your scope.
-
-Workarounds exist for some of this global behavior, but many of these variables
-have existed since Perl 1 and will continue as part of Perl 5 throughout its
-lifetime.  As the easy file slurping idiom (L<easy_file_slurping>)
-demonstrates, this is often possible:
+Perl 5 continues to move more global behavior into lexical behavior, so you can
+avoid many of these globals. When you can't avoid them, use C<local> in the
+smallest possible scope to constrain any modifications. You are still
+susceptible to any changes code you I<call> makes to those globals, but you
+reduce the likelihood of surprising code I<outside> of your scope. As the easy
+file slurping idiom (L<easy_file_slurping>) demonstrates, C<local> is often the
+right approach:
 
 =begin programlisting
 
@@ -37,20 +34,20 @@ demonstrates, this is often possible:
 
 The effect of C<local>izing C<$/> lasts only through the end of the block.
 There is a low chance that any Perl code will run as a result of reading lines
-from the filehandleN<A tied filehandle is one of the few possibilities.> and
-change the value of C<$/> within the C<do> block.
+from the filehandleN<A tied filehandle (L<tie>) is one of the few
+possibilities.> and change the value of C<$/> within the C<do> block.
 
 Not all cases of using super globals are this easy to guard, but this often
 works.
 
 X<C<eval>>
 X<exceptions; catching>
+X<exceptions; C<$@>>
 
 Other times you need to I<read> the value of a super global and hope that no
-other code has modified it.  Catching exceptions with an C<eval> block can be
-susceptible to race conditionsN<< Use C<Try::Tiny> instead! >>, in that
-C<DESTROY()> methods invoked on lexicals that have gone out of scope may reset
-C<$@>:
+other code has modified it. Catching exceptions with an C<eval> block can be
+susceptible to race conditions, in that C<DESTROY()> methods invoked on
+lexicals that have gone out of scope may reset C<$@>:
 
 =begin programlisting
 
@@ -62,14 +59,23 @@ C<$@>:
 
 =end programlisting
 
-Copy C<$@> I<immediately> to preserve its contents.
+Copy C<$@> I<immediately> after catching an exception to preserve its contents.
+
+=begin tip Safer Exception Handling
+
+X<CPAN; C<Try::Tiny>>
+
+While Perl 5.14 has fixed some odd bugs related to exception handling,
+C<Try::Tiny> is still the most reliable mechanism to catch exceptions.
+
+=end tip
 
 =head2 English Names
 
 X<C<English>>
 
-The core C<English> module provides verbose names for the punctuation-heavy
-super globals.  Import them into a namespace with:
+The core C<English> module provides verbose names for punctuation-heavy super
+globals. Import them into a namespace with:
 
 =begin programlisting
 
@@ -77,8 +83,8 @@ super globals.  Import them into a namespace with:
 
 =end programlisting
 
-Subsequently you can use the verbose names documented in C<perldoc perlvar>
-within the scope of this namespace.
+This allows you to use the verbose names documented in C<perldoc perlvar>
+within the scope of this pragma.
 
 X<C<$&>>
 X<global variables; C<$&>>
@@ -89,9 +95,8 @@ X<global variables; C<$'>>
 
 Three regex-related super globals (C<$&>, C<$`>, and C<$'>) impose a global
 performance penalty for I<all> regular expressions within a program.  If you
-neglect to provide that import flag, your program will suffer the penalty even
-if you don't explicitly read from those variables.  This is not the default
-behavior for backwards-compatibility concerns.
+forget the C<-no_match_vars> import, your program will suffer the penalty even
+if you don't explicitly read from those variables.
 
 Modern Perl programs should use the C<@-> variable as a replacement for the
 terrible three.
@@ -101,9 +106,8 @@ terrible three.
 X<super globals; useful>
 
 Most modern Perl 5 programs can get by with using only a couple of the super
-globals.  Several exist for special circumstances you're unlikely to encounter.
-While C<perldoc perlvar> is the canonical documentation for most of these
-variables, some deserve special mention.
+globals. You're most likely to encounter only a few of these variables in real
+programs.
 
 X<C<$/>>
 X<global variables; C<$/>>
@@ -115,33 +119,32 @@ X<C<readline>>
 
 =item * C<$/> (or C<$INPUT_RECORD_SEPARATOR> from the C<English> pragma) is a
 string of zero or more characters which denotes the end of a record when
-reading input a line at a timeN<Yes, C<readline()> should more accurately be
-C<readrecord()>, but the name has stuck by now.>.  By default, this is your
-platform-specific newline character sequence.  If you undefine this value, Perl
-will attempt to read the entire file into memory.  If you set this value to a
-I<reference> to an integer, Perl will try to read that many I<bytes> per record
-(so beware of Unicode concerns).
+reading input a line at a time. By default, this is your platform-specific
+newline character sequence. If you undefine this value, Perl will attempt to
+read the entire file into memory. If you set this value to a I<reference> to an
+integer, Perl will try to read that many I<bytes> per record (so beware of
+Unicode concerns).
 
 X<C<$.>>
 X<global variables; C<$.>>
 X<C<$INPUT_LINE_NUMBER>>
 X<global variables; C<$INPUT_LINE_NUMBER>>
 
-=item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of current record
-read from the most recently-accessed filehandle.  You can read from this
-variable, but writing to it has no effect.  Localizing this variable will
-localize the filehandle to which it refers.
+=item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of records read from
+the most recently-accessed filehandle.  You can read from this variable, but
+writing to it has no effect.  Localizing this variable will localize the
+filehandle to which it refers.
 
 X<C<$|>>
 X<global variables; C<$|>>
 X<C<$OUTPUT_AUTOFLUSH>>
 X<global variables; C<$OUTPUT_AUTOFLUSH>>
 
-=item * C<$|> (C<$OUTPUT_AUTOFLUSH>) is the boolean value of this variable
-governs whether Perl will flush everything written to the currently selected
-filehandle immediately or only when Perl's buffer is full.  Unbuffered output
-is useful when writing to a pipe or socket or terminal which should not block
-waiting for input.
+=item * C<$|> (C<$OUTPUT_AUTOFLUSH>) governs whether Perl will flush everything
+written to the currently selected filehandle immediately or only when Perl's
+buffer is full. Unbuffered output is useful when writing to a pipe or socket or
+terminal which should not block waiting for input. This variable will coerce
+any values assigned to it to boolean values.
 
 X<C<@ARGV>>
 X<global variables; C<@ARGV>>
@@ -155,13 +158,13 @@ X<global variables; C<$ERRNO>>
 
 =item * C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result
 of the I<most recent> system call.  In numeric context, this corresponds to C's
-C<errno> value, where anything other than zero indicates some kind of error.
-In string context, returns the appropriate system error string.  Localize this
+C<errno> value, where anything other than zero indicates an error.  In string
+context, this evaluates to the appropriate system error string.  Localize this
 variable before making a system call (implicitly or explicitly) to avoid
 overwriting the appropriate value for other code elsewhere.  Many places within
-Perl 5 itself make system calls without your knowledge.  The value of this
-variable can change out from under you, so copy it I<immediately> after making
-such a call yourself.
+Perl 5 itself make system calls without your knowledge, so the value of this
+variable can change out from under you. Copy it I<immediately> after causing a
+system call for the most accurate results.
 
 X<C<$">>
 X<global variables; C<$">>
@@ -202,7 +205,7 @@ X<global variables; C<$PID>>
 
 =item * C<$$> (C<$PID>) contains the process id of the currently running
 instance of the program, as the operating system understands it.  This will
-vary between C<fork()>ed programs and may vary between threads in the same
+vary between C<fork()>ed programs and I<may> vary between threads in the same
 program.
 
 X<C<@INC>>
@@ -228,16 +231,9 @@ X<super globals; alternatives>
 X<C<Try::Tiny>>
 
 The worst culprits for action at a distance relate to IO and exceptional
-conditions.  Using C<Try::Tiny> (L<exception_caveats>) will help insulate you
-from the tricky semantics of proper exception handling.  C<local>izing and
+conditions. Using C<Try::Tiny> (L<exception_caveats>) will help insulate you
+from the tricky semantics of proper exception handling. C<local>izing and
 copying the value of C<$!> can help you avoid strange behaviors when Perl makes
-implicit system calls.
-
-X<C<IO::Handle>>
-
-C<IO::Handle> allows you to call methods on filehandles
-(L<lexical_filehandles>) to replace the manipulation of IO-related super
-globals.  Call the C<autoflush()> method on a lexical filehandle instead of
-C<select>ing the filehandle, then manipulating C<$|>.  Use the
-C<input_line_number()> method to get the equivalent of C<$.> for that specific
-filehandle.  See the C<IO::Handle> documentation for other appropriate methods.
+implicit system calls. Using C<IO::File> and its methods on lexical filehandles
+(L<file_handling_variables>) helps prevent unwanted global changes to IO
+behavior.

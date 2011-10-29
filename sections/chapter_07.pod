@@ -1,18 +1,15 @@
 =head0 Objects
 
-Writing large programs requires more discipline than writing small programs,
-due to the difficulty of managing all of the details of your program
-simultaneously.  Abstraction (finding and exploiting similarities and
-near-similarities) and encapsulation (grouping specific details together and
-accessing them where they belong) are essential to managing this complexity.
+Programming is a management activity. The larger the program, the more details
+you must manage. Our only hope to manage this complexity is to exploit
+abstraction (treating similar things similarly) and encapsulation (grouping
+related details together).
 
-Functions help, but functions by themselves aren't sufficient for the largest
-programs.  Object orientation is a popular technique for grouping functions
-together into classes of related behaviors.
-
-Perl 5's default object system is minimal.  It's very flexible--you can build
-almost any other object system you want on top of it--but it provides little
-assistance for the most common tasks.
+Functions alone are insufficient for large problems. Several techniques group
+functions into units of related behaviors--one popular technique is object
+orientation. Perl 5's default object system is flexible, but minimal. You can
+build great things on top of it, but it provides little assistance for some
+basic tasks.
 
 L<moose>
 

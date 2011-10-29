@@ -4,21 +4,21 @@ Z<overloading>
 X<overloading>
 
 Perl 5 is not a pervasively object oriented language. Its core data types
-(scalars, arrays, and hashes) are not objects with methods you can overload.
-Even so, you I<can> control the behavior of your own classes and objects,
-especially when they undergo coercion or evaluation in various contexts.  This
-is I<overloading>.
+(scalars, arrays, and hashes) are not objects with overloadable methods, but
+you I<can> control the behavior of your own classes and objects, especially
+when they undergo coercion or contextual evaluation. This is I<overloading>.
 
 Overloading can be subtle but powerful.  An interesting example is overloading
 how an object behaves in boolean context, especially if you use something like
-the Null Object pattern (U<http://www.c2.com/cgi/wiki?NullObject>).  In boolean
-context, an object will be true... but not if you overload boolification.
+the Null Object pattern (U<http://www.c2.com/cgi/wiki?NullObject>). In boolean
+context, an object will evaluate to a true value, unless you overload
+boolification.
 
-You can overload what the object does for almost every operation:
-stringification, numification, boolification,
-iteration, invocation, array access, hash
-access, arithmetic operations, comparison operations, smart match, bitwise
-operations, and even assignment.
+You can overload what the object does for almost every operation or coercion:
+stringification, numification, boolification, iteration, invocation, array
+access, hash access, arithmetic operations, comparison operations, smart match,
+bitwise operations, and even assignment. Stringification, numification, and
+boolification are the most important and most common.
 
 =head2 Overloading Common Operations
 
@@ -28,10 +28,9 @@ X<overloading; string>
 X<C<overload> pragma>
 X<pragmas; C<overload>>
 
-The most useful are often the most common: stringification, numification, and
-boolification.  The C<overload> pragma allows you to associate a function with
-an operation you can overload.  Here's a class which overloads boolean
-evaluation:
+The C<overload> pragma allows you to associate a function with an operation you
+can overload. A C<Null> class which overloads boolean evaluation might
+resemble:
 
 =begin programlisting
 
@@ -41,7 +40,8 @@ evaluation:
 
 =end programlisting
 
-In all boolean contexts, every instance of this class will evaluate to false.
+In all boolean contexts, every instance of this class will evaluate to a false
+value.
 
 The arguments to the C<overload> pragma are pairs where the key describes the
 type of overload and the value is a function reference to call in place of
@@ -60,15 +60,15 @@ It's easy to add a stringification:
 =end programlisting
 
 Overriding numification is more complex, because arithmetic operators tend to
-be binary ops (L<arity>).  Given two operands both with overloaded methods for
-addition, which takes precedence?  The answer needs to be consistent, easy to
+be binary ops (L<arity>). Given two operands both with overloaded methods for
+addition, which takes precedence? The answer needs to be consistent, easy to
 explain, and understandable by people who haven't read the source code of the
 implementation.
 
 C<perldoc overload> attempts to explain this in the sections labeled I<Calling
 Conventions for Binary Operations> and I<MAGIC AUTOGENERATION>, but the easiest
-solution is to overload numification and tell C<overload> to use the provided
-overloads as fallbacks where possible:
+solution is to overload numification (keyed by C<'0+'>) and tell C<overload> to
+use the provided overloads as fallbacks where possible:
 
 =begin programlisting
 
@@ -83,7 +83,7 @@ overloads as fallbacks where possible:
 =end programlisting
 
 Setting C<fallback> to a true value lets Perl use any other defined overloads
-to compose the requested operation, if possible.  If that's not possible, Perl
+to compose the requested operation when possible.  If that's not possible, Perl
 will act as if there were no overloads in effect.  This is often what you want.
 
 Without C<fallback>, Perl will only use the specific overloadings you have
@@ -115,19 +115,19 @@ hard-coding a function reference:
 
 =end programlisting
 
-Child classes do not have to use C<overload> themselves; they can merely
-override the appropriate C<get_*> methods.  This is often more flexible.
+In this case, any child classes can perform these overloaded operations
+differently by overriding the appropriate named methods.
 
 =head2 Uses of Overloading
 
-X<C<IO::All>>
+X<CPAN; C<IO::All>>
 
 Overloading may seem like a tempting tool to use to produce symbolic shortcuts
-for new operations.  The C<IO::All> CPAN distribution pushes this idea to its
-limit to produce clever ideas for concise and composable code.  Yet for every
-brilliant API refined through the appropriate use of overloading, a dozen more
-messes congeal.  Sometimes the best code eschews cleverness in favor of simple
-and straightforward design.
+for new operations, but it's rare in Perl 5 for a good reason. The C<IO::All>
+CPAN distribution pushes this idea to its limit to produce clever ideas for
+concise and composable code.  Yet for every brilliant API refined through the
+appropriate use of overloading, a dozen more messes congeal.  Sometimes the
+best code eschews cleverness in favor of simplicity.
 
 Overriding addition, multiplication, and even concatenation on a C<Matrix>
 class makes sense, only because the existing notation for those operations is
@@ -135,9 +135,7 @@ pervasive.  A new problem domain without that established notation is a poor
 candidate for overloading, as is a problem domain where you have to squint to
 make Perl's existing operators match a different notation.
 
-Damian Conway's I<Perl Best Practices> suggests that the other useful use of
-overloading is to prevent the accidental abuse of objects.  For example,
-overloading numification to C<croak()> for objects which have no reasonable
-single numeric representation can help you find real bugs in real programs.
-Overloading in Perl 5 is relatively rare, but this suggestion can improve the
-reliability and safety of programs.
+Damian Conway's I<Perl Best Practices> suggests one other use for overloading:
+to prevent the accidental abuse of objects.  For example, overloading
+numification to C<croak()> for objects which have no reasonable single numeric
+representation can help you find and fix real bugs.

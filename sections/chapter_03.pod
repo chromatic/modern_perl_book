@@ -1,11 +1,11 @@
 =head0 The Perl Language
 
-The Perl language has several smaller parts which combine to form its syntax.
-Unlike spoken language, where nuance and tone of voice and intuition allow
-people to communicate despite slight misunderstandings and fuzzy concepts,
-computers and source code require precision.  You can write effective Perl code
-without knowing every detail of every language feature, but you must understand
-how they work together to write Perl code well.
+Like a spoken language, the whole of Perl is a combination of several smaller
+but interrelated parts. Unlike spoken language, where nuance and tone of voice
+and intuition allow people to communicate despite slight misunderstandings and
+fuzzy concepts, computers and source code require precision. You can write
+effective Perl code without knowing every detail of every language feature, but
+you must understand how they work together to write Perl code well.
 
 L<names>
 

@@ -6,20 +6,12 @@ X<smart match>
 X<operators; smart match>
 X<C<~~>; smart match operator>
 X<operators; C<~~>>
+X<builtins; C<given>>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
-if they match each other.  The fuzziness of the definition demonstrates the
+if they match each other. The fuzziness of the definition demonstrates the
 smartness of the operator: the type of comparison depends on the type of both
-operands.  You've seen this behavior before, as C<given> (L<given_when>)
-performs an implicit smart match.
-
-=begin sidebar
-
-See the "Smart matching in detail" section of C<perldoc perlsyn> for far more
-detail.  Some of the semantics of smart match have changed between Perl 5.10.0
-and Perl 5.10.1, so when possible, use smart matching only after 5.10.1.
-
-=end sidebar
+operands. C<given> (L<given_when>) performs an implicit smart match.
 
 X<operators; C<~~>>
 X<C<~~>; smart match operator>
@@ -33,11 +25,11 @@ The smart match operator is an infix operator:
 =end programlisting
 
 The type of comparison generally depends first on the type of the right operand
-and then on the left operand.  For example, if the right operand is a scalar
-with a numeric component, the comparison will use numeric equality.  If the
+and then on the left operand. For example, if the right operand is a scalar
+with a numeric component, the comparison will use numeric equality. If the
 right operand is a regex, the comparison will use a grep or a pattern match.
 If the right operand is an array, the comparison will perform a grep or a
-recursive smart match.  If the right operand is a hash, the comparison will
+recursive smart match. If the right operand is a hash, the comparison will
 check the existence of one or more keys.
 
 For example:
@@ -89,7 +81,7 @@ For example:
 =end programlisting
 
 These comparisons work correctly if one operand is a I<reference> to the given
-data type.  For example:
+data type. For example:
 
 =begin programlisting
 
@@ -97,9 +89,9 @@ data type.  For example:
 
 =end programlisting
 
-You may overload (L<overloading>) the smart match operator on objects.  If you
-do not do so, the smart match operator will throw an exception if you try to
-use an object as an operand.
-
-You may also use other data types such as C<undef> and function references as
-smart match operands.  See the chart in C<perldoc perlsyn> for more details.
+A large and intimidating chart in C<perldoc perlsyn> gives far more details
+about all the comparisons smart match can perform. A serious proposal for 5.16
+suggests simplifying smart match substantially. The more complex your operands,
+the more likely the results will confuse the readers of your program. If you
+avoid comparing objects and stick to simple operations with scalars or one
+scalar and one aggregate, you will have better results.

@@ -6,23 +6,24 @@ X<reflection>
 X<introspection>
 
 I<Reflection> (or I<introspection>) is the process of asking a program about
-itself as it runs.  Even though you can write many useful programs without ever
-having to use reflection, techniques such as metaprogramming
-(L<code_generation>) benefit from a deeper understanding of which entities are
-in the system.
+itself as it runs. By treating code as data you can manage code in the same way
+that you manage data. This is a principle behind code generation
+(L<code_generation>).
 
-C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
-systems, but many useful programs do not use objects pervasively, and many
-useful programs do not use C<Class::MOP>.  Several idioms exist for using
-reflection effectively in the absence of such a formal system.  These are the
-most common.
+X<CPAN; C<Class::MOP>>
+
+Moose's C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for
+object systems. If you use Moose, its metaprogramming system will help you. If
+not, several other core Perl 5 idioms help you inspect and manipulate running
+programs.
 
 =head2 Checking that a Package Exists
 
-To check that a package exists somewhere in the system--that is, if some code
+To check that a package exists somewhere in your program--if some code
 somewhere has executed a C<package> directive with a given name--check that the
-package inherits from C<UNIVERSAL> by testing that the package somehow provides
-the C<can()> method:
+package inherits from C<UNIVERSAL>. Anything which extends C<UNIVERSAL> must
+somehow provide the C<can()> method. If no such package exists, Perl will throw
+an exception about an invalid invocant, so wrap this call in an C<eval> block:
 
 =begin programlisting
 
@@ -30,33 +31,25 @@ the C<can()> method:
 
 =end programlisting
 
-Although you I<may> use packages with the names C<0> and C<''>N<...  only if
-you define them symbolically, as these are I<not> identifiers forbidden by the
-Perl 5 parser.>, the C<can()> method will throw a method invocation exception
-if you use them as invocants.  The C<eval> block catches such an exception.
-
-You I<could> also grovel through the symbol table, but this approach is quicker
-and easier to understand.
+An alternate approach is groveling through Perl's symbol tables.
 
 =head2 Checking that a Class Exists
 
 Because Perl 5 makes no strong distinction between packages and classes, the
-same technique for checking the existence of a package works for checking that
-a class exists.  There is no generic way for determining if a package is a
-class.  You I<can> check that the package C<can()> provide C<new()>, but there
-is no guarantee that any C<new()> found is a method, nor a constructor.
+best you can do without Moose is to check that a package of the expected class
+name exists. You I<can> check that the package C<can()> provide C<new()>, but
+there is no guarantee that any C<new()> found is either a method or a
+constructor.
 
 =head2 Checking that a Module Has Loaded
 
 X<C<%INC>>
-X<C<@INC>>
 
 If you know the name of a module, you can check that Perl believes it has
-loaded that module from disk by looking in the C<%INC> hash.  This hash
-corresponds to C<@INC>; when Perl 5 loads code with C<use> or C<require>, it
-stores an entry in C<%INC> where the key is the file path of the module to load
-and the value is the full path on disk to that module.  In other words, loading
-C<Modern::Perl> effectively does:
+loaded that module by looking in the C<%INC> hash. When Perl 5 loads code with
+C<use> or C<require>, it stores an entry in C<%INC> where the key is the file
+path of the module to load and the value is the full path on disk to that
+module. In other words, loading C<Modern::Perl> effectively does:
 
 =begin programlisting
 
@@ -65,10 +58,9 @@ C<Modern::Perl> effectively does:
 
 =end programlisting
 
-The details of the path will vary depending on your installation, but for the
-purpose of testing that Perl has successfully loaded a module, you can convert
-the name of the module into the canonical file form and test for existence
-within C<%INC>:
+The details of the path will vary depending on your installation. To test that
+Perl has successfully loaded a module, convert the name of the module into the
+canonical file form and test for that key's existence within C<%INC>:
 
 =begin programlisting
 
@@ -80,17 +72,24 @@ within C<%INC>:
 
 =end programlisting
 
-Nothing prevents other code from manipulating C<%INC> itself.  Depending on
-your paranoia level, you may check the path and the expected contents of the
-package yourself.  Some modules (such as C<Test::MockObject> or
-C<Test::MockModule>) manipulate C<%INC> for good reasons.  Code which
-manipulates C<%INC> for poor reasons deserves replacing.
+X<C<@INC>>
+X<CPAN; C<Test::MockObject>>
+X<CPAN; C<Test::MockModule>>
 
-=head2 Checking the Version of a Module
+As with C<@INC>, any code anywhere may manipulate C<%INC>. Some modules (such
+as C<Test::MockObject> or C<Test::MockModule>) manipulate C<%INC> for good
+reasons. Depending on your paranoia level, you may check the path and the
+expected contents of the package yourself.
 
-There is no guarantee that a given module provides a version.  Even so, all
-modules inherit from C<UNIVERSAL> (L<universal>), so they all have a
-C<VERSION()> method available:
+X<CPAN; C<Class::Load>>
+
+The C<Class::Load> CPAN module's C<is_class_loaded()> function encapsulates
+this C<%INC> check.
+
+=head2 Checking a Module Version Number
+
+Modules do not have to provide version numbers, but all package extend
+C<UNIVERSAL> (L<universal>) and respond to its C<VERSION()> method:
 
 =begin programlisting
 
@@ -98,14 +97,14 @@ C<VERSION()> method available:
 
 =end programlisting
 
-If the given module does not override C<VERSION()> or contain a package
-variable C<$VERSION>, the method will return an undefined value.  Likewise, if
-the module does not exist, the method call will fail.
+C<VERSION()> returns the given module's version number, if defined. Otherwise
+it returns C<undef>. If the module does not exist, the method will likewise
+return C<undef>.
 
 =head2 Checking that a Function Exists
 
-The simplest mechanism by which to determine if a function exists is to use the
-C<can()> method on the package name:
+To check whether a function exists in a package, call C<can()> as a class
+method on the package name:
 
 =begin programlisting
 
@@ -116,11 +115,11 @@ C<can()> method on the package name:
 Perl will throw an exception unless C<$pkg> is a valid invocant; wrap the
 method call in an C<eval> block if you have any doubts about its validity.
 Beware that a function implemented in terms of C<AUTOLOAD()> (L<autoload>) may
-report the wrong answer if the function's package does not also override
-C<can()> correctly.  This is a bug in the other package.
+report the wrong answer if the function's package has not predeclared the
+function or overridden C<can()> correctly. This is a bug in the other package.
 
-You may use this technique to determine if a module's C<import()> has imported
-a function into the current namespace:
+Use this technique to determine if a module's C<import()> has imported a
+function into the current namespace:
 
 =begin programlisting
 
@@ -128,14 +127,13 @@ a function into the current namespace:
 
 =end programlisting
 
-You may also root around in the symbol table and typeglobs to determine if a
-function exists, but this mechanism is simpler and easier to explain.
+As with checking for the existence of a package, you I<can> root around in
+symbol tables yourself, if you have the patience for it.
 
 =head2 Checking that a Method Exists
 
-There is no generic way to determine whether a given function is a function or
-a method.  Some functions behave as both functions and methods; though this is
-overly complex and usually a mistake, it is an allowed feature.
+There is no foolproof way for reflection to distinguish between a function or a
+method.
 
 =head2 Rooting Around in Symbol Tables
 
@@ -143,21 +141,22 @@ X<symbol tables>
 X<typeglobs>
 
 A Perl 5 symbol table is a special type of hash, where the keys are the names
-of package global symbols and the values are typeglobs.  A I<typeglob> is a
-core data structure which can contain any or all of a scalar, an array, a hash,
-a filehandle, and a function.  Perl 5 uses typeglobs internally when it looks
-up these variables.
+of package global symbols and the values are typeglobs. A I<typeglob> is an
+internal data structure which can contain any or all of a scalar, an array, a
+hash, a filehandle, and a function.
 
-You can access a symbol table as a hash by appending double-colons to the name
-of the package.  For example, the symbol table for the C<MonkeyGrinder> package
-is available as C<%MonkeyGrinder::>.
+Access a symbol table as a hash by appending double-colons to the name of the
+package. For example, the symbol table for the C<MonkeyGrinder> package is
+available as C<%MonkeyGrinder::>.
 
 You I<can> test the existence of specific symbol names within a symbol table
 with the C<exists> operator (or manipulate the symbol table to I<add> or
-I<remove> symbols, if you like).  Yet be aware that certain changes to the Perl
-5 core have modified what exists by default in each typeglob entry.  In
-particular, earlier versions of Perl 5 have always provided a default scalar
-variable for every typeglob created, while modern versions of Perl 5 do not.
+I<remove> symbols, if you like). Yet be aware that certain changes to the Perl
+5 core have modified the details of what typeglobs store and when and why.
+
+X<CPAN; C<Package::Stash>>
 
 See the "Symbol Tables" section in C<perldoc perlmod> for more details, then
-prefer the other techniques in this section for reflection.
+prefer the other techniques in this section for reflection. If you really must
+manipulate symbol tables and typeglobs, consider using the C<Package::Stash>
+CPAN module instead.

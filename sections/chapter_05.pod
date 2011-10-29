@@ -4,13 +4,13 @@ X<function>
 X<subroutine>
 
 A I<function> (or I<subroutine>) in Perl is a discrete, encapsulated unit of
-behavior.  It may or may not have a name.  It may or may not consume incoming
-information.  It may or may not produce outgoing information.  It represents a
-type of control flow, where the execution of the program proceeds to another
-point in the source code.
+behavior. A program is a collection of little black boxes where the interaction
+of these functions governs the control flow of the program. A function may have
+a name. It may consume incoming information. It may produce outgoing
+information.
 
 Functions are a prime mechanism for abstraction, encapsulation, and re-use in
-Perl 5; many other mechanisms build on the idea of the function.
+Perl 5.
 
 L<functions>
 

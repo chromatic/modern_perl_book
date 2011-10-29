@@ -2,16 +2,13 @@
 
 Z<writing_real_programs>
 
-Writing simple example programs to solve example problems in a book helps you
-learn a language in the small.  Yet writing real programs requires more than
-learning the syntax of a language, or its design principles, or even how to
-find and use its libraries.
+A book can teach you to write small programs to solve small example problems.
+You can learn a lot of syntax that way. To write real programs to solve real
+problems, you must learn to I<manage> code written in your language. How do you
+organize code? How do you know that it works? How can you make it robust in the
+face of errors? What makes code concise, clear, and maintainable?
 
-Practical programming requires you to manage code: to organize it, to know that
-it works, to make it robust in the face of errors of logic or intent, and to do
-all of this in a concise, clear, and maintainable fashion.  Fortunately, modern
-Perl provides many tools and techniques to write real programs--from testing to
-the organization of your source code.
+Modern Perl provides many tools and techniques to write real programs.
 
 L<testing>
 

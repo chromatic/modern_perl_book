@@ -2,21 +2,23 @@
 
 Z<missing_defaults>
 
-Perl 5's design process in 1993 and 1994 tried to anticipate new directions for
-the language, but it's impossible to predict the future.  Perl 5 added many
-great new features, but it also kept compatibility with the previous seven
-years of Perl 1 through Perl 4.  Sixteen years later, the best way to write
-clean, maintainable, powerful, and succinct Perl 5 code is very different from
-Perl 5.000.  The default behaviors sometimes get in the way; fortunately,
-better behaviors are available.
+Perl 5's design process tried to anticipate new directions for the language,
+but it was as impossible to predict the future in 1994 as it is in 2011. Perl 5
+expanded the language, but remained compatible with Perl 1 from 1987.
 
-X<C<Task::Kensho>>
+The best Perl 5 code of 2011 is very different from the best Perl 5 code of
+1994, or the best Perl 1 code of 1987.
 
-The CPAN (L<cpan>) contains many modules and pragmas designed to make your work
-simpler, more correct, and more enjoyableN<See C<Task::Kensho> to start.>.  As
-you improve as a Perl programmer, you will have many opportunities to use (and
-even to create) such code in the right circumstances.  For now, use these
-pragmas and modules regularly in your own code.
+X<CPAN; C<Task::Kensho>>
+
+Although Perl 5 contains an extensive core library, it's not comprehensive.
+Many of the best Perl 5 modules exist on the CPAN (L<cpan>) and not in the
+core. The C<Task::Kensho> meta-distribution includes several other
+distributions which represent the best the CPAN has to offer. When you need to
+solve a problem, look there first.
+
+With that said, a few core pragmas and modules are indispensable to serious
+Perl programmers.
 
 =head2 The strict Pragma
 
@@ -24,26 +26,23 @@ X<C<strict>>
 X<pragmas; C<strict>>
 
 The C<strict> pragma (L<pragmas>) allows you to forbid (or re-enable) various
-language constructs which offer power but also the potential for accidental
-abuse.
+powerful language constructs which offer potential for accidental abuse.
 
-C<strict> provides three features: forbidding symbolic references, requiring
-variable declarations, and forbidding the use of undeclared barewords
-(L<barewords>).  While the occasional use of symbolic references is necessary
-to manipulate symbol tables (barring the use of helper modules, such as
-C<Moose>), the use of a variable as a variable name offers the possibility of
-subtle errors of action at a distance--or, worse, the possibility of
-poorly-validated user input manipulating internal-only data for malicious
-purposes.
+C<strict> forbids symbolic references, requires variable declarations
+(L<lexical_scope>), and prohibits the use of undeclared barewords
+(L<barewords>). While the occasional use of symbolic references is necessary to
+manipulate symbol tables (L<import>), the use of a variable as a variable name
+offers the possibility of subtle errors of action at a distance--or, worse, the
+possibility of poorly-validated user input manipulating internal-only data for
+malicious purposes.
 
 Requiring variable declarations helps to prevent typos in variable names and
 encourages proper scoping of lexical variables.  It's much easier to see the
 intended scope of a lexical variable if all variables have C<my> or C<our>
 declarations in the appropriate scope.
 
-C<strict> has a lexical effect, based on the compile-time scope of its use.
-You may disable certain features of C<strict> (within the smallest possible
-scope, of course) with C<no strict>.  See C<perldoc strict> for more details.
+C<strict> has a lexical effect based on the compile-time scope of its use
+(L<import>) and disabling (with C<no>). See C<perldoc strict> for more details.
 
 =head2 The warnings Pragma
 
@@ -58,49 +57,30 @@ guesses correctly, disambiguation on your part will ensure that your programs
 run correctly.
 
 The C<warnings> pragma has a lexical effect on the compile-time scope of its
-use.  You may disable some or all warnings with C<no warnings> (within the
-smallest possible scope, of course).  See C<perldoc perllexwarn> and C<perldoc
+use or disabling (with C<no>). See C<perldoc perllexwarn> and C<perldoc
 warnings> for more details.
 
 =begin sidebar
 
-Combine C<use warnings> with C<use diagnostics>, and Perl 5 will display
-expanded diagnostic messages for each warning present in your programs.  These
-expanded diagnostics come from C<perldoc perldiag>.  This behavior is useful
-when learning Perl, but it's less useful in code deployed to production,
-because it can produce verbose error output.
+Combine C<use warnings> with C<use diagnostics> to receive expanded diagnostic
+messages for each warning present in your programs.  These expanded diagnostics
+come from C<perldoc perldiag>. This behavior is useful when learning Perl.
+Disable it in deployed software, as it can produce verbose output.
 
 =end sidebar
 
-=head2 IO::Handle
+=head2 C<IO::File> and C<IO::Handle>
 
-Perl 5.6.0 added lexical filehandles.  Previously, filehandles were all package
-globals.  This was occasionally messy and often confusing.  Now that you can
-write:
+X<C<IO::File>>
+X<C<IO::Handle>>
 
-=begin programlisting
+Before Perl 5.14, lexical filehandles were objects of the C<IO::Handle> class,
+but you had to load C<IO::Handle> explicitly before you could call methods on
+them. As of Perl 5.14, lexical filehandles are instances of C<IO::File> and
+Perl loads C<IO::File> for you.
 
-    open my $fh, '>', $file or die "Can't write to '$file': $!\n";
-
-=end programlisting
-
-... the lexical filehandle in C<$fh> is easier to use.  The implementation of
-lexical filehandles creates objects; C<$fh> is an instance of C<IO::Handle>.
-Unfortunately, even though C<$fh> is an object, you can't call methods on it
-because nothing has loaded the C<IO::Handle> class.
-
-This is occasionally painful when you want to flush the buffer of the
-associated filehandle, for example.  It could be as easy as:
-
-=begin programlisting
-
-    $fh->flush();
-
-=end programlisting
-
-... but only if your program somewhere contains C<use IO::Handle>.  The
-solution is to add this line to your programs so that lexical filehandles--the
-objects as they are--behave as objects should behave.
+Add C<IO::Handle> to code running on Perl 5.12 or earlier if you call methods
+on lexical filehandles.
 
 =head2 The autodie Pragma
 
@@ -108,10 +88,11 @@ Z<autodie>
 X<C<autodie> pragma>
 X<pragmas; C<autodie>>
 
-Perl 5's default error checking is parsimonious.  If you're not careful to
-check the return value of every C<open()> call, for example, you could try to
-read from a closed filehandle--or worse, lose data as you try to write to one.
-The C<autodie> pragma changes the default behavior.  If you write:
+Perl 5 leaves error handling (or error ignoring) up to you.  If you're not
+careful to check the return value of every C<open()> call, for example, you
+could try to read from a closed filehandle--or worse, lose data as you try to
+write to one. The C<autodie> pragma changes the default behavior.  If you
+write:
 
 =begin programlisting
 
@@ -121,11 +102,10 @@ The C<autodie> pragma changes the default behavior.  If you write:
 
 =end programlisting
 
-... an unsuccessful C<open()> call will throw an exception via Perl 5's normal
-exception mechanism.  Given that the most appropriate approach to a failed
-system call is throwing an exception, this pragma can remove a lot of
-boilerplate code and allow you the peace of mind of knowing that you haven't
-forgotten to check a return value.
+... an unsuccessful C<open()> call will throw an exception. Given that the most
+appropriate approach to a failed system call is throwing an exception, this
+pragma can remove a lot of boilerplate code and allow you the peace of mind of
+knowing that you haven't forgotten to check a return value.
 
 This pragma entered the Perl 5 core as of Perl 5.10.1.  See C<perldoc autodie>
 for more information.

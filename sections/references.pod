@@ -1,8 +1,8 @@
-=head2 References
+=head1 References
 
 Z<references>
 
-Perl usually does what you expect, even if what you expect is subtle.  Consider
+Perl usually does what you expect, even if what you expect is subtle. Consider
 what happens when you pass values to functions:
 
 =begin programlisting
@@ -19,32 +19,28 @@ what happens when you pass values to functions:
 
 =end programlisting
 
-You probably expect that, outside of the function, C<$name> contains C<Chuck>,
-even though the value passed into the function gets reversed into C<kcuhC>--and
-that's what happens.  The C<$name> outside the function is a separate scalar
-from the C<$name> inside the function, and each one has a distinct copy of the
-string.  Modifying one has no effect on the other.
+Outside of the function, C<$name> contains C<Chuck>, even though the value
+passed into the function gets reversed into C<kcuhC>. You probably expected
+that. The value of C<$name> outside the function is separate from the C<$name>
+inside the function. Modifying one has no effect on the other.
 
-This is useful and desirable default behavior.  If you had to make explicit
-copies of every value before you did anything to them which could possibly
-cause changes, you'd write lots of extra, unnecessary code to defend against
-well-meaning but incorrect modifications.
+Consider the alternative. If you had to make copies of every value before
+anything could possibly change them out from under you, you'd have to write
+lots of extra defensive code.
 
-Sometimes it's useful to modify a value in place as well.  If you
-have a hash full of data that you want to pass to a function to update or to
-delete a key/value pair, creating and returning a new hash for each change
-could be troublesome (to say nothing of inefficient).
+Yet sometimes it's useful to modify values in place. If you want to pash a hash
+full of data to a function to modify, creating and returning a new hash for
+each change could be troublesome (to say nothing of inefficient).
 
 X<references>
 
-Perl 5 provides a mechanism by which you can refer to a value without making a
-copy of that value.  Any changes made to that I<reference> will update the
-value in place, such that I<all> references to that value will see the new
-value.  A reference is a first-class scalar data type in Perl 5.  It's not a
-string, an array, or a hash.  It's a scalar which refers to another first-class
-data type.
+Perl 5 provides a mechanism by which to refer to a value without making a copy.
+Any changes made to that I<reference> will update the value in place, such that
+I<all> references to that value can reach the new value. A reference is a
+first-class scalar data type in Perl 5 which refers to another first-class data
+type.
 
-=head3 Scalar References
+=head2 Scalar References
 
 Z<scalar_references>
 
@@ -54,10 +50,9 @@ X<references; C<\> operator>
 X<references; scalar>
 X<scalars; references>
 
-The reference operator is the backslash (C<\>).  In scalar context, it creates
-a single reference which refers to another value.  In list context, it creates
-a list of references.  Thus you can take a reference to C<$name> from the
-previous example:
+The reference operator is the backslash (C<\>). In scalar context, it creates a
+single reference which refers to another value. In list context, it creates a
+list of references. To take a reference to C<$name>:
 
 =begin programlisting
 
@@ -69,7 +64,7 @@ previous example:
 X<dereferencing>
 X<references; dereferencing>
 
-To access the value to which a reference refers, you must I<dereference> it.
+You must I<dereference> a reference to evaluate the value to which it refers.
 Dereferencing requires you to add an extra sigil for each level of
 dereferencing:
 
@@ -91,16 +86,15 @@ The double scalar sigil dereferences a scalar reference.
 
 =begin sidebar
 
-This example isn't useful in the obvious case; why not have the function return
-the modified value directly?  Scalar references are useful when processing
-I<large> scalars; copying the contents of those scalars can use a lot of time
-and memory.
+In this case, why not have the function return the modified value directly?
+Scalar references are useful when processing I<large> scalars, as copying their
+contents can cost much time and memory.
 
 =end sidebar
 
 Complex references may require a curly-brace block to disambiguate portions of
-the expression.  This is optional for simple dereferences, though it can be
-messy:
+the expression. You may always use this syntax, though sometimes it clarifies
+and other times it obscures:
 
 =begin programlisting
 
@@ -112,33 +106,30 @@ messy:
 
 =end programlisting
 
-If you forget to dereference a scalar reference, it will stringify or numify.
-The string value will be of the form C<SCALAR(0x93339e8)>, and the numeric
-value will be the C<0x93339e8> portion.  This value encodes the type of
+If you forget to dereference a scalar reference, Perl will likely coerce the
+reference. The string value will be of the form C<SCALAR(0x93339e8)>, and the
+numeric value will be the C<0x93339e8> portion. This value encodes the type of
 reference (in this case, C<SCALAR>) and the location in memory of the
 reference.
 
 =begin sidebar
 
-Perl does not offer native access to memory locations.  The address of the
-reference is a value used as a mostly-unique identifier, as a reference does
-not necessarily have a name.  Unlike pointers in a language such as C, you
-cannot modify the address or treat it as an address into memory.
-
+Perl does not offer native access to memory locations. The address of the
+reference is a value used as an identifier. Unlike pointers in a language such
+as C, you cannot modify the address or treat it as an address into memory.
 These addresses are only I<mostly> unique because Perl may reuse storage
-locations if its garbage collector has reclaimed an unreferenced reference.
+locations as it reclaims unused memory.
 
 =end sidebar
 
-=head3 Array References
+=head2 Array References
 
 Z<array_references>
 
 X<arrays; references>
 X<references; arrays>
 
-You can also create references to arrays, or I<array references>.  This is
-useful for several reasons:
+I<Array references> are useful in several circumstances:
 
 =over 4
 
@@ -152,7 +143,7 @@ useful for several reasons:
 
 =back
 
-To take a reference to a declared array, use the reference operator:
+Use the reference operator to create a reference to a declared array:
 
 =begin programlisting
 
@@ -161,11 +152,9 @@ To take a reference to a declared array, use the reference operator:
 
 =end programlisting
 
-Now C<$cards_ref> contains a reference to the array.  Any modifications made
-through C<$cards_ref> will modify C<@cards> and vice versa.
-
-You may access the entire array as a whole with the C<@> sigil, whether to
-flatten the array into a list or count the number of elements it contains:
+Any modifications made through C<$cards_ref> will modify C<@cards> and vice
+versa. You may access the entire array as a whole with the C<@> sigil, whether
+to flatten the array into a list or count its elements:
 
 =begin programlisting
 
@@ -177,8 +166,7 @@ flatten the array into a list or count the number of elements it contains:
 X<<< C<< -E<gt> >>; dereferencing arrow >>>
 X<<< operators; C<< -E<gt> >> >>>
 
-You may also access individual elements by using the dereferencing arrow
-(C<< -> >>):
+Access individual elements by using the dereferencing arrow (C<< -> >>):
 
 =begin programlisting
 
@@ -188,18 +176,18 @@ You may also access individual elements by using the dereferencing arrow
 =end programlisting
 
 The arrow is necessary to distinguish between a scalar named C<$cards_ref> and
-an array named C<@cards_ref> from which you wish to access a single element.
+an array named C<@cards_ref>. Note the use of the scalar sigil (L<sigils>) to
+access a single element.
 
 =begin sidebar
 
-An alternate syntax is available, where you prepend another scalar sigil to the
-array reference.  It's shorter, if less readable, to write C<< my $first_card =
-B<$$cards_ref[0]>; >>.
+An alternate syntax prepends another scalar sigil to the array reference. It's
+shorter, if uglier, to write C<< my $first_card = B<$$cards_ref[0]>; >>.
 
 =end sidebar
 
-Slice an array through its reference with the curly-brace dereference grouping
-syntax:
+Use the curly-brace dereferencing syntax to slice (L<array_slices>) an array
+reference:
 
 =begin programlisting
 
@@ -207,14 +195,14 @@ syntax:
 
 =end programlisting
 
-In this case, you I<may> omit the curly braces, but the visual grouping they
-(and the whitespace) provide only helps readability in this case.
+You I<may> omit the curly braces, but their grouping often improves
+readability.
 
 X<references; anonymous arrays>
 X<arrays; anonymous>
 
-You may also create anonymous arrays in place without using named arrays.
-Surround a list of values or expressions with square brackets:
+To create an anonymous array--without using a declared array--surround a list
+of values with square brackets:
 
 =begin programlisting
 
@@ -223,9 +211,9 @@ Surround a list of values or expressions with square brackets:
 =end programlisting
 
 This array reference behaves the same as named array references, except that
-the anonymous array brackets I<always> create a new reference, while taking a
+the anonymous array brackets I<always> create a new reference. Taking a
 reference to a named array always refers to the I<same> array with regard to
-scoping.  That is to say:
+scoping. For example:
 
 =begin programlisting
 
@@ -249,18 +237,18 @@ scoping.  That is to say:
 
 =end programlisting
 
-... neither C<$sunday_ref> nor C<$monday_ref> contains a dessert.  Within the
+... neither C<$sunday_ref> nor C<$monday_ref> contains a dessert. Within the
 square braces used to create the anonymous array, list context flattens the
-C<@meals> array.
+C<@meals> array into a list unconnected to C<@meals>.
 
-=head3 Hash References
+=head2 Hash References
 
 Z<hash_references>
 
 X<hashes; references>
 X<references; hashes>
 
-To create a I<hash reference>, use the reference operator on a named hash:
+Use the reference operator on a named hash to create a I<hash reference>:
 
 =begin programlisting
 
@@ -287,8 +275,8 @@ sigil C<%>:
 
 =end programlisting
 
-You may access individual values of the hash (to store, delete, check the
-existence of, or retrieve) by using the dereferencing arrow:
+Access individual values of the hash (to store, delete, check the existence of,
+or retrieve) by using the dereferencing arrow:
 
 =begin programlisting
 
@@ -303,24 +291,20 @@ existence of, or retrieve) by using the dereferencing arrow:
 =begin sidebar
 
 As with array references, you may eschew the dereferencing arrow for a
-prepended scalar sigil: C<$$colors_ref{$color}>, though the arrow is often much
-clearer.
+prepended scalar sigil, such as C<$$colors_ref{$color}>.
 
 =end sidebar
 
-You may also use hash slices by reference:
+Use the array sigil (C<@>) and disambiguation braces to slice a hash reference:
 
 =begin programlisting
 
-    my @colors = qw( red blue green );
+    my @colors  = qw( red blue green );
     my @colores = B<@{ $colors_ref }{@colors}>;
 
 =end programlisting
 
-Note the use of curly brackets to denote a hash indexing operation and the use
-of the array sigil to denote a list operation on the reference.
-
-You may create anonymous hashes in place with curly braces:
+Create anonymous hashes in place with curly braces:
 
 =begin programlisting
 
@@ -338,13 +322,13 @@ execution.
 
 =begin sidebar
 
-A common novice typo is to assign an anonymous hash to a standard hash.  This
-produces a warning about an odd number of elements in the hash.  Use
-parentheses for a named hash and curly brackets for an anonymous hash.
+The common novice error of assigning an anonymous hash to a standard hash
+produces a warning about an odd number of elements in the hash. Use parentheses
+for a named hash and curly brackets for an anonymous hash.
 
 =end sidebar
 
-=head3 Function References
+=head2 Function References
 
 Z<function_references>
 
@@ -352,11 +336,10 @@ X<functions; references>
 X<references; functions>
 X<functions; first-class>
 
-Perl 5 supports I<first-class functions>.  A function is a data type just as is
-an array or hash, at least when you use I<function references>.  This feature
-enables many advanced features (L<closures>).  As with other data types, you
-may create a function reference by using the reference operator on the name of
-a function:
+Perl 5 supports I<first-class functions> in that a function is a data type just
+as is an array or hash. This is most obvious with I<function references>, and
+enables many advanced features (L<closures>). Create a function reference by
+using the reference operator on the name of a function:
 
 =begin programlisting
 
@@ -373,7 +356,7 @@ X<C<&>; sigil>
 Without the I<function sigil> (C<&>), you will take a reference to the
 function's return value or values.
 
-You may also create anonymous functions:
+Create anonymous functions with the bare C<sub> keyword:
 
 =begin programlisting
 
@@ -384,10 +367,9 @@ You may also create anonymous functions:
 X<builtins; C<sub>>
 
 The use of the C<sub> builtin I<without> a name compiles the function as
-normal, but does not install it in the current namespace.  The only way to
-access this function is through the reference.
-
-You may invoke the function reference with the dereferencing arrow:
+normal, but does not install it in the current namespace. The only way to
+access this function is via the reference returned from C<sub>. Invoke the
+function reference with the dereferencing arrow:
 
 =begin programlisting
 
@@ -398,8 +380,8 @@ You may invoke the function reference with the dereferencing arrow:
 
 Think of the empty parentheses as denoting an invocation dereferencing
 operation in the same way that square brackets indicate an indexed lookup and
-curly brackets cause a hash lookup.  You may pass arguments to the function
-within the parentheses:
+curly brackets cause a hash lookup. Pass arguments to the function within the
+parentheses:
 
 =begin programlisting
 
@@ -407,8 +389,8 @@ within the parentheses:
 
 =end programlisting
 
-You may also use function references as methods with objects (L<moose>); this
-is most useful when you've already looked up the method:
+You may also use function references as methods with objects (L<moose>). This
+is useful when you've already looked up the method (L<reflection>):
 
 =begin programlisting
 
@@ -419,25 +401,23 @@ is most useful when you've already looked up the method:
 
 =begin sidebar
 
-You may see an alternate invocation syntax for function references which uses
-the function sigil (C<&>) instead of the dereferencing arrow.  Avoid this
-syntax; it has implications for implicit argument passing.
+An alternate invocation syntax for function references uses the function sigil
+(C<&>) instead of the dereferencing arrow. Avoid this syntax; it has subtle
+implications for parsing and argument passing.
 
 =end sidebar
 
-=head3 Filehandle References
+=head2 Filehandle References
 
 Z<lexical_filehandles>
 
 X<filehandles; references>
 X<references; filehandles>
 
-Filehandles can be references as well.  When you use C<open>'s (and
-C<opendir>'s) lexical filehandle form, you deal with filehandle references.
-Stringifying this filehandle produces something of the form C<GLOB(0x8bda880)>.
-
-Internally, these filehandles are objects of the class C<IO::Handle>.  When you
-load that module, you can call methods on filehandles:
+When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
+with filehandle references. Internally, these filehandles are objects of the
+class C<IO::Handle>.  When you load that module, you can call methods on
+filehandles:
 
 =begin programlisting
 
@@ -462,25 +442,22 @@ You may see old code which takes references to typeglobs, such as:
 =end programlisting
 
 This idiom predates lexical filehandles, introduced as part of Perl 5.6.0 in
-March 2000N<... so you know how old that code is.>.  You may still use the
-reference operator on typeglobs to take references to package-global
-filehandles such as C<STDIN>, C<STDOUT>, C<STDERR>, or C<DATA>--but these
-represent global data anyhow.  For all other filehandles, prefer lexical
-filehandles.
+March 2000. You may still use the reference operator on typeglobs to take
+references to package-global filehandles such as C<STDIN>, C<STDOUT>,
+C<STDERR>, or C<DATA>--but these are all global names anyhow.
 
-Besides the benefit of using lexical scope instead of package or global scope,
-lexical filehandles allow you to manage the lifespan of filehandles.  This is a
-nice feature of how Perl 5 manages memory and scopes.
+Prefer lexical filehandles when possible. With the benefit of explicit scoping,
+lexical filehandles allow you to manage the lifespan of filehandles. This is a
+nice feature of how Perl 5 manages memory.
 
-=head3 Reference Counts
+=head2 Reference Counts
 
 Z<reference_counts>
 
 X<lexicals; lifecycle>
 
-How does Perl know when it can safely release the memory for a variable and
-when it needs to keep it around?  How does Perl know when it's safe to close
-the file opened in this inner scope:
+How does Perl know when it can safely release the memory for a variable? How
+does Perl know when it's safe to close the file opened in this inner scope:
 
 =begin programlisting
 
@@ -504,31 +481,31 @@ the file opened in this inner scope:
 X<references; reference counting>
 
 Perl 5 uses a memory management technique known as I<reference counting>.
-Every value in the program has an attached counter.  Perl increases this
-counter every time something takes a reference to the value, whether implicitly
-or explicitly.  Perl decreases that counter every time a reference goes away.
-When the counter reaches zero, Perl can safely recycle that value.
+Every Perl value has a counter attached. Perl increases this counter every time
+something takes a reference to the value, whether implicitly or explicitly.
+Perl decreases that counter every time a reference goes away. When the counter
+reaches zero, Perl can safely recycle that value.
 
-Within the inner block in the example, there's one C<$fh>.  (Multiple lines in
-the source code refer to it, but there's only one I<reference> to it; C<$fh>
-itself.)  C<$fh> is only in scope in the block and does not get assigned to
-anything outside of the block, so when the block ends, its reference count
-reaches zero.  The recycling of C<$fh> calls an implicit C<close()> method on
-the filehandle, which closes the file.
+Within the inner block in the example, there's one C<$fh>. (Multiple lines in
+the source code refer to it, but only one variable refers to it: C<$fh>.)
+C<$fh> is only in scope in the block. Its value never leaves the block. When
+execution reaches the end of the block, Perl recycles the variable C<$fh> and
+decreases the reference count of the contained filehandle. The filehandle's
+reference count reaches zero, so Perl recycles it to reclaim memory, and calls
+C<close()> implicitly.
 
-You don't have to understand the details of how all of this works.  You only
+You don't have to understand the details of how all of this works. You only
 need to understand that your actions in taking references and passing them
-around affect how Perl manages memory--with one caveat
-(L<circular_references>).
+around affect how Perl manages memory (see L<circular_references>).
 
-=head3 References and Functions
+=head2 References and Functions
 
 When you use references as arguments to functions, document your intent
-carefully.  Modifying the values of a reference from within a function may
-surprise calling code, which expects no modifications.
+carefully. Modifying the values of a reference from within a function may
+surprise the calling code, which expects no modifications.
 
-If you need to modify the contents of a reference without affecting the
-reference itself, copy its values to a new variable:
+To modify the contents of a reference without affecting the reference itself,
+copy its values to a new variable:
 
 =begin programlisting
 
@@ -541,6 +518,6 @@ X<C<Storable>>
 X<C<dclone()>>
 
 This is only necessary in a few cases, but explicit cloning helps avoid nasty
-surprises for the calling code.  If your references are more complex--if you
-use nested data structures--consider the use of the core module C<Storable> and
-its C<dclone> (I<deep cloning>) function.
+surprises for the calling code. If you use nested data structures or other
+complex references, consider the use of the core module C<Storable> and its
+C<dclone> (I<deep cloning>) function.
