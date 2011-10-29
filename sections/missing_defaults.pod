@@ -36,7 +36,7 @@ offers the possibility of subtle errors of action at a distance--or, worse, the
 possibility of poorly-validated user input manipulating internal-only data for
 malicious purposes.
 
-Requiring variable declarations helps to prevent typos in variable names and
+Requiring variable declarations helps to detect typos in variable names and
 encourages proper scoping of lexical variables.  It's much easier to see the
 intended scope of a lexical variable if all variables have C<my> or C<our>
 declarations in the appropriate scope.
