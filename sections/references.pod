@@ -414,10 +414,12 @@ Z<lexical_filehandles>
 X<filehandles; references>
 X<references; filehandles>
 
-When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
-with filehandle references. Internally, these filehandles are objects of the
-class C<IO::Handle>.  When you load that module, you can call methods on
-filehandles:
+When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you
+deal with filehandle references. Internally, these filehandles are
+objects of the class C<IO::Handle> (as of Perl 5.12, they are
+C<IO::File> objects).  When you load that module (as of Perl 5.14,
+C<IO::File> will be loaded for you automatically), you can call
+methods on filehandles:
 
 =begin programlisting
 
