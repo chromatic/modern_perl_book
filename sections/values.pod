@@ -285,7 +285,7 @@ X<UTF-8>
 X<ASCII>
 X<Latin-1>
 
-A Unicode string is a sequence of octets which represent a sequence of
+A Unicode string is a sequence of octets which represents a sequence of
 characters. A I<Unicode encoding> maps octet sequences to characters. Some
 encodings, such as UTF-8, can encode all of the characters in the Unicode
 character set. Other encodings represent a subset of Unicode characters. For
