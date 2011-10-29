@@ -663,8 +663,8 @@ defined value (anything other than C<undef>):
 
     my $status = 'suffering from a cold';
 
-    say B<defined> $status;
-    say B<defined> undef;
+    say B<defined> $status;  # 1, which is true
+    say B<defined> undef;    # an empty string, which is false
 
 =end programlisting
 
