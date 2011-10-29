@@ -298,7 +298,7 @@ X<IO layers>
 
 When you tell Perl that a specific filehandle (L<files>) works with encoded
 text, Perl will convert the incoming octets to Unicode strings automatically.
-To do this, add a IO layer to the mode of the C<open> builtin. An I<IO layer>
+To do this, add an IO layer to the mode of the C<open> builtin. An I<IO layer>
 wraps around input or output and converts the data. In this case, the C<:utf8>
 layer decodes UTF-8 data:
 
