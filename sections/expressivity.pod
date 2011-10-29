@@ -37,7 +37,7 @@ comfortable with them.
 Learning Perl is like learning a new spoken language. You'll learn a few words,
 string together sentences, and soon will enjoy simple conversations.  Mastery
 comes with practice of reading and writing. You don't have to understand every
-details of Perl to be productive, but the principles in this chapter are vital
+detail of Perl to be productive, but the principles in this chapter are vital
 to your growth as a programmer.
 
 =end sidebar
@@ -106,5 +106,5 @@ Experience writing Perl will help you to focus on I<what> you want to do rather
 than I<how> to do it. Even so, Perl will happily run simple programs. You can
 design and refine your programs for clarity, expressivity, reuse, and
 maintainability, in part or in whole. Take advantage of this flexibility and
-pragmatism: far better to accomplish your task effectively now than to write a
+pragmatism: it's far better to accomplish your task effectively now than to write a
 conceptually pure and beautiful program next year.
