@@ -966,8 +966,8 @@ original:
 =begin programlisting
 
     my $status     = 'I am hungry for pie.';
-    my $newstatus  = $status =~ s/pie/cake/;
-    my $statuscopy = $status =~ s/liver and onions/bratwurst/;
+    my $newstatus  = $status =~ s/pie/cake/r;
+    my $statuscopy = $status =~ s/liver and onions/bratwurst/r;
 
     is( $status, 'I am hungry for pie.',
         'original string should be unmodified' );
