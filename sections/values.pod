@@ -374,7 +374,7 @@ you to use Unicode characters in strings and identifiers:
 
     sub E<pound>_to_E<yen> { ... }
 
-    my $pounds = E<pound>_to_E<yen>('1000E<pound>');
+    my $yen = E<pound>_to_E<yen>('1000E<pound>');
 
 =end programlisting
 
