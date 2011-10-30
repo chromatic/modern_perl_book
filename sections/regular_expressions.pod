@@ -988,7 +988,7 @@ whitespace and comments. The results are often much more readable:
 =begin programlisting
 
     my $attr_re = qr{
-        ^                     # start of line
+        \A                    # start of line
 
         # miscellany
         (?:
