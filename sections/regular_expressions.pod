@@ -843,7 +843,7 @@ sizes; you may not use quantifiers:
 
 =begin programlisting
 
-    my $middle_cat = qr/(?<!^)cat/;
+    my $middle_cat = qr/(?<!\A)cat/;
 
 =end programlisting
 
@@ -938,10 +938,10 @@ character (C<->):
 X<C</m>; multiline regex modifier>
 X<regex; C</m> modifier>
 X<regex; multiline>
-X<C<^>; start of line regex metacharacter>
-X<C<$>; end of line regex metacharacter>
+X<C<\A>; start of line regex metacharacter>
+X<C<\Z>; end of line regex metacharacter>
 
-The multiline operator, C</m>, allows the C<^> and C<$> anchors to match at any
+The multiline operator, C</m>, allows the C<\A> and C<\Z> anchors to match at any
 newline embedded within the string.
 
 X<C</s>; single line regex modifier>
