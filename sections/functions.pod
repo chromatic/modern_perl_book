@@ -561,7 +561,7 @@ functions.
 X<C<Want>>
 X<C<Contextual::Return>>
 
-robin Houston's C<Want> and Damian Conway's C<Contextual::Return> distributions
+Robin Houston's C<Want> and Damian Conway's C<Contextual::Return> distributions
 from the CPAN offer many possibilities for writing powerful and usable
 context-aware interfaces.
 
