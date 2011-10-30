@@ -17,7 +17,7 @@ Z<lexical_scope>
 X<lexical scope>
 X<scope; lexical>
 
-L<Lexical scope> is the scope visible as you I<read> a program. The Perl
+I<Lexical scope> is the scope visible as you I<read> a program. The Perl
 compiler resolves this scope during compilation. A block delimited by curly
 braces creates a new scope, whether a bare block, the block of a loop
 construct, the block of a C<sub> declaration, an C<eval> block, or any other
