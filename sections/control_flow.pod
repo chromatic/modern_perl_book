@@ -769,7 +769,7 @@ file.
 
 X<builtins; C<chomp>>
 
-Use the C<chomp> builtin remove line-ending characters from each line. May
+Use the C<chomp> builtin to remove line-ending characters from each line. Many
 novices forget this.
 
 =end sidebar
