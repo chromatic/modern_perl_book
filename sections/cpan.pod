@@ -8,7 +8,7 @@ world. If you have a problem to solve, chances are someone's already written--an
 
 X<CPAN>
 
-Modern Perl programming makes heavy use of the CPAN (U<http://www.cpan.org/>)
+Modern Perl programming makes heavy use of the CPAN (U<http://www.cpan.org/>).
 The Comprehensive Perl Archive Network is an uploading and mirroring system for
 redistributable, reusable Perl code. It's one of--if not I<the>--largest
 archives of libraries of code in the world. The CPAN offers libraries for
@@ -149,6 +149,6 @@ two distributions, though C<App::local::lib::helper> can simplify.  See
 U<http://search.cpan.org/perldoc?local::lib> and
 U<http://search.cpan.org/perldoc?App::local::lib::helper> for more details.
 
-All three distributions projects tend to assume a Unix-like environment (such
+All three projects tend to assume a Unix-like environment (such
 as a GNU/Linux distribution or even Mac OS X). Windows users, see the Padre
 all-in-one download (U<http://padre.perlide.org/download.html>).
