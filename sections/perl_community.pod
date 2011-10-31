@@ -12,8 +12,8 @@ novice questions and get accurate and helpful answers. See
 U<http://learn.perl.org/faq/beginners.html>.
 
 The home of Perl development is U<http://dev.perl.org/>, which links to
-relevant resources for developing core development of Perl 5, Perl 6N<Though
-see also U<http://www.perl6.org/>>, and even Perl 1.
+relevant resources for core development of Perl 5 and Perl 6N<Though
+see also U<http://www.perl6.org/>>.
 
 X<perl.com>
 X<websites; perl.com>

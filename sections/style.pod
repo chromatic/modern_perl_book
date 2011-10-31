@@ -125,7 +125,7 @@ those solutions. Take advantage of this force multiplier. Search the CPAN first
 for a solution or partial solution to your problem. Invest your research time;
 it will pay off.
 
-If you find a bug, report it. Patch it, if possible. Fix a typo. As for a
+If you find a bug, report it. Patch it, if possible. Fix a typo. Ask for a
 feature. Say "Thank you!" We are better together than we are separately. We are
 powerful and effective when we reuse code.
 
