@@ -14,7 +14,7 @@ your programs.  These values are data--your aunt's name and address, the
 distance between your office and a golf course on the moon, or the weight of
 all cookies you've eaten in the past year. Within your program, the rules
 regarding the format of that data are often strict. Effective programs need
-effective (simple, fast, most compact, most efficnet) ways of representing
+effective (simple, fast, most compact, most efficient) ways of representing
 their data.
 
 =head2 Strings
@@ -280,7 +280,7 @@ X<UTF-8>
 X<ASCII>
 X<Latin-1>
 
-A Unicode string is a sequence of octets which represent a sequence of
+A Unicode string is a sequence of octets which represents a sequence of
 characters. A I<Unicode encoding> maps octet sequences to characters. Some
 encodings, such as UTF-8, can encode all of the characters in the Unicode
 character set. Other encodings represent a subset of Unicode characters. For
@@ -298,7 +298,7 @@ X<IO layers>
 
 When you tell Perl that a specific filehandle (L<files>) works with encoded
 text, Perl will convert the incoming octets to Unicode strings automatically.
-To do this, add a IO layer to the mode of the C<open> builtin. An I<IO layer>
+To do this, add an IO layer to the mode of the C<open> builtin. An I<IO layer>
 wraps around input or output and converts the data. In this case, the C<:utf8>
 layer decodes UTF-8 data:
 
@@ -658,8 +658,8 @@ defined value (anything other than C<undef>):
 
     my $status = 'suffering from a cold';
 
-    say B<defined> $status;
-    say B<defined> undef;
+    say B<defined> $status;  # 1, which is true
+    say B<defined> undef;    # an empty string, which is false
 
 =end programlisting
 
