@@ -128,7 +128,7 @@ contain. Both of these calls to C<find_chores()> occur in list context:
 
 The latter example often surprises novice programmers who expect scalar context
 for the function call. Initializing a hash (L<hashes>) with a list of values
-imposes list context on C<expensive_operation>.
+imposes list context on C<find_chores>.
 
 X<builtins; C<scalar>>
 
@@ -197,7 +197,7 @@ X<builtins; C<==>>
 
 The C<eq> operator treats its operands as strings by enforcing I<string
 context> on them.  The C<==> operator imposes I<numeric context>. In numeric
-context, both strings evaluate to C<0> (L<numeric_coercion>).
+context, both strings evaluate to numbers C<0> (L<numeric_coercion>).
 
 X<boolean context>
 X<context; boolean>
