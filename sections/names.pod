@@ -42,7 +42,7 @@ X<symbolic lookups>
 I<Names exist primarily for the benefit of the programmer>. These rules apply
 only to literal names which appear as-is in your source code, such as C<sub
 fetch_pie> or C<my $waffleiron>. Only Perl's parser enforces the rules about
-indentifier names.
+identifier names.
 
 Perl's dynamic nature allows you to refer to entities with names generated at
 runtime or provided as input to a program. These I<symbolic lookups> provide

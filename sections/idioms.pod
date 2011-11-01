@@ -464,11 +464,7 @@ This technique works on other in-place modification operators:
 Perl 5.14 added the non-destructive substitution modifier C</r>, so that you
 can write:
 
-=begin programlisting
-
-    my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;
-
-=end programlisting
+    C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>
 
 =end tip
 

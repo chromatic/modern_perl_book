@@ -78,7 +78,7 @@ action when the conditional expression evaluates to I<false>:
 
 =begin programlisting
 
-    say "You're no Bob!" unless $name eq 'Bob';
+    say "You're not Bob!" unless $name eq 'Bob';
 
 =end programlisting
 

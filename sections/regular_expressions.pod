@@ -226,7 +226,7 @@ X<quantifiers; greedy>
 
 The C<+> and C<*> quantifiers are I<greedy>, as they try to match as much of
 the input string as possible. This is particularly pernicious. Consider a
-naE<iuml> use the "zero or more non-newline characters" pattern of C<.*>:
+naE<iuml>ve use of the "zero or more non-newline characters" pattern of C<.*>:
 
 =begin programlisting
 

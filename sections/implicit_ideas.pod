@@ -47,7 +47,7 @@ from C<$_>. These two lines of code are equivalent:
 
 C<$_> has the same function in Perl as the pronoun I<it> in English. Read the
 first line as "C<chomp> I<it>" and the second as "C<chomp>". Perl understands
-what you mean when you say "C<chomp>"; Perl will always chomp I<it>.  I<it>.
+what you mean when you say "C<chomp>"; Perl will always chomp I<it>.
 
 X<builtins; C<say>>
 X<builtins; C<print>>
@@ -95,7 +95,7 @@ provide an alternative.
 
 X<builtins; C<for>>
 
-Perl's looping directives (L<looping_directives>) default to C<$_> is the
+Perl's looping directives (L<looping_directives>) default to using C<$_> as the
 iteration variable. Consider C<for> iterating over a list:
 
 =begin programlisting
