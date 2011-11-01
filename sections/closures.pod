@@ -84,8 +84,6 @@ lexical environment:
 
 =end programlisting
 
-=begin sidebar
-
 Because C<make_iterator()> does not return these lexicals by value or by
 reference, no other Perl code besides the closure can access them. They're
 encapsulated as effectively as any other lexical encapsulation, although any
