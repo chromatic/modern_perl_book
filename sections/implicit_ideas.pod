@@ -95,7 +95,7 @@ provide an alternative.
 
 X<builtins; C<for>>
 
-Perl's looping directives (L<looping_directives>) default to C<$_> is the
+Perl's looping directives (L<looping_directives>) default to using C<$_> as the
 iteration variable. Consider C<for> iterating over a list:
 
 =begin programlisting
