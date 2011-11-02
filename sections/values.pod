@@ -567,8 +567,8 @@ X<C<0>>
 X<C<0x>>
 
 The emboldened characters are the numeric prefixes for binary, octal, and hex
-notation respectively. Be aware that a leading zero I<always> indicates octal
-mode.
+notation respectively. Be aware that a leading zero on an integer I<always>
+indicates octal mode.
 
 X<numbers; underscore separator>
 X<underscore>
