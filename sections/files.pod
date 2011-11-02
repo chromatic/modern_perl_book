@@ -65,8 +65,6 @@ Z<file_modes_table>
 
 =headrow
 
-=row
-
 =cell Symbols
 
 =cell Explanation
