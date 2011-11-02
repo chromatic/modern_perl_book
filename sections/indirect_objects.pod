@@ -109,7 +109,7 @@ For the limited case of filehandle operations, the dative use is so prevalent
 that you can use the indirect invocation approach if you surround your intended
 invocant with curly brackets. If you're using Perl 5.14 (or if you load
 C<IO::File> or C<IO::Handle>), you can use methods on lexical
-filehandlesN<<Almost no one does this for C<print> and C<say> though.>>.
+filehandlesN<Almost no one does this for C<print> and C<say> though.>.
 
 X<CPAN; C<Perl::Critic>>
 X<CPAN; C<Perl::Critic::Policy::Dynamic::NoIndirect>>
