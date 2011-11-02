@@ -88,7 +88,7 @@ To install a distribution within the client:
     $ B<cpan>
     cpan[1]> B<install Modern::Perl>
 
-=end
+=end screen
 
 ... or to install directly from the command line:
 
