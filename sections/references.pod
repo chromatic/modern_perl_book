@@ -217,7 +217,7 @@ scoping. For example:
 
 =begin programlisting
 
-    my @meals      = qw( waffles sandwiches pizza );
+    my @meals      = qw( soup sandwiches pizza );
     my $sunday_ref = \@meals;
     my $monday_ref = \@meals;
 
@@ -229,7 +229,7 @@ scoping. For example:
 
 =begin programlisting
 
-    my @meals      = qw( waffles sandwiches pizza );
+    my @meals      = qw( soup sandwiches pizza );
     my $sunday_ref = [ @meals ];
     my $monday_ref = [ @meals ];
 
