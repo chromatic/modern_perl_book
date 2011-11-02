@@ -39,7 +39,7 @@ The first example displays the documentation embedded within the C<List::Util>
 module. The second example displays a pure documentation file, in this case the
 table of contents of the core documentation. The third example displays a pure
 documentation file included as part of a CPAN distribution (L<moose>).
-C<perldoc> hides these details; here's no distinction between reading the
+C<perldoc> hides these details; there's no distinction between reading the
 documentation for a core library such as C<Data::Dumper> or one installed from
 the CPAN.
 
