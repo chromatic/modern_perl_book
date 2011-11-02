@@ -199,12 +199,8 @@ pragma, but C<parent> superseded C<base> in Perl 5.10.>:
 
 =end programlisting
 
-=begin programlisting
-
 Moose has its own metamodel which stores extended inheritance information; this
 offers additional features.
-
-=end programlisting
 
 X<multiple inheritance>
 X<OO; inheritance>
