@@ -116,7 +116,7 @@ that everything passed or the specifics of any failures. The core module
 C<Test::Harness> interprets TAP, and its related program C<prove> runs tests
 and displays only the most pertinent information:
 
-=begin programlisting
+=begin screen
 
     $ B<prove truth_values.t>
     truth_values.t .. 1/?
@@ -134,7 +134,7 @@ and displays only the most pertinent information:
     truth_values.t (Wstat: 512 Tests: 4 Failed: 2)
       Failed tests:  2-3
 
-=end programlisting
+=end screen
 
 That's a lot of output to display what is already obvious: the second and third
 tests fail because zero and the empty string evaluate to false.  It's easy to

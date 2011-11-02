@@ -621,7 +621,7 @@ To prevent someone from accidentally adding a hash key you did not intend
 (whether as a typo or from untrusted user input), use the C<lock_keys()>
 function to restrict the hash to its current set of keys. Any attempt to add a
 new key to the hash will raise an exception. This is lax security suitable only
-for preventing accidents; anyone can use theC<unlock_keys()> function to remove
+for preventing accidents; anyone can use the C<unlock_keys()> function to remove
 this protection.
 
 Similarly you can lock or unlock the existing value for a given key in the hash

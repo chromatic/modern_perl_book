@@ -8,7 +8,7 @@ program:
 
 =begin programlisting
 
-    #! perl
+    #!/usr/bin/perl
 
     use Modern::Perl;
 
