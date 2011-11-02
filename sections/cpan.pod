@@ -69,12 +69,11 @@ X<CPAN; C<CPAN.pm>>
 X<CPAN; C<CPANPLUS>>
 
 Modern Perl installations include two clients to connect to, search, download,
-build, test, and install CPAN distributions, CPAN.pm and CPANPLUS. A newer
-alternative is also available, though it is not part of the core distribution.
-For the most part, each of these clients is equivalent for basic installation.
-This book recommends the use of CPAN.pm solely due to its ubiquity. With a
-recent version (as of this writing, 1.9800 is the latest stable release),
-module installation is reasonably easy. Start the client with:
+build, test, and install CPAN distributions, CPAN.pm and CPANPLUS. For the most
+part, each of these clients is equivalent for basic installation. This book
+recommends the use of CPAN.pm solely due to its ubiquity. With a recent version
+(as of this writing, 1.9800 is the latest stable release), module installation
+is reasonably easy. Start the client with:
 
 =begin screen
 
@@ -82,7 +81,16 @@ module installation is reasonably easy. Start the client with:
 
 =end screen
 
-To install a distribution:
+To install a distribution within the client:
+
+=begin screen
+
+    $ B<cpan>
+    cpan[1]> B<install Modern::Perl>
+
+=end
+
+... or to install directly from the command line:
 
 =begin screen
 
