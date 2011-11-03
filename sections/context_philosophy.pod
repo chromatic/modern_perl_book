@@ -197,7 +197,7 @@ X<builtins; C<==>>
 
 The C<eq> operator treats its operands as strings by enforcing I<string
 context> on them.  The C<==> operator imposes I<numeric context>. In numeric
-context, both strings evaluate to numbers C<0> (L<numeric_coercion>).
+context, both strings evaluate to C<0> (L<numeric_coercion>).
 
 X<boolean context>
 X<context; boolean>
