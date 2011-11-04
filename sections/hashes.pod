@@ -7,7 +7,7 @@ X<hashes>
 A I<hash> is a first-class Perl data structure which associates string keys
 with scalar values. In the same way that the name of a variable corresponds to
 a storage location, a key in a hash refers to a value. Think of a hash like you
-would a telephone book: use your friend's name to look up her number. Other
+would a telephone book: use your friend's name to look up their number. Other
 languages call hashes I<tables>, I<associative arrays>, I<dictionaries>, or
 I<maps>.
 
