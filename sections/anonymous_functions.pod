@@ -22,12 +22,13 @@ input with behavior:
     (
         plus     => \&add_two_numbers,
         minus    => \&subtract_two_numbers,
+        times    => \&multiply_two_numbers,
         # ... and so on
     );
 
     sub add_two_numbers      { $_[0] + $_[1] }
-
     sub subtract_two_numbers { $_[0] - $_[1] }
+    sub multiply_two_numbers { $_[0] * $_[1] }
 
     sub dispatch
     {

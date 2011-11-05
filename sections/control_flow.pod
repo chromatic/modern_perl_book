@@ -346,6 +346,7 @@ using an undefined value might raise a warning:
 
 =begin programlisting
 
+    my $barbeque;
     if (defined $barbeque and $barbeque eq 'pork shoulder') { ... }
 
 =end programlisting
