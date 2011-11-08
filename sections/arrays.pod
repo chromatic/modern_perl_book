@@ -267,7 +267,7 @@ X<builtins; C<shift>>
 X<builtins; C<unshift>>
 
 Similarly, C<unshift> and C<shift> add elements to and remove an element from
-the start of an array:
+the start of an array, respectively:
 
 =begin programlisting
 

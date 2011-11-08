@@ -29,7 +29,7 @@ anything could possibly change them out from under you, you'd have to write
 lots of extra defensive code.
 
 Yet sometimes it's useful to modify values in place. If you want to pass a hash
-full of data to a function to modify, creating and returning a new hash for
+full of data to a function to modify it, creating and returning a new hash for
 each change could be troublesome (to say nothing of inefficient).
 
 X<references>
