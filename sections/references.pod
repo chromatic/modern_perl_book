@@ -82,7 +82,7 @@ dereferencing:
 
 =end programlisting
 
-The double scalar sigil dereferences a scalar reference.
+The double scalar sigil (C<$$>) dereferences a scalar reference.
 
 =begin sidebar
 

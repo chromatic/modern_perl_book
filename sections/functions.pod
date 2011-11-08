@@ -133,8 +133,8 @@ code uses C<shift> or list unpacking:
 
 =begin sidebar
 
-Remember that the array builtins use C<@_> as the default operand. Take
-advantage of this idiom.
+Remember that the array builtins use C<@_> as the default operand I<within
+functions>. Take advantage of this idiom.
 
 =end sidebar
 
