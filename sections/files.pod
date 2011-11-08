@@ -189,7 +189,7 @@ words, this is shorthand for:
 
 =end programlisting
 
-=begin tip Why use C<while> and not C<for>?
+=begin tip Why use C<while> and not C<for>? FIXME: C<> appears literally
 
 C<for> imposes list context on its operand, which reads the entire file before
 processing any of it. This may use a lot of memory for large files.
@@ -556,11 +556,11 @@ value. C<perldoc -f -X> lists all other file tests; the most popular are:
 X<C<-d>; directory test operator>
 X<C<-f>; file test operator>
 X<C<-r>; readable file test operator>
-X<C<-z>; non-empty file test operator>
+X<C<-s>; non-empty file test operator>
 X<operators; C<-d>>
 X<operators; C<-f>>
 X<operators; C<-r>>
-X<operators; C<-z>>
+X<operators; C<-s>>
 
 =over 4
 
@@ -571,7 +571,7 @@ X<operators; C<-z>>
 =item C<-r>, which returns a true value if the file permissions of its operand
 permit reading by the current user
 
-=item C<-z>, which returns a true value if its operand is a non-empty file
+=item C<-s>, which returns a true value if its operand is a non-empty file
 
 =back
 
