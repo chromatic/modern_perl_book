@@ -36,12 +36,12 @@ A simple declaration of an array of arrays might be:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Commas are Free
 
 Perl allows but does not require the trailing comma so as to ease adding new
 elements to the list.
 
-=end sidebar
+=end tip
 
 =head2 Accessing Nested Data Structures
 
@@ -156,13 +156,6 @@ the honest intent to create missing elements in nested data structures and
 typos. The CPAN's C<autovivification> pragma (L<pragmas>) lets you disable
 autovivification in a lexical scope for specific types of operations.
 
-=begin sidebar
-
-You I<can> verify your expectations before dereferencing each level of a
-complex data structure, but the resulting code is often lengthy and tedious.
-
-=end sidebar
-
 You may wonder at the contradiction between taking advantage of
 autovivification while enabling C<strict>ures. The question is one of balance.
 Is it more convenient to catch errors which change the behavior of your program
@@ -175,6 +168,11 @@ the freedom to experiment. While testing and deploying, consider an increase of
 strictness to prevent unwanted side effects. Thanks to the lexical scoping of
 the C<strict> and C<autovivification> pragmas, you can enable these behaviors
 where and as necessary.
+
+You I<can> verify your expectations before dereferencing each level of a
+complex data structure, but the resulting code is often lengthy and tedious.
+It's better to avoid deeply nested data structures by revising your
+data model to provide better encapsulation.
 
 =head2 Debugging Nested Data Structures
 

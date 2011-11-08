@@ -102,15 +102,15 @@ U<http://github.com/chromatic/modern_perl_book/>>. See especially Gitpan
 (U<http://github.com/gitpan/>), which hosts Git repositories chronicling the
 complete history of every distribution on the CPAN.
 
-=begin sidebar
+=begin tip A Local Git Mirror
 
-X<C<Git::CPAN::Patch>>
+X<CPAN; C<Git::CPAN::Patch>>
+X<Champoux, Yanick>
 
-If GitPAN is out of date (updating it takes considerable time and resources),
-see Yanick Champoux's wonderful C<Git::CPAN::Patch> module.
+GitPAN receives infrequent updates. As an alternative, consider using Yanick
+Champoux's wonderful C<Git::CPAN::Patch> module.
 
-=end sidebar
-
+=end tip
 
 =head1 Events
 

@@ -32,15 +32,11 @@ Perl novices often may find certain constructs opaque. Many of the these idioms
 (L<idioms>) offer great (if subtle) power. It's okay to avoid them until you're
 comfortable with them.
 
-=begin sidebar
-
 Learning Perl is like learning a new spoken language. You'll learn a few words,
 string together sentences, and soon will enjoy simple conversations.  Mastery
 comes with practice of reading and writing. You don't have to understand every
 detail of Perl to be productive, but the principles in this chapter are vital
 to your growth as a programmer.
-
-=end sidebar
 
 As another design goal, Perl tries to avoid surprising experienced (Perl)
 programmers.  For example, adding two variables (C<$first_num + $second_num>)

@@ -84,7 +84,7 @@ as C<use Modern::Perl;>.>. This enables warnings in I<lexical> scopes and
 indicates that the code's authors intended that it should not normally produce
 warnings.
 
-=begin sidebar
+=begin tip Global Warnings Flags
 
 X<C<-W>; enable warnings command-line argument>
 X<command-line arguments; C<-W>>
@@ -95,7 +95,7 @@ The C<-W> flag enables warnings throughout the program unilaterally, regardless
 of lexical enabling or disabling through the C<warnings> pragma. The C<-X> flag
 I<disables> warnings throughout the program unilaterally.  Neither is common.
 
-=end sidebar
+=end tip
 
 X<C<$^W>>
 X<global variables; C<$^W>>

@@ -97,13 +97,13 @@ X<CPAN; C<Class::Load>>
 
 =end programlisting
 
-=begin sidebar
+=begin tip C<Module::Pluggable>
 
 X<CPAN; C<Module::Pluggable>>
 
 The CPAN module C<Module::Pluggable> is a great way to manage plugins.
 
-=end sidebar
+=end tip
 
 Override C<can()> in your own code if you use C<AUTOLOAD()>
 (L<autoload_drawbacks>).

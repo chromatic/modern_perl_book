@@ -226,16 +226,16 @@ the three exported functions. You may also export variables:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Simplified Exporting
 
 X<CPAN; C<Sub::Exporter>>
 
 The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
-without using package globals.  It also offers more powerful options.  However,
+without using package globals. It also offers more powerful options.  However,
 C<Exporter> can export variables, while C<Sub::Exporter> only exports
 functions.
 
-=end sidebar
+=end tip
 
 Export symbols by default by listing them in C<@EXPORT> instead of
 C<@EXPORT_OK>:

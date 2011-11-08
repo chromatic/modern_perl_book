@@ -60,14 +60,14 @@ The C<warnings> pragma has a lexical effect on the compile-time scope of its
 use or disabling (with C<no>). See C<perldoc perllexwarn> and C<perldoc
 warnings> for more details.
 
-=begin sidebar
+=begin tip Asking for More Help
 
 Combine C<use warnings> with C<use diagnostics> to receive expanded diagnostic
 messages for each warning present in your programs.  These expanded diagnostics
 come from C<perldoc perldiag>. This behavior is useful when learning Perl.
 Disable it in deployed software, as it can produce verbose output.
 
-=end sidebar
+=end tip
 
 =head2 C<IO::File> and C<IO::Handle>
 

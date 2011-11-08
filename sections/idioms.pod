@@ -69,12 +69,12 @@ if it were a single argument:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Hash or Hash Ref?
 
 I<Perl Best Practices> suggests passing hash references instead. This allows
 Perl to perform caller-side validation of the hash reference.
 
-=end sidebar
+=end tip
 
 This technique works well with C<import()> (L<importing>) or other methods;
 process as many parameters as you like before slurping the remainder into a
@@ -150,12 +150,12 @@ fashion--in this case, two-element anonymous arrays:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Know Your Data
 
 Reversing the hash I<in place> would work if no one had the same name.  This
 particular data set presents no such problem, but code defensively.
 
-=end sidebar
+=end tip
 
 C<sort> takes the list of anonymous arrays and compares their second elements
 (the names) as strings:
@@ -340,13 +340,13 @@ write a single line at the start of the module:
 If there's I<no> caller for the module, someone invoked it directly as a
 program (with C<perl path/to/Module.pm> instead of C<use Module;>).
 
-=begin sidebar
+=begin tip Improved Caller Inspection
 
 The eighth element of the list returned from C<caller> in list context is a
 true value if the call frame represents C<use> or C<require> and C<undef>
-otherwise. That's more accurate, but less common to see.
+otherwise. While that's more accurate, few people use it.
 
-=end sidebar
+=end tip
 
 =head2 Postfix Parameter Validation
 

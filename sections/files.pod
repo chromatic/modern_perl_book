@@ -248,14 +248,16 @@ Given a filehandle open for output, C<print> or C<say> to it:
 
 Note the lack of comma between the filehandle and the subsequent operand.
 
-=begin sidebar
+=begin tip Filehandle Disambiguation
+
+X<Conway, Damian>
 
 Damian Conway's I<Perl Best Practices> recommends enclosing the filehandle in
 curly braces as a habit.  This is necessary to disambiguate parsing of a
 filehandle contained in an aggregate variable, and it won't hurt anything in
 the simpler cases.
 
-=end sidebar
+=end tip
 
 X<C<$,>>
 X<global variables; C<$,>>

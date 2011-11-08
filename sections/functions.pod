@@ -27,12 +27,12 @@ will define it later:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Now You See Them
 
 Forward declarations are only useful in the two rare cases of attributes
 (L<attributes>) and autoloading (L<autoload>).
 
-=end sidebar
+=end tip
 
 =head1 Invoking Functions
 
@@ -49,12 +49,9 @@ function and pass an optional list of arguments:
 
 =end programlisting
 
-=begin sidebar
-
-These parentheses are not strictly necessary even with C<strict> enabled, but
-they provide clarity to human readers and Perl's parser.
-
-=end sidebar
+While these parentheses are not strictly necessary for these examples--even
+with C<strict> enabled--they provide clarity to human readers and Perl's
+parser. When in doubt, leave them in.
 
 Function arguments can be arbitrary expressions, including simple variables:
 
@@ -131,12 +128,12 @@ code uses C<shift> or list unpacking:
 
 =end programlisting
 
-=begin sidebar
+=begin tip The Implicit Them
 
 Remember that the array builtins use C<@_> as the default operand I<within
 functions>. Take advantage of this idiom.
 
-=end sidebar
+=end tip
 
 Assigning a scalar parameter from C<@_> requires C<shift>, indexed access to
 C<@_>, or lvalue list context parentheses. Otherwise, Perl 5 will happily
@@ -199,7 +196,7 @@ rest to another function:
 Use C<shift> when your function needs only a single parameter. Use list
 assignment when accessing multiple parameters.
 
-=begin sidebar
+=begin tip Real Function Signatures
 
 X<CPAN; C<signatures>>
 X<CPAN; C<Method::Signatures>>
@@ -210,7 +207,7 @@ The C<signatures>, C<Method::Signatures>, C<Method::Signatures::Simple>, and
 C<MooseX::Method::Signatures> CPAN modules offer more powerful parameter
 handling.
 
-=end sidebar
+=end tip
 
 =head2 Flattening
 
@@ -556,7 +553,7 @@ context. Yet remember that there exists no single best recommendation for the
 use C<wantarray>. Sometimes it's clearer to write separate and unambiguous
 functions.
 
-=begin sidebar
+=begin tip Putting it in Context
 
 X<C<Want>>
 X<C<Contextual::Return>>
@@ -565,7 +562,7 @@ Robin Houston's C<Want> and Damian Conway's C<Contextual::Return> distributions
 from the CPAN offer many possibilities for writing powerful and usable
 context-aware interfaces.
 
-=end sidebar
+=end tip
 
 =head2 Recursion
 
@@ -703,15 +700,6 @@ results. These recursive calls to C<elem_exists()>:
 ... are candidates for tail call elimination. This optimization would avoid
 returning to the current call and then returning to the parent call. Instead,
 it returns to the parent call directly.
-
-=begin sidebar
-
-X<CPAN; C<Sub::Call::Tail>>
-
-Yuval Kogman's experimental C<Sub::Call::Tail> can help with tail calls of
-non-recursive code.
-
-=end sidebar
 
 X<C<goto>>
 X<functions; C<goto>>

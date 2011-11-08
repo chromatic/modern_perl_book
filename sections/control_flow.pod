@@ -278,14 +278,8 @@ example:
 
 =end programlisting
 
-=begin sidebar
-
 The return value of C<ok()> (L<testing>) is the boolean value obtained by
-evaluating the first argument.
-
-=end sidebar
-
-This example prints:
+evaluating the first argument, so this code prints:
 
 =begin screen
 
@@ -377,17 +371,16 @@ C<undef>--evaluates to true in boolean context. A hash which contains any
 elements--even a key and a value of C<undef>--evaluates to a true value in
 boolean context.
 
-=begin sidebar
+=begin tip Greater Control Over Context
 
-X<C<Want>>
+X<CPAN; C<Want>>
 X<pragmas; C<overloading>>
 
-The C<Want> module available from the CPAN allows you to detect boolean context
-within your own functions.  The core C<overloading> pragma (L<overloading>)
-allows you to specify what your own data types produce when evaluated in
-various contexts.
+The C<Want> module from the CPAN allows you to detect boolean context within
+your own functions. The core C<overloading> pragma (L<overloading>) allows you
+to specify what your own data types produce when evaluated in various contexts.
 
-=end sidebar
+=end tip
 
 =head2 Looping Directives
 
@@ -787,14 +780,14 @@ contained only the character C<0>--would end the loop. The C<readline> (C<< <>
 >>) operator returns an undefined value only when it has reached the end of the
 file.
 
-=begin sidebar
+=begin tip C<chomp> Your Lines
 
 X<builtins; C<chomp>>
 
 Use the C<chomp> builtin to remove line-ending characters from each line. Many
 novices forget this.
 
-=end sidebar
+=end tip
 
 Both C<while> and C<until> have postfix forms. Another infinite loop is:
 
@@ -1143,14 +1136,14 @@ Scissors game:
 
 Perl executes the C<default> rule when none of the other conditions match.
 
-=begin sidebar
+=begin tip Simplified Dispatch with Multimethods
 
-X<C<MooseX::MultiMethods>>
+X<CPAN; C<MooseX::MultiMethods>>
 
-The CPAN module C<MooseX::MultiMethods> allows another technique to reduce this
-code further.
+The CPAN module C<MooseX::MultiMethods> provides another technique to simplify
+this code.
 
-=end sidebar
+=end tip
 
 The C<when> construct is even more powerful; it can match (L<smart_match>)
 against many other types of expressions including scalars, aggregates,

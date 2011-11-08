@@ -16,13 +16,13 @@ declare lexical or package variables. The names of scalar variables must
 conform to standard variable naming guidelines (L<names>). Scalar variables
 always use the leading dollar-sign (C<$>) sigil (L<sigils>).
 
-=begin sidebar
+=begin tip Variant Sigils and Context
 
 Scalar values and scalar context have a deep connection; assigning to a scalar
 provides scalar context. Using the scalar sigil with an aggregate variable
 imposes scalar context to access a single element of the hash or array.
 
-=end sidebar
+=end tip
 
 =head2 Scalars and Types
 
@@ -70,12 +70,12 @@ You may also use mathematical operations on strings:
 
 X<increment; string>
 
-=begin sidebar
+=begin tip One-Way Increment Magic
 
 This magical string increment behavior has no corresponding magical decrement
 behavior. You can't get the previous string value by writing C<$call_sign-->.
 
-=end sidebar
+=end tip
 
 This string increment operation turns C<a> into C<b> and C<z> into C<aa>,
 respecting character set and case. While C<ZZ9> becomes C<AAA0>, C<ZZ09>

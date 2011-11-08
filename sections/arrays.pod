@@ -162,12 +162,12 @@ To clear an array, assign an empty list:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Arrays Start Empty
 
 C<my @items = ();> is a longer and noisier version of C<my @items> because
 freshly-declared arrays start out empty.
 
-=end sidebar
+=end tip
 
 =head2 Array Slices
 
@@ -283,11 +283,11 @@ C<unshift> prepends a list of elements to the start of the array and returns
 the new number of elements in the array. C<shift> removes and returns the first
 element of the array.
 
-=begin sidebar
+=begin tip Zero, One, or Many
 
 Few programs use the return values of C<push> and C<unshift>.
 
-=end sidebar
+=end tip
 
 X<arrays; C<splice>>
 X<builtins; C<splice>>

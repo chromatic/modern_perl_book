@@ -330,13 +330,13 @@ While the syntax for I<creating> C<Cat> objects has changed, the syntax for
 I<using> C<Cat> objects has not. Outside of C<Cat>, C<age()> behaves as it
 always has. I<How> it works internally is a detail to the C<Cat> class.
 
-=begin sidebar
+=begin tip Compatibility and APIs
 
 Retain the old syntax for I<creating> C<Cat> objects by customizing the
 generated C<Cat> constructor to allow passing an C<age> parameter. Calculate
 C<birth_year> from that. See C<perldoc Moose::Manual::Attributes>.
 
-=end sidebar
+=end tip
 
 X<attributes; default values>
 
@@ -416,7 +416,7 @@ This property of I<polymorphism> means that you can substitute an object of one
 class for an object of another class if they provide the same external
 interface.
 
-=begin sidebar
+=begin tip Duck Typing
 
 X<duck typing>
 X<OO; duck typing>
@@ -429,7 +429,7 @@ name as equivalent enough. Some people call this I<duck typing>, arguing that
 any object which can C<quack()> is sufficiently duck-like that you can treat it
 as a duck.
 
-=end sidebar
+=end tip
 
 C<show_vital_stats()> cares that an invocant is valid only in that it supports
 three methods, C<name()>, C<age()>, and C<diet()> which take no arguments and
@@ -523,13 +523,13 @@ constraints.
 If C<LivingBeing> were composed into a class which did not provide those
 methods, Moose would throw an exception.
 
-=begin sidebar
+=begin tip Order Matters!
 
 The C<with> keyword used to apply roles to a class must occur I<after>
 attribute declaration so that composition can identify any generated accessor
 methods.
 
-=end sidebar
+=end tip
 
 Now all C<Cat> instances will return a true value when queried if they provide
 the C<LivingBeing> role. C<Cheese> objects should not:
@@ -642,7 +642,7 @@ behavior, but you may substitute any instance of a child where code expects its
 parent. In one sense, a subclass provides the role implied by the existence of
 its parent class.
 
-=begin sidebar
+=begin tip Roles versus Inheritance
 
 Should you use roles or inheritance? Roles provide composition-time safety,
 better type checking, better factoring of code, and finer-grained control over
@@ -651,7 +651,7 @@ of other languages. Use inheritance when one class truly I<extends> another.
 Use a role when a class needs additional behavior, and when you can give that
 behavior a meaningful name.
 
-=end sidebar
+=end tip
 
 Consider a C<LightSource> class which provides two public attributes
 (C<candle_power> and C<enabled>) and two methods (C<light> and C<extinguish>):
@@ -682,12 +682,8 @@ Consider a C<LightSource> class which provides two public attributes
 
 =end programlisting
 
-=begin sidebar
-
-The C<writer> option to the C<enabled> attribute creates a private accessor
-usable within the class to set the value.
-
-=end sidebar
+(Note that C<enabled>'s C<writer> option creates a private accessor usable
+within the class to set the value.)
 
 =head3 Inheritance and Attributes
 
@@ -820,12 +816,12 @@ that already has the current state. The C<super()> function dispatches to the
 nearest parent's implementation of the current method, per the normal Perl 5
 method resolution order.
 
-=begin sidebar
+=begin tip Powered by Moose
 
 Moose's method modifiers can do similar things--and more. See C<perldoc
 Moose::Manual::MethodModifiers>.
 
-=end sidebar
+=end tip
 
 =head3 Inheritance and isa()
 
@@ -940,11 +936,11 @@ Perl and ActivePerl also include it. Even though Moose is a CPAN module and not
 a core library, its cleanliness and simplicity make it essential to modern Perl
 programming.
 
-=begin sidebar
+=begin tip The Svelte I<Alces>
 
 X<CPAN; C<Any::Moose>>
 
-Moose programs do use more memory than non-Moose programs, but the
-C<Any::Moose> CPAN module helps reduce the cost of features you don't use.
+Moose isn't a small library, but it's powerful. The C<Any::Moose> CPAN module
+helps reduce the cost of features you don't use.
 
-=end sidebar
+=end tip

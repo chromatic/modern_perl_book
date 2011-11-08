@@ -112,12 +112,12 @@ vampires.>, even though redeclaring a lexical variable with the same name and
 type I<in the same lexical scope> produces a warning message. Shadowing a
 lexical is a feature of encapsulation.
 
-=begin sidebar
+=begin tip Name Collisions
 
 Lexical shadowing can happen by accident. Limit the scope of variables and the
 nesting of scopes to lessen your risk.
 
-=end sidebar
+=end tip
 
 Some lexical declarations have subtleties, such as a lexical variable used as
 the iterator variable of a C<for> loop. Its declaration comes outside of the

@@ -66,7 +66,7 @@ named function, such as to declare the dispatch table's functions in place:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Defensive Dispatch
 
 This dispatch table offers some degree of security; only those functions mapped
 within the table are available for users to call. If your dispatch function
@@ -75,7 +75,7 @@ directly to the name of a function to call, a malicious user could conceivably
 call any function in any other namespace by crafting an operator name of
 C<'Internal::Functions::some_malicious_function'>.
 
-=end sidebar
+=end tip
 
 You may also see anonymous functions passed as function arguments:
 
@@ -125,14 +125,14 @@ named or anonymous with introspection:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Who Are You?
 
 X<CPAN; C<Sub::Identify>>
 
 The CPAN module C<Sub::Identify>'s C<sub_name> function simplifies this
 introspection.
 
-=end sidebar
+=end tip
 
 The result may be surprising:
 

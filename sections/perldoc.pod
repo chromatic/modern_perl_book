@@ -48,14 +48,14 @@ demonstrates sample uses, and then contains a detailed explanation of the
 module and its interface. While the amount of documentation varies by author,
 the form of the documentation is remarkably consistent.
 
-=begin sidebar
+=begin tip How to Read the Documentation
 
 C<perldoc perltoc> displays the table of contents of the core documentation,
 and C<perldoc perlfaq> displays the table of contents for Frequently Asked
 Questions about Perl 5. Skimming these files will give you a great overview of
 Perl 5.
 
-=end sidebar
+=end tip
 
 X<perldoc; C<-q> (search perlfaq)>
 
@@ -79,13 +79,13 @@ displays the documentation for the variable which contains the current
 program's process id. Depending on your shell, you may have to quote the
 variable appropriately.
 
-=begin sidebar
+=begin tip Deciphering Code
 
 C<perldoc perlop> and C<perldoc perlsyn> document Perl's symbolic operators and
 syntactic constructs. C<perldoc perldiag> explains the meanings of Perl's
 warning messages. C<perldoc perlvar> lists all of Perl's symbolic variables.
 
-=end sidebar
+=end tip
 
 The C<-l> option causes C<perldoc> to display the I<path> to the documentation
 file rather than the contents of the documentationN<Be aware that a module may

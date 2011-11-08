@@ -20,8 +20,6 @@ made them available to anyone willing to learn them.
 
 =head1 Running Modern Perl
 
-=begin sidebar
-
 The Modern::Perl module from the CPAN (L<cpan>) asks Perl to warn of dubious
 constructs and typos and will enable new features introduced in modern releases
 of Perl 5. Assume every example in this book begins with:
@@ -43,8 +41,6 @@ rough equivalent:
     use autodie;
 
 =end programlisting
-
-=end sidebar
 
 Unless otherwise mentioned, code snippets always assume the basic skeleton of a
 program:

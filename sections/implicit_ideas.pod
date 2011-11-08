@@ -258,17 +258,13 @@ command-line filter which reverses its input:
 
 =end programlisting
 
-=begin sidebar
-
 Why C<scalar>? C<say> imposes list context on its operands. C<reverse> passes
 its context on to its operands, treating them as a list in list context and a
 concatenated string in scalar context. If the behavior of C<reverse> sounds
 confusing, your instincts are correct. Perl 5 arguably should have separated
 "reverse a string" from "reverse a list".
 
-=end sidebar
-
-If you run it with a list of files:
+Run the program with a list of files:
 
 =begin screen
 

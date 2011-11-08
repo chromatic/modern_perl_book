@@ -107,7 +107,7 @@ global scope. Any lexical variables shared between nested functions will go
 unshared when the outer function destroys its first lexical environmentN<If
 that's confusing to you, imagine the implementation.>.
 
-=begin sidebar
+=begin tip Invasion of Privacy
 
 X<CPAN; C<PadWalker>>
 
@@ -115,7 +115,7 @@ The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone
 who uses it and breaks your code earns the right to fix any concomitant bugs
 without your help.
 
-=end sidebar
+=end tip
 
 =head2 Uses of Closures
 
@@ -208,13 +208,12 @@ the next number in the Fibonacci series. Customizing the behavior of code--in
 this case, C<gen_caching_closure()>--by passing in a function allows tremendous
 flexibility and abstraction.
 
-=begin sidebar
+=begin tip Fold, Apply, and Filter
 
-In one sense, you can consider the builtins C<map>, C<grep>, and C<sort>
-higher-order functions, especially if you compare them to
-C<gen_caching_closure()>.
+In one sense, the builtins C<map>, C<grep>, and C<sort> are themselves
+higher-order functions. Compare them to C<gen_caching_closure()>.
 
-=end sidebar
+=end tip
 
 =head2 Closures and Partial Application
 
