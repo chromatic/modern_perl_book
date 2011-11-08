@@ -69,26 +69,34 @@ X<CPAN; C<CPAN.pm>>
 X<CPAN; C<CPANPLUS>>
 
 Modern Perl installations include two clients to connect to, search, download,
-build, test, and install CPAN distributions, CPAN.pm and CPANPLUS. A newer
-alternative is also available, though it is not part of the core distribution.
-For the most part, each of these clients is equivalent for basic installation.
-This book recommends the use of CPAN.pm solely due to its ubiquity. With a
-recent version (as of this writing, 1.9800 is the latest stable release),
-module installation is reasonably easy. Start the client with:
+build, test, and install CPAN distributions, CPAN.pm and CPANPLUS. For the most
+part, each of these clients is equivalent for basic installation. This book
+recommends the use of CPAN.pm solely due to its ubiquity. With a recent version
+(as of this writing, 1.9800 is the latest stable release), module installation
+is reasonably easy. Start the client with:
 
-=begin programlisting
+=begin screen
 
     $ B<cpan>
 
-=end programlisting
+=end screen
 
-To install a distribution:
+To install a distribution within the client:
 
-=begin programlisting
+=begin screen
+
+    $ B<cpan>
+    cpan[1]> B<install Modern::Perl>
+
+=end screen
+
+... or to install directly from the command line:
+
+=begin screen
 
     $ B<cpan Modern::Perl>
 
-=end programlisting
+=end screen
 
 X<CPAN; C<CPAN.pm>>
 
@@ -118,25 +126,25 @@ projects help to make this possible.
 C<App::cpanminus> is a relatively new CPAN client with goals of speed,
 simplicity, and zero configuration. Install it with C<cpan App::cpanminus>, or:
 
-=begin programlisting
+=begin screen
 
     $ B<curl -LO http://xrl.us/cpanm>
     $ B<chmod +x cpanm>
 
-=end programlisting
+=end screen
 
 C<App::perlbrew> is a system to manage and to switch between your own
 installations of multiple versions and configurations of Perl. Installation is
 as easy as:
 
-=begin programlisting
+=begin screen
 
     $ B<curl -LO http://xrl.us/perlbrew>
     $ B<chmod +x perlbrew>
     $ B<./perlbrew install>
     $ B<perldoc App::perlbrew>
 
-=end programlisting
+=end screen
 
 X<CPAN; local::lib>
 X<CPAN; App::local::lib::helper>
@@ -145,7 +153,7 @@ The C<local::lib> CPAN distribution allows you to install and to manage
 distributions in your own user directory, rather than for the system as a
 whole. This is an effective way to maintain CPAN distributions without
 affecting other users. Installation is somewhat more involved than the previous
-two distributions, though C<App::local::lib::helper> can simplify.  See
+two distributions, though C<App::local::lib::helper> can simplify the process.  See
 U<http://search.cpan.org/perldoc?local::lib> and
 U<http://search.cpan.org/perldoc?App::local::lib::helper> for more details.
 

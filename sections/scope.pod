@@ -108,9 +108,9 @@ outer scope hides, or I<shadows>, the outer lexical:
 =end programlisting
 
 This program prints C<Edward> and then C<Jacob>N<Family members, not
-vampires.>. Even though redeclaring a lexical variable with the same name and
-type I<in the same lexical scope> produces a warning message, shadowing a
-lexical FIXME. This is a feature of encapsulation.
+vampires.>, even though redeclaring a lexical variable with the same name and
+type I<in the same lexical scope> produces a warning message. Shadowing a
+lexical is a feature of encapsulation.
 
 =begin sidebar
 

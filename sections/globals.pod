@@ -123,7 +123,9 @@ reading input a line at a time. By default, this is your platform-specific
 newline character sequence. If you undefine this value, Perl will attempt to
 read the entire file into memory. If you set this value to a I<reference> to an
 integer, Perl will try to read that many I<bytes> per record (so beware of
-Unicode concerns).
+Unicode concerns). If you set this value to an empty string (C<''>), Perl will
+read in a paragraph at a time, where a paragraph is a chunk of text followed by
+an arbitrary number of newlines.
 
 X<C<$.>>
 X<global variables; C<$.>>

@@ -133,8 +133,8 @@ code uses C<shift> or list unpacking:
 
 =begin sidebar
 
-Remember that the array builtins default to C<@_> as operand within functions.
-Take advantage of this idiom.
+Remember that the array builtins use C<@_> as the default operand I<within
+functions>. Take advantage of this idiom.
 
 =end sidebar
 
@@ -245,7 +245,7 @@ immediately followed by its value. Hash assignment inside C<show_pets()> works
 essentially as the more explicit assignment to C<%pet_names_and_types> does.
 
 This flattening is often useful, but beware of mixing scalars with flattened
-aggregates in parameter lists. To write C<show_pets_of_type()> function, where
+aggregates in parameter lists. To write a C<show_pets_of_type()> function, where
 one parameter is the type of pet to display, pass that type as the I<first>
 parameter (or use C<pop> to remove it from the end of C<@_>):
 

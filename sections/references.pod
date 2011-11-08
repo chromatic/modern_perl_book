@@ -28,8 +28,8 @@ Consider the alternative. If you had to make copies of every value before
 anything could possibly change them out from under you, you'd have to write
 lots of extra defensive code.
 
-Yet sometimes it's useful to modify values in place. If you want to pash a hash
-full of data to a function to modify, creating and returning a new hash for
+Yet sometimes it's useful to modify values in place. If you want to pass a hash
+full of data to a function to modify it, creating and returning a new hash for
 each change could be troublesome (to say nothing of inefficient).
 
 X<references>
@@ -82,7 +82,7 @@ dereferencing:
 
 =end programlisting
 
-The double scalar sigil dereferences a scalar reference.
+The double scalar sigil (C<$$>) dereferences a scalar reference.
 
 =begin sidebar
 
@@ -217,7 +217,7 @@ scoping. For example:
 
 =begin programlisting
 
-    my @meals      = qw( waffles sandwiches pizza );
+    my @meals      = qw( soup sandwiches pizza );
     my $sunday_ref = \@meals;
     my $monday_ref = \@meals;
 
@@ -229,7 +229,7 @@ scoping. For example:
 
 =begin programlisting
 
-    my @meals      = qw( waffles sandwiches pizza );
+    my @meals      = qw( soup sandwiches pizza );
     my $sunday_ref = [ @meals ];
     my $monday_ref = [ @meals ];
 

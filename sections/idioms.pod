@@ -462,9 +462,7 @@ This technique works on other in-place modification operators:
 =begin tip /r in Perl 5.14
 
 Perl 5.14 added the non-destructive substitution modifier C</r>, so that you
-can write:
-
-    C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>
+can write C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
 
 =end tip
 

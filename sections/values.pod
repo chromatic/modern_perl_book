@@ -12,10 +12,10 @@ Where variables allow the abstract manipulation of data, the values they hold
 make programs concrete and useful. The more accurate your values, the better
 your programs.  These values are data--your aunt's name and address, the
 distance between your office and a golf course on the moon, or the weight of
-all cookies you've eaten in the past year. Within your program, the rules
-regarding the format of that data are often strict. Effective programs need
-effective (simple, fast, most compact, most efficient) ways of representing
-their data.
+all of the cookies you've eaten in the past year. Within your program, the
+rules regarding the format of that data are often strict. Effective programs
+need effective (simple, fast, most compact, most efficient) ways of
+representing their data.
 
 =head2 Strings
 
@@ -298,7 +298,7 @@ X<IO layers>
 
 When you tell Perl that a specific filehandle (L<files>) works with encoded
 text, Perl will convert the incoming octets to Unicode strings automatically.
-To do this, add a IO layer to the mode of the C<open> builtin. An I<IO layer>
+To do this, add an IO layer to the mode of the C<open> builtin. An I<IO layer>
 wraps around input or output and converts the data. In this case, the C<:utf8>
 layer decodes UTF-8 data:
 
@@ -509,8 +509,8 @@ produce another Unicode string.
 If both strings are octet streams, Perl will concatenate them into a new octet
 string. If both values are octets of the same encoding--both Latin-1, for
 example, the concatenation will work correctly. If the octets do not share an
-encoding, the concatenation append UTF-8 data to Latin-1 data, producing a
-sequence of octets which makes sense in I<neither> encoding. This could happen
+encoding, for example a concatenation appending UTF-8 data to Latin-1 data, then the
+resulting sequence of octets makes sense in I<neither> encoding. This could happen
 if the user entered a name as UTF-8 data and the greeting were a Latin-1 string
 literal, but the program decoded neither.
 
@@ -567,8 +567,8 @@ X<C<0>>
 X<C<0x>>
 
 The emboldened characters are the numeric prefixes for binary, octal, and hex
-notation respectively. Be aware that a leading zero I<always> indicates octal
-mode.
+notation respectively. Be aware that a leading zero on an integer I<always>
+indicates octal mode.
 
 X<numbers; underscore separator>
 X<underscore>

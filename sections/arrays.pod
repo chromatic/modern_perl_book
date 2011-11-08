@@ -227,7 +227,7 @@ used as its index:
 =begin programlisting
 
     # function called in list context
-    my @cats = @cats[ get_cat_indices() ];
+    my @hungry_cats = @cats[ get_cat_indices() ];
 
 =end programlisting
 
@@ -267,7 +267,7 @@ X<builtins; C<shift>>
 X<builtins; C<unshift>>
 
 Similarly, C<unshift> and C<shift> add elements to and remove an element from
-the start of an array:
+the start of an array, respectively:
 
 =begin programlisting
 

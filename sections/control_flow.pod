@@ -346,6 +346,7 @@ using an undefined value might raise a warning:
 
 =begin programlisting
 
+    my $barbeque;
     if (defined $barbeque and $barbeque eq 'pork shoulder') { ... }
 
 =end programlisting
@@ -710,12 +711,33 @@ C<@values> array by modifying the array with each loop iteration:
 
 =begin programlisting
 
+    while (@values)
+    {
+        my $value = shift @values;
+        say $value;
+    }
+
+=end programlisting
+
+=begin sidebar
+
+Modifying C<@values> inside of the C<while> condition check also works, but it
+has some subtleties related to the truthiness of each value.
+
+=begin programlisting
+
     while (my $value = shift @values)
     {
         say $value;
     }
 
 =end programlisting
+
+This loop will exit as soon as it reaches an element that evaluates to a false
+value, not necessarily when it has exhausted the array. That may be the desired
+behavior, but is often surprising to novices.
+
+=end sidebar
 
 X<loops; C<until>>
 

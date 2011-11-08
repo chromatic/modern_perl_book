@@ -13,7 +13,7 @@ people. I<People> make a community worth joining and preserving and expanding.
 The Perl community is strong and healthy. It welcomes willing participants at
 all levels, from novices to core developers. Take advantage of the knowledge
 and experience of countless other Perl programmers, and you'll become a better
-programmer. 
+programmer.
 
 L<perl_community>
 

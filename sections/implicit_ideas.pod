@@ -24,7 +24,7 @@ C<$_> as the variable, but it's often unnecessary.
 X<builtins; C<chomp>>
 
 For example, the C<chomp> builtin removes any trailing newline sequence from
-the given stringN<See C<$/> for more precise details of its behavior.>:
+the given stringN<See C<perldoc -f chomp> and C<$/> for more precise details of its behavior.>:
 
 =begin programlisting
 

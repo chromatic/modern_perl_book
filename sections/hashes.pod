@@ -7,9 +7,9 @@ X<hashes>
 A I<hash> is a first-class Perl data structure which associates string keys
 with scalar values. In the same way that the name of a variable corresponds to
 a storage location, a key in a hash refers to a value. Think of a hash like you
-would a telephone book: use your friend's name to look up her number. Other
-languages call hashes I<tables>, I<associative arrays>, I<dictionaries>, or
-I<maps>.
+would a telephone book: use the names of your friends to look up their numbers.
+Other languages call hashes I<tables>, I<associative arrays>, I<dictionaries>,
+or I<maps>.
 
 Hashes have two important properties: they store one scalar per unique key and
 they provide no specific ordering of keys.
@@ -438,7 +438,7 @@ you can safely ignore.
 In list context, a hash evaluates to a list of key/value pairs similar to what
 you receive from the C<each> operator.  However, you I<cannot> iterate over
 this list the same way you can iterate over the list produced by C<each>, lest
-the loop never terminate:
+the loop will never terminate:
 
 =begin programlisting
 
@@ -621,7 +621,7 @@ To prevent someone from accidentally adding a hash key you did not intend
 (whether as a typo or from untrusted user input), use the C<lock_keys()>
 function to restrict the hash to its current set of keys. Any attempt to add a
 new key to the hash will raise an exception. This is lax security suitable only
-for preventing accidents; anyone can use theC<unlock_keys()> function to remove
+for preventing accidents; anyone can use the C<unlock_keys()> function to remove
 this protection.
 
 Similarly you can lock or unlock the existing value for a given key in the hash
