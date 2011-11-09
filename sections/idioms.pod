@@ -63,7 +63,7 @@ if it were a single argument:
     {
         B<my %args = @_;>
 
-        my $ice_cream = get_ice_cream( $args{ice_cream}) );
+        my $ice_cream = get_ice_cream( $args{ice_cream} );
         ...
     }
 
