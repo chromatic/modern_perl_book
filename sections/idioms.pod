@@ -266,7 +266,7 @@ end of the block, C<$file> now contains the contents of the file.
 The second example contains no assignment and merely returns the single line
 read from the filehandle.
 
-=begin tip C<File::Slurp> FIXME: C<> appears literally
+=begin tip C<File::Slurp>
 
 X<CPAN; C<File::Slurp>>
 

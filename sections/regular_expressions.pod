@@ -104,7 +104,6 @@ X<builtins; C<index>>
 The C<index> builtin can also search for a literal substring within a string.
 Using a regex engine for that is like flying your autonomous combat helicopter
 to the corner store to buy spare cheese.
-FIXME: ok, this is a fun sentence, and worth keeping, but not here...
 
 X<regex; quantifiers>
 X<regex; zero or one quantifier>

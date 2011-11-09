@@ -189,7 +189,7 @@ words, this is shorthand for:
 
 =end programlisting
 
-=begin tip Why use C<while> and not C<for>? FIXME: C<> appears literally
+=begin tip Why use C<while> and not C<for>?
 
 C<for> imposes list context on its operand, which reads the entire file before
 processing any of it. This may use a lot of memory for large files.
