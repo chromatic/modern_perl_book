@@ -109,7 +109,9 @@ Choroba, Paulo Custodio, Felipe, Shlomi Fish, Jeremiah Foster, Mark Fowler,
 John Gabriele, Andrew Grangaard, Bruce Gray, Ask Bjørn Hansen, Tim Heaney,
 Robert Hicks, Michael Hind, Mark Hindess, Yary Hluchan, Mike Huffman, Curtis
 Jewell, Mohammed Arafat Kamaal, James E Keenan, Yuval Kogman, Jan Krynicky,
-Jeff Lavallee, Moritz Lenz, Jean-Baptiste Mazon, Josh McAdams, Gareth
+Jeff Lavallee, Moritz Lenz,
+Andy Lester,
+Jean-Baptiste Mazon, Josh McAdams, Gareth
 McCaughan, John McNamara, Shawn M Moore, Alex Muntada, Carl Mäsak, Chris
 Niswander, Nelo Onyiah, Chas. Owens, ww from PerlMonks, Jess Robinson, Dave
 Rolsky, Gabrielle Roth, Andrew Savige, Lorne Schachter, Dan Scott, Alexander
