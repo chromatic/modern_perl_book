@@ -539,7 +539,8 @@ X<C<-X>; file test operators>
 X<operators; C<-X>>
 
 Besides reading and writing files, you can also manipulate them as you would
-directly from a command line or a file manager.  The C<-X> file test operators
+directly from a command line or a file manager.  The file test
+operators, collectively called the C<-X> operators because they are a hyphen and a single letter,
 examine file and directory attributes. For example, to test that a file exists:
 
 X<C<-e>; file exists operator>
