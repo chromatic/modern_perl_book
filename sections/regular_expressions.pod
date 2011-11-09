@@ -104,6 +104,7 @@ X<builtins; C<index>>
 The C<index> builtin can also search for a literal substring within a string.
 Using a regex engine for that is like flying your autonomous combat helicopter
 to the corner store to buy spare cheese.
+FIXME: ok, this is a fun sentence, and worth keeping, but not here...
 
 X<regex; quantifiers>
 X<regex; zero or one quantifier>
@@ -842,7 +843,7 @@ sizes; you may not use quantifiers:
 
 =begin programlisting
 
-    my $middle_cat = qr/(?<!^)cat/;
+    my $middle_cat = qr/(?<!\A)cat/;
 
 =end programlisting
 
@@ -937,10 +938,10 @@ character (C<->):
 X<C</m>; multiline regex modifier>
 X<regex; C</m> modifier>
 X<regex; multiline>
-X<C<^>; start of line regex metacharacter>
-X<C<$>; end of line regex metacharacter>
+X<C<\A>; start of line regex metacharacter>
+X<C<\Z>; end of line regex metacharacter>
 
-The multiline operator, C</m>, allows the C<^> and C<$> anchors to match at any
+The multiline operator, C</m>, allows the C<\A> and C<\Z> anchors to match at any
 newline embedded within the string.
 
 X<C</s>; single line regex modifier>
@@ -965,8 +966,8 @@ original:
 =begin programlisting
 
     my $status     = 'I am hungry for pie.';
-    my $newstatus  = $status =~ s/pie/cake/;
-    my $statuscopy = $status =~ s/liver and onions/bratwurst/;
+    my $newstatus  = $status =~ s/pie/cake/r;
+    my $statuscopy = $status =~ s/liver and onions/bratwurst/r;
 
     is( $status, 'I am hungry for pie.',
         'original string should be unmodified' );
@@ -987,7 +988,7 @@ whitespace and comments. The results are often much more readable:
 =begin programlisting
 
     my $attr_re = qr{
-        ^                     # start of line
+        \A                    # start of line
 
         # miscellany
         (?:

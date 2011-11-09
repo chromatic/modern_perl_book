@@ -166,7 +166,7 @@ recursively running all test files found under F<t/> (C<-r t>), and running
 slow tests first (C<--state=slow,save>).
 
 X<C<proveall>>
-X<testing; C<proveall> alias>>
+X<testing; C<proveall> alias>
 The bash shell alias C<proveall> may prove useful:
 
     alias proveall='prove -j9 --state=slow,save -lr t'
