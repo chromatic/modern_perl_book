@@ -402,5 +402,5 @@ better than 80%.
 
 =back
 
-See the Perl QA project (U<http://qa.perl.org/>) For more information about
+See the Perl QA project (U<http://qa.perl.org/>) for more information about
 testing in Perl.
