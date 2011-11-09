@@ -606,7 +606,8 @@ X<files; deleting>
 
 There's no core builtin to copy a file, but the core C<File::Copy> module
 provides both C<copy()> and C<move()> functions. Use the C<unlink> builtin to
-remove one or more files. These functions and builtins all return true values
+remove one or more files. (The C<delete> builtin deletes an element from a hash, not a file from the filesystem.)
+These functions and builtins all return true values
 on success and set C<$!> on error.
 
 =begin sidebar
