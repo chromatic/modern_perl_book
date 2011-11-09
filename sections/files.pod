@@ -414,7 +414,7 @@ to a list in one swoop:
 =begin programlisting
 
     # iteration
-    while (my $file = readdir $dirh )
+    while (my $file = readdir $dirh)
     {
         ...
     }
