@@ -43,7 +43,7 @@ X<strings; single-quoted>
 
 Characters in a I<single-quoted string> represent themselves literally, with
 two exceptions. Embed a single quote inside a single-quoted string by escaping
-the quote with a leading backlash:
+the quote with a leading backslash:
 
 =begin programlisting
 
