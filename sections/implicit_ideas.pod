@@ -264,19 +264,19 @@ concatenated string in scalar context. If the behavior of C<reverse> sounds
 confusing, your instincts are correct. Perl 5 arguably should have separated
 "reverse a string" from "reverse a list".
 
-=begin sidebar
+=begin tip C<readline>
 
-Perl's C<< <$fh> >> operator is implemented with the C<readline>
-function. That is, 'C<readline $fh>' does the same thing. However,
-until Perl 5.10, the readline function had no default, so a bare
-C<readline> did not do the same thing as empty C<< <> >>. But ever
-since Perl 5.10, a bare C<readline> behaves just like C<< <> >>, so we
-can now use C<readline> everywhere. For historic reasons, C<< <> >> is
-still more common, but consider using C<readline> as a more readable
-alternative. You probably prefer 'C<glob '*.html'> to C<< <*.html> >>,
-right? Same idea.
+X<builtins; C<readline>
+X<builtins; C<glob>
 
-=end sidebar
+Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
+C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
+C<readline> behaves just like C<< <> >>, so you can now use C<readline>
+everywhere. For historic reasons, C<< <> >> is still more common, but consider
+using C<readline> as a more readable alternative. You probably prefer C<glob
+'*.html'> to C<< <*.html> >>, right? It's the same idea.
+
+=end tip
 
 If you run it with a list of files:
 
