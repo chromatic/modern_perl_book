@@ -558,9 +558,9 @@ X<C<my $_>>
 X<C<$_>; lexical>
 
 Iterator scoping with the topic variable provides one common source of
-confusion. Consider a function C<topic_mangler()> that modifies C<$_> on purpose. If
-code iterating over a list called C<topic_mangler()> without protecting C<$_>,
-debugging fun would ensue:
+confusion. Consider a function C<topic_mangler()> which modifies C<$_> on
+purpose. If code iterating over a list called C<topic_mangler()> without
+protecting C<$_>, debugging fun would ensue:
 
 =begin programlisting
 
