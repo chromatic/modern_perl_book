@@ -57,11 +57,11 @@ named function, such as to declare the dispatch table's functions in place:
 
     my %dispatch =
     (
-        plus     => sub { $_[0]  + $_[1] },
-        minus    => sub { $_[0]  - $_[1] },
-        times    => sub { $_[0]  * $_[1] },
-        goesinto => sub { $_[0]  / $_[1] },
-        raisedto => sub { $_[0] ** $_[1] },
+        plus      => sub { $_[0]  + $_[1] },
+        minus     => sub { $_[0]  - $_[1] },
+        times     => sub { $_[0]  * $_[1] },
+        dividedby => sub { $_[0]  / $_[1] },
+        raisedto  => sub { $_[0] ** $_[1] },
     );
 
 =end programlisting
