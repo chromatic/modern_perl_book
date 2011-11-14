@@ -175,9 +175,9 @@ bareword C<PI> or a call to C<PI()>, with respect to scoping and visibility.
 
 X<C<constant> pragma>
 X<pragmas; C<constant>>
-X<CPAN; C<Readonly>>
+X<CPAN; C<Const::Fast>>
 
-The core pragma C<constant> handles these details for you. The C<Readonly>
+The core pragma C<constant> handles these details for you. The C<Const::Fast>
 module from the CPAN creates constant scalars which you can interpolate into
 strings.
 

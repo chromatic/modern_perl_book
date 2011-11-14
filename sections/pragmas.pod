@@ -115,7 +115,7 @@ and builtins
 X<pragmas; C<constant>>
 
 =item * the C<constant> pragma allows you to create compile-time constant
-values (see the CPAN's C<Readonly> for an alternative)
+values (see the CPAN's C<Const::Fast> for an alternative)
 
 X<pragmas; C<vars>>
 
