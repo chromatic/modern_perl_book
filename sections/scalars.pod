@@ -58,13 +58,15 @@ You may also use mathematical operations on strings:
 =begin programlisting
 
     my $call_sign = 'KBMIU';
-    my $next_sign = $call_sign++;
 
-    # also fine as
-    $next_sign    = ++$call_sign;
+    # update sign in place and return new value
+    my $next_sign = ++$call_sign;
+
+    # return old value, I<then> update sign
+    my $curr_sign = $call_sign++;
 
     # but I<does not work> as:
-    $next_sign    = $call_sign + 1;
+    my $new_sign  = $call_sign + 1;
 
 =end programlisting
 
