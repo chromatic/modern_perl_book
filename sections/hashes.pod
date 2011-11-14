@@ -517,7 +517,7 @@ expensive operation with little overhead:
         sub fetch_user
         {
             my $id = shift;
-            $user_cache{$id} ||= create_user($id);
+            $user_cache{$id} //= create_user($id);
             return $user_cache{$id};
         }
     }
@@ -531,23 +531,20 @@ X<operators; defined-or>
 
 This I<orcish maneuver>N<Or-cache, if you like puns.> returns the value from
 the hash, if it exists. Otherwise, it calculates, caches, and returns the
-value.  Beware that the boolean-or assignment operator (C<||=>) operates on
-boolean values; if your cached value evaluates to false in a boolean context,
-use the defined-or assignment operator (C<//=>) instead:
+value. The defined-or assignment operator (C<//=>) evaluates its left operand.
+If that operand is not defined, the operator assigns the lvalue the value of
+its right operand. In other words, if there's no value in the hash for the
+given key, this function will call C<create_user()> with the key and update the
+hash.
 
-=begin programlisting
-
-        sub fetch_user
-        {
-            my $id = shift;
-            $user_cache{$id} B<//=> create_user($id);
-            return $user_cache{$id};
-        }
-
-=end programlisting
+Perl 5.10 introduced the defined-or and defined-or assignment operators. Prior
+to 5.10, most code used the boolean-or assignment operator (C<||=>) for this
+purpose. Unfortunately, some valid values evaluate to a false value in boolean
+context, so evaluating the I<definedness> of values is almost always more
+accurate.
 
 This lazy orcish maneuver tests for the definedness of the cached value, not
-truthiness. The defined-or assignment operator was new in Perl 5.10.
+truthiness.
 
 X<hashes; named parameters>
 
