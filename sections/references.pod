@@ -414,21 +414,26 @@ Z<lexical_filehandles>
 
 X<filehandles; references>
 X<references; filehandles>
+X<C<IO::File>>
+X<C<IO::Handle>>
 
 When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
 with filehandle references. Internally, these filehandles are objects of the
-class C<IO::Handle>.  When you load that module, you can call methods on
-filehandles:
+class C<IO::File>. You can call methods on them directly. As of Perl 5.14, this
+is as simple as:
 
 =begin programlisting
 
-    use IO::Handle;
     use autodie;
 
     open my $out_fh, '>', 'output_file.txt';
     $out_fh->say( 'Have some text!' );
 
 =end programlisting
+
+In 5.12, you must write C<use IO::File;> before this will work. Before 5.12,
+these objects were instances of C<IO::Handle>, so you had to C<use> that
+instead.
 
 You may see old code which takes references to typeglobs, such as:
 
