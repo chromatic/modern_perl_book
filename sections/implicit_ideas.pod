@@ -115,7 +115,7 @@ X<builtins; C<while>>
 
 =begin programlisting
 
-    while (readline STDIN)
+    while (<STDIN>)
     {
         chomp;
         say scalar reverse;
@@ -155,7 +155,7 @@ to prevent this clobbering behavior:
 
 =begin programlisting
 
-    while (readline STDIN)
+    while (<STDIN>)
     {
         chomp;
 
@@ -173,7 +173,7 @@ clobbering an existing instance of C<$_>:
 
 =begin programlisting
 
-    while (my $_ = readline STDIN)
+    while (my $_ = <STDIN>)
     {
         ...
     }
@@ -184,7 +184,7 @@ Of course, using a named lexical can be just as clear:
 
 =begin programlisting
 
-    while (my $line = readline STDIN)
+    while (my $line = <STDIN>)
     {
         ...
     }
@@ -242,16 +242,15 @@ cannot use C<@_> when you mean C<@ARGV>.
 
 X<null filehandle>
 
-C<ARGV> has one special case. If you read from the null filehandle
-(just a bare C<readline>), Perl will treat every element in C<@ARGV>
-as the I<name> of a file to open for reading. (If C<@ARGV> is empty,
-Perl will read from standard input.) This implicit C<@ARGV> behavior
-is useful for writing short programs, such as this command-line filter
-which reverses its input:
+C<ARGV> has one special case. If you read from the null filehandle,
+Perl will treat every element in C<@ARGV> as the I<name> of a file to
+open for reading. (If C<@ARGV> is empty, Perl will read from standard
+input.) This implicit C<@ARGV> behavior is useful for writing short
+programs, such as this command-line filter which reverses its input:
 
 =begin programlisting
 
-    while (readline)
+    while (<>)
     {
         chomp;
         say scalar reverse;
@@ -265,7 +264,13 @@ concatenated string in scalar context. If the behavior of C<reverse> sounds
 confusing, your instincts are correct. Perl 5 arguably should have separated
 "reverse a string" from "reverse a list".
 
-Run the program with a list of files:
+=begin sidebar
+
+Perl's C<< <$fh> >> operator is implemented with the C<readline> function. That is 'C<readline $fh>' does the same thing. However, until Perl 5.10, the readline function had no default, so a bare C<readline> did not do the same thing as empty C<< <> >>. But ever since Perl 5.10, a bare C<readline> behaves just like C<< <> >>, so we can now use C<readline> everywhere. For historic reasons, C<< <> >> is still more common, but consider using C<readline> as a more readable alternative. You probably prefer 'C<glob '*.html'> to C<< <*.html> >>, right? Same idea.
+
+=end sidebar
+
+If you run it with a list of files:
 
 =begin screen
 
