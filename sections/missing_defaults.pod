@@ -65,7 +65,8 @@ warnings> for more details.
 Combine C<use warnings> with C<use diagnostics> to receive expanded diagnostic
 messages for each warning present in your programs.  These expanded diagnostics
 come from C<perldoc perldiag>. This behavior is useful when learning Perl.
-Disable it in deployed software, since it produces verbose output.
+Disable it before you deploy your program, because it produces verbose output
+which might fill up your logs and expose too much information to users.
 
 =end tip
 

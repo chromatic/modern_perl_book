@@ -539,9 +539,10 @@ X<C<-X>; file test operators>
 X<operators; C<-X>>
 
 Besides reading and writing files, you can also manipulate them as you would
-directly from a command line or a file manager.  The file test
-operators, collectively called the C<-X> operators because they are a hyphen and a single letter,
-examine file and directory attributes. For example, to test that a file exists:
+directly from a command line or a file manager.  The file test operators,
+collectively called the C<-X> operators because they are a hyphen and a single
+letter, examine file and directory attributes. For example, to test that a file
+exists:
 
 X<C<-e>; file exists operator>
 X<operators; C<-e>>
@@ -599,6 +600,7 @@ takes two operands, the old name of the file and the new name:
 
 X<C<File::Copy>>
 X<builtins; C<unlink>>
+X<builtins; C<delete>>
 X<files; copying>
 X<files; moving>
 X<files; removing>
@@ -606,9 +608,9 @@ X<files; deleting>
 
 There's no core builtin to copy a file, but the core C<File::Copy> module
 provides both C<copy()> and C<move()> functions. Use the C<unlink> builtin to
-remove one or more files. (The C<delete> builtin deletes an element from a hash, not a file from the filesystem.)
-These functions and builtins all return true values
-on success and set C<$!> on error.
+remove one or more files. (The C<delete> builtin deletes an element from a
+hash, not a file from the filesystem.) These functions and builtins all return
+true values on success and set C<$!> on error.
 
 =begin sidebar
 
