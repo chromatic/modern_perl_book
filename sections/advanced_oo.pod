@@ -42,7 +42,7 @@ contact information, and other personal data, while a C<Job> object may
 represent business responsibilities. Separating these entities in terms of
 their responsibilities allows the C<Employee> class to consider only the
 problem of managing information specific to who the person is and the C<Job>
-class to represent what the person does. (Two C<Employees> may have a
+class to represent what the person does. (Two C<Employee>s may have a
 C<Job>-sharing arrangement, for example.)
 
 When each class has a single responsibility, you improve the encapsulation of
