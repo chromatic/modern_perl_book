@@ -93,16 +93,10 @@ well-secured path:
 =end programlisting
 
 If you do not set C<$ENV{PATH}> appropriately, you will receive messages about
-its insecurity.
-
-=begin sidebar
-
-If this environment variable contained the current working directory, or if it
-contained relative directories, or if the directories specified had
-world-writable permissions, a clever attacker could hijack system calls to
-perpetrate mischief.
-
-=end sidebar
+its insecurity. If this environment variable contained the current working
+directory, or if it contained relative directories, or if the directories
+specified had world-writable permissions, a clever attacker could hijack system
+calls to perpetrate mischief.
 
 For similar reasons, C<@INC> does not contain the current working directory
 under taint mode. Perl will also ignore the C<PERL5LIB> and C<PERLLIB>

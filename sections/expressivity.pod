@@ -7,7 +7,7 @@ X<Larry Wall>
 
 When Larry Wall created Perl, his studies of linguistics and human languages
 influenced his design. Notably, Perl allows you tremendous freedom to solve
-problem, depending on your group style, the available time, the expected
+your problems, depending on your group style, the available time, the expected
 lifespan of the program, or even how creative you feel. You may write simple,
 straightforward code or integrate into larger, well-defined programs. You may
 select from multiple design paradigms, and you may eschew or embrace advanced
@@ -32,15 +32,11 @@ Perl novices often may find certain constructs opaque. Many of these idioms
 (L<idioms>) offer great (if subtle) power. It's okay to avoid them until you're
 comfortable with them.
 
-=begin sidebar
-
 Learning Perl is like learning a new spoken language. You'll learn a few words,
 string together sentences, and soon will enjoy simple conversations.  Mastery
 comes with practice of reading and writing. You don't have to understand every
-details of Perl to be productive, but the principles in this chapter are vital
+detail of Perl to be productive, but the principles in this chapter are vital
 to your growth as a programmer.
-
-=end sidebar
 
 As another design goal, Perl tries to avoid surprising experienced (Perl)
 programmers.  For example, adding two variables (C<$first_num + $second_num>)
@@ -64,10 +60,32 @@ X<baby Perl>
 Perl's expressivity also allows novices to write useful programs without having
 to understand everything. The resulting code is often called I<baby Perl>, in
 the sense that most everyone wants to help babies learn to communicate well.
-Everyone begins as a novice. Through practice and leaning from more experienced
+Everyone begins as a novice. Through practice and learning from more experienced
 programmers, you will understand and adopt more powerful idioms and techniques.
 
-For example, a Perl novice might triple a list of numbers by writing:
+For example, an experienced Perl hacker might triple a list of numbers by
+writing:
+
+=begin programlisting
+
+    my @tripled = map { $_ * 3 } @numbers;
+
+=end programlisting
+
+... and a Perl adept might write:
+
+=begin programlisting
+
+    my @tripled;
+
+    for my $num (@numbers)
+    {
+        push @tripled, $num * 3;
+    }
+
+=end programlisting
+
+... while a novice might start with:
 
 =begin programlisting
 
@@ -81,30 +99,12 @@ For example, a Perl novice might triple a list of numbers by writing:
 
 =end programlisting
 
-A Perl adept might write:
-
-=begin programlisting
-
-    my @tripled;
-
-    for my $num (@numbers)
-    {
-        push @tripled, $num * 3;
-    }
-
-=end programlisting
-
-An experienced Perl hacker might write:
-
-=begin programlisting
-
-    my @tripled = map { $_ * 3 } @numbers;
-
-=end programlisting
+All three approaches accomplish the same thing, but each takes advantage of
+Perl in a different way.
 
 Experience writing Perl will help you to focus on I<what> you want to do rather
 than I<how> to do it. Even so, Perl will happily run simple programs. You can
 design and refine your programs for clarity, expressivity, reuse, and
 maintainability, in part or in whole. Take advantage of this flexibility and
-pragmatism: far better to accomplish your task effectively now than to write a
-conceptually pure and beautiful program next year.
+pragmatism: it's far better to accomplish your task effectively now than to
+write a conceptually pure and beautiful program next year.

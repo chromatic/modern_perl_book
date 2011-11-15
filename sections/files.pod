@@ -65,8 +65,6 @@ Z<file_modes_table>
 
 =headrow
 
-=row
-
 =cell Symbols
 
 =cell Explanation
@@ -250,14 +248,16 @@ Given a filehandle open for output, C<print> or C<say> to it:
 
 Note the lack of comma between the filehandle and the subsequent operand.
 
-=begin sidebar
+=begin tip Filehandle Disambiguation
+
+X<Conway, Damian>
 
 Damian Conway's I<Perl Best Practices> recommends enclosing the filehandle in
 curly braces as a habit.  This is necessary to disambiguate parsing of a
 filehandle contained in an aggregate variable, and it won't hurt anything in
 the simpler cases.
 
-=end sidebar
+=end tip
 
 X<C<$,>>
 X<global variables; C<$,>>
@@ -414,7 +414,7 @@ to a list in one swoop:
 =begin programlisting
 
     # iteration
-    while (my $file = readdir $dirh )
+    while (my $file = readdir $dirh)
     {
         ...
     }
@@ -539,8 +539,10 @@ X<C<-X>; file test operators>
 X<operators; C<-X>>
 
 Besides reading and writing files, you can also manipulate them as you would
-directly from a command line or a file manager.  The C<-X> file test operators
-examine file and directory attributes. For example, to test that a file exists:
+directly from a command line or a file manager.  The file test operators,
+collectively called the C<-X> operators because they are a hyphen and a single
+letter, examine file and directory attributes. For example, to test that a file
+exists:
 
 X<C<-e>; file exists operator>
 X<operators; C<-e>>
@@ -558,11 +560,11 @@ value. C<perldoc -f -X> lists all other file tests; the most popular are:
 X<C<-d>; directory test operator>
 X<C<-f>; file test operator>
 X<C<-r>; readable file test operator>
-X<C<-z>; non-empty file test operator>
+X<C<-s>; non-empty file test operator>
 X<operators; C<-d>>
 X<operators; C<-f>>
 X<operators; C<-r>>
-X<operators; C<-z>>
+X<operators; C<-s>>
 
 =over 4
 
@@ -573,7 +575,7 @@ X<operators; C<-z>>
 =item C<-r>, which returns a true value if the file permissions of its operand
 permit reading by the current user
 
-=item C<-z>, which returns a true value if its operand is a non-empty file
+=item C<-s>, which returns a true value if its operand is a non-empty file
 
 =back
 
@@ -598,6 +600,7 @@ takes two operands, the old name of the file and the new name:
 
 X<C<File::Copy>>
 X<builtins; C<unlink>>
+X<builtins; C<delete>>
 X<files; copying>
 X<files; moving>
 X<files; removing>
@@ -605,8 +608,9 @@ X<files; deleting>
 
 There's no core builtin to copy a file, but the core C<File::Copy> module
 provides both C<copy()> and C<move()> functions. Use the C<unlink> builtin to
-remove one or more files. These functions and builtins all return true values
-on success and set C<$!> on error.
+remove one or more files. (The C<delete> builtin deletes an element from a
+hash, not a file from the filesystem.) These functions and builtins all return
+true values on success and set C<$!> on error.
 
 =begin sidebar
 

@@ -28,8 +28,8 @@ Consider the alternative. If you had to make copies of every value before
 anything could possibly change them out from under you, you'd have to write
 lots of extra defensive code.
 
-Yet sometimes it's useful to modify values in place. If you want to pash a hash
-full of data to a function to modify, creating and returning a new hash for
+Yet sometimes it's useful to modify values in place. If you want to pass a hash
+full of data to a function to modify it, creating and returning a new hash for
 each change could be troublesome (to say nothing of inefficient).
 
 X<references>
@@ -82,15 +82,16 @@ dereferencing:
 
 =end programlisting
 
-The double scalar sigil dereferences a scalar reference.
+The double scalar sigil (C<$$>) dereferences a scalar reference.
 
-=begin sidebar
+=begin tip Saving Memory with References
 
-In this case, why not have the function return the modified value directly?
-Scalar references are useful when processing I<large> scalars, as copying their
-contents can cost much time and memory.
+Modifying a value in place, or returning a reference to a scalar can save
+memory. Because Perl copies values on assignment, you could end up with
+multiple copies of a large string. Passing around references means that Perl
+will only copy the references--a far cheaper operation.
 
-=end sidebar
+=end tip
 
 Complex references may require a curly-brace block to disambiguate portions of
 the expression. You may always use this syntax, though sometimes it clarifies
@@ -112,7 +113,7 @@ numeric value will be the C<0x93339e8> portion. This value encodes the type of
 reference (in this case, C<SCALAR>) and the location in memory of the
 reference.
 
-=begin sidebar
+=begin tip References Aren't Pointers
 
 Perl does not offer native access to memory locations. The address of the
 reference is a value used as an identifier. Unlike pointers in a language such
@@ -120,7 +121,7 @@ as C, you cannot modify the address or treat it as an address into memory.
 These addresses are only I<mostly> unique because Perl may reuse storage
 locations as it reclaims unused memory.
 
-=end sidebar
+=end tip
 
 =head2 Array References
 
@@ -179,12 +180,12 @@ The arrow is necessary to distinguish between a scalar named C<$cards_ref> and
 an array named C<@cards_ref>. Note the use of the scalar sigil (L<sigils>) to
 access a single element.
 
-=begin sidebar
+=begin tip Doubling Sigils
 
 An alternate syntax prepends another scalar sigil to the array reference. It's
 shorter, if uglier, to write C<< my $first_card = B<$$cards_ref[0]>; >>.
 
-=end sidebar
+=end tip
 
 Use the curly-brace dereferencing syntax to slice (L<array_slices>) an array
 reference:
@@ -217,7 +218,7 @@ scoping. For example:
 
 =begin programlisting
 
-    my @meals      = qw( waffles sandwiches pizza );
+    my @meals      = qw( soup sandwiches pizza );
     my $sunday_ref = \@meals;
     my $monday_ref = \@meals;
 
@@ -229,7 +230,7 @@ scoping. For example:
 
 =begin programlisting
 
-    my @meals      = qw( waffles sandwiches pizza );
+    my @meals      = qw( soup sandwiches pizza );
     my $sunday_ref = [ @meals ];
     my $monday_ref = [ @meals ];
 
@@ -288,12 +289,12 @@ or retrieve) by using the dereferencing arrow:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Doubling Sigils Redux
 
-As with array references, you may eschew the dereferencing arrow for a
-prepended scalar sigil, such as C<$$colors_ref{$color}>.
+As with array references, you may eschew the dereferencing arrow for another
+prefixed scalar sigil, such as C<$$colors_ref{$color}>.
 
-=end sidebar
+=end tip
 
 Use the array sigil (C<@>) and disambiguation braces to slice a hash reference:
 
@@ -320,13 +321,67 @@ Create anonymous hashes in place with curly braces:
 As with anonymous arrays, anonymous hashes create a new anonymous hash on every
 execution.
 
-=begin sidebar
+=begin tip Watch Those Braces!
 
 The common novice error of assigning an anonymous hash to a standard hash
 produces a warning about an odd number of elements in the hash. Use parentheses
 for a named hash and curly brackets for an anonymous hash.
 
-=end sidebar
+=end tip
+
+=head2 Automatic Dereferencing
+
+Z<automatic_dereferencing>
+
+X<builtins; C<push>>
+
+As of Perl 5.14, Perl can automatically dereference certain references on your
+behalf. Given an array reference in C<$arrayref>, you can write:
+
+=begin programlisting
+
+    push $arrayref, qw( list of values );
+
+=end programlisting
+
+Given an expression which returns an array reference, you can do the same:
+
+=begin programlisting
+
+    push $houses{$location}[$closets], \@new_shoes;
+
+=end programlisting
+
+X<builtins; C<push>>
+X<builtins; C<pop>>
+X<builtins; C<shift>>
+X<builtins; C<unshift>>
+X<builtins; C<splice>>
+X<builtins; C<keys>>
+X<builtins; C<values>>
+X<builtins; C<each>>
+
+The same goes for the array operators C<pop>, C<shift>, C<unshift>, C<splice>,
+C<keys>, C<values>, and C<each>.
+
+Similarly, Perl can also automatically dereference hash references used with
+C<keys>, C<values>, and C<each>.
+
+If the reference provided is not of the proper type--if it does not dereference
+properly--Perl will throw an exception. While this may seem more dangerous than
+explicitly dereferencing references directly, it is in fact the same behavior:
+
+=begin programlisting
+
+    my $ref = sub { ... };
+
+    # will throw an exception
+    push  $ref, qw( list of values );
+
+    # will also throw an exception
+    push @$ref, qw( list of values );
+
+=end programlisting
 
 =head2 Function References
 
@@ -413,23 +468,26 @@ Z<lexical_filehandles>
 
 X<filehandles; references>
 X<references; filehandles>
+X<C<IO::File>>
+X<C<IO::Handle>>
 
-When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you
-deal with filehandle references. Internally, these filehandles are
-objects of the class C<IO::Handle> (as of Perl 5.12, they are
-C<IO::File> objects).  When you load that module (as of Perl 5.14,
-C<IO::File> will be loaded for you automatically), you can call
-methods on filehandles:
+When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
+with filehandle references. Internally, these filehandles are objects of the
+class C<IO::File>. You can call methods on them directly. As of Perl 5.14, this
+is as simple as:
 
 =begin programlisting
 
-    use IO::Handle;
     use autodie;
 
     open my $out_fh, '>', 'output_file.txt';
     $out_fh->say( 'Have some text!' );
 
 =end programlisting
+
+In 5.12, you must write C<use IO::File;> before this will work. Before 5.12,
+these objects were instances of C<IO::Handle>, so you had to C<use> that
+instead.
 
 You may see old code which takes references to typeglobs, such as:
 

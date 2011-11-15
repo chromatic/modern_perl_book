@@ -7,7 +7,7 @@ X<perldoc>
 Perl has a culture of useful documentation.  The C<perldoc> utility is part of
 every complete Perl 5 installationN<However your Unix-like system may require
 you to install an additional package such as C<perl-doc> on Debian or Ubuntu
-GNU/Linux.> C<perldoc> displays the documentation of every Perl module
+GNU/Linux.>. C<perldoc> displays the documentation of every Perl module
 installed on the system--whether a core module or one installed from the
 Comprehensive Perl Archive Network (CPAN)--as well as thousands of pages of
 Perl's copious core documentation.
@@ -39,7 +39,7 @@ The first example displays the documentation embedded within the C<List::Util>
 module. The second example displays a pure documentation file, in this case the
 table of contents of the core documentation. The third example displays a pure
 documentation file included as part of a CPAN distribution (L<moose>).
-C<perldoc> hides these details; here's no distinction between reading the
+C<perldoc> hides these details; there's no distinction between reading the
 documentation for a core library such as C<Data::Dumper> or one installed from
 the CPAN.
 
@@ -48,14 +48,14 @@ demonstrates sample uses, and then contains a detailed explanation of the
 module and its interface. While the amount of documentation varies by author,
 the form of the documentation is remarkably consistent.
 
-=begin sidebar
+=begin tip How to Read the Documentation
 
 C<perldoc perltoc> displays the table of contents of the core documentation,
 and C<perldoc perlfaq> displays the table of contents for Frequently Asked
 Questions about Perl 5. Skimming these files will give you a great overview of
 Perl 5.
 
-=end sidebar
+=end tip
 
 X<perldoc; C<-q> (search perlfaq)>
 
@@ -79,13 +79,13 @@ displays the documentation for the variable which contains the current
 program's process id. Depending on your shell, you may have to quote the
 variable appropriately.
 
-=begin sidebar
+=begin tip Deciphering Code
 
 C<perldoc perlop> and C<perldoc perlsyn> document Perl's symbolic operators and
 syntactic constructs. C<perldoc perldiag> explains the meanings of Perl's
 warning messages. C<perldoc perlvar> lists all of Perl's symbolic variables.
 
-=end sidebar
+=end tip
 
 The C<-l> option causes C<perldoc> to display the I<path> to the documentation
 file rather than the contents of the documentationN<Be aware that a module may

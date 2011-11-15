@@ -73,13 +73,13 @@ The core module C<Scalar::Util> contains a C<looks_like_number()> function
 which uses the same parsing rules as the Perl 5 grammar to extract a number
 from a string.
 
-=begin sidebar
+=begin tip Mathematicians Rejoice
 
 The strings C<Inf> and C<Infinity> represent the infinite value and behave as
 numbers. The string C<NaN> represents the concept "not a number". Numifying
-them produces no "Argument isn't numeric" warning. Mathematicians, rejoice.
+them produces no "Argument isn't numeric" warning.
 
-=end sidebar
+=end tip
 
 =head2 Reference Coercion
 

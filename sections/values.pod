@@ -12,10 +12,10 @@ Where variables allow the abstract manipulation of data, the values they hold
 make programs concrete and useful. The more accurate your values, the better
 your programs.  These values are data--your aunt's name and address, the
 distance between your office and a golf course on the moon, or the weight of
-all cookies you've eaten in the past year. Within your program, the rules
-regarding the format of that data are often strict. Effective programs need
-effective (simple, fast, most compact, most efficient) ways of representing
-their data.
+all of the cookies you've eaten in the past year. Within your program, the
+rules regarding the format of that data are often strict. Effective programs
+need effective (simple, fast, most compact, most efficient) ways of
+representing their data.
 
 =head2 Strings
 
@@ -41,16 +41,9 @@ quotes:
 
 X<strings; single-quoted>
 
-=begin sidebar
-
-Perl strings have variable lengths. As you manipulate and modify strings, Perl
-will change their sizes as appropriate.
-
-=end sidebar
-
 Characters in a I<single-quoted string> represent themselves literally, with
 two exceptions. Embed a single quote inside a single-quoted string by escaping
-the quote with a leading backlash:
+the quote with a leading backslash:
 
 =begin programlisting
 
@@ -67,8 +60,6 @@ the closing delimiter and producing a syntax error:
 
 =end programlisting
 
-=begin sidebar
-
 Any other backslash will be part of the string as it appears, unless two
 backslashes are adjacent, in which case the first will escape the second:
 
@@ -78,8 +69,6 @@ backslashes are adjacent, in which case the first will escape the second:
         'single quotes backslash escaping');
 
 =end programlisting
-
-=end sidebar
 
 X<strings; double-quoted>
 
@@ -117,12 +106,28 @@ equivalent:
 
 These sequences are often easier to read than their whitespace equivalents.
 
+X<concatenation>
+X<strings; concatenation>
+X<operators; C<.>>
+
+Perl strings have variable lengths. As you manipulate and modify strings, Perl
+will change their sizes as appropriate. For example, you can combine multiple
+strings into a larger string with the I<concatenation> operator C<.>:
+
+=begin programlisting
+
+    my $kitten = 'Choco' . ' ' . 'Spidermonkey';
+
+=end programlisting
+
+This is effectively the same as if you'd initialized the string all at once.
+
 X<interpolation>
 X<strings; interpolation>
 
 You may also I<interpolate> the value of a scalar variable or the values of an
 array within a double-quoted string, such that the I<current> contents of the
-variable become part of the string as if you'd used concatenation directly:
+variable become part of the string as if you'd concatenated them:
 
 =begin programlisting
 
@@ -253,13 +258,13 @@ represent a number between 0 and 255.
 
 =back
 
-=begin sidebar
+=begin tip Words Matter
 
 Why I<octet> and not I<byte>? Assuming that one character fits in one byte will
 cause you no end of Unicode grief. Separate the idea of memory storage from
 character representation.
 
-=end sidebar
+=end tip
 
 Unicode strings and binary strings look similar. Each has a C<length()>.  Each
 supports standard string operations such as concatenation, splicing, and
@@ -374,7 +379,7 @@ you to use Unicode characters in strings and identifiers:
 
     sub E<pound>_to_E<yen> { ... }
 
-    my $pounds = E<pound>_to_E<yen>('1000E<pound>');
+    my $yen = E<pound>_to_E<yen>('1000E<pound>');
 
 =end programlisting
 
@@ -509,8 +514,8 @@ produce another Unicode string.
 If both strings are octet streams, Perl will concatenate them into a new octet
 string. If both values are octets of the same encoding--both Latin-1, for
 example, the concatenation will work correctly. If the octets do not share an
-encoding, the concatenation append UTF-8 data to Latin-1 data, producing a
-sequence of octets which makes sense in I<neither> encoding. This could happen
+encoding, for example a concatenation appending UTF-8 data to Latin-1 data, then the
+resulting sequence of octets makes sense in I<neither> encoding. This could happen
 if the user entered a name as UTF-8 data and the greeting were a Latin-1 string
 literal, but the program decoded neither.
 
@@ -533,7 +538,7 @@ U<http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by
 X<C<unicode_strings>>
 X<pragmas; C<feature>>
 
-Perl 5.12 added a feature called C<unicode_strings>, which enables Unicode
+Perl 5.12 added a feature, C<unicode_strings>, which enables Unicode
 semantics for all string operations within its scope. Perl 5.14 improved this
 feature; if you work with Unicode in Perl, it's worth upgrading to at least
 Perl 5.14.
@@ -567,20 +572,20 @@ X<C<0>>
 X<C<0x>>
 
 The emboldened characters are the numeric prefixes for binary, octal, and hex
-notation respectively. Be aware that a leading zero I<always> indicates octal
-mode.
+notation respectively. Be aware that a leading zero on an integer I<always>
+indicates octal mode.
 
 X<numbers; underscore separator>
 X<underscore>
 
-=begin sidebar
+=begin tip When 1.99 + 1.99 is 4
 
 Even though you can write floating-point values explicitly in Perl 5 with
 perfect accuracy, Perl 5 stores them internally in a binary format. This
 representation is sometimes imprecise in specific ways; consult C<perldoc
 perlnumber> for more details.
 
-=end sidebar
+=end tip
 
 You may not use commas to separate thousands in numeric literals, lest the
 parser interpret the commas as comma operators. Instead, use underscores within
@@ -658,8 +663,8 @@ defined value (anything other than C<undef>):
 
     my $status = 'suffering from a cold';
 
-    say B<defined> $status;  # 1, which is true
-    say B<defined> undef;    # an empty string, which is false
+    say B<defined> $status;  # 1, which is a true value
+    say B<defined> undef;    # an empty string; a false value
 
 =end programlisting
 
@@ -753,13 +758,13 @@ list of strings:
 
 =end programlisting
 
-=begin sidebar
+=begin tip No Comment Please
 
-Perl will produce a warning if a C<qw()> contains a comma or the comment
-character (C<#>), because not only are such characters rare in a C<qw()>, their
-presence usually indicates an oversight.
+Perl will emit a warning if a C<qw()> contains a comma or the comment character
+(C<#>), because not only are such characters rare in a C<qw()>, their presence
+usually indicates an oversight.
 
-=end sidebar
+=end tip
 
 Lists can (and often do) occur as the results of expressions, but these lists
 do not appear literally in source code.

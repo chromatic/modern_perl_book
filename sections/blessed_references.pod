@@ -130,13 +130,8 @@ without breaking external code. Accessor methods are safer:
 =end programlisting
 
 ... and now you're starting to write manually what Moose gives you for free.
-
-=begin sidebar
-
-Moose encourages you to write better code by using accessors instead of
-accessing attributes directly.
-
-=end sidebar
+Better yet, Moose encourages people to use accessors instead of direct access
+by hiding the accessor generation code. Goodbye, temptation.
 
 =head2 Method Lookup and Inheritance
 
@@ -159,13 +154,13 @@ extends class, Perl looks in the parent class (and so on and so on) until it
 finds a C<number()>. If Perl finds C<number()>, it calls that method with
 C<$joel> as an invocant.
 
-=begin sidebar
+=begin tip Keeping Namespaces Clean
 
 X<CPAN; C<namespace::autoclean>>
 
 The C<namespace::autoclean> CPAN module can help avoid unintentional collisions between imported functions and methods.
 
-=end sidebar
+=end tip
 
 X<C<@ISA>>
 X<OO; C<@ISA>>
@@ -199,12 +194,8 @@ pragma, but C<parent> superseded C<base> in Perl 5.10.>:
 
 =end programlisting
 
-=begin programlisting
-
 Moose has its own metamodel which stores extended inheritance information; this
 offers additional features.
-
-=end programlisting
 
 X<multiple inheritance>
 X<OO; inheritance>
@@ -267,7 +258,7 @@ dispatch to an overridden method of the appropriate name. You can provide your
 own arguments to the overridden method, but most code reuses C<@_>. Be careful
 to C<shift> off the invocant if you do.
 
-=begin sidebar
+=begin tip The Brokenness of C<SUPER::>
 
 X<CPAN; C<SUPER>>
 
@@ -278,7 +269,7 @@ parent. The desire for backwards compatibility has kept this misfeature in
 place. The C<SUPER> module from the CPAN offers a workaround. Moose's
 C<super()> does not suffer the same problem.
 
-=end sidebar
+=end tip
 
 =head2 Strategies for Coping with Blessed References
 

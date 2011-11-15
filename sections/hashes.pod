@@ -7,9 +7,9 @@ X<hashes>
 A I<hash> is a first-class Perl data structure which associates string keys
 with scalar values. In the same way that the name of a variable corresponds to
 a storage location, a key in a hash refers to a value. Think of a hash like you
-would a telephone book: use your friend's name to look up her number. Other
-languages call hashes I<tables>, I<associative arrays>, I<dictionaries>, or
-I<maps>.
+would a telephone book: use the names of your friends to look up their numbers.
+Other languages call hashes I<tables>, I<associative arrays>, I<dictionaries>,
+or I<maps>.
 
 Hashes have two important properties: they store one scalar per unique key and
 they provide no specific ordering of keys.
@@ -152,13 +152,13 @@ automatically according to the same rules as fat commas:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Don't Quote Me
 
 Novices often always quote string literal hash keys, but experienced developers
 elide the quotes whenever possible. In this way, the presence of quotes in hash
 keys signifies an intention to do something different.
 
-=end sidebar
+=end tip
 
 Even Perl 5 builtins get the autoquoting treatment:
 
@@ -337,12 +337,12 @@ Reset a hash's iterator with C<keys> or C<values> in void context:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Reset Your Iterators
 
 The single hash iterator is a well lamented caveat, but it doesn't come up as
 often as you might expect. Be cautious, but use C<each> when you need it.
 
-=end sidebar
+=end tip
 
 =head2 Hash Slices
 
@@ -399,13 +399,9 @@ Hash slices make it easy to merge two hashes:
 This is equivalent to looping over the contents of C<%canada_addresses>
 manually, but is much shorter.
 
-=begin sidebar
-
 What if the same key occurs in both hashes?  The hash slice approach always
 I<overwrites> existing key/value pairs in C<%addresses>. If you want other
 behavior, looping is more appropriate.
-
-=end sidebar
 
 =head2 The Empty Hash
 
@@ -438,7 +434,7 @@ you can safely ignore.
 In list context, a hash evaluates to a list of key/value pairs similar to what
 you receive from the C<each> operator.  However, you I<cannot> iterate over
 this list the same way you can iterate over the list produced by C<each>, lest
-the loop never terminate:
+the loop will never terminate:
 
 =begin programlisting
 
@@ -521,7 +517,7 @@ expensive operation with little overhead:
         sub fetch_user
         {
             my $id = shift;
-            $user_cache{$id} ||= create_user($id);
+            $user_cache{$id} //= create_user($id);
             return $user_cache{$id};
         }
     }
@@ -535,23 +531,20 @@ X<operators; defined-or>
 
 This I<orcish maneuver>N<Or-cache, if you like puns.> returns the value from
 the hash, if it exists. Otherwise, it calculates, caches, and returns the
-value.  Beware that the boolean-or assignment operator (C<||=>) operates on
-boolean values; if your cached value evaluates to false in a boolean context,
-use the defined-or assignment operator (C<//=>) instead:
+value. The defined-or assignment operator (C<//=>) evaluates its left operand.
+If that operand is not defined, the operator assigns the lvalue the value of
+its right operand. In other words, if there's no value in the hash for the
+given key, this function will call C<create_user()> with the key and update the
+hash.
 
-=begin programlisting
-
-        sub fetch_user
-        {
-            my $id = shift;
-            $user_cache{$id} B<//=> create_user($id);
-            return $user_cache{$id};
-        }
-
-=end programlisting
+Perl 5.10 introduced the defined-or and defined-or assignment operators. Prior
+to 5.10, most code used the boolean-or assignment operator (C<||=>) for this
+purpose. Unfortunately, some valid values evaluate to a false value in boolean
+context, so evaluating the I<definedness> of values is almost always more
+accurate.
 
 This lazy orcish maneuver tests for the definedness of the cached value, not
-truthiness. The defined-or assignment operator was new in Perl 5.10.
+truthiness.
 
 X<hashes; named parameters>
 
@@ -621,7 +614,7 @@ To prevent someone from accidentally adding a hash key you did not intend
 (whether as a typo or from untrusted user input), use the C<lock_keys()>
 function to restrict the hash to its current set of keys. Any attempt to add a
 new key to the hash will raise an exception. This is lax security suitable only
-for preventing accidents; anyone can use theC<unlock_keys()> function to remove
+for preventing accidents; anyone can use the C<unlock_keys()> function to remove
 this protection.
 
 Similarly you can lock or unlock the existing value for a given key in the hash

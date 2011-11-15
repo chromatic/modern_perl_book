@@ -151,13 +151,14 @@ functions, and methods. Assigning a reference to a symbol table entry installs
 or replaces the appropriate entry. To promote an anonymous function to a
 method, store that function's reference in the symbol table.
 
-=begin sidebar
+=begin tip Symbol Tables Simplified
 
 X<CPAN; C<Package::Stash>>
+
 The CPAN module C<Package::Stash> offers a nicer interface to this symbol table
 hackery.
 
-=end sidebar
+=end tip
 
 X<C<strict> pragma>
 X<pragmas; C<strict>>

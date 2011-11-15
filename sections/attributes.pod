@@ -56,13 +56,13 @@ other classes. This separates the concern of specifying what this class must do
 with the concern of how other classes do their work, and offers great
 flexibility.
 
-=begin sidebar
+=begin tip Practical Attributes
 
 X<Catalyst>
 
 The Catalyst web framework also uses attributes to determine the visibility and behavior of methods within web applications.
 
-=end sidebar
+=end tip
 
 =head2 Drawbacks of Attributes
 

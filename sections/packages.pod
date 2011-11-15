@@ -38,10 +38,10 @@ complete package name.
 
 X<scope; packages>
 
-The scope of a package continues until the next C<package> declaration
-or the end of the file, whichever comes first. Perl 5.14 enhanced
-C<package> so that you may provide a block which explicitly delineates
-the scope of the declaration:
+The scope of a package continues until the next C<package> declaration or the
+end of the file, whichever comes first. Perl 5.14 enhanced C<package> so that
+you may provide a block which explicitly delineates the scope of the
+declaration:
 
 =begin programlisting
 
@@ -123,10 +123,10 @@ argument:
     # require at least 2.1
     Some::Plugin->VERSION( 2.1 );
 
-=end programlisting
-
     die "Your plugin $version is too old"
         unless $version > 2;
+
+=end programlisting
 
 =head2 Packages and Namespaces
 

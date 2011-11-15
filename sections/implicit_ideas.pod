@@ -24,7 +24,7 @@ C<$_> as the variable, but it's often unnecessary.
 X<builtins; C<chomp>>
 
 For example, the C<chomp> builtin removes any trailing newline sequence from
-the given stringN<See C<$/> for more precise details of its behavior.>:
+the given stringN<See C<perldoc -f chomp> and C<$/> for more precise details of its behavior.>:
 
 =begin programlisting
 
@@ -47,7 +47,7 @@ from C<$_>. These two lines of code are equivalent:
 
 C<$_> has the same function in Perl as the pronoun I<it> in English. Read the
 first line as "C<chomp> I<it>" and the second as "C<chomp>". Perl understands
-what you mean when you say "C<chomp>"; Perl will always chomp I<it>.  I<it>.
+what you mean when you say "C<chomp>"; Perl will always chomp I<it>.
 
 X<builtins; C<say>>
 X<builtins; C<print>>
@@ -95,7 +95,7 @@ provide an alternative.
 
 X<builtins; C<for>>
 
-Perl's looping directives (L<looping_directives>) default to C<$_> as the
+Perl's looping directives (L<looping_directives>) default to using C<$_> as the
 iteration variable. Consider C<for> iterating over a list:
 
 =begin programlisting
@@ -258,15 +258,25 @@ command-line filter which reverses its input:
 
 =end programlisting
 
-=begin sidebar
-
 Why C<scalar>? C<say> imposes list context on its operands. C<reverse> passes
 its context on to its operands, treating them as a list in list context and a
 concatenated string in scalar context. If the behavior of C<reverse> sounds
 confusing, your instincts are correct. Perl 5 arguably should have separated
 "reverse a string" from "reverse a list".
 
-=end sidebar
+=begin tip C<readline>
+
+X<builtins; C<readline>
+X<builtins; C<glob>
+
+Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
+C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
+C<readline> behaves just like C<< <> >>, so you can now use C<readline>
+everywhere. For historic reasons, C<< <> >> is still more common, but consider
+using C<readline> as a more readable alternative. You probably prefer C<glob
+'*.html'> to C<< <*.html> >>, right? It's the same idea.
+
+=end tip
 
 =begin sidebar
 

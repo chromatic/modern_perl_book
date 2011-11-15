@@ -225,7 +225,7 @@ X<quantifiers; greedy>
 
 The C<+> and C<*> quantifiers are I<greedy>, as they try to match as much of
 the input string as possible. This is particularly pernicious. Consider a
-naE<iuml> use the "zero or more non-newline characters" pattern of C<.*>:
+naE<iuml>ve use of the "zero or more non-newline characters" pattern of C<.*>:
 
 =begin programlisting
 
@@ -438,14 +438,14 @@ I<character class> by enclosing them in square brackets:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Interpolation Happens
 
 Without curly braces around the name of the scalar variable C<$ascii_vowels>,
 Perl's parser would interpret the variable name as C<$ascii_vowelst>, which
 either causes a compile-time error about an unknown variable or interpolates
 the contents of an existing C<$ascii_vowelst> into the regex.
 
-=end sidebar
+=end tip
 
 X<C<->; character class range regex metacharacter>
 
@@ -485,13 +485,9 @@ Use the caret (C<^>) as the first element of the character class to mean
 
 =end programlisting
 
-=begin sidebar
-
 Use a caret anywhere but this position to make it a member of the character
 class. To include a hyphen in a negated character class, place it after the
 caret or at the end of the class, or escape it.
-
-=end sidebar
 
 =head1 Capturing
 
@@ -588,12 +584,12 @@ provides additional clarity. Counting left parentheses is tedious work, and
 combining regexes which each contain numbered captures is far too difficult.
 Named captures improve regex maintainability.
 
-=begin sidebar
+=begin tip Safer Capture Composition
 
 Named captures I<can> produce name collisions, though far less frequent than
 number collisions. To avoid this, use named captures only in top-level regexes.
 
-=end sidebar
+=end tip
 
 In list context, a regex match against a string returns a list of all captured
 substrings:
@@ -711,12 +707,12 @@ X<C<(?:)>; non-capturing regex group>
 
 The C<(?:)> sequence groups a series of atoms without making a capture.
 
-=begin sidebar
+=begin tip Non-Captured For Your Protection
 
 A stringified regular expression includes an enclosing non-capturing group;
 C<qr/rice|beans/> stringifies as C<(?^u:rice|beans)>.
 
-=end sidebar
+=end tip
 
 =head1 Other Escape Sequences
 
@@ -842,7 +838,7 @@ sizes; you may not use quantifiers:
 
 =begin programlisting
 
-    my $middle_cat = qr/(?<!^)cat/;
+    my $middle_cat = qr/(?<!\A)cat/;
 
 =end programlisting
 
@@ -937,10 +933,10 @@ character (C<->):
 X<C</m>; multiline regex modifier>
 X<regex; C</m> modifier>
 X<regex; multiline>
-X<C<^>; start of line regex metacharacter>
-X<C<$>; end of line regex metacharacter>
+X<C<\A>; start of line regex metacharacter>
+X<C<\Z>; end of line regex metacharacter>
 
-The multiline operator, C</m>, allows the C<^> and C<$> anchors to match at any
+The multiline operator, C</m>, allows the C<\A> and C<\Z> anchors to match at any
 newline embedded within the string.
 
 X<C</s>; single line regex modifier>
@@ -965,8 +961,8 @@ original:
 =begin programlisting
 
     my $status     = 'I am hungry for pie.';
-    my $newstatus  = $status =~ s/pie/cake/;
-    my $statuscopy = $status =~ s/liver and onions/bratwurst/;
+    my $newstatus  = $status =~ s/pie/cake/r;
+    my $statuscopy = $status =~ s/liver and onions/bratwurst/r;
 
     is( $status, 'I am hungry for pie.',
         'original string should be unmodified' );
@@ -987,7 +983,7 @@ whitespace and comments. The results are often much more readable:
 =begin programlisting
 
     my $attr_re = qr{
-        ^                     # start of line
+        \A                    # start of line
 
         # miscellany
         (?:

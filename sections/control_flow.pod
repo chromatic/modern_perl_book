@@ -78,7 +78,7 @@ action when the conditional expression evaluates to I<false>:
 
 =begin programlisting
 
-    say "You're no Bob!" unless $name eq 'Bob';
+    say "You're not Bob!" unless $name eq 'Bob';
 
 =end programlisting
 
@@ -278,15 +278,8 @@ example:
 
 =end programlisting
 
-=begin sidebar
-
-We will see C<ok()> in chapter 9. All we need to know now is that its
-return value is the boolean value obtained by evaluating the first
-argument.
-
-=end sidebar
-
-This example prints:
+The return value of C<ok()> (L<testing>) is the boolean value obtained by
+evaluating the first argument, so this code prints:
 
 =begin screen
 
@@ -347,6 +340,7 @@ using an undefined value might raise a warning:
 
 =begin programlisting
 
+    my $barbeque;
     if (defined $barbeque and $barbeque eq 'pork shoulder') { ... }
 
 =end programlisting
@@ -377,17 +371,16 @@ C<undef>--evaluates to true in boolean context. A hash which contains any
 elements--even a key and a value of C<undef>--evaluates to a true value in
 boolean context.
 
-=begin sidebar
+=begin tip Greater Control Over Context
 
-X<C<Want>>
+X<CPAN; C<Want>>
 X<pragmas; C<overloading>>
 
-The C<Want> module available from the CPAN allows you to detect boolean context
-within your own functions.  The core C<overloading> pragma (L<overloading>)
-allows you to specify what your own data types produce when evaluated in
-various contexts.
+The C<Want> module from the CPAN allows you to detect boolean context within
+your own functions. The core C<overloading> pragma (L<overloading>) allows you
+to specify what your own data types produce when evaluated in various contexts.
 
-=end sidebar
+=end tip
 
 =head2 Looping Directives
 
@@ -565,9 +558,9 @@ X<C<my $_>>
 X<C<$_>; lexical>
 
 Iterator scoping with the topic variable provides one common source of
-confusion. Consider a function C<topic_mangler()> modifies C<$_> on purpose. If
-code iterating over a list called C<topic_mangler()> without protecting C<$_>,
-debugging fun would ensue:
+confusion. Consider a function C<topic_mangler()> which modifies C<$_> on
+purpose. If code iterating over a list called C<topic_mangler()> without
+protecting C<$_>, debugging fun would ensue:
 
 =begin programlisting
 
@@ -711,12 +704,33 @@ C<@values> array by modifying the array with each loop iteration:
 
 =begin programlisting
 
+    while (@values)
+    {
+        my $value = shift @values;
+        say $value;
+    }
+
+=end programlisting
+
+=begin sidebar
+
+Modifying C<@values> inside of the C<while> condition check also works, but it
+has some subtleties related to the truthiness of each value.
+
+=begin programlisting
+
     while (my $value = shift @values)
     {
         say $value;
     }
 
 =end programlisting
+
+This loop will exit as soon as it reaches an element that evaluates to a false
+value, not necessarily when it has exhausted the array. That may be the desired
+behavior, but is often surprising to novices.
+
+=end sidebar
 
 X<loops; C<until>>
 
@@ -766,14 +780,14 @@ contained only the character C<0>--would end the loop. The C<readline> (C<< <>
 >>) operator returns an undefined value only when it has reached the end of the
 file.
 
-=begin sidebar
+=begin tip C<chomp> Your Lines
 
 X<builtins; C<chomp>>
 
-Use the C<chomp> builtin to remove line-ending characters from each
-line. Many novices forget this.
+Use the C<chomp> builtin to remove line-ending characters from each line. Many
+novices forget this.
 
-=end sidebar
+=end tip
 
 Both C<while> and C<until> have postfix forms. Another infinite loop is:
 
@@ -1122,14 +1136,14 @@ Scissors game:
 
 Perl executes the C<default> rule when none of the other conditions match.
 
-=begin sidebar
+=begin tip Simplified Dispatch with Multimethods
 
-X<C<MooseX::MultiMethods>>
+X<CPAN; C<MooseX::MultiMethods>>
 
-The CPAN module C<MooseX::MultiMethods> allows another technique to reduce this
-code further.
+The CPAN module C<MooseX::MultiMethods> provides another technique to simplify
+this code.
 
-=end sidebar
+=end tip
 
 The C<when> construct is even more powerful; it can match (L<smart_match>)
 against many other types of expressions including scalars, aggregates,

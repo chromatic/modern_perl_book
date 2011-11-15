@@ -22,12 +22,13 @@ input with behavior:
     (
         plus     => \&add_two_numbers,
         minus    => \&subtract_two_numbers,
+        times    => \&multiply_two_numbers,
         # ... and so on
     );
 
     sub add_two_numbers      { $_[0] + $_[1] }
-
     sub subtract_two_numbers { $_[0] - $_[1] }
+    sub multiply_two_numbers { $_[0] * $_[1] }
 
     sub dispatch
     {
@@ -56,16 +57,16 @@ named function, such as to declare the dispatch table's functions in place:
 
     my %dispatch =
     (
-        plus     => sub { $_[0]  + $_[1] },
-        minus    => sub { $_[0]  - $_[1] },
-        times    => sub { $_[0]  * $_[1] },
-        goesinto => sub { $_[0]  / $_[1] },
-        raisedto => sub { $_[0] ** $_[1] },
+        plus      => sub { $_[0]  + $_[1] },
+        minus     => sub { $_[0]  - $_[1] },
+        times     => sub { $_[0]  * $_[1] },
+        dividedby => sub { $_[0]  / $_[1] },
+        raisedto  => sub { $_[0] ** $_[1] },
     );
 
 =end programlisting
 
-=begin sidebar
+=begin tip Defensive Dispatch
 
 This dispatch table offers some degree of security; only those functions mapped
 within the table are available for users to call. If your dispatch function
@@ -74,7 +75,7 @@ directly to the name of a function to call, a malicious user could conceivably
 call any function in any other namespace by crafting an operator name of
 C<'Internal::Functions::some_malicious_function'>.
 
-=end sidebar
+=end tip
 
 You may also see anonymous functions passed as function arguments:
 
@@ -124,14 +125,14 @@ named or anonymous with introspection:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Who Are You?
 
 X<CPAN; C<Sub::Identify>>
 
 The CPAN module C<Sub::Identify>'s C<sub_name> function simplifies this
 introspection.
 
-=end sidebar
+=end tip
 
 The result may be surprising:
 

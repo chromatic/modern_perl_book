@@ -38,7 +38,7 @@ The builtin C<prototype> takes the name of a function and returns a string
 representing its prototype. Use the C<CORE::> form to see the prototype of a
 builtin:
 
-=begin programlisting
+=begin screen
 
     $ B<perl -E "say prototype 'CORE::push';">
     \@@
@@ -47,12 +47,12 @@ builtin:
     $ B<perl -E "say prototype 'CORE::open';">
     *;$@
 
-=end programlisting
+=end screen
 
 C<prototype> will return C<undef> for those builtins whose functions you cannot
 emulate:
 
-=begin programlisting
+=begin screen
 
     $ B<perl -E "say prototype 'CORE::system' // 'undef' ">
     undef
@@ -62,16 +62,16 @@ emulate:
     undef
     # Builtin function C<prototype> has no prototype.
 
-=end programlisting
+=end screen
 
 Remember C<push>?
 
-=begin programlisting
+=begin screen
 
     $ B<perl -E "say prototype 'CORE::push';">
     \@@
 
-=end programlisting
+=end screen
 
 The C<@> character represents a list. The backslash forces the use of a
 I<reference> to the corresponding argument. This prototype means that C<push>
@@ -175,9 +175,9 @@ bareword C<PI> or a call to C<PI()>, with respect to scoping and visibility.
 
 X<C<constant> pragma>
 X<pragmas; C<constant>>
-X<CPAN; C<Readonly>>
+X<CPAN; C<Const::Fast>>
 
-The core pragma C<constant> handles these details for you. The C<Readonly>
+The core pragma C<constant> handles these details for you. The C<Const::Fast>
 module from the CPAN creates constant scalars which you can interpolate into
 strings.
 

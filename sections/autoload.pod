@@ -8,7 +8,7 @@ program:
 
 =begin programlisting
 
-    #! perl
+    #!/usr/bin/perl
 
     use Modern::Perl;
 
@@ -275,12 +275,12 @@ dispatch to it instead of C<AUTOLOAD()>:
 
 =end programlisting
 
-=begin sidebar
+=begin tip A Very Special Method
 
 The special methods C<import()>, C<unimport()>, and C<VERSION()> never go
 through C<AUTOLOAD()>.
 
-=end sidebar
+=end tip
 
 If you mix functions and methods in a single namespace which inherits from
 another package which provides its own C<AUTOLOAD()>, you may see the strange
