@@ -101,6 +101,12 @@ if you don't explicitly read from those variables.
 Modern Perl programs should use the C<@-> variable as a replacement for the
 terrible three.
 
+=for author
+
+I don't understand this strategy. What is being replaced? In Modern Perl, we have the /p modifier with gives use the not-so-terrible three, ${^MATCH}, ${^PREMATCH}, and ${^POSTMATCH}. 
+
+=end for
+
 =head2 Useful Super Globals
 
 X<super globals; useful>
