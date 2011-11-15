@@ -278,20 +278,6 @@ using C<readline> as a more readable alternative. You probably prefer C<glob
 
 =end tip
 
-=begin sidebar
-
-Perl's C<< <$fh> >> operator is implemented with the C<readline>
-function. That is, 'C<readline $fh>' does the same thing. However,
-until Perl 5.10, the readline function had no default, so a bare
-C<readline> did not do the same thing as empty C<< <> >>. But ever
-since Perl 5.10, a bare C<readline> behaves just like C<< <> >>, so we
-can now use C<readline> everywhere. For historic reasons, C<< <> >> is
-still more common, but consider using C<readline> as a more readable
-alternative. You probably prefer 'C<glob '*.html'> to C<< <*.html> >>,
-right? Same idea.
-
-=end sidebar
-
 If you run it with a list of files:
 
 =begin screen
