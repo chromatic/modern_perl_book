@@ -514,3 +514,5 @@ string:
 
 Though the need for these coercions is vanishingly rare, you should understand
 these idioms if you encounter them.
+While it may look like it would be safe to remove a "useless"
+C<+ 0> from an expression, doing so may well break the code.
