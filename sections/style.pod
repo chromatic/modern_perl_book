@@ -82,7 +82,7 @@ X<CPAN; C<Perl::Tidy>>
 X<CPAN; C<CPAN::Mini>>
 
 =item * I<Follow community norms.> Perl is a community of toolsmiths. We solve
-broad problems, including code analysis (C<Perl::Critic>), reformatting
+broad problems, including static code analysis (C<Perl::Critic>), reformatting
 (C<Perl::Tidy>), and private distribution systems (C<CPAN::Mini>). Take
 advantage of the CPAN infrastructure; follow the CPAN model of writing,
 documenting, packaging, testing, and distributing your code.
