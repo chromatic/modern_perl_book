@@ -247,7 +247,7 @@ the C<SUPER::> dispatch hint:
     sub overridden
     {
         my $self = shift;
-        warn "Called overridden() in child!";
+        warn 'Called overridden() in child!';
         return $self->SUPER::overridden( @_ );
     }
 
