@@ -104,8 +104,8 @@ terrible three.
 =for author
 
 I don't understand this strategy. What is being replaced? In Modern
-Perl, we have the /p modifier with gives use the not-so-terrible
-three, ${^MATCH}, ${^PREMATCH}, and ${^POSTMATCH}.
+Perl, we have the /p modifier with gives us the not-so-terrible three,
+${^MATCH}, ${^PREMATCH}, and ${^POSTMATCH}.
 
 =end for
 
