@@ -266,8 +266,8 @@ confusing, your instincts are correct. Perl 5 arguably should have separated
 
 =begin tip C<readline>
 
-X<builtins; C<readline>
-X<builtins; C<glob>
+X<builtins; C<readline>>
+X<builtins; C<glob>>
 
 Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
 C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
