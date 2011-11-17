@@ -122,6 +122,14 @@ X<pragmas; C<vars>>
 =item * the C<vars> pragma allows you to declare package global variables, such
 as C<$VERSION> or C<@ISA> (L<blessed_references>)
 
+X<pragmas; C<feature>>
+
+=item * the C<feature> pragma allows you to enable and disable post-5.10
+features of Perl 5 individually. Where C<use 5.14;> enables all of the Perl
+5.14 features and the C<strict> pragma, C<use feature ':5.14';> does the same.
+This pragma is more useful to I<disable> individual features in a lexical
+scope.
+
 =back
 
 X<magic variables; C<$^H>>
