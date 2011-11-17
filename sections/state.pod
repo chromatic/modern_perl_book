@@ -43,7 +43,7 @@ parlor. Every hundredth person gets free sprinkles:
 
             my $order = shift;
 
-            add_sprinkles($order) if $cust_count % 100 == 0)
+            add_sprinkles($order) if ($cust_count % 100 == 0);
 
             ...
         }
@@ -67,7 +67,7 @@ between invocations:
         $cust_count++;
 
         my $order = shift;
-        add_sprinkles($order) if $cust_count % 100 == 0)
+        add_sprinkles($order) if ($cust_count % 100 == 0);
 
         ...
     }
