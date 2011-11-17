@@ -23,7 +23,7 @@ The match operator (formally C<m//>, but abbreviated C<//>) identifies a
 regular expression--in this example, C<hat>. This pattern is I<not> a word.
 Instead it means "the C<h> character, followed by the C<a> character, followed
 by the C<t> character." Each character in the pattern is an indivisible
-element,or I<atom>. It matches or it doesn't.
+element, or I<atom>. It matches or it doesn't.
 
 X<operators; C<=~>>
 X<C<=~>; regex bind>
