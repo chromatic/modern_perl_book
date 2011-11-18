@@ -17,7 +17,7 @@ X<metaprogramming>
 X<code generation>
 
 Writing programs to write programs for you--I<metaprogramming> or I<code
-generation>)--offers greater possibilities for abstraction. While you can make
+generation>--offers greater possibilities for abstraction. While you can make
 a huge mess, you can also build amazing things. For example, metaprogramming
 techniques make Moose possible (L<moose>).
 
