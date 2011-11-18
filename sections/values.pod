@@ -527,7 +527,7 @@ into five Unicode characters to form I<JosE<Atilde>E<copy>> (I<sic>) instead of
 I<JosE<eacute>> because the UTF-8 data means something else when decoded as
 Latin-1 data.
 
-See C<perldoc perluniintro> for a far more detailed explanation of  Unicode,
+See C<perldoc perluniintro> for a far more detailed explanation of Unicode,
 encodings, and how to manage incoming and outgoing data in a Unicode worldN<For
 I<far> more detail about managing Unicode effectively throughout your programs,
 see Tom Christiansen's answer to "Why does Modern Perl avoid UTF-8 by default?"
