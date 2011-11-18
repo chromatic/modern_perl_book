@@ -9,7 +9,7 @@ The simplest regexes are simple substring patterns:
 =begin programlisting
 
     my $name = 'Chatfield';
-    say "Found a hat!" if $name =~ B</hat/>;
+    say 'Found a hat!' if $name =~ B</hat/>;
 
 =end programlisting
 
