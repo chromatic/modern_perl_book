@@ -71,7 +71,7 @@ match operator to use them:
 
 =end programlisting
 
-Combine multiple regexp objects into complex patterns:
+Combine multiple regex objects into complex patterns:
 
 =begin programlisting
 
