@@ -7,7 +7,7 @@ concise, and effective code. You can learn these skills too!
 
 Perl first appeared in 1987 as a simple tool for system administration. Though
 it began by declaring and occupying a comfortable niche between shell scripting
-and C programming, it's become a powerful, general-purpose language family.
+and C programming, it has become a powerful, general-purpose language family.
 Perl 5 has a solid history of pragmatism and a bright future of polish and
 enhancementN<Perl 6 is a reinvention of programming based on the solid
 principles of Perl, but it's a subject of another book.>.
