@@ -147,7 +147,7 @@ Given a blessed reference, a method call of the form:
 =end programlisting
 
 ... looks up the name of the class associated with the blessed reference
-C<$joel>--C<Player>, in this case. Next, Perl looks for a functionN<Remember
+C<$joel>--in this case, C<Player>. Next, Perl looks for a functionN<Remember
 that Perl 5 makes no distinction between functions in a namespace and methods.>
 named C<number()> in C<Player>. If no such function exists and if C<Player>
 extends class, Perl looks in the parent class (and so on and so on) until it
