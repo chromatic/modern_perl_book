@@ -24,7 +24,7 @@ principles:
 code--when you fix a bug on one section, did you fix it in others? When you
 update one section, did you update the others?
 
-Well designed systems have little duplication. They use functions, modules,
+Well-designed systems have little duplication. They use functions, modules,
 objects, and roles to extract duplicate code into reusable components which
 accurately model the domain of the problem. The best designs allow you to add
 features by I<removing> code.

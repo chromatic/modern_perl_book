@@ -375,9 +375,10 @@ no constructor value for that attribute, the object gets the default value:
 =head3 Polymorphism
 
 Encapsulation is useful, but the real power of object orientation is much
-broader. A well designed OO program can manage many types of data. When well
-designed classes encapsulate specific details of objects into the appropriate
-places, something curious happens: the code often becomes I<less> specific.
+broader. A well-designed OO program can manage many types of data. When
+well-designed classes encapsulate specific details of objects into the
+appropriate places, something curious happens: the code often becomes I<less>
+specific.
 
 Moving the details of what the program knows about individual C<Cat>s (the
 attributes) and what the program knows that C<Cat>s can do (the methods) into

@@ -110,7 +110,7 @@ methods to get and set internal values. This simple technique leads to the
 unfortunate temptation to spread the object's responsibilities throughout the
 entire system.
 
-With a well designed object, you tell it what to do and not how to do it. As a
+With a well-designed object, you tell it what to do and not how to do it. As a
 rule of thumb, if you find yourself accessing object instance data (even
 through accessor methods), you may have too much access to an object's
 internals.
