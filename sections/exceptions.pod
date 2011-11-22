@@ -122,9 +122,8 @@ X<exceptions; custom classes with C<Exception::Class>>
 X<C<Exception::Class>>
 
 You may C<die> with either a string or a reference--even an I<object>. Applying
-regular expressions to string exceptions can be fragile.
-Error messages may change over time, even built-in ones from Perl itself.
-Objects are more
+regular expressions to string exceptions can be fragile, because error messages
+may change over time, even those built from Perl itself. Objects are more
 robust; they contain more information. You can throw any object as an
 exception, but consider using the CPAN distribution C<Exception::Class> to
 define your own class or classes of exceptions:
