@@ -184,7 +184,7 @@ strings.
 X<CPAN; C<Test::Exception>>
 X<CPAN; C<Test::Fatal>>
 
-A final reasonable use of prototypes is to extend Perl's syntax to operate on
+A reasonable use of prototypes is to extend Perl's syntax to operate on
 anonymous functions as blocks. The CPAN module C<Test::Exception> uses this to
 good effect to provide a nice API with delayed computationN<See also
 C<Test::Fatal>>. Its C<throws_ok()> function takes three arguments: a block of
@@ -243,5 +243,7 @@ with C<sort>N<Ben Tilly suggested this example.>:
 
 =end programlisting
 
-The prototype of C<$$> forces Perl to pass the sort pairs in C<@_> instead of
-the package globals C<$a> and C<$b>.
+The prototype of C<$$> forces Perl to pass the sort pairs in C<@_>. C<sort>'s
+documentation suggests that this is slightly slower than using the package
+globals C<$a> and C<$b>, but using lexical variables often makes up for any
+speed penalty.
