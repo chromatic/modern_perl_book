@@ -103,6 +103,35 @@ construct an object, call the constructor method on the class name directly:
 
 =end programlisting
 
+This syntax I<still> has a bareword problem in that if you have a function
+named C<CGI>, Perl will interpret the bareword class name as a call to the
+function, as:
+
+=begin programlisting
+
+    sub CGI;
+
+    # you wrote CGI->new(), but Perl saw
+    my $q = CGI()->new();
+
+=end programlisting
+
+While this happens rarely, you can disambiguate classnames by appending the
+package separator (C<::>) or by explicitly marking class names as string
+literals:
+
+=begin programlisting
+
+    # package separator
+    my $q = CGI::->new();
+
+    # unambiguously a string literal
+    my $q = 'CGI'->new();
+
+=end programlisting
+
+Yet almost no one ever does this.
+
 X<C<IO::File>>
 
 For the limited case of filehandle operations, the dative use is so prevalent
