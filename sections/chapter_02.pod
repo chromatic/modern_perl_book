@@ -6,15 +6,16 @@ and Sybase, for example, Perl 5 had a real extension mechanism. Larry wanted
 people to create and maintain their own extensions without fragmenting Perl
 into thousands of incompatible pidgins--and it worked.
 
-That technical accomplishment was almost as important as the growth of a community
-around Perl 5. I<People> write libraries. I<People> build on the work of other
-people. I<People> make a community worth joining and preserving and expanding.
+That technical accomplishment was almost as important as the growth of a
+community around Perl 5. I<People> write libraries. I<People> build on the work
+of other people. I<People> make a community worth joining and preserving and
+expanding.
 
 The Perl community is strong and healthy. It welcomes willing participants at
 all levels, from novices to core developers. Take advantage of the knowledge
 and experience of countless other Perl programmers, and you'll become a better
 programmer.
 
-L<perl_community>
-
 L<cpan>
+
+L<perl_community>

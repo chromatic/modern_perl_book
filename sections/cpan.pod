@@ -27,14 +27,16 @@ distribution can contain one or more I<modules>, or self-contained libraries of
 Perl code. Each distribution occupies its own CPAN namespace and provides
 unique metadata.
 
-=begin sidebar
+=begin tip The CPAN is Big, Really Big
 
 The CPAN I<adds> hundreds of registered contributors and thousands of indexed
 modules in hundreds of distributions every month. Those numbers do not take
-into account updates. In late August 2011, search.cpan.org reported 9171
-uploaders, 99011 modules, and 23260 distributions.
+into account updates. In late November 2011, search.cpan.org reported 9359
+uploaders, 101656 modules, and 23808 distributions (representing growth rates
+of 11.5%, 19.4%, and 14.3% since the previous edition of this book,
+respectively).
 
-=end sidebar
+=end tip
 
 X<search.cpan.org>
 
