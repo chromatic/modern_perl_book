@@ -486,9 +486,13 @@ Use the caret (C<^>) as the first element of the character class to mean
 
 =end programlisting
 
-Use a caret anywhere but this position to make it a member of the character
-class. To include a hyphen in a negated character class, place it after the
-caret or at the end of the class, or escape it.
+=begin tip Metacharacters in Character Classes
+
+Use a caret anywhere but the first position to make it a member of the
+character class. To include a hyphen in a negated character class, place it
+after the caret or at the end of the class, or escape it.
+
+=end tip
 
 =head1 Capturing
 
