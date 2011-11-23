@@ -835,7 +835,7 @@ class. That invocant may be the name of a class or an instance of an object:
 =begin programlisting
 
     say 'Looks like a LightSource' if     $sconce->isa( 'LightSource' );
-    say 'Monkeys do not glow'      unless $chimpy->isa( 'LightSource' );
+    say 'Hominidae do not glow'    unless $chimpy->isa( 'LightSource' );
 
 =end programlisting
 
