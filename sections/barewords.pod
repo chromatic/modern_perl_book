@@ -188,25 +188,24 @@ X<builtins; C<sort>>
 
 Finally, the C<sort> builtin can take as its second argument the I<name> of a
 function to use for sorting. While this is rarely ambiguous to the parser, it
-can confuse I<human> readers. Prefer instead a I<reference> to the sorting
-function:
+can confuse I<human> readers. The alternative of providing a function reference in a scalar is little better:
 
 =begin programlisting
 
-    # poor style; do not use
+    # bareword style
     my @sorted = sort compare_lengths @unsorted;
 
-    # better style
+    # function reference in scalar
     my $comparison = \&compare_lengths;
     my @sorted     = sort $comparison @unsorted;
 
 =end programlisting
 
-The result is one line longer, but it avoids the use of a bareword.
-Unfortunately, Perl 5's parser I<does not> understand the single-line version
-due to the special parsing of C<sort>; you cannot use an arbitrary expression
-(such as taking a reference to a named function) where a block or a scalar
-might otherwise go.
+The second option avoids the use of a bareword, but the result is one line
+longer. Unfortunately, Perl 5's parser I<does not> understand the single-line
+version due to the special parsing of C<sort>; you cannot use an arbitrary
+expression (such as taking a reference to a named function) where a block or a
+scalar might otherwise go.
 
 =begin programlisting
 
@@ -214,3 +213,8 @@ might otherwise go.
     my @sorted = sort \&compare_lengths @unsorted;
 
 =end programlisting
+
+In both cases, the way C<sort> invokes the function and provides arguments can
+be confusing (see C<perldoc -f sort> for the details). Where possible, consider
+using the block form of C<sort> instead. If you must use either function form,
+consider adding an explanatory comment.
