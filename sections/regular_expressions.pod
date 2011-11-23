@@ -103,7 +103,8 @@ X<builtins; C<index>>
 
 The C<index> builtin can also search for a literal substring within a string.
 Using a regex engine for that is like flying your autonomous combat helicopter
-to the corner store to buy spare cheese.
+to the corner store to buy spare cheese. Then again, Perl allows you to choose
+what you find most readable under your circumstances.
 
 X<regex; quantifiers>
 X<regex; zero or one quantifier>
