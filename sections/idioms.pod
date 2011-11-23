@@ -252,6 +252,10 @@ files into a scalar in a single expression:
 
     my $file = do { local $/; <$fh> };
 
+    # or
+
+    my $file; { local $/; $file = <$fh> };
+
 =end programlisting
 
 C<$/> is the input record separator.  C<local>izing it sets its value to
@@ -265,6 +269,9 @@ end of the block, C<$file> now contains the contents of the file.
 
 The second example contains no assignment and merely returns the single line
 read from the filehandle.
+
+The third example avoids a second copy of the string containing the file's
+contents; it's not as pretty, but it uses the least amount of memory.
 
 =begin tip C<File::Slurp>
 
