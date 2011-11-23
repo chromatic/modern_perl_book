@@ -84,6 +84,29 @@ dereferencing:
 
 The double scalar sigil (C<$$>) dereferences a scalar reference.
 
+X<references; aliases>
+X<aliases>
+
+While in C<@_>, parameters behave as I<aliases> to caller variablesN<Remember that C<for> loops produce a similar aliasing behavior.>, so you can
+modify them in place:
+
+=begin programlisting
+
+    sub reverse_value_in_place
+    {
+        $_[0] = reverse $_[0];
+    }
+
+    my $name = 'allizocohC';
+    reverse_value_in_place( $name );
+    say $name;
+
+=end programlisting
+
+You usually don't want to modify values this way--callers rarely expect it, for
+example. Assigning parameters to lexicals within your functions removes this
+aliasing behavior.
+
 =begin tip Saving Memory with References
 
 Modifying a value in place, or returning a reference to a scalar can save

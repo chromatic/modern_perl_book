@@ -544,8 +544,10 @@ alias C<$_> to the variable:
 
     for ($user_input)
     {
-        s/^\s*|\s*$//g;  # trim whitespace
-        s/(\W)/\\$1/g;   # escape non-word characters
+        s/\A\s+/;       # trim leading whitespace
+        s/\s+\z/;       # trim trailing whitespace
+
+        $_ = quotemeta; # escape non-word characters
     }
 
 =end programlisting
