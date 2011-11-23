@@ -95,7 +95,7 @@ file otherwise.
 
 =cell C<< +< >>
 
-=cell Open for reading I<and> writing.
+=cell Open for both reading and writing.
 
 =end table
 
