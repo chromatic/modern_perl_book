@@ -929,6 +929,15 @@ file but skip everything that starts with the comment character C<#>, write:
 
 =end programlisting
 
+=begin tip Multiple Exits versus Nested Ifs
+
+Compare the use of C<next> with the alternative: wrapping the rest of the body
+of the block in an C<if>. Now consider what happens if you have multiple
+conditions which could cause you to skip a line. Loop control modifiers with
+postfix conditionals can make your code much more readable.
+
+=end tip
+
 X<loops; C<last>>
 
 The I<last> statement ends the loop immediately. To finish processing a file
