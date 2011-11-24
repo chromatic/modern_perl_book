@@ -366,7 +366,7 @@ X<CPAN; C<Devel::Cover>>
 
 =over 4
 
-=item * <Test::Fatal> helps test that your code throws (and does not throw)
+=item * C<Test::Fatal> helps test that your code throws (and does not throw)
 exceptions appropriately. You may also encounter C<Test::Exception>.
 
 =item * C<Test::MockObject> and C<Test::MockModule> allow you to test difficult
