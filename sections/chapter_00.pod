@@ -51,8 +51,7 @@ program:
 
     use Modern::Perl;
 
-    # example code here
-    ...
+    # example code follows
 
 =end programlisting
 
@@ -67,7 +66,7 @@ C<is()> (L<testing>).  That skeleton program is:
     B<use Test::More;>
 
     # example code here
-    ...
+
     done_testing();
 
 =end programlisting
