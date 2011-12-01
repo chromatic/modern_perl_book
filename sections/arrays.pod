@@ -242,7 +242,7 @@ X<arrays; C<pop>>
 X<builtins; C<push>>
 X<builtins; C<pop>>
 
-The C<push> and C<pop> operators add and remove elements from the tail of the
+The C<push> and C<pop> operators add and remove elements from the tail of an
 array, respectively:
 
 =begin programlisting
@@ -260,6 +260,15 @@ array, respectively:
 You may C<push> a list of values onto an array, but you may only C<pop> one at
 a time. C<push> returns the new number of elements in the array. C<pop> returns
 the removed element.
+
+Because C<push> operates on a list, you can easily append the elements of one
+or more arrays to another with:
+
+=begin programlisting
+
+    push @meals, @breakfast, @lunch, @dinner;
+
+=end programlisting
 
 X<arrays; C<shift>>
 X<arrays; C<unshift>>

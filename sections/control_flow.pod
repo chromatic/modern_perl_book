@@ -1191,7 +1191,8 @@ Heavily recursive code (L<recursion>), especially mutually recursive code, can
 consume a lot of memory. Tailcalls reduce the memory needed for internal
 bookkeeping of control flow and can make expensive algorithms tractable.
 Unfortunately, Perl 5 will not detect cases where it could apply this
-optimization automatically.
+optimization automatically. If this happens in your code, use a manual tailcall
+optimization.
 
 X<builtins; C<goto>>
 
@@ -1217,3 +1218,8 @@ C<goto &$function_reference> requires the use of the function sigil (C<&>) so
 that the parser knows to perform a tailcall instead of jumping to a label.
 Second, this form of function call passes the contents of C<@_> implicitly to
 the called function. You may modify C<@_> to change the passed arguments.
+
+This technique is relatively rare; it's most useful when you want to hijack
+control flow to get out of the way of other functions inspecting C<caller>
+(such as when you're implementing special logging or some sort of debugging
+feature), or when using an algorithm which requires a lot of recursion.

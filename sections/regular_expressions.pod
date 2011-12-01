@@ -522,9 +522,9 @@ X<regex; captures>
 X<regex; named captures>
 X<<< C<< (?<>) >>; regex named capture >>>
 
-I<Named captures> allow you to capture portions of matches from applying a
-regular expression and access them later, such as finding a phone number in a
-string of contact information:
+Perl 5.10 added I<named captures>, which allow you to capture portions of
+matches from applying a regular expression and access them later, such as
+finding a phone number in a string of contact information:
 
 =begin programlisting
 
@@ -560,8 +560,7 @@ string.
 X<regex; numbered captures>
 X<regex; captures>
 
-Perl 5.10 added named captures. I<Numbered captures> have existed in Perl for
-far longer:
+Perl has supported I<numbered captures> for ages:
 
 =begin programlisting
 
