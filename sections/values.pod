@@ -295,6 +295,14 @@ Latin-1 can represent text in most languages which use the Latin alphabet.
 To avoid most Unicode problems, always decode to and from the appropriate
 encoding at the inputs and outputs of your program.
 
+=begin tip An Evolving Standard
+
+Perl 5.12 supports the Unicode 5.2 standard, while Perl 5.14 supports Unicode
+6.0. If you need to care about the differences between Unicode versions, you
+probably already know to see U<http://unicode.org/versions/>.
+
+=end tip
+
 =head3 Unicode in Your Filehandles
 
 X<C<open>>
