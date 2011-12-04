@@ -50,12 +50,12 @@ distributions. These include:
 
 =over 4
 
-=item Standards for automated CPAN installers.
+=item * Standards for automated CPAN installers.
 
-=item Standards for metadata to describe what each distribution provides
+=item * Standards for metadata to describe what each distribution provides
 and expects.
 
-=item Standards for documentation and licensing.
+=item * Standards for documentation and licensing.
 
 =back
 
