@@ -20,54 +20,44 @@ made them available to anyone willing to learn them.
 
 =head1 Running Modern Perl
 
-The Modern::Perl module from the CPAN (L<cpan>) asks Perl to warn of dubious
+The C<Modern::Perl> module from the CPAN (L<cpan>) asks Perl to warn of dubious
 constructs and typos and will enable new features introduced in modern releases
-of Perl 5. Assume every example in this book begins with:
+of Perl 5. Unless otherwise mentioned, code snippets always assume the basic
+skeleton of a program:
 
 =begin programlisting
+
+    #!/usr/bin/env perl
 
     use Modern::Perl;
 
 =end programlisting
 
-If you cannot yet install this module, you may start your programs with the
-rough equivalent:
+... which is equivalent to:
 
 =begin programlisting
 
+    #!/usr/bin/env perl
+
     use 5.012;
-    use strict;
     use warnings;
     use autodie;
 
 =end programlisting
 
-Unless otherwise mentioned, code snippets always assume the basic skeleton of a
-program:
+Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
+(L<testing>). These programs follow the pattern:
 
 =begin programlisting
 
-    #!/usr/bin/perl
-
-    use Modern::Perl;
-
-    # example code follows
-
-=end programlisting
-
-Other code snippets use testing functions such as C<ok()>, C<like()>, and
-C<is()> (L<testing>).  That skeleton program is:
-
-=begin programlisting
-
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     use Modern::Perl;
     B<use Test::More;>
 
     # example code here
 
-    done_testing();
+    B<done_testing();>
 
 =end programlisting
 
@@ -102,21 +92,6 @@ This book would not have been possible without questions, comments,
 suggestions, advice, wisdom, and encouragement from many, many people. In
 particular, the author and editor thank:
 
-John SJ Anderson, Peter Aronoff, Lee Aylward, Alex Balhatchet, Ævar Arnfjörð
-Bjarmason, Matthias Bloch, John Bokma, Vasily Chekalkin, Dmitry Chestnykh, E.
-Choroba, Anneli Cuss, Paulo Custodio, Steve Dickinson, Kurt Edmiston, Felipe,
-Shlomi Fish, Jeremiah Foster, Mark Fowler, John Gabriele, Andrew Grangaard,
-Bruce Gray, Ask Bjørn Hansen, Tim Heaney, Graeme Hewson, Robert Hicks, Michael
-Hind, Mark Hindess, Yary Hluchan, Mike Huffman, Gary H. Jones II, Curtis
-Jewell, Mohammed Arafat Kamaal, James E Keenan, Kirk Kimmel, Yuval Kogman, Jan
-Krynicky, Michael Lang, Jeff Lavallee, Moritz Lenz, Andy Lester, Jean-Baptiste
-Mazon, Josh McAdams, Gareth McCaughan, John McNamara, Shawn M Moore, Alex
-Muntada, Carl Mäsak, Chris Niswander, Nelo Onyiah, Chas. Owens, ww from
-PerlMonks, Jess Robinson, Dave Rolsky, Gabrielle Roth, Eduardo Santiago, Andrew
-Savige, Lorne Schachter, Steve Schulze, Dan Scott, Alexander Scott-Johns,
-Phillip Smith, Christopher E. Stith, Mark A. Stratman, Bryan Summersett, Audrey
-Tang, Scott Thomson, Ben Tilly, Ruud H. G. van Tol, Sam Vilain, Larry Wall,
-Lewis Wall, Colin Wetherbee, Frank Wiegand, Doug Wilson, Sawyer X, David
-Yingling, Marko Zagozen, harleypig, hbm, and sunnavy.
+L<credits>
 
 Any remaining errors are the fault of the stubborn author.
