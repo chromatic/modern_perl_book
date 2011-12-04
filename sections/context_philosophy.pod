@@ -120,7 +120,7 @@ contain. Both of these calls to C<find_chores()> occur in list context:
 
     my %results =
     (
-        cheap_operation     => $cheap_operation_results,
+        cheap_operation     => $cheap_results,
         expensive_operation => find_chores(), # OOPS!
     );
 
@@ -138,7 +138,7 @@ Use the C<scalar> operator to impose scalar context:
 
     my %results =
     (
-        cheap_operation     => $cheap_operation_results,
+        cheap_operation     => $cheap_results,
         expensive_operation => B<scalar> find_chores(),
     );
 
@@ -184,7 +184,7 @@ different, but they still compare the same:
 =begin programlisting
 
     my $alice = 'alice';
-    say "Catastrophic crypto fail!" if $alice == 'Bob';  # OOPS
+    say "Catastrophic crypto fail!" if $alice == 'Bob';
 
 =end programlisting
 

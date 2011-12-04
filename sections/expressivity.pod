@@ -5,17 +5,16 @@ Z<expressivity>
 X<Wall, Larry>
 X<Larry Wall>
 
-When Larry Wall created Perl, his studies of linguistics and human languages
-influenced his design. Notably, Perl allows you tremendous freedom to solve
-your problems, depending on your group style, the available time, the expected
+Larry Wall's his studies of linguistics and human languages influenced the
+design of Perl. The language allows you tremendous freedom to solve your
+problems, depending on your group style, the available time, the expected
 lifespan of the program, or even how creative you feel. You may write simple,
 straightforward code or integrate into larger, well-defined programs. You may
 select from multiple design paradigms, and you may eschew or embrace advanced
 features.
 
-Where other languages might suggest that one enforced way to write any
-operation is the right solution, Perl allows you to optimize for your most
-important criteria.
+Where other languages enforce one best way to write any code, Perl allows
+I<you> to decide what's most readable or useful or fun.
 
 X<TIMTOWTDI>
 X<Tim Toady>

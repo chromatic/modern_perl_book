@@ -57,8 +57,8 @@ arguments:
 
 =begin programlisting
 
-    print;  # prints $_ to the currently selected filehandle
-    say;    # prints $_ to the currently selected filehandle
+    print;  # prints $_ to the current filehandle
+    say;    # prints $_ to the current filehandle,
             # with a trailing newline
 
 =end programlisting
@@ -140,7 +140,8 @@ X<builtins; C<grep>>
 
 =begin programlisting
 
-    say 'Brunch time!' if grep { /pancake mix/ } @pantry;
+    say 'Brunch time!'
+        if grep { /pancake mix/ } @pantry;
 
 =end programlisting
 
@@ -197,14 +198,12 @@ Use C<$_> as you would the word "it" in formal writing: sparingly, in small and 
 
 X<builtins; C<...>>
 
-Perl 5.12 introduced the triple-dot (C<...>) operator. It's a complete
-statement on its own which acts as a placeholder for code you intend to fill in
-later. Perl will parse it as a complete statement, but will throw an exception
-that you're trying to run unimplemented code if you try to run it. See
-C<perldoc perlop> for more details.
+Perl 5.12 introduced the triple-dot (C<...>) operator as a placeholder for code
+you intend to fill in later. Perl will parse it as a complete statement, but
+will throw an exception that you're trying to run unimplemented code if you try
+to run it. See C<perldoc perlop> for more details.
 
 =end tip
-
 
 =head2 The Default Array Variables
 
@@ -253,6 +252,20 @@ command-line arguments to the program. Perl's array operations (including
 C<shift> and C<pop>) operate on C<@ARGV> implicitly outside of functions. You
 cannot use C<@_> when you mean C<@ARGV>.
 
+=begin tip C<readline>
+
+X<builtins; C<readline>>
+X<builtins; C<glob>>
+
+Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
+C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
+C<readline> behaves just like C<< <> >>, so you can now use C<readline>
+everywhere. For historic reasons, C<< <> >> is still more common, but consider
+using C<readline> as a more readable alternative. You probably prefer C<glob
+'*.html'> to C<< <*.html> >>, right? It's the same idea.
+
+=end tip
+
 X<null filehandle>
 
 C<ARGV> has one special case. If you read from the null filehandle C<< <> >>,
@@ -276,20 +289,6 @@ its context on to its operands, treating them as a list in list context and a
 concatenated string in scalar context. If the behavior of C<reverse> sounds
 confusing, your instincts are correct. Perl 5 arguably should have separated
 "reverse a string" from "reverse a list".
-
-=begin tip C<readline>
-
-X<builtins; C<readline>>
-X<builtins; C<glob>>
-
-Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
-C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
-C<readline> behaves just like C<< <> >>, so you can now use C<readline>
-everywhere. For historic reasons, C<< <> >> is still more common, but consider
-using C<readline> as a more readable alternative. You probably prefer C<glob
-'*.html'> to C<< <*.html> >>, right? It's the same idea.
-
-=end tip
 
 If you run it with a list of files:
 

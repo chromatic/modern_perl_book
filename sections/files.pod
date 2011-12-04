@@ -25,7 +25,7 @@ you C<warn()> goes to C<STDERR>. This separation of output allows you to
 redirect useful output and errors to two different places--an output file and
 error logs, for example.
 
-=begin sidebar
+=begin tip The Many Names of C<DATA>
 
 X<C<DATA>>
 X<C<__DATA__>>
@@ -38,7 +38,7 @@ section. Any text which occurs after that token is available for reading from
 C<DATA>. This is useful for short, self-contained programs. See C<perldoc
 perldata> for more details.
 
-=end sidebar
+=end tip
 
 X<builtins; C<open>>
 
