@@ -32,9 +32,9 @@ X<namespaces; fully qualified>
 All global variables and functions declared or referred to after the package
 declaration refer to symbols within the C<MyCode> namespace. You can refer to
 the C<@boxes> variable from the C<main> namespace only by its I<fully
-qualified> name, C<@MyCode::boxes>. Similarly, you can call the C<add_box()>
-function only by C<MyCode::add_box()>. A fully qualified name includes a
-complete package name.
+qualified> name of C<@MyCode::boxes>. A fully qualified name includes a
+complete package name, so you can call the C<add_box()> function only by
+C<MyCode::add_box()>.
 
 X<scope; packages>
 

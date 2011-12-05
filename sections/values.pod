@@ -47,7 +47,8 @@ the quote with a leading backslash:
 
 =begin programlisting
 
-    my $reminder = 'DonB<\'>t forget to escape the single quote!';
+    my $reminder = 'DonB<\'>t forget to escape '
+                 . 'the single quote!';
 
 =end programlisting
 
@@ -56,7 +57,8 @@ the closing delimiter and producing a syntax error:
 
 =begin programlisting
 
-    my $exception = 'This string ends with a backslash, not a quote: B<\\>';
+    my $exception = 'This string ends with a '
+                  . 'backslash, not a quote: B<\\>';
 
 =end programlisting
 
@@ -100,7 +102,7 @@ equivalent:
     my $escaped = "two\nlines";
     my $literal = "two
     lines";
-    is $escaped, $literal, '\n and newline are equivalent';
+    is $escaped, $literal, 'equivalent \n and newline';
 
 =end programlisting
 
@@ -131,11 +133,10 @@ variable become part of the string as if you'd concatenated them:
 
 =begin programlisting
 
-    my $factoid = "Did you know that B<$name> lives at B<$address>?";
+    my $factoid = "B<$name> lives at B<$address>!";
 
     # equivalent to
-
-    my $factoid = 'Did you know that ' . $name . ' lives at ' . $address . '?';
+    my $factoid = $name . ' lives at ' . $address . '!';
 
 =end programlisting
 
@@ -168,8 +169,8 @@ both the starting and ending delimiter.
 =begin programlisting
 
     my $quote     = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
-    my $reminder  = B<q^>Don't need to escape the single quote!B<^>;
-    my $complaint = B<q{>It's too early to be awake.B<}>;
+    my $reminder  =  B<q^>Don't escape the single quote!B<^>;
+    my $complaint =  B<q{>It's too early to be awake.B<}>;
 
 =end programlisting
 
@@ -183,12 +184,14 @@ use the I<heredoc> syntax to assign one or more lines of a string:
 
     my $blurb =<<'END_BLURB';
 
-    He looked up. "Time is never on our side, my child. Do you see the irony?
-    All they know is change. Change is the constant on which they all can
-    agree. Whereas we, born out of time to remain perfect and perfectly
-    self-aware, can only suffer change if we pursue it. It is against our
-    nature. We rebel against that change. Shall we consider them greater
-    for it?"
+    He looked up. "Time is never on our side, my child.
+    Do you see the irony? All they know is change.
+    Change is the constant on which they all can agree.
+    We instead, born out of time, remain perfect and
+    perfectly self-aware. We only suffer change as we
+    pursue it. It is against our nature. We rebel
+    against that change. Shall we consider them
+    greater for it?"
     END_BLURB
 
 =end programlisting
@@ -352,21 +355,13 @@ X<C<decode()>>
 X<C<encode()>>
 
 The core module C<Encode> provides a function named C<decode()> to convert a
-scalar containing data to a Unicode string. For example, if you have UTF-8
-data:
+scalar containing data to a Unicode string. The corresponding C<encode()>
+function converts from Perl's internal encoding to the desired output encoding:
 
 =begin programlisting
 
-    my $string = decode('utf8', $data);
-
-=end programlisting
-
-The corresponding C<encode()> function converts from Perl's internal encoding
-to the desired output encoding:
-
-=begin programlisting
-
-    my $latin1 = encode('iso-8859-1', $string);
+    my $from_utf8 = decode('utf8', $data);
+    my $to_latin1 = encode('iso-8859-1', $string);
 
 =end programlisting
 
@@ -425,7 +420,8 @@ C<\N{}> escape to refer to them:
     my $escaped_thorn = "\x{00FE}";
     my $named_thorn   = "\N{LATIN SMALL LETTER THORN}";
 
-    is $escaped_thorn, $named_thorn, 'Thorn equivalence check';
+    is $escaped_thorn, $named_thorn,
+        'Thorn equivalence check';
 
 =end programlisting
 
@@ -658,7 +654,8 @@ value> warning:
 
 =begin screen
 
-    Use of uninitialized value $undefined in concatenation (.) or string...
+    Use of uninitialized value $undefined in
+    concatenation (.) or string...
 
 =end screen
 
@@ -672,7 +669,7 @@ defined value (anything other than C<undef>):
     my $status = 'suffering from a cold';
 
     say B<defined> $status;  # 1, which is a true value
-    say B<defined> undef;    # an empty string; a false value
+    say B<defined> undef;    # empty string; a false value
 
 =end programlisting
 
@@ -683,11 +680,10 @@ X<C<()>; empty list>
 
 When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list. In scalar context, this evaluates to C<undef>. In
-list context, it is an empty list.
-
-When used on the left-hand side of an assignment, the C<()> construct imposes
-list context. To count the number of elements returned from an expression in
-list context without using a temporary variable, use the idiom (L<idioms>):
+list context, it is an empty list. When used on the left-hand side of an
+assignment, the C<()> construct imposes list context. To count the number of
+elements returned from an expression in list context without using a temporary
+variable, use the idiom (L<idioms>):
 
 =begin programlisting
 
@@ -785,7 +781,7 @@ a single element) or list context (for a slice):
 
 =begin programlisting
 
-    # you do not need to understand all of this right now
+    # don't worry about the details right now
     sub context
     {
         my $context = wantarray();

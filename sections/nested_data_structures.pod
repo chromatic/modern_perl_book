@@ -12,26 +12,26 @@ possible through the use of references.
 
 =head2 Declaring Nested Data Structures
 
-A simple declaration of an array of arrays might be:
+Use the anonymous reference declaration syntax to declare a nested data
+structure:
 
 =begin programlisting
 
-    my @famous_triplets = (
+    my @famous_triplets =
+    (
         [qw( eenie miney moe   )],
         [qw( huey  dewey louie )],
         [qw( duck  duck  goose )],
     );
 
-=end programlisting
-
-... and a simple declaration of a hash of hashes might be:
-
-=begin programlisting
-
-    my %meals = (
-        breakfast => { entree => 'eggs',   side => 'hash browns'   },
-        lunch     => { entree => 'panini', side => 'apple'         },
-        dinner    => { entree => 'steak',  side => 'avocado salad' },
+    my %meals =
+    (
+        breakfast => { entree => 'eggs',
+                       side   => 'hash browns' },
+        lunch     => { entree => 'panini',
+                       side => 'apple'         },
+        dinner    => { entree => 'steak',
+                       side => 'avocado salad' },
     );
 
 =end programlisting
@@ -66,12 +66,12 @@ arrow is superfluous. You may omit it for clarity:
 
 =end programlisting
 
-=begin sidebar
+=begin tip Save Your Arrows for Functions
 
 The arrow invocation syntax is clearest only in the case of invoking a function
 reference stored in a nested data structure.
 
-=end sidebar
+=end tip
 
 Use disambiguation blocks to access components of nested data structures as if
 they were first-class arrays or hashes:
@@ -87,7 +87,8 @@ they were first-class arrays or hashes:
 
 =begin programlisting
 
-    my ($entree, $side) = @{ $meals{breakfast} }{qw( entree side )};
+    my ($entree, $side) = @{ $meals{breakfast} }
+                           {qw( entree side )};
 
 =end programlisting
 
@@ -96,8 +97,8 @@ Use temporary variables to clarify:
 
 =begin programlisting
 
-    my $breakfast_ref   = $meals{breakfast};
-    my ($entree, $side) = @$breakfast_ref{qw( entree side )};
+    my $meal_ref        = $meals{breakfast};
+    my ($entree, $side) = @$meal_ref{qw( entree side )};
 
 =end programlisting
 
@@ -108,7 +109,8 @@ intermediate reference:
 
 =begin programlisting
 
-    my ($entree, $side) = @{ $_ }{qw( entree side )} for $meals{breakfast};
+    my ($entree, $side) = @{ $_ }{qw( entree side )}
+                          for $meals{breakfast};
 
 =end programlisting
 
@@ -153,8 +155,8 @@ X<pragmas; C<autovivification>>
 This useful behavior is I<autovivification>. While it reduces the
 initialization code of nested data structures, it cannot distinguish between
 the honest intent to create missing elements in nested data structures and
-typos. The CPAN's C<autovivification> pragma (L<pragmas>) lets you disable
-autovivification in a lexical scope for specific types of operations.
+typos. The C<autovivification> pragma (L<pragmas>) from the CPAN lets you
+disable autovivification in a lexical scope for specific types of operations.
 
 You may wonder at the contradiction between taking advantage of
 autovivification while enabling C<strict>ures. The question is one of balance.
@@ -218,9 +220,9 @@ children:
 
 =begin programlisting
 
-    my $alice  = { mother => '',     father => '',      children => [] };
-    my $robert = { mother => '',     father => '',      children => [] };
-    my $cianne = { mother => $alice, father => $robert, children => [] };
+    my $alice  = { mother => '',     father => ''      };
+    my $robert = { mother => '',     father => ''      };
+    my $cianne = { mother => $alice, father => $robert };
 
     push @{ $alice->{children}  }, $cianne;
     push @{ $robert->{children} }, $cianne;
@@ -248,9 +250,9 @@ from increasing:
 
     use Scalar::Util 'weaken';
 
-    my $alice  = { mother => '',     father => '',      children => [] };
-    my $robert = { mother => '',     father => '',      children => [] };
-    my $cianne = { mother => $alice, father => $robert, children => [] };
+    my $alice  = { mother => '',     father => ''      };
+    my $robert = { mother => '',     father => ''      };
+    my $cianne = { mother => $alice, father => $robert };
 
     push @{ $alice->{children}  }, $cianne;
     push @{ $robert->{children} }, $cianne;

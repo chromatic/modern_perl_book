@@ -230,7 +230,7 @@ of values with square brackets:
 
 =begin programlisting
 
-    my $suits_ref = [qw( Monkeys Robots Dinosaurs Cheese )];
+    my $suits_ref = [qw( Monkeys Robots Dinos Cheese )];
 
 =end programlisting
 
@@ -385,10 +385,8 @@ X<builtins; C<values>>
 X<builtins; C<each>>
 
 The same goes for the array operators C<pop>, C<shift>, C<unshift>, C<splice>,
-C<keys>, C<values>, and C<each>.
-
-Similarly, Perl can also automatically dereference hash references used with
-C<keys>, C<values>, and C<each>.
+C<keys>, C<values>, and C<each> and the hash operators C<keys>, C<values>, and
+C<each>.
 
 If the reference provided is not of the proper type--if it does not dereference
 properly--Perl will throw an exception. While this may seem more dangerous than
@@ -456,6 +454,14 @@ function reference with the dereferencing arrow:
 
 =end programlisting
 
+=begin tip Perl 4 Function Calls
+
+An alternate invocation syntax for function references uses the function sigil
+(C<&>) instead of the dereferencing arrow. Avoid this syntax; it has subtle
+implications for parsing and argument passing.
+
+=end tip
+
 Think of the empty parentheses as denoting an invocation dereferencing
 operation in the same way that square brackets indicate an indexed lookup and
 curly brackets cause a hash lookup. Pass arguments to the function within the
@@ -477,14 +483,6 @@ is useful when you've already looked up the method (L<reflection>):
 
 =end programlisting
 
-=begin sidebar
-
-An alternate invocation syntax for function references uses the function sigil
-(C<&>) instead of the dereferencing arrow. Avoid this syntax; it has subtle
-implications for parsing and argument passing.
-
-=end sidebar
-
 =head2 Filehandle References
 
 Z<lexical_filehandles>
@@ -495,13 +493,11 @@ X<C<IO::File>>
 X<C<IO::Handle>>
 
 When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
-with filehandle references. Internally, these filehandles are objects of the
-class C<IO::File>. You can call methods on them directly. As of Perl 5.14, this
-is as simple as:
+with filehandle references. Internally, these filehandles are C<IO::File>
+objects. You can call methods on them directly. As of Perl 5.14, this is as
+simple as:
 
 =begin programlisting
-
-    use autodie;
 
     open my $out_fh, '>', 'output_file.txt';
     $out_fh->say( 'Have some text!' );
@@ -516,9 +512,11 @@ You may see old code which takes references to typeglobs, such as:
 
 =begin programlisting
 
-    my $fh = do {
+    my $fh = do
+    {
         local *FH;
-        open FH, "> $file" or die "Can't write to '$file': $!\n";
+        open FH, "> $file"
+            or die "Can't write to '$file': $!\n";
         B<\*FH>;
     };
 
@@ -530,12 +528,19 @@ references to package-global filehandles such as C<STDIN>, C<STDOUT>,
 C<STDERR>, or C<DATA>--but these are all global names anyhow.
 
 Prefer lexical filehandles when possible. With the benefit of explicit scoping,
-lexical filehandles allow you to manage the lifespan of filehandles. This is a
-nice feature of how Perl 5 manages memory.
+lexical filehandles allow you to manage the lifespan of filehandles as a
+feature of how Perl 5 manages memory.
 
 =head2 Reference Counts
 
 Z<reference_counts>
+X<references; reference counting>
+
+Perl 5 uses a memory management technique known as I<reference counting>.
+Every Perl value has a counter attached. Perl increases this counter every time
+something takes a reference to the value, whether implicitly or explicitly.
+Perl decreases that counter every time a reference goes away. When the counter
+reaches zero, Perl can safely recycle that value.
 
 X<lexicals; lifecycle>
 
@@ -543,9 +548,6 @@ How does Perl know when it can safely release the memory for a variable? How
 does Perl know when it's safe to close the file opened in this inner scope:
 
 =begin programlisting
-
-    use autodie;
-    use IO::Handle;
 
     sub show_off_scope
     {
@@ -560,14 +562,6 @@ does Perl know when it's safe to close the file opened in this inner scope:
     }
 
 =end programlisting
-
-X<references; reference counting>
-
-Perl 5 uses a memory management technique known as I<reference counting>.
-Every Perl value has a counter attached. Perl increases this counter every time
-something takes a reference to the value, whether implicitly or explicitly.
-Perl decreases that counter every time a reference goes away. When the counter
-reaches zero, Perl can safely recycle that value.
 
 Within the inner block in the example, there's one C<$fh>. (Multiple lines in
 the source code refer to it, but only one variable refers to it: C<$fh>.)
@@ -585,10 +579,9 @@ around affect how Perl manages memory (see L<circular_references>).
 
 When you use references as arguments to functions, document your intent
 carefully. Modifying the values of a reference from within a function may
-surprise the calling code, which expects no modifications.
-
-To modify the contents of a reference without affecting the reference itself,
-copy its values to a new variable:
+surprise the calling code, which doesn't expect anything else to modify its
+data. To modify the contents of a reference without affecting the reference
+itself, copy its values to a new variable:
 
 =begin programlisting
 

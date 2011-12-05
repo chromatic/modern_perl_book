@@ -115,6 +115,7 @@ Assign to individual positions in an array directly by index:
     $cats[0] = 'Daisy';
     $cats[1] = 'Petunia';
     $cats[4] = 'Brad';
+    $cats[5] = 'Choco';
 
 =end programlisting
 
@@ -127,17 +128,13 @@ As an assignment shortcut, initialize an array from a list:
 
 =begin programlisting
 
-    my @cats = ( 'Daisy', 'Petunia', 'Tuxedo', 'Jack', 'Brad' );
+    my @cats = ( 'Daisy', 'Petunia', 'Tuxedo', ... );
 
 =end programlisting
 
-=begin sidebar
-
-Remember that these parentheses I<do not> create a list. Without parentheses,
-this would assign C<Daisy> as the first and only element of the array, due to
-operator precedence (L<precedence>).
-
-=end sidebar
+... but remember that these parentheses I<do not> create a list. Without
+parentheses, this would assign C<Daisy> as the first and only element of the
+array, due to operator precedence (L<precedence>).
 
 Any expression which produces a list in list context can assign to an array:
 
@@ -217,7 +214,7 @@ slice evaluated in scalar context will produce a warning:
 
 =begin screen
 
-    Scalar value @cats[1] better written as $cats[1] at...
+    Scalar value @cats[1] better written as $cats[1]...
 
 =end screen
 
@@ -281,7 +278,7 @@ the start of an array, respectively:
 =begin programlisting
 
     # expand our culinary horizons
-    unshift @meals, qw( tofu curry spanakopita taquitos );
+    unshift @meals, qw( tofu spanakopita taquitos );
 
     # rethink that whole soy idea
     shift @meals;
@@ -292,11 +289,7 @@ C<unshift> prepends a list of elements to the start of the array and returns
 the new number of elements in the array. C<shift> removes and returns the first
 element of the array.
 
-=begin tip Zero, One, or Many
-
 Few programs use the return values of C<push> and C<unshift>.
-
-=end tip
 
 X<arrays; C<splice>>
 X<builtins; C<splice>>
@@ -367,7 +360,9 @@ nested arrays in Perl 5:
 =begin programlisting
 
     # creates a single array, not an array of arrays
-    my @array_of_arrays = ( 1 .. 10, ( 11 .. 20, ( 21 .. 30 ) ) );
+    my @numbers = (  1 .. 10,
+                  ( 11 .. 20,
+                  ( 21 .. 30 ) ) );
 
 =end programlisting
 
@@ -376,7 +371,7 @@ nested arrays in Perl 5:
 =begin programlisting
 
     # creates a single array, not an array of arrays
-    my @array_of_arrays = 1 .. 30;
+    my @numbers = 1 .. 30;
 
 =end programlisting
 
@@ -400,7 +395,8 @@ C<$LIST_SEPARATOR>. Thus:
 
     my @alphabet = 'a' .. 'z';
     say "[@alphabet]";
-    B<[a b c d e f g h i j k l m n o p q r s t u v w x y z]>
+    B<[a b c d e f g h i j k l m>
+     B<n o p q r s t u v w x y z]>
 
 =end programlisting
 

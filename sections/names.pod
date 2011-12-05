@@ -68,9 +68,8 @@ X<sigil>
 
 I<Variable names> always have a leading I<sigil> (or symbol) which indicates
 the type of the variable's value. I<Scalar variables> (L<scalars>) use the
-dollar sign (C<$>) character. I<Array variables> (L<arrays>) use the at sign
-(C<@>) character. I<Hash variables> (L<hashes>) use the percent sign (C<%>)
-character:
+dollar sign (C<$>). I<Array variables> (L<arrays>) use the at sign (C<@>).
+I<Hash variables> (L<hashes>) use the percent sign (C<%>):
 
 =begin programlisting
 
@@ -90,8 +89,7 @@ different types:
 
 =end programlisting
 
-Again, names exist to help programmers. Perl won't get confused. People reading
-this code will.
+Though Perl won't get confused, people reading this code will.
 
 X<variant sigils>
 
@@ -146,26 +144,28 @@ X<fully-qualified name>
 X<namespaces>
 
 Perl provides a mechanism to group similar functions and variables into their
-own unique named spaces--I<namespaces> (L<packages>). A namespace is a
-collection of one or more names joined by double colons (C<::>), such that
-C<DessertShop::IceCream> refers to a logical collection of related variables and
-functions, such as C<scoop()> and C<pour_hot_fudge()>.
+own unique named spaces--I<namespaces> (L<packages>). A namespace is a named
+collection of symbols. Perl allows multi-level namespaces, with names joined by
+double colons (C<::>), where C<DessertShop::IceCream> refers to a logical
+collection of related variables and functions, such as C<scoop()> and
+C<pour_hot_fudge()>.
 
 Within a namespace, you may use the short name of its members. Outside of the
-namespace, refer to a member using its I<fully-qualified name>, which includes
-the namespace, as in C<DessertShop::IceCream::add_sprinkles()>.
+namespace, refer to a member using its I<fully-qualified name>. That is, within
+C<DessertShop::IceCream>, C<add_sprinkles()> refers to the same function as
+does C<DessertShop::IceCream::add_sprinkles()> outside of the namespace.
 
 While standard naming rules apply to package names, by convention user-defined
 packages all start with uppercase letters. The Perl core reserves lowercase
 package names for core pragmas (L<pragmas>), such as C<strict> and C<warnings>.
 This is a policy enforced primarily by community guidelines.
 
-Namespaces do not nest in Perl 5. The relationship between
-C<DessertShop::IceCream> and C<DessertShop::IceCream::Freezer> is only a
-storage mechanism, with no further implications on the relationships between
-parent and child or sibling packages. When Perl looks up a symbol in
+All namespaces in Perl 5 are globally visible. When Perl looks up a symbol in
 C<DessertShop::IceCream::Freezer>, it looks in the C<main::> symbol table for a
 symbol representing the C<DessertShop::> namespace, then in there for the
-C<IceCream::> namespace, and so on. Only a programmer can make I<logical>
-relationships between entities obvious--by choosing good names and organizing
-them well.
+C<IceCream::> namespace, and so on. The C<Freezer::> is visible from outside of
+the C<IceCream::> namespace. The nesting of the former within the latter is
+only a storage mechanism, and implies nothing further about relationships
+between parent and child or sibling packages. Only a programmer can make
+I<logical> relationships between entities obvious--by choosing good names and
+organizing them well.

@@ -227,8 +227,10 @@ contains the given key:
         Utako    => 'Cantor Hotel, Room 1',
     );
 
-    say "Have Leonardo's address" if exists $addresses{Leonardo};
-    say "Have Warnie's address"   if exists $addresses{Warnie};
+    say "Have Leonardo's address"
+        if exists $addresses{Leonardo};
+    say "Have Warnie's address"
+        if exists $addresses{Warnie};
 
 =end programlisting
 
@@ -241,7 +243,8 @@ may exist with a value even if that value evaluates to a boolean false
 
     my  %false_key_value = ( 0 => '' );
     ok( %false_key_value,
-         'hash containing false key & value should evaluate to a true value' );
+         'hash containing false key & value
+          should evaluate to a true value' );
 
 =end programlisting
 
@@ -323,7 +326,8 @@ latter will begin partway through the hash. During such iteration, beware not
 to call any function which may itself try to iterate over the hash with
 C<each>.
 
-Reset a hash's iterator with C<keys> or C<values> in void context:
+In practice this occurs rarely, but reset a hash's iterator with C<keys> or
+C<values> in void context when you need it:
 
 =begin programlisting
 
@@ -336,13 +340,6 @@ Reset a hash's iterator with C<keys> or C<values> in void context:
     }
 
 =end programlisting
-
-=begin tip Reset Your Iterators
-
-The single hash iterator is a well lamented caveat, but it doesn't come up as
-often as you might expect. Be cautious, but use C<each> when you need it.
-
-=end tip
 
 =head2 Hash Slices
 
@@ -363,27 +360,27 @@ This is equivalent to the initialization:
 
 =begin programlisting
 
-    my %cats = map { $_ => 1 } qw( Jack Brad Mars Grumpy );
+    my %cats = map { $_ => 1 }
+               qw( Jack Brad Mars Grumpy );
 
 =end programlisting
 
 ... except that the hash slice initialization does not I<replace> the existing
 contents of the hash.
 
-To retrieve multiple values from a hash with a slice:
+X<C<@>; sigil>
+X<sigils; C<@>>
+
+Hash slices also allow you to retrieve multiple values from a hash in a single
+operation. As with array slices, the sigil of the hash changes to indicate list
+context.  The use of the curly braces indicates keyed access and makes the hash
+unambiguous:
 
 =begin programlisting
 
     my @buyer_addresses = @addresses{ @buyers };
 
 =end programlisting
-
-X<C<@>; sigil>
-X<sigils; C<@>>
-
-As with array slices, the sigil of the hash changes to indicate list context.
-The use of the curly braces indicates keyed access and makes the hash
-unambiguous.
 
 Hash slices make it easy to merge two hashes:
 
@@ -392,7 +389,8 @@ Hash slices make it easy to merge two hashes:
     my %addresses        = ( ... );
     my %canada_addresses = ( ... );
 
-    @addresses{ keys %canada_addresses } = values %canada_addresses;
+    @addresses{ keys   %canada_addresses }
+              = values %canada_addresses;
 
 =end programlisting
 
@@ -418,10 +416,12 @@ both would themselves evaluate to false values in a boolean context.
     ok( ! %empty, 'empty hash should evaluate to false' );
 
     my %false_key = ( 0 => 'true value' );
-    ok( %false_key, 'hash containing false key should evaluate to true' );
+    ok( %false_key, 'hash containing false key
+                     should evaluate to true' );
 
     my %false_value = ( 'true key' => 0 );
-    ok( %false_value, 'hash containing false value should evaluate to true' );
+    ok( %false_value, 'hash containing false value
+                       should evaluate to true' );
 
     done_testing();
 
@@ -560,7 +560,8 @@ function arguments:
         ...
     }
 
-    make_sundae( flavor => 'Lemon Burst', topping => 'cookie bits' );
+    make_sundae( flavor  => 'Lemon Burst',
+                 topping => 'cookie bits' );
 
 =end programlisting
 
