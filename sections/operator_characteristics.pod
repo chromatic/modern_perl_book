@@ -148,7 +148,7 @@ X<C<//=>; infix operator>
 
 =over 4
 
-=item I<Infix> operators appear between their operands. Most mathematical
+=item * I<Infix> operators appear between their operands. Most mathematical
 operators are infix operators, such as the multiplication operator in C<$length
 * $width>.
 
@@ -161,9 +161,9 @@ X<C<->; prefix operator>
 X<C<!>; prefix operator>
 X<C<!!>; prefix operator>
 
-=item I<Prefix> operators precede their operators. I<Postfix> operators follow.
-These operators tend to be unary, such as mathematic negation (C<-$x>), boolean
-negation (C<!$y>), and postfix increment (C<$z++>).
+=item * I<Prefix> operators precede their operators. I<Postfix> operators
+follow. These operators tend to be unary, such as mathematic negation (C<-$x>),
+boolean negation (C<!$y>), and postfix increment (C<$z++>).
 
 X<C<()>; circumfix operator>
 X<C<{}>; circumfix operator>
@@ -173,15 +173,14 @@ X<C<``>; circumfix operator>
 X<C<''>; circumfix operator>
 X<C<"">; circumfix operator>
 
-=item I<Circumfix> operators surround their operands, as with the anonymous
+=item * I<Circumfix> operators surround their operands, as with the anonymous
 hash constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
 
 X<C<()>; postcircumfix operator>
 X<C<{}>; postcircumfix operator>
 X<C<[]>; postcircumfix operator>
 
-=item I<Postcircumfix> operators follow certain operands and surround others,
-as seen in hash and array element access (C<$hash{ ...  }> and C<$array[ ...
-]>).
+=item * I<Postcircumfix> operators follow certain operands and surround others,
+as seen in hash and array element access (C<$hash{$x}> and C<$array[$y]>).
 
 =back
