@@ -4,7 +4,7 @@ Z<regular_expressions>
 
 X<regex; literals>
 
-The simplest regexes are simple substring patterns:
+Regexes can be as simple as substring patterns:
 
 =begin programlisting
 
@@ -19,32 +19,42 @@ X<operators; C<m//>>
 X<regex; atom>
 X<atom>
 
-The match operator (formally C<m//>, but abbreviated C<//>) identifies a
-regular expression--in this example, C<hat>. This pattern is I<not> a word.
-Instead it means "the C<h> character, followed by the C<a> character, followed
-by the C<t> character." Each character in the pattern is an indivisible
-element, or I<atom>. It matches or it doesn't.
+The match operator (C<m//>, abbreviated C<//>) identifies a regular
+expression--in this example, C<hat>. This pattern is I<not> a word. Instead it
+means "the C<h> character, followed by the C<a> character, followed by the C<t>
+character." Each character in the pattern is an indivisible element, or
+I<atom>. It matches or it doesn't.
 
 X<operators; C<=~>>
 X<C<=~>; regex bind>
+X<operators; C<!~>>
+X<C<!~>; negated regex bind>
 
 The regex binding operator (C<=~>) is an infix operator (L<fixity>) which
 applies the regex of its second operand to a string provided by its first
 operand. When evaluated in scalar context, a match evaluates to a true value if
-it succeeds.
+it succeeds. The negated form of the binding operator (C<!~>) evaluates to a
+true value unless the match succeeds.
 
-X<operators; C<!~>>
-X<C<!~>; negated regex bind>
+=begin tip Remember C<index>!
 
-The negated form of the binding operator (C<!~>) evaluates to a true value
-unless the match succeeds.
+X<builtins; C<index>>
+
+The C<index> builtin can also search for a literal substring within a string.
+Using a regex engine for that is like flying your autonomous combat helicopter
+to the corner store to buy cheese--but Perl allows you to decide what you find
+most maintainable.
+
+=end tip
 
 X<operators; substitution>
 X<operators; C<s///>>
 
-The substitution operator, C<s///>, evaluates its first portion as a regular
-expression to match and the second portion as a substring used to replace the
-matched portion. In other words, to get over your pesky summer allergies:
+The substitution operator, C<s///>, is in one sense a circumfix operator
+(L<fixity>) with two operands. Its first operand is a regular expression to
+match when used with the regex binding operator. The second operand is a
+substring used to replace the matched portion of the first operand used with
+the regex binding operator. For example, to cure pesky summer allergies:
 
 =begin programlisting
 
@@ -71,22 +81,22 @@ match operator to use them:
 
 =end programlisting
 
-Combine multiple regex objects into complex patterns:
+... or combine multiple regex objects into complex patterns:
 
 =begin programlisting
 
     my $hat   = qr/hat/;
     my $field = qr/field/;
 
-    say 'Found a hat in a field!' if $name =~ /B<$hat$field>/;
+    say 'Found a hat in a field!'
+        if $name =~ /B<$hat$field>/;
 
-    # or
-
-    like( $name, qr/B<$hat$field>/, 'Found a hat in a field!' );
+    like( $name, qr/B<$hat$field>/,
+                   'Found a hat in a field!' );
 
 =end programlisting
 
-=begin sidebar
+=begin tip Like C<is>, with More C<like>
 
 X<CPAN; C<Test::More>>
 X<C<like>>
@@ -94,17 +104,9 @@ X<C<like>>
 C<Test::More>'s C<like> function tests that the first argument matches the
 regex provided as the second argument.
 
-=end sidebar
+=end tip
 
 =head1 Quantifiers
-
-X<regex; quantifiers>
-X<builtins; C<index>>
-
-The C<index> builtin can also search for a literal substring within a string.
-Using a regex engine for that is like flying your autonomous combat helicopter
-to the corner store to buy spare cheese. Then again, Perl allows you to choose
-what you find most readable under your circumstances.
 
 X<regex; quantifiers>
 X<regex; zero or one quantifier>
@@ -136,14 +138,14 @@ of the quantified atom:
 
 =begin programlisting
 
-    my $one_or_more_a = qr/caB<+>t/;
+    my $some_a = qr/caB<+>t/;
 
-    like( 'cat',    $one_or_more_a, "'cat' matches /ca+t/"    );
-    like( 'caat',   $one_or_more_a, "'caat' matches /ca+t/"   );
-    like( 'caaat',  $one_or_more_a, "'caaat' matches /ca+t/"  );
-    like( 'caaaat', $one_or_more_a, "'caaaat' matches /ca+t/" );
+    like( 'cat',    $some_a, "'cat' matches /ca+t/" );
+    like( 'caat',   $some_a, "'caat' matches/"      );
+    like( 'caaat',  $some_a, "'caaat' matches"      );
+    like( 'caaaat', $some_a, "'caaaat' matches"     );
 
-    unlike( 'ct',   $one_or_more_a, "'ct' does not match /ca+t/" );
+    unlike( 'ct',   $some_a, "'ct' does not match"  );
 
 =end programlisting
 
@@ -158,13 +160,13 @@ quantified atom:
 
 =begin programlisting
 
-    my $zero_or_more_a = qr/caB<*>t/;
+    my $any_a = qr/caB<*>t/;
 
-    like( 'cat',    $zero_or_more_a, "'cat' matches /ca*t/"    );
-    like( 'caat',   $zero_or_more_a, "'caat' matches /ca*t/"   );
-    like( 'caaat',  $zero_or_more_a, "'caaat' matches /ca*t/"  );
-    like( 'caaaat', $zero_or_more_a, "'caaaat' matches /ca*t/" );
-    like( 'ct',     $zero_or_more_a, "'ct' matches /ca*t/"     );
+    like( 'cat',    $any_a, "'cat' matches /ca*t/" );
+    like( 'caat',   $any_a, "'caat' matches"       );
+    like( 'caaat',  $any_a, "'caaat' matches"      );
+    like( 'caaaat', $any_a, "'caaaat' matches"     );
+    like( 'ct',     $any_a, "'ct' matches"         );
 
 =end programlisting
 
@@ -193,12 +195,12 @@ C<{n,}> matches an atom I<at least> I<n> times:
 =begin programlisting
 
     # equivalent to qr/ca+t/;
-    my $at_least_one_a = qr/caB<{1,}>t/;
+    my $some_a = qr/caB<{1,}>t/;
 
-    like( 'cat',    $at_least_one_a, "'cat' matches /ca{1,}t/"    );
-    like( 'caat',   $at_least_one_a, "'caat' matches /ca{1,}t/"   );
-    like( 'caaat',  $at_least_one_a, "'caaat' matches /ca{1,}t/"  );
-    like( 'caaaat', $at_least_one_a, "'caaaat' matches /ca{1,}t/" );
+    like( 'cat',    $some_a, "'cat' matches /ca{1,}t/" );
+    like( 'caat',   $some_a, "'caat' matches"          );
+    like( 'caaat',  $some_a, "'caaat' matches"         );
+    like( 'caaaat', $some_a, "'caaaat' matches"        );
 
 =end programlisting
 
@@ -207,12 +209,13 @@ more than I<m> times:
 
 =begin programlisting
 
-    my $one_to_three_a = qr/caB<{1,3}>t/;
+    my $few_a = qr/caB<{1,3}>t/;
 
-    like(   'cat',    $one_to_three_a, "'cat' matches /ca{1,3}t/"           );
-    like(   'caat',   $one_to_three_a, "'caat' matches /ca{1,3}t/"          );
-    like(   'caaat',  $one_to_three_a, "'caaat' matches /ca{1,3}t/"         );
-    unlike( 'caaaat', $one_to_three_a, "'caaaat' does not match /ca{1,3}t/" );
+    like( 'cat',    $few_a, "'cat' matches /ca{1,3}t/" );
+    like( 'caat',   $few_a, "'caat' matches"           );
+    like( 'caaat',  $few_a, "'caaat' matches"          );
+
+    unlike( 'caaaat', $few_a, "'caaaat' doesn't match" );
 
 =end programlisting
 
@@ -233,9 +236,11 @@ naE<iuml>ve use of the "zero or more non-newline characters" pattern of C<.*>:
     # a poor regex
     my $hot_meal = qr/hot.*meal/;
 
-    say 'Found a hot meal!' if 'I have a hot meal' =~ $hot_meal;
     say 'Found a hot meal!'
-         if 'I did some one-shot, piecemeal work!' =~ $hot_meal;
+        if 'I have a hot meal' =~ $hot_meal;
+
+    say 'Found a hot meal!'
+         if 'one-shot, piecemeal work!' =~ $hot_meal;
 
 =end programlisting
 
@@ -249,7 +254,7 @@ The C<?> quantifier modifier turns a greedy-quantifier parsimonious:
 
 =begin programlisting
 
-    my $minimal_greedy_match = qr/hot.*?meal/;
+    my $minimal_greedy = qr/hot.*?meal/;
 
 =end programlisting
 
@@ -261,7 +266,8 @@ potential match for this token combination is zero characters:
 
 =begin programlisting
 
-    say 'Found a hot meal' if 'ilikeahotmeal' =~ /$minimal_greedy_match/;
+    say 'Found a hot meal'
+    if 'ilikeahotmeal' =~ /$minimal_greedy/;
 
 =end programlisting
 
@@ -271,11 +277,11 @@ Use C<+?> to match one or more items non-greedily:
 
 =begin programlisting
 
-    my $minimal_greedy_at_least_one = qr/hot.+?meal/;
+    my $minimal_greedy_plus = qr/hot.+?meal/;
 
-    unlike( 'ilikeahotmeal', $minimal_greedy_at_least_one );
+    unlike( 'ilikeahotmeal', $minimal_greedy_plus );
 
-    like( 'i like a hot meal', $minimal_greedy_at_least_one );
+    like( 'i like a hot meal', $minimal_greedy_plus );
 
 =end programlisting
 
@@ -286,8 +292,9 @@ quantifier as well as the range quantifiers. In every case, it causes the regex
 to match as little of the input as possible.
 
 The greedy patterns C<.+> and C<.*> are tempting but dangerous. A
-cruciverbalist who needs to fill in four boxes of 7 Down ("Rich soil") will
-find too many invalid candidates with the pattern:
+cruciverbalistN<A crossword puzzle afficionado.> who needs to fill in four
+boxes of 7 Down ("Rich soil") will find too many invalid candidates with the
+pattern:
 
 =begin programlisting
 
@@ -298,7 +305,7 @@ find too many invalid candidates with the pattern:
 She'll have to discard C<Alabama>, C<Belgium>, and C<Bethlehem> long before the
 program suggests C<loam>. Not only are those words too long, but the matches
 start in the middle of the words. A working understanding of greediness helps,
-as does copious testing of real data you expect to match and to discard.
+but there is no substitute for the copious testing with real, working data.
 
 =head1 Regex Anchors
 
@@ -306,9 +313,9 @@ X<regex; anchors>
 X<anchors; start of string>
 X<C<\A>; start of string regex metacharacter>
 
-I<Regex anchors> tie a match to absolute string positions. The I<start of
-string anchor> (C<\A>) dictates that any match must start at the beginning of
-the string:
+I<Regex anchors> force the regex engine to start or end a match at an absolute
+position. The I<start of string anchor> (C<\A>) dictates that any match must
+start at the beginning of the string:
 
 =begin programlisting
 
@@ -333,9 +340,9 @@ of a line within the string.
 X<word boundary metacharacter>
 X<C<\b>; word boundary regex metacharacter>
 
-The I<word boundary metacharacter> (C<\b>) matches only at the boundary between
-a word character (C<\w>) and a non-word character (C<\W>). Thus to find C<loam>
-but not C<Belgium> in a sentence, use the anchored regex:
+The I<word boundary anchor> (C<\b>) matches only at the boundary between a word
+character (C<\w>) and a non-word character (C<\W>). Use an anchored regex to
+find C<loam> while prohibiting C<Belgium>:
 
 =begin programlisting
 
@@ -346,16 +353,20 @@ but not C<Belgium> in a sentence, use the anchored regex:
 =head1 Metacharacters
 
 X<regex; metacharacters>
-X<regex; C<.>>
-X<C<.>; anything but newline regex metacharacter>
 X<regex; metacharacters>
 X<metacharacters; regex>
 
 Perl interprets several characters in regular expressions as I<metacharacters>,
-which represent something different than their literal characters. This offers
-power far beyond mere substring matches. The C<.> character in a regular
-expression means "match any character except a newline". While the anchored
-searches are obvious improvements, a simple regex search for 7 Down might be:
+characters represent something other than their literal interpretation.
+Metacharacters give regex wielders power far beyond mere substring matches.
+
+X<regex; C<.>>
+X<C<.>; anything but newline regex metacharacter>
+
+The C<.> metacharacter means "match any character except a newline". Remember
+that caveat; many novices forget it. A simple regex search--ignoring the
+obvious improvement of using anchors--for 7 Down might be C</l..m/>. Of course,
+there's always more than one way to get the right answer:
 
 =begin programlisting
 
@@ -390,8 +401,8 @@ The C<\d> metacharacter matches digits (also in the Unicode sense):
 =begin programlisting
 
     # not a robust phone number matcher
-    next unless $potential_phone_number =~ /B<\d>{3}-B<\d>{3}-B<\d>{4}/;
-    say "I have your number: $potential_phone_number";
+    next unless $number =~ /B<\d>{3}-B<\d>{3}-B<\d>{4}/;
+    say "I have your number: $number";
 
 =end programlisting
 
@@ -441,10 +452,10 @@ I<character class> by enclosing them in square brackets:
 
 =begin tip Interpolation Happens
 
-Without curly braces around the name of the scalar variable C<$ascii_vowels>,
-Perl's parser would interpret the variable name as C<$ascii_vowelst>, which
-either causes a compile-time error about an unknown variable or interpolates
-the contents of an existing C<$ascii_vowelst> into the regex.
+Without those curly braces, Perl's parser would interpret the variable name as
+C<$ascii_vowelst>, which either causes a compile-time error about an unknown
+variable or interpolates the contents of an existing C<$ascii_vowelst> into the
+regex.
 
 =end tip
 
@@ -614,9 +625,9 @@ may be more verbose:
 
     my $order = 'Vegan brownies!';
 
-    $order    =~ s/Vegan (\w+)/Vegetarian $1/;
+    $order =~ s/Vegan (\w+)/Vegetarian $1/;
     # or
-    $order    =~ s/Vegan (?<menuitem>\w+)/Vegetarian $+{menuitem}/;
+    $order =~ s/Vegan (?<food>\w+)/Vegetarian $+{food}/;
 
 =end programlisting
 
@@ -672,8 +683,8 @@ metacharacter (C<|>) expresses this intent:
     my $rice  = qr/rice/;
     my $beans = qr/beans/;
 
-    like( 'rice',  qr/$rice|$beans/, 'Found some rice'  );
-    like( 'beans', qr/$rice|$beans/, 'Found some beans' );
+    like( 'rice',  qr/$rice|$beans/, 'Found rice'  );
+    like( 'beans', qr/$rice|$beans/, 'Found beans' );
 
 =end programlisting
 
@@ -683,9 +694,9 @@ than even atoms:
 
 =begin programlisting
 
-    like(   'rice',  qr/rice|beans/, 'Found some rice'  );
-    like(   'beans', qr/rice|beans/, 'Found some beans' );
-    unlike( 'ricb',  qr/rice|beans/, 'Found some weird hybrid' );
+    like(   'rice',  qr/rice|beans/, 'Found rice'   );
+    like(   'beans', qr/rice|beans/, 'Found beans'  );
+    unlike( 'ricb',  qr/rice|beans/, 'Found hybrid' );
 
 =end programlisting
 
@@ -821,8 +832,8 @@ start with C<cat>:
     while (<$words>)
     {
         chomp;
-        next unless /\A(?<some_cat>$disastrous_feline.*)\Z/;
-        say "Found a non-catastrophe '$+{some_cat}'";
+        next unless /\A(?<cat>$disastrous_feline.*)\Z/;
+        say "Found a non-catastrophe '$+{cat}'";
     }
 
 =end programlisting
@@ -868,11 +879,11 @@ zero-width positive look-behind assertion I<can> have a variable length:
 
 =begin programlisting
 
-    my $double_space_cat = qr/\s+\Kcat/;
+    my $spacey_cat = qr/\s+\Kcat/;
 
-    like( 'my cat has been to space', $double_space_cat );
+    like( 'my cat has been to space', $spacey_cat );
     like( 'my  cat  has  been  to  doublespace',
-         $double_space_cat );
+         $spacey_cat );
 
 =end programlisting
 
@@ -884,7 +895,8 @@ of a pattern:
     my $exclamation = 'This is a catastrophe!';
     $exclamation    =~ s/cat\K\w+!/./;
 
-    like( $exclamation, qr/\bcat\./, "That wasn't so bad!" );
+    like( $exclamation, qr/\bcat\./,
+                          "That wasn't so bad!" );
 
 =end programlisting
 
@@ -903,8 +915,8 @@ operators. For example, to enable case-insensitive matching:
 
     my $pet = 'CaMeLiA';
 
-    like( $pet, qr/Camelia/,  'You have a nice butterfly there'       );
-    like( $pet, qr/Camelia/i, 'Butterfly may have a broken shift key' );
+    like( $pet, qr/Camelia/,  'Nice butterfly!'  );
+    like( $pet, qr/Camelia/i, 'shift key br0ken' );
 
 =end programlisting
 
@@ -966,13 +978,14 @@ original:
 
     my $status     = 'I am hungry for pie.';
     my $newstatus  = $status =~ s/pie/cake/r;
-    my $statuscopy = $status =~ s/liver and onions/bratwurst/r;
+    my $statuscopy = $status
+                   =~ s/liver and onions/bratwurst/r;
 
     is( $status, 'I am hungry for pie.',
         'original string should be unmodified' );
 
-    like( $newstatus,    qr/cake/,      '... someone wants cake'   );
-    unlike( $statuscopy, qr/bratwurst/, '... no German food today' );
+    like( $newstatus,    qr/cake/,      'cake wanted' );
+    unlike( $statuscopy, qr/bratwurst/, 'wurst not'   );
 
 =end programlisting
 
@@ -991,7 +1004,7 @@ whitespace and comments. The results are often much more readable:
 
         # miscellany
         (?:
-          [;\n\s]*            # blank spaces and spurious semicolons
+          [;\n\s]*            # spaces and semicolons
           (?:/\*.*?\*/)?      # C comments
         )*
 
@@ -1067,7 +1080,11 @@ unfortunate protagonist's name with:
     # appease the Mitchell estate
     my $contents = slurp( $file );
     $contents    =~ s{Scarlett( O'Hara)?}
-                     { 'Mauve' . defined $1 ? ' Midway' : '' }ge;
+                     {
+                        'Mauve' . defined $1
+                                ? ' Midway'
+                                : ''
+                     }ge;
 
 =end programlisting
 

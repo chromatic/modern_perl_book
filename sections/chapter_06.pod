@@ -11,12 +11,12 @@ regular expression (I<regex> or I<regexp>) is a I<pattern> which describes
 characteristics of a piece of text. A I<regular expression engine> interprets
 patterns and applies them to match or modify pieces of text.
 
-Perl's core documentation--C<perldoc perlretut>, C<perldoc perlreref>, and
-C<perldoc perlre>--includes a regex tutorial, a reference guide, and full
-documentation, respectively. Jeffrey Friedl's book I<Mastering Regular
-Expressions> explains the theory and the mechanics of how regular expressions
-work. While mastering regular expressions is a daunting pursuit, a little
-knowledge will give you great power.
+Perl's core regex documentation includes a tutorial (C<perldoc perlretut>), a
+reference guide (C<perldoc perlreref>), and full documentation (C<perldoc
+perlre>). Jeffrey Friedl's book I<Mastering Regular Expressions> explains the
+theory and the mechanics of how regular expressions work. While mastering
+regular expressions is a daunting pursuit, a little knowledge will give you
+great power.
 
 L<regular_expressions>
 

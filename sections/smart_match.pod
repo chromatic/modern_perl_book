@@ -54,9 +54,14 @@ For example:
 
     my $needlepat = qr/needle/;
 
-    say 'Pattern match'          if $needle   ~~ $needlepat;
-    say 'Grep through array'     if @haystack ~~ $needlepat;
-    say 'Grep through hash keys' if %hayhash  ~~ $needlepat;
+    say 'Pattern match'
+        if $needle   ~~ $needlepat;
+
+    say 'Grep through array'
+        if @haystack ~~ $needlepat;
+
+    say 'Grep through hash keys'
+        if %hayhash  ~~ $needlepat;
 
 =end programlisting
 
@@ -64,9 +69,14 @@ For example:
 
 =begin programlisting
 
-    say 'Grep through array'                 if $needlepat  ~~ @haystack;
-    say 'Array elements exist as hash keys'  if %hayhash    ~~ @haystack;
-    say 'Array elements smart match'         if @strawstack ~~ @haystack;
+    say 'Grep through array'
+        if $needlepat  ~~ @haystack;
+
+    say 'Array elements exist as hash keys'
+        if %hayhash    ~~ @haystack;
+
+    say 'Array elements smart match'
+        if @strawstack ~~ @haystack;
 
 =end programlisting
 
@@ -74,9 +84,14 @@ For example:
 
 =begin programlisting
 
-    say 'Grep through hash keys'            if $needlepat ~~ %hayhash;
-    say 'Array elements exist as hash keys' if @haystack  ~~ %hayhach;
-    say 'Hash keys identical'               if %hayhash   ~~ %haymap;
+    say 'Grep through hash keys'
+        if $needlepat ~~ %hayhash;
+
+    say 'Array elements exist as hash keys'
+        if @haystack  ~~ %hayhach;
+
+    say 'Hash keys identical'
+        if %hayhash   ~~ %haymap;
 
 =end programlisting
 
