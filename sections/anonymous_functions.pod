@@ -23,7 +23,6 @@ input with behavior:
         plus     => \&add_two_numbers,
         minus    => \&subtract_two_numbers,
         times    => \&multiply_two_numbers,
-        # ... and so on
     );
 
     sub add_two_numbers      { $_[0] + $_[1] }
@@ -34,8 +33,7 @@ input with behavior:
     {
         my ($left, $op, $right) = @_;
 
-        die "Unknown operation!"
-            unless exists $dispatch{ $op };
+        return unless exists $dispatch{ $op };
 
         return $dispatch{ $op }->( $left, $right );
     }
@@ -72,8 +70,8 @@ This dispatch table offers some degree of security; only those functions mapped
 within the table are available for users to call. If your dispatch function
 blindly assumed that the string given as the name of the operator corresponded
 directly to the name of a function to call, a malicious user could conceivably
-call any function in any other namespace by crafting an operator name of
-C<'Internal::Functions::some_malicious_function'>.
+call any function in any other namespace by passing
+C<'Internal::Functions::malicious_function'>.
 
 =end tip
 
@@ -93,7 +91,7 @@ You may also see anonymous functions passed as function arguments:
     }
 
     invoke_anon_function( \&named_func );
-    invoke_anon_function( B<sub { say 'I am an anonymous function' }> );
+    invoke_anon_function( B<sub { say 'Who am I?' }> );
 
 =end programlisting
 
@@ -110,8 +108,8 @@ named or anonymous with introspection:
 
     sub show_caller
     {
-        my ($package, $filename, $line, $sub) = caller(1);
-        say "Called from $sub in $package at $filename : $line";
+        my ($package, $file, $line, $sub) = caller(1);
+        say "Called from $sub in $package:$file:$line";
     }
 
     sub main
@@ -136,8 +134,10 @@ introspection.
 
 The result may be surprising:
 
-    Called from ShowCaller::B<main> in ShowCaller at anoncaller.pl : 20
-    Called from ShowCaller::B<__ANON__> in ShowCaller at anoncaller.pl : 17
+    Called from ShowCaller::B<main>
+             in ShowCaller:anoncaller.pl:20
+    Called from ShowCaller::B<__ANON__>
+             in ShowCaller:anoncaller.pl:17
 
 X<CPAN; C<Sub::Name>>
 
@@ -193,8 +193,8 @@ functions. Consider the CPAN module C<Test::Fatal>:
     my $croaker = exception { die 'I croak!' };
     my $liver   = exception { 1 + 1 };
 
-    like( $croaker, qr/I croak/, 'die() should throw an exception' );
-    is(   $liver,   undef,       'simple addition should not' );
+    like( $croaker, qr/I croak/, 'die() should croak'   );
+    is(   $liver,   undef,       'addition should live' );
 
     done_testing();
 
@@ -217,14 +217,13 @@ This syntax allows you to pass named functions by reference as well:
 =begin programlisting
 
     B<sub croaker { die 'I croak!' }>
-
     B<sub liver   { 1 + 1 }>
 
     my $croaker = exception \&croaker;
     my $liver   = exception \&liver;
 
-    like( $croaker, qr/I croak/, 'die() should throw an exception' );
-    is(   $liver,   undef,       'simple addition should not' );
+    like( $croaker, qr/I croak/, 'die() should die'     );
+    is(   $liver,   undef,       'addition should live' );
 
 =end programlisting
 
@@ -247,8 +246,8 @@ will contain, and so will throw an exception.
 
 =begin screen
 
-    Type of arg 1 to Test::Fatal::exception must be block or sub {}
-    (not private variable)
+    Type of arg 1 to Test::Fatal::exception
+       must be block or sub {} (not private variable)
 
 =end screen
 
@@ -260,7 +259,8 @@ multiple arguments cannot have a trailing comma after the function block:
     use Test::More;
     use Test::Fatal 'dies_ok';
 
-    dies_ok { die 'This is my boomstick!' } 'No movie references here';
+    dies_ok { die 'This is my boomstick!' }
+            'No movie references here';
 
 =end programlisting
 

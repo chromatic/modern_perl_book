@@ -43,7 +43,8 @@ parlor. Every hundredth person gets free sprinkles:
 
             my $order = shift;
 
-            add_sprinkles($order) if ($cust_count % 100 == 0);
+            add_sprinkles($order)
+                if ($cust_count % 100 == 0);
 
             ...
         }
@@ -67,7 +68,8 @@ between invocations:
         $cust_count++;
 
         my $order = shift;
-        add_sprinkles($order) if ($cust_count % 100 == 0);
+        add_sprinkles($order)
+            if ($cust_count % 100 == 0);
 
         ...
     }
@@ -117,7 +119,7 @@ it:
 
     sub inadvertent_state
     {
-        # my $counter  = 1 if 0; # DEPRECATED; do not use
+        # my $counter  = 1 if 0; # DEPRECATED; don't use
         state $counter = 1;      # use instead
 
         ...

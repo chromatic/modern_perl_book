@@ -230,6 +230,13 @@ C<AUTOLOAD()> with the C<subs> pragma:
 
 =end programlisting
 
+=begin tip Now You See Them
+
+Forward declarations are only useful in the two rare cases of attributes and
+autoloading (L<autoload>).
+
+=end tip
+
 That technique has the advantage of documenting your intent but the
 disadvantage that you have to maintain a static list of functions or methods.
 Overriding C<can()> (L<universal>) sometimes works better:
@@ -288,7 +295,8 @@ error:
 
 =begin screen
 
-  Use of inherited AUTOLOAD for non-method I<slam_door>() is deprecated
+  Use of inherited AUTOLOAD for non-method
+      I<slam_door>() is deprecated
 
 =end screen
 

@@ -21,38 +21,14 @@ I<Lexical scope> is the scope visible as you I<read> a program. The Perl
 compiler resolves this scope during compilation. A block delimited by curly
 braces creates a new scope, whether a bare block, the block of a loop
 construct, the block of a C<sub> declaration, an C<eval> block, or any other
-non-quoting block:
-
-=begin programlisting
-
-    # outer lexical scope
-    {
-        package Robot::Butler;
-
-        # inner lexical scope
-        sub tidy_room
-        {
-            # further inner lexical scope
-            do {
-                ...
-            } while (@_);
-
-            # sibling inner lexical scope
-            for (@_)
-            {
-                ...
-            }
-        }
-    }
-
-=end programlisting
+non-quoting block.
 
 X<variables; lexical>
 
-Lexical scope governs the visibility of variables declared with C<my>--
-I<lexical> variables. A lexical variable declared in one scope is visible in
-that scope and any scopes nested within it, but is invisible to sibling or
-outer scopes:
+Lexical scope governs the visibility of variables declared with
+C<my>--I<lexical> variables. A lexical variable declared in one scope is
+visible in that scope and any scopes nested within it, but is invisible to
+sibling or outer scopes:
 
 =begin programlisting
 
@@ -60,13 +36,16 @@ outer scopes:
     {
         package Robot::Butler
 
+        # inner lexical scope
         my $battery_level;
 
         sub tidy_room
         {
+            # further inner lexical scope
             my $timer;
 
             do {
+                # innermost lexical scope
                 my $dustpan;
                 ...
             } while (@_);
@@ -74,6 +53,7 @@ outer scopes:
             # sibling inner lexical scope
             for (@_)
             {
+                # separate innermost scope
                 my $polish_cloth;
                 ...
             }
@@ -94,16 +74,14 @@ outer scope hides, or I<shadows>, the outer lexical:
 
 =begin programlisting
 
+    my $name = 'Jacob';
+
     {
-        my $name = 'Jacob';
-
-        {
-            my $name = 'Edward';
-            say $name;
-        }
-
+        my $name = 'Edward';
         say $name;
     }
+
+    say $name;
 
 =end programlisting
 
@@ -125,9 +103,9 @@ block, but its scope is that I<within> the loop block:
 
 =begin programlisting
 
-    my $cat = 'Bradley';
+    my $cat = 'Brad';
 
-    for my $cat (qw( Jack Daisy Petunia Tuxedo ))
+    for my $cat (qw( Jack Daisy Petunia Tuxedo Choco ))
     {
         say "Iterator cat is $cat";
     }
@@ -139,8 +117,8 @@ block, but its scope is that I<within> the loop block:
 X<lexical topic>
 X<topic; lexical>
 
-Similarly, C<given> (L<given_when>) creates a I<lexical topic> (akin to C<my
-$_>) within its block:
+Similarly, C<given> (L<given_when>) creates a I<lexical topic> (like C<my $_>)
+within its block:
 
 =begin programlisting
 
@@ -173,7 +151,7 @@ builtin. Like C<my>, C<our> enforces lexical scoping of the alias. The
 fully-qualified name is available everywhere, but the lexical alias is visible
 only within its scope.
 
-C<our> is most useful with package global variables such as C<$VERSION> and
+C<our> is most useful with package global variables like C<$VERSION> and
 C<$AUTOLOAD>.
 
 =head2 Dynamic Scope
@@ -190,32 +168,29 @@ scopes, its I<value> changes depending on C<local>ization and assignment:
 
 =begin programlisting
 
+    our $scope;
+
+    sub inner
     {
-        our $scope;
-
-        sub inner
-        {
-            say $scope;
-        }
-
-        sub main
-        {
-            say $scope;
-            local $scope = 'main() scope';
-            middle();
-        }
-
-        sub middle
-        {
-            say $scope;
-            inner();
-        }
-
-        $scope = 'outer scope';
-        main();
         say $scope;
     }
 
+    sub main
+    {
+        say $scope;
+        local $scope = 'main() scope';
+        middle();
+    }
+
+    sub middle
+    {
+        say $scope;
+        inner();
+    }
+
+    $scope = 'outer scope';
+    main();
+    say $scope;
 
 =end programlisting
 

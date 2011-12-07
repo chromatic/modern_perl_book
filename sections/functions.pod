@@ -27,13 +27,6 @@ will define it later:
 
 =end programlisting
 
-=begin tip Now You See Them
-
-Forward declarations are only useful in the two rare cases of attributes
-(L<attributes>) and autoloading (L<autoload>).
-
-=end tip
-
 =head1 Invoking Functions
 
 X<functions; invoking>
@@ -94,9 +87,21 @@ operate on C<@_> directly:
 
 =end programlisting
 
-C<@_> behaves as a normal Perl array. Refer to individual elements by index:
+Most code uses C<shift> or list unpacking, though C<@_> behaves as a normal Perl array, so you can refer to individual elements by index:
 
 =begin programlisting
+
+    sub greet_one_shift
+    {
+        B<my $name = shift>;
+        say "Hello, $name!";
+    }
+
+    sub greet_two_no_shift
+    {
+        my ($hero, $sidekick) = @_;
+        say "Well if it isn't $hero and $sidekick. Welcome!";
+    }
 
     sub greet_one_indexed
     {
@@ -109,24 +114,7 @@ C<@_> behaves as a normal Perl array. Refer to individual elements by index:
 
 =end programlisting
 
-... or C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>. Most
-code uses C<shift> or list unpacking:
-
-=begin programlisting
-
-    sub greet_one_shift
-    {
-        B<my $name = shift>;
-        say "Hello, $name!";
-    }
-
-    sub greet_two_shift
-    {
-        my ($hero, $sidekick) = @_;
-        say "Well if it isn't $hero and $sidekick. Welcome!";
-    }
-
-=end programlisting
+... or C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>.
 
 =begin tip The Implicit Them
 
@@ -145,7 +133,7 @@ passed:
     sub bad_greet_one
     {
         B<my $name = @_>;  # buggy
-        say "Hello, $name; you're looking quite numeric today!"
+        say "Hello, $name; you look numeric today!"
     }
 
 =end programlisting
@@ -203,9 +191,10 @@ X<CPAN; C<Method::Signatures>>
 X<CPAN; C<MooseX::Method::Signatures>>
 X<CPAN; C<Method::Signatures::Simple>>
 
-The C<signatures>, C<Method::Signatures>, C<Method::Signatures::Simple>, and
-C<MooseX::Method::Signatures> CPAN modules offer more powerful parameter
-handling.
+Several CPAN distributions extend Perl 5's parameter handling with additional
+syntax and options. C<signatures> and C<Method::Signatures> are powerful.
+C<Method::Signatures::Simple> is basic, but useful.
+C<MooseX::Method::Signatures> works very well with Moose (L<moose>).
 
 =end tip
 
@@ -327,7 +316,7 @@ Be cautious, and unpack C<@_> rigorously.
 =head1 Functions and Namespaces
 
 Every function has a containing namespace (L<packages>). Functions in an
-undeclared namespace--functions not declared after an explicit C<package ...>
+undeclared namespace--functions not declared after an explicit C<package>
 statement--are in the C<main> namespace. You may also declare a function within
 another namespace by prefixing its name:
 
@@ -437,7 +426,7 @@ call, and the line number of the file on which the call occurred:
     sub show_call_information
     {
         my ($package, $file, $line) = caller();
-        say "Called from $package in $file at $line";
+        say "Called from $package in $file:$line";
     }
 
 =end programlisting
@@ -457,7 +446,7 @@ values, including the name of the function and the context of the call:
     sub show_call_information
     {
         my ($package, $file, $lineB<, $func>) = caller(B<0>);
-        say "Called B<$func> from $package in $file at $line";
+        say "Called B<$func> from $package in $file:$line";
     }
 
 =end programlisting
@@ -473,21 +462,7 @@ caller. C<carp()> reports a warning from the file and line number of its caller
 (L<producing_warnings>).
 
 This behavior is most useful when validating parameters or preconditions of a
-function to indicate that the calling code is wrong somehow:
-
-=begin programlisting
-
-    use Carp 'croak';
-
-    sub add_two_numbers
-    {
-        croak 'add_two_numbers() takes two and only two arguments'
-            unless @_ == 2;
-
-        ...
-    }
-
-=end programlisting
+function to indicate that the calling code is wrong somehow.
 
 =head2 Validating Arguments
 
@@ -500,7 +475,7 @@ function is correct:
 
     sub add_numbers
     {
-        croak "Expected two numbers, but received: " . @_
+        croak 'Expected two numbers, but received: ' . @_
             unless @_ == 2;
 
         ...
@@ -535,9 +510,10 @@ context.
     sub context_sensitive
     {
         my $context = wantarray();
-        return qw( Called in list context )  if             $context;
-        say       'Called in void context'   unless defined $context;
-        return    'Called in scalar context' unless         $context;
+
+        return qw( List context )   if         $context;
+        say    'Void context'   unless defined $context;
+        return 'Scalar context' unless         $context;
     }
 
     context_sensitive();
@@ -582,19 +558,32 @@ An automated test for this technique could be:
 
 =begin programlisting
 
-    use Test::More tests => 8;
+    use Test::More;
 
-    my @elements = ( 1, 5, 6, 19, 48, 77, 997, 1025, 7777, 8192, 9999 );
+    my @elements =
+    (
+        1, 5, 6, 19, 48, 77, 997, 1025, 7777, 8192, 9999
+    );
 
-    ok   elem_exists(     1, @elements ), 'found first element in array';
-    ok   elem_exists(  9999, @elements ), 'found last element in array';
-    ok ! elem_exists(   998, @elements ), 'did not find element not in array';
-    ok ! elem_exists(    -1, @elements ), 'did not find element not in array';
-    ok ! elem_exists( 10000, @elements ), 'did not find element not in array';
+    ok   elem_exists(     1, @elements ),
+            'found first element in array';
+    ok   elem_exists(  9999, @elements ),
+             'found last element in array';
+    ok ! elem_exists(   998, @elements ),
+            'did not find element not in array';
+    ok ! elem_exists(    -1, @elements ),
+            'did not find element not in array';
+    ok ! elem_exists( 10000, @elements ),
+            'did not find element not in array';
 
-    ok   elem_exists(    77, @elements ), 'found midpoint element';
-    ok   elem_exists(    48, @elements ), 'found end of lower half element';
-    ok   elem_exists(   997, @elements ), 'found start of upper half element';
+    ok   elem_exists(    77, @elements ),
+            'found midpoint element';
+    ok   elem_exists(    48, @elements ),
+            'found end of lower half element';
+    ok   elem_exists(   997, @elements ),
+            'found start of upper half element';
+
+    done_testing();
 
 =end programlisting
 
@@ -612,25 +601,28 @@ knows how to call itself, halving the list each time:
     {
         my ($item, @array) = @_;
 
-        # break recursion if there are no elements to search
+        # break recursion with no elements to search
         return unless @array;
 
-        # bias down, if there are an odd number of elements
+        # bias down with odd number of elements
         my $midpoint = int( (@array / 2) - 0.5 );
         my $miditem  = $array[ $midpoint ];
 
-        # return true if the current element is the target
+        # return true if found
         return 1 if $item  == $miditem;
 
-        # return false if the current element is the only element
+        # return false with only one element
         return   if @array == 1;
 
         # split the array down and recurse
-        return B<elem_exists>( $item, @array[0 .. $midpoint] )
-            if $item < $miditem;
+        return B<elem_exists>(
+            $item, @array[0 .. $midpoint]
+        ) if $item < $miditem;
 
-        # split the array up and recurse
-        return B<elem_exists>( $item, @array[$midpoint + 1 .. $#array] );
+        # split the array and recurse
+        return B<elem_exists>(
+             $item, @array[ $midpoint + 1 .. $#array ]
+        );
     }
 
 =end programlisting
@@ -644,7 +636,10 @@ Every new invocation of a function creates its own I<instance> of a lexical
 scope. Even though the declaration of C<elem_exists()> creates a single scope
 for the lexicals C<$item>, C<@array>, C<$midpoint>, and C<$miditem>, every
 I<call> to C<elem_exists()>--even recursively--stores the values of those
-lexicals separately. Demonstrate that with some debugging code:
+lexicals separately.
+
+Not only can C<elem_exists()> call itself, but the lexical variables of each
+invocation are safe and separate:
 
 =begin programlisting
 
@@ -661,9 +656,6 @@ lexicals separately. Demonstrate that with some debugging code:
     }
 
 =end programlisting
-
-Not only can C<elem_exists()> call itself, but the lexical variables of each
-invocation are safe and separate.
 
 =head2 Tail Calls
 
@@ -688,12 +680,15 @@ results. These recursive calls to C<elem_exists()>:
 
 =begin programlisting
 
-        # split the array down and recurse
-        return elem_exists( $item, @array[0 .. $midpoint] )
-            if $item < $miditem;
+    # split the array down and recurse
+    return B<elem_exists>(
+        $item, @array[0 .. $midpoint]
+    ) if $item < $miditem;
 
-        # split the array up and recurse
-        return elem_exists( $item, @array[$midpoint + 1 .. $#array] );
+    # split the array and recurse
+    return B<elem_exists>(
+         $item, @array[ $midpoint + 1 .. $#array ]
+    );
 
 =end programlisting
 
@@ -714,19 +709,19 @@ want to pass different arguments:
 
 =begin programlisting
 
-        # split the array down and recurse
-        if ($item < $miditem)
-        {
-            @_ = ($item, @array[0 .. $midpoint]);
-            B<goto &elem_exists;>
-        }
+    # split the array down and recurse
+    if ($item < $miditem)
+    {
+        @_ = ($item, @array[0 .. $midpoint]);
+        B<goto &elem_exists;>
+    }
 
-        # split the array up and recurse
-        else
-        {
-            @_ = ($item, @array[$midpoint + 1 .. $#array] );
-            B<goto &elem_exists;>
-        }
+    # split the array up and recurse
+    else
+    {
+        @_ = ($item, @array[$midpoint + 1 .. $#array] );
+        B<goto &elem_exists;>
+    }
 
 =end programlisting
 
@@ -736,8 +731,8 @@ Sometimes optimizations are ugly.
 
 X<functions; misfeatures>
 
-Other Perl 5 function features look good, but have substantial drawbacks. In
-particular, prototypes (L<prototypes>) rarely do what novices mean.
+Some Perl features look good, but have substantial drawbacks. In particular,
+prototypes (L<prototypes>) rarely do what novices mean.
 
 X<functions; Perl 4>
 X<functions; Perl 1>
@@ -770,23 +765,20 @@ arguments yourself. Both can lead to surprising behavior.
 
 A final pitfall comes from leaving the parentheses off of function calls. The
 Perl 5 parser uses several heuristics to resolve ambiguous barewords and the
-number of parameters passed to a function, and heuristics can get things wrong.
-While extraneous parentheses can hamper readability, consider readability
-versus correctness:
+number of parameters passed to a function. Heuristics can be wrong:
 
 =begin programlisting
 
-    ok( elem_exists( 1, @elements ), 'found first element in array' );
-
     # warning; contains a subtle bug
-    ok elem_exists 1, @elements, 'found first element in array';
+    ok elem_exists 1, @elements, 'found first element';
 
 =end programlisting
 
-In the second form, the call to C<elem_exists()> will gobble up the test
-description intended as the second argument to C<ok()>. Because
-C<elem_exists()> uses a slurpy second parameter, this may go unnoticed until
-Perl produces warnings about comparing a non-number (the test description,
-which it cannot convert into a number) with the element in the array.
+The call to C<elem_exists()> will gobble up the test description intended as
+the second argument to C<ok()>. Because C<elem_exists()> uses a slurpy second
+parameter, this may go unnoticed until Perl produces warnings about comparing a
+non-number (the test description, which it cannot convert into a number) with
+the element in the array.
 
-Thoughtful use of parentheses can clarify code and make subtle bugs unlikely.
+While extraneous parentheses can hamper readability, thoughtful use of
+parentheses can clarify code and make subtle bugs unlikely.

@@ -20,16 +20,11 @@ You've probably already created and used closures without realizing it:
 
 =begin programlisting
 
-    {
-        package Invisible::Closure;
+    package Invisible::Closure;
 
-        my $filename = shift @ARGV;
+    my $filename = shift @ARGV;
 
-        sub get_filename
-        {
-            return $filename;
-        }
-    }
+    sub get_filename { return $filename }
 
 =end programlisting
 
@@ -55,8 +50,9 @@ invoked, will return the next item in the iteration:
         }
     }
 
-    my @cousins = qw( Rick Alex Kaycee Eric Corey Mandy Christine )
-    my $cousins = make_iterator( @cousins );
+    my $cousins = make_iterator(
+        qw( Rick Alex Kaycee Eric Corey Mandy Christine )
+    );
 
     say $cousins->() for 1 .. 5;
 
@@ -73,12 +69,10 @@ lexical environment:
 
 =begin programlisting
 
-    my @aunts   = qw( Carole Phyllis Wendy Sylvia Monica Lupe );
-    my $cousins = make_iterator( @cousins );
-    my $aunts   = make_iterator( @aunts );
+    my $aunts = make_iterator(
+        qw( Carole Phyllis Wendy Sylvia Monica Lupe )
+    );
 
-    say $cousins->();
-    say $aunts->();
     say $cousins->();
     say $aunts->();
 
@@ -140,10 +134,10 @@ elements you need:
             {
                 for my $calc (@fibs .. $item)
                 {
-                    $fibs[$calc] = $fibs[$calc - 2] + $fibs[$calc - 1];
+                    $fibs[$calc] = $fibs[$calc - 2]
+                                 + $fibs[$calc - 1];
                 }
             }
-
             return $fibs[$item];
         }
     }
@@ -162,8 +156,7 @@ returns the calculated or cached value. If you extract the behavior specific to
 Fibonacci values, this code can provide any arbitrary code with a
 lazily-iterated cache.
 
-Extract the function C<generate_caching_closure()> and rewrite C<gen_fib()> to
-use it:
+Extracting the function C<generate_caching_closure()> produces:
 
 =begin programlisting
 
@@ -175,12 +168,25 @@ use it:
         {
             my $item = shift;
 
-            $calc_element->($item, \@cache) unless $item < @cache;
+            $calc_element->($item, \@cache)
+                unless $item < @cache;
 
             return $cache[$item];
         };
     }
 
+=end programlisting
+
+=begin tip Fold, Apply, and Filter
+
+In one sense, the builtins C<map>, C<grep>, and C<sort> are themselves
+higher-order functions. Compare them to C<gen_caching_closure()>.
+
+=end tip
+
+Now C<gen_fib()> can become:
+
+=begin programlisting
 
     sub gen_fib
     {
@@ -193,7 +199,8 @@ use it:
 
                 for my $calc ((@$fibs - 1) .. $item)
                 {
-                    $fibs->[$calc] = $fibs->[$calc - 2] + $fibs->[$calc - 1];
+                    $fibs->[$calc] = $fibs->[$calc - 2]
+                                   + $fibs->[$calc - 1];
                 }
             },
             @fibs
@@ -206,14 +213,7 @@ The program behaves as it did before, but the use of function references and
 closures separates the cache initialization behavior from the calculation of
 the next number in the Fibonacci series. Customizing the behavior of code--in
 this case, C<gen_caching_closure()>--by passing in a function allows tremendous
-flexibility and abstraction.
-
-=begin tip Fold, Apply, and Filter
-
-In one sense, the builtins C<map>, C<grep>, and C<sort> are themselves
-higher-order functions. Compare them to C<gen_caching_closure()>.
-
-=end tip
+flexibility.
 
 =head2 Closures and Partial Application
 
@@ -243,8 +243,12 @@ arguments that never change.
 
 X<partial application>
 
-I<Partial application> binds some of the arguments to a function and allows you
-to provide the rest later:
+A technique called I<partial application> allows you to bind I<some> of the
+arguments to a function so that you can provide the others later. Wrap the
+function you intend to call in a closure and pass the bound arguments.
+
+Consider an ice cream cart which only serves French Vanilla ice cream over
+Cavendish bananas:
 
 =begin programlisting
 
