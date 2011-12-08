@@ -11,10 +11,10 @@ translates to a specific method call.
 X<builtins; C<tie>>
 X<C<Tie::File>>
 
-The C<tie> builtin originally allowed the use of hashes stored on disk, so that
-Perl could access files larger than could easily fit in memory. The core module
-C<Tie::File> provides a similar system, and allows you to treat files as if
-they were arrays.
+The C<tie> builtin originally allowed you to use disk space as the backing
+memory for hashes, so that Perl could access files larger than could easily fit
+in memory. The core module C<Tie::File> provides a similar system, and allows
+you to treat files as if they were arrays.
 
 X<C<Tie::StdScalar>>
 X<C<Tie::StdArray>>
@@ -26,14 +26,14 @@ the core modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> for
 specific details. Start by inheriting from one of those classes, then override
 any specific methods you need to modify.
 
-=begin sidebar
+=begin tip When Class and Package Names Collide
 
 If C<tie> weren't confusing enough, C<Tie::Scalar>, C<Tie::Array>, and
 C<Tie::Hash> define the necessary interfaces to tie scalars, arrays, and
 hashes, but C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> provide
 the default implementations.
 
-=end sidebar
+=end tip
 
 =head2 Tying Variables
 
@@ -62,9 +62,11 @@ use C<tied> in a boolean context, however.
 =head2 Implementing Tied Variables
 
 To implement the class of a tied variable, inherit from a core module such as
-C<Tie::StdScalar>, then override the specific methods for the operations you
-want to change.  In the case of a tied scalar, these are likely C<FETCH> and
-C<STORE>, possibly C<TIESCALAR()>, and probably not C<DESTROY()>.
+C<Tie::StdScalar>N<C<Tie::StdScalar> lacks its own F<.pm> file, so use
+C<Tie::Scalar> to make it available.>, then override the specific methods for
+the operations you want to change.  In the case of a tied scalar, these are
+likely C<FETCH> and C<STORE>, possibly C<TIESCALAR()>, and probably not
+C<DESTROY()>.
 
 You can create a class which logs all reads from and writes to a scalar with
 very little code:
@@ -100,13 +102,6 @@ very little code:
 Assume that the C<Logger> class method C<log()> takes a string and the number
 of frames up the call stack of which to report the location.
 
-=begin tip Using C<Tie::StdScalar>
-
-C<Tie::StdScalar> lacks its own F<.pm> file; C<use Tie::Scalar;> to make it
-available.
-
-=end tip
-
 Within the C<STORE()> and C<FETCH()> methods, C<$self> works as a blessed
 scalar.  Assigning to that scalar reference changes the value of the scalar and
 reading from it returns its value.
@@ -116,13 +111,13 @@ array and hash references, respectively.  The C<perldoc perltie> documentation
 explains the copious methods they support, as you can read or write multiple
 values from them, among other operations.
 
-=begin sidebar
+=begin tip Isn't C<tie> Fun?
 
 The C<-norequire> option prevents the C<parent> pragma from attempting to load
 a file for C<Tie::StdScalar>, as that module is part of the file
 F<Tie/Scalar.pm>.
 
-=end sidebar
+=end tip
 
 =head2 When to use Tied Variables
 

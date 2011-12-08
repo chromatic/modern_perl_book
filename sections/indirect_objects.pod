@@ -69,7 +69,7 @@ variable I<seems> obvious, but it is not:
 =begin programlisting
 
     # DOES NOT WORK AS WRITTEN
-    say $config->{output} "This is a diagnostic message!";
+    say $config->{output} 'Fun diagnostic message!';
 
 =end programlisting
 
@@ -87,7 +87,7 @@ subexpression which produces the intended invocant:
 
 =begin programlisting
 
-    say B<{>$config->{output}B<}> "This is a diagnostic message!";
+    say B<{>$config->{output}B<}> 'Fun diagnostic message!';
 
 =end programlisting
 
