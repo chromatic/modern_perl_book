@@ -9,49 +9,28 @@ The CPAN is, at its core, a system for finding and installing modules. A
 I<module> is a package contained in its own file and loadable with C<use> or
 C<require>. A module must be valid Perl 5 code. It must end with an expression
 which evaluates to a true value so that the Perl 5 parser knows it has loaded
-and compiled the module successfully.
-
-There are no other requirements, only strong conventions.
+and compiled the module successfully. There are no other requirements, only
+strong conventions.
 
 X<C<::>; package name separator>
 
 When you load a module, Perl splits the package name on double-colons (C<::>)
-and turns the components of the package name into a file path. Thus:
+and turns the components of the package name into a file path. In practice,
+C<use StrangeMonkey;> causes Perl to search for a file named
+F<StrangeMonkey.pm> in every directory in C<@INC>, in order, until it finds one
+or exhausts the list.
 
-=begin programlisting
-
-    use StrangeMonkey;
-
-=end programlisting
-
-... causes Perl to search for a file named F<StrangeMonkey.pm> in every
-directory in C<@INC>, in order, until it finds one or exhausts the list. As
-well:
-
-=begin programlisting
-
-    use StrangeMonkey::Persistence;
-
-=end programlisting
-
-... causes Perl to search for a file named C<Persistence.pm> in every directory
-named F<StrangeMonkey/> present in every directory in C<@INC>, and so on.
-Finally:
-
-=begin programlisting
-
-    use StrangeMonkey::UI::Mobile;
-
-=end programlisting
-
-... causes Perl to search for a relative file path of
-F<StrangeMonkey/UI/Mobile.pm> in every directory in C<@INC>.
+Similarly, C<use StrangeMonkey::Persistence;> causes Perl to search for a file
+named C<Persistence.pm> in every directory named F<StrangeMonkey/> present in
+every directory in C<@INC>, and so on. C<use StrangeMonkey::UI::Mobile;> causes
+Perl to search for a relative file path of F<StrangeMonkey/UI/Mobile.pm> in
+every directory in C<@INC>.
 
 The resulting file may or may not contain a package declaration matching its
-filename--there is no technical reason to do so--but maintenance concerns
+filename--there is no such technical I<requirement>--but maintenance concerns
 recommend that convention.
 
-=begin sidebar
+=begin tip C<perldoc> Tricks
 
 X<C<perldoc>; C<-l>>
 X<C<perldoc>; C<-m>>
@@ -63,7 +42,7 @@ file. C<perldoc -lm Module::Name> will print the full path to the F<.pm> file
 regardless of the existence of any parallel F<.pod> file. C<perldoc -m
 Module::Name> will display the contents of the F<.pm> file.
 
-=end sidebar
+=end tip
 
 =head2 Using and Importing
 
@@ -80,9 +59,14 @@ C<import()> method, passing any arguments you provided:
 
 =begin programlisting
 
-    use strict;                  # calls strict->import()
-    use CGI ':standard';         # calls CGI->import( ':standard' )
-    use feature qw( say switch ) # calls feature->import( qw( say switch ) )
+    use strict;
+    # ... calls strict->import()
+
+    use CGI ':standard';
+    # ... calls CGI->import( ':standard' )
+
+    use feature qw( say switch );
+    # ... calls feature->import( qw( say switch ) )
 
 =end programlisting
 
@@ -102,16 +86,16 @@ through C<import()>:
 
 =begin programlisting
 
+    # no symbolic references
+    # variable declaration required
+    # no barewords
     use strict;
 
-    # no symbolic references, variable declaration required, no barewords
-    ...
-
     {
-        no strict 'refs';
-
         # symbolic references allowed
-        # variable declaration still required; barewords prohibited
+        # variable declaration still required
+        # barewords still prohibited
+        no strict 'refs';
     }
 
 =end programlisting
@@ -151,7 +135,7 @@ Similarly:
     BEGIN
     {
         require 'Module/Name.pm';
-        Module::Name->unimport( qw( list of arguments ) );
+        Module::Name->unimport(qw( list of arguments ));
     }
 
 =end programlisting
@@ -162,12 +146,12 @@ You I<may> call C<import()> and C<unimport()> directly, though outside of a
 C<BEGIN> block it makes little sense to do so; after compilation has completed,
 the effects of C<import()> or C<unimport()> may have little effect.
 
-=begin sidebar
+=begin tip Missing Methods Never Missed
 
 If C<import()> or C<unimport()> does not exist in the module, Perl will not
 give an error message. They are truly optional.
 
-=end sidebar
+=end tip
 
 X<modules; case-sensitivity>
 X<case-sensitivity>
@@ -226,17 +210,6 @@ the three exported functions. You may also export variables:
 
 =end programlisting
 
-=begin tip Simplified Exporting
-
-X<CPAN; C<Sub::Exporter>>
-
-The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
-without using package globals. It also offers more powerful options.  However,
-C<Exporter> can export variables, while C<Sub::Exporter> only exports
-functions.
-
-=end tip
-
 Export symbols by default by listing them in C<@EXPORT> instead of
 C<@EXPORT_OK>:
 
@@ -266,6 +239,17 @@ package with their fully-qualified names:
     StrangeMonkey::Utilities::screech();
 
 =end programlisting
+
+=begin tip Simplified Exporting
+
+X<CPAN; C<Sub::Exporter>>
+
+The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
+without using package globals. It also offers more powerful options.  However,
+C<Exporter> can export variables, while C<Sub::Exporter> only exports
+functions.
+
+=end tip
 
 =head2 Organizing Code with Modules
 

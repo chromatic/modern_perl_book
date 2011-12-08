@@ -45,7 +45,8 @@ its argument is tainted:
 
 =begin programlisting
 
-    die "Oh no!" if Scalar::Util::tainted( $some_suspicious_value );
+    die 'Oh no! Tainted data!'
+        if Scalar::Util::tainted( $suspicious_value );
 
 =end programlisting
 
@@ -60,8 +61,8 @@ input consists of a US telephone number, you can untaint it with:
 
 =begin programlisting
 
-    die "Number still tainted!"
-        unless $tainted_number =~ /(\(/d{3}\) \d{3}-\d{4})/;
+    die 'Number still tainted!'
+        unless $number =~ /(\(/d{3}\) \d{3}-\d{4})/;
 
     my $safe_number = $1;
 

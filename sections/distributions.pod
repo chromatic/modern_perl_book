@@ -105,8 +105,8 @@ X<cpanm>
 
 =over 4
 
-=item * C<App::cpanminus> provides almost configuration-free use of the public
-CPAN. It provides the most common 90% of what a CPAN client needs.
+=item * C<App::cpanminus> is a configuration-free CPAN client. It handles the
+most common cases, uses little memory, and works quickly.
 
 X<CPAN; C<App::perlbrew>>
 X<perlbrew>

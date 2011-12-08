@@ -6,7 +6,7 @@ X<C<UNIVERSAL>>
 
 Perl 5's builtin C<UNIVERSAL> package is the ancestor of all other packages--in
 the object-oriented sense (L<moose>). C<UNIVERSAL> provides a few methods for
-its children.
+its children to inherit or override.
 
 =head2 The isa() Method
 
@@ -49,7 +49,8 @@ X<CPAN; C<Test::MockModule>>
 
 Any class may override C<isa()>. This can be useful when working with mock
 objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN) or with
-code that does not use roles (L<roles>).
+code that does not use roles (L<roles>). Be aware that any class which I<does>
+override C<isa()> generally has a good reason for doing so.
 
 =head2 The can() Method
 
@@ -60,14 +61,26 @@ The C<can()> method takes a string containing the name of a method. It returns
 a reference to the function which implements that method, if it exists.
 Otherwise, it returns a false value. You may call this on a class, an object,
 or the name of a package. In the latter case, it returns a reference to a
-function, not a method.
+function, not a methodN<... not that you can tell the difference, given only a
+reference.>.
+
+=begin tip Does a Class Exist?
+
+While both C<UNIVERSAL::isa()> and C<UNIVERSAL::can()> are methods
+(L<method_sub_equivalence>), you may I<safely> use the latter as a function
+solely to determine whether a class exists in Perl 5.  If C<UNIVERSAL::can(
+$classname, 'can' )> returns a true value, someone somewhere has defined a
+class of the name C<$classname>. That class may not be usable, but it does
+exist.
+
+=end tip
 
 Given a class named C<SpiderMonkey> with a method named C<screech>, get a
 reference to the method with:
 
 =begin programlisting
 
-    if (my $meth = SpiderMonkey->can( 'screech' )) { ... }
+    if (my $meth = SpiderMonkey->can( 'screech' )) {...}
 
     if (my $meth = $sm->can( 'screech' )
     {
@@ -88,7 +101,8 @@ X<CPAN; C<Class::Load>>
 
     use Class::Load;
 
-    die "Couldn't load $module!" unless load_class( $module );
+    die "Couldn't load $module!"
+        unless load_class( $module );
 
     if (my $register = $module->can( 'register' )
     {
@@ -108,15 +122,6 @@ The CPAN module C<Module::Pluggable> is a great way to manage plugins.
 Override C<can()> in your own code if you use C<AUTOLOAD()>
 (L<autoload_drawbacks>).
 
-=begin sidebar
-
-While both C<UNIVERSAL::isa()> and C<UNIVERSAL::can()> are methods, you may use
-the latter as a function in I<one> known case: to determine whether a class
-exists in Perl 5.  If C<UNIVERSAL::can( $classname, 'can' )> returns a true
-value, someone somewhere has defined a class of the name C<$classname>.
-
-=end sidebar
-
 =head2 The VERSION() Method
 
 X<C<UNIVERSAL::VERSION>>
@@ -135,7 +140,7 @@ Given a C<HowlerMonkey> module of version C<1.23>:
     say $hm->VERSION();             # prints 1.23
     say $hm->VERSION( 0.0  );       # prints 1.23
     say $hm->VERSION( 1.23 );       # prints 1.23
-    say $hm->VERSION( 2.0  );       # throws exception
+    say $hm->VERSION( 2.0  );       # exception!
 
 =end programlisting
 
@@ -182,7 +187,7 @@ With that said, occasional abuse of C<UNIVERSAL> for I<debugging> purposes and
 to fix improper default behavior may be excusable.  For example, Joshua ben
 Jore's C<UNIVERSAL::ref> distribution makes the nearly-useless C<ref()>
 operator usable. The C<UNIVERSAL::can> and C<UNIVERSAL::isa> distributions can
-help you debug anti-polymorphism bugs (L<method_sub_equivalence>), while
+help you debug anti-polymorphism bugs (L<method_sub_equivalence>).
 C<Perl::Critic> can detect those and other problems.
 
 Outside of very carefully controlled code and very specific, very pragmatic

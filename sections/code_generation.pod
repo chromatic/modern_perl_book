@@ -62,15 +62,13 @@ others:
         sub get_$methname
         {
             my \$self = shift;
-
             return \$self->{$attrname};
         }
 
         sub set_$methname
         {
             my (\$self, \$value) = \@_;
-
-            \$self->{$attrname} = \$value;
+            \$self->{$attrname}  = \$value;
         }
     END_ACCESSOR
     }
@@ -79,10 +77,8 @@ others:
 
 Woe to those who forget a backslash! Good luck convincing your syntax
 highlighter what's happening! Worse yet, each invocation of string C<eval>
-builds a new data structure representing the entire code. Compiling code isn't
-free, either.
-
-Even with its limitations, this technique is reasonably simple.
+builds a new data structure representing the entire code, and compiling code
+isn't free, either. Yet Even with its limitations, this technique is simple.
 
 =head2 Parametric Closures
 
@@ -107,7 +103,6 @@ without requiring additional evaluation:
         my $setter = sub
         {
             my ($self, $value) = @_;
-
             $self->{$attrname} = $value;
         };
 
@@ -130,11 +125,11 @@ Installing into symbol tables is reasonably easy, if ugly:
 =begin programlisting
 
     {
-        my ($getter, $setter) = generate_accessors( 'homecourt' );
+        my ($get, $set) = generate_accessors( 'pie' );
 
         no strict 'refs';
-        *{ 'get_homecourt' } = $getter;
-        *{ 'set_homecourt' } = $setter;
+        *{ 'get_pie' } = $get;
+        *{ 'set_pie' } = $set;
     }
 
 =end programlisting
@@ -174,7 +169,7 @@ generate in a single line:
         no strict 'refs';
 
         *{ $methname } = sub {
-            # subtle bug: strict refs disabled in here too
+            # subtle bug: strict refs disabled here too
         };
     }
 
@@ -191,7 +186,8 @@ the contents of a variable, you can assign to the relevant symbol directly:
 
     {
         no warnings 'once';
-        (*get_homecourt, *set_homecourt) = generate_accessors( 'homecourt' );
+        (*get_pie, *set_pie) =
+             generate_accessors( 'pie' );
     }
 
 =end programlisting
@@ -242,7 +238,8 @@ The difference between writing:
     {
         for my $accessor (qw( age name weight ))
         {
-            my ($get, $set) = make_accessors( $accessor );
+            my ($get, $set) =
+                make_accessors( $accessor );
 
             no strict 'refs';
             *{ 'get_' . $accessor } = $get;
@@ -316,7 +313,9 @@ To create a class:
 
     use Class::MOP;
 
-    my $class = Class::MOP::Class->create( 'Monkey::Wrench' );
+    my $class = Class::MOP::Class->create(
+                    'Monkey::Wrench'
+                );
 
 =end programlisting
 
@@ -334,8 +333,8 @@ Add attributes and methods to this class when you create it:
         (
             attributes =>
             [
-                Class::MOP::Attribute->new( '$material' ),
-                Class::MOP::Attribute->new( '$color' ),
+                Class::MOP::Attribute->new('$material'),
+                Class::MOP::Attribute->new('$color'),
             ]
             methods =>
             {
@@ -352,8 +351,11 @@ after you've created it:
 
 =begin programlisting
 
-    $class->add_attribute( experience  => Class::MOP::Attribute->new( '$xp' ) );
-    $class->add_method(    bash_zombie => sub { ... } );
+    $class->add_attribute(
+        experience  => Class::MOP::Attribute->new('$xp')
+    );
+
+    $class->add_method( bash_zombie => sub { ... } );
 
 =end programlisting
 

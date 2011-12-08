@@ -25,21 +25,6 @@ you C<warn()> goes to C<STDERR>. This separation of output allows you to
 redirect useful output and errors to two different places--an output file and
 error logs, for example.
 
-=begin tip The Many Names of C<DATA>
-
-X<C<DATA>>
-X<C<__DATA__>>
-X<C<__END__>>
-
-The special package global C<DATA> filehandle represents the current file. When
-Perl finishes compiling the file, it leaves C<DATA> available and open at the
-end of the compilation unit I<if> the file has a C<__DATA__> or C<__END__>
-section. Any text which occurs after that token is available for reading from
-C<DATA>. This is useful for short, self-contained programs. See C<perldoc
-perldata> for more details.
-
-=end tip
-
 X<builtins; C<open>>
 
 Use the C<open> builtin to get a filehandle. To open a file for reading:
@@ -51,6 +36,14 @@ Use the C<open> builtin to get a filehandle. To open a file for reading:
 
 =end programlisting
 
+=begin tip Remember C<autodie>?
+
+Assume all examples in this section have C<use autodie;> enabled. If you choose
+not to do this, remember to add error checking yourself.
+
+=end tip
+
+
 The first operand is a lexical which will contain the resulting filehandle. The
 second operand is the I<file mode>, which determines the type of the filehandle
 operation. The final operand is the name of the file. If the C<open> fails, the
@@ -58,6 +51,7 @@ C<die> clause will throw an exception, with the contents of C<$!> giving the
 reason why the open failed.
 
 You may also open files for writing, appending, reading and writing, and more.
+Some of the most important file modes are:
 
 =begin table File Modes
 
@@ -65,9 +59,9 @@ Z<file_modes_table>
 
 =headrow
 
-=cell Symbols
+=cell B<Symbols>
 
-=cell Explanation
+=cell B<Explanation>
 
 =bodyrows
 
@@ -99,20 +93,16 @@ file otherwise.
 
 =end table
 
-You can even create filehandles which read from or write to plain Perl scalars:
+You can even create filehandles which read from or write to plain Perl scalars, using any existing file mode:
 
 =begin programlisting
 
-    use autodie;  # L<autodie>
+    open my $read_fh,  '<', \$fake_input;
+    open my $write_fh, '>', \$captured_output;
 
-    my $captured_output;
-    open my $fh, '>', \$captured_output;
-
-    do_something_awesome( $fh );
+    do_something_awesome( $read_fh, $write_fh );
 
 =end programlisting
-
-Such filehandles support all of the existing file modes.
 
 X<builtins; C<sysopen>>
 
@@ -120,6 +110,21 @@ C<perldoc perlopentut> offers far more details about more exotic uses of
 C<open>, including its ability to launch and control other processes, as well
 as the use of C<sysopen> for finer-grained control over input and output.
 C<perldoc perlfaq5> includes working code for many common IO tasks.
+
+=begin tip The Many Names of C<DATA>
+
+X<C<DATA>>
+X<C<__DATA__>>
+X<C<__END__>>
+
+The special package global C<DATA> filehandle represents the current file. When
+Perl finishes compiling the file, it leaves C<DATA> open at the end of the
+compilation unit I<if> the file has a C<__DATA__> or C<__END__> section. Any
+text which occurs after that token is available for reading from C<DATA>. This
+is useful for short, self-contained programs. See C<perldoc perldata> for more
+details.
+
+=end tip
 
 =head3 Two-argument C<open>
 
@@ -153,8 +158,6 @@ C<while()> loop:
 
 =begin programlisting
 
-    use autodie;
-
     open my $fh, '<', 'some_file';
 
     while (<$fh>)
@@ -176,8 +179,6 @@ words, this is shorthand for:
 
 =begin programlisting
 
-    use autodie;
-
     open my $fh, '<', 'some_file';
 
     while (defined($_ = <$fh>))
@@ -191,8 +192,10 @@ words, this is shorthand for:
 
 =begin tip Why use C<while> and not C<for>?
 
-C<for> imposes list context on its operand, which reads the entire file before
-processing any of it. This may use a lot of memory for large files.
+C<for> imposes list context on its operand. In the case of C<readline>, Perl
+will read the I<entire> file before processing I<any> of it. C<while> performs
+iteration and reads a line at a time. When memory use is a concern, use
+C<while>.
 
 =end tip
 
@@ -206,8 +209,6 @@ the two (C<\r\n>). Use C<chomp> to remove it.
 The cleanest way to read a file line-by-line in Perl 5 is:
 
 =begin programlisting
-
-    use autodie;
 
     open my $fh, '<', $filename;
 
@@ -236,8 +237,6 @@ X<builtins; C<say>>
 Given a filehandle open for output, C<print> or C<say> to it:
 
 =begin programlisting
-
-    use autodie;
 
     open my $out_fh, '>', 'output_file.txt';
 
@@ -340,14 +339,14 @@ filehandle.  When set to a non-zero value, Perl will flush the output after
 each write to the filehandle.  When set to a zero value, Perl will use its
 default buffering strategy.
 
-=begin sidebar
+=begin tip Automatic Flushing
 
 Files default to a fully-buffered strategy. C<STDOUT> when connected to an
-active terminal--and I<not> another program--uses a line-buffered strategy,
-such that Perl will flush C<STDOUT> every time it encounters a newline in the
+active terminal--but I<not> another program--uses a line-buffered strategy,
+where Perl will flush C<STDOUT> every time it encounters a newline in the
 output.
 
-=end sidebar
+=end tip
 
 X<C<autoflush()>>
 X<C<IO::File>; C<autoflush()>>
@@ -357,8 +356,6 @@ filehandle:
 
 =begin programlisting
 
-    use autodie;
-
     open my $fh, '>', 'pecan.log';
     $fh->autoflush( 1 );
 
@@ -367,17 +364,12 @@ filehandle:
 =end programlisting
 
 X<C<IO::File>>
+X<C<FileHandle>>
 
 As of Perl 5.14, you can use any method provided by C<IO::File> on a
-filehandle. You do not need to load C<IO::File> explicitly.
-
-=begin sidebar
-
-X<C<FileHandle>>
-In Perl 5.12, you must load C<IO::File> yourself. In Perl 5.10 and earlier, you
-must load C<FileHandle> instead.
-
-=end sidebar
+filehandle. You do not need to load C<IO::File> explicitly. In Perl 5.12, you
+must load C<IO::File> yourself. In Perl 5.10 and earlier, you must load
+C<FileHandle> instead.
 
 X<C<IO::File>; C<input_line_number()>>
 X<C<IO::File>; C<input_record_separator()>>
@@ -398,8 +390,6 @@ cannot I<write> to directoriesN<Instead, you save and move and rename and
 remove files.>. Open a directory handle with the C<opendir> builtin:
 
 =begin programlisting
-
-    use autodie;
 
     opendir my $dirh, '/home/monkeytamer/tasks/';
 
@@ -429,7 +419,6 @@ Perl 5.12 added a feature where C<readdir> in a C<while> sets C<$_>:
 =begin programlisting
 
     use 5.012;
-    use autodie;
 
     opendir my $dirh, 'tasks/circus/';
 
@@ -492,22 +481,15 @@ C<file()> function to create an object representing a file:
     use Path::Class;
 
     my $meals = dir( 'tasks', 'cooking' );
-    my $file  = file( 'tasks', 'health', 'exoskeleton_research.txt' );
+    my $file  = file( 'tasks', 'health', 'robots.txt' );
 
 =end programlisting
 
-You can get File objects from directories:
+You can get File objects from directories and vice versa:
 
 =begin programlisting
 
-    my $lunch = $meals->file( 'veggie_calzone.txt' );
-
-=end programlisting
-
-... and vice versa:
-
-=begin programlisting
-
+    my $lunch      = $meals->file( 'veggie_calzone' );
     my $robots_dir = $robot_list->dir();
 
 =end programlisting
@@ -517,7 +499,8 @@ You can even open filehandles to directories and files:
 =begin programlisting
 
     my $dir_fh    = $dir->open();
-    my $robots_fh = $robot_list->open( 'r' ) or die "Open failed: $!";
+    my $robots_fh = $robot_list->open( 'r' )
+                        or die "Open failed: $!";
 
 =end programlisting
 
@@ -589,8 +572,6 @@ takes two operands, the old name of the file and the new name:
 
 =begin programlisting
 
-    use autodie;
-
     rename 'death_star.txt', 'carbon_sink.txt';
 
     # or if you're stylish:
@@ -612,12 +593,12 @@ remove one or more files. (The C<delete> builtin deletes an element from a
 hash, not a file from the filesystem.) These functions and builtins all return
 true values on success and set C<$!> on error.
 
-=begin sidebar
+=begin tip Better than C<File::Spec>
 
 C<Path::Class> provides convenience methods to check certain file attributes as
 well as to remove files completely, in a cross-platform fashion.
 
-=end sidebar
+=end tip
 
 X<builtins; C<chdir>>
 X<C<Cwd>>
