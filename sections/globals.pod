@@ -28,7 +28,7 @@ right approach:
 
 =begin programlisting
 
-    my $file = do { B<local $/> = <$fh> };
+    my $file; { B<local $/>; $file = <$fh> };
 
 =end programlisting
 
@@ -60,15 +60,7 @@ lexicals that have gone out of scope may reset C<$@>:
 =end programlisting
 
 Copy C<$@> I<immediately> after catching an exception to preserve its contents.
-
-=begin tip Safer Exception Handling
-
-X<CPAN; C<Try::Tiny>>
-
-While Perl 5.14 has fixed some odd bugs related to exception handling,
-C<Try::Tiny> is still the most reliable mechanism to catch exceptions.
-
-=end tip
+See also C<Try::Tiny> instead (L<exception_caveats>).
 
 =head2 English Names
 
