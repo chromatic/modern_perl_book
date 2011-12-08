@@ -15,22 +15,22 @@ modules.
 
 X<pragmas; scope>
 
-Pragmas work by exporting specific behavior or information into their caller
-scopes--lexical scopes. Just as declaring a lexical variable makes a symbol
+Pragmas work by exporting specific behavior or information into the lexical
+scopes of their callers. Just as declaring a lexical variable makes a symbol
 name available within a scope, using a pragma makes its behavior effective
 within that scope:
 
 =begin programlisting
 
     {
-        # $lexical is B<not> visible; strict is B<not> in effect
+        # $lexical B<not> visible; strict B<not> in effect
         {
             use strict;
             my $lexical = 'available here';
             # $lexical B<is> visible; strict B<is> in effect
             ...
         }
-        # $lexical is again B<not> visible; strict is B<not> in effect
+        # $lexical again invisible; strict B<not> in effect
     }
 
 =end programlisting
@@ -61,7 +61,7 @@ behavior:
 
 =begin programlisting
 
-    # require variable declarations; prohibit bareword function names
+    # require variable declarations, prohibit barewords
     use strict qw( subs vars );
 
 =end programlisting
@@ -69,8 +69,13 @@ behavior:
 X<pragmas; disabling>
 X<builtins; C<no>>
 
-Disable all or part of a pragma with the C<no> builtin. This also respects
-lexical scoping:
+Pragmas have lexical effects, and sometimes you need to I<disable> all or part
+of those effects within a further nested lexical scope. The C<no> builtin
+performs an unimport (L<importing>), which with well-behaved pragmas undoes
+their effects.
+
+For example, to disable the protection of C<strict> when you need to do
+something symbolic:
 
 =begin programlisting
 
@@ -137,8 +142,9 @@ X<pragmas; writing>
 
 Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
 code. C<perldoc perlpragma> explains how to do so, while the explanation of
-C<$^H> in C<perldoc perlvar> explains how the feature works. The CPAN has begun
-to gather useful pragmas, including:
+C<$^H> in C<perldoc perlvar> explains how the feature works.
+
+The CPAN has begun to gather useful pragmas. Some of the most useful are:
 
 X<CPAN; C<autobox>>
 X<CPAN; C<perl5i>>

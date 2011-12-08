@@ -91,7 +91,7 @@ documenting, packaging, testing, and distributing your code.
 (U<http://learn.perl.org/faq/beginners.html>), browse PerlMonks
 (U<http://perlmonks.org/>), and otherwise immerse yourself in the
 communityN<See U<http://www.perl.org/community.html>.>. Read code and try to
-write solutions--even if you never post them, this is a great opportunity to
+answer questions--even if you never post them, this is a great opportunity to
 learn.
 
 =back
