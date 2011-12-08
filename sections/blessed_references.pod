@@ -72,9 +72,9 @@ references are most common, but you can bless any type of reference:
 
 =end programlisting
 
-Whereas classes built with Moose define their own object attributes
-declaratively, Perl 5's default OO is lax. A class representing basketball
-players which stores jersey number and position might use a constructor like:
+Moose classes define object attributes declaratively, but Perl 5's default OO
+is lax. A class representing basketball players which stores jersey number and
+position might use a constructor like:
 
 =begin programlisting
 
@@ -83,7 +83,6 @@ players which stores jersey number and position might use a constructor like:
         sub new
         {
             my ($class, %attrs) = @_;
-
             bless \%attrs, $class;
         }
     }
@@ -94,33 +93,29 @@ players which stores jersey number and position might use a constructor like:
 
 =begin programlisting
 
-    my $joel = Player->new(
-        number   => 10,
-        position => 'center',
-    );
+    my $joel  = Player->new( number  => 10,
+                            position => 'center' );
 
-    my $dante = Player->new(
-        number   => 33,
-        position => 'forward',
-    );
+    my $dante = Player->new( number   => 33,
+                             position => 'forward' );
 
 =end programlisting
 
-The object's methods can access hash elements directly:
+The class's methods can access object attributes as hash elements directly:
 
 =begin programlisting
 
     sub format
     {
         my $self = shift;
-        return '#' . $self->{number} . ' plays ' . $self->{position};
+        return '#'       . $self->{number}
+             . ' plays ' . $self->{position};
     }
 
 =end programlisting
 
-... but so can any other code. If external code violates attribute
-encapsulation, you can never change the object's internal representation
-without breaking external code. Accessor methods are safer:
+... but so can any other code, so any change to the object's internal
+representation may break other code. Accessor methods are safer:
 
 =begin programlisting
 

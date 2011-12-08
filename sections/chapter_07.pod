@@ -5,11 +5,15 @@ you must manage. Our only hope to manage this complexity is to exploit
 abstraction (treating similar things similarly) and encapsulation (grouping
 related details together).
 
+X<OO>
+X<objects>
+X<OO; classes>
+X<classes>
+
 Functions alone are insufficient for large problems. Several techniques group
-functions into units of related behaviors--one popular technique is object
-orientation. Perl 5's default object system is flexible, but minimal. You can
-build great things on top of it, but it provides little assistance for some
-basic tasks.
+functions into units of related behaviors. One popular technique is I<object
+orientation> (OO), or I<object oriented programming> (OOP), where programs work
+with I<objects>--discrete, unique entities with their own identities.
 
 L<moose>
 

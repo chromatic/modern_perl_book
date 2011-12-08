@@ -21,7 +21,7 @@ with code declared elsewhere?
 X<OO; is-a>
 X<OO; has-a>
 
-Inheritance is one tool. It's not the only tool. Although C<Car> may extend
+Inheritance is but one of many tools. Although C<Car> may extend
 C<Vehicle::Wheeled> (an I<is-a relationship>), it's likely better for C<Car> to
 I<contain> contain several C<Wheel> objects as instance attributes (a I<has-a
 relationship>).
@@ -35,15 +35,14 @@ entities are easier to understand, test, and maintain.
 
 X<OO; single responsibility principle>
 
-When you design your object system, model the problem in terms of
-responsibilities--the behavior each entity must provide. For example, an
-C<Employee> object may represent specific information about a person's name,
-contact information, and other personal data, while a C<Job> object may
-represent business responsibilities. Separating these entities in terms of
-their responsibilities allows the C<Employee> class to consider only the
-problem of managing information specific to who the person is and the C<Job>
-class to represent what the person does. (Two C<Employee>s may have a
-C<Job>-sharing arrangement, for example.)
+When you design your object system, consider the responsibilities of each
+entity. For example, an C<Employee> object may represent specific information
+about a person's name, contact information, and other personal data, while a
+C<Job> object may represent business responsibilities. Separating these
+entities in terms of their responsibilities allows the C<Employee> class to
+consider only the problem of managing information specific to who the person is
+and the C<Job> class to represent what the person does. (Two C<Employee>s may
+have a C<Job>-sharing arrangement, for example.)
 
 When each class has a single responsibility, you improve the encapsulation of
 class-specific data and behaviors and reduce coupling between classes.
