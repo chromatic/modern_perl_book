@@ -29,7 +29,8 @@ skeleton of a program:
 
     #!/usr/bin/env perl
 
-    use Modern::Perl;
+    use Modern::Perl 2011;
+    use autodie;
 
 =end programlisting
 
@@ -39,7 +40,7 @@ skeleton of a program:
 
     #!/usr/bin/env perl
 
-    use 5.012;
+    use 5.012;      # implies "use strict;"
     use warnings;
     use autodie;
 
