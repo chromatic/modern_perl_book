@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use File::Spec::Functions qw( catfile catdir splitpath );
+use File::Which;
 
 # getting chapter list
 my @chapters = get_chapter_list();
@@ -19,6 +20,13 @@ for my $chapter ( @chapters ){
     print "Converting $chapter to pdf\n";
     system( 'pod2pdf', '--noheader', $chapter, '--output-file',
         catfile(qw( build pdf ), (splitpath($filename[0]))[-1] . '.pdf' ) );
+}
+
+my $pdftk = which('pdftk');
+
+if ($pdftk) {
+    my @c = glob catfile( $outpath, qw ( chapter_??.pdf ));
+    system( $pdftk, @c, 'cat', 'output', catfile($outpath, 'modern_perl.pdf'));
 }
 
 print "PDFs have been generated in build/pdf\n";
