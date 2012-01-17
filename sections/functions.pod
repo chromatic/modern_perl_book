@@ -475,7 +475,7 @@ function is correct:
 
     sub add_numbers
     {
-        croak 'Expected two numbers, but received: ' . @_
+        croak 'Expected two numbers, received: ' . @_
             unless @_ == 2;
 
         ...
@@ -700,12 +700,11 @@ X<C<goto>>
 X<functions; C<goto>>
 X<builtins; C<goto>>
 
-Unfortunately, Perl 5 does not eliminate tail calls automatically. You can do
-so manually with a special form of the C<goto> builtin. Unlike the form which
-can often lead to spaghetti code, the C<goto> function form replaces the
-current function call with a call to another function. You may use a function
-by name or by reference. You must always set C<@_> yourself manually, if you
-want to pass different arguments:
+Unfortunately, Perl 5 does not eliminate tail calls automatically. Do so
+manually with a special form of the C<goto> builtin. Unlike the form which
+often produces spaghetti code, the C<goto> function form replaces the current
+function call with a call to another function. You may use a function by name
+or by reference. To pass different arguments, assign to C<@_> directly:
 
 =begin programlisting
 
@@ -730,10 +729,6 @@ Sometimes optimizations are ugly.
 =head1 Pitfalls and Misfeatures
 
 X<functions; misfeatures>
-
-Some Perl features look good, but have substantial drawbacks. In particular,
-prototypes (L<prototypes>) rarely do what novices mean.
-
 X<functions; Perl 4>
 X<functions; Perl 1>
 X<C<&>; sigil>

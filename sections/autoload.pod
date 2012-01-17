@@ -8,8 +8,6 @@ program:
 
 =begin programlisting
 
-    #!/usr/bin/perl
-
     use Modern::Perl;
 
     bake_pie( filling => 'apple' );
@@ -17,7 +15,9 @@ program:
 =end programlisting
 
 When you run it, Perl will throw an exception due to the call to the undefined
-function C<bake_pie()>. Now add a function called C<AUTOLOAD()>:
+function C<bake_pie()>.
+
+Now add a function called C<AUTOLOAD()>:
 
 =begin programlisting
 
@@ -25,9 +25,9 @@ function C<bake_pie()>. Now add a function called C<AUTOLOAD()>:
 
 =end programlisting
 
-When you run the program now, nothing will happen.  Perl will call a function
-named C<AUTOLOAD()> in a package--if it exists-- whenever normal dispatch.
-Change the C<AUTOLOAD()> to emit a message:
+When you run the program now, nothing obvious will happen. Perl will call a
+function named C<AUTOLOAD()> in a package--if it exists--whenever normal
+dispatch fails.  Change the C<AUTOLOAD()> to emit a message:
 
 =begin programlisting
 
@@ -35,26 +35,16 @@ Change the C<AUTOLOAD()> to emit a message:
 
 =end programlisting
 
+... to demonstrate that it gets called.
+
 =head2 Basic Features of AUTOLOAD
-
-The C<AUTOLOAD()> function receives the arguments passed to the undefined
-function in C<@_> directly. Manipulate these arguments as you like:
-
-=begin programlisting
-
-    sub AUTOLOAD
-    {
-        # pretty-print the arguments
-        B<local $" = ', ';>
-        B<say "In AUTOLOAD(@_)!">
-    }
-
-=end programlisting
 
 X<C<$AUTOLOAD>>
 
-The I<name> of the undefined function is available in the pseudo-global
-variable C<$AUTOLOAD>:
+The C<AUTOLOAD()> function receives the arguments passed to the undefined
+function in C<@_> directly and the I<name> of the undefined function is
+available in the package global C<$AUTOLOAD>. Manipulate these arguments as you
+like:
 
 =begin programlisting
 
@@ -69,10 +59,10 @@ variable C<$AUTOLOAD>:
 
 =end programlisting
 
-The C<our> declaration (L<our>) scopes this variable to the body of
-C<AUTOLOAD()>. The variable contains the fully-qualified name of the undefined
-function (in this case, C<main::bake_pie>). Remove the package name with a
-regular expression (L<regex>):
+The C<our> declaration (L<our>) scopes C<$AUTOLOAD> to the function body.  The
+variable contains the fully-qualified name of the undefined function (in this
+case, C<main::bake_pie>). Remove the package name with a regular expression
+(L<regex>):
 
 =begin programlisting
 
@@ -193,7 +183,6 @@ of C<AUTOLOAD()> with a call to the destination method:
     sub AUTOLOAD
     {
         B<my ($name) = our $AUTOLOAD =~ /::(\w+)$/;>
-
         my $method = sub { ... }
 
         no strict 'refs';

@@ -22,21 +22,31 @@ contents of C<$_> in the absence of an explicit variable. You can still use
 C<$_> as the variable, but it's often unnecessary.
 
 X<builtins; C<chomp>>
+X<builtins; C<chr>>
+X<builtins; C<ord>>
+X<builtins; C<lc>>
+X<builtins; C<length>>
+X<builtins; C<reverse>>
+X<builtins; C<uc>>
 
-For example, the C<chomp> builtin removes any trailing newline sequence from
-the given stringN<See C<perldoc -f chomp> and C<$/> for more precise details of its behavior.>:
+Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
+C<reverse>, and C<uc>) work on the default scalar variable if you do not
+provide an alternative. For example, the C<chomp> builtin removes any trailing
+newline sequence from its operandN<See C<perldoc -f chomp> and C<$/> for more
+precise details of its behavior.>:
 
 =begin programlisting
 
     my $uncle = "Bob\n";
-    say "'$uncle'";
     chomp $uncle;
     say "'$uncle'";
 
 =end programlisting
 
-Without an explicit variable, C<chomp> removes the trailing newline sequence
-from C<$_>. These two lines of code are equivalent:
+C<$_> has the same function in Perl as the pronoun I<it> in English. Without an
+explicit variable, C<chomp> removes the trailing newline sequence from C<$_>.
+Perl understands what you mean when you say "C<chomp>"; Perl will always chomp
+I<it>, so these two lines of code are equivalent:
 
 =begin programlisting
 
@@ -44,10 +54,6 @@ from C<$_>. These two lines of code are equivalent:
     chomp;
 
 =end programlisting
-
-C<$_> has the same function in Perl as the pronoun I<it> in English. Read the
-first line as "C<chomp> I<it>" and the second as "C<chomp>". Perl understands
-what you mean when you say "C<chomp>"; Perl will always chomp I<it>.
 
 X<builtins; C<say>>
 X<builtins; C<print>>
@@ -58,8 +64,7 @@ arguments:
 =begin programlisting
 
     print;  # prints $_ to the current filehandle
-    say;    # prints $_ to the current filehandle,
-            # with a trailing newline
+    say;    # prints "$_\n" to the current filehandle
 
 =end programlisting
 
@@ -81,17 +86,6 @@ substitute, and transliterate:
     say;
 
 =end programlisting
-
-X<builtins; C<chr>>
-X<builtins; C<ord>>
-X<builtins; C<lc>>
-X<builtins; C<length>>
-X<builtins; C<reverse>>
-X<builtins; C<uc>>
-
-Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
-C<reverse>, and C<uc>) work on the default scalar variable if you do not
-provide an alternative.
 
 X<builtins; C<for>>
 

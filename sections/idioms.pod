@@ -61,9 +61,9 @@ if it were a single argument:
 
     sub make_ice_cream_sundae
     {
-        B<my %args = @_;>
-
+        B<my %args    = @_;>
         my $dessert = get_ice_cream( $args{ice_cream} );
+
         ...
     }
 
@@ -130,8 +130,8 @@ their phone extensions:
 
 =end programlisting
 
-If you want to sort this list by names alphabetically, you must sort the hash
-by its values, not its keys. Getting the values sorted correctly is easy:
+To sort this list by name alphabetically, you must sort the hash by its values,
+not its keys. Getting the values sorted correctly is easy:
 
 =begin programlisting
 
@@ -140,9 +140,9 @@ by its values, not its keys. Getting the values sorted correctly is easy:
 =end programlisting
 
 ... but you need an extra step to preserve the association of names and
-extensions, unless you use the Schwartzian transform. First, convert the hash
-into a list of data structures which contain the vital information in sortable
-fashion--in this case, two-element anonymous arrays:
+extensions, hence the Schwartzian transform. First, convert the hash into a
+list of data structures which is easy to sort--in this case, two-element
+anonymous arrays:
 
 =begin programlisting
 
@@ -150,13 +150,6 @@ fashion--in this case, two-element anonymous arrays:
                 keys %extensions;
 
 =end programlisting
-
-=begin tip Know Your Data
-
-Reversing the hash I<in place> would work if no one had the same name.  This
-particular data set presents no such problem, but code defensively.
-
-=end tip
 
 C<sort> takes the list of anonymous arrays and compares their second elements
 (the names) as strings:
@@ -180,6 +173,13 @@ the contents of C<$b>. If C<$a> should come before C<$b> in the results, the
 block must return -1. If both values are sufficiently equal in the sorting
 terms, the block must return 0. Finally, if C<$a> should come after C<$b> in
 the results, the block should return 1. Any other return values are errors.
+
+=begin tip Know Your Data
+
+Reversing the hash I<in place> would work if no one had the same name.  This
+particular data set presents no such problem, but code defensively.
+
+=end tip
 
 X<operators; C<cmp>>
 X<< operators; C<< <=> >> >>

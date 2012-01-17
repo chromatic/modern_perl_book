@@ -59,13 +59,12 @@ programs, and even F<.pm> files.
 X<packages; versions>
 X<C<$VERSION>>
 
-Besides a name, a package has a version and three implicit methods,
-C<VERSION()>, C<import()> (L<importing>), and C<unimport()>.
-
-C<VERSION()> returns the package's version number. This number is a series of
-numbers contained in a package global named C<$VERSION>. By rough convention,
-versions tend to be a series of integers separated by dots, as in C<1.23> or
-C<1.1.10>, where each segment is an integer.
+Besides a name, a package has a version and three implicit methods, C<import()>
+(L<importing>), C<unimport()>, and C<VERSION()>. C<VERSION()> returns the
+package's version number. This number is a series of numbers contained in a
+package global named C<$VERSION>. By rough convention, versions tend to be a
+series of integers separated by dots, as in C<1.23> or C<1.1.10>, where each
+segment is an integer.
 
 X<version numbers>
 

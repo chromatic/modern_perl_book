@@ -20,7 +20,8 @@ of its uploading, with errors reported automatically to authors--all without
 human intervention.
 
 You may choose never to release any of your code as public CPAN distributions,
-but you can reuse CPAN tools and conventions.
+but you can use CPAN tools and conventions to manage even private code. The
+Perl community has built amazing infrastructure; why not take advantage of it?
 
 =head2 Attributes of a Distribution
 
@@ -55,7 +56,9 @@ A well-formed distribution must contain a unique name and single version number
 (often taken from its primary module). Any distribution you download from the
 public CPAN should conform to these standards. The public CPANTS service
 (U<http://cpants.perl.org/>) evaluates each uploaded distribution against
-packaging guidelines and conventions and recommends improvements.
+packaging guidelines and conventions and recommends improvements. Following the
+CPANTS guidelines doesn't mean the code works, but it does mean that the CPAN
+packaging tools should understand the distribution.
 
 =head2 CPAN Tools for Managing Distributions
 

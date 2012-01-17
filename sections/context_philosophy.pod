@@ -126,13 +126,11 @@ contain. Both of these calls to C<find_chores()> occur in list context:
 
 =end programlisting
 
-The latter example often surprises novice programmers who expect scalar context
-for the function call. Initializing a hash (L<hashes>) with a list of values
-imposes list context on C<find_chores>.
-
 X<builtins; C<scalar>>
 
-Use the C<scalar> operator to impose scalar context:
+The latter example often surprises novice programmers, as initializing a hash
+(L<hashes>) with a list of values imposes list context on C<find_chores>. Use
+the C<scalar> operator to impose scalar context:
 
 =begin programlisting
 
@@ -145,10 +143,9 @@ Use the C<scalar> operator to impose scalar context:
 =end programlisting
 
 Why does context matter? A context-aware function can examine its calling
-context and decide how much work it needs to do before returning its results.
-In void context, C<find_chores()> may legitimately do nothing. In scalar
-context, it can find only the most important task. In list context, it must
-sort and return the entire list.
+context and decide how much work it must do. In void context, C<find_chores()>
+may legitimately do nothing. In scalar context, it can find only the most
+important task. In list context, it must sort and return the entire list.
 
 =head2 Numeric, String, and Boolean Context
 
@@ -166,11 +163,9 @@ contexts provide hints that tell the compiler how to treat data.
 
 X<builtins; C<eq>>
 
-Perl will do its best to coerce values to the proper type (L<coercion>),
-depending on the operators you use. Be sure to use the proper operator for the
-type of context you want. Suppose you want to compare the contents of two
-strings. The C<eq> operator tells you if the strings contain the same
-information I<as strings>:
+Perl will coerce values to specific proper types (L<coercion>), depending on
+the operators you use. For example, the C<eq> operator tests that strings
+contain the same information I<as strings>:
 
 =begin programlisting
 
@@ -197,7 +192,8 @@ X<builtins; C<==>>
 
 The C<eq> operator treats its operands as strings by enforcing I<string
 context> on them.  The C<==> operator imposes I<numeric context>. In numeric
-context, both strings evaluate to C<0> (L<numeric_coercion>).
+context, both strings evaluate to C<0> (L<numeric_coercion>). Be sure to use
+the proper operator for the type of context you want.
 
 X<boolean context>
 X<context; boolean>
@@ -221,6 +217,6 @@ string. To force a boolean context, double the negation operator:
 
 =end programlisting
 
-Type contexts are less difficult to identify than amount contexts. Once you
-understand that they exist and know which operators provide which contexts
-(L<operator_types>), you'll rarely make mistakes with them.
+Type contexts are easier to identify than amount contexts. Once you know which
+operators provide which contexts (L<operator_types>), you'll rarely make
+mistakes.

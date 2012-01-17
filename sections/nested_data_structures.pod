@@ -10,28 +10,24 @@ you to access aggregate data types through special scalars. Nested data
 structures in Perl, such as an array of arrays or a hash of hashes, are
 possible through the use of references.
 
-=head2 Declaring Nested Data Structures
-
 Use the anonymous reference declaration syntax to declare a nested data
 structure:
 
 =begin programlisting
 
-    my @famous_triplets =
-    (
+    my @famous_triplets = (
         [qw( eenie miney moe   )],
         [qw( huey  dewey louie )],
         [qw( duck  duck  goose )],
     );
 
-    my %meals =
-    (
+    my %meals = (
         breakfast => { entree => 'eggs',
                        side   => 'hash browns' },
         lunch     => { entree => 'panini',
-                       side => 'apple'         },
+                       side   => 'apple'         },
         dinner    => { entree => 'steak',
-                       side => 'avocado salad' },
+                       side   => 'avocado salad' },
     );
 
 =end programlisting
@@ -42,8 +38,6 @@ Perl allows but does not require the trailing comma so as to ease adding new
 elements to the list.
 
 =end tip
-
-=head2 Accessing Nested Data Structures
 
 Use Perl's reference syntax to access elements in nested data structures. The
 sigil denotes the amount of data to retrieve, and the dereferencing arrow
@@ -57,21 +51,16 @@ indicates that the value of one portion of the data structure is a reference:
 =end programlisting
 
 The only way to nest a multi-level data structure is through references, so the
-arrow is superfluous. You may omit it for clarity:
+arrow is superfluous. You may omit it for clarity, except for invoking function
+references:
 
 =begin programlisting
 
-    my $last_nephew = $famous_triplets[1][2];
-    my $breaky_side = $meals{breakfast}{side};
+    my $nephew = $famous_triplets[1][2];
+    my $meal   = $meals{breakfast}{side};
+    $actions{financial}{buy_food}->( $nephew, $meal );
 
 =end programlisting
-
-=begin tip Save Your Arrows for Functions
-
-The arrow invocation syntax is clearest only in the case of invoking a function
-reference stored in a nested data structure.
-
-=end tip
 
 Use disambiguation blocks to access components of nested data structures as if
 they were first-class arrays or hashes:
@@ -114,8 +103,6 @@ intermediate reference:
 
 =end programlisting
 
-... though always keep clarity in mind.
-
 C<perldoc perldsc>, the data structures cookbook, gives copious examples of how
 to use Perl's various data structures.
 
@@ -124,9 +111,8 @@ to use Perl's various data structures.
 Z<autovivification>
 X<autovivification>
 
-Perl's expressivity extends to nested data structures. When you attempt to
-write to a component of a nested data structure, Perl will create the path
-through the data structure to the destination as necessary:
+When you attempt to write to a component of a nested data structure, Perl will
+create the path through the data structure to the destination as necessary:
 
 =begin programlisting
 
@@ -139,12 +125,12 @@ After the second line of code, this array of arrays of arrays of arrays
 contains an array reference in an array reference in an array reference in an
 array reference. Each array reference contains one element. Similarly, treating
 an undefined value as if it were a hash reference in a nested data structure
-will create intermediary hashes:
+will make it so:
 
 =begin programlisting
 
     my %hohoh;
-    $hohoh{Robot}{Santa}{Claus} = 'mostly harmful';
+    $hohoh{Robot}{Santa} = 'mostly harmful';
 
 =end programlisting
 

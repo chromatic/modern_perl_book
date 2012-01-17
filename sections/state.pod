@@ -29,25 +29,21 @@ This idiom works well for cases where external code should be able to change
 internal state, but it's clunkier when only one function needs to manage that
 state.
 
-Suppose that you want to count the number of customers at your ice cream
-parlor. Every hundredth person gets free sprinkles:
+Suppose every hundredth person at your ice cream parlor gets free sprinkles:
 
 =begin programlisting
 
+    my $cust_count = 0;
+
+    sub serve_customer
     {
-        my $cust_count = 0;
+        $cust_count++;
 
-        sub serve_customer
-        {
-            $cust_count++;
+        my $order = shift;
 
-            my $order = shift;
+        add_sprinkles($order) if $cust_count % 100 == 0;
 
-            add_sprinkles($order)
-                if ($cust_count % 100 == 0);
-
-            ...
-        }
+        ...
     }
 
 =end programlisting

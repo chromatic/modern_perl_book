@@ -69,38 +69,42 @@ behavior:
 X<pragmas; disabling>
 X<builtins; C<no>>
 
-Pragmas have lexical effects, and sometimes you need to I<disable> all or part
-of those effects within a further nested lexical scope. The C<no> builtin
-performs an unimport (L<importing>), which with well-behaved pragmas undoes
-their effects.
-
-For example, to disable the protection of C<strict> when you need to do
-something symbolic:
+Sometimes you need to I<disable> all or part of those effects within a further
+nested lexical scope. The C<no> builtin performs an unimport (L<importing>),
+which undoes the effects of well-behaved pragmas. For example, to disable the
+protection of C<strict> when you need to do something symbolic:
 
 =begin programlisting
 
-    use strict;
+    use Modern::Perl;
+    # or use strict;
 
     {
-        # get ready to manipulate the symbol table
         no strict 'refs';
-        ...
+        # manipulate the symbol table here
     }
 
 =end programlisting
 
-=head2 Useful Core Pragmas
+=head2 Useful Pragmas
+
+X<magic variables; C<$^H>>
+X<pragmas; writing>
+
+Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
+code. C<perldoc perlpragma> explains how to do so, while the explanation of
+C<$^H> in C<perldoc perlvar> explains how the feature works.
 
 X<pragmas; useful core pragmas>
 
-Perl 5 includes several useful core pragmas:
+Even before 5.10, Perl 5 included several useful core pragmas.
 
 X<pragmas; C<strict>>
 
 =over 4
 
 =item * the C<strict> pragma enables compiler checking of symbolic references,
-bareword use, and variable declaration
+bareword use, and variable declaration.
 
 X<pragmas; C<warnings>>
 
@@ -110,22 +114,22 @@ unintended, and awkward behaviors.
 X<pragmas; C<utf8>>
 
 =item * the C<utf8> pragma forces the parser to interpret the source code with
-UTF-8 encoding
+UTF-8 encoding.
 
 X<pragmas; C<autodie>>
 
 =item * the C<autodie> pragma enables automatic error checking of system calls
-and builtins
+and builtins.
 
 X<pragmas; C<constant>>
 
 =item * the C<constant> pragma allows you to create compile-time constant
-values (see the CPAN's C<Const::Fast> for an alternative)
+values (see the CPAN's C<Const::Fast> for an alternative).
 
 X<pragmas; C<vars>>
 
 =item * the C<vars> pragma allows you to declare package global variables, such
-as C<$VERSION> or C<@ISA> (L<blessed_references>)
+as C<$VERSION> or C<@ISA> (L<blessed_references>).
 
 X<pragmas; C<feature>>
 
@@ -135,16 +139,13 @@ features of Perl 5 individually. Where C<use 5.14;> enables all of the Perl
 This pragma is more useful to I<disable> individual features in a lexical
 scope.
 
+X<pragmas; C<less>>
+
+=item * the C<less> pragma demonstrates how to write a pragma.
+
 =back
 
-X<magic variables; C<$^H>>
-X<pragmas; writing>
-
-Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
-code. C<perldoc perlpragma> explains how to do so, while the explanation of
-C<$^H> in C<perldoc perlvar> explains how the feature works.
-
-The CPAN has begun to gather useful pragmas. Some of the most useful are:
+The CPAN has begun to gather non-core pragmas:
 
 X<CPAN; C<autobox>>
 X<CPAN; C<perl5i>>

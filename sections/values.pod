@@ -798,10 +798,7 @@ a single element) or list context (for a slice):
     my @array_slice = @list_slice[context()];
     my $array_index = $array_slice[context()];
 
-    # say imposes list context
-    say context();
-
-    # void context is obvious
-    context();
+    say context(); # list context
+    context();     # void context
 
 =end programlisting

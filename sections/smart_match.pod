@@ -9,9 +9,9 @@ X<operators; C<~~>>
 X<builtins; C<given>>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
-if they match each other. The fuzziness of the definition demonstrates the
-smartness of the operator: the type of comparison depends on the type of both
-operands. C<given> (L<given_when>) performs an implicit smart match.
+if they match. The fuzziness of the definition demonstrates the smartness of
+the operator: the type of comparison depends on the type of both operands.
+C<given> (L<given_when>) performs an implicit smart match.
 
 X<operators; C<~~>>
 X<C<~~>; smart match operator>
@@ -30,83 +30,54 @@ with a numeric component, the comparison will use numeric equality. If the
 right operand is a regex, the comparison will use a grep or a pattern match.
 If the right operand is an array, the comparison will perform a grep or a
 recursive smart match. If the right operand is a hash, the comparison will
-check the existence of one or more keys.
+check the existence of one or more keys. A large and intimidating chart in
+C<perldoc perlsyn> gives far more details about all the comparisons smart match
+can perform.
 
-For example:
+A serious proposal for 5.16 suggests simplifying smart match substantially. The
+more complex your operands, the more likely you are to receive confusing
+results. Avoid comparing objects and stick to simple operations between two
+scalars or one scalar and one aggregate for the best results.
+
+With that said, smart match can be useful:
 
 =begin programlisting
 
-    # scalar numeric comparison
-    my $x = 10;
-    my $y = 20;
+    my ($x, $y) = (10, 20);
     say 'Not equal numerically' unless $x ~~ $y;
 
-    # scalar numeric-ish comparison
-    my $x = 10;
-    my $y = '10 little endians';
-    say 'Equal numeric-ishally' if $x ~~ $y;
+    my $z = '10 little endians';
+    say 'Equal numeric-ishally' if $x ~~ $z;
 
-=end programlisting
+    # regular expression match
+    my $needle = qr/needle/;
 
-... or:
+    say 'Pattern match' if 'needle' ~~ $needle;
 
-=begin programlisting
+    say 'Grep through array' if @haystack ~~ $needle;
 
-    my $needlepat = qr/needle/;
+    say 'Grep through hash keys' if %hayhash ~~ $needle;
 
-    say 'Pattern match'
-        if $needle   ~~ $needlepat;
-
-    say 'Grep through array'
-        if @haystack ~~ $needlepat;
-
-    say 'Grep through hash keys'
-        if %hayhash  ~~ $needlepat;
-
-=end programlisting
-
-... or:
-
-=begin programlisting
-
-    say 'Grep through array'
-        if $needlepat  ~~ @haystack;
+    say 'Grep through array' if $needle ~~ @haystack;
 
     say 'Array elements exist as hash keys'
         if %hayhash    ~~ @haystack;
 
-    say 'Array elements smart match'
-        if @strawstack ~~ @haystack;
+    say 'Smart match elements' if @straw ~~ @haystack;
 
-=end programlisting
-
-.... or:
-
-=begin programlisting
-
-    say 'Grep through hash keys'
-        if $needlepat ~~ %hayhash;
+    say 'Grep through hash keys' if $needle ~~ %hayhash;
 
     say 'Array elements exist as hash keys'
-        if @haystack  ~~ %hayhach;
+        if @haystack  ~~ %hayhash;
 
-    say 'Hash keys identical'
-        if %hayhash   ~~ %haymap;
+    say 'Hash keys identical' if %hayhash ~~ %haymap;
 
 =end programlisting
 
-These comparisons work correctly if one operand is a I<reference> to the given
-data type. For example:
+Smart match works even if one operand is a I<reference> to the given data type:
 
 =begin programlisting
 
     say 'Hash keys identical' if %hayhash ~~ \%hayhash;
 
 =end programlisting
-
-A large and intimidating chart in C<perldoc perlsyn> gives far more details
-about all the comparisons smart match can perform. A serious proposal for 5.16
-suggests simplifying smart match substantially. The more complex your operands,
-the more likely the results will confuse the readers of your program. If you
-avoid comparing objects and stick to simple operations with scalars or one
-scalar and one aggregate, you will have better results.

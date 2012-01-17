@@ -358,7 +358,8 @@ X<metacharacters; regex>
 
 Perl interprets several characters in regular expressions as I<metacharacters>,
 characters represent something other than their literal interpretation.
-Metacharacters give regex wielders power far beyond mere substring matches.
+Metacharacters give regex wielders power far beyond mere substring matches. The
+regex engine treats all metacharacters as atoms.
 
 X<regex; C<.>>
 X<C<.>; anything but newline regex metacharacter>
@@ -427,12 +428,14 @@ X<C<\D>; non-digit regex metacharacter>
 X<C<\S>; non-whitespace regex metacharacter>
 X<C<\W>; non-alphanumeric regex metacharacter>
 
+=begin tip Negated Metacharacters
+
 These metacharacters have negated forms. Use C<\W> to match any character
 I<except> a word character. Use C<\D> to match a non-digit character. Use C<\S>
 to match anything but whitespace. Use C<\B> to match anywhere except a word
 boundary.
 
-The regex engine treats all metacharacters as atoms.
+=end tip
 
 =head1 Character Classes
 
@@ -560,11 +563,12 @@ X<global variables; C<%+>>
 
 Parentheses enclose the capture. The C<< ?< name > >> construct names this
 particular capture and must immediately follow the left parenthesis. The
-remainder of the capture is a regular expression. When a match against the
-enclosing pattern succeeds, Perl stores the portion of the string which matches
-the enclosed pattern in the magic variable C<%+>. In this hash, the key is the
-name of the capture and the value is the appropriate portion of the matched
-string.
+remainder of the capture is a regular expression.
+
+When a match against the enclosing pattern succeeds, Perl stores the portion of
+the string which matches the enclosed pattern in the magic variable C<%+>. In
+this hash, the key is the name of the capture and the value is the appropriate
+portion of the matched string.
 
 =head2 Numbered Captures
 
@@ -597,17 +601,11 @@ second into C<$2>, and so on.
 While the syntax for named captures is longer than for numbered captures, it
 provides additional clarity. Counting left parentheses is tedious work, and
 combining regexes which each contain numbered captures is far too difficult.
-Named captures improve regex maintainability.
+Named captures improve regex maintainability--though name collisions are
+possible, they're relatively infrequent. Minimize the risk by using named
+captures only in top-level regexes.
 
-=begin tip Safer Capture Composition
-
-Named captures I<can> produce name collisions, though far less frequent than
-number collisions. To avoid this, use named captures only in top-level regexes.
-
-=end tip
-
-In list context, a regex match against a string returns a list of all captured
-substrings:
+In list context, a regex match returns a list of captured substrings:
 
 =begin programlisting
 
@@ -1002,22 +1000,17 @@ whitespace and comments. The results are often much more readable:
     my $attr_re = qr{
         \A                    # start of line
 
-        # miscellany
         (?:
           [;\n\s]*            # spaces and semicolons
           (?:/\*.*?\*/)?      # C comments
         )*
 
-        # attribute marker
         ATTR
 
-        # type
         \s+
         (   U?INTVAL
           | FLOATVAL
           | STRING\s+\*
-          | PMC\s+\*
-          | \w*
         )
     }x;
 
@@ -1072,22 +1065,20 @@ X<regex; substitution evaluation>
 The C</e> modifier allows you to write arbitrary Perl 5 code on the right side
 of a substitution operation. If the match succeeds, the regex engine will run
 the code, using its return value as the substitution value. The earlier global
-substitution example could be more robust about replacing some or all of an
-unfortunate protagonist's name with:
+substitution example could be simpler with code like:
 
 =begin programlisting
 
     # appease the Mitchell estate
-    my $contents = slurp( $file );
-    $contents    =~ s{Scarlett( O'Hara)?}
-                     {
-                        'Mauve' . defined $1
-                                ? ' Midway'
-                                : ''
-                     }ge;
+    $sequel  =~ s{Scarlett( O'Hara)?}
+                 {
+                    'Mauve' . defined $1
+                            ? ' Midway'
+                            : ''
+                 }ge;
 
 =end programlisting
 
 Each additional occurrence of the C</e> modifier will cause another evaluation
-of the result of the expression, though only Perl golfers tend to use C</ee> or
-anything more complex.
+of the result of the expression, though only Perl golfers use anything beyond
+C</ee>.

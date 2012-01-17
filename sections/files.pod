@@ -36,14 +36,6 @@ Use the C<open> builtin to get a filehandle. To open a file for reading:
 
 =end programlisting
 
-=begin tip Remember C<autodie>?
-
-Assume all examples in this section have C<use autodie;> enabled. If you choose
-not to do this, remember to add error checking yourself.
-
-=end tip
-
-
 The first operand is a lexical which will contain the resulting filehandle. The
 second operand is the I<file mode>, which determines the type of the filehandle
 operation. The final operand is the name of the file. If the C<open> fails, the
@@ -91,6 +83,18 @@ file otherwise.
 
 =cell Open for both reading and writing.
 
+=row
+
+=cell C<< -| >>
+
+=cell Open a pipe to an external process for reading.
+
+=row
+
+=cell C<< |- >>
+
+=cell Open a pipe to an external process for writing.
+
 =end table
 
 You can even create filehandles which read from or write to plain Perl scalars, using any existing file mode:
@@ -104,27 +108,21 @@ You can even create filehandles which read from or write to plain Perl scalars, 
 
 =end programlisting
 
+=begin tip Remember C<autodie>?
+
+All examples in this section have C<use autodie;> enabled, and so can safely
+elide error handling. If you choose not to use C<autodie>, that's fine--but
+remember to check the return values of all system calls to handle errors
+appropriately.
+
+=end tip
+
 X<builtins; C<sysopen>>
 
 C<perldoc perlopentut> offers far more details about more exotic uses of
 C<open>, including its ability to launch and control other processes, as well
 as the use of C<sysopen> for finer-grained control over input and output.
 C<perldoc perlfaq5> includes working code for many common IO tasks.
-
-=begin tip The Many Names of C<DATA>
-
-X<C<DATA>>
-X<C<__DATA__>>
-X<C<__END__>>
-
-The special package global C<DATA> filehandle represents the current file. When
-Perl finishes compiling the file, it leaves C<DATA> open at the end of the
-compilation unit I<if> the file has a C<__DATA__> or C<__END__> section. Any
-text which occurs after that token is available for reading from C<DATA>. This
-is useful for short, self-contained programs. See C<perldoc perldata> for more
-details.
-
-=end tip
 
 =head3 Two-argument C<open>
 
@@ -145,6 +143,21 @@ user input, you have a potential security problem, as any unexpected characters
 could change how your program behaves.
 
 The three-argument C<open()> is a safer replacement for this code.
+
+=begin tip The Many Names of C<DATA>
+
+X<C<DATA>>
+X<C<__DATA__>>
+X<C<__END__>>
+
+The special package global C<DATA> filehandle represents the current file. When
+Perl finishes compiling the file, it leaves C<DATA> open at the end of the
+compilation unit I<if> the file has a C<__DATA__> or C<__END__> section. Any
+text which occurs after that token is available for reading from C<DATA>. This
+is useful for short, self-contained programs. See C<perldoc perldata> for more
+details.
+
+=end tip
 
 =head3 Reading from Files
 
@@ -376,10 +389,10 @@ X<C<IO::File>; C<input_record_separator()>>
 X<C<IO::Handle>>
 X<C<IO::Seekable>; C<seek()>>
 
-C<IO::File> provides several methods, including C<input_line_number()> and
-C<input_record_separator()> methods to access C<$.> and C<$/>, as well as
-C<seek()>. See C<perldoc IO::File>, C<perldoc IO::Handle>, and C<perldoc
-IO::Seekable> for more information.
+C<IO::File>'s C<input_line_number()> and C<input_record_separator()> methods
+allow per-filehandle access to that for which you'd normally have to use the
+superglobals C<$.> and C<$/>. See the documentation for C<IO::File>,
+C<IO::Handle>, and C<IO::Seekable> for more information.
 
 =head2 Directories and Paths
 

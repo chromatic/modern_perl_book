@@ -70,7 +70,8 @@ X<lexical shadowing>
 X<scope; lexical shadowing>
 
 Declaring a lexical in an inner scope with the same name as a lexical in an
-outer scope hides, or I<shadows>, the outer lexical:
+outer scope hides, or I<shadows>, the outer lexical within the inner scope.
+This is often what you want:
 
 =begin programlisting
 
@@ -85,17 +86,17 @@ outer scope hides, or I<shadows>, the outer lexical:
 
 =end programlisting
 
-This program prints C<Edward> and then C<Jacob>N<Family members, not
-vampires.>, even though redeclaring a lexical variable with the same name and
-type I<in the same lexical scope> produces a warning message. Shadowing a
-lexical is a feature of encapsulation.
-
 =begin tip Name Collisions
 
 Lexical shadowing can happen by accident. Limit the scope of variables and the
 nesting of scopes to lessen your risk.
 
 =end tip
+
+This program prints C<Edward> and then C<Jacob>N<Family members, not
+vampires.>, even though redeclaring a lexical variable with the same name and
+type I<in the same lexical scope> produces a warning message. Shadowing a
+lexical is a feature of encapsulation.
 
 Some lexical declarations have subtleties, such as a lexical variable used as
 the iterator variable of a C<for> loop. Its declaration comes outside of the
@@ -139,7 +140,7 @@ within its block:
 Functions--named and anonymous--provide lexical scoping to their bodies. This
 facilitates closures (L<closures>).
 
-=head3 Our Scope
+=head2 Our Scope
 
 Z<our>
 X<builtins; C<our>>

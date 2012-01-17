@@ -413,7 +413,7 @@ both would themselves evaluate to false values in a boolean context.
     use Test::More;
 
     my %empty;
-    ok( ! %empty, 'empty hash should evaluate to false' );
+    ok( ! %empty, 'empty hash should evaluate false' );
 
     my %false_key = ( 0 => 'true value' );
     ok( %false_key, 'hash containing false key
@@ -449,16 +449,7 @@ the loop will never terminate:
 You I<can> loop over the list of keys and values with a C<for> loop, but the
 iterator variable will get a key on one iteration and its value on the next,
 because Perl will flatten the hash into a single list of interleaved keys and
-values:
-
-=begin programlisting
-
-    for (%hash)
-    {
-        ...
-    }
-
-=end programlisting
+values.
 
 =head2 Hash Idioms
 
@@ -541,10 +532,8 @@ Perl 5.10 introduced the defined-or and defined-or assignment operators. Prior
 to 5.10, most code used the boolean-or assignment operator (C<||=>) for this
 purpose. Unfortunately, some valid values evaluate to a false value in boolean
 context, so evaluating the I<definedness> of values is almost always more
-accurate.
-
-This lazy orcish maneuver tests for the definedness of the cached value, not
-truthiness.
+accurate. This lazy orcish maneuver tests for the definedness of the cached
+value, not truthiness.
 
 X<hashes; named parameters>
 
@@ -571,7 +560,7 @@ This approach allows you to set default values:
 
     sub make_sundae
     {
-        my %parameters             = @_;
+        my %parameters           = @_;
         B<$parameters{flavor}    //= 'Vanilla';>
         B<$parameters{topping}   //= 'fudge';>
         B<$parameters{sprinkles} //= 100;>
@@ -580,7 +569,8 @@ This approach allows you to set default values:
 
 =end programlisting
 
-... or include them in the initial declaration and assignment itself:
+... or include them in the hash initialization, as latter assignments take
+precedence over earlier assignments:
 
 =begin programlisting
 
@@ -597,9 +587,6 @@ This approach allows you to set default values:
     }
 
 =end programlisting
-
-... as subsequent declarations of the same key with a different value will
-overwrite previous values.
 
 =head2 Locking Hashes
 

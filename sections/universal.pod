@@ -92,10 +92,7 @@ reference to the method with:
 X<builtins; C<require>>
 X<CPAN; C<UNIVERSAL::require>>
 
-In an application which uses plugins, use C<can()> to test if a package
-implements a specific function.
-
-X<CPAN; C<Class::Load>>
+Use C<can()> to test if a package implements a specific function or method:
 
 =begin programlisting
 
@@ -104,7 +101,7 @@ X<CPAN; C<Class::Load>>
     die "Couldn't load $module!"
         unless load_class( $module );
 
-    if (my $register = $module->can( 'register' )
+    if (my $register = $module->can( 'register' ))
     {
         $register->();
     }
@@ -113,14 +110,15 @@ X<CPAN; C<Class::Load>>
 
 =begin tip C<Module::Pluggable>
 
+X<CPAN; C<Class::Load>>
 X<CPAN; C<Module::Pluggable>>
 
-The CPAN module C<Module::Pluggable> is a great way to manage plugins.
+While the CPAN module C<Class::Load> simplifies the work of loading classes by
+name--rather than doing the C<require> dance--C<Module::Pluggable> takes most
+of the work out of building and managing plugin systems. Get to know both
+distributions.
 
 =end tip
-
-Override C<can()> in your own code if you use C<AUTOLOAD()>
-(L<autoload_drawbacks>).
 
 =head2 The VERSION() Method
 

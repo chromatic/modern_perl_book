@@ -1,17 +1,15 @@
 =head1 Arrays
 
 Z<arrays>
+
 X<arrays>
+X<C<@> sigil>
+X<sigils; C<@>>
 
 Perl 5 I<arrays> are I<first-class> data structures--the language supports them
 as a built-in data type--which store zero or more scalars. You can access
 individual members of the array by integer indexes, and you can add or remove
-elements at will.
-
-X<C<@> sigil>
-X<sigils; C<@>>
-
-The C<@> sigil denotes an array. To declare an array:
+elements at will. The C<@> sigil denotes an array. To declare an array:
 
 =begin programlisting
 
@@ -58,37 +56,27 @@ addition, or boolean context) evaluates to the number of elements in the array:
 
 =end programlisting
 
+X<C<$#>; sigil>
+X<sigils; C<$#>>
+
 To get the I<index> of the final element of an array, subtract one from the
-number of elements of the array (remember that array indexes start at 0):
+number of elements of the array (remember that array indexes start at 0) or use the unwieldy C<$#cats> syntax:
 
 =begin programlisting
 
     my $first_index = 0;
     my $last_index  = @cats - 1;
+    # or
+    # my $last_index = $#cats;
 
     say   "My first cat has an index of $first_index, "
         . "and my last cat has an index of $last_index."
 
 =end programlisting
 
-X<C<$#>; sigil>
-X<sigils; C<$#>>
-
-The less wieldy syntax C<$#cats> also evaluates to the last index of the array:
-
-=begin programlisting
-
-    my $first_index = 0;
-    B<my $last_index  = $#cats;>
-
-    say   "My first cat has an index of $first_index, "
-        . "and my last cat has an index of $last_index."
-
-=end programlisting
-
-... though it's often clearer to use negative array indices instead.  The last
-element of an array is available at the index C<-1>. The second to last element
-of the array is available at index C<-2>, and so on:
+When the index matters less than the position of an element, use negative array
+indices instead. The last element of an array is available at the index C<-1>.
+The second to last element of the array is available at index C<-2>, and so on:
 
 =begin programlisting
 
@@ -165,68 +153,6 @@ C<my @items = ();> is a longer and noisier version of C<my @items> because
 freshly-declared arrays start out empty.
 
 =end tip
-
-=head2 Array Slices
-
-Z<array_slices>
-
-X<arrays; slices>
-X<slices; array>
-X<C<@>; sigil>
-X<sigils; C<@>>
-
-The I<array slice> construct allows you to access elements of an array in list
-context. Unlike scalar access of an array element, this indexing operation
-takes a list of zero or more indices and uses the array sigil (C<@>):
-
-=begin programlisting
-
-    my @youngest_cats = @cats[-1, -2];
-    my @oldest_cats   = @cats[0 .. 2];
-    my @selected_cats = @cats[ @indexes ];
-
-=end programlisting
-
-Array slices are useful for assignment:
-
-=begin programlisting
-
-    @users[ @replace_indices ] = @replace_users;
-
-=end programlisting
-
-A slice can contain zero or more elements--including one:
-
-=begin programlisting
-
-    # single-element array slice; function call in I<list> context
-    @cats[-1] = get_more_cats();
-
-    # single-element array access; function call in I<scalar> context
-    $cats[-1] = get_more_cats();
-
-=end programlisting
-
-The only syntactic difference between an array slice of one element and the
-scalar access of an array element is the leading sigil. The I<semantic>
-difference is greater: an array slice always imposes list context. An array
-slice evaluated in scalar context will produce a warning:
-
-=begin screen
-
-    Scalar value @cats[1] better written as $cats[1]...
-
-=end screen
-
-An array slice imposes list context (L<context_philosophy>) on the expression
-used as its index:
-
-=begin programlisting
-
-    # function called in list context
-    my @hungry_cats = @cats[ get_cat_indices() ];
-
-=end programlisting
 
 =head2 Array Operations
 
@@ -326,6 +252,67 @@ As of Perl 5.12, C<each> can iterate over an array by index and value:
 
 =end programlisting
 
+=head2 Array Slices
+
+Z<array_slices>
+
+X<arrays; slices>
+X<slices; array>
+X<C<@>; sigil>
+X<sigils; C<@>>
+
+The I<array slice> construct allows you to access elements of an array in list
+context. Unlike scalar access of an array element, this indexing operation
+takes a list of zero or more indices and uses the array sigil (C<@>):
+
+=begin programlisting
+
+    my @youngest_cats = @cats[-1, -2];
+    my @oldest_cats   = @cats[0 .. 2];
+    my @selected_cats = @cats[ @indexes ];
+
+=end programlisting
+
+Array slices are useful for assignment:
+
+=begin programlisting
+
+    @users[ @replace_indices ] = @replace_users;
+
+=end programlisting
+
+A slice can contain zero or more elements--including one:
+
+=begin programlisting
+
+    # single-element array slice; I<list> context
+    @cats[-1] = get_more_cats();
+
+    # single-element array access; I<scalar> context
+    $cats[-1] = get_more_cats();
+
+=end programlisting
+
+The only syntactic difference between an array slice of one element and the
+scalar access of an array element is the leading sigil. The I<semantic>
+difference is greater: an array slice always imposes list context. An array
+slice evaluated in scalar context will produce a warning:
+
+=begin screen
+
+    Scalar value @cats[1] better written as $cats[1]...
+
+=end screen
+
+An array slice imposes list context on the expression used as its index:
+
+=begin programlisting
+
+    # function called in list context
+    my @hungry_cats = @cats[ get_cat_indices() ];
+
+=end programlisting
+
 =head2 Arrays and Context
 
 X<list context; arrays>
@@ -400,24 +387,13 @@ C<$LIST_SEPARATOR>. Thus:
 
 =end programlisting
 
-Temporarily localizing and assigning another value to C<$"> for debugging
-purposes is very handyN<Credit goes to Mark Jason Dominus for demonstrating its
-efficacy.>:
+Localize C<$"> with a delimiter to ease your debuggingN<Credit goes to Mark Jason Dominus for this technique.>:
 
 =begin programlisting
 
     # what's in this array again?
-    {
-        local $" = ')(';
-        say "(@sweet_treats)";
-    }
+    local $" = ')(';
+    say "(@sweet_treats)";
+    B<(pie)(cake)(doughnuts)(cookies)(raisin bread)>
 
 =end programlisting
-
-... which produces the result:
-
-=begin screen
-
-    (pie)(cake)(doughnuts)(cookies)(raisin bread)
-
-=end screen

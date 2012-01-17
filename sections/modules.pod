@@ -55,7 +55,12 @@ X<C<feature> pragma>
 X<pragmas; C<feature>>
 
 When you load a module with C<use>, Perl loads it from disk, then calls its
-C<import()> method, passing any arguments you provided:
+C<import()> method, passing any arguments you provided. By convention, a
+module's C<import()> method takes a list of names and exports functions and
+other symbols into the calling namespace. This is merely convention; a module
+may decline to provide an C<import()>, or its C<import()> may perform other
+behaviors. Pragmas (L<pragmas>) such as C<strict> use arguments to change the
+behavior of the calling lexical scope instead of exporting symbols:
 
 =begin programlisting
 
@@ -70,13 +75,6 @@ C<import()> method, passing any arguments you provided:
 
 =end programlisting
 
-By convention, a module's C<import()> method takes a list of names and exports
-functions and other symbols into the calling namespace. This is merely
-convention; a module may decline to provide an C<import()>, or its C<import()>
-may perform other behaviors. Pragmas (L<pragmas>) such as C<strict> use
-arguments to change the behavior of the calling lexical scope instead of
-exporting symbols.
-
 X<builtins; C<no>>
 X<unimporting>
 
@@ -86,21 +84,19 @@ through C<import()>:
 
 =begin programlisting
 
-    # no symbolic references
-    # variable declaration required
-    # no barewords
     use strict;
+    # no symbolic references or barewords
+    # variable declaration required
 
     {
-        # symbolic references allowed
-        # variable declaration still required
-        # barewords still prohibited
         no strict 'refs';
+        # symbolic references allowed
+        # strict 'subs' and 'vars' still in effect
     }
 
 =end programlisting
 
-Both C<use> and C<no> take effect during compilation:
+Both C<use> and C<no> take effect during compilation, such that:
 
 =begin programlisting
 
@@ -142,16 +138,16 @@ Similarly:
 
 ... including the C<require> of the module.
 
-You I<may> call C<import()> and C<unimport()> directly, though outside of a
-C<BEGIN> block it makes little sense to do so; after compilation has completed,
-the effects of C<import()> or C<unimport()> may have little effect.
-
 =begin tip Missing Methods Never Missed
 
 If C<import()> or C<unimport()> does not exist in the module, Perl will not
 give an error message. They are truly optional.
 
 =end tip
+
+You I<may> call C<import()> and C<unimport()> directly, though outside of a
+C<BEGIN> block it makes little sense to do so; after compilation has completed,
+the effects of C<import()> or C<unimport()> may have little effect.
 
 X<modules; case-sensitivity>
 X<case-sensitivity>
@@ -193,11 +189,9 @@ functions usable throughout the system:
 
     use Exporter 'import';
 
-    our @EXPORT_OK = qw( round_number translate screech );
+    our @EXPORT_OK = qw( round translate screech );
 
     ...
-
-    1;
 
 =end programlisting
 

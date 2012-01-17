@@ -104,10 +104,7 @@ validation in functions (L<postfix_parameter_validation>):
     {
         return unless @_;
 
-        for my $chant (@_)
-        {
-            ...
-        }
+        for my $chant (@_) { ... }
     }
 
 =end programlisting
@@ -833,10 +830,7 @@ You may nest loops within other loops:
 
     for my $suit (@suits)
     {
-        for my $values (@card_values)
-        {
-            ...
-        }
+        for my $values (@card_values) { ... }
     }
 
 =end programlisting
@@ -1065,10 +1059,10 @@ C<given> also lexicalizes the topic variable:
 X<builtins; C<when>>
 X<topicalization>
 
-C<given> is most useful when combined with C<when>. C<given> I<topicalizes> a
-value within a block so that multiple C<when> statements can match the topic
-against expressions using I<smart-match> semantics. To write the Rock, Paper,
-Scissors game:
+C<given> is most useful when combined with C<when> (L<smart_match>). C<given>
+I<topicalizes> a value within a block so that multiple C<when> statements can
+match the topic against expressions using I<smart-match> semantics. To write
+the Rock, Paper, Scissors game:
 
 =begin programlisting
 
@@ -1135,18 +1129,14 @@ this code.
 
 =end tip
 
-The C<when> construct is even more powerful; it can match (L<smart_match>)
-against many other types of expressions including scalars, aggregates,
-references, arbitrary comparison expressions, and even code references.
-
 =head2 Tailcalls
 
 Z<tailcalls>
 X<tailcalls>
 
 A I<tailcall> occurs when the last expression within a function is a call to
-another function--the return value of the outer function is the return
-value of the inner function:
+another function--the outer function's return value is the inner function's
+return value:
 
 =begin programlisting
 
@@ -1160,18 +1150,17 @@ value of the inner function:
 
 =end programlisting
 
-Here returning from C<greet_person()> directly to the caller of
-C<log_and_greet_person()> is more efficient than returning to
-C<log_and_greet_person()> and immediately returning I<from>
-C<log_and_greet_person()>. Returning directly from C<greet_person()> to the
-caller of C<log_and_greet_person()> is a I<tailcall optimization>.
+Returning from C<greet_person()> directly to the caller of
+C<log_and_greet_person()> is more efficient than returning I<to>
+C<log_and_greet_person()> and immediately I<from> C<log_and_greet_person()>.
+Returning directly I<from> C<greet_person()> to the caller of
+C<log_and_greet_person()> is a I<tailcall optimization>.
 
 Heavily recursive code (L<recursion>), especially mutually recursive code, can
 consume a lot of memory. Tailcalls reduce the memory needed for internal
 bookkeeping of control flow and can make expensive algorithms tractable.
-Unfortunately, Perl 5 will not detect cases where it could apply this
-optimization automatically. If this happens in your code, use a manual tailcall
-optimization.
+Unfortunately, Perl 5 does not automatically perform this optimization; you
+have to do it yourself when it's necessary.
 
 X<builtins; C<goto>>
 

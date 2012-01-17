@@ -300,7 +300,7 @@ sigil C<%>:
 =end programlisting
 
 Access individual values of the hash (to store, delete, check the existence of,
-or retrieve) by using the dereferencing arrow:
+or retrieve) by using the dereferencing arrow or double sigils:
 
 =begin programlisting
 
@@ -308,16 +308,10 @@ or retrieve) by using the dereferencing arrow:
     {
         my $color = shift;
         return B<< $colors_ref->{$color} >>;
+        # or return B<< $$colors_ref{$color} >>;
     }
 
 =end programlisting
-
-=begin tip Doubling Sigils Redux
-
-As with array references, you may eschew the dereferencing arrow for another
-prefixed scalar sigil, such as C<$$colors_ref{$color}>.
-
-=end tip
 
 Use the array sigil (C<@>) and disambiguation braces to slice a hash reference:
 
@@ -504,32 +498,25 @@ simple as:
 
 =end programlisting
 
-In 5.12, you must write C<use IO::File;> before this will work. Before 5.12,
-these objects were instances of C<IO::Handle>, so you had to C<use> that
-instead.
-
-You may see old code which takes references to typeglobs, such as:
+You must C<use IO::File;> in 5.12 to enable this and C<use IO::Handle;> in 5.10
+and earlier. Even older code may take references to typeglobs:
 
 =begin programlisting
 
-    my $fh = do
-    {
-        local *FH;
-        open FH, "> $file"
-            or die "Can't write to '$file': $!\n";
-        B<\*FH>;
-    };
+    local *FH;
+    open FH, "> $file" or die "Can't write '$file': $!";
+    my $fh = B<\*FH>;
 
 =end programlisting
 
-This idiom predates lexical filehandles, introduced as part of Perl 5.6.0 in
-March 2000. You may still use the reference operator on typeglobs to take
-references to package-global filehandles such as C<STDIN>, C<STDOUT>,
-C<STDERR>, or C<DATA>--but these are all global names anyhow.
+This idiom predates lexical filehandles (introduced with Perl 5.6.0 in March
+2000). You may still use the reference operator on typeglobs to take references
+to package-global filehandles such as C<STDIN>, C<STDOUT>, C<STDERR>, or
+C<DATA>--but these are all global names anyhow.
 
 Prefer lexical filehandles when possible. With the benefit of explicit scoping,
 lexical filehandles allow you to manage the lifespan of filehandles as a
-feature of how Perl 5 manages memory.
+feature of Perl 5's memory management.
 
 =head2 Reference Counts
 
@@ -549,17 +536,14 @@ does Perl know when it's safe to close the file opened in this inner scope:
 
 =begin programlisting
 
-    sub show_off_scope
+    say 'file not open';
+
     {
-        say 'file not open';
-
-        {
-            open my $fh, '>', 'inner_scope.txt';
-            $fh->say( 'file open here' );
-        }
-
-        say 'file closed here';
+        open my $fh, '>', 'inner_scope.txt';
+        $fh->say( 'file open here' );
     }
+
+    say 'file closed here';
 
 =end programlisting
 

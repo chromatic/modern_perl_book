@@ -326,8 +326,6 @@ Add attributes and methods to this class when you create it:
 
 =begin programlisting
 
-    use Class::MOP;
-
     my $class = Class::MOP::Class->create(
         'Monkey::Wrench' =>
         (
@@ -346,8 +344,7 @@ Add attributes and methods to this class when you create it:
 
 =end programlisting
 
-... or add them to the I<metaclass> (the object which represents that class)
-after you've created it:
+... or to the metaclass (the object which represents that class) once created:
 
 =begin programlisting
 

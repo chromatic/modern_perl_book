@@ -25,7 +25,7 @@ describes the test's purpose:
 =begin programlisting
 
     ok(   1, 'the number one should be true'         );
-    ok(   0, '... and the number zero should not'    );
+    ok(   0, '... and zero should not'               );
     ok(  '', 'the empty string should be false'      );
     ok( '!', '... and a non-empty string should not' );
 
@@ -64,7 +64,7 @@ individual assertions you plan to run:
     use Test::More tests => 4;
 
     ok(   1, 'the number one should be true'         );
-    ok(   0, '... and the number zero should not'    );
+    ok(   0, '... and zero should not'               );
     ok(  '', 'the empty string should be false'      );
     ok( '!', '... and a non-empty string should not' );
 
@@ -86,8 +86,8 @@ output:
 =begin screen
 
     ok 1 - the number one should be true
-    not ok 2 - ... and the number zero should not
-    #   Failed test '... and the number zero should not'
+    not ok 2 - ... and zero should not
+    #   Failed test '... and zero should not'
     #   at truth_values.t line 4.
     not ok 3 - the empty string should be false
     #   Failed test 'the empty string should be false'
@@ -120,7 +120,7 @@ and displays only the most pertinent information:
 
     $ B<prove truth_values.t>
     truth_values.t .. 1/?
-    #   Failed test '... and the number zero should not'
+    #   Failed test '... and zero should not'
     #   at truth_values.t line 4.
 
     #   Failed test 'the empty string should be false'
@@ -144,8 +144,8 @@ boolean coercion (L<boolean_coercion>):
 
 =begin programlisting
 
-    ok(   B<!> 0, '... and the number zero should not'  );
-    ok(  B<!> '', 'the empty string should be false'    );
+    ok(   B<!> 0, '... and zero should not'          );
+    ok(  B<!> '', 'the empty string should be false' );
 
 =end programlisting
 
@@ -377,9 +377,10 @@ exceptions appropriately. You may also encounter C<Test::Exception>.
 =item * C<Test::MockObject> and C<Test::MockModule> allow you to test difficult
 interfaces by I<mocking> (emulating but producing different results).
 
-=item * C<Test::WWW::Mechanize> allows you to test web applications.  Both
-C<Plack::Test>, C<Plack::Test::Agent>, and C<Test::WWW::Mechanize::PSGI> can do
-so without requiring the use of a live web server.
+=item * C<Test::WWW::Mechanize> helps test web applications, while
+C<Plack::Test>, C<Plack::Test::Agent>, and the subclass
+C<Test::WWW::Mechanize::PSGI> can do so without using an external live web
+server.
 
 =item * C<Test::Database> provides functions to test the use and abuse of
 databases. C<DBICx::TestDatabase> helps test schemas built with C<DBIx::Class>.
@@ -387,9 +388,9 @@ databases. C<DBICx::TestDatabase> helps test schemas built with C<DBIx::Class>.
 =item * C<Test::Class> offers an alternate mechanism for organizing test
 suites.  It allows you to create classes in which specific methods group tests.
 You can inherit from test classes just as your code classes inherit from each
-other.  This is an excellent way to reduce duplication in test suites.  See the
-C<Test::Class> series written by Curtis Poe at
-U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>.
+other.  This is an excellent way to reduce duplication in test suites.  See
+Curtis Poe's excellent C<Test::Class>
+seriesN<U<http://www.modernperlbooks.com/mt/2009/03/organizing-test-suites-with-testclass.html>>.
 The newer C<Test::Routine> distribution offers similar possibilities through
 the use of Moose (L<moose>).
 

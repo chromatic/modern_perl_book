@@ -99,8 +99,11 @@ You may also see anonymous functions passed as function arguments:
 
 X<anonymous functions; names>
 
+X<CPAN; C<Sub::Identify>>
+
 Given a reference to a function, you can determine whether the function is
-named or anonymous with introspection:
+named or anonymous with introspectionN<... or C<sub_name> from the CPAN module
+C<Sub::Identify>.>:
 
 =begin programlisting
 
@@ -122,15 +125,6 @@ named or anonymous with introspection:
     main();
 
 =end programlisting
-
-=begin tip Who Are You?
-
-X<CPAN; C<Sub::Identify>>
-
-The CPAN module C<Sub::Identify>'s C<sub_name> function simplifies this
-introspection.
-
-=end tip
 
 The result may be surprising:
 
@@ -183,7 +177,10 @@ Perl 5 allows the declaration of anonymous functions implicitly through the use
 of prototypes (L<prototypes>). Though this feature exists nominally to enable
 programmers to write their own syntax such as that for C<map> and C<eval>, an
 interesting example is the use of I<delayed> functions that don't look like
-functions. Consider the CPAN module C<Test::Fatal>:
+functions.
+
+Consider the CPAN module C<Test::Fatal>, which takes an anonymous function as
+the first argument to its C<exception()> function:
 
 =begin programlisting
 
@@ -200,8 +197,7 @@ functions. Consider the CPAN module C<Test::Fatal>:
 
 =end programlisting
 
-The function C<exception()> takes an anonymous function as its first argument.
-These calls are equivalent to:
+You might rewrite this more verbosely as:
 
 =begin programlisting
 
@@ -210,9 +206,7 @@ These calls are equivalent to:
 
 =end programlisting
 
-... but are easier to read.
-
-This syntax allows you to pass named functions by reference as well:
+... or to pass named functions by reference:
 
 =begin programlisting
 

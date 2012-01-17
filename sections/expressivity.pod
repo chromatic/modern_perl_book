@@ -62,8 +62,7 @@ the sense that most everyone wants to help babies learn to communicate well.
 Everyone begins as a novice. Through practice and learning from more experienced
 programmers, you will understand and adopt more powerful idioms and techniques.
 
-For example, an experienced Perl hacker might triple a list of numbers by
-writing:
+For example, an experienced Perl hacker might triple a list of numbers with:
 
 =begin programlisting
 
@@ -84,22 +83,21 @@ writing:
 
 =end programlisting
 
-... while a novice might start with:
+... while a novice might try:
 
 =begin programlisting
 
     my @tripled;
-    my $count = @numbers;
 
-    for (my $i = 0; $i < $count; $i++)
+    for (my $i = 0; $i < scalar @numbers; $i++)
     {
         $tripled[$i] = $numbers[$i] * 3;
     }
 
 =end programlisting
 
-All three approaches accomplish the same thing, but each takes advantage of
-Perl in a different way.
+All three approaches accomplish the same thing, but each uses Perl in a
+different way.
 
 Experience writing Perl will help you to focus on I<what> you want to do rather
 than I<how> to do it. Even so, Perl will happily run simple programs. You can

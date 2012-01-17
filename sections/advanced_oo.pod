@@ -21,10 +21,9 @@ with code declared elsewhere?
 X<OO; is-a>
 X<OO; has-a>
 
-Inheritance is but one of many tools. Although C<Car> may extend
-C<Vehicle::Wheeled> (an I<is-a relationship>), it's likely better for C<Car> to
-I<contain> contain several C<Wheel> objects as instance attributes (a I<has-a
-relationship>).
+Inheritance is but one of many tools. A C<Car> may extend C<Vehicle::Wheeled>
+(an I<is-a relationship>), but C<Car> may better I<contain> several C<Wheel>
+objects as instance attributes (a I<has-a relationship>).
 
 Decomposing complex classes into smaller, focused entities (whether classes or
 roles) improves encapsulation and reduces the possibility that any one class or

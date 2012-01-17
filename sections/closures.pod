@@ -145,18 +145,13 @@ elements you need:
 =end programlisting
 
 Every call to the function returned by C<gen_fib()> takes one argument, the
-I<n>th element of the Fibonacci series.  The function generates all preceding
+I<n>th element of the Fibonacci series. The function generates all preceding
 values in the series as necessary, caches them, and returns the requested
-element. It delays computation until absolutely necessary.
-
-Perhaps this is too much work to calculate a simple numeric series, but the
-function C<gen_fib()> is itself amazing. It initializes an array as a cache,
-executes some custom code to populate arbitrary elements of the cache, and
-returns the calculated or cached value. If you extract the behavior specific to
-Fibonacci values, this code can provide any arbitrary code with a
-lazily-iterated cache.
-
-Extracting the function C<generate_caching_closure()> produces:
+element--even delaying computation until absolutely necessary. Yet there's a
+pattern specific to caching intertwined with the numeric series. What happens
+if you extract the cache-specific code (initialize a cache, execute custom code
+to populate cache elements, and return the calculated or cached value) to a
+function C<generate_caching_closure()>?
 
 =begin programlisting
 
@@ -179,8 +174,8 @@ Extracting the function C<generate_caching_closure()> produces:
 
 =begin tip Fold, Apply, and Filter
 
-In one sense, the builtins C<map>, C<grep>, and C<sort> are themselves
-higher-order functions. Compare them to C<gen_caching_closure()>.
+The builtins C<map>, C<grep>, and C<sort> are themselves higher-order
+functions.
 
 =end tip
 
