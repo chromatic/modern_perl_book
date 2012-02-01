@@ -149,7 +149,7 @@ them:
             Log::method_call( $name, @_ );
 
             my $self = shift;
-            return $self->$name( @_ );
+            return $$self->$name( @_ );
         }
 
         B<no strict 'refs';>
