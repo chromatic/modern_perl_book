@@ -112,23 +112,31 @@ their phone extensions:
 
     my %extensions =
     (
-        001 => 'Armon',
-        002 => 'Wesley',
-        003 => 'Gerald',
-        005 => 'Rudy',
-        007 => 'Brandon',
-        008 => 'Patrick',
-        011 => 'Luke',
-        012 => 'LaMarcus',
-        017 => 'Chris',
-        020 => 'Maurice',
-        023 => 'Marcus',
-        024 => 'Andre',
-        052 => 'Greg',
-        088 => 'Nic',
+        '001' => 'Armon',
+        '002' => 'Wesley',
+        '003' => 'Gerald',
+        '005' => 'Rudy',
+        '007' => 'Brandon',
+        '008' => 'Patrick',
+        '011' => 'Luke',
+        '012' => 'LaMarcus',
+        '017' => 'Chris',
+        '020' => 'Maurice',
+        '023' => 'Marcus',
+        '024' => 'Andre',
+        '052' => 'Greg',
+        '088' => 'Nic',
     );
 
 =end programlisting
+
+=begin tip Hash Key Quoting Rules
+
+Fat comma hash key quoting only works on things that look like barewords; these
+keys look like numbers--octal numbers, in specific, with the leading zero. Yes,
+almost everyone makes this mistake.
+
+=end tip
 
 To sort this list by name alphabetically, you must sort the hash by its values,
 not its keys. Getting the values sorted correctly is easy:
