@@ -33,7 +33,7 @@ code {color: #000033;}
 .url { color: #000099; }
 .footnote { color: #333333; }
 
-div.author
+.author
 {
 	background: #ffaaaa;
 	border-style: solid;
@@ -42,7 +42,7 @@ div.author
 	width: 25%;
 }
 
-div.editor
+.editor
 {
 	background: #aaaaff;
 	border-style: solid;
@@ -85,16 +85,31 @@ div.production
 	text-decoration: underline;
 }
 
-div.epigraph p
+.epigraph
 {
     margin: 0;
     font-size: 0.8em;
 }
 
-div.literal
+.literal
 {
     white-space: pre-wrap;
     line-height: 1.5em;
+}
+
+.programlisting
+{
+  background-color: #CCCCCC ;
+  border: 1px solid #006600 ;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.screen
+{
+  border: 1px solid #006600 ;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 li
@@ -121,12 +136,37 @@ img
     max-width: 100%;
 }
 
-div.sidebar
+.sidebar
 {
     padding: 1em;
     border: 1px solid;
-    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
     margin: 0;
+}
+
+.tip
+{
+    padding: 0.5em;
+    border: 1px solid;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 10px;
+    align: center;
+}
+
+.tip .title
+{
+    background-color: black;
+    color: white;
+    width: 100%;
+    font-variant: small-caps;
+    text-align: center;
+}
+
+.tip .title code
+{
+    color: white;
 }
 
 hr
