@@ -54,13 +54,11 @@ emulate:
 
 =begin screen
 
-    $ B<perl -E "say prototype 'CORE::system' // 'undef' ">
-    undef
-    # You can't emulate builtin function C<system>'s calling convention.
+    B<say prototype 'CORE::system' // 'undef'>
+    # undef; cannot emulate builtin C<system>
 
-    $ B<perl -E "say prototype 'CORE::prototype' // 'undef' ">
-    undef
-    # Builtin function C<prototype> has no prototype.
+    B<say prototype 'CORE::prototype' // 'undef'>
+    # undef; builtin C<prototype> has no prototype
 
 =end screen
 
@@ -111,7 +109,8 @@ incoming arguments:
 
     my @nums = 1 .. 10;
 
-    say "They're equal, whatever that means!" if numeric_equality @nums, 10;
+    say 'They're equal, whatever that means!'
+        if numeric_equality @nums, 10;
 
 =end programlisting
 
@@ -197,9 +196,9 @@ and an optional description of the test:
     use Test::Exception;
 
     throws_ok
-        { my $not_an_object; $not_an_object->some_method() }
-        qr/Can't call method "some_method" on an undefined value/,
-        'Calling a method on an undefined invocant should throw exception';
+        { my $unobject; $unobject->yoink() }
+        qr/Can't call method "yoink" on an undefined/,
+        'Method on undefined invocant should fail';
 
 =end programlisting
 
@@ -219,9 +218,9 @@ You may use C<throws_ok()> without taking advantage of the prototype:
     use Test::Exception;
 
     throws_okB<(>
-        B<sub> { my $not_an_object; $not_an_object->some_method() }B<,>
-        qr/Can't call method "some_method" on an undefined value/,
-        'Calling a method on an undefined invocant should throw exception'B<)>;
+        B<sub> { my $unobject; $unobject->yoink() }B<,>
+        qr/Can't call method "yoink" on an undefined/,
+        'Method on undefined invocant should fail' B<)>;
 
 =end programlisting
 
@@ -235,7 +234,6 @@ with C<sort>N<Ben Tilly suggested this example.>:
     sub length_sort ($$)
     {
         my ($left, $right) = @_;
-
         return length($left) <=> length($right);
     }
 

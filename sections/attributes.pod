@@ -36,11 +36,9 @@ CPAN uses such parametric arguments to good effect:
 
 =begin programlisting
 
-    sub setup_tests :Test(setup) { ... }
-
-    sub test_monkey_creation :Test(10) { ... }
-
-    sub shutdown_tests :Test(teardown) { ... }
+    sub setup_tests          :Test(setup)    { ... }
+    sub test_monkey_creation :Test(10)       { ... }
+    sub shutdown_tests       :Test(teardown) { ... }
 
 =end programlisting
 

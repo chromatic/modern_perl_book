@@ -37,12 +37,12 @@ Given function parameter validation like:
 
 =begin programlisting
 
-    use Carp;
+    use Carp 'carp';
 
     sub only_two_arguments
     {
         my ($lop, $rop) = @_;
-        Carp::carp( 'Too many arguments provided' ) if @_ > 2;
+        carp( 'Too many arguments provided' ) if @_ > 2;
         ...
     }
 
@@ -205,8 +205,6 @@ module, C<use> the C<warnings::register> pragma:
 
     B<use warnings::register;>
 
-    1;
-
 =end programlisting
 
 This will create a new warnings category named after the package
@@ -227,11 +225,10 @@ C<deprecated> category:
     B<sub import>
     B<{>
         B<warnings::warnif( 'deprecated',>
-            B<'empty imports from ' . __PACKAGE__ . ' are now deprecated' )>
-            B<unless @_;>
+            B<'empty imports from ' . __PACKAGE__ .>
+            B<' are now deprecated' )>
+        B<unless @_;>
     B<}>
-
-    1;
 
 =end programlisting
 

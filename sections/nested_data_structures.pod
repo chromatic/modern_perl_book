@@ -10,9 +10,8 @@ you to access aggregate data types through special scalars. Nested data
 structures in Perl, such as an array of arrays or a hash of hashes, are
 possible through the use of references.
 
-=head2 Declaring Nested Data Structures
-
-A simple declaration of an array of arrays might be:
+Use the anonymous reference declaration syntax to declare a nested data
+structure:
 
 =begin programlisting
 
@@ -22,16 +21,13 @@ A simple declaration of an array of arrays might be:
         [qw( duck  duck  goose )],
     );
 
-=end programlisting
-
-... and a simple declaration of a hash of hashes might be:
-
-=begin programlisting
-
     my %meals = (
-        breakfast => { entree => 'eggs',   side => 'hash browns'   },
-        lunch     => { entree => 'panini', side => 'apple'         },
-        dinner    => { entree => 'steak',  side => 'avocado salad' },
+        breakfast => { entree => 'eggs',
+                       side   => 'hash browns' },
+        lunch     => { entree => 'panini',
+                       side   => 'apple'         },
+        dinner    => { entree => 'steak',
+                       side   => 'avocado salad' },
     );
 
 =end programlisting
@@ -42,8 +38,6 @@ Perl allows but does not require the trailing comma so as to ease adding new
 elements to the list.
 
 =end tip
-
-=head2 Accessing Nested Data Structures
 
 Use Perl's reference syntax to access elements in nested data structures. The
 sigil denotes the amount of data to retrieve, and the dereferencing arrow
@@ -57,21 +51,16 @@ indicates that the value of one portion of the data structure is a reference:
 =end programlisting
 
 The only way to nest a multi-level data structure is through references, so the
-arrow is superfluous. You may omit it for clarity:
+arrow is superfluous. You may omit it for clarity, except for invoking function
+references:
 
 =begin programlisting
 
-    my $last_nephew = $famous_triplets[1][2];
-    my $breaky_side = $meals{breakfast}{side};
+    my $nephew = $famous_triplets[1][2];
+    my $meal   = $meals{breakfast}{side};
+    $actions{financial}{buy_food}->( $nephew, $meal );
 
 =end programlisting
-
-=begin sidebar
-
-The arrow invocation syntax is clearest only in the case of invoking a function
-reference stored in a nested data structure.
-
-=end sidebar
 
 Use disambiguation blocks to access components of nested data structures as if
 they were first-class arrays or hashes:
@@ -87,7 +76,8 @@ they were first-class arrays or hashes:
 
 =begin programlisting
 
-    my ($entree, $side) = @{ $meals{breakfast} }{qw( entree side )};
+    my ($entree, $side) = @{ $meals{breakfast} }
+                           {qw( entree side )};
 
 =end programlisting
 
@@ -96,8 +86,8 @@ Use temporary variables to clarify:
 
 =begin programlisting
 
-    my $breakfast_ref   = $meals{breakfast};
-    my ($entree, $side) = @$breakfast_ref{qw( entree side )};
+    my $meal_ref        = $meals{breakfast};
+    my ($entree, $side) = @$meal_ref{qw( entree side )};
 
 =end programlisting
 
@@ -108,11 +98,10 @@ intermediate reference:
 
 =begin programlisting
 
-    my ($entree, $side) = @{ $_ }{qw( entree side )} for $meals{breakfast};
+    my ($entree, $side) = @{ $_ }{qw( entree side )}
+                          for $meals{breakfast};
 
 =end programlisting
-
-... though always keep clarity in mind.
 
 C<perldoc perldsc>, the data structures cookbook, gives copious examples of how
 to use Perl's various data structures.
@@ -122,9 +111,8 @@ to use Perl's various data structures.
 Z<autovivification>
 X<autovivification>
 
-Perl's expressivity extends to nested data structures. When you attempt to
-write to a component of a nested data structure, Perl will create the path
-through the data structure to the destination as necessary:
+When you attempt to write to a component of a nested data structure, Perl will
+create the path through the data structure to the destination as necessary:
 
 =begin programlisting
 
@@ -137,12 +125,12 @@ After the second line of code, this array of arrays of arrays of arrays
 contains an array reference in an array reference in an array reference in an
 array reference. Each array reference contains one element. Similarly, treating
 an undefined value as if it were a hash reference in a nested data structure
-will create intermediary hashes:
+will make it so:
 
 =begin programlisting
 
     my %hohoh;
-    $hohoh{Robot}{Santa}{Claus} = 'mostly harmful';
+    $hohoh{Robot}{Santa} = 'mostly harmful';
 
 =end programlisting
 
@@ -153,8 +141,8 @@ X<pragmas; C<autovivification>>
 This useful behavior is I<autovivification>. While it reduces the
 initialization code of nested data structures, it cannot distinguish between
 the honest intent to create missing elements in nested data structures and
-typos. The CPAN's C<autovivification> pragma (L<pragmas>) lets you disable
-autovivification in a lexical scope for specific types of operations.
+typos. The C<autovivification> pragma (L<pragmas>) from the CPAN lets you
+disable autovivification in a lexical scope for specific types of operations.
 
 You may wonder at the contradiction between taking advantage of
 autovivification while enabling C<strict>ures. The question is one of balance.
@@ -218,9 +206,9 @@ children:
 
 =begin programlisting
 
-    my $alice  = { mother => '',     father => '',      children => [] };
-    my $robert = { mother => '',     father => '',      children => [] };
-    my $cianne = { mother => $alice, father => $robert, children => [] };
+    my $alice  = { mother => '',     father => ''      };
+    my $robert = { mother => '',     father => ''      };
+    my $cianne = { mother => $alice, father => $robert };
 
     push @{ $alice->{children}  }, $cianne;
     push @{ $robert->{children} }, $cianne;
@@ -248,9 +236,9 @@ from increasing:
 
     use Scalar::Util 'weaken';
 
-    my $alice  = { mother => '',     father => '',      children => [] };
-    my $robert = { mother => '',     father => '',      children => [] };
-    my $cianne = { mother => $alice, father => $robert, children => [] };
+    my $alice  = { mother => '',     father => ''      };
+    my $robert = { mother => '',     father => ''      };
+    my $cianne = { mother => $alice, father => $robert };
 
     push @{ $alice->{children}  }, $cianne;
     push @{ $robert->{children} }, $cianne;

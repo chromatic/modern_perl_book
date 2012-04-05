@@ -94,12 +94,12 @@ manipulating nested data structures (L<nested_data_structures>):
 
     my %users;
 
-    $users{Bradley}{id} = 228;
-    $users{Jack}{id}    = 229;
+    $users{Brad}{id} = 228;
+    $users{Jack}{id} = 229;
 
 =end programlisting
 
-Although the hash never contained values for C<Bradley> and C<Jack>, Perl
+Although the hash never contained values for C<Brad> and C<Jack>, Perl
 helpfully created hash references for them, then assigned each a key/value pair
 keyed on C<id>.
 

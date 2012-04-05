@@ -80,8 +80,9 @@ X<magic variables; C<$@>>
 
 An exception handler is a blunt tool. It will catch all exceptions in its
 dynamic scope. To check which exception you've caught (or if you've caught an
-exception at all), check the value of C<$@>. As C<$@> is a I<global> variable,
-you should C<local>ize it before you attempt to catch an exception:
+exception at all), check the value of C<$@>. Be sure to C<local>ize C<$@>
+before you attempt to catch an exception; remember that C<$@> is a global
+variable:
 
 =begin programlisting
 
@@ -101,14 +102,15 @@ Copy C<$@> to a lexical variable immediately to avoid the possibility of
 subsequent code clobbering the global variable C<$@>. You never know what else
 has used an C<eval> block elsewhere and reset C<$@>.
 
-C<$@> usually contains a string describing the exception. You can inspect its
-contents to see whether you can handle the exception:
+C<$@> usually contains a string describing the exception. Inspect its contents
+to see whether you can handle the exception:
 
 =begin programlisting
 
     if (my $exception = $@)
     {
-        die $exception unless $exception =~ /^Can't open logging file/;
+        die $exception
+            unless $exception =~ /^Can't open logging/;
         $fh = log_to_syslog();
     }
 
@@ -118,15 +120,20 @@ Rethrow an exception by calling C<die()> again. Pass the existing exception or
 a new one as necessary.
 
 X<exceptions; throwing objects>
+
+Applying regular expressions to string exceptions can be fragile, because error
+messages may change over time. This includes the core exceptions that Perl
+itself throws. Fortunately, you may also provide a reference--even a blessed
+reference--to C<die>. This allows you to provide much more information in your
+exception: line numbers, files, and other debugging information. Retrieving
+this information from something structured is much easier than parsing it out
+of a string. Catch these exceptions as you would any other exception.
+
 X<exceptions; custom classes with C<Exception::Class>>
 X<C<Exception::Class>>
 
-You may C<die> with either a string or a reference--even an I<object>. Applying
-regular expressions to string exceptions can be fragile, because error messages
-may change over time, even those built from Perl itself. Objects are more
-robust; they contain more information. You can throw any object as an
-exception, but consider using the CPAN distribution C<Exception::Class> to
-define your own class or classes of exceptions:
+The CPAN distribution C<Exception::Class> makes creating and using exception
+objects easy:
 
 =begin programlisting
 
@@ -140,20 +147,20 @@ define your own class or classes of exceptions:
     sub cage_open
     {
         my $self = shift;
-        Zoo::AnimalEscaped->throw unless $self->contains_animal;
+        Zoo::AnimalEscaped->throw
+            unless $self->contains_animal;
         ...
     }
 
     sub breakroom_open
     {
         my $self = shift;
-        Zoo::HandlerEscaped->throw unless $self->contains_handler;
+        Zoo::HandlerEscaped->throw
+            unless $self->contains_handler;
         ...
     }
 
 =end programlisting
-
-Catch these exceptions as you would any other exception.
 
 =head2 Exception Caveats
 
@@ -161,6 +168,7 @@ Z<exception_caveats>
 
 X<exceptions; caveats>
 
+Though throwing exceptions is relatively simple, catching them is less so.
 Using C<$@> correctly requires you to navigate several subtle risks:
 
 =over 4
@@ -181,16 +189,20 @@ change C<$@>
 X<exceptions; handling safely with C<Try::Tiny>>
 X<C<Try::Tiny>>
 
-Perl 5.14 improves the safety of exception handling. The C<Try::Tiny> CPAN
-distribution improves the safety of exception handling I<and> the syntax. It's
-easy to use:
+Perl 5.14 fixed some of these issues. Granted, they occur very rarely, but
+they're often difficult to diagnose and to fix. The C<Try::Tiny> CPAN
+distribution improves the safety of exception handling I<and> the syntaxN<In
+fact, C<Try::Tiny> helped inspire improvements to Perl 5.14's exception
+handling.>.
+
+C<Try::Tiny> is easy to use:
 
 =begin programlisting
 
     use Try::Tiny;
 
     my $fh = try   { open_log_file( 'monkeytown.log' ) }
-             catch { log_exception( "Something went wrong: '$_'" };
+             catch { log_exception( $_ ) };
 
 =end programlisting
 

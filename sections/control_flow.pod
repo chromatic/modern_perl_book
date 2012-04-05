@@ -104,10 +104,7 @@ validation in functions (L<postfix_parameter_validation>):
     {
         return unless @_;
 
-        for my $chant (@_)
-        {
-            ...
-        }
+        for my $chant (@_) { ... }
     }
 
 =end programlisting
@@ -232,7 +229,9 @@ produces one of two alternatives:
 
 =begin programlisting
 
-    my $time_suffix = after_noon($time) ? 'afternoon' : 'morning';
+    my $time_suffix = after_noon($time)
+                    ? 'afternoon'
+                    : 'morning';
 
 =end programlisting
 
@@ -248,7 +247,8 @@ select between alternative I<variables>, not only values:
 
 =begin programlisting
 
-    push @{ rand() > 0.5 ? \@red_team : \@blue_team }, Player->new;
+    push @{ rand() > 0.5 ? \@red_team : \@blue_team },
+        Player->new;
 
 =end programlisting
 
@@ -269,10 +269,8 @@ example:
 
 =begin programlisting
 
-    use Test::More;
-
-    say "Both true!" if ok( 1, 'first subexpression'  )
-                     && ok( 1, 'second subexpression' );
+    say "Both true!" if ok( 1, 'subexpression one' )
+                     && ok( 1, 'subexpression two' );
 
     done_testing();
 
@@ -283,8 +281,8 @@ evaluating the first argument, so this code prints:
 
 =begin screen
 
-    ok 1 - first subexpression
-    ok 2 - second subexpression
+    ok 1 - subexpression one
+    ok 2 - subexpression two
     Both true!
 
 =end screen
@@ -296,8 +294,8 @@ subexpressions, as the entire expression could not succeed:
 
 =begin programlisting
 
-    say "Both true!" if ok( 0, 'first subexpression'  )
-                     && ok( 1, 'second subexpression' );
+    say "Both true!" if ok( 0, 'subexpression one' )
+                     && ok( 1, 'subexpression two' );
 
 =end programlisting
 
@@ -305,7 +303,7 @@ This example prints:
 
 =begin screen
 
-    not ok 1 - first subexpression
+    not ok 1 - subexpression one
 
 =end screen
 
@@ -315,8 +313,8 @@ operations:
 
 =begin programlisting
 
-    say "Either true!" if ok( 1, 'first subexpression'  )
-                       || ok( 1, 'second subexpression' );
+    say "Either true!" if ok( 1, 'subexpression one' )
+                       || ok( 1, 'subexpression two' );
 
 =end programlisting
 
@@ -324,7 +322,7 @@ This example prints:
 
 =begin screen
 
-    ok 1 - first subexpression
+    ok 1 - subexpression one
     Either true!
 
 =end screen
@@ -340,8 +338,8 @@ using an undefined value might raise a warning:
 
 =begin programlisting
 
-    my $barbeque;
-    if (defined $barbeque and $barbeque eq 'pork shoulder') { ... }
+    my $bbq;
+    if (defined $bbq and $bbq eq 'brisket') { ... }
 
 =end programlisting
 
@@ -386,12 +384,11 @@ to specify what your own data types produce when evaluated in various contexts.
 
 Z<looping_directives>
 
-Perl provides several directives for looping and iteration.
-
 X<looping directives; C<for>>
 X<looping directives; C<foreach>>
 
-The I<foreach>-style loop evaluates an expression which produces a list and
+Perl provides several directives for looping and iteration. The
+I<foreach>-style loop evaluates an expression which produces a list and
 executes a statement or block until it has consumed that list:
 
 =begin programlisting
@@ -408,21 +405,18 @@ ten inclusive. The C<foreach> directive loops over them, setting the topic
 variable C<$_> (L<default_scalar_variable>) to each in turn. Perl executes the
 block for each integer and prints the squares of the integers.
 
-=begin sidebar
+=begin tip C<foreach> versus C<for>
 
 X<builtins; C<for>>
 X<builtins; C<foreach>>
 
-Perl treats the builtins C<foreach> and C<for> interchangeably. The remainder
-of the syntax of the loop determines the behavior of the loop. Though
-experienced Perl programmers tend to refer to the loop with automatic iteration
-as a C<foreach> loop, you can use the keyword C<for> safely and clearly any
-place you might want to write C<foreach>.
+Many Perl programmers refer to iteration as C<foreach> loops, but Perl treats
+the names C<foreach> and C<for> interchangeably. The subsequent code determines
+the type and behavior of the loop.
 
-=end sidebar
+=end tip
 
-Like C<if> and C<unless>, the C<for> loop has a postfix form suitable for
-simple expressions:
+Like C<if> and C<unless>, this loop has a postfix form:
 
 =begin programlisting
 
@@ -441,10 +435,11 @@ A C<for> loop may use a named variable instead of the topic:
 
 =end programlisting
 
-The scope of the variable C<$i> is only valid I<within> the loop. Perl will set
-this lexical to the value of each item in the iteration. Perl will not modify
-the topic variable (C<$_>). If you have declared a lexical C<$i> in an outer
-scope, its value will persist outside the loop:
+When a C<for> loop uses an iterator variable, the variable scope is I<within>
+the loop. Perl will set this lexical to the value of each item in the
+iteration. Perl will not modify the topic variable (C<$_>). If you have
+declared a lexical C<$i> in an outer scope, its value will persist outside the
+loop:
 
 =begin programlisting
 
@@ -455,7 +450,7 @@ scope, its value will persist outside the loop:
         say "$i * $i = ", $i * $i;
     }
 
-    is( $i, 'cow', 'Lexical variable not overwritten in outer scope' );
+    is( $i, 'cow', 'Value preserved in outer scope' );
 
 =end programlisting
 
@@ -472,7 +467,7 @@ their scope.>:
         say "$i * $i = ", $i * $i;
     }
 
-    is( $i, 'horse', 'Lexical variable still not overwritten in outer scope' );
+    is( $i, 'horse', 'Value preserved in outer scope' );
 
 =end programlisting
 
@@ -501,7 +496,7 @@ value in place:
 
 =end programlisting
 
-This aliasing also works with the block style C<foreach> loop:
+This aliasing also works with the block style C<for> loop:
 
 =begin programlisting
 
@@ -642,18 +637,15 @@ stops. The final subexpression executes after each iteration of the loop body.
 
 =begin programlisting
 
-    # declared outside to avoid declaration in conditional
-    my $i;
-
     for (
         # loop initialization subexpression
-        say 'Initializing' and $i = 0;
+        say 'Initializing', my $i = 0;
 
         # conditional comparison subexpression
         say "Iteration: $i" and $i < 10;
 
         # iteration ending subexpression
-        say 'Incrementing $i' and $i++
+        say 'Incrementing ' . $i++
     )
     {
         say "$i * $i = ", $i * $i;
@@ -662,8 +654,8 @@ stops. The final subexpression executes after each iteration of the loop body.
 =end programlisting
 
 Note the lack of a semicolon after the final subexpression as well as the use
-of the low-precedence C<and>; this syntax is surprisingly finicky. When
-possible, prefer the C<foreach> style loop to the C<for> loop.
+of the comma operator and low-precedence C<and>; this syntax is surprisingly
+finicky. When possible, prefer the C<foreach>-style loop to the C<for> loop.
 
 All three subexpressions are optional. An infinite C<for> loop might be:
 
@@ -714,8 +706,6 @@ C<@values> array by modifying the array with each loop iteration:
 
 =end programlisting
 
-=begin sidebar
-
 Modifying C<@values> inside of the C<while> condition check also works, but it
 has some subtleties related to the truthiness of each value.
 
@@ -731,8 +721,6 @@ has some subtleties related to the truthiness of each value.
 This loop will exit as soon as it reaches an element that evaluates to a false
 value, not necessarily when it has exhausted the array. That may be the desired
 behavior, but is often surprising to novices.
-
-=end sidebar
 
 X<loops; C<until>>
 
@@ -791,16 +779,10 @@ novices forget this.
 
 =end tip
 
-Both C<while> and C<until> have postfix forms. Another infinite loop is:
-
-=begin programlisting
-
-    1 while 1;
-
-=end programlisting
-
-Any single expression is suitable for a postfix C<while> or C<until>, such as
-the classic "Hello, world!" example from 8-bit computers of the early 1980s:
+Both C<while> and C<until> have postfix forms, such as the infinite loop C<1
+while 1;>. Any single expression is suitable for a postfix C<while> or
+C<until>, including the classic "Hello, world!" example from 8-bit computers of
+the early 1980s:
 
 =begin programlisting
 
@@ -848,10 +830,7 @@ You may nest loops within other loops:
 
     for my $suit (@suits)
     {
-        for my $values (@card_values)
-        {
-            ...
-        }
+        for my $values (@card_values) { ... }
     }
 
 =end programlisting
@@ -1046,10 +1025,7 @@ an expression to the topic variable and introduces a block:
 
 =begin programlisting
 
-    given ($name)
-    {
-        ...
-    }
+    given ($name) { ... }
 
 =end programlisting
 
@@ -1060,7 +1036,7 @@ expression in scalar context, and always assigns to the topic variable:
 
     given (my $username = find_user())
     {
-        is( $username, $_, 'topic assignment happens automatically' );
+        is( $username, $_, 'topic auto-assignment' );
     }
 
 =end programlisting
@@ -1076,25 +1052,22 @@ C<given> also lexicalizes the topic variable:
         say;
     }
 
-    sub mouse_to_man
-    {
-        $_ = shift;
-        s/mouse/man/;
-    }
+    sub mouse_to_man { s/mouse/man/ }
 
 =end programlisting
 
 X<builtins; C<when>>
 X<topicalization>
 
-C<given> is most useful when combined with C<when>. C<given> I<topicalizes> a
-value within a block so that multiple C<when> statements can match the topic
-against expressions using I<smart-match> semantics. To write the Rock, Paper,
-Scissors game:
+C<given> is most useful when combined with C<when> (L<smart_match>). C<given>
+I<topicalizes> a value within a block so that multiple C<when> statements can
+match the topic against expressions using I<smart-match> semantics. To write
+the Rock, Paper, Scissors game:
 
 =begin programlisting
 
-    my @options = ( \&rock, \&paper, \&scissors );
+    my @options  = ( \&rock, \&paper, \&scissors );
+    my $confused = "I don't understand your move.";
 
     do
     {
@@ -1113,7 +1086,7 @@ Scissors game:
             when (/paper/)    { say 'You win!' };
             when (/rock/)     { say 'We tie!'  };
             when (/scissors/) { say 'I win!'   };
-            default           { say "I don't understand your move" };
+            default           { say $confused  };
         }
     }
 
@@ -1126,7 +1099,7 @@ Scissors game:
             when (/paper/)    { say 'We tie!'  };
             when (/rock/)     { say 'I win!'   };
             when (/scissors/) { say 'You win!' };
-            default           { say "I don't understand your move" };
+            default           { say $confused  };
         }
     }
 
@@ -1139,7 +1112,7 @@ Scissors game:
             when (/paper/)    { say 'I win!'   };
             when (/rock/)     { say 'You win!' };
             when (/scissors/) { say 'We tie!'  };
-            default           { say "I don't understand your move" };
+            default           { say $confused  };
         }
     }
 
@@ -1156,18 +1129,14 @@ this code.
 
 =end tip
 
-The C<when> construct is even more powerful; it can match (L<smart_match>)
-against many other types of expressions including scalars, aggregates,
-references, arbitrary comparison expressions, and even code references.
-
 =head2 Tailcalls
 
 Z<tailcalls>
 X<tailcalls>
 
 A I<tailcall> occurs when the last expression within a function is a call to
-another function--the return value of the outer function is the return
-value of the inner function:
+another function--the outer function's return value is the inner function's
+return value:
 
 =begin programlisting
 
@@ -1181,24 +1150,24 @@ value of the inner function:
 
 =end programlisting
 
-Here returning from C<greet_person()> directly to the caller of
-C<log_and_greet_person()> is more efficient than returning to
-C<log_and_greet_person()> and immediately returning I<from>
-C<log_and_greet_person()>. Returning directly from C<greet_person()> to the
-caller of C<log_and_greet_person()> is a I<tailcall optimization>.
+Returning from C<greet_person()> directly to the caller of
+C<log_and_greet_person()> is more efficient than returning I<to>
+C<log_and_greet_person()> and immediately I<from> C<log_and_greet_person()>.
+Returning directly I<from> C<greet_person()> to the caller of
+C<log_and_greet_person()> is a I<tailcall optimization>.
 
 Heavily recursive code (L<recursion>), especially mutually recursive code, can
 consume a lot of memory. Tailcalls reduce the memory needed for internal
 bookkeeping of control flow and can make expensive algorithms tractable.
-Unfortunately, Perl 5 will not detect cases where it could apply this
-optimization automatically.
+Unfortunately, Perl 5 does not automatically perform this optimization; you
+have to do it yourself when it's necessary.
 
 X<builtins; C<goto>>
 
 The builtin C<goto> operator has a form which calls a function as if the
 current function were never called, essentially erasing the bookkeeping for the
-new function call. The syntax is ugly, and confuses people who've heard "Never
-use C<goto>", but it works:
+new function call. The ugly syntax confuses people who've heard "Never use
+C<goto>", but it works:
 
 =begin programlisting
 
@@ -1217,3 +1186,8 @@ C<goto &$function_reference> requires the use of the function sigil (C<&>) so
 that the parser knows to perform a tailcall instead of jumping to a label.
 Second, this form of function call passes the contents of C<@_> implicitly to
 the called function. You may modify C<@_> to change the passed arguments.
+
+This technique is relatively rare; it's most useful when you want to hijack
+control flow to get out of the way of other functions inspecting C<caller>
+(such as when you're implementing special logging or some sort of debugging
+feature), or when using an algorithm which requires a lot of recursion.

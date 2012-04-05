@@ -61,9 +61,9 @@ if it were a single argument:
 
     sub make_ice_cream_sundae
     {
-        B<my %args = @_;>
+        B<my %args    = @_;>
+        my $dessert = get_ice_cream( $args{ice_cream} );
 
-        my $ice_cream = get_ice_cream( $args{ice_cream} );
         ...
     }
 
@@ -112,26 +112,34 @@ their phone extensions:
 
     my %extensions =
     (
-        001 => 'Armon',
-        002 => 'Wesley',
-        003 => 'Gerald',
-        005 => 'Rudy',
-        007 => 'Brandon',
-        008 => 'Patrick',
-        011 => 'Luke',
-        012 => 'LaMarcus',
-        017 => 'Chris',
-        020 => 'Maurice',
-        023 => 'Marcus',
-        024 => 'Andre',
-        052 => 'Greg',
-        088 => 'Nic',
+        '001' => 'Armon',
+        '002' => 'Wesley',
+        '003' => 'Gerald',
+        '005' => 'Rudy',
+        '007' => 'Brandon',
+        '008' => 'Patrick',
+        '011' => 'Luke',
+        '012' => 'LaMarcus',
+        '017' => 'Chris',
+        '020' => 'Maurice',
+        '023' => 'Marcus',
+        '024' => 'Andre',
+        '052' => 'Greg',
+        '088' => 'Nic',
     );
 
 =end programlisting
 
-If you want to sort this list by names alphabetically, you must sort the hash
-by its values, not its keys. Getting the values sorted correctly is easy:
+=begin tip Hash Key Quoting Rules
+
+Fat comma hash key quoting only works on things that look like barewords; these
+keys look like numbers--octal numbers, in specific, with the leading zero. Yes,
+almost everyone makes this mistake.
+
+=end tip
+
+To sort this list by name alphabetically, you must sort the hash by its values,
+not its keys. Getting the values sorted correctly is easy:
 
 =begin programlisting
 
@@ -140,29 +148,24 @@ by its values, not its keys. Getting the values sorted correctly is easy:
 =end programlisting
 
 ... but you need an extra step to preserve the association of names and
-extensions, unless you use the Schwartzian transform. First, convert the hash
-into a list of data structures which contain the vital information in sortable
-fashion--in this case, two-element anonymous arrays:
+extensions, hence the Schwartzian transform. First, convert the hash into a
+list of data structures which is easy to sort--in this case, two-element
+anonymous arrays:
 
 =begin programlisting
 
-    my @pairs = map { [ $_, $extensions{$_} ] } keys %extensions;
+    my @pairs = map  { [ $_, $extensions{$_} ] }
+                keys %extensions;
 
 =end programlisting
-
-=begin tip Know Your Data
-
-Reversing the hash I<in place> would work if no one had the same name.  This
-particular data set presents no such problem, but code defensively.
-
-=end tip
 
 C<sort> takes the list of anonymous arrays and compares their second elements
 (the names) as strings:
 
 =begin programlisting
 
-    my @sorted_pairs = sort { $a->[1] cmp $b->[1] } @pairs;
+    my @sorted_pairs = sort { $a->[1] cmp $b->[1] }
+                            @pairs;
 
 =end programlisting
 
@@ -179,6 +182,13 @@ block must return -1. If both values are sufficiently equal in the sorting
 terms, the block must return 0. Finally, if C<$a> should come after C<$b> in
 the results, the block should return 1. Any other return values are errors.
 
+=begin tip Know Your Data
+
+Reversing the hash I<in place> would work if no one had the same name.  This
+particular data set presents no such problem, but code defensively.
+
+=end tip
+
 X<operators; C<cmp>>
 X<< operators; C<< <=> >> >>
 
@@ -190,7 +200,8 @@ to a more usable form:
 
 =begin programlisting
 
-    my @formatted_exts = map { "$_->[1], ext. $_->[0]" } @sorted_pairs;
+    my @formatted_exts = map { "$_->[1], ext. $_->[0]" }
+                             @sorted_pairs;
 
 =end programlisting
 
@@ -249,11 +260,9 @@ files into a scalar in a single expression:
     my $file = do { local $/ = <$fh> };
 
     # or
-
     my $file = do { local $/; <$fh> };
 
     # or
-
     my $file; { local $/; $file = <$fh> };
 
 =end programlisting
@@ -322,10 +331,8 @@ Z<controlled_execution>
 
 The effective difference between a program and a module is in its intended use.
 Users invoke programs directly, while programs load modules after execution has
-already begun. Yet a module is Perl code, just like a program except for how
-you run it.
-
-Making a module executable is easy. So is making a program behave as a module
+already begun. Yet a module is Perl code, in the same way that a program is.
+Making a module executable is easy.  So is making a program behave as a module
 (useful for testing parts of an existing program without formally making a
 module). All you need to do is to discover I<how> Perl began to execute a piece
 of code.
@@ -371,15 +378,14 @@ write:
 
 =begin programlisting
 
-    use Carp;
+    use Carp 'croak';
 
     sub groom_monkeys
     {
         if (@_ != 2)
         {
-            croak 'Monkey grooming requires two monkeys!';
+            croak 'Grooming requires two monkeys!';
         }
-
         ...
     }
 
@@ -390,7 +396,7 @@ the check and deserve to be at the I<start> of the expression:
 
 =begin programlisting
 
-    croak 'Monkey grooming requires two monkeys!' if @_ != 2;
+    croak 'Grooming requires two monkeys!' if @_ != 2;
 
 =end programlisting
 
@@ -398,7 +404,8 @@ the check and deserve to be at the I<start> of the expression:
 
 =begin programlisting
 
-    croak 'Monkey grooming requires two monkeys!' unless @_ == 2;
+    croak 'Grooming requires two monkeys!'
+        unless @_ == 2;
 
 =end programlisting
 
@@ -413,8 +420,7 @@ Z<regex_en_passant>
 X<regex; modification>
 X<regex; substitution>
 
-Many Perl 5 idioms rely on the language design where expressions evaluate to
-values, as in:
+Many Perl 5 idioms rely on the fact that expressions evaluate to values:
 
 =begin programlisting
 
@@ -450,6 +456,13 @@ user name for a system account, you could write:
 
 =end programlisting
 
+=begin tip /r in Perl 5.14
+
+Perl 5.14 added the non-destructive substitution modifier C</r>, so that you
+can write C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
+
+=end tip
+
 First, assign the value of C<$name> to C<$normalized_name>, as the parentheses
 affect the precedence so that assignment happens first.  The assignment
 expression evaluates to the I<variable> C<$normalized_name>, so that that
@@ -465,13 +478,6 @@ This technique works on other in-place modification operators:
     say "Next year I will be $next_age";
 
 =end programlisting
-
-=begin tip /r in Perl 5.14
-
-Perl 5.14 added the non-destructive substitution modifier C</r>, so that you
-can write C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
-
-=end tip
 
 =head2 Unary Coercions
 

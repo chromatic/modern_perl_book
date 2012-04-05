@@ -17,30 +17,6 @@ object systems. If you use Moose, its metaprogramming system will help you. If
 not, several other core Perl 5 idioms help you inspect and manipulate running
 programs.
 
-=head2 Checking that a Package Exists
-
-To check that a package exists somewhere in your program--if some code
-somewhere has executed a C<package> directive with a given name--check that the
-package inherits from C<UNIVERSAL>. Anything which extends C<UNIVERSAL> must
-somehow provide the C<can()> method. If no such package exists, Perl will throw
-an exception about an invalid invocant, so wrap this call in an C<eval> block:
-
-=begin programlisting
-
-    say "$pkg exists" if eval { $pkg->can( 'can' ) };
-
-=end programlisting
-
-An alternate approach is groveling through Perl's symbol tables.
-
-=head2 Checking that a Class Exists
-
-Because Perl 5 makes no strong distinction between packages and classes, the
-best you can do without Moose is to check that a package of the expected class
-name exists. You I<can> check that the package C<can()> provide C<new()>, but
-there is no guarantee that any C<new()> found is either a method or a
-constructor.
-
 =head2 Checking that a Module Has Loaded
 
 X<C<%INC>>
@@ -54,7 +30,7 @@ module. In other words, loading C<Modern::Perl> effectively does:
 =begin programlisting
 
     $INC{'Modern/Perl.pm'} =
-        '/path/to/perl/lib/site_perl/5.12.1/Modern/Perl.pm';
+        '.../lib/site_perl/5.12.1/Modern/Perl.pm';
 
 =end programlisting
 
@@ -86,10 +62,35 @@ X<CPAN; C<Class::Load>>
 The C<Class::Load> CPAN module's C<is_class_loaded()> function encapsulates
 this C<%INC> check.
 
+=head2 Checking that a Package Exists
+
+To check that a package exists somewhere in your program--if some code
+somewhere has executed a C<package> directive with a given name--check that the
+package inherits from C<UNIVERSAL>. Anything which extends C<UNIVERSAL> must
+somehow provide the C<can()> method. If no such package exists, Perl will throw
+an exception about an invalid invocant, so wrap this call in an C<eval> block:
+
+=begin programlisting
+
+    say "$pkg exists" if eval { $pkg->can( 'can' ) };
+
+=end programlisting
+
+An alternate approach is groveling through Perl's symbol tables.
+
+=head2 Checking that a Class Exists
+
+Because Perl 5 makes no strong distinction between packages and classes, the
+best you can do without Moose is to check that a package of the expected class
+name exists. You I<can> check that the package C<can()> provide C<new()>, but
+there is no guarantee that any C<new()> found is either a method or a
+constructor.
+
 =head2 Checking a Module Version Number
 
-Modules do not have to provide version numbers, but all package extend
-C<UNIVERSAL> (L<universal>) and respond to its C<VERSION()> method:
+Modules do not have to provide version numbers, but every package inherits the
+C<VERSION()> method from the universal parent class C<UNIVERSAL>
+(L<universal>):
 
 =begin programlisting
 

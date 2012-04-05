@@ -115,14 +115,11 @@ Constants declared with the C<constant> pragma are usable as barewords:
     use constant NAME     => 'Bucky';
     use constant PASSWORD => '|38fish!head74|';
 
-    ...
-
     return unless $name eq NAME && $pass eq PASSWORD;
 
 =end programlisting
 
-Note that these constants do I<not> interpolate in double-quoted strings, for
-example.
+Note that these constants do I<not> interpolate in double-quoted strings.
 
 X<prototypes; barewords>
 
@@ -139,15 +136,6 @@ No matter how cautiously you code, barewords still produce ambiguous code. You
 can avoid most uses, but you will encounter several types of barewords in
 legacy code.
 
-=head3 Bareword filehandles
-
-X<barewords; filehandles>
-
-Prior to lexical filehandles (L<lexical_filehandles>), all file and directory
-handles used barewords. You can almost always safely rewrite this code to use
-lexical filehandles; the exceptions are C<STDIN>, C<STDOUT>, and C<STDERR>.
-Fortunately, Perl's parser recognizes these.
-
 =head3 Bareword function calls
 
 X<barewords; function calls>
@@ -162,8 +150,7 @@ accordingly.
 
 X<barewords; hash values>
 
-Along similar lines, old code may not take pains to quote the I<values> of hash
-pairs appropriately:
+Some old code may not take pains to quote the I<values> of hash pairs:
 
 =begin programlisting
 
@@ -179,6 +166,15 @@ pairs appropriately:
 When neither the C<Floyd()> nor C<Annette()> functions exist, Perl will
 interpret these barewords as strings. C<strict 'subs'> will produce an error in
 this situation.
+
+=head3 Bareword filehandles
+
+X<barewords; filehandles>
+
+Prior to lexical filehandles (L<lexical_filehandles>), all file and directory
+handles used barewords. You can almost always safely rewrite this code to use
+lexical filehandles; the exceptions are C<STDIN>, C<STDOUT>, and C<STDERR>.
+Fortunately, Perl's parser recognizes these.
 
 =head3 Bareword sort functions
 

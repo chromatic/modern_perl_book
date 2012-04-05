@@ -142,9 +142,9 @@ through the textual chat system known as IRC. Many of the most popular and
 useful Perl projects have their own IRC channels, such as I<#moose> and
 I<#catalyst>.
 
-The main server for Perl community is U<irc://irc.perl.org/>. Other notable
-channels include I<#perl-help>, for general assistance on Perl programming, and
+The main server for Perl community is U<irc://irc.perl.org/>. Notable channels
+include I<#perl-help>, for general assistance on Perl programming, and
 I<#perl-qa>, devoted to testing and other quality issues. Be aware that the
-channel I<#perl> is a general purpose room for discussing whatever its
-participants want to discussN<... and it's not often friendly to people who ask
-basic programming questions.>.
+channel I<#perl> is a general purpose channel for discussing whatever its
+participants want to discussN<... and, as such, it's not primarily a
+helpdesk.>.

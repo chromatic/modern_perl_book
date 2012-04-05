@@ -29,33 +29,32 @@ X<C<overload> pragma>
 X<pragmas; C<overload>>
 
 The C<overload> pragma allows you to associate a function with an operation you
-can overload. A C<Null> class which overloads boolean evaluation might
-resemble:
+can overload by passing argument pairs, where the key names the type of
+overload and the value is a function reference to call for that operation. A
+C<Null> class which overloads boolean evaluation so that it always evaluates to
+a false value might resemble:
 
 =begin programlisting
 
-    package Null;
+    package Null
+    {
+        use overload 'bool' => sub { 0 };
 
-    use overload 'bool' => sub { 0 };
+        ...
+    }
 
 =end programlisting
-
-In all boolean contexts, every instance of this class will evaluate to a false
-value.
-
-The arguments to the C<overload> pragma are pairs where the key describes the
-type of overload and the value is a function reference to call in place of
-Perl's default behavior for that object.
 
 It's easy to add a stringification:
 
 =begin programlisting
 
-    package Null;
-
-    use overload
-        'bool' => sub { 0 },
-        B<< '""'   => sub { '(null)' }; >>
+    package Null
+    {
+        use overload
+            'bool' => sub { 0 },
+            B<< '""'   => sub { '(null)' }; >>
+    }
 
 =end programlisting
 
@@ -72,13 +71,14 @@ use the provided overloads as fallbacks where possible:
 
 =begin programlisting
 
-    package Null;
-
-    use overload
-        'bool'   => sub { 0 },
-        '""'     => sub { '(null)' },
-        B<< '0+'     => sub { 0 }, >>
-        B<< fallback => 1; >>
+    package Null
+    {
+        use overload
+            'bool'   => sub { 0 },
+            '""'     => sub { '(null)' },
+            B<< '0+'     => sub { 0 }, >>
+            B<< fallback => 1; >>
+    }
 
 =end programlisting
 
@@ -105,13 +105,14 @@ hard-coding a function reference:
 
 =begin programlisting
 
-    package Null;
-
-    use overload
-        'bool'   => 'get_bool',
-        '""'     => 'get_string',
-        '0+'     => 'get_num',
-        fallback => 1;
+    package Null
+    {
+        use overload
+            'bool'   => 'get_bool',
+            '""'     => 'get_string',
+            '0+'     => 'get_num',
+            fallback => 1;
+    }
 
 =end programlisting
 

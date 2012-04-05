@@ -222,15 +222,15 @@ becomes C<aaa>, and C<a9> becomes C<b0>.
 
     $num++;
     $str++;
-    is( $num,   2, 'numeric autoincrement should stay numeric' );
-    is( $str, 'b', 'string autoincrement should stay string'   );
+    is( $num,   2, 'numeric autoincrement' );
+    is( $str, 'b', 'string autoincrement'  );
 
     no warnings 'numeric';
     $num += $str;
     $str++;
 
-    is( $num, 2, 'adding $str to $num should add numeric value of $str'   );
-    is( $str, 1, '... but $str should now autoincrement its numeric part' );
+    is( $num, 2, 'numeric addition with $str'    );
+    is( $str, 1, '... gives $str a numeric part' );
 
 =end programlisting
 
@@ -245,23 +245,24 @@ it produces a string consisting of the string value of its first operand
 concatenated to itself the number of times specified by its second operand.
 
 In scalar context, the operator always produces a concatenated string repeated
-appropriately.
-
-For example:
+appropriately. For example:
 
 =begin programlisting
 
     my @scheherazade = ('nights') x 1001;
     my $calendar     =  'nights'  x 1001;
+    my $cal_length   =  length $calendar;
 
-    is( @scheherazade,                      1001, 'list repeated' );
-    is( length $calendar, 1001 * length 'nights', 'word repeated' );
+    is( @scheherazade, 1001, 'list repeated' );
+    is( $length,       1001 * length 'nights',
+                       'word repeated' );
 
     my @schenolist   =  'nights'  x 1001;
     my $calscalar    = ('nights') x 1001;
 
-    is( @schenolist,                            1, 'no lvalue list'      );
-    is( length $calscalar, 1001 * length 'nights', 'word still repeated' );
+    is( @schenolist, 1, 'no lvalue list' );
+    is( length $calscalar,
+        1001 * length 'nights', 'word still repeated' );
 
 =end programlisting
 
