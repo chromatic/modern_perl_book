@@ -1,0 +1,107 @@
+=head1 Expressivity
+
+Z<expressivity>
+
+X<Wall, Larry>
+X<Larry Wall>
+
+Larry Wall's studies of linguistics and human languages influenced the
+design of Perl. The language allows you tremendous freedom to solve your
+problems, depending on your group style, the available time, the expected
+lifespan of the program, or even how creative you feel. You may write simple,
+straightforward code or integrate into larger, well-defined programs. You may
+select from multiple design paradigms, and you may eschew or embrace advanced
+features.
+
+Where other languages enforce one best way to write any code, Perl allows
+I<you> to decide what's most readable or useful or fun.
+
+X<TIMTOWTDI>
+X<Tim Toady>
+
+Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounced "Tim Toady", or
+"There's more than one way to do it!"
+
+Though this expressivity allows master craftworkers to create amazing programs,
+it allows the unwise or uncautious to make messes. Experience and good taste
+will guide you to write great code. The choice is yours--but be mindful of
+readability and maintainability, especially for those who come after you.
+
+Perl novices often may find certain constructs opaque. Many of these idioms
+(L<idioms>) offer great (if subtle) power. It's okay to avoid them until you're
+comfortable with them.
+
+Learning Perl is like learning a new spoken language. You'll learn a few words,
+string together sentences, and soon will enjoy simple conversations.  Mastery
+comes with practice of reading and writing. You don't have to understand every
+detail of Perl to be productive, but the principles in this chapter are vital
+to your growth as a programmer.
+
+As another design goal, Perl tries to avoid surprising experienced (Perl)
+programmers.  For example, adding two variables (C<$first_num + $second_num>)
+is obviously a numeric operation (L<numeric_operators>); the addition operator
+must treat both as numeric values to produce a numeric result. No matter the
+contents of C<$first_num> and C<$second_num>, Perl will coerce them to numeric
+values (L<numeric_coercion>). You've expressed your intent to treat them as
+numbers by using a numeric operator. Perl happily does so.
+
+X<DWIM>
+X<principle of least astonishment>
+
+Perl adepts often call this principle I<DWIM>, or I<do what I mean>.  Another
+phrasing is that Perl follows the I<principle of least astonishment>.  Given a
+cursory understanding of Perl (especially context; L<context_philosophy>), it
+should be possible to understand the intent of an unfamiliar Perl expression.
+You will develop this skill.
+
+X<baby Perl>
+
+Perl's expressivity also allows novices to write useful programs without having
+to understand everything. The resulting code is often called I<baby Perl>, in
+the sense that most everyone wants to help babies learn to communicate well.
+Everyone begins as a novice. Through practice and learning from more experienced
+programmers, you will understand and adopt more powerful idioms and techniques.
+
+For example, an experienced Perl hacker might triple a list of numbers with:
+
+=begin programlisting
+
+    my @tripled = map { $_ * 3 } @numbers;
+
+=end programlisting
+
+... and a Perl adept might write:
+
+=begin programlisting
+
+    my @tripled;
+
+    for my $num (@numbers)
+    {
+        push @tripled, $num * 3;
+    }
+
+=end programlisting
+
+... while a novice might try:
+
+=begin programlisting
+
+    my @tripled;
+
+    for (my $i = 0; $i < scalar @numbers; $i++)
+    {
+        $tripled[$i] = $numbers[$i] * 3;
+    }
+
+=end programlisting
+
+All three approaches accomplish the same thing, but each uses Perl in a
+different way.
+
+Experience writing Perl will help you to focus on I<what> you want to do rather
+than I<how> to do it. Even so, Perl will happily run simple programs. You can
+design and refine your programs for clarity, expressivity, reuse, and
+maintainability, in part or in whole. Take advantage of this flexibility and
+pragmatism: it's far better to accomplish your task effectively now than to
+write a conceptually pure and beautiful program next year.

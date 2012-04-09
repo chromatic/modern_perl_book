@@ -1,0 +1,247 @@
+=head1 Prototypes
+
+Z<prototypes>
+
+X<prototypes>
+
+A I<prototype> is a piece of optional metadata attached to a function which
+changes the way the parser understands its arguments. While they may
+superficially resemble function signatures in other languages, they are very
+different.
+
+X<builtins; C<push>>
+
+Prototypes allow users to define their own functions which behave like
+builtins. Consider the builtin C<push>, which takes an array and a list. While
+Perl 5 would normally flatten the array and list into a single list passed to
+C<push>, the parser knows not to flatten the array so that C<push> can modify
+it in place.
+
+Function prototypes are part of declarations:
+
+=begin programlisting
+
+    sub foo        B<(&@)>;
+    sub bar        B<($$)> { ... }
+    my  $baz = sub B<(&&)> { ... };
+
+=end programlisting
+
+Any prototype attached to a forward declaration must match the prototype
+attached to the function declaration. Perl will give a warning if this is not
+true. Strangely you may omit the prototype from a forward declaration and
+include it for the full declaration--but there's no reason to do so.
+
+X<builtins; C<prototype>>
+
+The builtin C<prototype> takes the name of a function and returns a string
+representing its prototype. Use the C<CORE::> form to see the prototype of a
+builtin:
+
+=begin screen
+
+    $ B<perl -E "say prototype 'CORE::push';">
+    \@@
+    $ B<perl -E "say prototype 'CORE::keys';">
+    \%
+    $ B<perl -E "say prototype 'CORE::open';">
+    *;$@
+
+=end screen
+
+C<prototype> will return C<undef> for those builtins whose functions you cannot
+emulate:
+
+=begin screen
+
+    B<say prototype 'CORE::system' // 'undef'>
+    # undef; cannot emulate builtin C<system>
+
+    B<say prototype 'CORE::prototype' // 'undef'>
+    # undef; builtin C<prototype> has no prototype
+
+=end screen
+
+Remember C<push>?
+
+=begin screen
+
+    $ B<perl -E "say prototype 'CORE::push';">
+    \@@
+
+=end screen
+
+The C<@> character represents a list. The backslash forces the use of a
+I<reference> to the corresponding argument. This prototype means that C<push>
+takes a reference to an array and a list of values. You might write C<mypush>
+as:
+
+=begin programlisting
+
+    sub mypush (\@@)
+    {
+        my ($array, @rest) = @_;
+        push @$array, @rest;
+    }
+
+=end programlisting
+
+Other prototype characters include C<$> to force a scalar argument, C<%> to
+mark a hash (most often used as a reference), and C<&> to identify a code
+block. See C<perldoc perlsub> for full documentation.
+
+=head2 The Problem with Prototypes
+
+Prototypes change how Perl parses your code and can cause argument type
+coercions. They do not document the number or types of arguments functions
+expect, nor do they map arguments to named parameters.
+
+Prototype coercions work in subtle ways, such as enforcing scalar context on
+incoming arguments:
+
+=begin programlisting
+
+    sub numeric_equality($$)
+    {
+        my ($left, $right) = @_;
+        return $left == $right;
+    }
+
+    my @nums = 1 .. 10;
+
+    say 'They're equal, whatever that means!'
+        if numeric_equality @nums, 10;
+
+=end programlisting
+
+... but only work on simple expressions:
+
+=begin programlisting
+
+    sub mypush(\@@);
+
+    # compilation error: prototype mismatch
+    # (expected array, got scalar assignment)
+    mypush( my $elems = [], 1 .. 20 );
+
+=end programlisting
+
+To debug this, users of C<mypush> must know both that a prototype exists, and
+the limitations of the array prototype. Worse yet, these are the I<simple>
+errors prototypes can cause.
+
+=head2 Good Uses of Prototypes
+
+X<builtins; overriding>
+X<pragmas; C<subs>>
+X<C<subs> pragma>
+
+Few uses of prototypes are compelling enough to overcome their drawbacks, but
+they exist.
+
+First, they can allow you to override builtins. First check that you I<can>
+override the builtin by examining its prototype in a small test program. Then
+use the C<subs> pragma to tell Perl that you plan to override a builtin,
+and finally declare your override with the correct prototype:
+
+=begin programlisting
+
+    use subs 'push';
+
+    sub push (\@@) { ... }
+
+=end programlisting
+
+Beware that the C<subs> pragma is in effect for the remainder of the I<file>,
+regardless of any lexical scoping.
+
+X<constants>
+
+The second reason to use prototypes is to define compile-time constants. When
+Perl encounters a function declared with an empty prototype (as opposed to
+I<no> prototype) I<and> this function evaluates to a single constant
+expression, the optimizer will turn all calls to that function into constants
+instead of function calls:
+
+=begin programlisting
+
+    sub PI () { 4 * atan2(1, 1) }
+
+=end programlisting
+
+All subsequent code will use the calculated value of pi in place of the
+bareword C<PI> or a call to C<PI()>, with respect to scoping and visibility.
+
+X<C<constant> pragma>
+X<pragmas; C<constant>>
+X<CPAN; C<Const::Fast>>
+
+The core pragma C<constant> handles these details for you. The C<Const::Fast>
+module from the CPAN creates constant scalars which you can interpolate into
+strings.
+
+X<CPAN; C<Test::Exception>>
+X<CPAN; C<Test::Fatal>>
+
+A reasonable use of prototypes is to extend Perl's syntax to operate on
+anonymous functions as blocks. The CPAN module C<Test::Exception> uses this to
+good effect to provide a nice API with delayed computationN<See also
+C<Test::Fatal>>. Its C<throws_ok()> function takes three arguments: a block of
+code to run, a regular expression to match against the string of the exception,
+and an optional description of the test:
+
+=begin programlisting
+
+    use Test::More tests => 1;
+    use Test::Exception;
+
+    throws_ok
+        { my $unobject; $unobject->yoink() }
+        qr/Can't call method "yoink" on an undefined/,
+        'Method on undefined invocant should fail';
+
+=end programlisting
+
+The exported C<throws_ok()> function has a prototype of C<&$;$>. Its first
+argument is a block, which becomes an anonymous function. The second argument
+is a scalar. The third argument is optional.
+
+Careful readers may have spotted the absence of a comma after the block.  This
+is a quirk of the Perl 5 parser, which expects whitespace after a prototyped
+block, not the comma operator. This is a drawback of the prototype syntax.
+
+You may use C<throws_ok()> without taking advantage of the prototype:
+
+=begin programlisting
+
+    use Test::More tests => 1;
+    use Test::Exception;
+
+    throws_okB<(>
+        B<sub> { my $unobject; $unobject->yoink() }B<,>
+        qr/Can't call method "yoink" on an undefined/,
+        'Method on undefined invocant should fail' B<)>;
+
+=end programlisting
+
+X<builtins; C<sort>>
+
+A final good use of prototypes is when defining a custom named function to use
+with C<sort>N<Ben Tilly suggested this example.>:
+
+=begin programlisting
+
+    sub length_sort ($$)
+    {
+        my ($left, $right) = @_;
+        return length($left) <=> length($right);
+    }
+
+    my @sorted = sort length_sort @unsorted;
+
+=end programlisting
+
+The prototype of C<$$> forces Perl to pass the sort pairs in C<@_>. C<sort>'s
+documentation suggests that this is slightly slower than using the package
+globals C<$a> and C<$b>, but using lexical variables often makes up for any
+speed penalty.

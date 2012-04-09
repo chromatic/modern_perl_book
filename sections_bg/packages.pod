@@ -1,0 +1,198 @@
+=head1 Packages
+
+Z<packages>
+X<packages>
+X<namespaces>
+
+A Perl I<namespace> associates and encapsulates various named entities within a
+named category, like your family name or a brand name. Unlike a real-world
+name, a namespace implies no direct relationship between entities. Such
+relationships may exist, but do not have to.
+
+A I<package> in Perl 5 is a collection of code in a single namespace. The
+distinction is subtle: the package represents the source code and the namespace
+represents the entity created when Perl parses that code.
+
+X<builtins; C<package>>
+
+The C<package> builtin declares a package and a namespace:
+
+=begin programlisting
+
+    package MyCode;
+
+    our @boxes;
+
+    sub add_box { ... }
+
+=end programlisting
+
+X<namespaces; fully qualified>
+
+All global variables and functions declared or referred to after the package
+declaration refer to symbols within the C<MyCode> namespace. You can refer to
+the C<@boxes> variable from the C<main> namespace only by its I<fully
+qualified> name of C<@MyCode::boxes>. A fully qualified name includes a
+complete package name, so you can call the C<add_box()> function only by
+C<MyCode::add_box()>.
+
+X<scope; packages>
+
+The scope of a package continues until the next C<package> declaration or the
+end of the file, whichever comes first. Perl 5.14 enhanced C<package> so that
+you may provide a block which explicitly delineates the scope of the
+declaration:
+
+=begin programlisting
+
+    package Pinball::Wizard
+    {
+        our $VERSION = 1969;
+    }
+
+=end programlisting
+
+The default package is the C<main> package. Without a package declaration, the
+current package is C<main>. This rule applies to one-liners, standalone
+programs, and even F<.pm> files.
+
+X<packages; versions>
+X<C<$VERSION>>
+
+Besides a name, a package has a version and three implicit methods, C<import()>
+(L<importing>), C<unimport()>, and C<VERSION()>. C<VERSION()> returns the
+package's version number. This number is a series of numbers contained in a
+package global named C<$VERSION>. By rough convention, versions tend to be a
+series of integers separated by dots, as in C<1.23> or C<1.1.10>, where each
+segment is an integer.
+
+X<version numbers>
+
+Perl 5.12 introduced a new syntax intended to simplify version numbers, as
+documented in C<perldoc version::Internals>. These stricter version numbers
+must have a leading C<v> character and at least three integer components
+separated by periods:
+
+=begin programlisting
+
+    package MyCode v1.2.1;
+
+=end programlisting
+
+With Perl 5.14, the optional block form of a C<package> declaration is:
+
+=begin programlisting
+
+    package Pinball::Wizard v1969.3.7
+    {
+        ...
+    }
+
+=end programlisting
+
+In 5.10 and earlier, the simplest way to declare the version of a package is:
+
+=begin programlisting
+
+    package MyCode;
+
+    our $VERSION = 1.21;
+
+=end programlisting
+
+X<C<UNIVERSAL>>
+X<C<VERSION()>>
+
+Every package inherits a C<VERSION()> method from the C<UNIVERSAL> base class.
+You may override C<VERSION()>, though there are few reasons to do so. This
+method returns the value of C<$VERSION>:
+
+=begin programlisting
+
+    my $version = Some::Plugin->VERSION();
+
+=end programlisting
+
+If you provide a version number as an argument, this method will throw an
+exception unless the version of the module is equal to or greater than the
+argument:
+
+=begin programlisting
+
+    # require at least 2.1
+    Some::Plugin->VERSION( 2.1 );
+
+    die "Your plugin $version is too old"
+        unless $version > 2;
+
+=end programlisting
+
+=head2 Packages and Namespaces
+
+X<namespaces>
+X<packages; namespaces>
+
+Every C<package> declaration creates a new namespace if necessary and causes
+the parser to put all subsequent package global symbols (global variables and
+functions) into that namespace.
+
+X<namespaces; open>
+
+Perl has I<open namespaces>. You can add functions or variables to a namespace
+at any point, either with a new package declaration:
+
+=begin programlisting
+
+    package Pack
+    {
+        sub first_sub { ... }
+    }
+
+    Pack::first_sub();
+
+    package Pack
+    {
+        sub second_sub { ... }
+    }
+
+    Pack::second_sub();
+
+=end programlisting
+
+... or by fully qualifying function names at the point of declaration:
+
+
+=begin programlisting
+
+    # implicit
+    package main;
+
+    sub Pack::third_sub { ... }
+
+=end programlisting
+
+You can add to a package at any point during compilation or runtime, regardless
+of the current file, though building up a package from multiple separate
+declarations can make code difficult to spelunk.
+
+X<namespaces; multi-level>
+
+Namespaces can have as many levels as your organizational scheme requires,
+though namespaces are not hierarchical. The only relationship between packages
+is semantic, not technical. Many projects and businesses create their own
+top-level namespaces. This reduces the possibility of global conflicts and
+helps to organize code on disk. For example:
+
+=over 4
+
+=item * C<StrangeMonkey> is the project name
+
+=item * C<StrangeMonkey::UI> contains top-level user interface code
+
+=item * C<StrangeMonkey::Persistence> contains top-level data management code
+
+=item * C<StrangeMonkey::Test> contains top-level testing code for the project
+
+=back
+
+... and so on.

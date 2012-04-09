@@ -1,0 +1,90 @@
+=head1 Attributes
+
+Z<attributes>
+
+Named entities in Perl--variables and functions--can have additional metadata
+attached to them in the form of I<attributes>. Attributes are arbitrary names
+and values used with certain types of metaprogramming (L<code_generation>).
+
+Attribute declaration syntax is awkward, and using attributes effectively is
+more art than science. Most programs never use them, but when used well they
+offer clarity and maintenance benefits.
+
+=head2 Using Attributes
+
+A simple attribute is a colon-preceded identifier attached to a declaration:
+
+=begin programlisting
+
+    my $fortress      B<:hidden>;
+
+    sub erupt_volcano B<:ScienceProject> { ... }
+
+=end programlisting
+
+These declarations will cause the invocation of attribute handlers named
+C<hidden> and C<ScienceProject>, if they exist for the appropriate type
+(scalars and functions, respectively). These handlers can do I<anything>.  If
+the appropriate handlers do not exist, Perl will throw a compile-time
+exception.
+
+X<CPAN; C<Test::Class>>
+
+Attributes may include a list of parameters. Perl treats these parameters as
+lists of constant strings and only strings. The C<Test::Class> module from the
+CPAN uses such parametric arguments to good effect:
+
+=begin programlisting
+
+    sub setup_tests          :Test(setup)    { ... }
+    sub test_monkey_creation :Test(10)       { ... }
+    sub shutdown_tests       :Test(teardown) { ... }
+
+=end programlisting
+
+The C<Test> attribute identifies methods which include test assertions, and
+optionally identifies the number of assertions the method intends to run.
+While introspection (L<reflection>) of these classes could discover the
+appropriate test methods, given well-designed solid heuristics, the C<:Test>
+attribute makes your intent clear.
+
+The C<setup> and C<teardown> parameters allow test classes to define their own
+support methods without worrying about conflicts with other such methods in
+other classes. This separates the concern of specifying what this class must do
+with the concern of how other classes do their work, and offers great
+flexibility.
+
+=begin tip Practical Attributes
+
+X<Catalyst>
+
+The Catalyst web framework also uses attributes to determine the visibility and behavior of methods within web applications.
+
+=end tip
+
+=head2 Drawbacks of Attributes
+
+X<pragmas; C<attributes>>
+X<C<attributes> pragma>
+X<CPAN; C<Attribute::Handlers>>
+X<CPAN; C<Attribute::Lexical>>
+
+Attributes have their drawbacks. The canonical pragma for working with
+attributes (the C<attributes> pragma) has listed its interface as experimental
+for many years. Damian Conway's core module C<Attribute::Handlers> simplifies
+their implementation. Andrew Main's C<Attribute::Lexical> is a newer approach.
+Prefer either to C<attributes> whenever possible.
+
+X<CPAN; C<Memoize>>
+
+The worst feature of attributes is their propensity to produce weird syntactic
+action at a distance. Given a snippet of code with attributes, can you predict
+their effect? Well written documentation helps, but if an innocent-looking
+declaration on a lexical variable stores a reference to that variable
+somewhere, your expectations of its lifespan may be wrong. Likewise, a handler
+may wrap a function in another function and replace it in the symbol table
+without your knowledge--consider a C<:memoize> attribute which automatically
+invokes the core C<Memoize> module.
+
+Attributes are available when you need them to solve difficult problems. They
+can be very useful, used properly--but most programs never need them.

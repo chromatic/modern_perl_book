@@ -1,0 +1,264 @@
+=head1 Anonymous Functions
+
+Z<anonymous_functions>
+
+X<functions; anonymous>
+
+An I<anonymous function> is a function without a name. It otherwise behaves
+exactly like a named function--you can invoke it, pass arguments to it, return
+values from it, and copy references to it. Yet the only way to deal with it is
+by reference (L<function_references>).
+
+X<functions; dispatch table>
+X<idioms; dispatch table>
+X<dispatch table>
+
+A common Perl 5 idiom known as a I<dispatch table> uses hashes to associate
+input with behavior:
+
+=begin programlisting
+
+    my %dispatch =
+    (
+        plus     => \&add_two_numbers,
+        minus    => \&subtract_two_numbers,
+        times    => \&multiply_two_numbers,
+    );
+
+    sub add_two_numbers      { $_[0] + $_[1] }
+    sub subtract_two_numbers { $_[0] - $_[1] }
+    sub multiply_two_numbers { $_[0] * $_[1] }
+
+    sub dispatch
+    {
+        my ($left, $op, $right) = @_;
+
+        return unless exists $dispatch{ $op };
+
+        return $dispatch{ $op }->( $left, $right );
+    }
+
+=end programlisting
+
+The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
+returns the result of evaluating the operation.
+
+=head2 Declaring Anonymous Functions
+
+X<builtins; C<sub>>
+
+The C<sub> builtin used without a name creates and returns an anonymous
+function. Use this function reference any place you'd use a reference to a
+named function, such as to declare the dispatch table's functions in place:
+
+=begin programlisting
+
+    my %dispatch =
+    (
+        plus      => sub { $_[0]  + $_[1] },
+        minus     => sub { $_[0]  - $_[1] },
+        times     => sub { $_[0]  * $_[1] },
+        dividedby => sub { $_[0]  / $_[1] },
+        raisedto  => sub { $_[0] ** $_[1] },
+    );
+
+=end programlisting
+
+=begin tip Defensive Dispatch
+
+This dispatch table offers some degree of security; only those functions mapped
+within the table are available for users to call. If your dispatch function
+blindly assumed that the string given as the name of the operator corresponded
+directly to the name of a function to call, a malicious user could conceivably
+call any function in any other namespace by passing
+C<'Internal::Functions::malicious_function'>.
+
+=end tip
+
+You may also see anonymous functions passed as function arguments:
+
+=begin programlisting
+
+    sub invoke_anon_function
+    {
+        my $func = shift;
+        return $func->( @_ );
+    }
+
+    sub named_func
+    {
+        say 'I am a named function!';
+    }
+
+    invoke_anon_function( \&named_func );
+    invoke_anon_function( B<sub { say 'Who am I?' }> );
+
+=end programlisting
+
+=head2 Anonymous Function Names
+
+X<anonymous functions; names>
+
+X<CPAN; C<Sub::Identify>>
+
+Given a reference to a function, you can determine whether the function is
+named or anonymous with introspectionN<... or C<sub_name> from the CPAN module
+C<Sub::Identify>.>:
+
+=begin programlisting
+
+    package ShowCaller;
+
+    sub show_caller
+    {
+        my ($package, $file, $line, $sub) = caller(1);
+        say "Called from $sub in $package:$file:$line";
+    }
+
+    sub main
+    {
+        my $anon_sub = sub { show_caller() };
+        show_caller();
+        $anon_sub->();
+    }
+
+    main();
+
+=end programlisting
+
+The result may be surprising:
+
+    Called from ShowCaller::B<main>
+             in ShowCaller:anoncaller.pl:20
+    Called from ShowCaller::B<__ANON__>
+             in ShowCaller:anoncaller.pl:17
+
+X<CPAN; C<Sub::Name>>
+
+The C<__ANON__> in the second line of output demonstrates that the anonymous
+function has no name that Perl can identify. This can complicate debugging.
+The CPAN module C<Sub::Name>'s C<subname()> function allows you to attach names
+to anonymous functions:
+
+=begin programlisting
+
+    use Sub::Name;
+    use Sub::Identify 'sub_name';
+
+    my $anon  = sub {};
+    say sub_name( $anon );
+
+    my $named = subname( 'pseudo-anonymous', $anon );
+    say sub_name( $named );
+    say sub_name( $anon );
+
+    say sub_name( sub {} );
+
+=end programlisting
+
+This program produces:
+
+    __ANON__
+    pseudo-anonymous
+    pseudo-anonymous
+    __ANON__
+
+Be aware that both references refer to the same underlying anonymous function.
+Using C<subname()> on one reference to a function will modify that anonymous
+function's name such that all other references to it will see the new name.
+
+=head2 Implicit Anonymous Functions
+
+X<anonymous functions; implicit>
+
+X<CPAN; C<Test::Fatal>>
+
+Perl 5 allows the declaration of anonymous functions implicitly through the use
+of prototypes (L<prototypes>). Though this feature exists nominally to enable
+programmers to write their own syntax such as that for C<map> and C<eval>, an
+interesting example is the use of I<delayed> functions that don't look like
+functions.
+
+Consider the CPAN module C<Test::Fatal>, which takes an anonymous function as
+the first argument to its C<exception()> function:
+
+=begin programlisting
+
+    use Test::More;
+    use Test::Fatal;
+
+    my $croaker = exception { die 'I croak!' };
+    my $liver   = exception { 1 + 1 };
+
+    like( $croaker, qr/I croak/, 'die() should croak'   );
+    is(   $liver,   undef,       'addition should live' );
+
+    done_testing();
+
+=end programlisting
+
+You might rewrite this more verbosely as:
+
+=begin programlisting
+
+    my $croaker = exception( sub { die 'I croak!' } );
+    my $liver   = exception( sub { 1 + 1 } );
+
+=end programlisting
+
+... or to pass named functions by reference:
+
+=begin programlisting
+
+    B<sub croaker { die 'I croak!' }>
+    B<sub liver   { 1 + 1 }>
+
+    my $croaker = exception \&croaker;
+    my $liver   = exception \&liver;
+
+    like( $croaker, qr/I croak/, 'die() should die'     );
+    is(   $liver,   undef,       'addition should live' );
+
+=end programlisting
+
+... but you may I<not> pass them as scalar references:
+
+=begin programlisting
+
+    B<my $croak_ref = \&croaker;>
+    B<my $live_ref  = \&liver;>
+
+    # BUGGY: does not work
+    my $croaker   = exception $croak_ref;
+    my $liver     = exception $live_ref;
+
+=end programlisting
+
+... because the prototype changes the way the Perl 5 parser interprets this
+code. It cannot determine with 100% clarity I<what> C<$croaker> and C<$liver>
+will contain, and so will throw an exception.
+
+=begin screen
+
+    Type of arg 1 to Test::Fatal::exception
+       must be block or sub {} (not private variable)
+
+=end screen
+
+Also be aware that a function which takes an anonymous function as the first of
+multiple arguments cannot have a trailing comma after the function block:
+
+=begin programlisting
+
+    use Test::More;
+    use Test::Fatal 'dies_ok';
+
+    dies_ok { die 'This is my boomstick!' }
+            'No movie references here';
+
+=end programlisting
+
+This is an occasionally confusing wart on otherwise helpful syntax, courtesy of
+a quirk of the Perl 5 parser. The syntactic clarity available by promoting bare
+blocks to anonymous functions can be helpful, but use it sparingly and document
+the API with care.

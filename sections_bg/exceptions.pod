@@ -1,0 +1,245 @@
+=head1 Exceptions
+
+Z<exceptions>
+X<exceptions>
+
+Programming well means anticipating the unexpected. Files that should exist
+don't. That huge disk that will never fill up does. The always-on network
+isn't. The unbreakable database breaks. Exceptions happen, and robust software
+must handle them.  If you can recover, great! If you can't, log the relevant
+information and retry.
+
+Perl 5 handles exceptional conditions through I<exceptions>: a
+dynamically-scoped control flow mechanism designed to raise and handle errors.
+
+=head2 Throwing Exceptions
+
+Z<throwing_exceptions>
+
+Suppose you want to write a log file. If you can't open the file, something has
+gone wrong. Use C<die> to throw an exception:
+
+=begin programlisting
+
+    sub open_log_file
+    {
+        my $name = shift;
+        open my $fh, '>>', $name
+            B<or die "Can't open logging file '$name': $!";>
+        return $fh;
+    }
+
+=end programlisting
+
+X<builtins; C<die>>
+X<exceptions; throwing>
+X<exceptions; throwing strings>
+X<exceptions; C<die>>
+X<C<$@>>
+X<exceptions; C<$@>>
+
+C<die()> sets the global variable C<$@> to its operand and immediately exits
+the current function I<without returning anything>. This thrown exception will
+continue up the call stack (L<controlled_execution>) until something catches
+it. If nothing catches the exception, the program will exit with an error.
+
+Exception handling uses the same dynamic scope (L<dynamic_scope>) as C<local>
+symbols.
+
+=head2 Catching Exceptions
+
+Z<catching_exceptions>
+
+X<exceptions; catching>
+
+Sometimes an exception exiting the program is useful. A program run as a timed
+process might throw an exception when the error logs have filled, causing an
+SMS to go out to administrators. Yet not all exceptions should be fatal. Good
+programs can recover from some, or at least save their state and exit cleanly.
+
+X<builtins; C<eval>>
+X<C<eval>; block>
+
+Use the block form of the C<eval> operator to catch an exception:
+
+=begin programlisting
+
+    # log file may not open
+    my $fh = eval { open_log_file( 'monkeytown.log' ) };
+
+=end programlisting
+
+If the file open succeeds, C<$fh> will contain the filehandle. If it fails,
+C<$fh> will remain undefined, and program flow will continue.
+
+The block argument to C<eval> introduces a new scope, both lexical and dynamic.
+If C<open_log_file()> called other functions and something eventually threw an
+exception, this C<eval> could catch it.
+
+X<magic variables; C<$@>>
+
+An exception handler is a blunt tool. It will catch all exceptions in its
+dynamic scope. To check which exception you've caught (or if you've caught an
+exception at all), check the value of C<$@>. Be sure to C<local>ize C<$@>
+before you attempt to catch an exception; remember that C<$@> is a global
+variable:
+
+=begin programlisting
+
+    B<local $@;>
+
+    # log file may not open
+    my $fh = eval { open_log_file( 'monkeytown.log' ) };
+
+    # caught exception
+    B<if (my $exception = $@) { ... }>
+
+=end programlisting
+
+X<exceptions; rethrowing>
+
+Copy C<$@> to a lexical variable immediately to avoid the possibility of
+subsequent code clobbering the global variable C<$@>. You never know what else
+has used an C<eval> block elsewhere and reset C<$@>.
+
+C<$@> usually contains a string describing the exception. Inspect its contents
+to see whether you can handle the exception:
+
+=begin programlisting
+
+    if (my $exception = $@)
+    {
+        die $exception
+            unless $exception =~ /^Can't open logging/;
+        $fh = log_to_syslog();
+    }
+
+=end programlisting
+
+Rethrow an exception by calling C<die()> again. Pass the existing exception or
+a new one as necessary.
+
+X<exceptions; throwing objects>
+
+Applying regular expressions to string exceptions can be fragile, because error
+messages may change over time. This includes the core exceptions that Perl
+itself throws. Fortunately, you may also provide a reference--even a blessed
+reference--to C<die>. This allows you to provide much more information in your
+exception: line numbers, files, and other debugging information. Retrieving
+this information from something structured is much easier than parsing it out
+of a string. Catch these exceptions as you would any other exception.
+
+X<exceptions; custom classes with C<Exception::Class>>
+X<C<Exception::Class>>
+
+The CPAN distribution C<Exception::Class> makes creating and using exception
+objects easy:
+
+=begin programlisting
+
+    package Zoo::Exceptions
+    {
+        use Exception::Class
+            'Zoo::AnimalEscaped',
+            'Zoo::HandlerEscaped';
+    }
+
+    sub cage_open
+    {
+        my $self = shift;
+        Zoo::AnimalEscaped->throw
+            unless $self->contains_animal;
+        ...
+    }
+
+    sub breakroom_open
+    {
+        my $self = shift;
+        Zoo::HandlerEscaped->throw
+            unless $self->contains_handler;
+        ...
+    }
+
+=end programlisting
+
+=head2 Exception Caveats
+
+Z<exception_caveats>
+
+X<exceptions; caveats>
+
+Though throwing exceptions is relatively simple, catching them is less so.
+Using C<$@> correctly requires you to navigate several subtle risks:
+
+=over 4
+
+=item * UnC<local>ized uses further down the dynamic scope may modify C<$@>
+
+=item * It may contain an object which overrides its boolean value to return
+false
+
+=item * A signal handler (especially the C<DIE> signal handler) may change
+C<$@>
+
+=item * The destruction of an object during scope exit may call C<eval> and
+change C<$@>
+
+=back
+
+X<exceptions; handling safely with C<Try::Tiny>>
+X<C<Try::Tiny>>
+
+Perl 5.14 fixed some of these issues. Granted, they occur very rarely, but
+they're often difficult to diagnose and to fix. The C<Try::Tiny> CPAN
+distribution improves the safety of exception handling I<and> the syntaxN<In
+fact, C<Try::Tiny> helped inspire improvements to Perl 5.14's exception
+handling.>.
+
+C<Try::Tiny> is easy to use:
+
+=begin programlisting
+
+    use Try::Tiny;
+
+    my $fh = try   { open_log_file( 'monkeytown.log' ) }
+             catch { log_exception( $_ ) };
+
+=end programlisting
+
+C<try> replaces C<eval>. The optional C<catch> block executes only when C<try>
+catches an exception. C<catch> receives the caught exception as the topic
+variable C<$_>.
+
+=head2 Built-in Exceptions
+
+Z<builtin_exceptions>
+
+X<exceptions; core>
+
+Perl 5 itself throws several exceptional conditions. C<perldoc perldiag> lists
+several "trappable fatal errors". While some are syntax errors thrown during
+the compilation process, you can catch the others during runtime. The most
+interesting are:
+
+=over 4
+
+=item * Using a disallowed key in a locked hash (L<locked_hashes>)
+
+=item * Blessing a non-reference (L<blessed_references>)
+
+=item * Calling a method on an invalid invocant (L<moose>)
+
+=item * Failing to find a method of the given name on the invocant
+
+=item * Using a tainted value in an unsafe fashion (L<taint>)
+
+=item * Modifying a read-only value
+
+=item * Performing an invalid operation on a reference (L<references>)
+
+=back
+
+X<C<autodie>>
+
+Of course you can also catch exceptions produced by C<autodie> (L<autodie>) and
+any lexical warnings promoted to exceptions (L<registering_warnings>).

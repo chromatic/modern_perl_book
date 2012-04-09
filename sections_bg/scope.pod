@@ -1,0 +1,339 @@
+=head1 Scope
+
+Z<scope>
+
+X<scope>
+X<encapsulation>
+
+I<Scope> in Perl refers to the lifespan and visibility of named entities.
+Everything with a name in Perl (a variable, a function) has a scope.  Scoping
+helps to enforce I<encapsulation>--keeping related concepts together and
+preventing them from leaking out.
+
+=head2 Lexical Scope
+
+Z<lexical_scope>
+
+X<lexical scope>
+X<scope; lexical>
+
+I<Lexical scope> is the scope visible as you I<read> a program. The Perl
+compiler resolves this scope during compilation. A block delimited by curly
+braces creates a new scope, whether a bare block, the block of a loop
+construct, the block of a C<sub> declaration, an C<eval> block, or any other
+non-quoting block.
+
+X<variables; lexical>
+
+Lexical scope governs the visibility of variables declared with
+C<my>--I<lexical> variables. A lexical variable declared in one scope is
+visible in that scope and any scopes nested within it, but is invisible to
+sibling or outer scopes:
+
+=begin programlisting
+
+    # outer lexical scope
+    {
+        package Robot::Butler
+
+        # inner lexical scope
+        my $battery_level;
+
+        sub tidy_room
+        {
+            # further inner lexical scope
+            my $timer;
+
+            do {
+                # innermost lexical scope
+                my $dustpan;
+                ...
+            } while (@_);
+
+            # sibling inner lexical scope
+            for (@_)
+            {
+                # separate innermost scope
+                my $polish_cloth;
+                ...
+            }
+        }
+    }
+
+=end programlisting
+
+... C<$battery_level> is visible in all four scopes. C<$timer> is visible in
+the method, the C<do> block, and the C<for> loop.  C<$dustpan> is visible only
+in the C<do> block and C<$polish_cloth> within the C<for> loop.
+
+X<lexical shadowing>
+X<scope; lexical shadowing>
+
+Declaring a lexical in an inner scope with the same name as a lexical in an
+outer scope hides, or I<shadows>, the outer lexical within the inner scope.
+This is often what you want:
+
+=begin programlisting
+
+    my $name = 'Jacob';
+
+    {
+        my $name = 'Edward';
+        say $name;
+    }
+
+    say $name;
+
+=end programlisting
+
+=begin tip Name Collisions
+
+Lexical shadowing can happen by accident. Limit the scope of variables and the
+nesting of scopes to lessen your risk.
+
+=end tip
+
+This program prints C<Edward> and then C<Jacob>N<Family members, not
+vampires.>, even though redeclaring a lexical variable with the same name and
+type I<in the same lexical scope> produces a warning message. Shadowing a
+lexical is a feature of encapsulation.
+
+Some lexical declarations have subtleties, such as a lexical variable used as
+the iterator variable of a C<for> loop. Its declaration comes outside of the
+block, but its scope is that I<within> the loop block:
+
+=begin programlisting
+
+    my $cat = 'Brad';
+
+    for my $cat (qw( Jack Daisy Petunia Tuxedo Choco ))
+    {
+        say "Iterator cat is $cat";
+    }
+
+    say "Static cat is $cat";
+
+=end programlisting
+
+X<lexical topic>
+X<topic; lexical>
+
+Similarly, C<given> (L<given_when>) creates a I<lexical topic> (like C<my $_>)
+within its block:
+
+=begin programlisting
+
+    $_ = 'outside';
+
+    given ('inner')
+    {
+        say;
+        $_ = 'this assignment does nothing useful';
+    }
+
+    say;
+
+=end programlisting
+
+... such that leaving the block restores the previous value of C<$_>.
+
+Functions--named and anonymous--provide lexical scoping to their bodies. This
+facilitates closures (L<closures>).
+
+=head2 Our Scope
+
+Z<our>
+X<builtins; C<our>>
+X<packages; scope>
+X<scope; packages>
+
+Within given scope, declare an alias to a package variable with the C<our>
+builtin. Like C<my>, C<our> enforces lexical scoping of the alias. The
+fully-qualified name is available everywhere, but the lexical alias is visible
+only within its scope.
+
+C<our> is most useful with package global variables like C<$VERSION> and
+C<$AUTOLOAD>.
+
+=head2 Dynamic Scope
+
+Z<dynamic_scope>
+
+X<dynamic scope>
+X<scope; dynamic>
+
+Dynamic scope resembles lexical scope in its visibility rules, but instead of
+looking outward in compile-time scopes, lookup traverses backwards through the
+calling context. While a package global variable may be I<visible> within all
+scopes, its I<value> changes depending on C<local>ization and assignment:
+
+=begin programlisting
+
+    our $scope;
+
+    sub inner
+    {
+        say $scope;
+    }
+
+    sub main
+    {
+        say $scope;
+        local $scope = 'main() scope';
+        middle();
+    }
+
+    sub middle
+    {
+        say $scope;
+        inner();
+    }
+
+    $scope = 'outer scope';
+    main();
+    say $scope;
+
+=end programlisting
+
+The program begins by declaring an C<our> variable, C<$scope>, as well as three
+functions. It ends by assigning to C<$scope> and calling C<main()>.
+
+X<builtins; C<local>>
+
+Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,
+then C<local>izes the variable. This changes the visibility of the symbol
+within the current lexical scope I<as well as> in any functions called from the
+I<current> lexical scope. Thus, C<$scope> contains C<main() scope> within the
+body of both C<middle()> and C<inner()>.  After C<main()> returns, when control
+flow reaches the end of its block, Perl restores the original value of the
+C<local>ized C<$scope>. The final C<say> prints C<outer scope> once again.
+
+X<lexicals; pads>
+X<lexpads>
+X<symbol tables>
+
+Package variables and lexical variables have different visibility rules and
+storage mechanisms within Perl. Every scope which contains lexical variables
+has a special data structure called a I<lexical pad> or I<lexpad> which can
+store the values for its enclosed lexical variables. Every time control flow
+enters one of these scopes, Perl creates another lexpad for the values of those
+lexical variables for that particular call. This makes functions work
+correctly, especially in recursive calls (L<recursion>).
+
+Each package has a single I<symbol table> which holds package variables as well
+as named functions. Importing (L<importing>) works by inspecting and
+manipulating this symbol table. So does C<local>. You may only C<local>ize
+global and package global variables--never lexical variables.
+
+X<C<$/>>
+X<magic variables; C<$/>>
+X<C<$!>>
+X<magic variables; C<$!>>
+X<C<$@>>
+X<magic variables; C<$@>>
+X<C<$|>>
+X<magic variables; C<$|>>
+
+C<local> is most often useful with magic variables. For example, C<$/>, the
+input record separator, governs how much data a C<readline> operation will read
+from a filehandle. C<$!>, the system error variable, contains the error number
+of the most recent system call. C<$@>, the Perl C<eval> error variable,
+contains any error from the most recent C<eval> operation. C<$|>, the autoflush
+variable, governs whether Perl will flush the currently C<select>ed filehandle
+after every write operation.
+
+C<local>izing these in the narrowest possible scope limits the effect of your
+changes. This can prevent strange behavior in other parts of your code.
+
+=head2 State Scope
+
+Z<state_scope>
+
+X<C<state>>
+X<builtins; C<state>>
+X<scope; state>
+
+Perl 5.10 added a new scope to support the C<state> builtin. State scope
+resembles lexical scope in terms of visibility, but adds a one-time
+initialization as well as value persistence:
+
+=begin programlisting
+
+    sub counter
+    {
+        B<state> $count = 1;
+        return $count++;
+    }
+
+    say counter();
+    say counter();
+    say counter();
+
+=end programlisting
+
+On the first call to C<counter>, Perl performs its single initialization of
+C<$count>. On subsequent calls, C<$count> retains its previous value. This
+program prints C<1>, C<2>, and C<3>. Change C<state> to C<my> and the program
+will print C<1>, C<1>, and C<1>.
+
+You may use an expression to set a C<state> variable's initial value:
+
+=begin programlisting
+
+    sub counter
+    {
+        state $count = shift;
+        return $count++;
+    }
+
+    say counter(B<2>);
+    say counter(B<4>);
+    say counter(B<6>);
+
+=end programlisting
+
+Even though a simple reading of the code may suggest that the output should be
+C<2>, C<4>, and C<6>, the output is actually C<2>, C<3>, and C<4>. The first
+call to the sub C<counter> sets the C<$count> variable. Subsequent calls will
+not change its value.
+
+C<state> can be useful for establishing a default value or preparing a cache,
+but be sure to understand its initialization behavior if you use it:
+
+=begin programlisting
+
+    sub counter
+    {
+        state $count = shift;
+        say 'Second arg is: ', shift;
+        return $count++;
+    }
+
+    say counter(2, 'two');
+    say counter(4, 'four');
+    say counter(6, 'six');
+
+=end programlisting
+
+The counter for this program prints C<2>, C<3>, and C<4> as expected, but the
+values of the intended second arguments to the C<counter()> calls are C<two>,
+C<4>, and C<6>--because the C<shift> of the first argument only happens in the
+first call to C<counter()>. Either change the API to prevent this mistake, or
+guard against it with:
+
+=begin programlisting
+
+    sub counter
+    {
+        my ($initial_value, $text) = @_;
+
+        state $count = $initial_value;
+        say "Second arg is: $text";
+        return $count++;
+    }
+
+    say counter(2, 'two');
+    say counter(4, 'four');
+    say counter(6, 'six');
+
+=end programlisting

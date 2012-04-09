@@ -1,0 +1,779 @@
+=head1 Declaring Functions
+
+Z<functions>
+
+X<functions; declaration>
+X<builtins; C<sub>>
+
+Use the C<sub> builtin to declare a function:
+
+=begin programlisting
+
+    B<sub> greet_me  { ... }
+
+=end programlisting
+
+Now C<greet_me()> is available for invocation anywhere else within the program.
+
+X<functions; forward declaration>
+
+You do not have to I<define> a function at the point you declare it. A
+I<forward declaration> tells Perl to remember the function name even though you
+will define it later:
+
+=begin programlisting
+
+    sub greet_sun;
+
+=end programlisting
+
+=head1 Invoking Functions
+
+X<functions; invoking>
+
+Use postfix (L<fixity>) parentheses and a function's name to invoke that
+function and pass an optional list of arguments:
+
+=begin programlisting
+
+    greet_me( 'Jack', 'Brad' );
+    greet_me( 'Snowy' );
+    greet_me();
+
+=end programlisting
+
+While these parentheses are not strictly necessary for these examples--even
+with C<strict> enabled--they provide clarity to human readers and Perl's
+parser. When in doubt, leave them in.
+
+Function arguments can be arbitrary expressions, including simple variables:
+
+=begin programlisting
+
+    greet_me( $name );
+    greet_me( @authors );
+    greet_me( %editors );
+
+=end programlisting
+
+... though Perl 5's default parameter handling sometimes surprises novices.
+
+=head1 Function Parameters
+
+Z<function_parameters>
+
+X<parameters>
+X<functions; parameters>
+X<C<@_>>
+X<parameters; flattening>
+
+A function receives its parameters in a single array, C<@_>
+(L<default_array_variables>). Perl I<flattens> all incoming parameters into a
+single list. The function must either unpack all parameters into variables or
+operate on C<@_> directly:
+
+=begin programlisting
+
+    sub greet_one
+    {
+        B<my ($name) = @_>;
+        say "Hello, $name!";
+    }
+
+    sub greet_all
+    {
+        say "Hello, B<$_!" for @_>;
+    }
+
+=end programlisting
+
+Most code uses C<shift> or list unpacking, though C<@_> behaves as a normal Perl array, so you can refer to individual elements by index:
+
+=begin programlisting
+
+    sub greet_one_shift
+    {
+        B<my $name = shift>;
+        say "Hello, $name!";
+    }
+
+    sub greet_two_no_shift
+    {
+        my ($hero, $sidekick) = @_;
+        say "Well if it isn't $hero and $sidekick. Welcome!";
+    }
+
+    sub greet_one_indexed
+    {
+        B<my $name = $_[0]>;
+        say "Hello, $name!";
+
+        # or, less clear
+        say "Hello, $_[0]!";
+    }
+
+=end programlisting
+
+... or C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>.
+
+=begin tip The Implicit Them
+
+Remember that the array builtins use C<@_> as the default operand I<within
+functions>. Take advantage of this idiom.
+
+=end tip
+
+Assigning a scalar parameter from C<@_> requires C<shift>, indexed access to
+C<@_>, or lvalue list context parentheses. Otherwise, Perl 5 will happily
+evaluate C<@_> in scalar context for you and assign the number of parameters
+passed:
+
+=begin programlisting
+
+    sub bad_greet_one
+    {
+        B<my $name = @_>;  # buggy
+        say "Hello, $name; you look numeric today!"
+    }
+
+=end programlisting
+
+List assignment of multiple parameters is often clearer than multiple lines of
+C<shift>. Compare:
+
+=begin programlisting
+
+    sub calculate_value
+    {
+        # multiple shifts
+        my $left_value  = shift;
+        my $operation   = shift;
+        my $right_value = shift;
+        ...
+    }
+
+=end programlisting
+
+... to:
+
+=begin programlisting
+
+    sub calculate_value
+    {
+        B<my ($left_value, $operation, $right_value) = @_;>
+        ...
+    }
+
+=end programlisting
+
+Occasionally it's necessary to extract a few parameters from C<@_> and pass the
+rest to another function:
+
+=begin programlisting
+
+    sub delegated_method
+    {
+        my $self = B<shift>;
+        say 'Calling delegated_method()'
+
+        $self->delegate->delegated_method( B<@_> );
+    }
+
+=end programlisting
+
+Use C<shift> when your function needs only a single parameter. Use list
+assignment when accessing multiple parameters.
+
+=begin tip Real Function Signatures
+
+X<CPAN; C<signatures>>
+X<CPAN; C<Method::Signatures>>
+X<CPAN; C<MooseX::Method::Signatures>>
+X<CPAN; C<Method::Signatures::Simple>>
+
+Several CPAN distributions extend Perl 5's parameter handling with additional
+syntax and options. C<signatures> and C<Method::Signatures> are powerful.
+C<Method::Signatures::Simple> is basic, but useful.
+C<MooseX::Method::Signatures> works very well with Moose (L<moose>).
+
+=end tip
+
+=head2 Flattening
+
+Parameter flattening into C<@_> happens on the caller side of a function call.
+Passing a hash as an argument produces a list of key/value pairs:
+
+=begin programlisting
+
+    my %pet_names_and_types = (
+        Lucky   => 'dog',
+        Rodney  => 'dog',
+        Tuxedo  => 'cat',
+        Petunia => 'cat',
+    );
+
+    show_pets( %pet_names_and_types );
+
+    sub show_pets
+    {
+        my %pets = @_;
+        while (my ($name, $type) = each %pets)
+        {
+            say "$name is a $type";
+        }
+    }
+
+=end programlisting
+
+When Perl flattens C<%pet_names_and_types> into a list, the order of the
+key/value pairs from the hash will vary, but the list will always contain a key
+immediately followed by its value. Hash assignment inside C<show_pets()> works
+essentially as the more explicit assignment to C<%pet_names_and_types> does.
+
+This flattening is often useful, but beware of mixing scalars with flattened
+aggregates in parameter lists. To write a C<show_pets_of_type()> function, where
+one parameter is the type of pet to display, pass that type as the I<first>
+parameter (or use C<pop> to remove it from the end of C<@_>):
+
+=begin programlisting
+
+    sub show_pets_by_type
+    {
+        B<my ($type, %pets) = @_>;
+
+        while (my ($name, $species) = each %pets)
+        {
+            B<next unless $species eq $type;>
+            say "$name is a $species";
+        }
+    }
+
+    my %pet_names_and_types = (
+        Lucky   => 'dog',
+        Rodney  => 'dog',
+        Tuxedo  => 'cat',
+        Petunia => 'cat',
+    );
+
+    show_pets_by_type( 'dog',   %pet_names_and_types );
+    show_pets_by_type( 'cat',   %pet_names_and_types );
+    show_pets_by_type( 'moose', %pet_names_and_types );
+
+=end programlisting
+
+=head2 Slurping
+
+Z<parameter_slurping>
+X<parameters; slurping>
+
+List assignment with an aggregate is always greedy, so assigning to C<%pets>
+I<slurps> all of the remaining values from C<@_>. If the C<$type> parameter
+came at the end of C<@_>, Perl would warn about assigning an odd number of
+elements to the hash. You I<could> work around that:
+
+=begin programlisting
+
+    sub show_pets_by_type
+    {
+        B<my $type = pop;>
+        B<my %pets = @_;>
+
+        ...
+    }
+
+=end programlisting
+
+... at the expense of clarity. The same principle applies when assigning to an
+array as a parameter, of course. Use references (L<references>) to avoid
+unwanted aggregate flattening and slurping.
+
+=head2 Aliasing
+
+X<parameters; aliasing>
+X<functions; aliasing parameters>
+
+C<@_> contains a subtlety; it I<aliases> function arguments such that you can
+modify them directly. For example:
+
+=begin programlisting
+
+    sub modify_name
+    {
+        $_[0] = reverse $_[0];
+    }
+
+    my $name = 'Orange';
+    modify_name( $name );
+    say $name;
+
+    # prints C<egnarO>
+
+=end programlisting
+
+Modify an element of C<@_> directly and you will modify the original parameter.
+Be cautious, and unpack C<@_> rigorously.
+
+=head1 Functions and Namespaces
+
+Every function has a containing namespace (L<packages>). Functions in an
+undeclared namespace--functions not declared after an explicit C<package>
+statement--are in the C<main> namespace. You may also declare a function within
+another namespace by prefixing its name:
+
+=begin programlisting
+
+    sub B<Extensions::Math::>add {
+        ...
+    }
+
+=end programlisting
+
+This will declare the function and create the namespace as necessary.  Remember
+that Perl 5 packages are open for modification at any point. You may only
+declare one function of the same name per namespace. Otherwise Perl 5 will warn
+you about subroutine redefinition. Disable this warning with C<no warnings
+'redefine'>--if you're certain this is what you intend.
+
+Call functions in other namespaces with their fully-qualified names:
+
+=begin programlisting
+
+    package main;
+
+    Extensions::Math::add( $scalar, $vector );
+
+=end programlisting
+
+Functions in namespaces are I<visible> outside of those namespaces through
+their fully-qualified names. Within a namespace, you may use the short name to
+call any function declared in that namespace. You may also import names from
+other namespaces.
+
+=head2 Importing
+
+Z<importing>
+
+X<functions; importing>
+X<builtins; C<use>>
+
+When loading a module with the C<use> builtin (L<modules>), Perl automatically
+calls a method named C<import()> on that module. Modules can provide their own
+C<import()> which makes some or all defined symbols available to the calling
+package. Any arguments after the name of the module in the C<use> statement get
+passed to the module's C<import()> method. Thus:
+
+=begin programlisting
+
+    use strict;
+
+=end programlisting
+
+... loads the F<strict.pm> module and calls C<< strict->import() >> with no
+arguments, while:
+
+=begin programlisting
+
+    use strict 'refs';
+    use strict qw( subs vars );
+
+=end programlisting
+
+... loads the F<strict.pm> module, calls C<< strict->import( 'refs' ) >>, then
+calls C<< strict->import( 'subs', vars' ) >>.
+
+C<use> has special behavior with regard to C<import()>, but you may call
+C<import()> directly. The C<use> example is equivalent to:
+
+=begin programlisting
+
+    BEGIN
+    {
+        require strict;
+        strict->import( 'refs' );
+        strict->import( qw( subs vars ) );
+    }
+
+=end programlisting
+
+The C<use> builtin adds an implicit C<BEGIN> block around these statements so
+that the C<import()> call happens I<immediately> after the parser has compiled
+the entire C<use> statement. This ensures that any imported symbols are visible
+when compiling the rest of the program. Otherwise, any functions I<imported>
+from other modules but not I<declared> in the current file would look like
+barewords, and would violate C<strict>.
+
+=head1 Reporting Errors
+
+Z<reporting_errors>
+X<builtins; C<caller>>
+
+Within a function, inspect the context of the call to the function with the
+C<caller> builtin. When passed no arguments, it returns a three element list
+containing the name of the calling package, the name of the file containing the
+call, and the line number of the file on which the call occurred:
+
+=begin programlisting
+
+    package main;
+
+    main();
+
+    sub main
+    {
+        show_call_information();
+    }
+
+    sub show_call_information
+    {
+        my ($package, $file, $line) = caller();
+        say "Called from $package in $file:$line";
+    }
+
+=end programlisting
+
+The full call chain is available for inspection. Pass a single integer argument
+I<n> to C<caller()> to inspect the caller of the caller of the caller I<n>
+times. In other words, if C<show_call_information()> used C<caller(0)>, it
+would receive information about the call from C<main()>. If it used
+C<caller(1)>, it would receive information about the call from the start of the
+program.
+
+This optional argument also tells C<caller> to provide additional return
+values, including the name of the function and the context of the call:
+
+=begin programlisting
+
+    sub show_call_information
+    {
+        my ($package, $file, $lineB<, $func>) = caller(B<0>);
+        say "Called B<$func> from $package in $file:$line";
+    }
+
+=end programlisting
+
+X<C<Carp>>
+X<C<Carp>; C<croak()>>
+X<C<Carp>; C<carp()>>
+
+The standard C<Carp> module uses this technique to great effect for reporting
+errors and throwing warnings in functions. When used in place of C<die> in
+library code, C<croak()> throws an exception from the point of view of its
+caller. C<carp()> reports a warning from the file and line number of its caller
+(L<producing_warnings>).
+
+This behavior is most useful when validating parameters or preconditions of a
+function to indicate that the calling code is wrong somehow.
+
+=head2 Validating Arguments
+
+While Perl does its best to do what the programmer means, it offers few native
+ways to test the validity of arguments provided to a function. Evaluate C<@_>
+in scalar context to check that the I<number> of parameters passed to a
+function is correct:
+
+=begin programlisting
+
+    sub add_numbers
+    {
+        croak 'Expected two numbers, received: ' . @_
+            unless @_ == 2;
+
+        ...
+    }
+
+=end programlisting
+
+X<CPAN; C<Params::Validate>>
+
+Type checking is more difficult, because of Perl's operator-oriented type
+conversions (L<context_philosophy>). The CPAN module C<Params::Validate> offers
+more strictness.
+
+=head1 Advanced Functions
+
+Functions are the foundation of many advanced Perl features.
+
+=head2 Context Awareness
+
+X<context>
+X<C<wantarray>>
+X<builtins; C<wantarray>>
+
+Perl 5's builtins know whether you've invoked them in void, scalar, or list
+context. So too can your functions. The misnamedN<See C<perldoc -f wantarray>
+to verify.> C<wantarray> builtin returns C<undef> to signify void context, a
+false value to signify scalar context, and a true value to signify list
+context.
+
+=begin programlisting
+
+    sub context_sensitive
+    {
+        my $context = wantarray();
+
+        return qw( List context )   if         $context;
+        say    'Void context'   unless defined $context;
+        return 'Scalar context' unless         $context;
+    }
+
+    context_sensitive();
+    say my $scalar = context_sensitive();
+    say context_sensitive();
+
+=end programlisting
+
+This can be useful for functions which might produce expensive return values to
+avoid doing so in void context. Some idiomatic functions return a list in list
+context and the first element of the list or an array reference in scalar
+context. Yet remember that there exists no single best recommendation for the
+use C<wantarray>. Sometimes it's clearer to write separate and unambiguous
+functions.
+
+=begin tip Putting it in Context
+
+X<C<Want>>
+X<C<Contextual::Return>>
+
+Robin Houston's C<Want> and Damian Conway's C<Contextual::Return> distributions
+from the CPAN offer many possibilities for writing powerful and usable
+context-aware interfaces.
+
+=end tip
+
+=head2 Recursion
+
+Z<recursion>
+X<recursion>
+X<call frame>
+X<functions; call frame>
+
+Suppose you want to find an element in a sorted array. You I<could> iterate
+through every element of the array individually, looking for the target, but on
+average, you'll have to examine half of the elements of the array. Another
+approach is to halve the array, pick the element at the midpoint, compare, then
+repeat with either the lower or upper half. Divide and conquer. When you run
+out of elements to inspect or find the element, stop.
+
+An automated test for this technique could be:
+
+=begin programlisting
+
+    use Test::More;
+
+    my @elements =
+    (
+        1, 5, 6, 19, 48, 77, 997, 1025, 7777, 8192, 9999
+    );
+
+    ok   elem_exists(     1, @elements ),
+            'found first element in array';
+    ok   elem_exists(  9999, @elements ),
+             'found last element in array';
+    ok ! elem_exists(   998, @elements ),
+            'did not find element not in array';
+    ok ! elem_exists(    -1, @elements ),
+            'did not find element not in array';
+    ok ! elem_exists( 10000, @elements ),
+            'did not find element not in array';
+
+    ok   elem_exists(    77, @elements ),
+            'found midpoint element';
+    ok   elem_exists(    48, @elements ),
+            'found end of lower half element';
+    ok   elem_exists(   997, @elements ),
+            'found start of upper half element';
+
+    done_testing();
+
+=end programlisting
+
+Recursion is a deceptively simple concept. Every call to a function in Perl
+creates a new I<call frame>, an internal data structure which represents the
+call itself, including the lexical environment of the function's current
+invocation. This means that a function can call itself, or I<recur>.
+
+To make the previous test pass, write a function called C<elem_exists()> which
+knows how to call itself, halving the list each time:
+
+=begin programlisting
+
+    sub elem_exists
+    {
+        my ($item, @array) = @_;
+
+        # break recursion with no elements to search
+        return unless @array;
+
+        # bias down with odd number of elements
+        my $midpoint = int( (@array / 2) - 0.5 );
+        my $miditem  = $array[ $midpoint ];
+
+        # return true if found
+        return 1 if $item  == $miditem;
+
+        # return false with only one element
+        return   if @array == 1;
+
+        # split the array down and recurse
+        return B<elem_exists>(
+            $item, @array[0 .. $midpoint]
+        ) if $item < $miditem;
+
+        # split the array and recurse
+        return B<elem_exists>(
+             $item, @array[ $midpoint + 1 .. $#array ]
+        );
+    }
+
+=end programlisting
+
+While you I<can> write this code in a procedural way and manage the halves of
+the list yourself, this recursive approach lets Perl manage the bookkeeping.
+
+=head2 Lexicals
+
+Every new invocation of a function creates its own I<instance> of a lexical
+scope. Even though the declaration of C<elem_exists()> creates a single scope
+for the lexicals C<$item>, C<@array>, C<$midpoint>, and C<$miditem>, every
+I<call> to C<elem_exists()>--even recursively--stores the values of those
+lexicals separately.
+
+Not only can C<elem_exists()> call itself, but the lexical variables of each
+invocation are safe and separate:
+
+=begin programlisting
+
+    B<use Carp 'cluck';>
+
+    sub elem_exists
+    {
+        my ($item, @array) = @_;
+
+        B<cluck "[$item] (@array)";>
+
+        # other code follows
+        ...
+    }
+
+=end programlisting
+
+=head2 Tail Calls
+
+Z<tail_calls>
+X<recursion; guard conditions>
+
+One I<drawback> of recursion is that you must get your return conditions
+correct, lest your function call itself an infinite number of times.
+C<elem_exists()> function has several C<return> statements for this reason.
+
+Perl offers a helpful C<Deep recursion on subroutine> warning when it suspects
+runaway recursion. The limit of 100 recursive calls is arbitrary, but often
+useful. Disable this warning with C<no warnings 'recursion'> in the scope of
+the recursive call.
+
+Because each call to a function requires a new call frame and lexical storage
+space, highly-recursive code can use more memory than iterative code. I<Tail
+call elimination> can help.
+
+A I<tail call> is a call to a function which directly returns that function's
+results. These recursive calls to C<elem_exists()>:
+
+=begin programlisting
+
+    # split the array down and recurse
+    return B<elem_exists>(
+        $item, @array[0 .. $midpoint]
+    ) if $item < $miditem;
+
+    # split the array and recurse
+    return B<elem_exists>(
+         $item, @array[ $midpoint + 1 .. $#array ]
+    );
+
+=end programlisting
+
+... are candidates for tail call elimination. This optimization would avoid
+returning to the current call and then returning to the parent call. Instead,
+it returns to the parent call directly.
+
+X<C<goto>>
+X<functions; C<goto>>
+X<builtins; C<goto>>
+
+Unfortunately, Perl 5 does not eliminate tail calls automatically. Do so
+manually with a special form of the C<goto> builtin. Unlike the form which
+often produces spaghetti code, the C<goto> function form replaces the current
+function call with a call to another function. You may use a function by name
+or by reference. To pass different arguments, assign to C<@_> directly:
+
+=begin programlisting
+
+    # split the array down and recurse
+    if ($item < $miditem)
+    {
+        @_ = ($item, @array[0 .. $midpoint]);
+        B<goto &elem_exists;>
+    }
+
+    # split the array up and recurse
+    else
+    {
+        @_ = ($item, @array[$midpoint + 1 .. $#array] );
+        B<goto &elem_exists;>
+    }
+
+=end programlisting
+
+Sometimes optimizations are ugly.
+
+=head1 Pitfalls and Misfeatures
+
+X<functions; misfeatures>
+X<functions; Perl 4>
+X<functions; Perl 1>
+X<C<&>; sigil>
+X<sigils; C<&>>
+X<builtins; C<do>>
+
+Perl 5 still supports old-style invocations of functions, carried over from
+older versions of Perl. While you may now invoke Perl functions by name,
+previous versions of Perl required you to invoke them with a leading ampersand
+(C<&>) character. Perl 1 required you to use the C<do> builtin:
+
+=begin programlisting
+
+    # outdated style; avoid
+    my $result = &calculate_result( 52 );
+
+    # Perl 1 style; avoid
+    my $result = do calculate_result( 42 );
+
+    # crazy mishmash; really truly avoid
+    my $result = do &calculate_result( 42 );
+
+=end programlisting
+
+While the vestigial syntax is visual clutter, the leading ampersand form has
+other surprising behaviors. First, it disables any prototype checking. Second,
+it I<implicitly> passes the contents of C<@_> unmodified unless you specify
+arguments yourself. Both can lead to surprising behavior.
+
+A final pitfall comes from leaving the parentheses off of function calls. The
+Perl 5 parser uses several heuristics to resolve ambiguous barewords and the
+number of parameters passed to a function. Heuristics can be wrong:
+
+=begin programlisting
+
+    # warning; contains a subtle bug
+    ok elem_exists 1, @elements, 'found first element';
+
+=end programlisting
+
+The call to C<elem_exists()> will gobble up the test description intended as
+the second argument to C<ok()>. Because C<elem_exists()> uses a slurpy second
+parameter, this may go unnoticed until Perl produces warnings about comparing a
+non-number (the test description, which it cannot convert into a number) with
+the element in the array.
+
+While extraneous parentheses can hamper readability, thoughtful use of
+parentheses can clarify code and make subtle bugs unlikely.

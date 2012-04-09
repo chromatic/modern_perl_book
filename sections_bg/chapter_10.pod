@@ -1,0 +1,12 @@
+=head0 Perl Beyond Syntax
+
+Baby Perl will only get you so far. Language fluency allows you to use the
+natural patterns and idioms of the language. Effective programmers understand
+how Perl's features interact and combine.
+
+Prepare for the second learning curve of Perl: Perlish thinking. The result is
+concise, powerful, and Perlish code.
+
+L<idioms>
+
+L<globals>

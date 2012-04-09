@@ -1,0 +1,27 @@
+=head0 Functions
+
+X<function>
+X<subroutine>
+
+A I<function> (or I<subroutine>) in Perl is a discrete, encapsulated unit of
+behavior. A program is a collection of little black boxes where the interaction
+of these functions governs the control flow of the program. A function may have
+a name. It may consume incoming information. It may produce outgoing
+information.
+
+Functions are a prime mechanism for abstraction, encapsulation, and re-use in
+Perl 5.
+
+L<functions>
+
+L<scope>
+
+L<anonymous_functions>
+
+L<closures>
+
+L<state>
+
+L<attributes>
+
+L<autoload>

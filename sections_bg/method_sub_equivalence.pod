@@ -1,0 +1,132 @@
+=head1 Method-Function Equivalence
+
+Z<method_sub_equivalence>
+
+X<builtins; C<sub>>
+
+Perl 5's object system is deliberately minimal (L<blessed_references>).
+Because a class is a package, Perl does not distinguish between a function and
+a method stored in a package. The same builtin, C<sub>, declares both.
+Documentation can clarify your intent, but Perl will happily dispatch to a
+function called as a method. Likewise, you can invoke a method as if it were a
+function--fully-qualified, exported, or as a reference--if you pass in your own
+invocant manually.
+
+Invoking the wrong thing in the wrong way causes problems.
+
+=head2 Caller-side
+
+Consider a class with several methods:
+
+=begin programlisting
+
+    package Order;
+
+    use List::Util 'sum';
+
+    ...
+
+    sub calculate_price
+    {
+        my $self = shift;
+        return sum( 0, $self->get_items() );
+    }
+
+=end programlisting
+
+Given an C<Order> object C<$o>, the following invocations of this method I<may>
+seem equivalent:
+
+=begin programlisting
+
+    my $price = $o->calculate_price();
+
+    # broken; do not use
+    my $price = Order::calculate_price( $o );
+
+=end programlisting
+
+Though in this simple case, they produce the same output, the latter violates
+object encapsulation by avoiding method lookup.
+
+X<methods; avoid calling as functions>
+
+If C<$o> were instead a subclass or allomorph (L<roles>) of C<Order> which
+overrode C<calculate_price()>, bypassing method dispatch would call the wrong
+method. Any change to the implementation of C<calculate_price()>, such as a
+modification of inheritance or delegation through C<AUTOLOAD()>--might break
+calling code.
+
+X<methods; calling with references>
+X<C<UNIVERSAL>; C<can()>>
+X<C<can()>>
+
+Perl has one circumstance where this behavior may seem necessary. If you force
+method resolution without dispatch, how do you invoke the resulting method
+reference?
+
+=begin programlisting
+
+    my $meth_ref = $o->can( 'apply_discount' );
+
+=end programlisting
+
+There are two possibilities.  The first is to discard the return value of the
+C<can()> method:
+
+=begin programlisting
+
+    $o->apply_discount() if $o->can( 'apply_discount' );
+
+=end programlisting
+
+The second is to use the reference itself with method invocation syntax:
+
+=begin programlisting
+
+    if (my $meth_ref = $o->can( 'apply_discount' ))
+    {
+        $o->$meth_ref();
+    }
+
+=end programlisting
+
+When C<$meth_ref> contains a function reference, Perl will invoke that
+reference with C<$o> as the invocant. This works even under strictures, as it
+does when invoking a method with a scalar containing its name:
+
+=begin programlisting
+
+    my $name = 'apply_discount';
+    $o->$name();
+
+=end programlisting
+
+There is one small drawback in invoking a method by reference; if the structure
+of the program changes between storing the reference and invoking the
+reference, the reference may no longer refer to the most appropriate method. If
+the C<Order> class has changed such that C<Order::apply_discount> is no longer
+the right method to call, the reference in C<$meth_ref> will not have updated.
+
+When you use this invocation form, limit the scope of the references.
+
+=head2 Callee-side
+
+X<methods; avoid calling as functions>
+X<functions; avoid calling as methods>
+
+Because Perl 5 makes no distinction between functions and methods at the point
+of declaration and because it's I<possible> (however inadvisable) to invoke a
+given function as a function or a method, it's possible to write a function
+callable as either. The core C<CGI> module is a prime offender. Its functions
+apply several heuristics to determine whether their first arguments are
+invocants.
+
+The drawbacks are many. It's difficult to predict exactly which invocants are
+potentially valid for a given method, especially when you may have to deal with
+subclasses. Creating an API that users cannot easily misuse is more difficult
+too, as is your documentation burden. What happens when one part of the project
+uses the procedural interface and another uses the object interface?
+
+If you I<must> provide a separate procedural and OO interface to a library,
+create two separate APIs.
