@@ -48,14 +48,16 @@ __PACKAGE__->$action();
 sub wrap {
   require Text::Wrap;
   no warnings qw(once);
-  $Text::Wrap::columns = 88;
+  local $Text::Wrap::columns = 88;
+  local $Text::Wrap::separator=" \n";
   open(my $f, "<:utf8", $OPTIONS{file});
-  print Text::Wrap::wrap("", " ", <$f>);
+  print Text::Wrap::wrap("", "", <$f>);
 }
 
 sub language {
   say $action;
 }
+
 
 sub update {
   say $action;
