@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 *Предговор
 
 I<Модерен Perl> е начин да се опише как работят най-ефективните програмисти на 
@@ -5,20 +7,16 @@ Perl 5 в света. Те използват идиоми. Те се възпо
 Те показват добър вкус и умения да пишат мощен, лесен за поддръжка, мащабируем,
 стегнат и ефективен код. Вие също можете да придобиете тези умения.
 
-Perl first appeared in 1987 as a simple tool for system administration. Though
-it began by declaring and occupying a comfortable niche between shell scripting
-and C programming, it has become a powerful, general-purpose language family.
-Perl 5 has a solid history of pragmatism and a bright future of polish and
-enhancementN<Perl 6 is a reinvention of programming based on the solid
-principles of Perl, but it's a subject of another book.>.
+Perl се появява за първи път през 1987 като просто средство за системна администрация. 
+Въпреки, че отначало заема удобната ниша между писането на шел-скриптове и програмирането на C, 
+по-късно се превръща в мощен език за програмиране с общо предназначение.
+Историята на Perl 5 е изпълнена с прагматизъм, a бъдещето му с подобрения и блясъкN<Perl 6 е преоткриване на програмирането, основано на здравите принципи на 
+Perl, но е предмет на друга книга.>. 
 
-Over Perl's long history--especially the 17 years of Perl 5--our understanding
-of what makes great Perl programs has changed. While you can write productive
-programs which never take advantage of all the language has to offer, the
-global Perl community has invented, borrowed, enhanced, and polished ideas and
-made them available to anyone willing to learn them.
+Историят на езика е дълга. Разбирането за писане на велики програми на Perl се промени значително 
+за последните 17 години. Може да пишете програми с добра производителност без да се възползвате от пълната функционалност на езика. Но програмистите от световната общност на Perl са изобретили, заели, подобрили и шлифовали идеи и умения, които са предоставили свободно на всеки който иска да ги усвои.
 
-=head1 Running Modern Perl
+=head1 Използване на Модерен Perl
 
 The C<Modern::Perl> module from the CPAN (L<cpan>) asks Perl to warn of dubious
 constructs and typos and will enable new features introduced in modern releases
