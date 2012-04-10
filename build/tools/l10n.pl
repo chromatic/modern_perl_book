@@ -66,21 +66,20 @@ sub update {
 
 =head1 NAME
 
-l10n.pl - a tool to generate new files from originals ready for translation
+l10n.pl - a toolset of helpers for translators
 
 
 =head1 DESCRIPTION
 
-This script will copy all files from the book into a directory 
-named after the language in which you want to translate the book.
-
+This script contains helper functions for automating common tasks during 
+the translation process.
 
 =head1 SYNOPSIS
 
-    #create a copy of the file-tree for translation
-    cd modernperlbooks
-    ./l10n.pl --make=language --language=bg
     
-    #check for updates of the original files and update them
-    ./l10n.pl --make update
-    
+  #text wrapping(format) for translated files
+  cd sections_bg/
+  ../build/tools/l10n.pl --make wrap -f chapter_00.pod    
+
+
+
