@@ -48,15 +48,30 @@ __PACKAGE__->$action();
 sub wrap {
   require Text::Wrap;
   no warnings qw(once);
-  local $Text::Wrap::columns   = 88;
-  local $Text::Wrap::separator = " \n";
+  local $Text::Wrap::columns = 88;
+
   my (@text);
   open(my $fh, "<:encoding(UTF-8)", $OPTIONS{file});
   @text = <$fh>;
   close $fh;
+  @text = map {
+
+    #remove multiple spaces
+    $_ =~ s/\s+/ /gx;
+
+    #add space at end of line if needed
+    $_ =~ s/(\S+)$/$1 /x;
+    $_ =~ s/^[=](.+?)\s+$/=$1/x;
+
+    #clean lines containing spaces only
+    $_ =~ s/^\s+$//x;
+    $_ . $/;
+  } @text;
+  my $text = Text::Wrap::wrap("", "", @text);
+
   open($fh, ">", $OPTIONS{file});
   binmode $fh, ":encoding(UTF-8)";
-  print $fh Text::Wrap::wrap("", "", @text);
+  print $fh $text;
   close $fh;
 }
 
