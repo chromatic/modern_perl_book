@@ -10,7 +10,7 @@ use Data::Dumper;
 
 #init
 local $| = 1;
-binmode STDOUT, ":encoding(utf8)";
+binmode STDOUT, ":encoding(UTF-8)";
 
 our %OPTIONS = ();
 Getopt::Long::Configure("bundling");
@@ -48,10 +48,16 @@ __PACKAGE__->$action();
 sub wrap {
   require Text::Wrap;
   no warnings qw(once);
-  local $Text::Wrap::columns = 88;
-  local $Text::Wrap::separator=" \n";
-  open(my $f, "<:utf8", $OPTIONS{file});
-  print Text::Wrap::wrap("", "", <$f>);
+  local $Text::Wrap::columns   = 88;
+  local $Text::Wrap::separator = " \n";
+  my (@text);
+  open(my $fh, "<:encoding(UTF-8)", $OPTIONS{file});
+  @text = <$fh>;
+  close $fh;
+  open($fh, ">", $OPTIONS{file});
+  binmode $fh, ":encoding(UTF-8)";
+  print $fh Text::Wrap::wrap("", "", @text);
+  close $fh;
 }
 
 sub language {
