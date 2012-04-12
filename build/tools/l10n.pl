@@ -49,7 +49,7 @@ sub wrap {
   require Text::Wrap;
   no warnings qw(once);
   local $Text::Wrap::columns = 88;
-  local $Text::Wrap::separator = " \n";
+
   my (@text);
   open(my $fh, "<:encoding(UTF-8)", $OPTIONS{file});
   @text = <$fh>;
@@ -70,7 +70,7 @@ sub wrap {
 
     #clean lines containing spaces only
     $_ =~ s/^\s+$//x;
-    $_ . $/;
+    $_;
   } @text;
 
 =pod
@@ -78,7 +78,7 @@ sub wrap {
 
   open($fh, ">", $OPTIONS{file});
   binmode $fh, ":encoding(UTF-8)";
-  print $fh @text;
+  print $fh join($/,@text);
   close $fh;
 }
 
