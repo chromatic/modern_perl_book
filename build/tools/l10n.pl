@@ -49,11 +49,16 @@ sub wrap {
   require Text::Wrap;
   no warnings qw(once);
   local $Text::Wrap::columns = 88;
-
+  local $Text::Wrap::separator = " \n";
   my (@text);
   open(my $fh, "<:encoding(UTF-8)", $OPTIONS{file});
   @text = <$fh>;
   close $fh;
+  
+  my $text = Text::Wrap::wrap("", "", @text);
+  $text =~ s/\n(?:\s*\n)+/\n\n/g;
+  @text = split /\n/, $text;
+  my $c =0;
   @text = map {
 
     #remove multiple spaces
@@ -67,11 +72,13 @@ sub wrap {
     $_ =~ s/^\s+$//x;
     $_ . $/;
   } @text;
-  my $text = Text::Wrap::wrap("", "", @text);
+
+=pod
+=cut
 
   open($fh, ">", $OPTIONS{file});
   binmode $fh, ":encoding(UTF-8)";
-  print $fh $text;
+  print $fh @text;
   close $fh;
 }
 

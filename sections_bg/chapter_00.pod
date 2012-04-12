@@ -4,13 +4,11 @@
 
 Книгата I<Модерен Perl> е начин да се опише как работят най-ефективните в света 
 програмисти на Perl 5. Те използват идиоми. Те се възползват от CPAN. 
-Те показват добър вкус и умения да пишат мощен, лесен за поддръжка, мащабируем, стегнат
-
-
+Те показват добър вкус и умения да пишат мощен, лесен за поддръжка, мащабируем, стегнат 
 
 и ефективен код. Вие също можете да придобиете тези умения. 
-
 Perl се появява за първи път през 1987 като просто средство за системна администрация. 
+
 Въпреки, че отначало заема удобната ниша между писането на шел-скриптове и 
 програмирането на C, по-късно се превръща в мощен език за програмиране с общо 
 предназначение. Историята на Perl 5 е изпълнена с прагматизъм, a бъдещето му с 
@@ -68,24 +66,26 @@ B<done_testing();>
 
 =end programlisting
 
-Когато пиша тази книга, текущтата стабилана версия на Perl 5 е 5.14. 
-Примерите в книгата работят най-добре с Perl 5.12.0 или по нов. 
-Много от примерите ще работят и на по-стари версии на Perl 5 с малки промени, 
-но не разчитайте на нещо отпреди 5.10.0. 
+Като пиша тази книга, текущтата стабилана версия на Perl 5 е 5.14. Примерите в 
+книгата работят най-добре с Perl 5.12.0 или по нов. Много от примерите ще работят 
+и на по-стари версии на Perl 5 с малки промени, а с версии преди 5.10.0 ще изпитате 
+значителни затруднения. 
 
 X<Strawberry Perl> 
 X<ActivePerl> 
 X<perlbrew> 
 X<CPAN; C<App::perlbrew>> 
 
-If you have no Perl 5 installed (or if you have an old version installed), you 
-can install a newer release yourself. Windows users, download Strawberry Perl 
-from U<http://www.strawberryperl.com/> or ActivePerl from 
-U<http://www.activestate.com/activeperl>. Users of other operating systems with 
-Perl 5 already installed (and a C compiler and the other development tools), 
-start by installing the CPAN module C<App::perlbrew>N<See 
-U<http://search.cpan.org/perldoc?App::perlbrew> for installation 
-instructions.>. 
+Ако на компютъра ви не е инсталиран Perl 5 (или версията ви е по-стара), можете сами да 
+
+инсталирате по-ново издание. Потребителите на Windows могат да си свалят Strawberry 
+Perl (Perl Ягодка) от U<http://www.strawberryperl.com/> или ActivePerl от 
+U<http://www.activestate.com/activeperl>. 
+Тези, които ползват други операционни системи, където Perl 5 е вече инсталиран, може 
+първо да 
+си инсталират от CPAN модула C<App::perlbrew>N<Вижте инструкциите за инсталиране 
+на адрес 
+U<http://search.cpan.org/perldoc?App::perlbrew>>. 
 
 C<perlbrew> allows you to install and manage multiple versions of Perl 5. This 
 allows you to switch between versions of Perl 5 as well as to install Perl 5 
