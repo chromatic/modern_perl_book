@@ -78,7 +78,7 @@ sub wrap {
 
   open($fh, ">", $OPTIONS{file});
   binmode $fh, ":encoding(UTF-8)";
-  print $fh join($/,@text);
+  print $fh join($/,@text,$/);
   close $fh;
 }
 
