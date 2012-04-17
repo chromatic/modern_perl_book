@@ -1,12 +1,13 @@
-=head0 Perl Beyond Syntax
+=head0 Perl Одвъд синтаксиса
 
-Baby Perl will only get you so far. Language fluency allows you to use the
-natural patterns and idioms of the language. Effective programmers understand
-how Perl's features interact and combine.
+Бебешкия Perl ще ви доведе само дотук. Владеенето на езика ви позволява да ползвате 
+неговите наложилите се модели на писане и идиоми. Ефективните програмисти знаят как си 
+взаимодействат и се комбинират свойствата на езика. 
 
-Prepare for the second learning curve of Perl: Perlish thinking. The result is
-concise, powerful, and Perlish code.
+Пригответе се за следващото предизвикателство в изучаването Perl. Мисленето на Perl. 
+Резултатът е сбит, мощен и по-Perl код. 
 
-L<idioms>
+L<idioms> 
 
-L<globals>
+L<globals> 
+
