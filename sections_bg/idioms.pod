@@ -1,0 +1,531 @@
+=head1 Idioms
+
+Z<idioms>
+
+Every language--programming or natural--has common patterns of expression, or
+I<idioms>. The earth revolves, but we speak of the sun rising or setting. We
+brag about clever hacks and cringe at nasty hacks as we sling code.
+
+Perl idioms aren't quite language features or design techniques. They're
+mannerisms and mechanisms that, taken together, give your code a Perlish
+accent. You don't have to use them, but they play to Perl's strengths.
+
+=head2 The Object as C<$self>
+
+X<C<$self>>
+X<variables; C<$self>>
+X<objects; invocant>
+X<methods; invocant>
+X<CPAN; C<MooseX::Method::Signatures>>
+
+Perl 5's object system (L<moose>) treats the invocant of a method as a mundane
+parameter. Regardless of whether you invoke a class or an instance method, the
+first element of C<@_> is always a method's invocant. By convention, most Perl
+5 code uses C<$class> as the name of the class method invocant and C<$self> for
+the name of the object invocant. This convention is strong enough that useful
+extensions such as C<MooseX::Method::Signatures> assume you will use C<$self>
+as the name of object invocants.
+
+=head2 Named Parameters
+
+X<parameters; named>
+X<arguments; named>
+X<CPAN; C<signatures>>
+X<CPAN; C<MooseX::MultiMethods>>
+
+List processing is a fundamental component of Perl's expression evaluation.
+The ability for Perl programmers to chain expressions which evaluate to
+variable-length lists provides countless opportunities to manipulate data
+effectively.
+
+While Perl 5's argument passing simplicity (everything flattens into C<@_>) is
+occasionally too simple, assigning from C<@_> in list context allows you to
+unpack named parameters as pairs. The fat comma (L<declaring_hashes>) operator
+turns an ordinary list into an obvious list of pairs of arguments:
+
+=begin programlisting
+
+    make_ice_cream_sundae(
+        whipped_cream => 1,
+        sprinkles     => 1,
+        banana        => 0,
+        ice_cream     => 'mint chocolate chip',
+    );
+
+=end programlisting
+
+The callee side can unpack these parameters into a hash and treat the hash as
+if it were a single argument:
+
+=begin programlisting
+
+    sub make_ice_cream_sundae
+    {
+        B<my %args    = @_;>
+        my $dessert = get_ice_cream( $args{ice_cream} );
+
+        ...
+    }
+
+=end programlisting
+
+=begin tip Hash or Hash Ref?
+
+I<Perl Best Practices> suggests passing hash references instead. This allows
+Perl to perform caller-side validation of the hash reference.
+
+=end tip
+
+This technique works well with C<import()> (L<importing>) or other methods;
+process as many parameters as you like before slurping the remainder into a
+hash:
+
+=begin programlisting
+
+    sub import
+    {
+        B<my ($class, %args)  = @_;>
+        my $calling_package = caller();
+
+        ...
+    }
+
+=end programlisting
+
+=head2 The Schwartzian Transform
+
+Z<schwartzian_transform>
+
+X<Schwartzian transform>
+X<C<map>; Schwartzian transform>
+X<C<sort>; Schwartzian transform>
+X<builtins; C<map>>
+X<builtins; C<sort>>
+
+The I<Schwartzian transform> is an elegant demonstration of Perl's pervasive
+list handling as an idiom handily borrowed from the Lisp family of languages.
+
+Suppose you have a Perl hash which associates the names of your co-workers with
+their phone extensions:
+
+=begin programlisting
+
+    my %extensions =
+    (
+        '001' => 'Armon',
+        '002' => 'Wesley',
+        '003' => 'Gerald',
+        '005' => 'Rudy',
+        '007' => 'Brandon',
+        '008' => 'Patrick',
+        '011' => 'Luke',
+        '012' => 'LaMarcus',
+        '017' => 'Chris',
+        '020' => 'Maurice',
+        '023' => 'Marcus',
+        '024' => 'Andre',
+        '052' => 'Greg',
+        '088' => 'Nic',
+    );
+
+=end programlisting
+
+=begin tip Hash Key Quoting Rules
+
+Fat comma hash key quoting only works on things that look like barewords; these
+keys look like numbers--octal numbers, in specific, with the leading zero. Yes,
+almost everyone makes this mistake.
+
+=end tip
+
+To sort this list by name alphabetically, you must sort the hash by its values,
+not its keys. Getting the values sorted correctly is easy:
+
+=begin programlisting
+
+    my @sorted_names = sort values %extensions;
+
+=end programlisting
+
+... but you need an extra step to preserve the association of names and
+extensions, hence the Schwartzian transform. First, convert the hash into a
+list of data structures which is easy to sort--in this case, two-element
+anonymous arrays:
+
+=begin programlisting
+
+    my @pairs = map  { [ $_, $extensions{$_} ] }
+                keys %extensions;
+
+=end programlisting
+
+C<sort> takes the list of anonymous arrays and compares their second elements
+(the names) as strings:
+
+=begin programlisting
+
+    my @sorted_pairs = sort { $a->[1] cmp $b->[1] }
+                            @pairs;
+
+=end programlisting
+
+X<C<$a>>
+X<C<$b>>
+X<builtins; C<sort>>
+
+The block provided to C<sort> takes its arguments in two package-scoped
+(L<scope>) variables C<$a> and C<$b>N<See C<perldoc -f sort> for an extensive
+discussion of the implications of this scoping.>. The C<sort> block takes its
+arguments two at a time; the first becomes the contents of C<$a> and the second
+the contents of C<$b>. If C<$a> should come before C<$b> in the results, the
+block must return -1. If both values are sufficiently equal in the sorting
+terms, the block must return 0. Finally, if C<$a> should come after C<$b> in
+the results, the block should return 1. Any other return values are errors.
+
+=begin tip Know Your Data
+
+Reversing the hash I<in place> would work if no one had the same name.  This
+particular data set presents no such problem, but code defensively.
+
+=end tip
+
+X<operators; C<cmp>>
+X<< operators; C<< <=> >> >>
+
+The C<cmp> operator performs string comparisons and the C<< <=> >> performs
+numeric comparisons.
+
+Given C<@sorted_pairs>, a second C<map> operation converts the data structure
+to a more usable form:
+
+=begin programlisting
+
+    my @formatted_exts = map { "$_->[1], ext. $_->[0]" }
+                             @sorted_pairs;
+
+=end programlisting
+
+... and now you can print the whole thing:
+
+=begin programlisting
+
+    say for @formatted_exts;
+
+=end programlisting
+
+The Schwartzian transformation itself uses Perl's pervasive list processing to
+get rid of the temporary variables. The combination is:
+
+=begin programlisting
+
+    say for
+        map  { " $_->[1], ext. $_->[0]"          }
+        sort {   $a->[1] cmp   $b->[1]           }
+        map  { [ $_      =>    $extensions{$_} ] }
+            keys %extensions;
+
+=end programlisting
+
+Read the expression from right to left, in the order of evaluation. For each
+key in the extensions hash, make a two-item anonymous array containing the key
+and the value from the hash. Sort that list of anonymous arrays by their second
+elements, the values from the hash. Format a string of output from those sorted
+arrays.
+
+The Schwartzian transform pipeline of C<map>-C<sort>-C<map> transforms a data
+structure into another form easier for sorting and then transforms it back into
+another form.
+
+While this sorting example is simple, consider the case of calculating a
+cryptographic hash for a large file. The Schwartzian transform is especially
+useful because it effectively caches any expensive calculations by performing
+them once in the rightmost C<map>.
+
+=head2 Easy File Slurping
+
+Z<easy_file_slurping>
+
+X<builtins; C<local>>
+X<C<$/>>
+X<files; slurping>
+X<global variables; C<$/>>
+
+C<local> is essential to managing Perl 5's magic global variables. You must
+understand scope (L<scope>) to use C<local> effectively--but if you do, you can
+use tight and lightweight scopes in interesting ways. For example, to slurp
+files into a scalar in a single expression:
+
+=begin programlisting
+
+    my $file = do { local $/ = <$fh> };
+
+    # or
+    my $file = do { local $/; <$fh> };
+
+    # or
+    my $file; { local $/; $file = <$fh> };
+
+=end programlisting
+
+C<$/> is the input record separator.  C<local>izing it sets its value to
+C<undef>, pending assignment. That C<local>ization takes place I<before> the
+assignment. As the value of the separator is undefined, Perl happily reads the
+entire contents of the filehandle in one swoop and assigns that value to C<$/>.
+Because a C<do> block evaluates to the value of the last expression evaluated
+within the block, this evaluates to the value of the assignment: the contents
+of the file. Even though C<$/> immediately reverts to its previous state at the
+end of the block, C<$file> now contains the contents of the file.
+
+The second example contains no assignment and merely returns the single line
+read from the filehandle.
+
+The third example avoids a second copy of the string containing the file's
+contents; it's not as pretty, but it uses the least amount of memory.
+
+=begin tip C<File::Slurp>
+
+X<CPAN; C<File::Slurp>>
+
+This useful example is admittedly maddening for people who don't understand
+both C<local> and scoping. The C<File::Slurp> module from the CPAN is a worthy
+(and often faster) alternative.
+
+=end tip
+
+=head2 Handling Main
+
+Perl requires no special syntax for creating closures (L<closures>); you can
+close over a lexical variable inadvertently. Many programs commonly set up
+several file-scoped lexical variables before handing off processing to other
+functions. It's tempting to use these variables directly, rather than passing
+values to and returning values from functions, especially as programs grow.
+Unfortunately, these programs may come to rely on subtleties of what happens
+when during Perl 5's compilation process; a variable you I<thought> would be
+initialized to a specific value may not get initialized until much later.
+
+To avoid this, wrap the main code of your program in a simple function,
+C<main()>. Encapsulate your variables to their proper scopes. Then add a single
+line to the beginning of your program, after you've used all of the modules and
+pragmas you need:
+
+=begin programlisting
+
+    #!/usr/bin/perl
+
+    use Modern::Perl;
+
+    ...
+
+    B<exit main( @ARGS );>
+
+=end programlisting
+
+Calling C<main()> I<before> anything else in the program forces you to be
+explicit about initialization and order of compilation. Calling C<exit> with
+C<main()>'s return value prevents any other bare code from running, though be
+sure to return C<0> from C<main()> on successful execution.
+
+=head2 Controlled Execution
+
+Z<controlled_execution>
+
+The effective difference between a program and a module is in its intended use.
+Users invoke programs directly, while programs load modules after execution has
+already begun. Yet a module is Perl code, in the same way that a program is.
+Making a module executable is easy.  So is making a program behave as a module
+(useful for testing parts of an existing program without formally making a
+module). All you need to do is to discover I<how> Perl began to execute a piece
+of code.
+
+X<builtins; C<caller>>
+
+C<caller>'s single optional argument is the number of call frames
+(L<recursion>) which to report. C<caller(0)> reports information about the
+current call frame. To allow a module to run correctly as a program I<or> a
+module, put all executable code in functions, add a C<main()> function, and
+write a single line at the start of the module:
+
+=begin programlisting
+
+    main() unless caller(0);
+
+=end programlisting
+
+If there's I<no> caller for the module, someone invoked it directly as a
+program (with C<perl path/to/Module.pm> instead of C<use Module;>).
+
+=begin tip Improved Caller Inspection
+
+The eighth element of the list returned from C<caller> in list context is a
+true value if the call frame represents C<use> or C<require> and C<undef>
+otherwise. While that's more accurate, few people use it.
+
+=end tip
+
+=head2 Postfix Parameter Validation
+
+Z<postfix_parameter_validation>
+
+X<CPAN; C<Params::Validate>>
+X<CPAN; C<MooseX::Params::Validate>>
+
+The CPAN has several modules which help verify the parameters of your
+functions; C<Params::Validate> and C<MooseX::Params::Validate> are two good
+options. Simple validation is easy even without those modules.
+
+Suppose your function takes two arguments, no more and no less. You I<could>
+write:
+
+=begin programlisting
+
+    use Carp 'croak';
+
+    sub groom_monkeys
+    {
+        if (@_ != 2)
+        {
+            croak 'Grooming requires two monkeys!';
+        }
+        ...
+    }
+
+=end programlisting
+
+... but from a linguistic perspective, the consequences are more important than
+the check and deserve to be at the I<start> of the expression:
+
+=begin programlisting
+
+    croak 'Grooming requires two monkeys!' if @_ != 2;
+
+=end programlisting
+
+... which may read more simply as:
+
+=begin programlisting
+
+    croak 'Grooming requires two monkeys!'
+        unless @_ == 2;
+
+=end programlisting
+
+This early return technique--especially with postfix conditionals--can simplify
+the rest of the code. Each such assertion is effectively a single row in a
+truth table.
+
+=head2 Regex En Passant
+
+Z<regex_en_passant>
+
+X<regex; modification>
+X<regex; substitution>
+
+Many Perl 5 idioms rely on the fact that expressions evaluate to values:
+
+=begin programlisting
+
+    say my $ext_num = my $extension = 42;
+
+=end programlisting
+
+While that code is obviously clunky, it demonstrates how to use the value of
+one expression in another expression.  This isn't a new idea; you've likely
+used the return value of a function in a list or as an argument to another
+function before.  You may not have realized its implications.
+
+X<regex; capture>
+
+Suppose you want to extract a first name from a first name plus surname
+combination with a precompiled regular expression in C<$first_name_rx>:
+
+=begin programlisting
+
+    my ($first_name) = $name =~ /($first_name_rx)/;
+
+=end programlisting
+
+In list context, a successful regex match returns a list of all captures
+(L<regex_captures>, and Perl assigns the first one to C<$first_name>.
+
+To modify the name, perhaps removing all non-word characters to create a useful
+user name for a system account, you could write:
+
+=begin programlisting
+
+    (my $normalized_name = $name) =~ tr/A-Za-z//dc;
+
+=end programlisting
+
+=begin tip /r in Perl 5.14
+
+Perl 5.14 added the non-destructive substitution modifier C</r>, so that you
+can write C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
+
+=end tip
+
+First, assign the value of C<$name> to C<$normalized_name>, as the parentheses
+affect the precedence so that assignment happens first.  The assignment
+expression evaluates to the I<variable> C<$normalized_name>, so that that
+variable becomes the first operand to the transliteration operator.
+
+This technique works on other in-place modification operators:
+
+=begin programlisting
+
+    my $age = 14;
+    (my $next_age = $age)++;
+
+    say "Next year I will be $next_age";
+
+=end programlisting
+
+=head2 Unary Coercions
+
+Z<unary_coercions>
+
+X<coercion>
+X<types>
+
+Perl 5's type system almost always does the right thing when you choose the
+correct operators. Use the string concatenation operator, and Perl will treat
+both operands as strings. Use the addition operator and Perl will treat both
+operands as numeric.
+
+Occasionally you have to give Perl a hint about what you mean with a I<unary
+coercion> to force the evaluation of a value a specific way.
+
+X<unary conversions; numeric>
+
+To ensure that Perl treats a value as numeric, add zero:
+
+=begin programlisting
+
+    my $numeric_value = 0 + $value;
+
+=end programlisting
+
+X<unary conversions; boolean>
+
+To ensure that Perl treats a value as boolean, double negate it:
+
+=begin programlisting
+
+    my $boolean_value = !! $value;
+
+=end programlisting
+
+X<unary conversions; string>
+
+To ensure that Perl treats a value as a string, concatenate it with the empty
+string:
+
+=begin programlisting
+
+    my $string_value = '' . $value;
+
+=end programlisting
+
+Though the need for these coercions is vanishingly rare, you should understand
+these idioms if you encounter them.
+While it may look like it would be safe to remove a "useless"
+C<+ 0> from an expression, doing so may well break the code.
