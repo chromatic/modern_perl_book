@@ -2,11 +2,11 @@
 
 Z<idioms> 
 
-Всеки език --човешки или програмен-- има общоприети изрази, наричани още идиоми. Земята 
+Всеки език --човешки или програмен-- има общоприети изрази, наричани още идиоми. Земята
 се върти, но ние говорим за изгреви и залези. Хвалим се и се умилкваме около мръсни и 
-остроумни хакове докато размятаме код наляво и надясно. 
+остроумни хакове докато размятаме код наляво и надясно.
 
-Идиомите в Perl не са точно свойства на езика или пък техники на дизайн. Те са по-скоро 
+Идиомите в Perl не са точно свойства на езика или пък техники на дизайн. Те са по-скоро
 маниернечене и трикове, които, взети заедно, правят кода да изглежда повече като 
 написан на Perl. Използването им не е задължително, но са част от силата на Perl. 
 
@@ -18,7 +18,7 @@ X<objects; invocant>
 X<methods; invocant> 
 X<CPAN; C<MooseX::Method::Signatures>> 
 
-Системата (L<moose>) за писане на обектно-ориентиран Perl 5 третира извикващия клас или 
+Системата (L<moose>) за писане на обектно-ориентиран Perl 5 третира извикващия клас или
 обект като обикновен параметър на метода. Независимо дали извиквате метод на клас или 
 метод на обект, първият елемент от масива с параметрите C<@_> е това, което извиква 
 метода - клас или обект. По конвенция в повечето Perl 5-код се използват имена на 
@@ -46,12 +46,12 @@ turns an ordinary list into an obvious list of pairs of arguments:
 
 =begin programlisting
 
- make_ice_cream_sundae( 
- whipped_cream => 1, 
- sprinkles => 1, 
- banana => 0, 
- ice_cream => 'mint chocolate chip', 
- ); 
+    make_ice_cream_sundae(
+	whipped_cream => 1,
+	sprinkles     => 1,
+	banana	      => 0,
+	ice_cream     => 'mint chocolate chip',
+    );
 
 =end programlisting
 
@@ -60,13 +60,13 @@ if it were a single argument:
 
 =begin programlisting
 
- sub make_ice_cream_sundae 
- { 
- B<my %args = @_;> 
- my $dessert = get_ice_cream( $args{ice_cream} ); 
+    sub make_ice_cream_sundae
+    {
+	B<my %args    = @_;>
+	my $dessert = get_ice_cream( $args{ice_cream} );
 
- ... 
- } 
+	...
+    }
 
 =end programlisting
 
@@ -83,13 +83,13 @@ hash:
 
 =begin programlisting
 
- sub import 
- { 
- B<my ($class, %args) = @_;> 
- my $calling_package = caller(); 
+    sub import
+    {
+	B<my ($class, %args)  = @_;>
+	my $calling_package = caller();
 
- ... 
- } 
+	...
+    }
 
 =end programlisting
 
@@ -111,23 +111,23 @@ their phone extensions:
 
 =begin programlisting
 
- my %extensions = 
- ( 
- '001' => 'Armon', 
- '002' => 'Wesley', 
- '003' => 'Gerald', 
- '005' => 'Rudy', 
- '007' => 'Brandon', 
- '008' => 'Patrick', 
- '011' => 'Luke', 
- '012' => 'LaMarcus', 
- '017' => 'Chris', 
- '020' => 'Maurice', 
- '023' => 'Marcus', 
- '024' => 'Andre', 
- '052' => 'Greg', 
- '088' => 'Nic', 
- ); 
+    my %extensions =
+    (
+	'001' => 'Armon',
+	'002' => 'Wesley',
+	'003' => 'Gerald',
+	'005' => 'Rudy',
+	'007' => 'Brandon',
+	'008' => 'Patrick',
+	'011' => 'Luke',
+	'012' => 'LaMarcus',
+	'017' => 'Chris',
+	'020' => 'Maurice',
+	'023' => 'Marcus',
+	'024' => 'Andre',
+	'052' => 'Greg',
+	'088' => 'Nic',
+    );
 
 =end programlisting
 
@@ -144,7 +144,7 @@ not its keys. Getting the values sorted correctly is easy:
 
 =begin programlisting
 
- my @sorted_names = sort values %extensions; 
+    my @sorted_names = sort values %extensions; 
 
 =end programlisting
 
@@ -155,8 +155,8 @@ anonymous arrays:
 
 =begin programlisting
 
- my @pairs = map { [ $_, $extensions{$_} ] } 
- keys %extensions; 
+    my @pairs = map  { [ $_, $extensions{$_} ] }
+		keys %extensions;
 
 =end programlisting
 
@@ -165,8 +165,8 @@ C<sort> takes the list of anonymous arrays and compares their second elements
 
 =begin programlisting
 
- my @sorted_pairs = sort { $a->[1] cmp $b->[1] } 
- @pairs; 
+    my @sorted_pairs = sort { $a->[1] cmp $b->[1] }
+			    @pairs;
 
 =end programlisting
 
@@ -201,8 +201,8 @@ to a more usable form:
 
 =begin programlisting
 
- my @formatted_exts = map { "$_->[1], ext. $_->[0]" } 
- @sorted_pairs; 
+    my @formatted_exts = map { "$_->[1], ext. $_->[0]" }
+			     @sorted_pairs;
 
 =end programlisting
 
@@ -210,7 +210,7 @@ to a more usable form:
 
 =begin programlisting
 
- say for @formatted_exts; 
+    say for @formatted_exts;
 
 =end programlisting
 
@@ -219,11 +219,11 @@ get rid of the temporary variables. The combination is:
 
 =begin programlisting
 
- say for 
- map { " $_->[1], ext. $_->[0]" } 
- sort { $a->[1] cmp $b->[1] } 
- map { [ $_ => $extensions{$_} ] } 
- keys %extensions; 
+    say for
+	map  { " $_->[1], ext. $_->[0]" 	 }
+	sort {	 $a->[1] cmp   $b->[1]		 }
+	map  { [ $_	 =>    $extensions{$_} ] }
+	    keys %extensions;
 
 =end programlisting
 
@@ -258,13 +258,13 @@ files into a scalar in a single expression:
 
 =begin programlisting
 
- my $file = do { local $/ = <$fh> }; 
+    my $file = do { local $/ = <$fh> };
 
- # or 
- my $file = do { local $/; <$fh> }; 
+    # or
+    my $file = do { local $/; <$fh> };
 
- # or 
- my $file; { local $/; $file = <$fh> }; 
+    # or
+    my $file; { local $/; $file = <$fh> };
 
 =end programlisting
 
@@ -311,13 +311,13 @@ pragmas you need:
 
 =begin programlisting
 
- #!/usr/bin/perl 
+    #!/usr/bin/perl
 
- use Modern::Perl; 
+    use Modern::Perl;
 
- ... 
+    ...
 
- B<exit main( @ARGS );> 
+    B<exit main( @ARGS );>
 
 =end programlisting
 
@@ -348,7 +348,7 @@ write a single line at the start of the module:
 
 =begin programlisting
 
- main() unless caller(0); 
+    main() unless caller(0);
 
 =end programlisting
 
@@ -379,16 +379,16 @@ write:
 
 =begin programlisting
 
- use Carp 'croak'; 
+    use Carp 'croak';
 
- sub groom_monkeys 
- { 
- if (@_ != 2) 
- { 
- croak 'Grooming requires two monkeys!'; 
- } 
- ... 
- } 
+    sub groom_monkeys
+    {
+	if (@_ != 2)
+	{
+	    croak 'Grooming requires two monkeys!';
+	}
+	...
+    }
 
 =end programlisting
 
@@ -397,7 +397,7 @@ the check and deserve to be at the I<start> of the expression:
 
 =begin programlisting
 
- croak 'Grooming requires two monkeys!' if @_ != 2; 
+    croak 'Grooming requires two monkeys!' if @_ != 2;
 
 =end programlisting
 
@@ -405,8 +405,8 @@ the check and deserve to be at the I<start> of the expression:
 
 =begin programlisting
 
- croak 'Grooming requires two monkeys!' 
- unless @_ == 2; 
+    croak 'Grooming requires two monkeys!'
+	unless @_ == 2;
 
 =end programlisting
 
@@ -425,7 +425,7 @@ Many Perl 5 idioms rely on the fact that expressions evaluate to values:
 
 =begin programlisting
 
- say my $ext_num = my $extension = 42; 
+    say my $ext_num = my $extension = 42;
 
 =end programlisting
 
@@ -441,7 +441,7 @@ combination with a precompiled regular expression in C<$first_name_rx>:
 
 =begin programlisting
 
- my ($first_name) = $name =~ /($first_name_rx)/; 
+    my ($first_name) = $name =~ /($first_name_rx)/;
 
 =end programlisting
 
@@ -453,7 +453,7 @@ user name for a system account, you could write:
 
 =begin programlisting
 
- (my $normalized_name = $name) =~ tr/A-Za-z//dc; 
+    (my $normalized_name = $name) =~ tr/A-Za-z//dc;
 
 =end programlisting
 
@@ -473,10 +473,10 @@ This technique works on other in-place modification operators:
 
 =begin programlisting
 
- my $age = 14; 
- (my $next_age = $age)++; 
+    my $age = 14;
+    (my $next_age = $age)++;
 
- say "Next year I will be $next_age"; 
+    say "Next year I will be $next_age";
 
 =end programlisting
 
@@ -501,7 +501,7 @@ To ensure that Perl treats a value as numeric, add zero:
 
 =begin programlisting
 
- my $numeric_value = 0 + $value; 
+    my $numeric_value = 0 + $value;
 
 =end programlisting
 
@@ -511,7 +511,7 @@ To ensure that Perl treats a value as boolean, double negate it:
 
 =begin programlisting
 
- my $boolean_value = !! $value; 
+    my $boolean_value = !! $value;
 
 =end programlisting
 
@@ -522,7 +522,7 @@ string:
 
 =begin programlisting
 
- my $string_value = '' . $value; 
+    my $string_value = '' . $value;
 
 =end programlisting
 
@@ -530,4 +530,3 @@ Though the need for these coercions is vanishingly rare, you should understand
 these idioms if you encounter them. 
 While it may look like it would be safe to remove a "useless" 
 C<+ 0> from an expression, doing so may well break the code. 
-

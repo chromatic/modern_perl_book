@@ -52,33 +52,13 @@ sub wrap {
 
   my (@text);
   open(my $fh, "<:encoding(UTF-8)", $OPTIONS{file});
-  @text = <$fh>;
+  my $text ='';
+  {local $/;$text= <$fh>;}
   close $fh;
-  
-  my $text = Text::Wrap::wrap("", "", @text);
-  $text =~ s/\n(?:\s*\n)+/\n\n/g;
-  @text = split /\n/, $text;
-  my $c =0;
-  @text = map {
-
-    #remove multiple spaces
-    $_ =~ s/\s+/ /gx;
-
-    #add space at end of line if needed
-    $_ =~ s/(\S+)$/$1 /x;
-    $_ =~ s/^[=](.+?)\s+$/=$1/x;
-
-    #clean lines containing spaces only
-    $_ =~ s/^\s+$//x;
-    $_;
-  } @text;
-
-=pod
-=cut
 
   open($fh, ">", $OPTIONS{file});
   binmode $fh, ":encoding(UTF-8)";
-  print $fh join($/,@text,$/);
+  print $fh Text::Wrap::wrap("", "", $text);
   close $fh;
 }
 
