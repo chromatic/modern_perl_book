@@ -19,15 +19,15 @@ C<perldoc> върви с всяка пълна инсталация на Perl 5N
 X<CPAN>
 X<metacpan>
 
-U<http://perldoc.perl.org/> hosts recent versions of the Perl documentation.
-CPAN indexes at U<http://search.cpan.org/> and U<http://metacpan.org/> provide
-documentation for all CPAN modules. Other Perl 5 distributions such as
-ActivePerl and Strawberry Perl provide local documentation in HTML formats.
+На U<http://perldoc.perl.org/> ще намерите документация за по-новите
+версии на Perl. На U<http://search.cpan.org/> и U<http://metacpan.org/> ще
+намерите документация за всички CPAN-модули. Някои дистрибуциии на Perl 5 като
+ActivePerl и Strawberry Perl вървят с документация в HTML формат.
 
 =end sidebar
 
-Use C<perldoc> to read the documentation for a module or part of the core
-documentation:
+Ето как можете да ползвате C<perldoc> на командния ред, за да четете
+документацията за даден модул или документацията на езика:
 
 =begin screen
 
@@ -37,13 +37,12 @@ documentation:
 
 =end screen
 
-The first example displays the documentation embedded within the C<List::Util>
-module. The second example displays a pure documentation file, in this case the
-table of contents of the core documentation. The third example displays a pure
-documentation file included as part of a CPAN distribution (L<moose>).
-C<perldoc> hides these details; there's no distinction between reading the
-documentation for a core library such as C<Data::Dumper> or one installed from
-the CPAN.
+Ако изпълните първия пример ще видите вградената документация на
+модула C<List::Util>. При втория пример ще видите файл със съдържанието на
+основната документация. Третия пример е също документационен файл, но от
+CPAN-дистрибуцията (L<moose>). C<perldoc> не показва тия подробности. Няма как
+да се разбере дали четете документация на модул от основната дистрибуция,
+като C<Data::Dumper>, или на някой, инсталиран от CPAN.
 
 The standard documentation template includes a description of the module,
 demonstrates sample uses, and then contains a detailed explanation of the
