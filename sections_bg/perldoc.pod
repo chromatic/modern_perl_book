@@ -44,20 +44,24 @@ CPAN-дистрибуцията (L<moose>). C<perldoc> не показва ти�
 да се разбере дали четете документация на модул от основната дистрибуция,
 като C<Data::Dumper>, или на някой, инсталиран от CPAN.
 
-The standard documentation template includes a description of the module,
-demonstrates sample uses, and then contains a detailed explanation of the
-module and its interface. While the amount of documentation varies by author,
-the form of the documentation is remarkably consistent.
+Стандартният шаблон за документацияN<Най-вероятно авторът е имал предвид
+препоръките и обясненията в U<http://perldoc.perl.org/perlpodstyle.html>
+или генерираните шаблони от помощните програми C<h2xs> и
+C<module-starter>(бел.прев.).> включва описание на модула, примерен програмен
+код за ползването му, следвани от подробно описание на интерфейса.
+Всеки автор пише различна по големина и подробност документация, но всички
+спазват изумително стриктно конвенцията.
 
-=begin tip How to Read the Documentation
+=begin tip Как да се чете документацията
 
-C<perldoc perltoc> displays the table of contents of the core documentation,
-and C<perldoc perlfaq> displays the table of contents for Frequently Asked
-Questions about Perl 5. C<perldoc perlop> and C<perldoc perlsyn> document
-Perl's symbolic operators and syntactic constructs. C<perldoc perldiag>
-explains the meanings of Perl's warning messages. C<perldoc perlvar> lists all
-of Perl's symbolic variables. Skimming these files will give you a great
-overview of Perl 5.
+Като изпълните командата C<perldoc perltoc> ще видите таблицата със съдържание
+за основната документация. C<perldoc perlfaq> пък показва Съдържанието на
+документа "Често Задавани Въпроси за Perl 5". C<perldoc perlop> и
+C<perldoc perlsyn> документират операторите и синтаксиса на езика.
+C<perldoc perldiag> обясняват значенията на предупредителните съобщения.
+C<perldoc perlvar> съдържа списък с обяснения на всички предефинирани
+(символни) променливи в Perl. Ако попрегледате тези файлове ще получите
+чудесна представа за Perl 5.
 
 =end tip
 
