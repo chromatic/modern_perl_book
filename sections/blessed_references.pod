@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Blessed References
 
 Z<blessed_references>

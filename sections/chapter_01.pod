@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 The Perl Philosophy
 
 Perl gets things done--it's flexible, forgiving, and malleable.  Capable

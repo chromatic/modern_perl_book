@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Nested Data Structures
 
 Z<nested_data_structures>

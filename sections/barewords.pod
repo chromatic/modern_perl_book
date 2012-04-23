@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Barewords
 
 Z<barewords>

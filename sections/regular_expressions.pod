@@ -1,3 +1,5 @@
+=encoding utf8
+
 Z<regular_expressions>
 
 =head1 Literals

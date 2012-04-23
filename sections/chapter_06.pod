@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 Regular Expressions and Matching
 
 Z<regex>

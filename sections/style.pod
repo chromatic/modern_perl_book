@@ -1,3 +1,5 @@
+=encoding utf8
+
 Z<style>
 
 =head1 Writing Maintainable Perl

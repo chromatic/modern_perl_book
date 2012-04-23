@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Missing Defaults
 
 Z<missing_defaults>

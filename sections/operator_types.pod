@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Operator Types
 
 Z<operator_types>
