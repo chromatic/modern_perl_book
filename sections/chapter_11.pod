@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 What to Avoid
 
 Perl 5 isn't perfect. Some features are difficult to use correctly. Otherwise

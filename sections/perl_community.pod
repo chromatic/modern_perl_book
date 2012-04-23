@@ -1,3 +1,5 @@
+=encoding utf8
+
 Z<perl_community>
 
 =head1 Community Sites

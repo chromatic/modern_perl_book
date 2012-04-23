@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 What's Missing
 
 Perl 5 isn't perfect, but it's malleable--in part because no single

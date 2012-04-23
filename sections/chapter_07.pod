@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 Objects
 
 Programming is a management activity. The larger the program, the more details

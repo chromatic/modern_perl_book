@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Implicit Ideas
 
 Z<implicit_ideas>

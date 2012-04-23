@@ -1,5 +1,3 @@
-=encoding utf8
-
 =head1 Global Variables
 
 Z<globals>

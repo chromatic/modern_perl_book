@@ -1,0 +1,106 @@
+=encoding utf8
+
+=head1 Perldoc
+
+Z<perldoc>
+
+X<perldoc>
+
+Полезната документация е неразделна част от Perl-културата. Програмата
+C<perldoc> върви с всяка пълна инсталация на Perl 5N<На някои Unix-базирани 
+оперционни системи като Debian и Ubuntu GNU/Linuxможе да ви се наложи да я 
+инсталирате като отделен пакет C<perl-doc>>. С C<perldoc> можете да четете 
+цялата документация на езика, както и на Perl-модулите, инсталирани на вашата 
+система, независимо дали са част от основната дистрибуция или са инсталирани 
+по-късно от CPAN (Подробната Мрежа с Perl Архиви).
+
+=begin sidebar
+
+X<CPAN>
+X<metacpan>
+
+На U<http://perldoc.perl.org/> ще намерите документация за по-новите
+версии на Perl. На U<http://search.cpan.org/> и U<http://metacpan.org/> ще
+намерите документация за всички CPAN-модули. Някои дистрибуциии на Perl 5 като
+ActivePerl и Strawberry Perl вървят с документация в HTML формат.
+
+=end sidebar
+
+Ето как можете да ползвате C<perldoc> на командния ред, за да четете
+документацията за даден модул или документацията на езика:
+
+=begin screen
+
+    $ B<perldoc List::Util>
+    $ B<perldoc perltoc>
+    $ B<perldoc Moose::Manual>
+
+=end screen
+
+Ако изпълните първия пример ще видите вградената документация на
+модула C<List::Util>. При втория пример ще видите файл със съдържанието на
+основната документация. Третия пример е също документационен файл, но от
+CPAN-дистрибуцията (L<moose>). C<perldoc> не показва тия подробности. Няма как
+да се разбере дали четете документация на модул от основната дистрибуция,
+като C<Data::Dumper>, или на някой, инсталиран от CPAN.
+
+Стандартният шаблон за документацияN<Най-вероятно авторът е имал предвид
+препоръките и обясненията в U<http://perldoc.perl.org/perlpodstyle.html>
+или генерираните шаблони от помощните програми C<h2xs> и
+C<module-starter>(бел.прев.).> включва описание на модула, примерен програмен
+код за ползването му, следвани от подробно описание на интерфейса.
+Всеки автор пише различна по големина и подробност документация, но всички
+спазват изумително стриктно конвенцията.
+
+=begin tip Как да се чете документацията
+
+Като изпълните командата C<perldoc perltoc> ще видите таблицата със съдържание
+за основната документация. C<perldoc perlfaq> пък показва Съдържанието на
+документа "Често Задавани Въпроси за Perl 5". C<perldoc perlop> и
+C<perldoc perlsyn> документират операторите и синтаксиса на езика.
+C<perldoc perldiag> обясняват значенията на предупредителните съобщения.
+C<perldoc perlvar> съдържа списък с обяснения на всички предефинирани
+(символни) променливи в Perl. Ако попрегледате тези файлове ще получите
+чудесна представа за Perl 5.
+
+=end tip
+
+X<perldoc; C<-q> (search perlfaq)>
+
+The C<perldoc> utility has many more abilities (see C<perldoc perldoc>). The
+C<-q> option searches only the Perl FAQ for any provided keywords. Thus
+C<perldoc -q sort> returns three questions: I<How do I sort an array by
+(anything)?>, I<How do I sort a hash (optionally by value instead of key)?>,
+and I<How can I always keep my hash sorted?>.
+
+X<perldoc; C<-f> (search perlfunc)>
+
+The C<-f> option displays the documentation for a builtin Perl function.
+C<perldoc -f sort> explains the behavior of the C<sort> operator. If you don't
+know the name of the function you want, browse the list of available builtins
+in C<perldoc perlfunc>.
+
+X<perldoc; C<-v> (search perlvar)>
+
+The C<-v> option looks up a builtin variable. For example, C<perldoc -v $PID>
+displays the documentation for the variable which contains the current
+program's process id. Depending on your shell, you may have to quote the
+variable appropriately.
+
+The C<-l> option causes C<perldoc> to display the I<path> to the documentation
+file rather than the contents of the documentationN<Be aware that a module may
+have a separate F<.pod> file in addition to its F<.pm> file.>.
+
+The C<-m> option displays the entire I<contents> of the module, code and all,
+without performing any special formatting.
+
+X<POD>
+X<POD; C<perldoc>>
+X<POD; C<podchecker>>
+X<POD; C<Pod::Webserver>>
+X<CPAN; C<Pod::Webserver>>
+
+Perl 5's documentation system is I<POD>, or I<Plain Old Documentation>.
+C<perldoc perlpod> describes how POD works. Other POD tools include
+C<podchecker>, which validates the form of your POD, and C<Pod::Webserver>,
+which displays local POD as HTML through a minimal web server.

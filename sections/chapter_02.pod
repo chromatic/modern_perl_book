@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 Perl and Its Community
 
 Perl 5's greatest accomplishment is the huge amount of reusable libraries

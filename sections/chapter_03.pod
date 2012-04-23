@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head0 The Perl Language
 
 Like a spoken language, the whole of Perl is a combination of several smaller
