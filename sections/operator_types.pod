@@ -254,7 +254,7 @@ appropriately. For example:
     my $cal_length   =  length $calendar;
 
     is( @scheherazade, 1001, 'list repeated' );
-    is( $length,       1001 * length 'nights',
+    is( $cal_length,   1001 * length 'nights',
                        'word repeated' );
 
     my @schenolist   =  'nights'  x 1001;
