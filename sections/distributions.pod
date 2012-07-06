@@ -130,7 +130,7 @@ X<CPAN; C<Dist::Zilla>>
 X<CPAN; C<Module::Build>>
 X<C<ExtUtils::MakeMaker>>
 
-=item * C<Dist::Zilla> automates away common distribution tasks tasks. While it
+=item * C<Dist::Zilla> automates away common distribution tasks. While it
 uses either C<Module::Build> or C<ExtUtils::MakeMaker>, it can replace I<your>
 use of them directly. See U<http://dzil.org/> for an interactive tutorial.
 
