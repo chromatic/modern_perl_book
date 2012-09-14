@@ -1,9 +1,9 @@
 =head0 What to Avoid
 
-Perl 5 isn't perfect. Some features are difficult to use correctly. Otherwise
-have never worked well. A few are quirky combinations of other features with
-strange edge cases. While you're better off avoiding these features, knowing
-why to avoid them will help you find better solutions.
+Perl 5 isn't perfect. Some features are difficult to use correctly. Others have
+never worked well. A few are quirky combinations of other features with strange
+edge cases. While you're better off avoiding these features, knowing why to
+avoid them will help you find better solutions.
 
 L<barewords>
 

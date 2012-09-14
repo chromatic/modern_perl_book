@@ -539,8 +539,8 @@ alias C<$_> to the variable:
 
     for ($user_input)
     {
-        s/\A\s+/;       # trim leading whitespace
-        s/\s+\z/;       # trim trailing whitespace
+        s/\A\s+//;      # trim leading whitespace
+        s/\s+\z//;      # trim trailing whitespace
 
         $_ = quotemeta; # escape non-word characters
     }

@@ -435,7 +435,7 @@ a sequence of octets or a sequence of characters. Perl allows you to combine
 these types through the use of implicit conversions. When these conversions are
 wrong, they're rarely I<obviously> wrong.
 
-When Perl concatenates a sequences of octets with a sequence of Unicode
+When Perl concatenates a sequence of octets with a sequence of Unicode
 characters, it implicitly decodes the octet sequence using the Latin-1
 encoding. The resulting string will contain Unicode characters. When you print
 Unicode characters, Perl will encode the string using UTF-8, because Latin-1

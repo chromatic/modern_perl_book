@@ -24,7 +24,8 @@ code {
   font: normal normal normal medium/1.2 Consolas, 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
 }
 
-table { font-size: 12px; font-family: sans-serif; }
+table { font-size: 12px; font-family: sans-serif; border: 1px solid; }
+td    { border: 1px solid; }
 
 th { background: #CCCCCC; text-align: left;}
 
