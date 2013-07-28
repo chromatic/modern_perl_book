@@ -316,7 +316,7 @@ pragmas you need:
 
     ...
 
-    B<exit main( @ARGS );>
+    B<exit main( @ARGV );>
 
 =end programlisting
 

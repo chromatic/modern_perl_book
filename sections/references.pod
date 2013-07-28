@@ -487,11 +487,13 @@ X<C<IO::File>>
 X<C<IO::Handle>>
 
 When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
-with filehandle references. Internally, these filehandles are C<IO::File>
-objects. You can call methods on them directly. As of Perl 5.14, this is as
-simple as:
+with filehandle references. Internally, these filehandles are objects of the
+class C<IO::File>. You can call methods on them directly. As of Perl 5.14, this
+is as simple as:
 
 =begin programlisting
+
+    use autodie;
 
     open my $out_fh, '>', 'output_file.txt';
     $out_fh->say( 'Have some text!' );

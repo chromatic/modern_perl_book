@@ -7,10 +7,10 @@ X<perldoc>
 Perl has a culture of useful documentation.  The C<perldoc> utility is part of
 every complete Perl 5 installationN<However your Unix-like system may require
 you to install an additional package such as C<perl-doc> on Debian or Ubuntu
-GNU/Linux.>. C<perldoc> displays the documentation of every Perl module
-installed on the system--whether a core module or one installed from the
-Comprehensive Perl Archive Network (CPAN)--as well as thousands of pages of
-Perl's copious core documentation.
+GNU/Linux.>. The C<perldoc> command-line utility displays the documentation of
+every Perl module installed on the system--whether a core module or one
+installed from the Comprehensive Perl Archive Network (CPAN)--as well as
+thousands of pages of Perl's copious core documentation.
 
 =begin sidebar
 
@@ -41,7 +41,9 @@ table of contents of the core documentation. The third example displays a pure
 documentation file included as part of a CPAN distribution (L<moose>).
 C<perldoc> hides these details; there's no distinction between reading the
 documentation for a core library such as C<Data::Dumper> or one installed from
-the CPAN.
+the CPAN. This consistency is a benefit to you--Perl culture values
+documentation so much that even external libraries tend to follow the good
+example of the core language documentation.
 
 The standard documentation template includes a description of the module,
 demonstrates sample uses, and then contains a detailed explanation of the
@@ -49,6 +51,8 @@ module and its interface. While the amount of documentation varies by author,
 the form of the documentation is remarkably consistent.
 
 =begin tip How to Read the Documentation
+
+Perl has lots of documentation. Where do you start?
 
 C<perldoc perltoc> displays the table of contents of the core documentation,
 and C<perldoc perlfaq> displays the table of contents for Frequently Asked
@@ -62,8 +66,8 @@ overview of Perl 5.
 
 X<perldoc; C<-q> (search perlfaq)>
 
-The C<perldoc> utility has many more abilities (see C<perldoc perldoc>). The
-C<-q> option searches only the Perl FAQ for any provided keywords. Thus
+The C<perldoc> utility has many more abilities (see C<perldoc perldoc>). To
+search the Perl FAQ, use the C<-q> option with a keyword. For example,
 C<perldoc -q sort> returns three questions: I<How do I sort an array by
 (anything)?>, I<How do I sort a hash (optionally by value instead of key)?>,
 and I<How can I always keep my hash sorted?>.
@@ -97,5 +101,6 @@ X<CPAN; C<Pod::Webserver>>
 
 Perl 5's documentation system is I<POD>, or I<Plain Old Documentation>.
 C<perldoc perlpod> describes how POD works. Other POD tools include
-C<podchecker>, which validates the form of your POD, and C<Pod::Webserver>,
-which displays local POD as HTML through a minimal web server.
+C<podchecker>, which validates the structure of POD documents, and the
+C<Pod::Webserver> CPAN module, which displays local POD as HTML through a
+minimal web server.

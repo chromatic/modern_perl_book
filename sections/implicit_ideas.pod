@@ -2,10 +2,9 @@
 
 Z<implicit_ideas>
 
-Context is only one linguistic shortcut in Perl. Programmers who understand
-these shortcuts can glance at code and instantly understand its most important
-characteristics. Another important linguistic feature is the Perl equivalent of
-pronouns.
+Programmers who understand Perl's linguistic shortcuts can glance at code and
+instantly understand its most important characteristics. Besides context, Perl
+has default variables--the programming equivalent of pronouns.
 
 =head2 The Default Scalar Variable
 
@@ -46,7 +45,7 @@ precise details of its behavior.>:
 C<$_> has the same function in Perl as the pronoun I<it> in English. Without an
 explicit variable, C<chomp> removes the trailing newline sequence from C<$_>.
 Perl understands what you mean when you say "C<chomp>"; Perl will always chomp
-I<it>, so these two lines of code are equivalent:
+I<it>. These two lines of code are equivalent:
 
 =begin programlisting
 
@@ -139,11 +138,12 @@ X<builtins; C<grep>>
 
 =end programlisting
 
-As English gets confusing when you have too many pronouns and antecedents, you
-must take care mixing uses of C<$_> implicitly or explicitly. Uncautious
-simultaneous use of C<$_> may lead to one piece of code silently overwriting
-the value written by another. If you write a function which uses C<$_>, you
-may clobber a caller function's use of C<$_>.
+As English gets confusing when you have too many pronouns and antecedents, so
+does Perl when you mix explicit and implicit uses of C<$_>. If you use it in
+multiple places, one piece of code may silently override the value expected by
+another piece of code. For example, if one function uses C<$_> and you call it
+from another function which uses C<$_>, the callee may clobber the caller's
+value.
 
 As of Perl 5.10, you may declare C<$_> as a lexical variable (L<lexical_scope>)
 to prevent this clobbering behavior:
@@ -175,7 +175,7 @@ clobbering an existing instance of C<$_>:
 
 =end programlisting
 
-Of course, using a named lexical can be just as clear:
+Of course, using a named lexical may be even clearer:
 
 =begin programlisting
 
@@ -210,7 +210,7 @@ X<C<@_>>
 
 Perl also provides two implicit array variables. Perl passes arguments to
 functions (L<functions>) in an array named C<@_>. Array manipulation operations
-(L<arrays>) inside functions affect this array by default, so these two
+(L<arrays>) inside functions operate on this array by default. These two
 snippets of code are equivalent:
 
 =begin programlisting
@@ -235,7 +235,7 @@ X<builtins; C<pop>>
 Just as C<$_> corresponds to the pronoun I<it>, C<@_> corresponds to the
 pronouns I<they> and I<them>. I<Unlike> C<$_>, Perl automatically localizes
 C<@_> for you when you call other functions. The builtins C<shift> and C<pop>
-operate on C<@_> with no other operands provided.
+operate on C<@_>, if provided no explicit operands.
 
 X<default variables; C<@ARGV>>
 X<variables; C<@ARGV>>
@@ -255,8 +255,8 @@ Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
 C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
 C<readline> behaves just like C<< <> >>, so you can now use C<readline>
 everywhere. For historic reasons, C<< <> >> is still more common, but consider
-using C<readline> as a more readable alternative. You probably prefer C<glob
-'*.html'> to C<< <*.html> >>, right? It's the same idea.
+using C<readline> as a more readable alternative. (What's more readable, C<glob
+'*.html'> to C<< <*.html> >>? The same idea applies.)
 
 =end tip
 
@@ -265,7 +265,7 @@ X<null filehandle>
 C<ARGV> has one special case. If you read from the null filehandle C<< <> >>,
 Perl will treat every element in C<@ARGV> as the I<name> of a file to open for
 reading. (If C<@ARGV> is empty, Perl will read from standard input.) This
-implicit C<@ARGV> behavior is useful for writing short programs, such as this
+implicit C<@ARGV> behavior is useful for writing short programs, such as a
 command-line filter which reverses its input:
 
 =begin programlisting
@@ -294,4 +294,5 @@ If you run it with a list of files:
 
 ... the result will be one long stream of output.  Without any arguments, you
 can provide your own standard input by piping in from another program or typing
-directly. Yet Perl is good for far more than small command-line programs....
+directly. That's a lot of flexibility in a small program, but Perl's only
+getting started.
