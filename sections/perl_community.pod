@@ -36,7 +36,7 @@ X<PerlMonks>
 X<websites; PerlMonks>
 
 PerlMonks, at U<http://perlmonks.org/>, is a community site devoted to
-discussions about Perl programming. Its eleven year history makes it one of the
+discussions about Perl programming. Its decade-plus history makes it one of the
 most venerable question and answer sites for any programming language.
 
 X<blogs.perl.org>
@@ -107,8 +107,10 @@ complete history of every distribution on the CPAN.
 X<CPAN; C<Git::CPAN::Patch>>
 X<Champoux, Yanick>
 
-GitPAN receives infrequent updates. As an alternative, consider using Yanick
-Champoux's wonderful C<Git::CPAN::Patch> module.
+GitPAN receives infrequent updates. As an alternative to hacking CPAN
+distributions from GitPAN, consider using Yanick Champoux's wonderful
+C<Git::CPAN::Patch> module to create local Git repositories from CPAN
+distributions.
 
 =end tip
 

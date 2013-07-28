@@ -2,9 +2,10 @@
 
 Z<cpan>
 
-Perl 5 is a pragmatic language on its own, yet the ever-pragmatic Perl
-community has extended that language and made their work available to the
-world. If you have a problem to solve, chances are someone's already written--and shared--Perl code for it.
+Perl 5 is a pragmatic language, and the availability of tens of thousands of
+freely reusable Perl libraries demonstrates that pragmatism. If you have a
+problem to solve, chances are the global Perl community has already
+written--and shared--code to solve it.
 
 X<CPAN>
 
@@ -17,7 +18,7 @@ every network device ever created to sound and graphics libraries and wrappers
 for shared libraries on your system.
 
 Modern Perl without the CPAN is just another language. Modern Perl with the
-CPAN is amazing.
+CPAN is a powerful toolset for solving problems.
 
 X<distribution>
 X<modules>
@@ -31,9 +32,9 @@ unique metadata.
 
 The CPAN I<adds> hundreds of registered contributors and thousands of indexed
 modules in hundreds of distributions every month. Those numbers do not take
-into account updates. In late November 2011, search.cpan.org reported 9359
-uploaders, 101656 modules, and 23808 distributions (representing growth rates
-of 11.5%, 19.4%, and 14.3% since the previous edition of this book,
+into account updates. In late July 2013, search.cpan.org reported 10808
+uploaders, 123287 modules, and 28005 distributions (representing growth rates
+of 15.5%, 17.6%, and 21.3% since the previous edition of this book,
 respectively).
 
 =end tip
@@ -41,21 +42,19 @@ respectively).
 X<search.cpan.org>
 
 The CPAN itself is merely a mirroring service. Authors upload distributions and
-the CPAN sends them to mirror sites, from which users and CPAN clients
-download, configure, build, test, and install them. The system succeeds because
-of this simplicity as well as the contributions of thousands of volunteers
-who've built on this distribution system. In particular, community standards
-have evolved to identify the attributes and characteristics of well-formed CPAN
-distributions. These include:
+the CPAN sends them to mirror sites, from which CPAN clients download,
+configure, build, test, and install them. This simplicity has served Perl well,
+by enabling the contributions of thousands of volunteers. In particular,
+community standards have evolved to identify the attributes and characteristics
+of well-formed CPAN distributions. These include:
 
 =over 4
 
-=item * Standards for automated CPAN installers.
+=item * the behavior of automated CPAN installers
 
-=item * Standards for metadata to describe what each distribution provides
-and expects.
+=item * metadata to describe what each distribution provides and expects
 
-=item * Standards for documentation and licensing.
+=item * machine-readable documentation and licensing
 
 =back
 
@@ -68,14 +67,11 @@ annotations, and more. All of this is available from
 U<http://search.cpan.org/>.
 
 X<CPAN; C<CPAN.pm>>
-X<CPAN; C<CPANPLUS>>
 
-Modern Perl installations include two clients to connect to, search, download,
-build, test, and install CPAN distributions, CPAN.pm and CPANPLUS. For the most
-part, each of these clients is equivalent for basic installation. This book
-recommends the use of CPAN.pm solely due to its ubiquity. With a recent version
-(as of this writing, 1.9800 is the latest stable release), module installation
-is reasonably easy. Start the client with:
+Modern Perl installations include a client to connect to, search, download,
+build, test, and install CPAN distributions; this is I<CPAN.pm>.  With a recent
+version (as of this writing, 2.0 is the latest stable release), module
+installation is reasonably easy. Start the client with:
 
 =begin screen
 
@@ -125,13 +121,15 @@ CPAN distributions. Serious Perl developers often construct virtual walls
 between the system Perl and their development Perl installations. Several
 projects help to make this possible.
 
-C<App::cpanminus> is a relatively new CPAN client with goals of speed,
-simplicity, and zero configuration. Install it with C<cpan App::cpanminus>, or:
+C<App::cpanminus> is a newer CPAN client with goals of speed, simplicity, and
+zero configuration. Install it with C<cpan App::cpanminus>, or:
 
 =begin screen
 
     $ B<curl -LO http://xrl.us/cpanm>
+    $ B<less cpanm> # review the code before running
     $ B<chmod +x cpanm>
+    $ B<./cpanm>
 
 =end screen
 
@@ -142,6 +140,7 @@ as easy as:
 =begin screen
 
     $ B<curl -LO http://xrl.us/perlbrew>
+    $ B<less perlbrew> # review the code before running
     $ B<chmod +x perlbrew>
     $ B<./perlbrew install>
     $ B<perldoc App::perlbrew>
@@ -153,10 +152,10 @@ X<CPAN; App::local::lib::helper>
 
 The C<local::lib> CPAN distribution allows you to install and to manage
 distributions in your own user directory, rather than for the system as a
-whole. This is an effective way to maintain CPAN distributions without
-affecting other users. Installation is somewhat more involved than the previous
-two distributions, though C<App::local::lib::helper> can simplify the process.  See
-U<http://search.cpan.org/perldoc?local::lib> and
+whole. This is an effective way to maintain CPAN distributions for individual
+users without affecting the system as a whole.  Installation is somewhat more
+involved than the previous two distributions, though C<App::local::lib::helper>
+can simplify the process.  See U<http://search.cpan.org/perldoc?local::lib> and
 U<http://search.cpan.org/perldoc?App::local::lib::helper> for more details.
 
 All three projects tend to assume a Unix-like environment (such
