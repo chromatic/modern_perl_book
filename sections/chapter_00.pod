@@ -9,10 +9,11 @@ Perl first appeared in 1987 as a simple tool for system administration. Though
 it began by declaring and occupying a comfortable niche between shell scripting
 and C programming, it has become a powerful, general-purpose language family.
 Perl 5 has a solid history of pragmatism and a bright future of polish and
-enhancementN<Perl 6 is a reinvention of programming based on the solid
-principles of Perl, but it's a subject of another book.>.
+enhancementN<Perl 6 is a new language in the Perl family. It's not the
+successor to Perl 5, and it's not suitable for general use at the time of this
+writing.>
 
-Over Perl's long history--especially the 17 years of Perl 5--our understanding
+Over Perl's long history--especially the 19 years of Perl 5--our understanding
 of what makes great Perl programs has changed. While you can write productive
 programs which never take advantage of all the language has to offer, the
 global Perl community has invented, borrowed, enhanced, and polished ideas and
@@ -29,7 +30,7 @@ skeleton of a program:
 
     #!/usr/bin/env perl
 
-    use Modern::Perl 2011;
+    use Modern::Perl '2013';
     use autodie;
 
 =end programlisting
@@ -40,7 +41,7 @@ skeleton of a program:
 
     #!/usr/bin/env perl
 
-    use 5.012;      # implies "use strict;"
+    use 5.016;      # implies "use strict;"
     use warnings;
     use autodie;
 
@@ -62,10 +63,11 @@ Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
 
 =end programlisting
 
-At the time of writing, the current stable Perl 5 release family is Perl 5.14.
-The examples in this book work best with Perl 5.12.0 or newer. Many examples
-will work on older versions of Perl 5 with modest changes, but you will have
-more difficulty with anything older than 5.10.0.
+At the time of writing, the current stable Perl 5 release family is Perl 5.18.
+Most examples in this book work best with Perl 5.14.0 or newer, though we
+recommend at least Perl 5.16. While the term "Modern Perl" can refer to any
+version of Perl from 5.10.1, several features added in newer versions are
+essential to modern development.
 
 X<Strawberry Perl>
 X<ActivePerl>
