@@ -64,10 +64,11 @@ Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
 =end programlisting
 
 At the time of writing, the current stable Perl 5 release family is Perl 5.18.
-Most examples in this book work best with Perl 5.14.0 or newer, though we
-recommend at least Perl 5.16. While the term "Modern Perl" can refer to any
-version of Perl from 5.10.1, several features added in newer versions are
-essential to modern development.
+If you're using an older version of Perl, you may not be able to run all of the
+examples in this book unmodified.  The examples in this book work best with
+Perl 5.14.0 or newer, though we recommend at least Perl 5.16. While the term
+"Modern Perl" can refer to any version of Perl from 5.10.1, several features
+added in newer versions are essential to modern development.
 
 X<Strawberry Perl>
 X<ActivePerl>
