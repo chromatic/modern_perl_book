@@ -3,8 +3,8 @@
 Z<operator_types>
 
 Perl operators provide value contexts (L<value_contexts>) to their operands.
-To choose the appropriate operator, understand the values of the operands you
-provide as well as the value you expect to receive.
+To choose the appropriate operator, you must know the values of the operands
+you provide as well as the value you expect to receive.
 
 =head2 Numeric Operators
 
@@ -41,8 +41,8 @@ X<C<-->; numeric operator>
 
 Numeric operators impose numeric contexts on their operands. These operators
 are the standard arithmetic operators such as addition (C<+>), subtraction
-(C<->), multiplication (C<*>), division (C</>), exponentiation (C<**>), modulo
-(C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
+(C<->), multiplication (C<*>), division (C</>), exponentiation (C<**>), and
+modulo (C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
 C<%=>), and both postfix and prefix auto-decrement (C<-->).
 
 The auto-increment operator has special string behavior
@@ -132,8 +132,8 @@ X<short-circuiting>
 
 Logical operators impose a boolean context on their operands. These operators
 are C<&&>, C<and>, C<||>, and C<or>. All are infix and all exhibit
-I<short-circuiting> behavior (L<short_circuiting>). The word variants have
-lower precedence than their punctuation forms.
+I<short-circuiting> behavior (L<short_circuiting>). The word forms have lower
+precedence than their punctuation forms.
 
 The defined-or operator, C<//>, tests the I<definedness> of its operand. Unlike
 C<||> which tests the I<truth> of its operand, C<//> evaluates to a true value
@@ -162,8 +162,8 @@ the third otherwise:
 
 =end programlisting
 
-The prefix C<!> and C<not> operators return the logical opposite of the boolean
-value of their operands. C<not> is a lower precedence version of C<!>.
+The prefix C<!> and C<not> operators return the logical opposites of the
+boolean values of their operands. C<not> is a lower precedence version of C<!>.
 
 The C<xor> operator is an infix operator which evaluates to the exclusive-or of
 its operands.
@@ -212,8 +212,8 @@ X<C<++>; auto-increment operator>
 The auto-increment operator has special behavior. When used on a value with a
 numeric component (L<cached_coercions>), the operator increments that numeric
 component. If the value is obviously a string (and has no numeric component),
-the operator increments that string value such that C<a> becomes C<b>, C<zz>
-becomes C<aaa>, and C<a9> becomes C<b0>.
+the operator increments the value's string component such that C<a> becomes
+C<b>, C<zz> becomes C<aaa>, and C<a9> becomes C<b0>.
 
 =begin programlisting
 
@@ -238,11 +238,12 @@ X<operators; repetition>
 X<operators; C<x>>
 X<C<x>; repetition operator>
 
-The repetition operator (C<x>) is an infix operator with complex behavior. In
-list context, when given a list, it evaluates to that list repeated the number
-of times specified by its second operand. In list context when given a scalar,
-it produces a string consisting of the string value of its first operand
-concatenated to itself the number of times specified by its second operand.
+The repetition operator (C<x>) is an infix operator with complex behavior. When
+evaluated in list context with a list as its first operand, it evaluates to
+that list repeated the number of times specified by its second operand. When
+evaluated in list context with a scalar as its first operand, it produces a
+string consisting of the string value of its first operand concatenated to
+itself the number of times specified by its second operand.
 
 In scalar context, the operator always produces a concatenated string repeated
 appropriately. For example:
@@ -314,3 +315,21 @@ order.
 
 The fat comma operator (C<< => >>) also automatically quotes any bareword used
 as its left operand (L<hashes>).
+
+X<operators; triple-dot>
+X<operators; whatever>
+X<operators; C<...>>
+
+The I<triple-dot> or I<whatever> operator stands in for a single statement. It
+is nullary and has neither precedence nor associativity. It parses, but when
+executed it throws an exception with the string C<Unimplemented>. This makes a
+great placeholder in example code you don't expect anyone to execute:
+
+=begin programlisting
+
+    sub some_example {
+        # implement this yourself
+        ...
+    }
+
+=end programlisting

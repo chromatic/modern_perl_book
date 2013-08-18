@@ -5,13 +5,13 @@ X<operators; characteristics>
 
 Every operator possesses several important characteristics which govern its
 behavior: the number of operands on which it operates, its relationship to
-other operators, and its syntactic possibilities.
+other operators, the contexts it enforces, and the syntax it provides.
 
 C<perldoc perlop> and C<perldoc perlsyn> provide voluminous information about
-Perl's operators, but the documentation assumes you're already familiar with
-some details of how they work. The essential computer science concepts may
-sound imposing at first, but once you get past their names, they're
-straightforward. You already understand them implicitly.
+Perl's operators, but the documentation assumes you're already familiar with a
+few essential computer science concepts. These ideas sound complicated, but
+they use complex names for ideas you already understand, even if you've never
+thought about them. If you can do elementary math in your head, you'll do fine.
 
 =head2 Precedence
 
@@ -20,17 +20,19 @@ X<precedence>
 
 The I<precedence> of an operator governs when Perl should evaluate it in an
 expression. Evaluation order proceeds from highest to lowest precedence.
-Because the precedence of multiplication is higher than the precedence of
-addition, C<7 + 7 * 10> evaluates to C<77>, not C<140>.
+Remember basic math? Multiply and divide before you add and subtract. That's
+precedence. Because the precedence of multiplication is higher than the
+precedence of addition, in Perl C<7 + 7 * 10> evaluates to C<77>, not C<140>.
 
 To force the evaluation of some operators before others, group their
 subexpressions in parentheses. In C<(7 + 7) * 10>, grouping the addition into a
 single unit forces its evaluation before the multiplication. The result is
 C<140>.
 
-C<perldoc perlop> contains a table of precedence. Read it, understand it, but
-don't bother memorizing it (almost no one does). Spend your time keeping your
-expressions simple, and then add parentheses to clarify your intent.
+C<perldoc perlop> contains a table of precedence. Skim it a few times, but
+don't bother memorizing it (almost no one does). Spend your time simplifying
+your code where you can and then adding clarifying parentheses where you need
+them.
 
 In cases where two operators have the same precedence, other factors such as
 associativity (L<associativity>) and fixity (L<fixity>) break the tie.
@@ -48,11 +50,12 @@ The I<associativity> of an operator governs whether it evaluates from left to
 right or right to left. Addition is left associative, such that C<2 + 3 + 4>
 evaluates C<2 + 3> first, then adds C<4> to the result. Exponentiation is right
 associative, such that C<2 ** 3 ** 4> evaluates C<3 ** 4> first, then raises
-C<2> to the 81st power.
+C<2> to the 81st power. As usual, grouping with parentheses will let you change
+the order of evaluation.
 
-It's worth your time to memorize the precedence and associativity of the common
-mathematical operators, but again simplicity rules the day. Use parentheses to
-make your intentions clear.
+If you memorize only the precedence and associativity of the common
+mathematical operators, you'll be fine. Simplify your code and you won't have
+to memorize other associativities.
 
 =begin sidebar
 
@@ -65,9 +68,9 @@ The core C<B::Deparse> module is an invaluable debugging tool. Run C<perl
 precedence and associativity. The C<-p> flag adds extra grouping parentheses
 which often clarify evaluation order.
 
-Beware that Perl's optimizer will simplify mathematical operations as given as
-examples earlier in this section; use variables instead, as in C<$x ** $y **
-$z>.
+Beware that Perl's optimizer will simplify mathematical operations using
+constant values. To work around this, use named variables instead, as in C<$x
+** $y ** $z>.
 
 =end sidebar
 
@@ -87,16 +90,15 @@ The I<arity> of an operator is the number of operands on which it operates.  A
 I<nullary> operator operates on zero operands. A I<unary> operator operates on
 one operand. A I<binary> operator operates on two operands. A I<trinary>
 operator operates on three operands. A I<listary> operator operates on a list
-of operands. An operator's documentation and examples should make its arity
-clear.
+of operands.
 
-For example, the arithmetic operators are binary operators, and are usually
-left associative. C<2 + 3 - 4> evaluates C<2 + 3> first; addition and
-subtraction have the same precedence, but they're left associative and binary,
-so the proper evaluation order applies the leftmost operator (C<+>) to the
-leftmost two operands (C<2> and C<3>) with the leftmost operator (C<+>), then
-applies the rightmost operator (C<->) to the result of the first operation and
-the rightmost operand (C<4>).
+The arithmetic operators are binary operators and are usually left associative.
+C<2 + 3 - 4> evaluates C<2 + 3> first; addition and subtraction have the same
+precedence, but they're left associative and binary, so the proper evaluation
+order applies the leftmost operator (C<+>) to the leftmost two operands (C<2>
+and C<3>) with the leftmost operator (C<+>), then applies the rightmost
+operator (C<->) to the result of the first operation and the rightmost operand
+(C<4>).
 
 Perl novices often find confusion between the interaction of listary
 operators--especially function calls--and nested expressions. Where parentheses
@@ -131,7 +133,8 @@ X<fixity; circumfix>
 X<postcircumfix>
 X<fixity; postcircumfix>
 
-An operator's I<fixity> is its position relative to its operands:
+An operator's I<fixity>N<Don't memorize all of these words. Just remember what
+they mean.> is its position relative to its operands:
 
 X<C<.>; infix operator>
 X<C<.=>; infix operator>
@@ -161,9 +164,9 @@ X<C<->; prefix operator>
 X<C<!>; prefix operator>
 X<C<!!>; prefix operator>
 
-=item * I<Prefix> operators precede their operators. I<Postfix> operators
-follow. These operators tend to be unary, such as mathematic negation (C<-$x>),
-boolean negation (C<!$y>), and postfix increment (C<$z++>).
+=item * I<Prefix> operators precede their operands. I<Postfix> operators follow
+their operands. These operators tend to be unary, such as mathematic negation
+(C<-$x>), boolean negation (C<!$y>), and postfix increment (C<$z++>).
 
 X<C<()>; circumfix operator>
 X<C<{}>; circumfix operator>
