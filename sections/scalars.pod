@@ -6,7 +6,7 @@ X<scalars>
 X<C<$>; sigil>
 X<sigils; C<$>>
 
-Perl 5's fundamental data type is the I<scalar>, a single, discrete value.
+Perl 5's fundamental data type is the I<scalar>: a single, discrete value.
 That value may be a string, an integer, a floating point value, a filehandle,
 or a reference--but it is always a single value. Scalars may be lexical,
 package, or global (L<globals>) variables. You may only declare lexical or
@@ -17,7 +17,7 @@ dollar-sign (C<$>) sigil (L<sigils>).
 =begin tip Variant Sigils and Context
 
 Scalar values and scalar context have a deep connection; assigning to a scalar
-provides scalar context. Using the scalar sigil with an aggregate variable
+imposes scalar context. Using the scalar sigil with an aggregate variable
 imposes scalar context to access a single element of the hash or array.
 
 =end tip
@@ -25,7 +25,8 @@ imposes scalar context to access a single element of the hash or array.
 =head2 Scalars and Types
 
 A scalar variable can contain any type of scalar value without special
-conversions or casts, and the type of value stored in a variable can change:
+conversions, coercions, or casts. The type of value stored in a scalar
+variable, once assigned, can change arbitrarily:
 
 =begin programlisting
 
@@ -33,12 +34,12 @@ conversions or casts, and the type of value stored in a variable can change:
     $value = 123.456;
     $value = 77;
     $value = "I am Chuck's big toe.";
-    $value = Store::IceCream->new();
+    $value = Store::IceCream->new;
 
 =end programlisting
 
 Even though this code is I<legal>, changing the type of data stored in a scalar
-is a sign of confusion.
+is confusing.
 
 This flexibility of type often leads to value coercion (L<coercion>). For
 example, you may treat the contents of a scalar as a string, even if you didn't
@@ -46,8 +47,8 @@ explicitly assign it a string:
 
 =begin programlisting
 
-    my $zip_code       = 97006;
-    my $city_state_zip = 'Beaverton, Oregon' . ' ' . $zip_code;
+    my $zip_code       = 97123;
+    my $city_state_zip = 'Hillsboro, Oregon' . ' ' . $zip_code;
 
 =end programlisting
 
@@ -73,7 +74,8 @@ X<increment; string>
 =begin tip One-Way Increment Magic
 
 This magical string increment behavior has no corresponding magical decrement
-behavior. You can't get the previous string value by writing C<$call_sign-->.
+behavior. You can't restore the previous string value by writing
+C<$call_sign-->.
 
 =end tip
 
@@ -123,19 +125,19 @@ X<numbers; true>
 X<numbers; false>
 
 Scalars do not contain a separate slot for boolean values. In boolean context,
-the empty string (C<''>) and C<'0'> are false. All other strings are true. In
-boolean context, numbers which evaluate to zero (C<0>, C<0.0>, and C<0e0>) are
-false. All other numbers are true.
+the empty strings (C<''>) and C<'0'> evaluate to false values. All other
+strings evaluate to true values. In boolean context, numbers which evaluate to
+zero (C<0>, C<0.0>, and C<0e0>) evaluate to false values. All other numbers are
+evaluate to true values.
 
 =begin tip What is Truth?
 
-Be careful that the I<strings> C<'0.0'> and C<'0e0'> are true; this is one
-place where Perl 5 makes a distinction between what looks like a number and
-what really is a number.
+Be careful that the I<strings> C<'0.0'> and C<'0e0'> evaluate to true values.
+This is one place where Perl 5 makes a distinction between what I<looks like> a
+number and what really is a number.
 
 =end tip
 
 X<C<undef>>
 
-One other value is always false: C<undef>. This is the value of uninitialized
-variables as well as a value in its own right.
+One other value is always a false value: C<undef>.

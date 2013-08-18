@@ -6,14 +6,14 @@ X<DWIM>
 X<dwimmery>
 X<coercion>
 
-A Perl variable can hold at various times values of different types--strings,
-integers, rational numbers, and more. Rather than attaching type information to
-variables, Perl relies on the context provided by operators (L<value_contexts>)
-to know what to do with values. By design, Perl attempts to do what you
-meanN<Called I<DWIM> for I<do what I mean> or I<dwimmery>.>, though you must be
-specific about your intentions. If you treat a variable which happens to
-contain a number as a string, Perl will do its best to I<coerce> that number
-into a string.
+Throughout its lifetime, a Perl variable may contain values of different
+types--strings, integers, rational numbers, and more. Rather than attaching
+type information to variables, Perl relies on the context provided by operators
+(L<value_contexts>) to determine how to handle values. By design, Perl attempts
+to do what you meanN<Called I<DWIM> for I<do what I mean> or I<dwimmery>.>,
+though you must be specific about your intentions. If you treat a variable
+which happens to contain a number as a string, Perl will do its best to
+I<coerce> that number into a string.
 
 =head2 Boolean Coercion
 
@@ -23,14 +23,14 @@ X<truthiness>
 
 Boolean coercion occurs when you test the I<truthiness> of a value, such as in
 an C<if> or C<while> condition. Numeric 0, C<undef>, the empty string, and the
-string C<'0'> all evaluate as false. All other values--including strings which
-may be I<numerically> equal to zero (such as C<'0.0'>, C<'0e'>, and C<'0 but
-true'>)--evaluate as true.
+string C<'0'> all evaluate as false values. All other values--including strings
+which may be I<numerically> equal to zero (such as C<'0.0'>, C<'0e'>, and C<'0
+but true'>)--evaluate as true values.
 
 When a scalar has I<both> string and numeric components (L<dualvars>), Perl 5
 prefers to check the string component for boolean truth. C<'0 but true'>
-evaluates to zero numerically, but it is not an empty string, thus it evaluates
-to a true value in boolean context.
+evaluates to zero numerically, but it is not an empty string, and so it
+evaluates to a true value in boolean context.
 
 =head2 String Coercion
 
@@ -39,11 +39,11 @@ X<stringification>
 
 String coercion occurs when using string operators such as comparisons (C<eq>
 and C<cmp>), concatenation, C<split>, C<substr>, and regular expressions, as
-well as when using a value as a hash key. The undefined value stringifies to an
-empty string, produces a "use of uninitialized value" warning. Numbers
-I<stringify> to strings containing their values, such that the value C<10>
-stringifies to the string C<10>. You can even C<split> a number into individual
-digits with:
+well as when using a value or an expression as a hash key. The undefined value
+stringifies to an empty string, but produces a "use of uninitialized value"
+warning. Numbers I<stringify> to strings containing their values, so the value
+C<10> stringifies to the string C<10>. You can even C<split> a number into
+individual digits with:
 
 =begin programlisting
 
@@ -59,15 +59,16 @@ X<numification>
 
 Numeric coercion occurs when using numeric comparison operators (such as C<==>
 and C<< <=> >>), when performing mathematic operations, and when using a value
-as an array or list index. The undefined value I<numifies> to zero and produces
-a "Use of uninitialized value" warning. Strings which do not begin with numeric
-portions also numify to zero and produce an "Argument isn't numeric" warning.
-Strings which begin with characters allowed in numeric literals numify to those
-values and produce no warnings, such that C<10 leptons leaping> numifies to
-C<10> and C<6.022e23 moles marauding> numifies to C<6.022e23>.
+or expression as an array or list index. The undefined value I<numifies> to
+zero and produces a "Use of uninitialized value" warning. Strings which do not
+begin with numeric portions also numify to zero and produce an "Argument isn't
+numeric" warning. Strings which begin with characters allowed in numeric
+literals numify to those values and produce no warnings, such that C<10 leptons
+leaping> numifies to C<10> and C<6.022e23 moles marauding> numifies to
+C<6.022e23>.
 
-X<Scalar::Util>
-X<Scalar::Util; looks_like_number>
+X<C<Scalar::Util>>
+X<C<Scalar::Util>; C<looks_like_number>>
 
 The core module C<Scalar::Util> contains a C<looks_like_number()> function
 which uses the same parsing rules as the Perl 5 grammar to extract a number
@@ -77,7 +78,10 @@ from a string.
 
 The strings C<Inf> and C<Infinity> represent the infinite value and behave as
 numbers. The string C<NaN> represents the concept "not a number". Numifying
-them produces no "Argument isn't numeric" warning.
+them produces no "Argument isn't numeric" warning. Beware that Perl's ideas of
+infinity and not a number may not match your platform's ideas; these notions
+aren't always portable across operating systems. Perl is consistent even if the
+rest of the universe isn't.
 
 =end tip
 
@@ -111,16 +115,16 @@ X<coercion; cached>
 
 Perl 5's internal representation of values stores both string and numeric
 values. Stringifying a numeric value does not I<replace> the numeric value.
-Instead, it I<attaches> a stringified value, so that the representation
-contains I<both> components. Similarly, numifying a string value populates the
-numeric component while leaving the string component untouched.
+Instead, it I<adds> a stringified value to the internal representation, which
+then contains I<both> components. Similarly, numifying a string value populates
+the numeric component while leaving the string component untouched.
 
 Certain Perl operations prefer to use one component of a value over
 another--boolean checks prefer strings, for example. If a value has a cached
 representation in a form you do not expect, relying on an implicit conversion
 may produce surprising results. You almost never need to be explicit about what
-you expectN<Your author can recall doing so twice in over a decade of
-programming Perl 5>, but knowing that this caching occurs may someday help you
+you expectN<Your author can recall doing so twice in fifteen years of
+programming Perl 5.>, but knowing that this caching occurs may someday help you
 diagnose an odd situation.
 
 =head2 Dualvars

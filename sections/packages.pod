@@ -5,9 +5,9 @@ X<packages>
 X<namespaces>
 
 A Perl I<namespace> associates and encapsulates various named entities within a
-named category, like your family name or a brand name. Unlike a real-world
+named category. It's like your family name or a brand name. Unlike a real-world
 name, a namespace implies no direct relationship between entities. Such
-relationships may exist, but do not have to.
+relationships may exist, but they do not have to.
 
 A I<package> in Perl 5 is a collection of code in a single namespace. The
 distinction is subtle: the package represents the source code and the namespace
@@ -39,9 +39,8 @@ C<MyCode::add_box()>.
 X<scope; packages>
 
 The scope of a package continues until the next C<package> declaration or the
-end of the file, whichever comes first. Perl 5.14 enhanced C<package> so that
-you may provide a block which explicitly delineates the scope of the
-declaration:
+end of the file, whichever comes first. With C<package>, you may provide a
+block which explicitly delineates the scope of the declaration:
 
 =begin programlisting
 
@@ -62,16 +61,14 @@ X<C<$VERSION>>
 Besides a name, a package has a version and three implicit methods, C<import()>
 (L<importing>), C<unimport()>, and C<VERSION()>. C<VERSION()> returns the
 package's version number. This number is a series of numbers contained in a
-package global named C<$VERSION>. By rough convention, versions tend to be a
-series of integers separated by dots, as in C<1.23> or C<1.1.10>, where each
-segment is an integer.
+package global named C<$VERSION>. By rough convention, versions are a series of
+integers separated by dots, as in C<1.23> or C<1.1.10>.
 
 X<version numbers>
 
-Perl 5.12 introduced a new syntax intended to simplify version numbers, as
-documented in C<perldoc version::Internals>. These stricter version numbers
-must have a leading C<v> character and at least three integer components
-separated by periods:
+Perl includes a stricter syntax for version numbers, as documented in C<perldoc
+version::Internals>. These version numbers must have a leading C<v> character
+and at least three integer components separated by periods:
 
 =begin programlisting
 
@@ -79,7 +76,7 @@ separated by periods:
 
 =end programlisting
 
-With Perl 5.14, the optional block form of a C<package> declaration is:
+Combined with the block form of a C<package> declaration, you can write:
 
 =begin programlisting
 
@@ -90,7 +87,8 @@ With Perl 5.14, the optional block form of a C<package> declaration is:
 
 =end programlisting
 
-In 5.10 and earlier, the simplest way to declare the version of a package is:
+This syntax is not very common in real code yet. You're more likely to see the
+pre-5.14 version written as:
 
 =begin programlisting
 
@@ -109,7 +107,7 @@ method returns the value of C<$VERSION>:
 
 =begin programlisting
 
-    my $version = Some::Plugin->VERSION();
+    my $version = Some::Plugin->VERSION;
 
 =end programlisting
 
@@ -132,7 +130,7 @@ argument:
 X<namespaces>
 X<packages; namespaces>
 
-Every C<package> declaration creates a new namespace if necessary and causes
+Every C<package> declaration creates a new namespace, if necessary, and causes
 the parser to put all subsequent package global symbols (global variables and
 functions) into that namespace.
 
@@ -173,7 +171,7 @@ at any point, either with a new package declaration:
 
 You can add to a package at any point during compilation or runtime, regardless
 of the current file, though building up a package from multiple separate
-declarations can make code difficult to spelunk.
+declarations (in multiple files!) can make code difficult to spelunk.
 
 X<namespaces; multi-level>
 
@@ -187,12 +185,12 @@ helps to organize code on disk. For example:
 
 =item * C<StrangeMonkey> is the project name
 
-=item * C<StrangeMonkey::UI> contains top-level user interface code
+=item * C<StrangeMonkey::UI> organizes user interface code
 
-=item * C<StrangeMonkey::Persistence> contains top-level data management code
+=item * C<StrangeMonkey::Persistence> organizes data management code
 
-=item * C<StrangeMonkey::Test> contains top-level testing code for the project
+=item * C<StrangeMonkey::Test> organizes testing code for the project
 
 =back
 
-... and so on.
+... and so on. This is a convention, but it's a useful one.

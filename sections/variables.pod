@@ -8,8 +8,8 @@ trivial program can manipulate values directly, most programs work with
 variables to simplify the logic of the code. A variable represents values; it's
 easier to explain the Pythagorean theorem in terms of the variables C<a>, C<b>,
 and C<c> than by intuiting its principle by producing a long list of valid
-values. This concept may seem basic, but effective programming requires you to
-manage the art of balancing the generic and reusable with the specific.
+values. This concept may seem basic, but to program effectively, you must learn
+the art of balancing the generic and reusable with the specific.
 
 =head2 Variable Scopes
 
@@ -19,10 +19,13 @@ X<variables; scope>
 X<scope>
 X<builtins; C<package>>
 
-Variables are visible to portions of your program depending on their scope
+Variables are available within your program depending on their scope
 (L<scope>). Most of the variables you will encounter have lexical scope
-(L<lexical_scope>). I<Files> themselves provide their own lexical scopes, such
-that the C<package> declaration on its own does not create a new scope:
+(L<lexical_scope>), or scope governed by the syntax of the program as written.
+Most lexical scopes are either the contents of blocks delimited by curly braces
+(C<{> and C<}>) or entire files. I<Files> themselves provide their own lexical
+scopes, such that the C<package> declaration on its own does not create a new
+scope:
 
 =begin programlisting
 
@@ -39,8 +42,8 @@ that the C<package> declaration on its own does not create a new scope:
 
 X<builtins; C<package>; BLOCK>
 
-As of Perl 5.14, you may provide a block to the C<package> declaration. This
-syntax I<does> provide a lexical scope:
+You may also provide a block to the C<package> declarationN<As of 5.14.>.
+Because this introduces a new block, it also provides a new lexical scope:
 
 =begin programlisting
 
@@ -68,11 +71,20 @@ X<variables; sigils>
 X<sigils>
 
 The sigil of the variable in a declaration determines the type of the variable:
-scalar, array, or hash. The sigil used when accessing a variable varies
+scalar, array, or hash. The sigil used when I<accessing> a variable varies
 depending on what you do to the variable. For example, you declare an array as
 C<@values>. Access the first element--a single value--of the array with
 C<$values[0]>. Access a list of values from the array with C<@values[ @indices
-]>.
+]>. As you might expect, the sigil you use determines amount context in an
+lvalue situation:
+
+    # imposes lvalue context on some_function()
+    @values[ @indexes ] = some_function()
+
+... or gets coerced in an rvalue situation:
+
+    # list evaluated to final element in scalar context
+    my $element = @values[ @indices ]
 
 =head2 Anonymous Variables
 
@@ -80,7 +92,7 @@ X<anonymous variables>
 X<variables; anonymous>
 
 Perl variables do not I<require> names. Names exist to help you, the
-programmer, keep track of an C<$apple>, C<@barrels>, or C<%cheap_meals>.
+programmer, keep track of an C<$apple>, C<@barrels>, or C<%cookie_recipes>.
 Variables created I<without> literal names in your source code are I<anonymous>
 variables. The only way to access anonymous variables is by reference
 (L<references>).
@@ -91,13 +103,17 @@ X<variables; types>
 X<variables; container type>
 X<variables; value type>
 
-A variable in Perl 5 represents both a value (a dollar cost, available pizza
-toppings, guitar shops with phone numbers) and the container which stores that
-value. Perl's type system deals with I<value types> and I<container types>.
-While a variable's I<container type>--scalar, array, or hash--cannot change,
-Perl is flexible about a variable's value type. You may store a string in a
-variable in one line, append to that variable a number on the next, and
-reassign a reference to a function (L<function_references>) on the third.
+This relationship between variable types, sigils, and context is essential to
+your understanding of Perl.
+
+A Perl variable represents both a value (a dollar cost, available pizza
+toppings, the names and numbers of guitar stores) and the container which
+stores that value. Perl's type system deals with I<value types> and I<container
+types>. While a variable's I<container type>--scalar, array, or hash--cannot
+change, Perl is flexible about a variable's value type. You may store a string
+in a variable in one line, append to that variable a number on the next, and
+reassign a reference to a function (L<function_references>) on the thirdN<...
+but you'll confuse yourself if you do all of that.>.
 
 Performing an operation on a variable which imposes a specific value type may
 cause coercion (L<coercion>) from the variable's existing value type.
@@ -106,12 +122,10 @@ For example, the documented way to determine the number of entries in an array
 is to evaluate that array in scalar context (L<context_philosophy>). Because a
 scalar variable can only ever contain a scalar, assigning an array to a scalar
 imposes scalar context on the operation, and an array evaluated in scalar
-context returns the number of elements in the array:
+context produces the number of elements in the array:
 
 =begin programlisting
 
     my $count = @items;
 
 =end programlisting
-
-This relationship between variable types, sigils, and context is essential.

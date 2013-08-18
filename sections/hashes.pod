@@ -5,14 +5,15 @@ Z<hashes>
 X<hashes>
 
 A I<hash> is a first-class Perl data structure which associates string keys
-with scalar values. In the same way that the name of a variable corresponds to
-a storage location, a key in a hash refers to a value. Think of a hash like you
-would a telephone book: use the names of your friends to look up their numbers.
-Other languages call hashes I<tables>, I<associative arrays>, I<dictionaries>,
-or I<maps>.
+with scalar values. Just as the name of a variable corresponds to something
+which holds a value, so does a hash key refer to something which contains a
+value. Think of a hash like a contact list: use the names of your friends to
+look up their phone numbers. Other languages call hashes I<tables>,
+I<associative arrays>, I<dictionaries>, or I<maps>.
 
 Hashes have two important properties: they store one scalar per unique key and
-they provide no specific ordering of keys.
+they provide no specific ordering of keys. Keep that latter property in mind.
+Though it has always been true in Perl, it's very, very true in Perl 5.18.
 
 =head2 Declaring Hashes
 
@@ -42,7 +43,7 @@ braces C<{ }> for keyed access:
 =begin programlisting
 
     my %favorite_flavors;
-    $favorite_flavors{Gabi}    = 'Raspberry chocolate';
+    $favorite_flavors{Gabi}    = 'Dark chocolate raspberry';
     $favorite_flavors{Annette} = 'French vanilla';
 
 =end programlisting
@@ -52,7 +53,7 @@ Assign a list of keys and values to a hash in a single expression:
 =begin programlisting
 
     my %favorite_flavors = (
-        'Gabi',    'Raspberry chocolate',
+        'Gabi',    'Dark chocolate raspberry',
         'Annette', 'French vanilla',
     );
 
@@ -61,20 +62,21 @@ Assign a list of keys and values to a hash in a single expression:
 X<<< C<< => >>; fat comma operator >>>
 X<<< operators; C<< => >> >>>
 
-If you assign an odd number of elements to the hash, you will receive a warning
-to that effect. Idiomatic Perl often uses the I<fat comma> operator (C<< => >>)
-to associate values with keys, as it makes the pairing more visible:
+Hashes store pairs of keys and values. Perl will warn you if you assign an odd
+number of elements to a hash. Idiomatic Perl often uses the I<fat comma>
+operator (C<< => >>) to associate values with keys, as it makes the pairing
+more visible:
 
 =begin programlisting
 
     my %favorite_flavors = (
-        Gabi    B<< => >> 'Mint chocolate chip',
+        Gabi    B<< => >> 'Dark chocolate raspberry',
         Annette B<< => >> 'French vanilla',
     );
 
 =end programlisting
 
-The fat comma operator acts like the regular comma, but also automatically
+The fat comma operator acts like the regular comma I<and> also automatically
 quotes the previous bareword (L<barewords>). The C<strict> pragma will not warn
 about such a bareword--and if you have a function with the same name as a hash
 key, the fat comma will I<not> call the function:
@@ -111,7 +113,7 @@ coercion.
 =end notetip
 
 Assign an empty list to empty a hashN<You may occasionally see C<undef
-%hash>.>:
+%hash>, but that's a little ugly.>:
 
 =begin programlisting
 
@@ -123,12 +125,11 @@ Assign an empty list to empty a hashN<You may occasionally see C<undef
 
 X<hashes; values>
 
-Access individual hash values with an indexing operation. Use a key (a I<keyed
-access> operation) to retrieve a value from a hash:
+To access an individual hash value, use a key (a I<keyed access> operation):to
 
 =begin programlisting
 
-    my $address = $addresses{$name};
+    my $address = $addressesB<{$name}>;
 
 =end programlisting
 
@@ -155,8 +156,8 @@ automatically according to the same rules as fat commas:
 =begin tip Don't Quote Me
 
 Novices often always quote string literal hash keys, but experienced developers
-elide the quotes whenever possible. In this way, the presence of quotes in hash
-keys signifies an intention to do something different.
+elide the quotes whenever possible. If you code this way, you can use the rare
+presence of quotes to indicate that you're doing something different.
 
 =end tip
 
@@ -190,14 +191,14 @@ an arbitrary expression--not only a function call--as the key of a hash:
     my $address = $addresses{"$first_name $last_name"};
 
     # so are method calls
-    my $address = $addresses{ $user->name() };
+    my $address = $addresses{ $user->name };
 
 =end programlisting
 
 Hash keys can only be strings. Anything that evaluates to a string is an
 acceptable hash key. Perl will go so far as to coerce (L<coercion>) any
-non-string into a string, such that if you use an object as a hash key, you'll
-get the stringified version of that object instead of the object itself:
+non-string into a string. For example, if you use an object as a hash key,
+you'll get the stringified version of that object instead of the object itself:
 
 =begin programlisting
 
@@ -270,9 +271,10 @@ If a hash key exists, its value may be C<undef>. Check that with C<defined>:
 X<hashes; C<keys>>
 X<builtins; C<keys>>
 
-Hashes are aggregate variables, but their pairwise nature offers many more
-possibilities for iteration: over the keys of a hash, the values of a hash, or
-pairs of keys and values. The C<keys> operator produces a list of hash keys:
+Hashes are aggregate variables, but their pairwise nature is unique. Perl
+allows you to iterate over the keys of a hash, over the values of a hash, or
+over pairs of keys and values. The C<keys> operator produces a list of hash
+keys:
 
 =begin programlisting
 
@@ -317,7 +319,11 @@ depends on the internal implementation of the hash, the particular version of
 Perl you are using, the size of the hash, and a random factor. Even so, the
 order of hash items is consistent between C<keys>, C<values>, and C<each>.
 Modifying the hash may change the order, but you can rely on that order if the
-hash remains the same.
+hash remains the same. However, even if two hashes have the I<same> keys and
+values, you cannot rely on the iteration order between those hashes being the
+same. They may have been constructed differently or have had elements removed.
+In Perl 5.18, even if they were constructed the same way, you cannot depend on
+the same iteration order between them.
 
 Each hash has only a I<single> iterator for the C<each> operator. You cannot
 reliably iterate over a hash with C<each> more than once; if you begin a new
@@ -326,7 +332,7 @@ latter will begin partway through the hash. During such iteration, beware not
 to call any function which may itself try to iterate over the hash with
 C<each>.
 
-In practice this occurs rarely, but reset a hash's iterator with C<keys> or
+In practice this occurs rarely. Reset a hash's iterator with C<keys> or
 C<values> in void context when you need it:
 
 =begin programlisting
@@ -372,9 +378,9 @@ X<C<@>; sigil>
 X<sigils; C<@>>
 
 Hash slices also allow you to retrieve multiple values from a hash in a single
-operation. As with array slices, the sigil of the hash changes to indicate list
-context.  The use of the curly braces indicates keyed access and makes the hash
-unambiguous:
+operation. As with array slices, the sigil of the hash changes to C<@> to
+indicate list context. The use of the curly braces indicates keyed access and
+makes the fact that you're working with a hash unambiguous:
 
 =begin programlisting
 
@@ -395,7 +401,10 @@ Hash slices make it easy to merge two hashes:
 =end programlisting
 
 This is equivalent to looping over the contents of C<%canada_addresses>
-manually, but is much shorter.
+manually, but is much shorter. Note that this relies on the iteration order of
+the hash remaining consistent between C<keys> and C<values>. Perl guarantees
+this, but only because these operations occur on the same hash and because
+nothing modifies the hash between the C<keys> and C<values> operations.
 
 What if the same key occurs in both hashes?  The hash slice approach always
 I<overwrites> existing key/value pairs in C<%addresses>. If you want other
@@ -406,7 +415,7 @@ behavior, looping is more appropriate.
 An empty hash contains no keys or values. It evaluates to a false value in a
 boolean context. A hash which contains at least one key/value pair evaluates to
 a true value in boolean context even if all of the keys or all of the values or
-both would themselves evaluate to false values in a boolean context.
+both would themselves evaluate to boolean false values.
 
 =begin programlisting
 
@@ -429,12 +438,13 @@ both would themselves evaluate to false values in a boolean context.
 
 In scalar context, a hash evaluates to a string which represents the ratio of
 full buckets in the hash--internal details about the hash implementation that
-you can safely ignore.
+you can safely ignore. (In a boolean scalar context, this ratio evaluates to a
+false value, so remember I<that> instead of the ratio details.)
 
-In list context, a hash evaluates to a list of key/value pairs similar to what
-you receive from the C<each> operator.  However, you I<cannot> iterate over
-this list the same way you can iterate over the list produced by C<each>, lest
-the loop will never terminate:
+In list context, a hash evaluates to a list of key/value pairs similar to the
+list produced by the C<each> operator. However, you I<cannot> iterate over this
+list the same way you can iterate over the list produced by C<each>. This loop
+will never terminate:
 
 =begin programlisting
 
@@ -456,8 +466,8 @@ values.
 X<hashes; finding uniques>
 
 Because each key exists only once in a hash, assigning the same key to a hash
-multiple times stores only the most recent key. Use this to find unique list
-elements:
+multiple times stores only the most recent value associated with that key. This
+behavior has advantages! For example, to find unique elements of a listlist :
 
 =begin programlisting
 
@@ -481,6 +491,7 @@ file:
 
     while (my $line = <$logfile>)
     {
+        chomp $line;
         my ($ip, $resource) = analyze_line( $line );
         $ip_addresses{$ip}++;
         ...
@@ -520,20 +531,21 @@ X<C<//>; infix operator>
 X<operators; C<//>>
 X<operators; defined-or>
 
-This I<orcish maneuver>N<Or-cache, if you like puns.> returns the value from
-the hash, if it exists. Otherwise, it calculates, caches, and returns the
-value. The defined-or assignment operator (C<//=>) evaluates its left operand.
-If that operand is not defined, the operator assigns the lvalue the value of
-its right operand. In other words, if there's no value in the hash for the
-given key, this function will call C<create_user()> with the key and update the
-hash.
+This I<orcish maneuver>N<Or-cache, if you like puns spelled out.> returns the
+value from the hash, if it exists. Otherwise, it calculates, caches, and
+returns the value. The defined-or assignment operator (C<//=>) evaluates its
+left operand. If that operand is not defined, the operator assigns to the
+lvalue the value of its right operand. In other words, if there's no value in
+the hash for the given key, this function will call C<create_user()> with the
+key and update the hash.
 
 Perl 5.10 introduced the defined-or and defined-or assignment operators. Prior
 to 5.10, most code used the boolean-or assignment operator (C<||=>) for this
 purpose. Unfortunately, some valid values evaluate to a false value in boolean
 context, so evaluating the I<definedness> of values is almost always more
 accurate. This lazy orcish maneuver tests for the definedness of the cached
-value, not truthiness.
+value, not truthiness. You may still see code with the pre-5.10 behavior. When
+you do, consider whether the defined-or operator makes more sense.
 
 X<hashes; named parameters>
 
@@ -593,18 +605,24 @@ precedence over earlier assignments:
 Z<locked_hashes>
 
 X<hashes; locked>
+X<C<Hash::Util>>
+X<C<Hash::Util>; C<lock_keys>>
+X<C<Hash::Util>; C<lock_value>>
+X<C<Hash::Util>; C<lock_hash>>
+X<C<Hash::Util>; C<unlock_hash>>
 
 As hash keys are barewords, they offer little typo protection compared to the
 function and variable name protection offered by the C<strict> pragma. The
-little-used core module C<Hash::Util> provides mechanisms to ameliorate this.
+little-used core module C<Hash::Util> can make hashes safer.
 
 To prevent someone from accidentally adding a hash key you did not intend
 (whether as a typo or from untrusted user input), use the C<lock_keys()>
 function to restrict the hash to its current set of keys. Any attempt to add a
-new key to the hash will raise an exception. This is lax security suitable only
-for preventing accidents; anyone can use the C<unlock_keys()> function to remove
-this protection.
+new key to the hash will raise an exception. Similarly you can lock or unlock
+the existing value for a given key in the hash (C<lock_value()> and
+C<unlock_value()>) and make or unmake the entire hash read-only with
+C<lock_hash()> and C<unlock_hash()>.
 
-Similarly you can lock or unlock the existing value for a given key in the hash
-(C<lock_value()> and C<unlock_value()>) and make or unmake the entire hash
-read-only with C<lock_hash()> and C<unlock_hash()>.
+This is lax security; anyone can use the appropriate unlocking functions to
+work around the locking. Yet it does protect against typos and other accidental
+behavior.

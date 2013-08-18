@@ -115,28 +115,6 @@ block, but its scope is that I<within> the loop block:
 
 =end programlisting
 
-X<lexical topic>
-X<topic; lexical>
-
-Similarly, C<given> (L<given_when>) creates a I<lexical topic> (like C<my $_>)
-within its block:
-
-=begin programlisting
-
-    $_ = 'outside';
-
-    given ('inner')
-    {
-        say;
-        $_ = 'this assignment does nothing useful';
-    }
-
-    say;
-
-=end programlisting
-
-... such that leaving the block restores the previous value of C<$_>.
-
 Functions--named and anonymous--provide lexical scoping to their bodies. This
 facilitates closures (L<closures>).
 

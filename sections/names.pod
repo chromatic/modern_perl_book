@@ -5,12 +5,12 @@ Z<names>
 X<names>
 X<identifiers>
 
-I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
-functions, packages, classes, and even filehandles. These names all begin with
-a letter or an underscore and may optionally include any combination of
-letters, numbers, and underscores.  When the C<utf8> pragma (L<unicode>) is in
-effect, you may use any UTF-8 word characters in identifiers. These are all
-valid Perl identifiers:
+I<Names> (or I<identifiers>) are everywhere in Perl programs: you get to choose
+them for variables, functions, packages, classes, and even filehandles. Valid
+Perl names all begin with a letter or an underscore and may optionally include
+any combination of letters, numbers, and underscores. When the C<utf8> pragma
+(L<unicode>) is in effect, you may use any UTF-8 word characters in
+identifiers. All of these are valid Perl identifiers:
 
 =begin programlisting
 
@@ -40,19 +40,18 @@ These are invalid Perl identifiers:
 X<symbolic lookups>
 
 I<Names exist primarily for the benefit of the programmer>. These rules apply
-only to literal names which appear as-is in your source code, such as C<sub
+only to literal names which appear in your source code, such as C<sub
 fetch_pie> or C<my $waffleiron>. Only Perl's parser enforces the rules about
-identifier names.
-
-Perl's dynamic nature allows you to refer to entities with names generated at
+identifier names. Perl allows you to refer to entities with names generated at
 runtime or provided as input to a program. These I<symbolic lookups> provide
-flexibility at the expense of some safety. In particular, invoking functions or
-methods indirectly or looking up symbols in a namespace lets you bypass Perl's
-parser.
+flexibility at the expense of safety.
 
-Doing so can produce confusing code. As Mark Jason Dominus recommends so
-effectivelyN<U<http://perl.plover.com/varvarname.html>>, use a hash (L<hashes>)
-or nested data structure (L<nested_data_structures>).
+In particular, invoking functions or methods indirectly or looking up symbols
+in a namespace lets you bypass Perl's parser. Symbolic lookups can produce
+confusing code. As Mark Jason Dominus recommends so
+effectivelyN<U<http://perl.plover.com/varvarname.html>>, prefer a hash
+(L<hashes>) or nested data structure (L<nested_data_structures>) over variables
+named, for example, C<$recipe1>, C<$recipe2>, and so on.
 
 =head2 Variable Names and Sigils
 
@@ -66,10 +65,10 @@ X<hashes>
 X<variables; hashes>
 X<sigil>
 
-I<Variable names> always have a leading I<sigil> (or symbol) which indicates
-the type of the variable's value. I<Scalar variables> (L<scalars>) use the
-dollar sign (C<$>). I<Array variables> (L<arrays>) use the at sign (C<@>).
-I<Hash variables> (L<hashes>) use the percent sign (C<%>):
+I<Variable names> always have a leading I<sigil> (a symbol) which indicates the
+type of the variable's value. I<Scalar variables> (L<scalars>) use the dollar
+sign (C<$>). I<Array variables> (L<arrays>) use the at sign (C<@>).  I<Hash
+variables> (L<hashes>) use the percent sign (C<%>):
 
 =begin programlisting
 
@@ -79,7 +78,7 @@ I<Hash variables> (L<hashes>) use the percent sign (C<%>):
 
 =end programlisting
 
-These sigils provide a visual namespacing for variable names. It's
+Sigils allow you to separate variables into different namespaces. It's
 possible--though confusing--to declare multiple variables of the same name with
 different types:
 
@@ -93,10 +92,11 @@ Though Perl won't get confused, people reading this code will.
 
 X<variant sigils>
 
-Perl 5's sigils are I<variant sigils>. As context determines how many items you
-expect from an operation or what type of data you expect to get, so the sigil
-governs how you manipulate the data of a variable.  For example, to access a
-single element of an array or a hash, you must use the scalar sigil (C<$>):
+The sigil of a variable can change depending on what you do with it; the term
+for this is I<variant sigils>. As context determines how many items you expect
+from an operation or what type of data you expect to get, so the sigil governs
+how you manipulate the data of a variable. For example, you must use the scalar
+sigil (C<$>) to access a single element of an array or a hash:
 
 =begin programlisting
 
@@ -112,9 +112,9 @@ X<lvalue>
 X<rvalue>
 
 The parallel with amount context is important. Using a scalar element of an
-aggregate as an I<lvalue> (the target of an assignment, on the left side of the
-C<=> character) imposes scalar context (L<context_philosophy>) on the I<rvalue>
-(the value assigned, on the right side of the C<=> character).
+aggregate as an I<lvalue> (the target of an assignment; on the I<l>eft side of
+the C<=> character) imposes scalar context (L<context_philosophy>) on the
+I<rvalue> (the value assigned; on the I<r>ight side of the C<=> character).
 
 X<slices>
 
@@ -133,7 +133,7 @@ even if the list itself has zero or one elements>:
 =end programlisting
 
 The most reliable way to determine the type of a variable--scalar, array, or
-hash--is to look at the operations performed on it. Scalars support all basic
+hash--is to examine the operations performed on it. Scalars support all basic
 operations, such as string, numeric, and boolean manipulations. Arrays support
 indexed access through square brackets. Hashes support keyed access through
 curly brackets.
@@ -144,28 +144,30 @@ X<fully-qualified name>
 X<namespaces>
 
 Perl provides a mechanism to group similar functions and variables into their
-own unique named spaces--I<namespaces> (L<packages>). A namespace is a named
-collection of symbols. Perl allows multi-level namespaces, with names joined by
-double colons (C<::>), where C<DessertShop::IceCream> refers to a logical
-collection of related variables and functions, such as C<scoop()> and
-C<pour_hot_fudge()>.
+own unique named spaces--I<namespaces> (L<packages>). A namespace is collection
+of symbols grouped under a globally unique name. Perl allows multi-level
+namespaces, with names joined by double colons (C<::>), where
+C<DessertShop::IceCream> refers to a logical collection of related variables
+and functions, such as C<scoop()> and C<pour_hot_fudge()>.
 
 Within a namespace, you may use the short name of its members. Outside of the
-namespace, refer to a member using its I<fully-qualified name>. That is, within
+namespace, you must refer to a member by its I<fully-qualified name>.  Within
 C<DessertShop::IceCream>, C<add_sprinkles()> refers to the same function as
 does C<DessertShop::IceCream::add_sprinkles()> outside of the namespace.
 
-While standard naming rules apply to package names, by convention user-defined
-packages all start with uppercase letters. The Perl core reserves lowercase
+While standard naming rules apply to package names, user-defined packages all
+start with uppercase letters by convention. The Perl core reserves lowercase
 package names for core pragmas (L<pragmas>), such as C<strict> and C<warnings>.
 This is a policy enforced primarily by community guidelines.
 
 All namespaces in Perl 5 are globally visible. When Perl looks up a symbol in
 C<DessertShop::IceCream::Freezer>, it looks in the C<main::> symbol table for a
-symbol representing the C<DessertShop::> namespace, then in there for the
-C<IceCream::> namespace, and so on. The C<Freezer::> is visible from outside of
-the C<IceCream::> namespace. The nesting of the former within the latter is
-only a storage mechanism, and implies nothing further about relationships
-between parent and child or sibling packages. Only a programmer can make
-I<logical> relationships between entities obvious--by choosing good names and
-organizing them well.
+symbol representing the C<DessertShop::> namespace, then in that namespace for
+the C<IceCream::> namespace, and so on.  Yet C<Freezer::> is visible from
+outside of the C<IceCream::> namespace. Namespaces are all globally accessible.
+The nesting of the former within the latter is only a storage mechanism, and
+implies nothing further about relationships between parent and child or sibling
+packages.
+
+Only a programmer can make I<logical> relationships between entities
+obvious--by choosing good names and organizing them well.
