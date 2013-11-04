@@ -20,7 +20,9 @@ You've probably already created and used closures without realizing it:
 
 =begin programlisting
 
-    package Invisible::Closure;
+    #!/usr/bin/perl
+
+    use Modern::Perl '2014';
 
     my $filename = shift @ARGV;
 
@@ -33,7 +35,7 @@ C<get_filename()> function can see the C<$filename> lexical. That's how scope
 works!
 
 Suppose you want to iterate over a list of items without managing the iterator
-yourself.  You can create a function which returns a function that, when
+yourself. You can create a function which returns a function that, when
 invoked, will return the next item in the iteration:
 
 =begin programlisting
@@ -51,21 +53,21 @@ invoked, will return the next item in the iteration:
     }
 
     my $cousins = make_iterator(
-        qw( Rick Alex Kaycee Eric Corey Mandy Christine )
+        qw( Rick Alex Kaycee Eric Corey Mandy Christine Alex2 )
     );
 
-    say $cousins->() for 1 .. 5;
+    say $cousins->() for 1 .. 6;
 
 =end programlisting
 
-Even though C<make_iterator()> has returned, the anonymous function, stored in
-C<$cousins>, has closed over the values of these variables as they existed
-within the invocation of C<make_iterator()>. Their values persist
+Even though C<make_iterator()> has returned, the anonymous function stored in
+C<$cousins> has closed over the values of these variables I<as they existed
+within> the invocation of C<make_iterator()>. Their values persist
 (L<reference_counts>).
 
-Because every invocation of C<make_iterator()> creates a separate lexical
-environment, the anonymous sub it creates and returns closes over a unique
-lexical environment:
+Because invoking C<make_iterator()> creates a separate lexical environment, the
+anonymous sub it creates and returns closes over a unique lexical environment
+for each invocation:
 
 =begin programlisting
 
@@ -80,10 +82,10 @@ lexical environment:
 
 Because C<make_iterator()> does not return these lexicals by value or by
 reference, no other Perl code besides the closure can access them. They're
-encapsulated as effectively as any other lexical encapsulation, although any
-code which shares a lexical environment can access these values. This idiom
-provides better encapsulation of what would otherwise be a file or package
-global variable:
+encapsulated as effectively as any other lexical is, although any code which
+shares a lexical environment can access these values. This idiom provides
+better encapsulation of what would otherwise be a file or package global
+variable:
 
 =begin programlisting
 
@@ -106,8 +108,7 @@ that's confusing to you, imagine the implementation.>.
 X<CPAN; C<PadWalker>>
 
 The CPAN module C<PadWalker> lets you violate lexical encapsulation, but anyone
-who uses it and breaks your code earns the right to fix any concomitant bugs
-without your help.
+who uses it gets to fix any bugs that result.
 
 =end tip
 
@@ -116,9 +117,9 @@ without your help.
 Iterating over a fixed-sized list with a closure is interesting, but closures
 can do much more, such as iterating over a list which is too expensive to
 calculate or too large to maintain in memory all at once. Consider a function
-to create the Fibonacci series as you need its elements. Instead of
-recalculating the series recursively, use a cache and lazily create the
-elements you need:
+to create the Fibonacci series as you need its elementsN<Why? To check your
+Haskell homework.>. Instead of recalculating the series recursively, use a
+cache and lazily create the elements you need:
 
 =begin programlisting
 
@@ -147,11 +148,13 @@ elements you need:
 Every call to the function returned by C<gen_fib()> takes one argument, the
 I<n>th element of the Fibonacci series. The function generates all preceding
 values in the series as necessary, caches them, and returns the requested
-element--even delaying computation until absolutely necessary. Yet there's a
-pattern specific to caching intertwined with the numeric series. What happens
-if you extract the cache-specific code (initialize a cache, execute custom code
-to populate cache elements, and return the calculated or cached value) to a
-function C<generate_caching_closure()>?
+element--even delaying computation until absolutely necessary.
+
+Here's where closures and first class functions get interesting. This code does
+two things; there's a pattern specific to caching intertwined with the numeric
+series. What happens if you extract the cache-specific code (initialize a
+cache, execute custom code to populate cache elements, and return the
+calculated or cached value) to a function C<gen_caching_closure()>?
 
 =begin programlisting
 
@@ -204,11 +207,11 @@ Now C<gen_fib()> can become:
 
 =end programlisting
 
-The program behaves as it did before, but the use of function references and
-closures separates the cache initialization behavior from the calculation of
-the next number in the Fibonacci series. Customizing the behavior of code--in
-this case, C<gen_caching_closure()>--by passing in a function allows tremendous
-flexibility.
+The program behaves as it did before, but now function references and closures
+separate the cache initialization behavior from the calculation of the next
+number in the Fibonacci series. Customizing the behavior of code--in this case,
+C<gen_caching_closure()>--by passing in a function allows tremendous
+flexibility and can clean up your code.
 
 =head2 Closures and Partial Application
 
@@ -221,11 +224,11 @@ function which takes several parameters:
 
     sub make_sundae
     {
-        my %args = @_;
+        my %args      = @_;
 
         my $ice_cream = get_ice_cream( $args{ice_cream} );
-        my $banana    = get_banana( $args{banana} );
-        my $syrup     = get_syrup( $args{syrup} );
+        my $banana    = get_banana(    $args{banana}    );
+        my $syrup     = get_syrup(     $args{syrup}     );
         ...
     }
 
@@ -239,11 +242,9 @@ arguments that never change.
 X<partial application>
 
 A technique called I<partial application> allows you to bind I<some> of the
-arguments to a function so that you can provide the others later. Wrap the
-function you intend to call in a closure and pass the bound arguments.
-
-Consider an ice cream cart which only serves French Vanilla ice cream over
-Cavendish bananas:
+arguments to a function now so that you can provide the others later. Wrap the
+function you intend to call in a closure and pass the bound arguments. Consider
+that small ice cream cart:
 
 =begin programlisting
 
@@ -259,11 +260,11 @@ Cavendish bananas:
 
 X<CPAN; C<Sub::Install>>
 
-Instead of calling C<make_sundae()> directly, invoke the function reference in
-C<$make_cart_sundae> and pass only the interesting arguments, without worrying
-about forgetting the invariants or passing them incorrectlyN<You can even use
-C<Sub::Install> from the CPAN to import this function into another namespace
-directly.>.
+Now whenever you process an order, instead of calling C<make_sundae()>
+directly, invoke the function reference in C<$make_cart_sundae> and pass only
+the interesting arguments. You'll never forget the invariants or pass them
+incorrectly. You can even use C<Sub::Install> from the CPAN to import
+C<$make_cart_sundae> function into another namespace.
 
 X<I<Higher Order Perl>>
 

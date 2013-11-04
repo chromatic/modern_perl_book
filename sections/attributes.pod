@@ -3,8 +3,8 @@
 Z<attributes>
 
 Named entities in Perl--variables and functions--can have additional metadata
-attached to them in the form of I<attributes>. Attributes are arbitrary names
-and values used with certain types of metaprogramming (L<code_generation>).
+attached. This metadata takes the form of I<attributes>, arbitrary names and
+values used with certain types of metaprogramming (L<code_generation>).
 
 Attribute declaration syntax is awkward, and using attributes effectively is
 more art than science. Most programs never use them, but when used well they
@@ -22,16 +22,16 @@ A simple attribute is a colon-preceded identifier attached to a declaration:
 
 =end programlisting
 
-These declarations will cause the invocation of attribute handlers named
-C<hidden> and C<ScienceProject>, if they exist for the appropriate type
-(scalars and functions, respectively). These handlers can do I<anything>.  If
+When Perl parses these declarations, it invokes attribute handlers named
+C<hidden> and C<ScienceProject>, if they exist for the appropriate types
+(scalars and functions, respectively). These handlers can do I<anything>. If
 the appropriate handlers do not exist, Perl will throw a compile-time
 exception.
 
 X<CPAN; C<Test::Class>>
 
 Attributes may include a list of parameters. Perl treats these parameters as
-lists of constant strings and only strings. The C<Test::Class> module from the
+lists of constant strings. Yes, strings. The C<Test::Class> module from the
 CPAN uses such parametric arguments to good effect:
 
 =begin programlisting
@@ -42,17 +42,20 @@ CPAN uses such parametric arguments to good effect:
 
 =end programlisting
 
-The C<Test> attribute identifies methods which include test assertions, and
+The C<Test> attribute identifies methods which include test assertions and
 optionally identifies the number of assertions the method intends to run.
 While introspection (L<reflection>) of these classes could discover the
 appropriate test methods, given well-designed solid heuristics, the C<:Test>
-attribute makes your intent clear.
+attribute is unambiguous. C<Test::Class> provides attribute handlers which keep
+track of these methods. When the class has finished parsing, C<Test::Class> can
+loop through the list of test methods and run them.
 
 The C<setup> and C<teardown> parameters allow test classes to define their own
 support methods without worrying about conflicts with other such methods in
-other classes. This separates the concern of specifying what this class must do
-with the concern of how other classes do their work, and offers great
-flexibility.
+other classes. This separates the idea of what this class must do from how
+other classes do their work. Otherwise a test class might have only one method
+named C<setup> and one named C<teardown> and would have to do everything there,
+then call the parent methods, and so on.
 
 =begin tip Practical Attributes
 
@@ -71,20 +74,22 @@ X<CPAN; C<Attribute::Lexical>>
 
 Attributes have their drawbacks. The canonical pragma for working with
 attributes (the C<attributes> pragma) has listed its interface as experimental
-for many years. Damian Conway's core module C<Attribute::Handlers> simplifies
-their implementation. Andrew Main's C<Attribute::Lexical> is a newer approach.
-Prefer either to C<attributes> whenever possible.
+for many years, and for good reason. Damian Conway's core module
+C<Attribute::Handlers> is much easier to use, and Andrew Main's
+C<Attribute::Lexical> is a newer approach. Prefer either to C<attributes>
+whenever possible.
 
 X<CPAN; C<Memoize>>
 
-The worst feature of attributes is their propensity to produce weird syntactic
-action at a distance. Given a snippet of code with attributes, can you predict
-their effect? Well written documentation helps, but if an innocent-looking
+The worst feature of attributes is that they make it easy to warp the syntax of
+Perl in unpredictable ways. It's not always easy to predict what code with
+attributes will do. Good documentation helps, but if an innocent-looking
 declaration on a lexical variable stores a reference to that variable
 somewhere, your expectations of its lifespan may be wrong. Likewise, a handler
 may wrap a function in another function and replace it in the symbol table
 without your knowledge--consider a C<:memoize> attribute which automatically
 invokes the core C<Memoize> module.
 
-Attributes are available when you need them to solve difficult problems. They
-can be very useful, used properly--but most programs never need them.
+Attributes I<can> help you to solve difficult problems or to make an API much
+easier to use. When used properly, they're powerful--but most programs never
+need them.

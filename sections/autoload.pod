@@ -27,7 +27,7 @@ Now add a function called C<AUTOLOAD()>:
 
 When you run the program now, nothing obvious will happen. Perl will call a
 function named C<AUTOLOAD()> in a package--if it exists--whenever normal
-dispatch fails.  Change the C<AUTOLOAD()> to emit a message:
+dispatch fails. Change the C<AUTOLOAD()> to emit a message:
 
 =begin programlisting
 
@@ -42,9 +42,8 @@ dispatch fails.  Change the C<AUTOLOAD()> to emit a message:
 X<C<$AUTOLOAD>>
 
 The C<AUTOLOAD()> function receives the arguments passed to the undefined
-function in C<@_> directly and the I<name> of the undefined function is
-available in the package global C<$AUTOLOAD>. Manipulate these arguments as you
-like:
+function in C<@_> as usual. The I<name> of the undefined function is available
+in the package global C<$AUTOLOAD>. Manipulate these arguments as you like:
 
 =begin programlisting
 
@@ -59,10 +58,10 @@ like:
 
 =end programlisting
 
-The C<our> declaration (L<our>) scopes C<$AUTOLOAD> to the function body.  The
-variable contains the fully-qualified name of the undefined function (in this
-case, C<main::bake_pie>). Remove the package name with a regular expression
-(L<regex>):
+The C<our> declaration (L<our>) constrains the scope of C<$AUTOLOAD> to the
+function body. This variable contains the fully-qualified name of the undefined
+function (in this case, C<main::bake_pie>). Extract the method name with a
+regular expression (L<regex>):
 
 =begin programlisting
 
@@ -100,18 +99,14 @@ X<OO; proxying>
 X<proxying>
 
 A common pattern in OO programming (L<moose>) is to I<delegate> or I<proxy>
-certain methods in one object to another, often contained in or otherwise
-accessible from the former. A logging proxy can help with debugging:
+certain methods in one object to another object somehow available to the
+former. A logging proxy can help with debugging:
 
 =begin programlisting
 
     package Proxy::Log;
 
-    sub new
-    {
-        my ($class, $proxied) = @_;
-        bless \$proxied, $class;
-    }
+    # constructor defined but not shown
 
     sub AUTOLOAD
     {
@@ -124,9 +119,9 @@ accessible from the former. A logging proxy can help with debugging:
 
 =end programlisting
 
-This C<AUTOLOAD()> logs the method call. Then it dereferences the proxied
-object from a blessed scalar reference, extracts the name of the undefined
-method, then invokes that method on the proxied object with the provided
+This C<AUTOLOAD()> extracts the name of the undefined method.  Then it
+dereferences the proxied object from a blessed scalar reference, logs the
+method call, then invokes that method on the proxied object with the provided
 parameters.
 
 =head2 Generating Code in AUTOLOAD()
@@ -134,7 +129,7 @@ parameters.
 X<C<AUTOLOAD>; code installation>
 
 This double dispatch is easy to write but inefficient. Every method call on the
-proxy must fail normal dispatch to end up in C<AUTOLOAD()>.  Pay that penalty
+proxy must fail normal dispatch to end up in C<AUTOLOAD()>. Pay that penalty
 only once by installing new methods into the proxy class as the program needs
 them:
 
@@ -207,7 +202,7 @@ X<C<subs> pragma>
 X<pragmas; C<subs>>
 X<functions; predeclaration>
 
-C<AUTOLOAD()> can be useful tool, though it is difficult to use properly. The
+C<AUTOLOAD()> can be useful, though it is difficult to use properly. The
 naE<iuml>ve approach to generating methods at runtime means that the C<can()>
 method will not report the right information about the capabilities of objects
 and classes. The easiest solution is to predeclare all functions you plan to
@@ -221,14 +216,14 @@ C<AUTOLOAD()> with the C<subs> pragma:
 
 =begin tip Now You See Them
 
-Forward declarations are only useful in the two rare cases of attributes and
+Forward declarations are useful only in the two rare cases of attributes and
 autoloading (L<autoload>).
 
 =end tip
 
-That technique has the advantage of documenting your intent but the
-disadvantage that you have to maintain a static list of functions or methods.
-Overriding C<can()> (L<universal>) sometimes works better:
+That technique documents your intent well, but requires you to maintain a
+static list of functions or methods. Overriding C<can()> (L<universal>)
+sometimes works better:
 
 =begin programlisting
 

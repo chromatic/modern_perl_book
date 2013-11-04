@@ -4,10 +4,10 @@ Z<anonymous_functions>
 
 X<functions; anonymous>
 
-An I<anonymous function> is a function without a name. It otherwise behaves
-exactly like a named function--you can invoke it, pass arguments to it, return
-values from it, and copy references to it. Yet the only way to deal with it is
-by reference (L<function_references>).
+An I<anonymous function> is a function without a name. It behaves exactly like
+a named function--you can invoke it, pass arguments to it, return values from
+it, and copy references to it. Yet the only way to deal with it is by reference
+(L<function_references>), not by name.
 
 X<functions; dispatch table>
 X<idioms; dispatch table>
@@ -41,7 +41,9 @@ input with behavior:
 =end programlisting
 
 The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
-returns the result of evaluating the operation.
+returns the result of evaluating the operation. If you were writing a trivial
+calculator application, you could use C<dispatch> to figure out which
+calculation to perform based on a name provided by a user.
 
 =head2 Declaring Anonymous Functions
 
@@ -173,11 +175,12 @@ X<anonymous functions; implicit>
 
 X<CPAN; C<Test::Fatal>>
 
-Perl 5 allows the declaration of anonymous functions implicitly through the use
-of prototypes (L<prototypes>). Though this feature exists nominally to enable
-programmers to write their own syntax such as that for C<map> and C<eval>, an
-interesting example is the use of I<delayed> functions that don't look like
-functions.
+Perl 5 allows you to declare anonymous functions as function arguments without
+using the C<sub> keyword. Though this feature exists nominally to enable
+programmers to write their own syntax such as that for C<map> and C<eval>
+(L<prototypes>), an interesting example is the use of I<delayed> functions that
+don't look like functions. It's not perfect, but it can make code easier to
+read.
 
 Consider the CPAN module C<Test::Fatal>, which takes an anonymous function as
 the first argument to its C<exception()> function:
@@ -234,9 +237,9 @@ You might rewrite this more verbosely as:
 
 =end programlisting
 
-... because the prototype changes the way the Perl 5 parser interprets this
-code. It cannot determine with 100% clarity I<what> C<$croaker> and C<$liver>
-will contain, and so will throw an exception.
+... because the prototype changes the way the Perl parser interprets this code.
+It cannot determine with 100% clarity I<what> C<$croaker> and C<$liver> will
+contain, and so will throw an exception.
 
 =begin screen
 
@@ -259,6 +262,6 @@ multiple arguments cannot have a trailing comma after the function block:
 =end programlisting
 
 This is an occasionally confusing wart on otherwise helpful syntax, courtesy of
-a quirk of the Perl 5 parser. The syntactic clarity available by promoting bare
+a quirk of the Perl parser. The syntactic clarity available by promoting bare
 blocks to anonymous functions can be helpful, but use it sparingly and document
 the API with care.

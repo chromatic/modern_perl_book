@@ -6,9 +6,9 @@ X<scope>
 X<encapsulation>
 
 I<Scope> in Perl refers to the lifespan and visibility of named entities.
-Everything with a name in Perl (a variable, a function) has a scope.  Scoping
-helps to enforce I<encapsulation>--keeping related concepts together and
-preventing them from leaking out.
+Everything with a name in Perl (a variable, a function, a filehandle, a class)
+has a scope. Scoping helps to enforce I<encapsulation>--keeping related
+concepts together and preventing their details from leaking.
 
 =head2 Lexical Scope
 
@@ -17,15 +17,15 @@ Z<lexical_scope>
 X<lexical scope>
 X<scope; lexical>
 
-I<Lexical scope> is the scope visible as you I<read> a program. The Perl
-compiler resolves this scope during compilation. A block delimited by curly
-braces creates a new scope, whether a bare block, the block of a loop
-construct, the block of a C<sub> declaration, an C<eval> block, or any other
-non-quoting block.
+I<Lexical scope> is the scope visible to you as you I<read> a program.  A block
+delimited by curly braces creates a new scope, whether a bare block, the block
+of a loop construct, the block of a C<sub> declaration, an C<eval> block, a
+C<package> block, or any other non-quoting block. The Perl compiler resolves
+this scope during compilation.
 
 X<variables; lexical>
 
-Lexical scope governs the visibility of variables declared with
+Lexical scope describes the visibility of variables declared with
 C<my>--I<lexical> variables. A lexical variable declared in one scope is
 visible in that scope and any scopes nested within it, but is invisible to
 sibling or outer scopes:
@@ -70,8 +70,7 @@ X<lexical shadowing>
 X<scope; lexical shadowing>
 
 Declaring a lexical in an inner scope with the same name as a lexical in an
-outer scope hides, or I<shadows>, the outer lexical within the inner scope.
-This is often what you want:
+outer scope hides, or I<shadows>, the outer lexical within the inner scope:
 
 =begin programlisting
 
@@ -86,6 +85,10 @@ This is often what you want:
 
 =end programlisting
 
+This toy example is obviously silly, but in longer code with larger scopes,
+this shadowing behavior is often desirable--it's easier to understand code when
+the scope of a lexical variable is no more than a couple of dozen lines.
+
 =begin tip Name Collisions
 
 Lexical shadowing can happen by accident. Limit the scope of variables and the
@@ -93,10 +96,11 @@ nesting of scopes to lessen your risk.
 
 =end tip
 
-This program prints C<Edward> and then C<Jacob>N<Family members, not
-vampires.>, even though redeclaring a lexical variable with the same name and
-type I<in the same lexical scope> produces a warning message. Shadowing a
-lexical is a feature of encapsulation.
+The silly lexical shadowing example program prints C<Edward> and then
+C<Jacob>N<Family members, not vampires.> because the lexical in the nested
+scope hides the lexical in the outer scope. Shadowing a lexical is a feature of
+encapsulation. Declaring multiple variables with the same name and type I<in
+the same lexical scope> produces a warning message.
 
 Some lexical declarations have subtleties, such as a lexical variable used as
 the iterator variable of a C<for> loop. Its declaration comes outside of the
@@ -116,7 +120,7 @@ block, but its scope is that I<within> the loop block:
 =end programlisting
 
 Functions--named and anonymous--provide lexical scoping to their bodies. This
-facilitates closures (L<closures>).
+enables closures (L<closures>).
 
 =head2 Our Scope
 
@@ -131,7 +135,9 @@ fully-qualified name is available everywhere, but the lexical alias is visible
 only within its scope.
 
 C<our> is most useful with package global variables like C<$VERSION> and
-C<$AUTOLOAD>.
+C<$AUTOLOAD>. You get a little bit of typo detection (declaring a package
+global with C<our> satisfies the C<strict> pragma's C<vars> rule), but you
+still have to deal with a global variable.
 
 =head2 Dynamic Scope
 
@@ -141,9 +147,12 @@ X<dynamic scope>
 X<scope; dynamic>
 
 Dynamic scope resembles lexical scope in its visibility rules, but instead of
-looking outward in compile-time scopes, lookup traverses backwards through the
-calling context. While a package global variable may be I<visible> within all
-scopes, its I<value> changes depending on C<local>ization and assignment:
+looking outward in compile-time scopes, lookup traverses backwards through all
+of the function calls you've made to reach the current code. Dynamic scope
+applies only to global and package global variables (because lexicals aren't
+visible outside their scopes), and is easiest to understand with an example.
+While a package global variable may be I<visible> within all scopes, its
+I<value> may change depending on C<local>ization and assignment:
 
 =begin programlisting
 
@@ -181,25 +190,26 @@ X<builtins; C<local>>
 Within C<main()>, the program prints C<$scope>'s current value, C<outer scope>,
 then C<local>izes the variable. This changes the visibility of the symbol
 within the current lexical scope I<as well as> in any functions called from the
-I<current> lexical scope. Thus, C<$scope> contains C<main() scope> within the
-body of both C<middle()> and C<inner()>.  After C<main()> returns, when control
-flow reaches the end of its block, Perl restores the original value of the
-C<local>ized C<$scope>. The final C<say> prints C<outer scope> once again.
+I<current> lexical scope; that I<as well as> condition is what dynamic scoping
+does. Thus, C<$scope> contains C<main() scope> within the body of both
+C<middle()> and C<inner()>. After C<main()> returns, when control flow reaches
+the end of its block, Perl restores the original value of the C<local>ized
+C<$scope>. The final C<say> prints C<outer scope> once again.
 
 X<lexicals; pads>
 X<lexpads>
 X<symbol tables>
 
-Package variables and lexical variables have different visibility rules and
-storage mechanisms within Perl. Every scope which contains lexical variables
-has a special data structure called a I<lexical pad> or I<lexpad> which can
-store the values for its enclosed lexical variables. Every time control flow
-enters one of these scopes, Perl creates another lexpad for the values of those
-lexical variables for that particular call. This makes functions work
-correctly, especially in recursive calls (L<recursion>).
+Perl uses different visibility rules and storage mechanisms for package
+variables and lexical variables. Every scope which contains lexical variables
+uses a data structure called a I<lexical pad> or I<lexpad> to store the values
+for its enclosed lexical variables. Every time control flow enters one of these
+scopes, Perl creates another lexpad to contain the values of the lexical
+variables for that particular call. This makes functions work correctly,
+especially in recursive calls (L<recursion>).
 
-Each package has a single I<symbol table> which holds package variables as well
-as named functions. Importing (L<importing>) works by inspecting and
+Each package has a single I<symbol table> which holds package variables and
+well as named functions. Importing (L<importing>) works by inspecting and
 manipulating this symbol table. So does C<local>. You may only C<local>ize
 global and package global variables--never lexical variables.
 
@@ -214,9 +224,9 @@ X<magic variables; C<$|>>
 
 C<local> is most often useful with magic variables. For example, C<$/>, the
 input record separator, governs how much data a C<readline> operation will read
-from a filehandle. C<$!>, the system error variable, contains the error number
-of the most recent system call. C<$@>, the Perl C<eval> error variable,
-contains any error from the most recent C<eval> operation. C<$|>, the autoflush
+from a filehandle. C<$!>, the system error variable, contains error details for
+the most recent system call. C<$@>, the Perl C<eval> error variable, contains
+any error from the most recent C<eval> operation. C<$|>, the autoflush
 variable, governs whether Perl will flush the currently C<select>ed filehandle
 after every write operation.
 
