@@ -9,9 +9,15 @@ X<operators; C<~~>>
 X<builtins; C<given>>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
-if they match. The fuzziness of the definition demonstrates the smartness of
-the operator: the type of comparison depends on the type of both operands.
+if they match. The type of comparison depends on the type of both operands.
 C<given> (L<given_when>) performs an implicit smart match.
+
+As of Perl 5.18, this feature is experimental. The details of the current
+design are complex and unwieldy, and no proposal for simplifying things has
+gained enough popular support to warrant a complete overhaul. The more complex
+your operands, the more likely you are to receive confusing results. Avoid
+comparing objects and stick to simple operations between two scalars or one
+scalar and one aggregate for the best results.
 
 X<operators; C<~~>>
 X<C<~~>; smart match operator>
@@ -24,22 +30,17 @@ The smart match operator is an infix operator:
 
 =end programlisting
 
-The type of comparison generally depends first on the type of the right operand
-and then on the left operand. For example, if the right operand is a scalar
-with a numeric component, the comparison will use numeric equality. If the
-right operand is a regex, the comparison will use a grep or a pattern match.
-If the right operand is an array, the comparison will perform a grep or a
-recursive smart match. If the right operand is a hash, the comparison will
+The type of comparison I<generally> depends first on the type of the right
+operand and then on the left operand. For example, if the right operand is a
+scalar with a numeric component, the comparison will use numeric equality. If
+the right operand is a regex, the comparison will use a grep or a pattern
+match.  If the right operand is an array, the comparison will perform a grep or
+a recursive smart match. If the right operand is a hash, the comparison will
 check the existence of one or more keys. A large and intimidating chart in
 C<perldoc perlsyn> gives far more details about all the comparisons smart match
 can perform.
 
-A serious proposal for 5.16 suggests simplifying smart match substantially. The
-more complex your operands, the more likely you are to receive confusing
-results. Avoid comparing objects and stick to simple operations between two
-scalars or one scalar and one aggregate for the best results.
-
-With that said, smart match can be useful:
+These examples are deliberately simple, because smart match can be confusing:
 
 =begin programlisting
 
@@ -81,3 +82,7 @@ Smart match works even if one operand is a I<reference> to the given data type:
     say 'Hash keys identical' if %hayhash ~~ \%hayhash;
 
 =end programlisting
+
+It's difficult to recommend the use of smart match except in the simplest
+circumstances, but it can be useful when you have a literal string or number to
+match against a variable, as in the case of smart match.
