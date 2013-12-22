@@ -14,20 +14,19 @@ Perl 5's core object system is deliberately minimal. It has only three rules:
 
 =back
 
-You can build anything else out of those three rules, but that's all you get by
-default. This minimalism can be impractical for larger projects--in particular,
-the possibilities for greater abstraction through metaprogramming
-(L<code_generation>) are awkward and limited. Moose (L<moose>) is a better
-choice for modern programs larger than a couple of hundred lines, although
-plenty of legacy code still uses Perl 5's default OO.
+You can build anything else out of those three rules. This minimalism can be
+impractical for larger projects--in particular, the possibilities for greater
+abstraction through metaprogramming (L<code_generation>) are awkward and
+limited. Moose (L<moose>) is a better choice for modern programs larger than a
+couple of hundred lines, although lots of legacy code still uses Perl's default
+OO.
 
 X<OO; C<bless>>
 X<builtins; C<bless>>
 
-The final piece of Perl 5 core OO is the blessed reference.  The C<bless>
-builtin associates the name of a class with a reference. That reference is now
-a valid invocant, and Perl will perform method dispatch on it, using the
-associated class.
+You've seen the first two rules already. The C<bless> builtin associates the
+name of a class with a reference. That reference is now a valid invocant, and
+Perl will perform method dispatch on it, using the associated class.
 
 X<OO; constructors>
 X<OO; class methods>
@@ -38,10 +37,11 @@ constructors have the name C<new()>, but this is not a requirement.
 Constructors are also almost always I<class methods>.
 
 C<bless> takes two arguments, a reference and a class name. It evaluates to the
-reference. The reference may be empty. The class does not have to exist yet.
-You may even use C<bless> outside of a constructor or a class (though all but
-the simplest programs should use real constructors). The canonical constructor
-resembles:
+reference. The reference may be to an empty hash or array or a scalar
+containing an undefined value. The class does not have to exist yet.  You may
+even use C<bless> outside of a constructor or a class (though all but the
+simplest programs should use real constructors). A constructor can be as simple
+as:
 
 =begin programlisting
 
@@ -54,8 +54,8 @@ resembles:
 =end programlisting
 
 By design, this constructor receives the class name as the method's invocant.
-You may also hard-code the name of a class, at the expense of flexibility.
-Parametric constructor allows reuse through inheritance, delegation, or
+You may also hard-code the name of a class, at the expense of flexibility.  A
+parametric constructor allows reuse through inheritance, delegation, or
 exporting.
 
 X<OO; instance data>
@@ -66,14 +66,14 @@ references are most common, but you can bless any type of reference:
 
 =begin programlisting
 
-    my $array_obj  = bless [], $class;
-    my $scalar_obj = bless \$scalar, $class;
-    my $sub_obj    = bless \&some_sub, $class;
+    my $array_obj  = bless [],          $class;
+    my $scalar_obj = bless \$scalar,    $class;
+    my $func_obj   = bless \&some_func, $class;
 
 =end programlisting
 
-Moose classes define object attributes declaratively, but Perl 5's default OO
-is lax. A class representing basketball players which stores jersey number and
+Moose classes define object attributes declaratively, but Perl's default OO is
+lax. A class representing basketball players which stores jersey number and
 position might use a constructor like:
 
 =begin programlisting
@@ -93,11 +93,11 @@ position might use a constructor like:
 
 =begin programlisting
 
-    my $joel  = Player->new( number  => 10,
+    my $joel   = Player->new( number => 10,
                             position => 'center' );
 
-    my $dante = Player->new( number   => 33,
-                             position => 'forward' );
+    my $damian = Player->new( number  => 0,
+                             position => 'guard' );
 
 =end programlisting
 
@@ -124,7 +124,7 @@ representation may break other code. Accessor methods are safer:
 
 =end programlisting
 
-... and now you're starting to write manually what Moose gives you for free.
+... and now you're starting to write yourself what Moose gives you for free.
 Better yet, Moose encourages people to use accessors instead of direct access
 by hiding the accessor generation code. Goodbye, temptation.
 
@@ -137,7 +137,7 @@ Given a blessed reference, a method call of the form:
 
 =begin programlisting
 
-    my $number = $joel->number();
+    my $number = $joel->number;
 
 =end programlisting
 
@@ -145,9 +145,9 @@ Given a blessed reference, a method call of the form:
 C<$joel>--in this case, C<Player>. Next, Perl looks for a functionN<Remember
 that Perl 5 makes no distinction between functions in a namespace and methods.>
 named C<number()> in C<Player>. If no such function exists and if C<Player>
-extends class, Perl looks in the parent class (and so on and so on) until it
-finds a C<number()>. If Perl finds C<number()>, it calls that method with
-C<$joel> as an invocant.
+extends a parent class, Perl looks in the parent class (and so on and so on)
+until it finds a C<number()>. If Perl finds C<number()>, it calls that method
+with C<$joel> as an invocant.
 
 =begin tip Keeping Namespaces Clean
 
@@ -160,7 +160,7 @@ The C<namespace::autoclean> CPAN module can help avoid unintentional collisions 
 X<C<@ISA>>
 X<OO; C<@ISA>>
 
-Moose provides C<extends> to track inheritance relationships, but Perl 5 uses a
+Moose provides C<extends> to track inheritance relationships, but Perl uses a
 package global variable named C<@ISA>. The method dispatcher looks in each
 class's C<@ISA> to find the names of its parent classes.  If C<InjuredPlayer>
 extends C<Player>, you might write:
@@ -189,8 +189,8 @@ pragma, but C<parent> superseded C<base> in Perl 5.10.>:
 
 =end programlisting
 
-Moose has its own metamodel which stores extended inheritance information; this
-offers additional features.
+Moose has its own metamodel which stores extended inheritance information. This
+allows Moose to provide additional metaprogramming opportunities.
 
 X<multiple inheritance>
 X<OO; inheritance>
@@ -216,7 +216,7 @@ X<OO; C<AUTOLOAD>>
 X<methods; C<AUTOLOAD>>
 
 If there is no applicable method in the invocant's class or any of its
-superclasses, Perl 5 will next look for an C<AUTOLOAD()> function (L<autoload>)
+superclasses, Perl will next look for an C<AUTOLOAD()> function (L<autoload>)
 in every class according to the selected method resolution order. Perl will
 invoke any C<AUTOLOAD()> it finds to provide or decline the desired method.
 
@@ -224,18 +224,18 @@ C<AUTOLOAD()> makes multiple inheritance much more difficult to understand.
 
 =head2 Method Overriding and SUPER
 
-As with Moose, you may override methods in the core Perl 5 OO. Unlike Moose,
-core Perl 5 provides no mechanism for indicating your I<intent> to override a
-parent's method. Worse yet, any function you predeclare, declare, or import
-into the child class may override a method in the parent class by having the
-same name. Even if you forget to use the C<override> system of Moose, at least
-it exists. Core Perl 5 OO offers no such protection.
+As with Moose, you may override methods in basic Perl OO. Unlike Moose, Perl
+provides no mechanism for indicating your I<intent> to override a parent's
+method. Worse yet, any function you predeclare, declare, or import into the
+child class may override a method in the parent class by having the same name.
+Even if you forget to use the C<override> system of Moose, at least it exists.
+Basic Perl OO offers no such protection.
 
 X<builtins; C<SUPER::>>
 
-To override a method in a child class, declare a method of the same name as the
-method in the parent. Within an overridden method, call the parent method with
-the C<SUPER::> dispatch hint:
+To override a method in a child class, declare a method with the same name as
+the method in the parent. Within an overridden method, call the parent method
+with the C<SUPER::> dispatch hint:
 
 =begin programlisting
 
@@ -268,8 +268,8 @@ C<super()> does not suffer the same problem.
 
 =head2 Strategies for Coping with Blessed References
 
-If blessed references seem minimal and tricky and confusing, they are. Moose is
-a tremendous improvement. Use it whenever possible. If you do find yourself
+Blessed references may seem minimal and tricky and confusing. They are. Moose
+is much easier to use, so use it whenever possible. If you do find yourself
 maintaining code which uses blessed references, or if you can't convince your
 team to use Moose in full yet, you can work around some of the problems of
 blessed references with discipline.
@@ -278,9 +278,8 @@ X<C<Class::Accessor>>
 
 =over 4
 
-=item * Use accessor methods pervasively, even within methods in your class.
-Consider using a module such as C<Class::Accessor> to avoid repetitive
-boilerplate.
+=item * Use accessor methods pervasively, even within methods in your class.  A
+module such as C<Class::Accessor> helps to avoid repetitive boilerplate.
 
 =item * Avoid C<AUTOLOAD()> where possible. If you I<must> use it, use forward
 declarations of your functions (L<functions>) to help Perl know which
