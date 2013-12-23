@@ -5,20 +5,19 @@ Z<pragmas>
 X<pragmas>
 X<modules; pragmas>
 
-Most Perl 5 extensions are modules which provide new functions or define
-classes (L<moose>). Some modules instead influence the behavior of the language
-itself, such as C<strict> or C<warnings>. Such a module is a I<pragma>. By
-convention, pragmas have lower-case names to differentiate them from other
-modules.
+Most Perl 5 modules which provide new functions or define classes (L<moose>).
+Others, such as C<strict> or C<warnings>, influence the behavior of the
+language itself. This second class of module is a I<pragma>. By convention,
+pragmas have lower-case names to differentiate them from other modules.
 
 =head2 Pragmas and Scope
 
 X<pragmas; scope>
 
 Pragmas work by exporting specific behavior or information into the lexical
-scopes of their callers. Just as declaring a lexical variable makes a symbol
-name available within a scope, using a pragma makes its behavior effective
-within that scope:
+scopes of their callers. You've seen how declaring a lexical variable makes a
+symbol name available within a scope. Using a pragma makes its behavior
+effective within a scope as well:
 
 =begin programlisting
 
@@ -56,13 +55,16 @@ effects within inner scopes:
 X<pragmas; enabling>
 
 C<use> a pragma as you would any other module. Pragmas take arguments, such as
-a minimum version number to use and a list of arguments to change the pragma's
+a minimum version number to use or a list of arguments to change the pragma's
 behavior:
 
 =begin programlisting
 
     # require variable declarations, prohibit barewords
     use strict qw( subs vars );
+
+    # rely on the semantics of the 2012 book
+    use Modern::Perl '2012';
 
 =end programlisting
 
@@ -71,7 +73,7 @@ X<builtins; C<no>>
 
 Sometimes you need to I<disable> all or part of those effects within a further
 nested lexical scope. The C<no> builtin performs an unimport (L<importing>),
-which undoes the effects of well-behaved pragmas. For example, to disable the
+which undoes the effects of a well-behaved pragma. For example, to disable the
 protection of C<strict> when you need to do something symbolic:
 
 =begin programlisting
@@ -88,16 +90,9 @@ protection of C<strict> when you need to do something symbolic:
 
 =head2 Useful Pragmas
 
-X<magic variables; C<$^H>>
-X<pragmas; writing>
-
-Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
-code. C<perldoc perlpragma> explains how to do so, while the explanation of
-C<$^H> in C<perldoc perlvar> explains how the feature works.
-
 X<pragmas; useful core pragmas>
 
-Even before 5.10, Perl 5 included several useful core pragmas.
+Perl 5 includes several useful core pragmas.
 
 X<pragmas; C<strict>>
 
@@ -113,8 +108,8 @@ unintended, and awkward behaviors.
 
 X<pragmas; C<utf8>>
 
-=item * the C<utf8> pragma forces the parser to interpret the source code with
-UTF-8 encoding.
+=item * the C<utf8> pragma tells the parser to use the UTF-8 encoding to
+understand the source code of the current file.
 
 X<pragmas; C<autodie>>
 
@@ -124,7 +119,7 @@ and builtins.
 X<pragmas; C<constant>>
 
 =item * the C<constant> pragma allows you to create compile-time constant
-values (see the CPAN's C<Const::Fast> for an alternative).
+values (though see the CPAN's C<Const::Fast> for an alternative).
 
 X<pragmas; C<vars>>
 
@@ -133,17 +128,23 @@ as C<$VERSION> or C<@ISA> (L<blessed_references>).
 
 X<pragmas; C<feature>>
 
-=item * the C<feature> pragma allows you to enable and disable post-5.10
-features of Perl 5 individually. Where C<use 5.14;> enables all of the Perl
-5.14 features and the C<strict> pragma, C<use feature ':5.14';> does the same.
-This pragma is more useful to I<disable> individual features in a lexical
-scope.
+=item * the C<feature> pragma allows you to enable and disable newer features
+of Perl individually. Where C<use 5.14;> enables all of the Perl 5.14 features
+and the C<strict> pragma, C<use feature ':5.14';> does the same.  This pragma
+is more useful to I<disable> individual features in a lexical scope.
 
 X<pragmas; C<less>>
 
 =item * the C<less> pragma demonstrates how to write a pragma.
 
 =back
+
+X<magic variables; C<$^H>>
+X<pragmas; writing>
+
+As you might suspect from C<less>, you can write your own lexical pragmas in
+pure Perl. C<perldoc perlpragma> explains how to do so, while the explanation
+of C<$^H> in C<perldoc perlvar> explains how the feature works.
 
 The CPAN has begun to gather non-core pragmas:
 
@@ -154,19 +155,20 @@ X<CPAN; C<indirect>>
 
 =over 4
 
+=item * C<autovivification> disables autovivification (L<autovivification>)
+
+=item * C<indirect> prevents the use of indirect invocation
+(L<indirect_objects>)
+
 =item * C<autobox> enables object-like behavior for Perl 5's core types
 (scalars, references, arrays, and hashes).
 
 =item * C<perl5i> combines and enables many experimental language extensions
 into a coherent whole.
 
-=item * C<autovivification> disables autovivification (L<autovivification>)
-
-=item * C<indirect> prevents the use of indirect invocation
-(L<indirect_objects>)
-
 =back
 
-These tools are not widely used yet. The latter two can help you write more
-correct code, while the former two are worth experimenting with in small
-projects. They represent what Perl 5 might be.
+These tools are not widely used yet, but they have their champions.
+C<autovivification> and C<indirect> can help you write more correct code.
+C<autobox> and C<perl5i> are experiments with what Perl might one day become;
+they're worth playing with in small projects.

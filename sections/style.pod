@@ -4,56 +4,57 @@ Z<style>
 
 X<maintainability>
 
-I<Maintainability> is the nebulous measurement of the ease of understanding and
-modifying an existing program. Set aside some code for six months, then return
-to it anew. Maintainability measures the difficulty you face making changes.
+I<Maintainability> is the nebulous measurement of how easy it is to understand
+and modify a program. Write some code. Come back to it in six months. How long
+does it take you to fix a bug or add a feature? That's maintainability.
 
-Maintainability is neither a syntactic concern nor a measurement of how a
-non-programmer might view your code. Assume a competent programmer who
-understands the nature of the problem the code must solve. What problems get in
-the way of fixing a bug or adding an enhancement correctly?
+Maintainability doesn't measure whether you have to look up the syntax for a
+builtin or a library function. It doesn't measure how someone who has never
+programmed before will or won't read your code. It's more interesting to ask
+whether a competent programmer who understands the problem you're trying to
+solve will find it easy or difficult to modify the program. What problems get
+in the way of fixing a bug or adding an enhancement correctly?
 
-The ability to write maintainable code comes from hard-won experience and
-comfort with idioms and techniques and the dominant style of the language. Yet
-even novices can improve the maintainability of their code by adhering to a few
-principles:
+To write maintainable software, you need experience solving real problems, an
+understanding of the idioms and techniques and style of your programming
+language, and good taste. You can develop all of these by concentrating on a
+few principles:
 
 =over 4
 
 =item * I<Remove duplication.> Bugs lurk in sections of repeated and similar
-code--when you fix a bug on one section, did you fix it in others? When you
-update one section, did you update the others?
+code--when you fix a bug in one piece of code, did you fix it in others? When
+you update one section, did you update the others?
 
 Well-designed systems have little duplication. They use functions, modules,
-objects, and roles to extract duplicate code into reusable components which
+objects, and roles to extract duplicate code into distinct components which
 accurately model the domain of the problem. The best designs allow you to add
 features by I<removing> code.
 
-=item * I<Name entities well.> Your code tells a story. Every named
-symbol--variables, functions, models, classes--allows you to clarify or
-obfuscate your intent. The ease of choosing names reveals your understanding of
-the problem and your design. Choose your names carefully.
+=item * I<Name entities well.> Your code tells a story. Every name you choose
+for a variable, function, module, and class allows you to clarify or obfuscate
+your intent. Choose your names carefully. If you're having trouble choosing
+good names, you may need to rethink your design or study your problem in more
+detail.
 
 =item * I<Avoid unnecessary cleverness.> Concise code is good, when it reveals
 the intention of the code. Clever code hides your intent behind flashy tricks.
-Perl allows you to write the right code at the right time. Where possible,
-choose the most obvious solution. Experience, good taste, and knowing what
-really matters will guide you.
+Perl allows you to write the right code at the right time. Choose the most
+obvious solution when possible. Experience and good taste will guide you.
 
-Some problems require clever solutions. Encapsulate this code behind a simple
-interface and document your cleverness.
+Some problems require clever solutions. When this happens, encapsulate this
+code behind a simple interface and document your cleverness.
 
-=item * I<Embrace simplicity.> All else being equal, a simpler program is
-easier to maintain than its more complex workalike. Simplicity means knowing
+=item * I<Embrace simplicity.> If everything else is equal, a simpler program
+is easier to maintain than its more complex workalike. Simplicity means knowing
 what's most important and doing just that.
 
-This is no excuse to avoid error checking or modularity or validation or
-security. Simple code can use advanced features. Simple code can use great
-piles of CPAN modules. Simple code may require work to understand. Yet simple
-code solves problems effectively, without unnecessary work.
-
 Sometimes you need powerful, robust code. Sometimes you need a one-liner.
-Simplicity means knowing the difference and building only what you need.
+Simplicity means knowing the difference and building only what you need.  This
+is no excuse to avoid error checking or modularity or validation or security.
+Simple code can use advanced features. Simple code can use CPAN modules, and
+many of them. Simple code may require work to understand. Yet simple code
+solves problems effectively, without I<unnecessary> work.
 
 =back
 
@@ -68,10 +69,10 @@ the language's idioms.
 
 =over 4
 
-=item * I<Understand community wisdom.> Perl programmers often host fierce
-debates over techniques. Perl programmers also often share their work, and not
-just on the CPAN. Pay attention, and gain enlightenment on the tradeoffs
-between various ideals and styles.
+=item * I<Understand community wisdom.> Perl programmers often debate
+techniques and idioms fiercely. Perl programmers also often share their work,
+and not just on the CPAN. Pay attention, and gain enlightenment on the
+tradeoffs between various ideals and styles.
 
 CPAN developers, Perl Mongers, and mailing list participants have hard-won
 experience solving problems in myriad ways. Talk to them. Read their code. Ask
@@ -80,12 +81,14 @@ questions. Learn from them and let them learn from you.
 X<CPAN; C<Perl::Critic>>
 X<CPAN; C<Perl::Tidy>>
 X<CPAN; C<CPAN::Mini>>
+X<CPAN; C<Carton>
+X<CPAN; C<Pinto>
 
 =item * I<Follow community norms.> Perl is a community of toolsmiths. We solve
 broad problems, including static code analysis (C<Perl::Critic>), reformatting
-(C<Perl::Tidy>), and private distribution systems (C<CPAN::Mini>). Take
-advantage of the CPAN infrastructure; follow the CPAN model of writing,
-documenting, packaging, testing, and distributing your code.
+(C<Perl::Tidy>), and private distribution systems (C<CPAN::Mini>, C<Carton>,
+C<Pinto>). Take advantage of the CPAN infrastructure; follow the CPAN model of
+writing, documenting, packaging, testing, and distributing your code.
 
 =item * I<Read code.> Join a mailing list such as Perl Beginners
 (U<http://learn.perl.org/faq/beginners.html>), browse PerlMonks
@@ -100,8 +103,8 @@ learn.
 
 X<efficacy>
 
-Maintainability is ultimately a design concern. Good design comes from
-practicing good habits:
+Writing maintainable code means designing maintainable code.  Good design comes
+from good habits:
 
 =over 4
 
@@ -111,25 +114,26 @@ give you the confidence to modify a program while keeping it running correctly.
 
 =item * I<Modularize.> Enforce encapsulation and abstraction boundaries. Find
 the right interfaces between components. Name things well and put them where
-they belong. Modularity forces you to reason about the abstractions in your
-programs to understand how everything fits together. Find the pieces that don't
-fit well. Improve your code until they do.
+they belong. Modularity forces you to think about patterns and abstractions in
+your code to understand how everything fits together. Find the pieces that
+don't fit well. Improve them until they do.
 
-=item * I<Follow sensible coding standards.> Effective guidelines govern error
-handling, security, encapsulation, API design, project layout, and other
-maintainability concerns. Excellent guidelines help developers communicate with
-each other with code. You solve problems. Speak clearly.
+=item * I<Follow sensible coding standards.> Effective guidelines discuss error
+handling, security, encapsulation, API design, project layout, and other facets
+of maintainable code. Excellent guidelines help developers communicate with
+each other with code. Your job is to solve problems with code. Let your code
+speak clearly.
 
 =item * I<Exploit the CPAN.> Perl programmers solve problems. Then we share
-those solutions. Take advantage of this force multiplier. Search the CPAN first
-for a solution or partial solution to your problem. Invest your research time;
-it will pay off.
+those solutions. The CPAN is a force multiplier; search it first for a solution
+or partial solution to your problem. Invest time in research to find full or
+partial solutions you can reuse. It will pay off.
 
 If you find a bug, report it. Patch it, if possible. Fix a typo. Ask for a
 feature. Say "Thank you!" We are better together than we are separately. We are
 powerful and effective when we reuse code.
 
-When you're ready, when you solve a new problem, share it. Join us. We solve
-problems.
+When you're ready--when you create something new or fix something old in a
+reusable way--share your code. Join us. We solve problems.
 
 =back

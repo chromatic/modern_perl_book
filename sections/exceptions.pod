@@ -3,11 +3,11 @@
 Z<exceptions>
 X<exceptions>
 
-Programming well means anticipating the unexpected. Files that should exist
-don't. That huge disk that will never fill up does. The always-on network
-isn't. The unbreakable database breaks. Exceptions happen, and robust software
-must handle them.  If you can recover, great! If you can't, log the relevant
-information and retry.
+Good programmers anticipate the unexpected. Files that should exist won't. A
+huge disk that will never fill up will. The always-up network goes down. The
+unbreakable database breaks. Exceptions happen. Robust software must handle
+them. If you can recover, great! If you can't, log the relevant information and
+retry.
 
 Perl 5 handles exceptional conditions through I<exceptions>: a
 dynamically-scoped control flow mechanism designed to raise and handle errors.
@@ -52,10 +52,12 @@ Z<catching_exceptions>
 
 X<exceptions; catching>
 
-Sometimes an exception exiting the program is useful. A program run as a timed
-process might throw an exception when the error logs have filled, causing an
-SMS to go out to administrators. Yet not all exceptions should be fatal. Good
-programs can recover from some, or at least save their state and exit cleanly.
+Sometimes allowing an exception to end the program is useful. A program run as
+a timed process might throw an exception when the error logs have filled,
+causing an SMS to go out to administrators. Yet not all exceptions should be
+fatal. Your program might need to recover from some exceptions. Other
+exceptions might only give you a chance to save your user's work and exit
+cleanly.
 
 X<builtins; C<eval>>
 X<C<eval>; block>
@@ -78,11 +80,10 @@ exception, this C<eval> could catch it.
 
 X<magic variables; C<$@>>
 
-An exception handler is a blunt tool. It will catch all exceptions in its
-dynamic scope. To check which exception you've caught (or if you've caught an
-exception at all), check the value of C<$@>. Be sure to C<local>ize C<$@>
-before you attempt to catch an exception; remember that C<$@> is a global
-variable:
+An exception handler is a blunt tool. It will catch all exceptions thrown in
+its dynamic scope. To check which exception you've caught (or if you've caught
+an exception at all), check the value of C<$@>. Be sure to C<local>ize C<$@>
+before you attempt to catch an exception, as C<$@> is a global variable:
 
 =begin programlisting
 
@@ -123,11 +124,12 @@ X<exceptions; throwing objects>
 
 Applying regular expressions to string exceptions can be fragile, because error
 messages may change over time. This includes the core exceptions that Perl
-itself throws. Fortunately, you may also provide a reference--even a blessed
-reference--to C<die>. This allows you to provide much more information in your
-exception: line numbers, files, and other debugging information. Retrieving
-this information from something structured is much easier than parsing it out
-of a string. Catch these exceptions as you would any other exception.
+itself throws. Instead of throwing an exception as a string, you may use a
+reference--even a blessed reference--with C<die>. This allows you to provide
+much more information in your exception: line numbers, files, and other
+debugging information. Retrieving information from a data structure is much
+easier than parsing data out of a string. Catch these exceptions as you would
+any other exception.
 
 X<exceptions; custom classes with C<Exception::Class>>
 X<C<Exception::Class>>
@@ -175,8 +177,8 @@ Using C<$@> correctly requires you to navigate several subtle risks:
 
 =item * UnC<local>ized uses further down the dynamic scope may modify C<$@>
 
-=item * It may contain an object which overrides its boolean value to return
-false
+=item * C<$@> may contain an object which returns a false value in boolean
+context
 
 =item * A signal handler (especially the C<DIE> signal handler) may change
 C<$@>
@@ -189,11 +191,10 @@ change C<$@>
 X<exceptions; handling safely with C<Try::Tiny>>
 X<C<Try::Tiny>>
 
-Perl 5.14 fixed some of these issues. Granted, they occur very rarely, but
-they're often difficult to diagnose and to fix. The C<Try::Tiny> CPAN
-distribution improves the safety of exception handling I<and> the syntaxN<In
-fact, C<Try::Tiny> helped inspire improvements to Perl 5.14's exception
-handling.>.
+Perl 5.14 fixed some of these issues. They occur rarely, but they're often
+difficult to diagnose and to fix. The C<Try::Tiny> CPAN distribution improves
+the safety of exception handling I<and> the syntaxN<C<Try::Tiny> helped inspire
+improvements to Perl 5.14's exception handling.>.
 
 C<Try::Tiny> is easy to use:
 
@@ -217,9 +218,9 @@ Z<builtin_exceptions>
 X<exceptions; core>
 
 Perl 5 itself throws several exceptional conditions. C<perldoc perldiag> lists
-several "trappable fatal errors". While some are syntax errors thrown during
-the compilation process, you can catch the others during runtime. The most
-interesting are:
+several "trappable fatal errors". Some are syntax errors that Perl produces
+during failed compilations, but you can catch the others during runtime. The
+most interesting are:
 
 =over 4
 
