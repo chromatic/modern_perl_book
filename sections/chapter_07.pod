@@ -1,9 +1,10 @@
 =head0 Objects
 
-Programming is a management activity. The larger the program, the more details
-you must manage. Our only hope to manage this complexity is to exploit
-abstraction (treating similar things similarly) and encapsulation (grouping
-related details together).
+When you design a program, you have to approach it from many levels. At the
+bottom, you have specific details about the problem you're solving. At the top
+levels, you have to organize the code so it makes sense. Our only hope to
+manage this complexity is to exploit abstraction (treating similar things
+similarly) and encapsulation (grouping related details together).
 
 X<OO>
 X<objects>
