@@ -2,13 +2,13 @@
 
 Z<idioms>
 
-Every language--programming or natural--has common patterns of expression, or
-I<idioms>. The earth revolves, but we speak of the sun rising or setting. We
-brag about clever hacks and cringe at nasty hacks as we sling code.
+Every language has common patterns of expression, or I<idioms>. The earth
+revolves, but we speak of the sun rising or setting. We brag about clever hacks
+and cringe at nasty hacks as we sling code.
 
-Perl idioms aren't quite language features or design techniques. They're
-mannerisms and mechanisms that, taken together, give your code a Perlish
-accent. You don't have to use them, but they play to Perl's strengths.
+Perl idioms are language features or design techniques. They're mannerisms and
+mechanisms that give your code a Perlish accent. You don't have to use them,
+but they play to Perl's strengths.
 
 =head2 The Object as C<$self>
 
@@ -18,11 +18,11 @@ X<objects; invocant>
 X<methods; invocant>
 X<CPAN; C<MooseX::Method::Signatures>>
 
-Perl 5's object system (L<moose>) treats the invocant of a method as a mundane
+Perl's object system (L<moose>) treats the invocant of a method as a mundane
 parameter. Regardless of whether you invoke a class or an instance method, the
-first element of C<@_> is always a method's invocant. By convention, most Perl
-5 code uses C<$class> as the name of the class method invocant and C<$self> for
-the name of the object invocant. This convention is strong enough that useful
+first element of C<@_> is always the invocant. By convention, most Perl code
+uses C<$class> as the name of the class method invocant and C<$self> for the
+name of the object invocant. This convention is strong enough that useful
 extensions such as C<MooseX::Method::Signatures> assume you will use C<$self>
 as the name of object invocants.
 
@@ -33,12 +33,11 @@ X<arguments; named>
 X<CPAN; C<signatures>>
 X<CPAN; C<MooseX::MultiMethods>>
 
-List processing is a fundamental component of Perl's expression evaluation.
-The ability for Perl programmers to chain expressions which evaluate to
-variable-length lists provides countless opportunities to manipulate data
-effectively.
+Perl loves lists. Lists are a fundamental element of Perl. List flattening and
+binding lets you chain together multiple expressions to manipulate data in many
+ways to produce the results you want.
 
-While Perl 5's argument passing simplicity (everything flattens into C<@_>) is
+While Perl's argument passing simplicity (everything flattens into C<@_>) is
 occasionally too simple, assigning from C<@_> in list context allows you to
 unpack named parameters as pairs. The fat comma (L<declaring_hashes>) operator
 turns an ordinary list into an obvious list of pairs of arguments:
@@ -54,8 +53,8 @@ turns an ordinary list into an obvious list of pairs of arguments:
 
 =end programlisting
 
-The callee side can unpack these parameters into a hash and treat the hash as
-if it were a single argument:
+Within the function, code unpacks these parameters into a hash and treats that
+hash as if it were a single argument:
 
 =begin programlisting
 
@@ -72,7 +71,9 @@ if it were a single argument:
 =begin tip Hash or Hash Ref?
 
 I<Perl Best Practices> suggests passing hash references instead. This allows
-Perl to perform caller-side validation of the hash reference.
+Perl to perform caller-side validation of the hash reference. In other words,
+if you pass the wrong number of arguments, you'll get an error where you
+I<call> the function.
 
 =end tip
 
@@ -103,28 +104,17 @@ X<builtins; C<map>>
 X<builtins; C<sort>>
 
 The I<Schwartzian transform> is an elegant demonstration of Perl's pervasive
-list handling as an idiom handily borrowed from the Lisp family of languages.
-
-Suppose you have a Perl hash which associates the names of your co-workers with
-their phone extensions:
+list handling as an idiom borrowed from Lisp. Suppose you have a Perl hash
+which associates the names of your co-workers with their phone extensions:
 
 =begin programlisting
 
     my %extensions =
     (
-        '001' => 'Armon',
+        '000' => 'Damian',
         '002' => 'Wesley',
-        '003' => 'Gerald',
-        '005' => 'Rudy',
-        '007' => 'Brandon',
-        '008' => 'Patrick',
-        '011' => 'Luke',
         '012' => 'LaMarcus',
-        '017' => 'Chris',
-        '020' => 'Maurice',
-        '023' => 'Marcus',
-        '024' => 'Andre',
-        '052' => 'Greg',
+        '042' => 'Robin',
         '088' => 'Nic',
     );
 
@@ -132,9 +122,9 @@ their phone extensions:
 
 =begin tip Hash Key Quoting Rules
 
-Fat comma hash key quoting only works on things that look like barewords; these
-keys look like numbers--octal numbers, in specific, with the leading zero. Yes,
-almost everyone makes this mistake.
+Fat comma hash key quoting only works on things that look like barewords. With
+the leading zero, these keys look like octal numbers. Almost everyone makes
+this mistake.
 
 =end tip
 
@@ -174,17 +164,17 @@ X<C<$b>>
 X<builtins; C<sort>>
 
 The block provided to C<sort> takes its arguments in two package-scoped
-(L<scope>) variables C<$a> and C<$b>N<See C<perldoc -f sort> for an extensive
+(L<scope>) variables: C<$a> and C<$b>N<See C<perldoc -f sort> for an extensive
 discussion of the implications of this scoping.>. The C<sort> block takes its
-arguments two at a time; the first becomes the contents of C<$a> and the second
+arguments two at a time. The first becomes the contents of C<$a> and the second
 the contents of C<$b>. If C<$a> should come before C<$b> in the results, the
-block must return -1. If both values are sufficiently equal in the sorting
-terms, the block must return 0. Finally, if C<$a> should come after C<$b> in
-the results, the block should return 1. Any other return values are errors.
+block must return -1. If both values sort to the same position, the block must
+return 0. Finally, if C<$a> should come after C<$b> in the results, the block
+should return 1. Any other return values are errors.
 
 =begin tip Know Your Data
 
-Reversing the hash I<in place> would work if no one had the same name.  This
+Reversing the hash I<in place> would work if no one had the same name. This
 particular data set presents no such problem, but code defensively.
 
 =end tip
@@ -193,10 +183,8 @@ X<operators; C<cmp>>
 X<< operators; C<< <=> >> >>
 
 The C<cmp> operator performs string comparisons and the C<< <=> >> performs
-numeric comparisons.
-
-Given C<@sorted_pairs>, a second C<map> operation converts the data structure
-to a more usable form:
+numeric comparisons. Given C<@sorted_pairs>, a second C<map> operation converts
+the data structure to a more usable form:
 
 =begin programlisting
 
@@ -213,8 +201,8 @@ to a more usable form:
 
 =end programlisting
 
-The Schwartzian transformation itself uses Perl's pervasive list processing to
-get rid of the temporary variables. The combination is:
+The Schwartzian transformation uses Perl's pervasive list processing to get rid
+of the temporary variables:
 
 =begin programlisting
 
@@ -250,7 +238,7 @@ X<C<$/>>
 X<files; slurping>
 X<global variables; C<$/>>
 
-C<local> is essential to managing Perl 5's magic global variables. You must
+C<local> is essential to managing Perl's magic global variables. You must
 understand scope (L<scope>) to use C<local> effectively--but if you do, you can
 use tight and lightweight scopes in interesting ways. For example, to slurp
 files into a scalar in a single expression:
@@ -267,7 +255,7 @@ files into a scalar in a single expression:
 
 =end programlisting
 
-C<$/> is the input record separator.  C<local>izing it sets its value to
+C<$/> is the input record separator. C<local>izing it sets its value to
 C<undef>, pending assignment. That C<local>ization takes place I<before> the
 assignment. As the value of the separator is undefined, Perl happily reads the
 entire contents of the filehandle in one swoop and assigns that value to C<$/>.
@@ -294,16 +282,16 @@ both C<local> and scoping. The C<File::Slurp> module from the CPAN is a worthy
 
 =head2 Handling Main
 
-Perl requires no special syntax for creating closures (L<closures>); you can
+Perl requires no special syntax for creating closures (L<closures>). You can
 close over a lexical variable inadvertently. Many programs commonly set up
 several file-scoped lexical variables before handing off processing to other
 functions. It's tempting to use these variables directly, rather than passing
 values to and returning values from functions, especially as programs grow.
 Unfortunately, these programs may come to rely on subtleties of what happens
-when during Perl 5's compilation process; a variable you I<thought> would be
+when during Perl's compilation process--a variable you I<thought> would be
 initialized to a specific value may not get initialized until much later.
 
-To avoid this, wrap the main code of your program in a simple function,
+To avoid this, wrap the main code of your program in a single function,
 C<main()>. Encapsulate your variables to their proper scopes. Then add a single
 line to the beginning of your program, after you've used all of the modules and
 pragmas you need:
@@ -318,12 +306,18 @@ pragmas you need:
 
     B<exit main( @ARGV );>
 
+    sub main {
+        ...
+
+        # successful exit
+        return 0;
+    }
+
 =end programlisting
 
 Calling C<main()> I<before> anything else in the program forces you to be
 explicit about initialization and order of compilation. Calling C<exit> with
-C<main()>'s return value prevents any other bare code from running, though be
-sure to return C<0> from C<main()> on successful execution.
+C<main()>'s return value prevents any other bare code from running.
 
 =head2 Controlled Execution
 
@@ -331,11 +325,10 @@ Z<controlled_execution>
 
 The effective difference between a program and a module is in its intended use.
 Users invoke programs directly, while programs load modules after execution has
-already begun. Yet a module is Perl code, in the same way that a program is.
-Making a module executable is easy.  So is making a program behave as a module
-(useful for testing parts of an existing program without formally making a
-module). All you need to do is to discover I<how> Perl began to execute a piece
-of code.
+already begun. Yet a module and a program are both Perl code.  Making a module
+executable is easy. So is making a program behave as a module (useful for
+testing parts of an existing program without formally making a module). All you
+need to do is to discover I<how> Perl began to execute a piece of code.
 
 X<builtins; C<caller>>
 
@@ -373,8 +366,7 @@ The CPAN has several modules which help verify the parameters of your
 functions; C<Params::Validate> and C<MooseX::Params::Validate> are two good
 options. Simple validation is easy even without those modules.
 
-Suppose your function takes two arguments, no more and no less. You I<could>
-write:
+Suppose your function takes exactly two arguments. You I<could> write:
 
 =begin programlisting
 
@@ -420,7 +412,7 @@ Z<regex_en_passant>
 X<regex; modification>
 X<regex; substitution>
 
-Many Perl 5 idioms rely on the fact that expressions evaluate to values:
+Many Perl idioms rely on the fact that expressions evaluate to values:
 
 =begin programlisting
 
@@ -429,9 +421,9 @@ Many Perl 5 idioms rely on the fact that expressions evaluate to values:
 =end programlisting
 
 While that code is obviously clunky, it demonstrates how to use the value of
-one expression in another expression.  This isn't a new idea; you've likely
-used the return value of a function in a list or as an argument to another
-function before.  You may not have realized its implications.
+one expression in another expression. This isn't a new idea; you've likely used
+the return value of a function in a list or as an argument to another function
+before. You may not have realized its implications.
 
 X<regex; capture>
 
@@ -447,8 +439,8 @@ combination with a precompiled regular expression in C<$first_name_rx>:
 In list context, a successful regex match returns a list of all captures
 (L<regex_captures>, and Perl assigns the first one to C<$first_name>.
 
-To modify the name, perhaps removing all non-word characters to create a useful
-user name for a system account, you could write:
+To remove all non-word characters to create a useful user name for a system
+account, you could write:
 
 =begin programlisting
 
@@ -463,10 +455,10 @@ can write C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
 
 =end tip
 
-First, assign the value of C<$name> to C<$normalized_name>, as the parentheses
-affect the precedence so that assignment happens first.  The assignment
-expression evaluates to the I<variable> C<$normalized_name>, so that that
-variable becomes the first operand to the transliteration operator.
+First, assign the value of C<$name> to C<$normalized_name>. The parentheses
+affect the precedence so that assignment happens first. The assignment
+expression evaluates to the I<variable> C<$normalized_name>. That variable
+becomes the first operand to the transliteration operator.
 
 This technique works on other in-place modification operators:
 
@@ -475,7 +467,7 @@ This technique works on other in-place modification operators:
     my $age = 14;
     (my $next_age = $age)++;
 
-    say "Next year I will be $next_age";
+    say "I am $age, but next year I will be $next_age";
 
 =end programlisting
 
@@ -486,8 +478,8 @@ Z<unary_coercions>
 X<coercion>
 X<types>
 
-Perl 5's type system almost always does the right thing when you choose the
-correct operators. Use the string concatenation operator, and Perl will treat
+Perl's type system almost always does the right thing when you choose the
+correct operators. Use the string concatenation operator and Perl will treat
 both operands as strings. Use the addition operator and Perl will treat both
 operands as numeric.
 
@@ -506,7 +498,7 @@ To ensure that Perl treats a value as numeric, add zero:
 
 X<unary conversions; boolean>
 
-To ensure that Perl treats a value as boolean, double negate it:
+To ensure that Perl treats a value as a boolean, double negate it:
 
 =begin programlisting
 
@@ -526,6 +518,5 @@ string:
 =end programlisting
 
 Though the need for these coercions is vanishingly rare, you should understand
-these idioms if you encounter them.
-While it may look like it would be safe to remove a "useless"
-C<+ 0> from an expression, doing so may well break the code.
+these idioms if you encounter them. While it may look like it would be safe to
+remove a "useless" C<+ 0> from an expression, doing so may well break the code.

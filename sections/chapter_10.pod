@@ -1,11 +1,9 @@
 =head0 Perl Beyond Syntax
 
-Baby Perl will only get you so far. Language fluency allows you to use the
-natural patterns and idioms of the language. Effective programmers understand
-how Perl's features interact and combine.
-
-Prepare for the second learning curve of Perl: Perlish thinking. The result is
-concise, powerful, and Perlish code.
+Baby Perl can solve a lot of your problems, but it will only take you so far.
+Effective programmers understand how Perl's features interact and combine. This
+fluent Perl takes advantage of the language's natural patterns and idioms. The
+result of Perlish thinking is concise, powerful, and useful code.
 
 L<idioms>
 

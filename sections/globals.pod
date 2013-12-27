@@ -5,22 +5,21 @@ Z<globals>
 X<super globals>
 X<variables; super global>
 
-Perl 5 provides several I<super global variables> that are truly global, not
-scoped to a package or file. Unfortunately,
-their global availability means that any direct or indirect
-modifications may have effects on other parts of the program--and they're terse.
-Experienced Perl 5 programmers have memorized some of them. Few people
-have memorized all of them. Only a handful are ever useful. C<perldoc
-perlvar> contains the exhaustive list of such variables.
+Perl provides several I<super global variables> that are truly global, not
+scoped to a package or file. Unfortunately, their global availability means
+that any direct or indirect modifications may have effects on other parts of
+the program--and they're terse. Experienced Perl hackers have memorized some of
+them. Few people have memorized all of them. Only a handful are ever useful.
+C<perldoc perlvar> contains the exhaustive list of these variables.
 
 =head2 Managing Super Globals
 
 X<super globals; managing>
 X<builtins; C<local>>
 
-Perl 5 continues to move more global behavior into lexical behavior, so you can
-avoid many of these globals. When you can't avoid them, use C<local> in the
-smallest possible scope to constrain any modifications. You are still
+As Perl evolves, it moves more global behavior into lexical behavior, so that
+you can avoid many of these globals. When you can't avoid them, use C<local> in
+the smallest possible scope to constrain any modifications. You are still
 susceptible to any changes code you I<call> makes to those globals, but you
 reduce the likelihood of surprising code I<outside> of your scope. As the easy
 file slurping idiom (L<easy_file_slurping>) demonstrates, C<local> is often the
@@ -45,8 +44,8 @@ X<exceptions; catching>
 X<exceptions; C<$@>>
 
 Other times you need to I<read> the value of a super global and hope that no
-other code has modified it. Catching exceptions with an C<eval> block can be
-susceptible to race conditions, in that C<DESTROY()> methods invoked on
+other code has modified it. Catching exceptions with an C<eval> block is
+susceptible at least one race condition where C<DESTROY()> methods invoked on
 lexicals that have gone out of scope may reset C<$@>:
 
 =begin programlisting
@@ -86,18 +85,16 @@ X<C<$'>>
 X<global variables; C<$'>>
 
 Three regex-related super globals (C<$&>, C<$`>, and C<$'>) impose a global
-performance penalty for I<all> regular expressions within a program.  If you
+performance penalty for I<all> regular expressions within a program. If you
 forget the C<-no_match_vars> import, your program will suffer the penalty even
-if you don't explicitly read from those variables.
-
-Modern Perl programs should use the C<@-> variable as a replacement for the
-terrible three.
+if you don't explicitly read from those variables. Modern Perl programs can use
+the C<@-> variable instead of them.
 
 =head2 Useful Super Globals
 
 X<super globals; useful>
 
-Most modern Perl 5 programs can get by with using only a couple of the super
+Most modern Perl programs can get by with using only a couple of the super
 globals. You're most likely to encounter only a few of these variables in real
 programs.
 
@@ -125,8 +122,8 @@ X<C<$INPUT_LINE_NUMBER>>
 X<global variables; C<$INPUT_LINE_NUMBER>>
 
 =item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of records read from
-the most recently-accessed filehandle.  You can read from this variable, but
-writing to it has no effect.  Localizing this variable will localize the
+the most recently-accessed filehandle. You can read from this variable, but
+writing to it has no effect. Localizing this variable will localize the
 filehandle to which it refers.
 
 X<C<$|>>
@@ -151,14 +148,14 @@ X<C<$ERRNO>>
 X<global variables; C<$ERRNO>>
 
 =item * C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result
-of the I<most recent> system call.  In numeric context, this corresponds to C's
-C<errno> value, where anything other than zero indicates an error.  In string
-context, this evaluates to the appropriate system error string.  Localize this
+of the I<most recent> system call. In numeric context, this corresponds to C's
+C<errno> value, where anything other than zero indicates an error. In string
+context, this evaluates to the appropriate system error string. Localize this
 variable before making a system call (implicitly or explicitly) to avoid
-overwriting the appropriate value for other code elsewhere.  Many places within
-Perl 5 itself make system calls without your knowledge, so the value of this
-variable can change out from under you. Copy it I<immediately> after causing a
-system call for the most accurate results.
+overwriting the appropriate value for other code elsewhere. Perl's internals
+make system calls sometimes, so the value of this variable can change out from
+under you. Copy it I<immediately> after causing a system call to get accurate
+results.
 
 X<C<$">>
 X<global variables; C<$">>
@@ -188,7 +185,7 @@ X<C<$PROGRAM_NAME>>
 X<global variables; C<$PROGRAM_NAME>>
 
 =item * C<$0> (C<$PROGRAM_NAME>) contains the name of the program currently
-executing.  You may modify this value on some Unix-like platforms to change the
+executing. You may modify this value on some Unix-like platforms to change the
 name of the program as it appears to other programs on the system, such as
 C<ps> or C<top>.
 
@@ -198,24 +195,24 @@ X<C<$PID>>
 X<global variables; C<$PID>>
 
 =item * C<$$> (C<$PID>) contains the process id of the currently running
-instance of the program, as the operating system understands it.  This will
-vary between C<fork()>ed programs and I<may> vary between threads in the same
+instance of the program, as the operating system understands it. This will vary
+between C<fork()>ed programs and I<may> vary between threads in the same
 program.
 
 X<C<@INC>>
 X<global variables; C<@INC>>
 
 =item * C<@INC> holds a list of filesystem paths in which Perl will look for
-files to load with C<use> or C<require>.  See C<perldoc -f require> for other
+files to load with C<use> or C<require>. See C<perldoc -f require> for other
 items this array can contain.
 
 X<C<%SIG>>
 X<global variables; C<%SIG>>
 
-=item * C<%SIG> maps OS and low-level Perl signals to function references
-used to handle those signals.  Trap the standard Ctrl-C interrupt by catching
-the C<INT> signal, for example.  See C<perldoc perlipc> for more information
-about signals and especially safe signals.
+=item * C<%SIG> maps OS and low-level Perl signals to function references used
+to handle those signals. Trap the standard Ctrl-C interrupt by catching the
+C<INT> signal, for example. See C<perldoc perlipc> for more information about
+signals and signal handling.
 
 =back
 
@@ -224,10 +221,9 @@ about signals and especially safe signals.
 X<super globals; alternatives>
 X<C<Try::Tiny>>
 
-The worst culprits for action at a distance relate to IO and exceptional
-conditions. Using C<Try::Tiny> (L<exception_caveats>) will help insulate you
-from the tricky semantics of proper exception handling. C<local>izing and
-copying the value of C<$!> can help you avoid strange behaviors when Perl makes
-implicit system calls. Using C<IO::File> and its methods on lexical filehandles
-(L<file_handling_variables>) helps prevent unwanted global changes to IO
-behavior.
+IO and exceptions are the worst perpetrators of action at a distance.  Use
+C<Try::Tiny> (L<exception_caveats>) to insulate you from the tricky semantics
+of proper exception handling. C<local>ize and copy the value of C<$!> to avoid
+strange behaviors when Perl makes implicit system calls. Use C<IO::File> and
+its methods on lexical filehandles (L<file_handling_variables>) to limit
+unwanted global changes to IO behavior.
