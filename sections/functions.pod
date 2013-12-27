@@ -413,7 +413,7 @@ Otherwise, any functions I<imported> from other modules but not I<declared> in
 the current file would look like barewords, and would violate C<strict>, for
 example.
 
-Of course, C<strict> is a pragma (L<pragma>), so it has other effects.
+Of course, C<strict> is a pragma (L<pragmas>), so it has other effects.
 
 =head1 Reporting Errors
 

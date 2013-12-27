@@ -10,7 +10,7 @@ X<builtins; C<given>>
 
 The smart match operator, C<~~>, compares two operands and returns a true value
 if they match. The type of comparison depends on the type of both operands.
-C<given> (L<given_when>) performs an implicit smart match.
+C<given> (L<switch_statements>) performs an implicit smart match.
 
 As of Perl 5.18, this feature is experimental. The details of the current
 design are complex and unwieldy, and no proposal for simplifying things has

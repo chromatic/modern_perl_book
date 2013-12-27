@@ -81,8 +81,8 @@ questions. Learn from them and let them learn from you.
 X<CPAN; C<Perl::Critic>>
 X<CPAN; C<Perl::Tidy>>
 X<CPAN; C<CPAN::Mini>>
-X<CPAN; C<Carton>
-X<CPAN; C<Pinto>
+X<CPAN; C<Carton>>
+X<CPAN; C<Pinto>>
 
 =item * I<Follow community norms.> Perl is a community of toolsmiths. We solve
 broad problems, including static code analysis (C<Perl::Critic>), reformatting
