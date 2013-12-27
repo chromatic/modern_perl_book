@@ -3,16 +3,22 @@
 Z<overloading>
 X<overloading>
 
-Perl 5 is not a pervasively object oriented language. Its core data types
-(scalars, arrays, and hashes) are not objects with overloadable methods, but
-you I<can> control the behavior of your own classes and objects, especially
-when they undergo coercion or contextual evaluation. This is I<overloading>.
+Perl is not a pervasively object oriented language. Its core data types
+(scalars, arrays, and hashes) are not objects with methods, but you I<can>
+control the behavior of your own classes and objects, especially when they
+undergo coercion or contextual evaluation. This is I<overloading>.
 
-Overloading can be subtle but powerful.  An interesting example is overloading
-how an object behaves in boolean context, especially if you use something like
-the Null Object pattern (U<http://www.c2.com/cgi/wiki?NullObject>). In boolean
-context, an object will evaluate to a true value, unless you overload
-boolification.
+Overloading is subtle but powerful. An interesting example is overloading how
+an object behaves in boolean context. In boolean context, an object will
+evaluate to a true value, unless you overload boolification.
+
+=begin tip
+
+Why overload boolean context? Suppose you're using the Null Object pattern
+(U<http://www.c2.com/cgi/wiki?NullObject>) to make your own objects appear
+false in boolean context.
+
+=end tip
 
 You can overload what the object does for almost every operation or coercion:
 stringification, numification, boolification, iteration, invocation, array
@@ -28,11 +34,10 @@ X<overloading; string>
 X<C<overload> pragma>
 X<pragmas; C<overload>>
 
-The C<overload> pragma allows you to associate a function with an operation you
-can overload by passing argument pairs, where the key names the type of
-overload and the value is a function reference to call for that operation. A
-C<Null> class which overloads boolean evaluation so that it always evaluates to
-a false value might resemble:
+The C<overload> pragma associates functions with overloadable operations.
+Passing argument pairs, where the key is the name of a type of overload and the
+value is a function reference. A C<Null> class which overloads boolean
+evaluation so that it always evaluates to a false value might resemble:
 
 =begin programlisting
 
@@ -60,9 +65,9 @@ It's easy to add a stringification:
 
 Overriding numification is more complex, because arithmetic operators tend to
 be binary ops (L<arity>). Given two operands both with overloaded methods for
-addition, which takes precedence? The answer needs to be consistent, easy to
-explain, and understandable by people who haven't read the source code of the
-implementation.
+addition, which overloading should take precedence? The answer needs to be
+consistent, easy to explain, and understandable by people who haven't read the
+source code of the implementation.
 
 C<perldoc overload> attempts to explain this in the sections labeled I<Calling
 Conventions for Binary Operations> and I<MAGIC AUTOGENERATION>, but the easiest
@@ -83,25 +88,25 @@ use the provided overloads as fallbacks where possible:
 =end programlisting
 
 Setting C<fallback> to a true value lets Perl use any other defined overloads
-to compose the requested operation when possible.  If that's not possible, Perl
-will act as if there were no overloads in effect.  This is often what you want.
+to compose the requested operation when possible. If that's not possible, Perl
+will act as if there were no overloads in effect. This is often what you want.
 
 Without C<fallback>, Perl will only use the specific overloadings you have
-provided.  If someone tries to perform an operation you have not overloaded,
+provided. If someone tries to perform an operation you have not overloaded,
 Perl will throw an exception.
 
 =head2 Overload and Inheritance
 
 X<overloading; inheritance>
 
-Subclasses inherit overloadings from their ancestors.  They may override this
-behavior in one of two ways.  If the parent class uses overloading as shown,
+Subclasses inherit overloadings from their ancestors. They may override this
+behavior in one of two ways. If the parent class uses overloading as shown,
 with function references provided directly, a child class I<must> override the
 parent's overloaded behavior by using C<overload> directly.
 
-Parent classes can allow their descendants more flexibility by specifying the
-I<name> of a method to call to implement the overloading, rather than
-hard-coding a function reference:
+If you're writing a parent class, use the I<name> of a method rather than a
+function reference. That'll allow child classes to prove their own overloadings
+by overriding the named methods:
 
 =begin programlisting
 
@@ -116,23 +121,23 @@ hard-coding a function reference:
 
 =end programlisting
 
-In this case, any child classes can perform these overloaded operations
-differently by overriding the appropriate named methods.
+Any child class can do something different for boolification by overriding
+C<get_bool()>, for example.
 
 =head2 Uses of Overloading
 
 X<CPAN; C<IO::All>>
 
 Overloading may seem like a tempting tool to use to produce symbolic shortcuts
-for new operations, but it's rare in Perl 5 for a good reason. The C<IO::All>
-CPAN distribution pushes this idea to its limit to produce clever ideas for
-concise and composable code.  Yet for every brilliant API refined through the
-appropriate use of overloading, a dozen more messes congeal.  Sometimes the
-best code eschews cleverness in favor of simplicity.
+for new operations, but it's rare for a good reason. The C<IO::All> CPAN
+distribution pushes this idea to its limit. In return, you get a simple and
+elegant API. Yet for every brilliant API refined through the appropriate use of
+overloading, a dozen more messes congeal. Sometimes the best code eschews
+cleverness in favor of simplicity.
 
 Overriding addition, multiplication, and even concatenation on a C<Matrix>
 class makes sense, only because the existing notation for those operations is
-pervasive.  A new problem domain without that established notation is a poor
+pervasive. A new problem domain without that established notation is a poor
 candidate for overloading, as is a problem domain where you have to squint to
 make Perl's existing operators match a different notation.
 

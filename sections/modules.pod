@@ -4,18 +4,17 @@ Z<modules>
 
 X<modules>
 
-Many people consider the CPAN (L<cpan>) to be Perl 5's most compelling feature.
-The CPAN is, at its core, a system for finding and installing modules. A
-I<module> is a package contained in its own file and loadable with C<use> or
-C<require>. A module must be valid Perl 5 code. It must end with an expression
-which evaluates to a true value so that the Perl 5 parser knows it has loaded
-and compiled the module successfully. There are no other requirements, only
-strong conventions.
+Many people consider the CPAN (L<cpan>) to be Perl's best advantage.  The CPAN
+is a system for finding and installing modules. A I<module> is a package
+contained in its own file and loadable with C<use> or C<require>. A module must
+be valid Perl code. It must end with an expression which evaluates to a true
+value so that the Perl parser knows it has loaded and compiled the module
+successfully. There are no other requirements, only strong conventions.
 
 X<C<::>; package name separator>
 
 When you load a module, Perl splits the package name on double-colons (C<::>)
-and turns the components of the package name into a file path. In practice,
+and turns the components of the package name into a file path. This means that
 C<use StrangeMonkey;> causes Perl to search for a file named
 F<StrangeMonkey.pm> in every directory in C<@INC>, in order, until it finds one
 or exhausts the list.
@@ -27,8 +26,8 @@ Perl to search for a relative file path of F<StrangeMonkey/UI/Mobile.pm> in
 every directory in C<@INC>.
 
 The resulting file may or may not contain a package declaration matching its
-filename--there is no such technical I<requirement>--but maintenance concerns
-recommend that convention.
+filename--there is no such technical I<requirement>--but it's easier to
+understand that way.
 
 =begin tip C<perldoc> Tricks
 
@@ -37,9 +36,8 @@ X<C<perldoc>; C<-m>>
 X<C<perldoc>; C<-lm>>
 
 C<perldoc -l Module::Name> will print the full path to the relevant F<.pm>
-file, provided that the I<documentation> for that module exists in the F<.pm>
-file. C<perldoc -lm Module::Name> will print the full path to the F<.pm> file
-regardless of the existence of any parallel F<.pod> file. C<perldoc -m
+file, if that file contains I<documentation> in POD form. C<perldoc -lm
+Module::Name> will print the full path to the F<.pm> file. C<perldoc -m
 Module::Name> will display the contents of the F<.pm> file.
 
 =end tip
@@ -79,8 +77,8 @@ X<builtins; C<no>>
 X<unimporting>
 
 The C<no> builtin calls a module's C<unimport()> method, if it exists, passing
-any arguments. This is most common with pragmas which introduce modify behavior
-through C<import()>:
+any arguments. This is most common with pragmas which introduce or modify
+behavior through C<import()>:
 
 =begin programlisting
 
@@ -152,31 +150,31 @@ the effects of C<import()> or C<unimport()> may have little effect.
 X<modules; case-sensitivity>
 X<case-sensitivity>
 
-Perl 5's C<use> and C<require> are case-sensitive, though while Perl knows the
-difference between C<strict> and C<Strict>, your combination of operating
-system and file system may not. If you were to write C<use Strict;>, Perl would
-not find F<strict.pm> on a case-sensitive filesystem.  With a case-insensitive
+Both C<use> and C<require> are case-sensitive. While Perl knows the difference
+between C<strict> and C<Strict>, your combination of operating system and file
+system may not. If you were to write C<use Strict;>, Perl would not find
+F<strict.pm> on a case-sensitive filesystem. With a case-insensitive
 filesystem, Perl would happily load F<Strict.pm>, but nothing would happen when
 it tried to call C<< Strict->import() >>. (F<strict.pm> declares a package
 named C<strict>.)
 
-Portable programs are strict about case even if they don't have to be.
+Portable programs are careful about case even if they don't have to be.
 
 =head2 Exporting
 
 Z<exporting>
 X<exporting>
 
-A module can make certain global symbols available to other packages through a
-process known as I<exporting>--a process initiated by calling C<import()>
-whether implicitly or directly.
+A module can make package global symbols available to other packages through a
+process known as I<exporting>--often by calling C<import()> implicitly or
+directly.
 
 X<C<Exporter>>
 X<C<Exporter>; C<@EXPORT_OK>>
 X<C<Exporter>; C<@EXPORT>>
 
-The core module C<Exporter> provides a standard mechanism to export symbols
-from a module. C<Exporter> relies on the presence of package global
+The core module C<Exporter> is the standard way to export symbols from a
+module. C<Exporter> relies on the presence of package global
 variables--C<@EXPORT_OK> and C<@EXPORT> in particular--which contain a list of
 symbols to export when requested.
 
@@ -216,7 +214,7 @@ C<@EXPORT_OK>:
 ... so that any C<use StrangeMonkey::Utilities;> will import both functions.
 Be aware that specifying symbols to import will I<not> import default symbols;
 you only get what you request. To load a module without importing any symbols,
-providing an explicit empty list:
+use an explicit empty list:
 
 =begin programlisting
 
@@ -239,7 +237,7 @@ package with their fully-qualified names:
 X<CPAN; C<Sub::Exporter>>
 
 The CPAN module C<Sub::Exporter> provides a nicer interface to export functions
-without using package globals. It also offers more powerful options.  However,
+without using package globals. It also offers more powerful options. However,
 C<Exporter> can export variables, while C<Sub::Exporter> only exports
 functions.
 
@@ -247,15 +245,14 @@ functions.
 
 =head2 Organizing Code with Modules
 
-Perl 5 does not require you to use modules, nor packages, nor namespaces.  You
-may put all of your code in a single F<.pl> file, or in multiple F<.pl> files
-you C<require> as necessary.  You have the flexibility to manage your
-code in the most appropriate way, given your development style, the formality
-and risk and reward of the project, your experience, and your comfort with Perl
-5 deployment.
+Perl does not require you to use modules, packages, or namespaces. You may put
+all of your code in a single F<.pl> file, or in multiple F<.pl> files you
+C<require> as necessary. You have the flexibility to manage your code in the
+most appropriate way, given your development style, the formality and risk and
+reward of the project, your experience, and your comfort with deploying code.
 
-Even so, a project with more than a couple of hundred lines of code receives
-multiple benefits from module organization:
+Even so, a project with more than a couple of hundred lines of code benefits
+from module organization:
 
 =over 4
 
@@ -266,7 +263,7 @@ in the system.
 
 =item * Modules suggest a natural organization of source code.
 
-=item * The Perl 5 ecosystem has many tools devoted to creating, maintaining,
+=item * The Perl ecosystem has many tools devoted to creating, maintaining,
 organizing, and deploying modules and distributions.
 
 =item * Modules provide a mechanism of code reuse.

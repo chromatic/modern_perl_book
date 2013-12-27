@@ -4,23 +4,20 @@ Z<distributions>
 
 X<distribution>
 
-The easiest way to manage software configuration, building, packaging, testing,
-and installation is to follow the CPAN's distribution conventions. A
-I<distribution> is a collection of metadata and one or more modules
-(L<modules>) which forms a single redistributable, testable, and installable
-unit.
-
-These guidelines--how to package a distribution, how to resolve its
-dependencies, where to install software, how to verify that it works, how to
-display documentation, how to manage a repository--have all arisen from the
-rough consensus of thousands of contributors working on tens of thousands of
-projects. A distribution built to CPAN standards can be tested on several
-versions of Perl 5 on several different hardware platforms within a few hours
-of its uploading, with errors reported automatically to authors--all without
-human intervention.
+A I<distribution> is a collection of metadata and modules (L<modules>) which
+forms a single redistributable, testable, and installable unit. The easiest way
+to configure, build, package, test, and install Perl code is to follow the
+CPAN's conventions. These conventions govern how to package a distribution, how
+to resolve its dependencies, where to install software, how to verify that it
+works, how to display documentation, and how to manage a repository. All of
+these guidelines have arisen from the rough consensus of thousands of
+contributors working on tens of thousands of projects. A distribution built to
+CPAN standards can be tested on several versions of Perl on several different
+hardware platforms within a few hours of its uploading, with errors reported
+automatically to authors--all without human intervention.
 
 You may choose never to release any of your code as public CPAN distributions,
-but you can use CPAN tools and conventions to manage even private code. The
+but you I<can> use CPAN tools and conventions to manage even private code. The
 Perl community has built amazing infrastructure; why not take advantage of it?
 
 =head2 Attributes of a Distribution
@@ -46,7 +43,8 @@ copyright and licensing information.
 
 =item * F<t/>, a directory containing test files.
 
-=item * F<Changes>, a log of every change to the distribution.
+=item * F<Changes>, a human-readable log of every significant change to the
+distribution.
 
 =back
 
@@ -62,18 +60,15 @@ packaging tools should understand the distribution.
 
 =head2 CPAN Tools for Managing Distributions
 
-The Perl 5 core includes several tools to install, develop, and manage your own
-distributions:
+The Perl core includes several tools to manage distributions:
 
 X<C<CPAN>>
-X<C<CPANPLUS>>
 
 =over 4
 
-=item * C<CPAN.pm> is the official CPAN client; C<CPANPLUS> is an alternative.
-They are largely equivalent. While by default these clients install
-distributions from the public CPAN, you can point them to your own repository
-instead of or in addition to the public repository.
+=item * C<CPAN.pm> is the official CPAN client. While by default this client
+installs distributions from the public CPAN, you can also use your ownpoint them to your own
+repository instead of or in addition to the public repository.
 
 X<C<Module::Build>>
 
@@ -91,11 +86,11 @@ X<C<Test::More>>
 =item * C<Test::More> (L<testing>) is the basic and most widely used testing
 module used to write automated tests for Perl software.
 
-X<C<Test::Harness>>
+X<C<TAP::Harness>>
 X<C<prove>>
 
-=item * C<Test::Harness> and C<prove> (L<running_tests>) run tests and
-interpret and report their results.
+=item * C<TAP::Harness> and C<prove> (L<running_tests>) run tests and interpret
+and report their results.
 
 =back
 
@@ -114,8 +109,8 @@ most common cases, uses little memory, and works quickly.
 X<CPAN; C<App::perlbrew>>
 X<perlbrew>
 
-=item * C<App::perlbrew> helps you to manage multiple installations of Perl 5.
-Install new versions of Perl 5 for testing or production, or to isolate
+=item * C<App::perlbrew> helps you to manage multiple installations of Perl.
+Install new versions of Perl for testing or production, or to isolate
 applications and their dependencies.
 
 X<CPAN; C<CPAN::Mini>>
@@ -140,6 +135,13 @@ X<CPAN; C<Test::Reporter>>
 automated test suites of distributions you install, giving their authors more
 data on any failures.
 
+X<carton>
+X<Pinto>
+
+=item * Carton and Pinto are two newer projects which help manage and install
+code's dependencies. Neither is in widespread use yet, but they're both under
+active development.
+
 =back
 
 =head2 Designing Distributions
@@ -151,34 +153,32 @@ I<Writing Perl Modules for CPAN>), but a few design principles will help you.
 Start with a utility such as C<Module::Starter> or C<Dist::Zilla>. The initial
 cost of learning the configuration and rules may seem like a steep investment,
 but the benefit of having everything set up the right way (and in the case of
-C<Dist::Zilla>, I<never> going out of date) relieves you of much tedious
-bookkeeping.
+C<Dist::Zilla>, I<never> going out of date) relieves you of tedious busywork.
 
-Then consider several rules:
+A distribution should follow several non-code guidelines:
 
 =over 4
 
-=item * I<Each distribution needs a single, well-defined purpose.> That purpose
+=item * I<Each distribution performs a single, well-defined purpose.> That purpose
 may even include gathering several related distributions into a single
-installable bundle. Decomposing your software into individual distributions
-allows you to manage their dependencies appropriately and to respect their
-encapsulation.
+installable bundle. Decompose your software into individual distributions to
+manage their dependencies appropriately and to respect their encapsulation.
 
-=item * I<Each distribution needs a single version number.> Version numbers
+=item * I<Each distribution contains a single version number.> Version numbers
 must always increase. The semantic version policy (U<http://semver.org/>) is
 sane and compatible with the Perl 5 approach.
 
-=item * I<Each distribution requires a well-defined API.> A comprehensive
+=item * I<Each distribution provides a well-defined API.> A comprehensive
 automated test suite can verify that you maintain this API across versions.  If
 you use a local CPAN mirror to install your own distributions, you can re-use
 the CPAN infrastructure for testing distributions and their dependencies.  You
 get easy access to integration testing across reusable components.
 
-=item * I<Automate your distribution tests and make them repeatable and
-valuable.> The CPAN infrastructure supports automated test reporting. Use it!
+=item * I<Distribution tests are useful and repeatable.> The CPAN
+infrastructure supports automated test reporting. Use it!
 
-=item * I<Present an effective and simple interface.> Avoid the use of global
-symbols and default exports; allow people to use only what they need. Do not
-pollute their namespaces.
+=item * I<Interfaces are simple and effective.> Avoid the use of global symbols
+and default exports; allow people to use only what they need. Do not pollute
+their namespaces.
 
 =back

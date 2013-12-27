@@ -4,13 +4,13 @@ Z<testing>
 
 X<testing>
 
-I<Testing> is the process of writing and running small pieces of code to verify
-that your software behaves as intended. Effective testing automates a process
-you've already done countless times already: write some code, run it, and see
-that it works. This I<automation> is essential. Rather than relying on humans
-to perform repeated manual checks perfectly, let the computer do it.
+You've already tested your code, if you've ever run it, noticed something
+wasn't working quite right, made a change, and then ran it again.  I<Testing>
+is the process of verifying that your software behaves as intended. Effective
+testing automates that process. Rather than relying on humans to perform
+repeated manual checks perfectly, let the computer do it.
 
-Perl 5 provides great tools to help you write the right tests.
+Perl provides great tools to help you write the right tests.
 
 =head2 Test::More
 
@@ -37,27 +37,27 @@ X<testing; assertion>
 
 Any condition you can test in your program can eventually become a binary
 value. Every test I<assertion> is a simple question with a yes or no answer:
-does this tiny piece of code work as I intended?  A complex program may have
-thousands of individual conditions, and, in general, the smaller the
-granularity the better. Isolating specific behaviors into individual assertions
-lets you narrow down bugs and misunderstandings, especially as you modify the
-code in the future.
+does this code behave as I intended? A complex program may have thousands of
+individual conditions. That's fine. You can test every one of those conditions,
+if you're willing to put in the work. Isolating specific behaviors into
+individual assertions helps you debug errors of coding and errors of
+understanding, especially as you modify the code in the future.
 
 The function C<done_testing()> tells C<Test::More> that the program has
-successfully executed all of the expected testing assertions. If the program
-encountered a runtime exception or otherwise exited unexpectedly before the
-call to C<done_testing()>, the test framework will notify you that something
-went wrong. Without a mechanism like C<done_testing()>, how would you I<know>?
+executed all of the assertions you expected to run. If the program encountered
+a runtime exception or otherwise exited unexpectedly before the call to
+C<done_testing()>, the test framework will notify you that something went
+wrong. Without a mechanism like C<done_testing()>, how would you I<know>?
 Admittedly this example code is too simple to fail, but code that's too simple
-to fail fails far more often than anyone would expect.
+to fail fails far more often than you want.
 
 =begin sidebar
 
 X<testing; plan>
 X<C<plan()>>
 
-C<Test::More> also allows the use of a I<test plan> to represent the number of
-individual assertions you plan to run:
+C<Test::More> allows an optional I<test plan> to count the number of individual
+assertions you plan to run:
 
 =begin programlisting
 
@@ -72,7 +72,8 @@ individual assertions you plan to run:
 
 The C<tests> argument to C<Test::More> sets the test plan for the program. This
 is a safety net. If fewer than four tests ran, something went wrong.  If more
-than four tests ran, something went wrong.
+than four tests ran, something went wrong. C<done_testing()> is easier, but
+sometimes an exact count can be useful.
 
 =end sidebar
 
@@ -80,8 +81,7 @@ than four tests ran, something went wrong.
 
 Z<running_tests>
 
-The resulting program is now a full-fledged Perl 5 program which produces the
-output:
+This example test file is a complete Perl program which produces the output:
 
 =begin screen
 
@@ -101,20 +101,20 @@ output:
 X<TAP (Test Anything Protocol)>
 X<testing; TAP>
 
-This format adheres to a standard of test output called I<TAP>, the I<Test
-Anything Protocol> (U<http://testanything.org/>). Failed TAP tests produce
-diagnostic messages as a debugging aid.
+This output uses a test output format called I<TAP>, the I<Test Anything
+Protocol> (U<http://testanything.org/>). Failed TAP tests produce diagnostic
+messages as a debugging aid.
 
-X<C<Test::Harness>>
+X<C<TAP::Harness>>
 X<C<prove>>
 X<testing; C<prove>>
 X<testing; running tests>
 
-The output of a test file containing multiple assertions (especially multiple
-I<failed> assertions) can be verbose. In most cases, you want to know either
-that everything passed or the specifics of any failures. The core module
-C<Test::Harness> interprets TAP, and its related program C<prove> runs tests
-and displays only the most pertinent information:
+This output of this small example is easy to understand, but it can get
+complicated quickly. In most cases, you want to know either that everything
+passed or the specifics of any failures. The core module C<TAP::Harness>
+interprets TAP. Its related program C<prove> runs tests and displays only the
+most pertinent information:
 
 =begin screen
 
@@ -138,9 +138,9 @@ and displays only the most pertinent information:
 =end screen
 
 That's a lot of output to display what is already obvious: the second and third
-tests fail because zero and the empty string evaluate to false.  It's easy to
-fix that failure by inverting the sense of the condition with the use of
-boolean coercion (L<boolean_coercion>):
+tests fail because zero and the empty string evaluate to false. Fortunately,
+it's easy to fix those failing tests with boolean coercion
+(L<boolean_coercion>):
 
 =begin programlisting
 
@@ -161,8 +161,8 @@ With those two changes, C<prove> now displays:
 
 =begin sidebar
 
-See C<perldoc prove> for valuable test options, such as running tests in
-parallel (C<-j>), automatically adding F<lib/> to Perl's include path (C<-l>),
+See C<perldoc prove> for other test options, such as running tests in parallel
+(C<-j>), automatically adding F<lib/> to Perl's include path (C<-l>),
 recursively running all test files found under F<t/> (C<-r t>), and running
 slow tests first (C<--state=slow,save>).
 
@@ -178,16 +178,15 @@ The bash shell alias C<proveall> may prove useful:
 
 Even though the heart of all automated testing is the boolean condition "is
 this true or false?", reducing everything to that boolean condition is tedious
-and offers few diagnostic possibilities. C<Test::More> provides several other
+and the diagnostics could be better. C<Test::More> provides several other
 convenient assertion functions.
 
 X<C<is()>>
 X<testing; C<is()>>
 X<operators; C<eq>>
 
-The C<is()> function compares two values using the C<eq> operator. If the
-values are equal, the test passes. Otherwise, the test fails with a diagnostic
-message:
+The C<is()> function compares two values using Perl's C<eq> operator. If the
+values are equal, the test passes:
 
 =begin programlisting
 
@@ -196,7 +195,8 @@ message:
 
 =end programlisting
 
-As you might expect, the first test passes and the second fails:
+As you might expect, the first test passes and the second fails with a
+diagnostic message:
 
 =begin screen
 
@@ -214,13 +214,14 @@ displays the expected and received values.
 
 C<is()> applies implicit scalar context to its values (L<prototypes>). This
 means, for example, that you can check the number of elements in an array
-without explicitly evaluating the array in scalar context:
+without explicitly evaluating the array in scalar contextN<...and you can omit
+the parenthesis.>:
 
 =begin programlisting
 
     my @cousins = qw( Rick Kristen Alex
                       Kaycee Eric Corey );
-    is( @cousins, 6, 'I should have only six cousins' );
+    is @cousins, 6, 'I should have only six cousins';
 
 =end programlisting
 
@@ -238,11 +239,11 @@ context to its operands.
 X<C<cmp_ok()>>
 X<testing; C<cmp_ok()>>
 
-Both C<is()> and C<isnt()> apply I<string comparisons> with the Perl 5
-operators C<eq> and C<ne>. This almost always does the right thing, but for
-complex values such as objects with overloading (L<overloading>) or dual vars
-(L<dualvars>), you may prefer explicit comparison testing. The C<cmp_ok()>
-function allows you to specify your own comparison operator:
+Both C<is()> and C<isnt()> apply I<string comparisons> with the C<eq> and C<ne>
+operators. This almost always does the right thing, but for complex values such
+as objects with overloading (L<overloading>) or dual vars (L<dualvars>), use
+the C<cmp_ok()> function which requires you to provide a specific comparison
+operator:
 
 =begin programlisting
 
@@ -263,7 +264,7 @@ C<isa_ok()>:
 
 =begin programlisting
 
-    my $chimpzilla = RobotMonkey->new();
+    my $chimpzilla = RobotMonkey->new;
     isa_ok( $chimpzilla, 'Robot' );
     isa_ok( $chimpzilla, 'Monkey' );
 
@@ -314,12 +315,11 @@ X<C<Module::Build>>
 X<C<ExtUtils::MakeMaker>>
 
 CPAN distributions should include a F<t/> directory containing one or more test
-files named with the F<.t> suffix.  By default, when you build a distribution
-with C<Module::Build> or C<ExtUtils::MakeMaker>, the testing step runs all of
-the F<t/*.t> files, summarizes their output, and succeeds or fails on the
-results of the test suite as a whole.  There are no concrete guidelines on how
-to manage the contents of individual F<.t> files, though two strategies are
-popular:
+files named with the F<.t> suffix. When you build a distribution with
+C<Module::Build> or C<ExtUtils::MakeMaker>, the testing step runs all of the
+F<t/*.t> files, summarizes their output, and succeeds or fails on the results
+of the test suite as a whole. There are no concrete guidelines on how to manage
+the contents of individual F<.t> files, though two strategies are popular:
 
 =over 4
 
@@ -330,14 +330,13 @@ popular:
 =back
 
 A hybrid approach is the most flexible; one test can verify that all of your
-modules compile, while other tests verify that each module behaves as intended.
-As distributions grow larger, the utility of managing tests in terms of
-features becomes more compelling; larger test files are more difficult to
-maintain.
+modules compile, while other tests demonstrate that each module behaves as
+intended. As your project grows, the second approach is easier to manage. Keep
+your test files small and focused and they'll be easier to maintain.
 
 Separate test files can also speed up development. If you're adding the ability
 to breathe fire to your C<RobotMonkey>, you may want only to run the
-F<t/breathe_fire.t> test file.  When you have the feature working to your
+F<t/breathe_fire.t> test file. When you have the feature working to your
 satisfaction, run the entire test suite to verify that local changes have no
 unintended global effects.
 
@@ -349,7 +348,7 @@ X<testing; C<Test::Builder>>
 C<Test::More> relies on a testing backend known as C<Test::Builder>.  The
 latter module manages the test plan and coordinates the test output into TAP.
 This design allows multiple test modules to share the same C<Test::Builder>
-backend.  Consequently, the CPAN has hundreds of test modules available--and
+backend. Consequently, the CPAN has hundreds of test modules available--and
 they can all work together in the same program.
 
 X<CPAN; C<Test::Exception>>
@@ -368,6 +367,7 @@ X<CPAN; C<Test::Differences>>
 X<CPAN; C<Test::Deep>>
 X<CPAN; C<Test::LongString>>
 X<CPAN; C<Devel::Cover>>
+X<CPAN; C<Test::Most>>
 
 =over 4
 
@@ -405,6 +405,9 @@ assertions.
 the amount of your code your tests actually exercises.  In general, the more
 coverage the better--though 100% coverage is not always possible, 95% is far
 better than 80%.
+
+=item * C<Test::Most> gathers several useful test modules into one parent
+module. It saves time and effort.
 
 =back
 
