@@ -1,9 +1,9 @@
 =head0 What's Missing
 
-Perl 5 isn't perfect, but it's malleable--in part because no single
+Perl isn't perfect, but it is malleable--in part because no single
 configuration is ideal for every programmer and every purpose. Some useful
 behaviors are available as core libraries. More are available from the CPAN.
-Your effectiveness as a Perl programmer depends on you taking advantage of
-these enhancements.
+Effective Perl programmers take full advantage of the options available to
+them.
 
 L<missing_defaults>

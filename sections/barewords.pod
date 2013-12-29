@@ -2,9 +2,9 @@
 
 Z<barewords>
 
-Perl is a malleable language. You can write programs in the most creative,
-maintainable, obfuscated, or bizarre fashion you prefer. Maintainability is a
-concern of good programmers, but Perl doesn't presume to dictate what I<you>
+Perl is a malleable language. You can write programs in whichever creative,
+maintainable, obfuscated, or bizarre fashion you prefer. Good programmers write
+code that they want to maintain, but Perl won't decide for you what I<you>
 consider maintainable.
 
 X<barewords>
@@ -13,8 +13,8 @@ X<pragmas; C<strict>>
 
 Perl's parser understands Perl's builtins and operators. It uses sigils to
 identify variables and other punctuation to recognize function and method
-calls.  Yet sometimes the parser has to guess what you mean, especially when
-you use a I<bareword>--an identifier without a sigil or other syntactically
+calls. Yet sometimes the parser has to guess what you mean, especially when you
+use a I<bareword>--an identifier without a sigil or other syntactically
 significant punctuation.
 
 =head2 Good Uses of Barewords
@@ -29,14 +29,13 @@ some barewords are acceptable.
 X<hashes; bareword keys>
 X<C<+>; unary operator>
 
-Hash keys in Perl 5 are usually I<not> ambiguous because the parser can
-identify them as string keys; C<pinball> in C<$games{pinball}> is obviously a
-string.
+Hash keys in Perl are usually I<not> ambiguous because the parser can identify
+them as string keys; C<pinball> in C<$games{pinball}> is obviously a string.
 
 Occasionally this interpretation is not what you want, especially when you
-intend to I<evaluate> a builtin or a function to produce the hash key. In this
-case, disambiguate by providing arguments, using function argument parentheses,
-or prepending unary plus to force the evaluation of the builtin:
+intend to I<evaluate> a builtin or a function to produce the hash key. To make
+these cases clear, pass arguments to the function or use parentheses, or
+prepend a unary plus to force the evaluation of the builtin:
 
 =begin programlisting
 
@@ -45,6 +44,9 @@ or prepending unary plus to force the evaluation of the builtin:
 
     # the value produced by shift is the key
     my $value = $items{B<shift @_>}
+
+    # the function returns the key
+    my $value = $items{B<myshift( @_ )>}
 
     # unary plus uses the builtin shift
     my $value = $items{B<+>shift};
@@ -55,25 +57,27 @@ or prepending unary plus to force the evaluation of the builtin:
 
 X<packages; bareword names>
 
-Package names in Perl 5 are also barewords. If you hew to naming conventions
-where package names have initial capitals and functions do not, you'll rarely
-encounter naming collisions, but the Perl 5 parser must determine how to parse
-C<< Package->method() >>. Does it mean "call a function named C<Package()> and
-call C<method()> on its return value?" or does it mean "Call a method named
-C<method()> in the C<Package> namespace?" The answer varies depending on what
-code the parser has already encountered in the current namespace.
+Package names are also barewords. If your naming conventions rule that package
+names have initial capitals and functions do not, you'll rarely encounter
+naming collisions. Even still, Perl must determine how to parse C<<
+Package->method >>. Does it mean "call a function named C<Package()> and call
+C<method()> on its return value?" or "Call a method named C<method()> in the
+C<Package> namespace?" The answer depends on the code you've already compiled.
 
 Force the parser to treat C<Package> as a package name by appending the package
 separator (C<::>)N<Even among people who understand why this works, very few
-people do it.>:
+people do it.> or make it a literal string:
 
 =begin programlisting
 
     # probably a class method
-    Package->method();
+    Package->method;
 
     # definitely a class method
-    Package::->method();
+    PackageB<::>->method;
+
+    # a slightly less ugly class method
+    B<'>PackageB<'>->method;
 
 =end programlisting
 
@@ -101,7 +105,7 @@ without the C<sub> builtin. You've seen this before (L<code_generation>):
 
 =end programlisting
 
-While you I<can> elide C<sub> from C<AUTOLOAD()> declarations, few people do.
+While you I<can> declare C<AUTOLOAD()> without using C<sub>, few people do.
 
 =head3 Bareword constants
 
@@ -119,22 +123,22 @@ Constants declared with the C<constant> pragma are usable as barewords:
 
 =end programlisting
 
-Note that these constants do I<not> interpolate in double-quoted strings.
+These constants do I<not> interpolate in double-quoted strings.
 
 X<prototypes; barewords>
 
 Constants are a special case of prototyped functions (L<prototypes>). When you
-predeclare a function with a prototype, the parser knows how to treat that
-function and will warn about ambiguous parsing errors. All other drawbacks of
-prototypes still apply.
+predeclare a function with a prototype, the parser will treat all subsequent
+uses of that bareword specially--and will warn about ambiguous parsing errors.
+All other drawbacks of prototypes still apply.
 
 =head2 Ill-Advised Uses of Barewords
 
 X<barewords; cons>
 
 No matter how cautiously you code, barewords still produce ambiguous code. You
-can avoid most uses, but you will encounter several types of barewords in
-legacy code.
+can avoid the worst abuses, but you will encounter several types of barewords
+in legacy code.
 
 =head3 Bareword function calls
 
@@ -142,7 +146,7 @@ X<barewords; function calls>
 X<C<B::Deparse>>
 
 Code written without C<strict 'subs'> may use bareword function names. Adding
-parentheses makes the code pass strictures.  Use C<perl -MO=Deparse,-p> (see
+parentheses will make the code pass strictures. Use C<perl -MO=Deparse,-p> (see
 C<perldoc B::Deparse>) to discover how Perl parses them, then parenthesize
 accordingly.
 
@@ -173,8 +177,8 @@ X<barewords; filehandles>
 
 Prior to lexical filehandles (L<lexical_filehandles>), all file and directory
 handles used barewords. You can almost always safely rewrite this code to use
-lexical filehandles; the exceptions are C<STDIN>, C<STDOUT>, and C<STDERR>.
-Fortunately, Perl's parser recognizes these.
+lexical filehandles. Perl's parser recognizes the special exceptions of
+C<STDIN>, C<STDOUT>, and C<STDERR>.
 
 =head3 Bareword sort functions
 
@@ -182,9 +186,10 @@ X<barewords; sort functions>
 X<C<sort>>
 X<builtins; C<sort>>
 
-Finally, the C<sort> builtin can take as its second argument the I<name> of a
+Finally, the second operand of the C<sort> builtin can be the I<name> of a
 function to use for sorting. While this is rarely ambiguous to the parser, it
-can confuse I<human> readers. The alternative of providing a function reference in a scalar is little better:
+can confuse I<human> readers. The alternative of providing a function reference
+in a scalar is little better:
 
 =begin programlisting
 
@@ -197,11 +202,11 @@ can confuse I<human> readers. The alternative of providing a function reference 
 
 =end programlisting
 
-The second option avoids the use of a bareword, but the result is one line
-longer. Unfortunately, Perl 5's parser I<does not> understand the single-line
-version due to the special parsing of C<sort>; you cannot use an arbitrary
-expression (such as taking a reference to a named function) where a block or a
-scalar might otherwise go.
+The second option avoids the use of a bareword, but the result is longer.
+Unfortunately, Perl's parser I<does not> understand the single-line version due
+to the special parsing of C<sort>; you cannot use an arbitrary expression (such
+as taking a reference to a named function) where a block or a scalar might
+otherwise go.
 
 =begin programlisting
 
@@ -213,4 +218,4 @@ scalar might otherwise go.
 In both cases, the way C<sort> invokes the function and provides arguments can
 be confusing (see C<perldoc -f sort> for the details). Where possible, consider
 using the block form of C<sort> instead. If you must use either function form,
-consider adding an explanatory comment.
+add a comment about what you're doing and why.

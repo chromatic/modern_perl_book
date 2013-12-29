@@ -4,13 +4,12 @@ Z<method_sub_equivalence>
 
 X<builtins; C<sub>>
 
-Perl 5's object system is deliberately minimal (L<blessed_references>).
-Because a class is a package, Perl does not distinguish between a function and
-a method stored in a package. The same builtin, C<sub>, declares both.
-Documentation can clarify your intent, but Perl will happily dispatch to a
-function called as a method. Likewise, you can invoke a method as if it were a
-function--fully-qualified, exported, or as a reference--if you pass in your own
-invocant manually.
+Perl's object system is deliberately minimal (L<blessed_references>). Because a
+class is a package, Perl does not distinguish between a function and a method
+stored in a package. The same builtin, C<sub>, declares both. Perl will happily
+dispatch to a function called as a method. Likewise, you can invoke a method as
+if it were a function--fully-qualified, exported, or as a reference--if you
+pass in your own invocant manually.
 
 Invoking the wrong thing in the wrong way causes problems.
 
@@ -29,7 +28,7 @@ Consider a class with several methods:
     sub calculate_price
     {
         my $self = shift;
-        return sum( 0, $self->get_items() );
+        return sum( 0, $self->get_items );
     }
 
 =end programlisting
@@ -39,7 +38,7 @@ seem equivalent:
 
 =begin programlisting
 
-    my $price = $o->calculate_price();
+    my $price = $o->calculate_price;
 
     # broken; do not use
     my $price = Order::calculate_price( $o );
@@ -76,7 +75,7 @@ C<can()> method:
 
 =begin programlisting
 
-    $o->apply_discount() if $o->can( 'apply_discount' );
+    $o->apply_discount if $o->can( 'apply_discount' );
 
 =end programlisting
 
@@ -86,7 +85,7 @@ The second is to use the reference itself with method invocation syntax:
 
     if (my $meth_ref = $o->can( 'apply_discount' ))
     {
-        $o->$meth_ref();
+        $o->B<$meth_ref>();
     }
 
 =end programlisting
@@ -98,7 +97,7 @@ does when invoking a method with a scalar containing its name:
 =begin programlisting
 
     my $name = 'apply_discount';
-    $o->$name();
+    $o->B<$name>();
 
 =end programlisting
 
@@ -115,14 +114,14 @@ When you use this invocation form, limit the scope of the references.
 X<methods; avoid calling as functions>
 X<functions; avoid calling as methods>
 
-Because Perl 5 makes no distinction between functions and methods at the point
-of declaration and because it's I<possible> (however inadvisable) to invoke a
+Because Perl makes no distinction between functions and methods at the point of
+declaration and because it's I<possible> (however inadvisable) to invoke a
 given function as a function or a method, it's possible to write a function
-callable as either. The core C<CGI> module is a prime offender. Its functions
-apply several heuristics to determine whether their first arguments are
-invocants.
+callable as either.
 
-The drawbacks are many. It's difficult to predict exactly which invocants are
+The C<CGI> module has these two-faced functions. Every one of them must apply
+several heuristics to determine whether the first argument is an invocant. This
+causes problems. It's difficult to predict exactly which invocants are
 potentially valid for a given method, especially when you may have to deal with
 subclasses. Creating an API that users cannot easily misuse is more difficult
 too, as is your documentation burden. What happens when one part of the project

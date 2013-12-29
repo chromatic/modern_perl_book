@@ -2,23 +2,24 @@
 
 Z<missing_defaults>
 
-Perl 5's design process tried to anticipate new directions for the language,
-but it was as impossible to predict the future in 1994 as it is in 2011. Perl 5
-expanded the language, but remained compatible with Perl 1 from 1987.
+Perl's language design process has always tried to combine practicality with
+expandability, but it was as impossible to predict the future in 1994 as it is
+in 2014. Perl 5 expanded the language and made the CPAN possible, but it also
+retained backwards compatibility with most Perl 1 code written as far back as
+1987.
 
-The best Perl 5 code of 2011 is very different from the best Perl 5 code of
-1994, or the best Perl 1 code of 1987.
+The best Perl code of 2014 is very different from the best Perl 5 code of 1994
+or the best Perl 1 code of 1987.
 
 X<CPAN; C<Task::Kensho>>
 
-Although Perl 5 contains an extensive core library, it's not comprehensive.
-Many of the best Perl 5 modules exist on the CPAN (L<cpan>) and not in the
-core. The C<Task::Kensho> meta-distribution includes several other
-distributions which represent the best the CPAN has to offer. When you need to
-solve a problem, look there first.
+Although Perl includes an extensive core library, it's not comprehensive. Many
+of the best modules are available outside of the core, from the CPAN (L<cpan>).
+The C<Task::Kensho> meta-distribution includes several other distributions
+which represent the best the CPAN has to offer. When you need to solve a
+problem, look there first.
 
-With that said, a few core pragmas and modules are indispensable to serious
-Perl programmers.
+There are still plenty of gems in the core, however.
 
 =head2 The strict Pragma
 
@@ -30,43 +31,41 @@ powerful language constructs which offer potential for accidental abuse.
 
 C<strict> forbids symbolic references, requires variable declarations
 (L<lexical_scope>), and prohibits the use of undeclared barewords
-(L<barewords>). While the occasional use of symbolic references is necessary to
-manipulate symbol tables (L<import>), the use of a variable as a variable name
-offers the possibility of subtle errors of action at a distance--or, worse, the
-possibility of poorly-validated user input manipulating internal-only data for
-malicious purposes.
+(L<barewords>). While symbolic references are occasionally necessary
+(L<import>), the use of a variable as a variable name offers the possibility of
+subtle errors of action at a distance--or, worse, the possibility of
+poorly-validated user input manipulating private data for malicious purposes.
 
 Requiring variable declarations helps to detect typos in variable names and
-encourages proper scoping of lexical variables.  It's much easier to see the
-intended scope of a lexical variable if all variables have C<my> or C<our>
-declarations in the appropriate scope.
+encourages proper scoping of lexical variables. It's easier to see the intended
+scope of a lexical variable if all variables have C<my> or C<our> declarations
+in the appropriate scope.
 
-C<strict> has a lexical effect based on the compile-time scope of its use
-(L<import>) and disabling (with C<no>). See C<perldoc strict> for more details.
+C<strict> takes effect in lexical scopes. See C<perldoc strict> for more
+details.
 
 =head2 The warnings Pragma
 
 The C<warnings> pragma (L<handling_warnings>) controls the reporting of various
-classes of warnings in Perl 5, such as attempting to stringify the C<undef>
-value or using the wrong type of operator on values.  It also warns about the
-use of deprecated features.
+warning classes, such as attempting to stringify the C<undef> value or using
+the wrong type of operator on values. It also warns about the use of deprecated
+features.
 
 The most useful warnings explain that Perl had trouble understanding what you
-meant and had to guess at the proper interpretation.  Even though Perl often
+meant and had to guess at the proper interpretation. Even though Perl often
 guesses correctly, disambiguation on your part will ensure that your programs
 run correctly.
 
-The C<warnings> pragma has a lexical effect on the compile-time scope of its
-use or disabling (with C<no>). See C<perldoc perllexwarn> and C<perldoc
-warnings> for more details.
+The C<warnings> pragma takes effect in lexical scopes. See C<perldoc
+perllexwarn> and C<perldoc warnings> for more details.
 
 =begin tip Asking for More Help
 
-Combine C<use warnings> with C<use diagnostics> to receive expanded diagnostic
-messages for each warning present in your programs.  These expanded diagnostics
-come from C<perldoc perldiag>. This behavior is useful when learning Perl.
-Disable it before you deploy your program, because it produces verbose output
-which might fill up your logs and expose too much information to users.
+If you use both C<warnings> with C<diagnostics>, you'll get expanded diagnostic
+messages for each warning present in your programs, straight out of C<perldoc
+perldiag>. It's a great help when learning Perl, but be sure to disable
+C<diagnostics> before deploying your program, lest you fill up your logs or
+expose debugging information to users.
 
 =end tip
 
@@ -78,10 +77,10 @@ X<C<IO::Handle>>
 Before Perl 5.14, lexical filehandles were objects of the C<IO::Handle> class,
 but you had to load C<IO::Handle> explicitly before you could call methods on
 them. As of Perl 5.14, lexical filehandles are instances of C<IO::File> and
-Perl loads C<IO::File> for you.
+Perl loads it for you.
 
-Add C<IO::Handle> to code running on Perl 5.12 or earlier if you call methods
-on lexical filehandles.
+Add C<use IO::Handle;> to code running on Perl 5.12 or earlier if you call
+methods on lexical filehandles.
 
 =head2 The autodie Pragma
 
@@ -89,11 +88,10 @@ Z<autodie>
 X<C<autodie> pragma>
 X<pragmas; C<autodie>>
 
-Perl 5 leaves error handling (or error ignoring) up to you.  If you're not
-careful to check the return value of every C<open()> call, for example, you
-could try to read from a closed filehandle--or worse, lose data as you try to
-write to one. The C<autodie> pragma changes the default behavior.  If you
-write:
+Perl leaves error handling (or error ignoring) up to you. If you forget to
+check the return value of every C<open()> call, for example, you could try to
+read from a closed filehandle--or worse, lose data as you try to write to one.
+The C<autodie> pragma changes this for you. If you write:
 
 =begin programlisting
 
@@ -106,7 +104,34 @@ write:
 ... an unsuccessful C<open()> call will throw an exception. Given that the most
 appropriate approach to a failed system call is throwing an exception, this
 pragma can remove a lot of boilerplate code and allow you the peace of mind of
-knowing that you haven't forgotten to check a return value.
+knowing that you haven't forgotten to check a return value. See C<perldoc
+autodie> for more information.
 
-This pragma entered the Perl 5 core as of Perl 5.10.1.  See C<perldoc autodie>
-for more information.
+=head2 Perl 5 Version Numbers
+
+Z<version_numbers>
+X<CPAN; C<Perl::MinimumVersion>>
+
+If you encounter a piece of Perl code without knowing when it was written or
+who wrote it, can you tell which version of Perl it requires? If you have a lot
+of experience with Perl both before and after the release of Perl 5.10, you
+might remember which version added C<say> and when C<autodie> entered the core.
+Otherwise, you might have to guess, trawl through C<perldelta> files, or use
+C<CPAN::MinimumVersion> from the CPAN.
+
+There's no requirement for you to add the minimum required Perl version number
+to all new code you write, but it I<can> clarify your intentions. For example,
+if you've tested your code with Perl 5.12 and use only features present in Perl
+5.12, write:
+
+=begin programlisting
+
+    use 5.012;
+
+=end programlisting
+
+... and you'll document your intent. You'll also make it easier for tools to
+identify the particular features of Perl you may or may not use in this code.
+If someone comes along later and proves that the code works just fine on Perl
+5.10, you can change the version number--and you'll do so based on practical
+evidence.

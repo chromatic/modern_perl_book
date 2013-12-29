@@ -6,23 +6,23 @@ Where overloading (L<overloading>) allows you to customize the behavior of
 classes and objects for specific types of coercion, a mechanism called I<tying>
 allows you to customize the behavior of primitive variables (scalars, arrays,
 hashes, and filehandles). Any operation you might perform on a tied variable
-translates to a specific method call.
+translates to a specific method call on an object.
 
 X<builtins; C<tie>>
 X<C<Tie::File>>
 
-The C<tie> builtin originally allowed you to use disk space as the backing
-memory for hashes, so that Perl could access files larger than could easily fit
-in memory. The core module C<Tie::File> provides a similar system, and allows
-you to treat files as if they were arrays.
+The C<tie> builtin originally allowed you to use disk space instead of RAM for
+hashes and arrays, so that Perl could use data larger than available memory.
+The core module C<Tie::File> allows you to do this, in effect treating files as
+if they were arrays.
 
 X<C<Tie::StdScalar>>
 X<C<Tie::StdArray>>
 X<C<Tie::StdHash>>
 
 The class to which you C<tie> a variable must conform to a defined interface
-for a specific data type. See C<perldoc perltie> for an overview, then consult
-the core modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> for
+for a specific data type. Read C<perldoc perltie> for an overview, then see the
+core modules C<Tie::StdScalar>, C<Tie::StdArray>, and C<Tie::StdHash> for
 specific details. Start by inheriting from one of those classes, then override
 any specific methods you need to modify.
 
@@ -46,9 +46,10 @@ To tie a variable:
 
 =end programlisting
 
-The first argument is the variable to tie, the second is the name of the class
-into which to tie it, and C<@args> is an optional list of arguments required
-for the tying function. In the case of C<Tie::File>, this is a valid filename.
+The first argument is the variable to tie. The second is the name of the class
+into which to tie it. C<@args> is an optional list of arguments required for
+the tying function. In the case of C<Tie::File>, C<@args> should contain a
+valid filename.
 
 X<builtins; C<tie>>
 X<builtins; C<tied>>
@@ -62,14 +63,12 @@ use C<tied> in a boolean context, however.
 =head2 Implementing Tied Variables
 
 To implement the class of a tied variable, inherit from a core module such as
-C<Tie::StdScalar>N<C<Tie::StdScalar> lacks its own F<.pm> file, so use
-C<Tie::Scalar> to make it available.>, then override the specific methods for
-the operations you want to change.  In the case of a tied scalar, these are
-likely C<FETCH> and C<STORE>, possibly C<TIESCALAR()>, and probably not
-C<DESTROY()>.
+C<Tie::StdScalar>N<C<Tie::StdScalar> lacks its own F<.pm> file, so write C<use
+Tie::Scalar;>.>, then override the specific methods for the operations you want
+to change.  In the case of a tied scalar, these are likely C<FETCH> and
+C<STORE>, possibly C<TIESCALAR()>, and probably not C<DESTROY()>.
 
-You can create a class which logs all reads from and writes to a scalar with
-very little code:
+Here's a class which logs all reads from and writes to a scalar:
 
 =begin programlisting
 
@@ -103,19 +102,19 @@ Assume that the C<Logger> class method C<log()> takes a string and the number
 of frames up the call stack of which to report the location.
 
 Within the C<STORE()> and C<FETCH()> methods, C<$self> works as a blessed
-scalar.  Assigning to that scalar reference changes the value of the scalar and
+scalar. Assigning to that scalar reference changes the value of the scalar and
 reading from it returns its value.
 
 Similarly, the methods of C<Tie::StdArray> and C<Tie::StdHash> act on blessed
-array and hash references, respectively.  The C<perldoc perltie> documentation
-explains the copious methods they support, as you can read or write multiple
-values from them, among other operations.
+array and hash references, respectively. Again, C<perldoc perltie> explains the
+methods tied variables support, such as reading or writing multiple values at
+once.
 
 =begin tip Isn't C<tie> Fun?
 
 The C<-norequire> option prevents the C<parent> pragma from attempting to load
 a file for C<Tie::StdScalar>, as that module is part of the file
-F<Tie/Scalar.pm>.
+F<Tie/Scalar.pm>. This is messy but necessary.
 
 =end tip
 
@@ -124,16 +123,16 @@ F<Tie/Scalar.pm>.
 Tied variables seem like fun opportunities for cleverness, but they can produce
 confusing interfaces. Unless you have a very good reason for making objects
 behave as if they were builtin data types, avoid creating your own ties.
-C<tie> is also much slower than using the builtin types due to various reasons
-of implementation.
+C<tie>d variables are often much slower than builtin data types.
 
-Good reasons include to ease debugging (use the logged scalar to help you
-understand where a value changes) and to make certain impossible operations
-possible (accessing large files in a memory-efficient way). Tied variables are
-less useful as the primary interfaces to objects; it's often too difficult and
-constraining to try to fit your whole interface to that supported by C<tie()>.
+With that said, tied variables can help you debug tricky code (use the logged
+scalar to help you understand I<where> a value changes) or to make certain
+impossible things possible (access large files without running out of memory).
+Tied variables are less useful as the primary interfaces to objects; it's often
+too difficult and constraining to try to fit your whole interface to that
+supported by C<tie()>.
 
-The final word of warning is both sad and convincing; too much code goes out of
-its way to I<prevent> use of tied variables, often by accident. This is
-unfortunate, but violating the expectations of library code tends to reveal
-bugs that are often out of your power to fix.
+A final word of warning is a sad indictment of lazy programming: a lot of code
+goes out of its way to I<prevent> use of tied variables, often by accident.
+This is unfortunate, but library code is sometimes fast and lazy with what it
+expects, and you can't always fix it.

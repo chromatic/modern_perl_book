@@ -4,20 +4,20 @@ Z<prototypes>
 
 X<prototypes>
 
-A I<prototype> is a piece of optional metadata attached to a function which
-changes the way the parser understands its arguments. While they may
-superficially resemble function signatures in other languages, they are very
-different.
+A I<prototype> is a piece metadata attached to a function or variable. A
+function prototype changes how Perl's parser understands it.
 
 X<builtins; C<push>>
 
 Prototypes allow users to define their own functions which behave like
 builtins. Consider the builtin C<push>, which takes an array and a list. While
-Perl 5 would normally flatten the array and list into a single list passed to
-C<push>, the parser knows not to flatten the array so that C<push> can modify
-it in place.
+Perl would normally flatten the array and list into a single list passed to
+C<push>, the parser knows to treat the array as a I<container>, not to flatten
+its values. In effect, this is like passing a reference to an array and a list
+of values to C<push>. The parser's behavior allows C<push> to modify the values
+of the container.
 
-Function prototypes are part of declarations:
+Function prototypes attach to function declarations:
 
 =begin programlisting
 
@@ -88,13 +88,15 @@ as:
 
 Other prototype characters include C<$> to force a scalar argument, C<%> to
 mark a hash (most often used as a reference), and C<&> to identify a code
-block. See C<perldoc perlsub> for full documentation.
+block. See C<perldoc perlsub> for more information.
 
 =head2 The Problem with Prototypes
 
-Prototypes change how Perl parses your code and can cause argument type
-coercions. They do not document the number or types of arguments functions
-expect, nor do they map arguments to named parameters.
+Prototypes change how Perl parses your code and how Perl coerces arguments to
+your functions. While these prototypes may superficially resemble function
+signatures in other languages, they are very different. They do not document
+the number or types of arguments functions expect, nor do they map arguments to
+named parameters.
 
 Prototype coercions work in subtle ways, such as enforcing scalar context on
 incoming arguments:
@@ -121,7 +123,7 @@ incoming arguments:
     sub mypush(\@@);
 
     # compilation error: prototype mismatch
-    # (expected array, got scalar assignment)
+    # (expects array, gets scalar assignment)
     mypush( my $elems = [], 1 .. 20 );
 
 =end programlisting
@@ -136,13 +138,12 @@ X<builtins; overriding>
 X<pragmas; C<subs>>
 X<C<subs> pragma>
 
-Few uses of prototypes are compelling enough to overcome their drawbacks, but
-they exist.
-
-First, they can allow you to override builtins. First check that you I<can>
-override the builtin by examining its prototype in a small test program. Then
-use the C<subs> pragma to tell Perl that you plan to override a builtin,
-and finally declare your override with the correct prototype:
+Prototypes I<do> have a few good uses that outweigh their problems. For
+example, you can use a prototyped function to override one of Perl's builtins.
+First check that you I<can> override the builtin by examining its prototype in
+a small test program. Then use the C<subs> pragma to tell Perl that you plan to
+override a builtin, and finally declare your override with the correct
+prototype:
 
 =begin programlisting
 
@@ -192,13 +193,15 @@ and an optional description of the test:
 
 =begin programlisting
 
-    use Test::More tests => 1;
+    use Test::More;
     use Test::Exception;
 
     throws_ok
-        { my $unobject; $unobject->yoink() }
+        { my $unobject; $unobject->yoink }
         qr/Can't call method "yoink" on an undefined/,
         'Method on undefined invocant should fail';
+
+    done_testing();
 
 =end programlisting
 
@@ -207,20 +210,21 @@ argument is a block, which becomes an anonymous function. The second argument
 is a scalar. The third argument is optional.
 
 Careful readers may have spotted the absence of a comma after the block.  This
-is a quirk of the Perl 5 parser, which expects whitespace after a prototyped
-block, not the comma operator. This is a drawback of the prototype syntax.
-
-You may use C<throws_ok()> without taking advantage of the prototype:
+is a quirk of Perl's parser, which expects whitespace after a prototyped block,
+not the comma operator. This is a drawback of the prototype syntax. If that
+bothers you, use C<throws_ok()> without taking advantage of the prototype:
 
 =begin programlisting
 
-    use Test::More tests => 1;
+    use Test::More;
     use Test::Exception;
 
     throws_okB<(>
         B<sub> { my $unobject; $unobject->yoink() }B<,>
         qr/Can't call method "yoink" on an undefined/,
         'Method on undefined invocant should fail' B<)>;
+
+    done_testing();
 
 =end programlisting
 

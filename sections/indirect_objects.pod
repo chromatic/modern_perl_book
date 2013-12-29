@@ -2,10 +2,10 @@
 
 Z<indirect_objects>
 
-Perl 5 has no operator C<new>; a constructor in Perl 5 is anything which
-returns an object. By convention, constructors are class methods named
-C<new()>, but you can choose anything you like. Several old Perl 5 object
-tutorials promote the use of C++ and Java-style constructor calls:
+Perl has no operator C<new>. A constructor is anything which returns an object.
+By convention, constructors are class methods named C<new()>, but you can name
+these methods (or even use I<functions>). Several old Perl OO tutorials promote
+the use of C++ and Java-style constructor calls:
 
 =begin programlisting
 
@@ -17,7 +17,7 @@ tutorials promote the use of C++ and Java-style constructor calls:
 
 =begin programlisting
 
-    my $q = CGI->new();
+    my $q = CGI->new;
 
 =end programlisting
 
@@ -31,16 +31,12 @@ X<dative notation>
 In the indirect object form (more precisely, the I<dative> case) of the first
 example, the verb (the method) precedes the noun to which it refers (the
 object). This is fine in spoken languages, but it introduces parsing
-ambiguities in Perl 5.
+ambiguities in Perl.
 
-As the method name is a bareword (L<barewords>), the parser must divine the
-proper interpretation of the code through the use of several heuristics. While
-these heuristics are well-tested and I<almost> always correct, their failure
-modes are confusing. Worse yet, they depend on the order of compilation of code
-and modules.
-
-Parsing difficulty increases when the constructor takes arguments. The indirect
-style may resemble:
+Because the method's name is a bareword (L<barewords>), the parser use several
+heuristics to figure out the proper interpretation of this code. While these
+heuristics are well-tested and I<almost> always correct, their failure modes
+are confusing. Things get worse when you pass arguments to a constructor:
 
 =begin programlisting
 
@@ -49,22 +45,23 @@ style may resemble:
 
 =end programlisting
 
-... thus making the name of the class look like a function call. Perl 5 I<can>
-disambiguate many of these cases, but its heuristics depend on which package
-names the parser has seen, which barewords it has already resolved (and how it
-resolved them), and the I<names> of functions already declared in the current
-package.
+In this example, the I<name> of the class looks like a function call. Perl
+I<can> disambiguate many of these cases, but its heuristics depend on which
+package names the parser has seen, which barewords it has already resolved (and
+how it resolved them), and the I<names> of functions already declared in the
+current package.
 
 Imagine running afoul of a prototyped function (L<prototypes>) with a name
 which just happens to conflict somehow with the name of a class or a method
-called indirectly. This is rare, but so unpleasant to debug that it's worth
-avoiding indirect invocations.
+called indirectly. This is rareN<It's happened to your author when using the
+C<JSON> module.>, but so unpleasant to debug that it's worth avoiding indirect
+invocations.
 
 =head2 Indirect Notation Scalar Limitations
 
-Another danger of the syntax is that the parser expects a single scalar
-expression as the object. Printing to a filehandle stored in an aggregate
-variable I<seems> obvious, but it is not:
+Another danger of the indirect syntax is that the parser expects a single
+scalar expression as the object. Printing to a filehandle stored in an
+aggregate variable I<seems> obvious, but it is not:
 
 =begin programlisting
 
@@ -80,7 +77,7 @@ X<builtins; C<close>>
 X<builtins; C<say>>
 
 C<print>, C<close>, and C<say>--all builtins which operate on
-filehandles--operate in an indirect fashion.  This was fine when filehandles
+filehandles--operate in an indirect fashion. This was fine when filehandles
 were package globals, but lexical filehandles (L<lexical_filehandles>) make the
 indirect object syntax problems obvious. To solve this, disambiguate the
 subexpression which produces the intended invocant:
@@ -93,26 +90,26 @@ subexpression which produces the intended invocant:
 
 =head2 Alternatives to Indirect Notation
 
-Direct invocation notation does not suffer this ambiguity problem.  To
-construct an object, call the constructor method on the class name directly:
+Direct invocation notation does not suffer this ambiguity problem. To construct
+an object, call the constructor method on the class name directly:
 
 =begin programlisting
 
-    my $q   = CGI->new();
+    my $q   = Plack::Request->new;
     my $obj = Class->new( arg => $value );
 
 =end programlisting
 
 This syntax I<still> has a bareword problem in that if you have a function
-named C<CGI>, Perl will interpret the bareword class name as a call to the
-function, as:
+named C<Request> in the C<Plack> namespace, Perl will interpret the bareword
+class name as a call to the function, as:
 
 =begin programlisting
 
-    sub CGI;
+    sub Plack::Request;
 
-    # you wrote CGI->new(), but Perl saw
-    my $q = CGI()->new();
+    # you wrote Plack::Reuqest->new, but Perl saw
+    my $q = Plack::Request()->new;
 
 =end programlisting
 
@@ -123,31 +120,30 @@ literals:
 =begin programlisting
 
     # package separator
-    my $q = CGI::->new();
+    my $q = Plack::Request::->new;
 
     # unambiguously a string literal
-    my $q = 'CGI'->new();
+    my $q = 'Plack::Request'->new;
 
 =end programlisting
 
-Yet almost no one ever does this.
+Almost no one ever does this.
 
 X<C<IO::File>>
 
 For the limited case of filehandle operations, the dative use is so prevalent
 that you can use the indirect invocation approach if you surround your intended
-invocant with curly brackets. If you're using Perl 5.14 (or if you load
-C<IO::File> or C<IO::Handle>), you can use methods on lexical
-filehandlesN<Almost no one does this for C<print> and C<say> though.>.
+invocant with curly brackets. If you're using Perl 5.14 or newer (or if you
+load C<IO::File> or C<IO::Handle>), you can use methods on lexical
+filehandlesN<Almost no one does this for C<print> and C<say>.>.
 
 X<CPAN; C<Perl::Critic>>
 X<CPAN; C<Perl::Critic::Policy::Dynamic::NoIndirect>>
 X<CPAN; C<indirect>>
 
 The CPAN module C<Perl::Critic::Policy::Dynamic::NoIndirect> (a plugin for
-C<Perl::Critic>) can identify indirect invocations during code reviews.  The
-CPAN module C<indirect> can identify and prohibit their use in running
-programs:
+C<Perl::Critic>) can analyze your code to find indirect invocations. The CPAN
+module C<indirect> can identify and prohibit their use in running programs:
 
 =begin programlisting
 
