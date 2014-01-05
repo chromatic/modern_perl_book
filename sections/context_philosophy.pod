@@ -13,7 +13,7 @@ masculine.> makes native speakers chuckle. Other words do double duty; one
 sheep is a sheep just as two sheep are also sheep.
 
 Context in Perl is similar. It describes the I<amount> as well as the I<kind>
-of data to use. Perl will do the what you mean to do to data if you choose the
+of data to use. Perl will do what you mean to do to data if you choose the
 appropriate context for that data.
 
 For example, several Perl operations produce different behaviors when you
@@ -27,7 +27,7 @@ Context can be tricky if you try to write or read Perl code as a series of
 single steps in isolation. That's not how Perl works! Every expression is part
 of a larger context. You may find yourself slapping your forehead after a long
 debugging session when you discover that your assumptions about context were
-incorrect. If instead you're cognizant of context, your code will be more
+incorrect. If instead you're aware of context, your code will be more
 correct--and cleaner, flexible, and more concise.
 
 =head2 Void, Scalar, and List Context
@@ -37,7 +37,7 @@ Z<amount_context>
 X<context; amount>
 X<amount context>
 
-I<Amount context> context governs I<how many> items you expect from an
+I<Amount context> governs I<how many> items you expect from an
 operation. The English language's subject-verb number agreement is a close
 parallel. Even without knowing the formal description of this linguistic
 principle, you probably understand the error in the sentence "Perl are a fun
