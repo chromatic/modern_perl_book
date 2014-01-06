@@ -127,7 +127,7 @@ functions>, so that C<my $name = shift;> works. Take advantage of this idiom.
 =end tip
 
 Assigning a scalar parameter from C<@_> requires C<shift>, indexed access to
-C<@_>, or lvalue list context parentheses. Otherwise, Perl 5 will happily
+C<@_>, or lvalue list context parentheses. Otherwise, Perl will happily
 evaluate C<@_> in scalar context for you and assign the number of parameters
 passed:
 
@@ -195,7 +195,7 @@ X<CPAN; C<Method::Signatures>>
 X<CPAN; C<MooseX::Method::Signatures>>
 X<CPAN; C<Method::Signatures::Simple>>
 
-Several CPAN distributions extend Perl 5's parameter handling with additional
+Several CPAN distributions extend Perl's parameter handling with additional
 syntax and options. C<signatures> and C<Method::Signatures> are powerful.
 C<Method::Signatures::Simple> is basic, but useful.
 C<MooseX::Method::Signatures> works very well with Moose (L<moose>).
@@ -521,7 +521,7 @@ X<context>
 X<C<wantarray>>
 X<builtins; C<wantarray>>
 
-Perl 5's builtins know whether you've invoked them in void, scalar, or list
+Perl's builtins know whether you've invoked them in void, scalar, or list
 context. So too can your functions. The misnamedN<See C<perldoc -f wantarray>.>
 C<wantarray> builtin returns C<undef> to signify void context, a false value to
 signify scalar context, and a true value to signify list context.
@@ -733,7 +733,7 @@ X<C<goto>>
 X<functions; C<goto>>
 X<builtins; C<goto>>
 
-Perl 5 does not eliminate tail calls automatically, but you can get the same
+Perl does not eliminate tail calls automatically, but you can get the same
 effect by using a special form of the C<goto> builtin. Unlike the form which
 often produces spaghetti codeN<Named because control flow is as simple and
 straightforward as a plate of spaghetti.>, the C<goto> function form replaces
@@ -771,7 +771,7 @@ X<C<&>; sigil>
 X<sigils; C<&>>
 X<builtins; C<do>>
 
-Perl 5 still supports old-style invocations of functions, carried over from
+Perl still supports old-style invocations of functions, carried over from
 ancient versions of Perl. Previous versions of Perl required you to invoke
 functions with a leading ampersand (C<&>) character. Perl 1 even required you
 to use the C<do> builtin:
@@ -796,7 +796,7 @@ explicitly passed arguments yourself. Yes, that's invisible action at a
 distance.
 
 A final pitfall comes from leaving the parentheses off of function calls. The
-Perl 5 parser uses several heuristics to resolve ambiguous barewords and the
+Perl parser uses several heuristics to resolve ambiguous barewords and the
 number of parameters passed to a function. Heuristics can be wrong:
 
 =begin programlisting

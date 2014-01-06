@@ -9,8 +9,8 @@ unbreakable database breaks. Exceptions happen. Robust software must handle
 them. If you can recover, great! If you can't, log the relevant information and
 retry.
 
-Perl 5 handles exceptional conditions through I<exceptions>: a
-dynamically-scoped control flow mechanism designed to raise and handle errors.
+Perl handles exceptional conditions through I<exceptions>: a dynamically-scoped
+control flow mechanism designed to raise and handle errors.
 
 =head2 Throwing Exceptions
 
@@ -217,7 +217,7 @@ Z<builtin_exceptions>
 
 X<exceptions; core>
 
-Perl 5 itself throws several exceptional conditions. C<perldoc perldiag> lists
+Perl itself throws several exceptional conditions. C<perldoc perldiag> lists
 several "trappable fatal errors". Some are syntax errors that Perl produces
 during failed compilations, but you can catch the others during runtime. The
 most interesting are:

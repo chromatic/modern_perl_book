@@ -2,7 +2,7 @@
 
 Z<cpan>
 
-Perl 5 is a pragmatic language, and the availability of tens of thousands of
+Perl is a pragmatic language, and the availability of tens of thousands of
 freely reusable Perl libraries demonstrates that pragmatism. If you have a
 problem to solve, chances are the global Perl community has already
 written--and shared--code to solve it.
@@ -18,7 +18,7 @@ every network device ever created to sound and graphics libraries and wrappers
 for shared libraries on your system.
 
 Modern Perl without the CPAN is just another language. Modern Perl with the
-CPAN is a powerful toolset for solving problems.
+CPAN is a powerful toolkit for solving problems.
 
 X<distribution>
 X<modules>
@@ -104,7 +104,7 @@ includes a great troubleshooting section.
 
 =begin sidebar
 
-Even though the CPAN client is a core module for the Perl 5 distribution, you
+Even though the CPAN client is a core module for the Perl distribution, you
 will likely need to install standard development tools such as a C<make>
 utility and possibly a C compiler. Windows users, see Strawberry Perl
 (U<http://strawberryperl.com/>) and Strawberry Perl Professional. Mac OS X
@@ -115,11 +115,11 @@ available (though Debian and Ubuntu users should install C<build-essential>).
 
 =head2 CPAN Management Tools
 
-If your operating system provides its own installation of Perl 5, that version
-may be out of date or it may have its own dependencies on specific versions of
-CPAN distributions. Serious Perl developers often construct virtual walls
-between the system Perl and their development Perl installations. Several
-projects help to make this possible.
+If your operating system provides its own Perl installation, that version may
+be out of date or it may have its own dependencies on specific versions of CPAN
+distributions. Serious Perl developers often construct virtual walls between
+the system Perl and their development Perl installations. Several projects help
+to make this possible.
 
 C<App::cpanminus> is a newer CPAN client with goals of speed, simplicity, and
 zero configuration. Install it with C<cpan App::cpanminus>, or:

@@ -103,7 +103,7 @@ however. You could also correctly write:
 
 =end programlisting
 
-.... in which case the parentheses give a hint to the Perl 5 parser that you
+.... in which case the parentheses give a hint to the Perl parser that you
 intend list context for the assignment even though you assign only one element
 of a list. This is subtle, but now that you know about it, the difference of
 amount context between these two statements should be obvious:

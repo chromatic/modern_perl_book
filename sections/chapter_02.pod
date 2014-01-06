@@ -1,13 +1,13 @@
 =head0 Perl and Its Community
 
-Perl 5's greatest accomplishment is the huge amount of reusable libraries
+Perl's greatest accomplishment is the huge amount of reusable libraries
 developed for it. Where Perl 4 had forks to connect to databases such as Oracle
-and Sybase, for example, Perl 5 had a real extension mechanism. Larry wanted
+and Sybase, for example, Perl now has a real extension mechanism. Larry wanted
 people to create and maintain their own extensions without fragmenting Perl
 into thousands of incompatible pidgins--and it worked.
 
 That technical accomplishment was almost as important as the growth of a
-community around Perl 5. I<People> write libraries. I<People> build on the work
+community around Perl. I<People> write libraries. I<People> build on the work
 of other people. I<People> make a community worth joining and preserving and
 expanding.
 

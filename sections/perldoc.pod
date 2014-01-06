@@ -5,8 +5,8 @@ Z<perldoc>
 X<perldoc>
 
 Perl has a culture of useful documentation.  The C<perldoc> utility is part of
-every complete Perl 5 installationN<However your Unix-like system may require
-you to install an additional package such as C<perl-doc> on Debian or Ubuntu
+every complete Perl installationN<However your Unix-like system may require you
+to install an additional package such as C<perl-doc> on Debian or Ubuntu
 GNU/Linux.>. The C<perldoc> command-line utility displays the documentation of
 every Perl module installed on the system--whether a core module or one
 installed from the Comprehensive Perl Archive Network (CPAN)--as well as
@@ -19,8 +19,8 @@ X<metacpan>
 
 U<http://perldoc.perl.org/> hosts recent versions of the Perl documentation.
 CPAN indexes at U<http://search.cpan.org/> and U<http://metacpan.org/> provide
-documentation for all CPAN modules. Other Perl 5 distributions such as
-ActivePerl and Strawberry Perl provide local documentation in HTML formats.
+documentation for all CPAN modules. Other distributions such as ActivePerl and
+Strawberry Perl provide local documentation in HTML formats.
 
 =end sidebar
 
@@ -56,11 +56,11 @@ Perl has lots of documentation. Where do you start?
 
 C<perldoc perltoc> displays the table of contents of the core documentation,
 and C<perldoc perlfaq> displays the table of contents for Frequently Asked
-Questions about Perl 5. C<perldoc perlop> and C<perldoc perlsyn> document
-Perl's symbolic operators and syntactic constructs. C<perldoc perldiag>
-explains the meanings of Perl's warning messages. C<perldoc perlvar> lists all
-of Perl's symbolic variables. Skimming these files will give you a great
-overview of Perl 5.
+Questions about Perl. C<perldoc perlop> and C<perldoc perlsyn> document Perl's
+symbolic operators and syntactic constructs. C<perldoc perldiag> explains the
+meanings of Perl's warning messages. C<perldoc perlvar> lists all of Perl's
+symbolic variables. Skimming these files will give you a great overview of the
+language.
 
 =end tip
 
@@ -99,7 +99,7 @@ X<POD; C<podchecker>>
 X<POD; C<Pod::Webserver>>
 X<CPAN; C<Pod::Webserver>>
 
-Perl 5's documentation system is I<POD>, or I<Plain Old Documentation>.
+Perl's documentation system is I<POD>, or I<Plain Old Documentation>.
 C<perldoc perlpod> describes how POD works. Other POD tools include
 C<podchecker>, which validates the structure of POD documents, and the
 C<Pod::Webserver> CPAN module, which displays local POD as HTML through a

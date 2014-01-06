@@ -5,7 +5,7 @@ Z<pragmas>
 X<pragmas>
 X<modules; pragmas>
 
-Most Perl 5 modules which provide new functions or define classes (L<moose>).
+Most Perl modules which provide new functions or define classes (L<moose>).
 Others, such as C<strict> or C<warnings>, influence the behavior of the
 language itself. This second class of module is a I<pragma>. By convention,
 pragmas have lower-case names to differentiate them from other modules.
@@ -92,7 +92,7 @@ protection of C<strict> when you need to do something symbolic:
 
 X<pragmas; useful core pragmas>
 
-Perl 5 includes several useful core pragmas.
+Perl includes several useful core pragmas.
 
 X<pragmas; C<strict>>
 
@@ -160,7 +160,7 @@ X<CPAN; C<indirect>>
 =item * C<indirect> prevents the use of indirect invocation
 (L<indirect_objects>)
 
-=item * C<autobox> enables object-like behavior for Perl 5's core types
+=item * C<autobox> enables object-like behavior for Perl's core types
 (scalars, references, arrays, and hashes).
 
 =item * C<perl5i> combines and enables many experimental language extensions

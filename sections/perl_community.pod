@@ -12,8 +12,7 @@ novice questions and get accurate and helpful answers. See
 U<http://learn.perl.org/faq/beginners.html>.
 
 The home of Perl development is U<http://dev.perl.org/>, which links to
-relevant resources for core development of Perl 5 and Perl 6N<Though
-see also U<http://www.perl6.org/>>.
+relevant resources for Perl's core development.
 
 X<perl.com>
 X<websites; perl.com>
@@ -73,15 +72,15 @@ X<Best Practical>
 
 Best Practical Solutions (U<http://bestpractical.com/>) maintains an
 installation of their popular request tracking system, RT, for CPAN authors as
-well as Perl 5 and Perl 6 development. Every CPAN distribution has its own RT
-queue, linked from C<search.cpan.org> and available on U<http://rt.cpan.org/>.
-Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
+well as Perl development. Every CPAN distribution has its own RT queue, linked
+from C<search.cpan.org> and available on U<http://rt.cpan.org/>.  Perl's RT
+queues is available at U<http://rt.perl.org/>.
 
 X<Perl 5 Porters>
 X<p5p>
 
 The Perl 5 Porters (or I<p5p>) mailing list is the focal point of the
-development of Perl 5 itself. See
+development of Perl. See
 U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
 
 X<TPF>
@@ -90,7 +89,7 @@ X<TPF; wiki>
 X<websites; TPF wiki>
 
 The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all
-things Perl 5. See U<http://www.perlfoundation.org/perl5>.
+things Perl. See U<http://www.perlfoundation.org/perl5>.
 
 X<Github>
 X<gitpan>

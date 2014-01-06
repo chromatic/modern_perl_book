@@ -201,14 +201,14 @@ data model to provide better encapsulation.
 
 =head2 Debugging Nested Data Structures
 
-The complexity of Perl 5's dereferencing syntax combined with the potential for
+The complexity of Perl's dereferencing syntax combined with the potential for
 confusion with multiple levels of references can make debugging nested data
 structures difficult. Two good visualization tools exist.
 
 X<C<Data::Dumper>>
 
 The core module C<Data::Dumper> converts values of arbitrary complexity into
-strings of Perl 5 code:
+strings of Perl code:
 
 =begin programlisting
 
@@ -223,9 +223,9 @@ should access, and what you accessed instead. C<Data::Dumper> can dump objects
 as well as function references (if you set C<$Data::Dumper::Deparse> to a true
 value).
 
-While C<Data::Dumper> is a core module and prints Perl 5 code, its output is
+While C<Data::Dumper> is a core module and prints Perl code, its output is
 verbose. Some developers prefer the use of the C<YAML::XS> or C<JSON> modules
-for debugging. They do not produce Perl 5 code, but their outputs can be much
+for debugging. They do not produce Perl code, but their outputs can be much
 clearer to read and to understand.
 
 =head2 Circular References
@@ -236,11 +236,10 @@ X<circular references>
 X<memory management; circular references>
 X<garbage collection>
 
-Perl 5's memory management system of reference counting (L<reference_counts>)
-has one drawback you might find. Two references which point to each other
-(directly or indirectly) form a I<circular reference> that Perl cannot destroy
-on its own. Consider a biological model, where each entity has two parents and
-zero or more children:
+Perl's memory management system of reference counting (L<reference_counts>) has
+one drawback. Two references which point to each other (directly or indirectly)
+form a I<circular reference> that Perl cannot destroy on its own. Consider a
+biological model, where each entity has two parents and zero or more children:
 
 =begin programlisting
 

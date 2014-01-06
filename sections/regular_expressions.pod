@@ -551,7 +551,7 @@ later use. To extract an American telephone number of the form C<(202)
 =end programlisting
 
 Note especially the escaping of the parentheses within C<$area_code>.
-Parentheses are special in Perl 5 regular expressions. They group atoms into
+Parentheses are special in Perl regular expressions. They group atoms into
 larger units and also capture portions of matching strings. To match literal
 parentheses, escape them with backslashes as seen in C<$area_code>.
 
@@ -897,8 +897,8 @@ can be useful when combining a global regex match with the C<\G> modifier.
 X<C<\K>; keep regex assertion>
 X<regex; keep assertion>
 
-A newer feature of Perl 5 regexes is the I<keep> assertion C<\K>. This
-zero-width positive look-behind assertion I<can> have a variable length:
+A newer feature of Perl regexes is the I<keep> assertion C<\K>. This zero-width
+positive look-behind assertion I<can> have a variable length:
 
 =begin programlisting
 
@@ -1090,9 +1090,9 @@ X<C</e>; substitution evaluation regex modifier>
 X<regex; C</e> modifier>
 X<regex; substitution evaluation>
 
-The C</e> modifier allows you to write arbitrary Perl 5 code on the right side
-of a substitution operation. If the match succeeds, the regex engine will run
-the code, using its return value as the substitution value. The earlier global
+The C</e> modifier allows you to write arbitrary code on the right side of a
+substitution operation. If the match succeeds, the regex engine will run the
+code, using its return value as the substitution value. The earlier global
 substitution example could be simpler with code like:
 
 =begin programlisting

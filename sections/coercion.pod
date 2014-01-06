@@ -27,7 +27,7 @@ string C<'0'> all evaluate as false values. All other values--including strings
 which may be I<numerically> equal to zero (such as C<'0.0'>, C<'0e'>, and C<'0
 but true'>)--evaluate as true values.
 
-When a scalar has I<both> string and numeric components (L<dualvars>), Perl 5
+When a scalar has I<both> string and numeric components (L<dualvars>), Perl
 prefers to check the string component for boolean truth. C<'0 but true'>
 evaluates to zero numerically, but it is not an empty string, and so it
 evaluates to a true value in boolean context.
@@ -71,8 +71,8 @@ X<C<Scalar::Util>>
 X<C<Scalar::Util>; C<looks_like_number>>
 
 The core module C<Scalar::Util> contains a C<looks_like_number()> function
-which uses the same parsing rules as the Perl 5 grammar to extract a number
-from a string.
+which uses the same parsing rules as the Perl grammar to extract a number from
+a string.
 
 =begin tip Mathematicians Rejoice
 
@@ -113,18 +113,18 @@ Z<cached_coercions>
 
 X<coercion; cached>
 
-Perl 5's internal representation of values stores both string and numeric
-values. Stringifying a numeric value does not I<replace> the numeric value.
-Instead, it I<adds> a stringified value to the internal representation, which
-then contains I<both> components. Similarly, numifying a string value populates
-the numeric component while leaving the string component untouched.
+Perl's internal representation of values stores both string and numeric values.
+Stringifying a numeric value does not I<replace> the numeric value.  Instead,
+it I<adds> a stringified value to the internal representation, which then
+contains I<both> components. Similarly, numifying a string value populates the
+numeric component while leaving the string component untouched.
 
 Certain Perl operations prefer to use one component of a value over
 another--boolean checks prefer strings, for example. If a value has a cached
 representation in a form you do not expect, relying on an implicit conversion
 may produce surprising results. You almost never need to be explicit about what
 you expectN<Your author can recall doing so twice in fifteen years of
-programming Perl 5.>, but knowing that this caching occurs may someday help you
+programming Perl.>, but knowing that this caching occurs may someday help you
 diagnose an odd situation.
 
 =head2 Dualvars

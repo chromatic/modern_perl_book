@@ -34,11 +34,10 @@ each change could be tedious (to say nothing of inefficient).
 
 X<references>
 
-Perl 5 provides a mechanism by which to refer to a value without making a copy.
+Perl provides a mechanism by which to refer to a value without making a copy.
 Any changes made to that I<reference> will update the value in place, such that
 I<all> references to that value see the modified value. A reference is a
-first-class scalar data type in Perl 5 which refers to another first-class data
-type.
+first-class scalar data type which refers to another first-class data type.
 
 =head2 Scalar References
 
@@ -413,7 +412,7 @@ X<functions; references>
 X<references; functions>
 X<functions; first-class>
 
-Perl 5 supports I<first-class functions> in that a function is a data type just
+Perl supports I<first-class functions> in that a function is a data type just
 as is an array or hash. In other words, Perl supports I<function references>.
 This enables many advanced features (L<closures>). Create a function reference
 by using the reference operator and the function sigil (C<&>) on the name of a
@@ -518,25 +517,25 @@ Old code might C<use IO::Handle;>. Older code may take references to typeglobs:
 =end programlisting
 
 This idiom predates lexical filehandlesN<Introduced with Perl 5.6.0 in March
-2000, so this code is free to join the 21st century anytime.>. You may still
-use the reference operator on typeglobs to take references to package-global
+2000, so this code is stuck in the previous millennium.>. You may still use the
+reference operator on typeglobs to take references to package-global
 filehandles such as C<STDIN>, C<STDOUT>, C<STDERR>, or C<DATA>--but these are
 all global names anyhow.
 
 Prefer lexical filehandles when possible. With the benefit of explicit scoping,
 lexical filehandles allow you to manage the lifespan of filehandles as a
-feature of Perl 5's memory management.
+feature of Perl's memory management.
 
 =head2 Reference Counts
 
 Z<reference_counts>
 X<references; reference counting>
 
-Perl 5 uses a memory management technique known as I<reference counting>.
-Every Perl value has an attached counter. Perl increases this counter every
-time something takes a reference to the value, whether implicitly or
-explicitly. Perl decreases that counter every time a reference goes away. When
-the counter reaches zero, Perl knows it can safely recycle that value.
+Perl uses a memory management technique known as I<reference counting>.  Every
+Perl value has an attached counter. Perl increases this counter every time
+something takes a reference to the value, whether implicitly or explicitly.
+Perl decreases that counter every time a reference goes away. When the counter
+reaches zero, Perl knows it can safely recycle that value.
 
 X<lexicals; lifecycle>
 

@@ -4,12 +4,12 @@ Z<moose>
 
 X<moose>
 
-Perl 5's default object system is but minimal but flexible. Its syntax is a
+Perl's default object system is but minimal but flexible. Its syntax is a
 little clunky, and it exposes I<how> an object system works. You can build
 great things on top of it, but you or someone else will have to build a lot of
 code to get what some other languages provide for free.
 
-I<Moose> is a complete object system for Perl 5N<See C<perldoc Moose::Manual>.>
+I<Moose> is a complete object system for PerlN<See C<perldoc Moose::Manual>.>
 Moose offers both a simpler way to use an object system as well as advanced
 features of languages such as Smalltalk and Common Lisp. Moose objects work
 with plain vanilla Perl. Moose is a great way to write object oriented code in
@@ -81,7 +81,7 @@ how Perl selects the appropriate method. This may seem obvious, given how
 simple the C<Cat> class is, but much of the power of OO comes from method
 dispatch.
 
-When invoked, a method's first argument is its invocant. Idiomatic Perl 5 uses
+When invoked, a method's first argument is its invocant. Idiomatic Perl uses
 C<$self> as its name. Suppose a C<Cat> can C<meow()>:
 
 =begin programlisting
@@ -142,10 +142,10 @@ X<OO; state>
 X<attributes; typed>
 X<attributes; C<ro> (read only)>
 
-Every object in Perl 5 is unique. Objects can contain private data associated
-with each unique object--you may hear this data called I<attributes>,
-I<instance data>, or object I<state>. Define an attribute by declaring it as
-part of the class:
+Every Perl object is unique. Objects can contain private data associated with
+each unique object--you may hear this data called I<attributes>, I<instance
+data>, or object I<state>. Define an attribute by declaring it as part of the
+class:
 
 =begin programlisting
 
@@ -639,7 +639,7 @@ X<inheritance>
 X<OO; inheritance>
 X<Moose; inheritance>
 
-Perl 5's object system supports I<inheritance>, which establishes a parent and
+Perl's object system supports I<inheritance>, which establishes a parent and
 child relationship between two classes such that one specializes the other. The
 child class behaves the same way as its parent--it has the same number and
 types of attributes and can use the same methods. It may have additional data
@@ -851,11 +851,11 @@ class. That invocant may be the name of a class or an instance of an object:
 
 =end programlisting
 
-=head2 Moose and Perl 5 OO
+=head2 Moose and Perl OO
 
-X<Moose; compared to default Perl 5 OO>
+X<Moose; compared to default Perl OO>
 
-Moose provides many features beyond Perl 5's default OO. While you I<can> build
+Moose provides many features beyond Perl's default OO. While you I<can> build
 everything you get with Moose yourself (L<blessed_references>), or cobble it
 together with a series of CPAN distributions, Moose is worth using. It is a
 coherent whole, with good documentation. Many important projects use it
@@ -907,8 +907,8 @@ See C<perldoc Class::MOP::Class> for more information about metaclass
 operations and C<perldoc Class::MOP> for Moose metaprogramming information.
 
 Moose and its I<meta-object protocol> (or MOP) offers the possibility of a
-better syntax for declaring and working with classes and objects in Perl 5.
-This is valid Perl 5 code:
+better syntax for declaring and working with classes and objects in Perl. This
+is valid code:
 
 =begin programlisting
 

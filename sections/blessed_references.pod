@@ -2,7 +2,7 @@
 
 Z<blessed_references>
 
-Perl 5's core object system is deliberately minimal. It has only three rules:
+Perl's core object system is deliberately minimal. It has only three rules:
 
 =over 4
 
@@ -143,7 +143,7 @@ Given a blessed reference, a method call of the form:
 
 ... looks up the name of the class associated with the blessed reference
 C<$joel>--in this case, C<Player>. Next, Perl looks for a functionN<Remember
-that Perl 5 makes no distinction between functions in a namespace and methods.>
+that Perl makes no distinction between functions in a namespace and methods.>
 named C<number()> in C<Player>. If no such function exists and if C<Player>
 extends a parent class, Perl looks in the parent class (and so on and so on)
 until it finds a C<number()>. If Perl finds C<number()>, it calls that method

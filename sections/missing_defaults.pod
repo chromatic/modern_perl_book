@@ -8,8 +8,8 @@ in 2014. Perl 5 expanded the language and made the CPAN possible, but it also
 retained backwards compatibility with most Perl 1 code written as far back as
 1987.
 
-The best Perl code of 2014 is very different from the best Perl 5 code of 1994
-or the best Perl 1 code of 1987.
+The best Perl code of 2014 is very different from the best Perl code of 1994 or
+the best Perl code of 1987.
 
 X<CPAN; C<Task::Kensho>>
 
@@ -107,7 +107,7 @@ pragma can remove a lot of boilerplate code and allow you the peace of mind of
 knowing that you haven't forgotten to check a return value. See C<perldoc
 autodie> for more information.
 
-=head2 Perl 5 Version Numbers
+=head2 Perl Version Numbers
 
 Z<version_numbers>
 X<CPAN; C<Perl::MinimumVersion>>

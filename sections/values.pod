@@ -203,7 +203,7 @@ use the I<heredoc> syntax to assign multiple lines to a string:
 The C<< <<'END_BLURB' >> syntax has three parts. The double angle-brackets
 introduce the heredoc. The quotes determine whether the heredoc follows single-
 or double-quoted behavior. (The default behavior is double-quoted.)
-C<END_BLURB> is an arbitrary identifier which the Perl 5 parser uses as the
+C<END_BLURB> is an arbitrary identifier which the Perl parser uses as the
 ending delimiter.
 
 Regardless of the indentation of the heredoc declaration itself, the ending
@@ -229,7 +229,7 @@ delimiter must I<start> at the beginning of the line:
 
 If the identifier I<begins> with whitespace, that same whitespace must be
 present before the ending delimiter--that is, C<<< <<' END_HEREDOC'>> >>> needs
-a leading space before C<END_HEREDOC>. Yet if you indent the identifier, Perl 5
+a leading space before C<END_HEREDOC>. Yet if you indent the identifier, Perl
 will I<not> remove equivalent whitespace from the start of each line of the
 heredoc. Yes, that's less than ideal.
 
@@ -247,7 +247,7 @@ languages. While most English text uses a character set of only 127 characters
 (which requires seven bits of storage and fits nicely into eight-bit bytes),
 it's naE<iuml>ve to believe that you won't someday need an umlaut.
 
-Perl 5 strings can represent either of two separate but related data types:
+Perl strings can represent either of two separate but related data types:
 
 X<codepoint>
 
@@ -618,10 +618,10 @@ X<underscore>
 
 =begin tip When 1.99 + 1.99 is 4
 
-Even though you can write floating-point values explicitly in Perl 5 with
-perfect accuracy, Perl 5--like most programming languages--represents them
-internally in a binary format. This representation is sometimes imprecise in
-specific ways; consult C<perldoc perlnumber> for more details.
+Even though you can write floating-point values explicitly with perfect
+accuracy, Perl--like most programming languages--represents them internally in
+a binary format. This representation is sometimes imprecise in specific ways;
+consult C<perldoc perlnumber> for more details.
 
 =end tip
 
@@ -659,7 +659,7 @@ numbers, integers, and floating-point values.
 
 X<C<undef>>
 
-Perl 5's C<undef> value represents an unassigned, undefined, and unknown value.
+Perl's C<undef> value represents an unassigned, undefined, and unknown value.
 Declared but undefined scalar variables contain C<undef>:
 
 =begin programlisting

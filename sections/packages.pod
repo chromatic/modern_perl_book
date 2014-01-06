@@ -9,7 +9,7 @@ named category. It's like your family name or a brand name. Unlike a real-world
 name, a namespace implies no direct relationship between entities. Such
 relationships may exist, but they do not have to.
 
-A I<package> in Perl 5 is a collection of code in a single namespace. The
+A I<package> in Perl is a collection of code in a single namespace. The
 distinction is subtle: the package represents the source code and the namespace
 represents the entity created when Perl parses that code.
 

@@ -161,7 +161,7 @@ presence of quotes to indicate that you're doing something different.
 
 =end tip
 
-Even Perl 5 builtins get the autoquoting treatment:
+Even Perl builtins get the autoquoting treatment:
 
 =begin programlisting
 

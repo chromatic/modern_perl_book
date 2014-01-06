@@ -13,8 +13,8 @@ X<functions; dispatch table>
 X<idioms; dispatch table>
 X<dispatch table>
 
-A common Perl 5 idiom known as a I<dispatch table> uses hashes to associate
-input with behavior:
+A common Perl idiom known as a I<dispatch table> uses hashes to associate input
+with behavior:
 
 =begin programlisting
 
@@ -175,7 +175,7 @@ X<anonymous functions; implicit>
 
 X<CPAN; C<Test::Fatal>>
 
-Perl 5 allows you to declare anonymous functions as function arguments without
+Perl allows you to declare anonymous functions as function arguments without
 using the C<sub> keyword. Though this feature exists nominally to enable
 programmers to write their own syntax such as that for C<map> and C<eval>
 (L<prototypes>), an interesting example is the use of I<delayed> functions that

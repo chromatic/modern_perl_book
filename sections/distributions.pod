@@ -166,7 +166,7 @@ manage their dependencies appropriately and to respect their encapsulation.
 
 =item * I<Each distribution contains a single version number.> Version numbers
 must always increase. The semantic version policy (U<http://semver.org/>) is
-sane and compatible with the Perl 5 approach.
+sane and compatible with Perl's approach.
 
 =item * I<Each distribution provides a well-defined API.> A comprehensive
 automated test suite can verify that you maintain this API across versions.  If

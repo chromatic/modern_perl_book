@@ -6,7 +6,7 @@ X<arrays>
 X<C<@> sigil>
 X<sigils; C<@>>
 
-Perl 5 I<arrays> are I<first-class> data structures--the language supports them
+Perl I<arrays> are I<first-class> data structures--the language supports them
 as a built-in data type--which store zero or more scalars. You can access
 individual members of the array by integer indexes, and you can add or remove
 elements at will. Arrays grow or shrink as you manipulate them.
@@ -25,8 +25,8 @@ X<sigils; variant>
 X<C<$>; sigil>
 X<sigils; C<$>>
 
-I<Accessing> an individual element of an array in Perl 5 requires the scalar
-sigil. C<$cats[0]> is an unambiguous use of the C<@cats> array, because postfix
+Use the scalar sigil to I<access> an individual element of an array.
+C<$cats[0]> is an unambiguous use of the C<@cats> array, because postfix
 (L<fixity>) square brackets (C<[]>) always mean indexed access to an array.
 
 The first element of an array is at the zeroth index:
@@ -90,7 +90,7 @@ so on:
 =end programlisting
 
 C<$#> has another use: resize an array in place by I<assigning> to C<$#array>.
-Remember that Perl 5 arrays are mutable. They expand or contract as necessary.
+Remember that Perl arrays are mutable. They expand or contract as necessary.
 When you shrink an array, Perl will discard values which do not fit in the
 resized array. When you expand an array, Perl will fill the expanded positions
 with C<undef>.
@@ -167,8 +167,8 @@ Freshly-declared arrays start out empty.
 =head2 Array Operations
 
 Sometimes an array is more convenient as an ordered, mutable collection of
-items than as a mapping of indices to values. Perl 5 provides several
-operations to manipulate array elements without using indices.
+items than as a mapping of indices to values. Perl provides several operations
+to manipulate array elements without using indices.
 
 X<arrays; C<push>>
 X<arrays; C<pop>>
@@ -328,7 +328,7 @@ A slice can contain zero or more elements--including one:
 X<list context; arrays>
 
 In list context, arrays flatten into lists. If you pass multiple arrays to a
-normal Perl 5 function, they will flatten into a single list:
+normal function, they will flatten into a single list:
 
 =begin programlisting
 
@@ -353,7 +353,7 @@ argument passed to the function. C<@dogs> will be emptyN<... but Rosie thinks
 she's a cat, so it's not all bad.>.
 
 This flattening behavior sometimes confuses novices who attempt to create
-nested arrays in Perl 5:
+nested arrays:
 
 =begin programlisting
 

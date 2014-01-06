@@ -10,7 +10,7 @@ a name. It may consume incoming information. It may produce outgoing
 information.
 
 Functions are a prime mechanism for abstraction, encapsulation, and re-use in
-Perl 5.
+Perl.
 
 L<functions>
 

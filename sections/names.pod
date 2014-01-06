@@ -160,7 +160,7 @@ start with uppercase letters by convention. The Perl core reserves lowercase
 package names for core pragmas (L<pragmas>), such as C<strict> and C<warnings>.
 This is a policy enforced primarily by community guidelines.
 
-All namespaces in Perl 5 are globally visible. When Perl looks up a symbol in
+All namespaces in Perl are globally visible. When Perl looks up a symbol in
 C<DessertShop::IceCream::Freezer>, it looks in the C<main::> symbol table for a
 symbol representing the C<DessertShop::> namespace, then in that namespace for
 the C<IceCream::> namespace, and so on.  Yet C<Freezer::> is visible from

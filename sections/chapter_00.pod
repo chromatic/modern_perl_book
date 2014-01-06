@@ -2,7 +2,7 @@
 
 =head0 *Preface
 
-I<Modern Perl> is one way to describe the way the world's most effective Perl 5
+I<Modern Perl> is one way to describe the way the world's most effective Perl
 programmers work. They use language idioms. They take advantage of the CPAN.
 They show good taste and craft to write powerful, maintainable, scalable,
 concise, and effective code. You can learn these skills too!
@@ -10,10 +10,8 @@ concise, and effective code. You can learn these skills too!
 Perl first appeared in 1987 as a simple tool for system administration. Though
 it began by declaring and occupying a comfortable niche between shell scripting
 and C programming, it has become a powerful, general-purpose language family.
-Perl 5 has a solid history of pragmatism and a bright future of polish and
-enhancementN<Perl 6 is a new language in the Perl family. It's not the
-successor to Perl 5, and it's not suitable for general use at the time of this
-writing.>
+Perl has a solid history of pragmatism and a bright future of polish and
+enhancement.
 
 Over Perl's long history--especially the 19 years of Perl 5--our understanding
 of what makes great Perl programs has changed. While you can write productive
@@ -24,8 +22,8 @@ made them available to anyone willing to learn them.
 =head1 Running Modern Perl
 
 The C<Modern::Perl> module from the CPAN (L<cpan>) asks Perl to warn of dubious
-constructs and typos and will enable new features introduced in modern releases
-of Perl 5. Unless otherwise mentioned, code snippets always assume the basic
+constructs and typos and will enable new features introduced in modern Perl
+releases. Unless otherwise mentioned, code snippets always assume the basic
 skeleton of a program:
 
 =begin programlisting
@@ -65,31 +63,31 @@ Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
 
 =end programlisting
 
-At the time of writing, the current stable Perl 5 release family is Perl 5.18.
+At the time of writing, the current stable Perl release family is Perl 5.18.
 If you're using an older version of Perl, you may not be able to run all of the
-examples in this book unmodified.  The examples in this book work best with
-Perl 5.14.0 or newer, though we recommend at least Perl 5.16. While the term
-"Modern Perl" can refer to any version of Perl from 5.10.1, several features
-added in newer versions are essential to modern development.
+examples in this book unmodified. The examples in this book work best with Perl
+5.14.0 or newer, though we recommend at least Perl 5.16. While the term "Modern
+Perl" can refer to any version of Perl from 5.10.1, several features added in
+newer versions are essential to modern development.
 
 X<Strawberry Perl>
 X<ActivePerl>
 X<perlbrew>
 X<CPAN; C<App::perlbrew>>
 
-If you have no Perl 5 installed (or if you have an old version installed), you
+If you have no Perl installed (or if you have an old version installed), you
 can install a newer release yourself. Windows users, download Strawberry Perl
 from U<http://www.strawberryperl.com/> or ActivePerl from
 U<http://www.activestate.com/activeperl>. Users of other operating systems with
-Perl 5 already installed (and a C compiler and the other development tools),
+Perl already installed (and a C compiler and the other development tools),
 start by installing the CPAN module C<App::perlbrew>N<See
 U<http://search.cpan.org/perldoc?App::perlbrew> for installation
 instructions.>.
 
-C<perlbrew> allows you to install and manage multiple versions of Perl 5. This
-allows you to switch between versions of Perl 5 as well as to install Perl 5
-and CPAN modules in your home directory without affecting the system's version.
-If you've ever had to beg your system administrator for permission to install
+C<perlbrew> allows you to install and manage multiple versions of Perl. This
+allows you to switch between versions as well as to install Perl and CPAN
+modules in your home directory without affecting the system's version.  If
+you've ever had to beg your system administrator for permission to install
 software, you know how much easier your life can be now.
 
 =head1 Credits

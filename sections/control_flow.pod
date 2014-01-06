@@ -357,7 +357,7 @@ operator--all evaluate an expression in boolean context
 and C<!=> all produce boolean results when evaluated, Perl coerces the results
 of other expressions--including variables and values--into boolean forms.
 
-Perl 5 has no single true value nor a single false value. Any number which
+Perl has no single true value nor a single false value. Any number which
 evaluates to 0 is false. This includes C<0>, C<0.0>, C<0e0>, C<0x0>, and so on.
 The empty string (C<''>) and C<'0'> evaluate to a false value, but the strings
 C<'0.0'>, C<'0e0'>, and so on do not. The idiom C<'0 but true'> evaluates to 0
@@ -758,7 +758,7 @@ filehandle:
 
 =end programlisting
 
-Perl 5 interprets this C<while> loop as if you had written:
+Perl interprets this C<while> loop as if you had written:
 
 =begin programlisting
 
@@ -895,7 +895,7 @@ overlooked option):
 X<loops; control>
 
 Sometimes you need to break out of a loop before you have exhausted the
-iteration conditions. Perl 5's standard control mechanisms--exceptions and
+iteration conditions. Perl's standard control mechanisms--exceptions and
 C<return>--work, but you may also use I<loop control> statements.
 
 X<loops; C<next>>
@@ -1135,7 +1135,7 @@ C<log_and_greet_person()> is a I<tailcall optimization>.
 Heavily recursive code (L<recursion>)--especially mutually recursive code--can
 consume a lot of memory. Tailcalls reduce the memory needed for internal
 bookkeeping of control flow and can make expensive algorithms cheaper.
-Unfortunately, Perl 5 does not automatically perform this optimization, so you
+Unfortunately, Perl does not automatically perform this optimization, so you
 have to do it yourself when it's necessary.
 
 X<builtins; C<goto>>

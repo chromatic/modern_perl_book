@@ -6,7 +6,7 @@ X<scalars>
 X<C<$>; sigil>
 X<sigils; C<$>>
 
-Perl 5's fundamental data type is the I<scalar>: a single, discrete value.
+Perl's fundamental data type is the I<scalar>: a single, discrete value.
 That value may be a string, an integer, a floating point value, a filehandle,
 or a reference--but it is always a single value. Scalars may be lexical,
 package, or global (L<globals>) variables. You may only declare lexical or
@@ -108,9 +108,9 @@ X<C<Scalar::Util>>
 X<dualvars>
 X<C<dualvar()>>
 
-To allow coercion without data loss, Perl 5 scalars can contain both numeric
-and string components. The internal data structure which represents a scalar in
-Perl 5 has a numeric slot and a string slot. Accessing a string in a numeric
+To allow coercion without data loss, Perl scalars can contain both numeric and
+string components. The internal data structure which represents a scalar in
+Perl has a numeric slot and a string slot. Accessing a string in a numeric
 context produces a scalar with both string and numeric values. The C<dualvar()>
 function within the core C<Scalar::Util> module allows you to manipulate both
 values directly within a single scalar.
@@ -133,7 +133,7 @@ evaluate to true values.
 =begin tip What is Truth?
 
 Be careful that the I<strings> C<'0.0'> and C<'0e0'> evaluate to true values.
-This is one place where Perl 5 makes a distinction between what I<looks like> a
+This is one place where Perl makes a distinction between what I<looks like> a
 number and what really is a number.
 
 =end tip
