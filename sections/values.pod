@@ -358,7 +358,7 @@ not Unicode characters.
 
 X<C<utf8::all>>
 
-=begin tip
+=begin tip Enable UTF-8 Everywhere
 
 The C<utf8::all> module enables UTF-8 IO layers on all filehandles throughout
 your program and enables all sorts of other Unicode features. It's very handy,

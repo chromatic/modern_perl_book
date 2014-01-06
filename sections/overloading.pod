@@ -12,7 +12,7 @@ Overloading is subtle but powerful. An interesting example is overloading how
 an object behaves in boolean context. In boolean context, an object will
 evaluate to a true value, unless you overload boolification.
 
-=begin tip
+=begin tip Overloading Boolean Context
 
 Why overload boolean context? Suppose you're using the Null Object pattern
 (U<http://www.c2.com/cgi/wiki?NullObject>) to make your own objects appear

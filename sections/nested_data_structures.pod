@@ -24,14 +24,9 @@ single array:
 Perl's solution to this is references (L<references>), which are special
 scalars that can refer to other variables (scalars, arrays, and hashes). Nested
 data structures in Perl, such as an array of arrays or a hash of hashes, are
-possible through the use of references.
-
-=begin tip
-
-This is one of Perl's uglier features. References are useful and you need to
-understand them, but you don't have to like their syntax.
-
-=end tip
+possible through the use of references. References are useful and you need to
+understand them, but you don't have to like their syntax--they're one of Perl's
+uglier features.
 
 X<operators; C<\>>
 
@@ -186,7 +181,7 @@ at the expense of disabling error checks for a few well-encapsulated symbolic
 references? Is it more convenient to allow data structures to grow or safer to
 require a fixed size and an allowed set of keys?
 
-=begin tip
+=begin tip Controlling Autovivification
 
 The C<autovivification> pragma (L<pragmas>) from the CPAN lets you disable
 autovivification in a lexical scope for specific types of operations.
@@ -294,14 +289,8 @@ C<$cianne> will retain usable references to C<$alice> and C<$robin>, but those
 weak references do not count toward the number of remaining references to the
 parents. If the reference count of C<$alice> reaches zero, Perl's garbage
 collector will reclaim her record, even though C<$cianne> has a weak reference
-to C<$alice>.
-
-=begin tip
-
-When C<$alice> gets reclaimed, C<$cianne>'s reference to C<$alice> will be set
-to C<undef>.
-
-=end tip
+to C<$alice>. Be aware that, when C<$alice> gets reclaimed, C<$cianne>'s
+reference to C<$alice> will be set to C<undef>.
 
 Most data structures do not need weak references, but when they're necessary,
 they're invaluable.
