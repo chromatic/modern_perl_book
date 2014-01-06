@@ -143,10 +143,7 @@ does Perl when you mix explicit and implicit uses of C<$_>. If you use it in
 multiple places, one piece of code may silently override the value expected by
 another piece of code. For example, if one function uses C<$_> and you call it
 from another function which uses C<$_>, the callee may clobber the caller's
-value.
-
-As of Perl 5.10, you may declare C<$_> as a lexical variable (L<lexical_scope>)
-to prevent this clobbering behavior:
+value:
 
 =begin programlisting
 
@@ -163,8 +160,9 @@ to prevent this clobbering behavior:
 =end programlisting
 
 If C<calculate_value()> or any other function changed C<$_>, that change would
-persist through that iteration of the loop. Adding a C<my> declaration prevents
-clobbering an existing instance of C<$_>:
+persist through that iteration of the loop. As of Perl 5.10, you can declare
+C<$_> as a lexical variable (L<lexical_scope>) with C<my> to prevent clobbering
+an existing instance of C<$_>:
 
 =begin programlisting
 
@@ -175,7 +173,10 @@ clobbering an existing instance of C<$_>:
 
 =end programlisting
 
-Of course, using a named lexical may be even clearer:
+Unfortunately, this construct has a few edge cases related to how existing
+functions behave when they expect C<$_> to be a global variable. As of Perl
+5.18, the Perl 5 Porters consider this feature experimental. Use it with
+caution. Besides, using a named lexical may be even clearer:
 
 =begin programlisting
 
