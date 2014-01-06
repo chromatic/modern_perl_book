@@ -348,62 +348,6 @@ for a named hash and curly brackets for an anonymous hash.
 
 =end tip
 
-=head2 Automatic Dereferencing
-
-Z<automatic_dereferencing>
-
-X<builtins; C<push>>
-
-Perl can automatically dereference certain references on your behalf. Given an
-array reference in C<$arrayref>, you can write:
-
-=begin programlisting
-
-    push $arrayref, qw( list of values );
-
-=end programlisting
-
-Given an expression which returns an array reference, you can do the same:
-
-=begin programlisting
-
-    push $houses{$location}[$closets], \@new_shoes;
-
-=end programlisting
-
-X<builtins; C<push>>
-X<builtins; C<pop>>
-X<builtins; C<shift>>
-X<builtins; C<unshift>>
-X<builtins; C<splice>>
-X<builtins; C<keys>>
-X<builtins; C<values>>
-X<builtins; C<each>>
-
-The same goes for the array operators C<pop>, C<shift>, C<unshift>, C<splice>,
-C<keys>, C<values>, and C<each> and the hash operators C<keys>, C<values>, and
-C<each>.
-
-If the reference provided is not of the proper type--if it does not dereference
-properly--Perl will throw an exception. While this may seem more dangerous than
-explicitly dereferencing references directly, it is in fact the same behavior:
-
-=begin programlisting
-
-    my $ref = sub { ... };
-
-    # will throw an exception
-    push  $ref, qw( list of values );
-
-    # will also throw an exception
-    push @$ref, qw( list of values );
-
-=end programlisting
-
-Remember that C<each> and C<keys> and C<values> can operate on both arrays and
-hashes. When combined with this automatic dereferencing, you can produce some
-very confusing code.
-
 =head2 Function References
 
 Z<function_references>

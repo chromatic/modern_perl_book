@@ -13,4 +13,6 @@ L<prototypes>
 
 L<method_sub_equivalence>
 
+L<automatic_dereferencing>
+
 L<tie>

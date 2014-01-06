@@ -1,0 +1,74 @@
+=head1 Automatic Dereferencing
+
+Z<automatic_dereferencing>
+
+X<builtins; C<push>>
+
+Perl can automatically dereference certain references on your behalf. Given an
+array reference in C<$arrayref>, you can write:
+
+=begin programlisting
+
+    push $arrayref, qw( list of values );
+
+=end programlisting
+
+Given an expression which returns an array reference, you can do the same:
+
+=begin programlisting
+
+    push $houses{$location}[$closets], \@new_shoes;
+
+=end programlisting
+
+X<builtins; C<push>>
+X<builtins; C<pop>>
+X<builtins; C<shift>>
+X<builtins; C<unshift>>
+X<builtins; C<splice>>
+X<builtins; C<keys>>
+X<builtins; C<values>>
+X<builtins; C<each>>
+
+The same goes for the array operators C<pop>, C<shift>, C<unshift>, C<splice>,
+C<keys>, C<values>, and C<each> and the hash operators C<keys>, C<values>, and
+C<each>.
+
+If the reference provided is not of the proper type--if it does not dereference
+properly--Perl will throw an exception. While this may seem more dangerous than
+explicitly dereferencing references directly, it is in fact the same behavior:
+
+=begin programlisting
+
+    my $ref = sub { ... };
+
+    # will throw an exception
+    push  $ref, qw( list of values );
+
+    # will also throw an exception
+    push @$ref, qw( list of values );
+
+=end programlisting
+
+Unfortunately, this automatic dereferencing has two problems. First, it only
+works on plain variables. If you have a C<bless>ed array or hash, a C<tie>d
+hash, or an object with array or hash overloading, Perl will throw a runtime
+exception instead of dereferencing the reference.
+
+Second, remember that C<each>, C<keys>, and C<values> can operate on both
+arrays and hashes. You can't look at:
+
+=begin programlisting
+
+    my @items = each $ref;
+
+=end programlisting
+
+... and tell whether C<@items> contains a list of key/value pairs or
+index/value pairs, because you don't know whether you should expect C<$ref> to
+refer to a hash or an array. Yes, choosing good variable names will help, but
+this code is intrinsically confusing.
+
+Neither of these drawbacks make this syntax I<unusable> in general, but its
+rough edges and potential for confusing readers make it less useful than it
+could be.
