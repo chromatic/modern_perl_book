@@ -58,7 +58,7 @@ expressions:
 
 =end programlisting
 
-... though Perl 5's default parameter handling sometimes surprises novices.
+... though Perl's default parameter handling sometimes surprises novices.
 
 =head1 Function Parameters
 
@@ -338,11 +338,11 @@ function within another namespace by prefixing its name:
 =end programlisting
 
 This will declare the function and create the namespace as necessary. Remember
-that Perl 5 packages are open for modification at any pointN<Yes, even while
-your program is running.>. You may only declare one function of the same name
-per namespace. Otherwise Perl 5 will warn you about subroutine redefinition.
-Disable this warning with C<no warnings 'redefine'> if you're certain this is
-what you intend.
+that Perl packages are open for modification at any pointN<Yes, even while your
+program is running.>. You may only declare one function of the same name per
+namespace. Otherwise Perl will warn you about subroutine redefinition.  Disable
+this warning with C<no warnings 'redefine'> if you're certain this is what you
+intend.
 
 You can refer to other functions within a namespace with their short names. Use
 a fully-qualified name to invoke a function in another namespace:
@@ -358,6 +358,14 @@ a fully-qualified name to invoke a function in another namespace:
 Remember, functions are I<visible> outside of their own namespaces through
 their fully-qualified names. Alternately, you may import names from other
 namespaces.
+
+=begin tip Lexical Functions
+
+Perl 5.18 added an experimental feature to declare functions lexically. They're
+visible only within lexical scopes after declaration. See the "Lexical
+Subroutines" section of C<perldoc perlsub> for more details.
+
+=end tip
 
 =head2 Importing
 
