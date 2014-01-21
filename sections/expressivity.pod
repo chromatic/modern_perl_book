@@ -5,7 +5,7 @@ Z<expressivity>
 X<Wall, Larry>
 X<Larry Wall>
 
-Larry Wall studied of linguistics and human languages. Then he designed Perl.
+Larry Wall studied linguistics and human languages. Then he designed Perl.
 Unlike other languages designed around a mathematical notion, Perl takes into
 account how people communicate. In return, you get the freedom to decide how to
 arrange your programs to meet your needs. You may write simple, straightforward
