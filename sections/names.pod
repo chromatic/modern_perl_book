@@ -163,7 +163,7 @@ This is a policy enforced primarily by community guidelines.
 All namespaces in Perl are globally visible. When Perl looks up a symbol in
 C<DessertShop::IceCream::Freezer>, it looks in the C<main::> symbol table for a
 symbol representing the C<DessertShop::> namespace, then in that namespace for
-the C<IceCream::> namespace, and so on.  Yet C<Freezer::> is visible from
+the C<IceCream::> namespace, and so on.  Yet C<Freezer> is visible from
 outside of the C<IceCream::> namespace. Namespaces are all globally accessible.
 The nesting of the former within the latter is only a storage mechanism, and
 implies nothing further about relationships between parent and child or sibling
