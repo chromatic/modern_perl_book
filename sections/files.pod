@@ -536,11 +536,13 @@ You can even open filehandles to directories and files:
 
 =end programlisting
 
+X<CPAN; C<Path::Tiny>>
+
 Both C<Path::Class::Dir> and C<Path::Class::File> offer further useful
 behaviors--though beware that if you use a C<Path::Class> object of some kind
 with an operator or function which expects a string containing a file path, you
 need to stringify the object yourself. This is a persistent but minor
-annoyance.
+annoyance. (If you find it burdensome, try C<Path::Tiny> as an alternative.)
 
 =begin programlisting
 
