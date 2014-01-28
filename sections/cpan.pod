@@ -32,14 +32,15 @@ unique metadata.
 
 The CPAN I<adds> hundreds of registered contributors and thousands of indexed
 modules in hundreds of distributions every month. Those numbers do not take
-into account updates. In late July 2013, search.cpan.org reported 10808
-uploaders, 123287 modules, and 28005 distributions (representing growth rates
-of 15.5%, 17.6%, and 21.3% since the previous edition of this book,
+into account updates. In January 2014, search.cpan.org reported 11021
+uploaders, 129039 modules, and 29068 distributions (representing growth rates
+of 15.1%, 21.2%, and 18.1% since the previous edition of this book,
 respectively).
 
 =end tip
 
 X<search.cpan.org>
+X<metacpan.org>
 
 The CPAN itself is merely a mirroring service. Authors upload distributions and
 the CPAN sends them to mirror sites, from which CPAN clients download,
@@ -63,8 +64,8 @@ to improve the quality of packaging and correctness across platforms and Perl
 versions. Every CPAN distribution has its own ticket queue on
 U<http://rt.cpan.org/> for reporting bugs and working with authors. CPAN sites
 also link to previous distribution versions, module ratings, documentation
-annotations, and more. All of this is available from
-U<http://search.cpan.org/>.
+annotations, and more. All of this is available from both
+U<http://search.cpan.org/> and U<http://metacpan.org/>.
 
 X<CPAN; C<CPAN.pm>>
 
