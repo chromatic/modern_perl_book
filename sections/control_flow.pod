@@ -753,6 +753,8 @@ filehandle:
 
     while (<$fh>)
     {
+        # remove newlines
+        chomp;
         ...
     }
 
@@ -762,8 +764,10 @@ Perl interprets this C<while> loop as if you had written:
 
 =begin programlisting
 
-    while (defined($_ = <$fh>))
+    while (B<defined($_> = <$fh>B<)>)
     {
+        # remove newlines
+        chomp;
         ...
     }
 
@@ -774,15 +778,6 @@ evaluated to a false value in a scalar context--a blank line or a line which
 contained only the character C<0>--would end the loop. The C<readline> (C<< <>
 >>) operator returns an undefined value only when it has reached the end of the
 file.
-
-=begin tip C<chomp> Your Lines
-
-X<builtins; C<chomp>>
-
-Use the C<chomp> builtin to remove line-ending characters from each line.
-Everyone forgets this at least once.
-
-=end tip
 
 Both C<while> and C<until> have postfix forms, such as the infinite loop C<1
 while 1;>. Any single expression is suitable for a postfix C<while> or
