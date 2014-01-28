@@ -143,6 +143,10 @@ cache and lazily create the elements you need:
         }
     }
 
+    # calculate 42nd Fibonacci number
+    my $fib = gen_fib();
+    say $fib->( 42 );
+
 =end programlisting
 
 Every call to the function returned by C<gen_fib()> takes one argument, the
