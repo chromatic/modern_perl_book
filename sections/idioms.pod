@@ -245,9 +245,6 @@ files into a scalar in a single expression:
 
 =begin programlisting
 
-    my $file = do { local $/ = <$fh> };
-
-    # or
     my $file = do { local $/; <$fh> };
 
     # or
@@ -256,18 +253,14 @@ files into a scalar in a single expression:
 =end programlisting
 
 C<$/> is the input record separator. C<local>izing it sets its value to
-C<undef>, pending assignment. That C<local>ization takes place I<before> the
-assignment. As the value of the separator is undefined, Perl happily reads the
-entire contents of the filehandle in one swoop and assigns that value to C<$/>.
-Because a C<do> block evaluates to the value of the last expression evaluated
-within the block, this evaluates to the value of the assignment: the contents
-of the file. Even though C<$/> immediately reverts to its previous state at the
-end of the block, C<$file> now contains the contents of the file.
+C<undef>, pending assignment. As the value of the separator is undefined, Perl
+happily reads the entire contents of the filehandle in one swoop.  Because a
+C<do> block evaluates to the value of the last expression evaluated within the
+block, this evaluates to the data read from the filehandle: the contents of the
+file. At the end of the expression, C<$/> has reverted to its previous state
+and C<$file> contains the contents of the file.
 
-The second example contains no assignment and merely returns the single line
-read from the filehandle.
-
-The third example avoids a second copy of the string containing the file's
+The second example avoids a second copy of the string containing the file's
 contents; it's not as pretty, but it uses the least amount of memory.
 
 =begin tip C<File::Slurp>
