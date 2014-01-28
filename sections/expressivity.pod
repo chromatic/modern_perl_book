@@ -25,7 +25,7 @@ Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounced "Tim Toady", or
 Though this expressivity allows master craftworkers to create amazing programs,
 it also allows the unwary to make messes. Experience and good taste will guide
 you as you design your code, but the choice is always yours. Express yourself,
-but but be mindful of readability and maintainability, especially for those who
+but be mindful of readability and maintainability, especially for those who
 come after you.
 
 Learning Perl is like learning a new spoken language. You'll learn a few words,
