@@ -48,11 +48,11 @@ how many you get.
 X<void context>
 X<context; void>
 
-Suppose you have a function (L<functions>) called C<find_chores()> which sorts
-your household todo list in order of task priority. The number of chores you
-expect to read from your list determines what exactly the function will do. If
-you expect nothing, you're just pretending to be busy. If you expect one task,
-you have something to do for the next fifteen minutes. If you have a burst of
+Suppose the function (L<functions>) called C<find_chores()> sorts your
+household todo list in order of task priority. The number of chores you expect
+to read from your list determines what exactly the function will do. If you
+expect nothing, you're just pretending to be busy. If you expect one task, you
+have something to do for the next fifteen minutes. If you have a burst of
 energy on a free weekend, you could get all of the chores.
 
 When you call a function on its own and never use its return value, you've used

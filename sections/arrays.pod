@@ -358,9 +358,7 @@ nested arrays:
 =begin programlisting
 
     # creates a single array, not an array of arrays
-    my @numbers = (  1 .. 10,
-                  ( 11 .. 20,
-                  ( 21 .. 30 ) ) );
+    my @numbers = (1 .. 10, (11 .. 20, (21 .. 30)));
 
 =end programlisting
 

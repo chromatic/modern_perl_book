@@ -85,9 +85,8 @@ key, the fat comma will I<not> call the function:
 
     sub name { 'Leonardo' }
 
-    my %address =
-    (
-        name => '1123 Fib Place',
+    my %address = (
+        name => '1123 Fib Place'
     );
 
 =end programlisting
@@ -97,9 +96,8 @@ make the function call explicit:
 
 =begin programlisting
 
-    my %address =
-    (
-        B<name()> => '1123 Fib Place',
+    my %address = (
+        B<name()> => '1123 Fib Place'
     );
 
 =end programlisting

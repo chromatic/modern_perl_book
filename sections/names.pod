@@ -17,7 +17,6 @@ identifiers. All of these are valid Perl identifiers:
     my $name;
     my @_private_names;
     my %Names_to_Addresses;
-
     sub anAwkwardName3;
 
     # with use utf8; enabled

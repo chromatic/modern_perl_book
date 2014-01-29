@@ -188,14 +188,11 @@ use the I<heredoc> syntax to assign multiple lines to a string:
 
     my $blurb =<<'END_BLURB';
 
-    He looked up. "Time is never on our side, child.
-    Do you see the irony? All they know is change.
-    Change is the constant on which they all can agree.
-    We instead, born out of time, remain perfect and
-    perfectly self-aware. We only suffer change as we
-    pursue it. It is against our nature. We rebel
-    against that change. Shall we consider them
-    greater for it?"
+    He looked up. "Change is the constant on which they all
+    can agree.  We instead, born out of time, remain perfect
+    and perfectly self-aware. We only suffer change as we
+    pursue it. It is against our nature. We rebel against
+    that change. Shall we consider them greater for it?"
     END_BLURB
 
 =end programlisting
@@ -303,16 +300,15 @@ For example, ASCII encodes plain English text with no accented characters,
 while Latin-1 can represent text in most languages which use the Latin
 alphabet.
 
-To avoid most Unicode problems, always decode to and from the appropriate
-encoding at the inputs and outputs of your program.
-
 =begin tip An Evolving Standard
 
 Perl 5.14 supports the Unicode 6.0 standard, 5.16 the 6.1 standard, and 5.18
-the 6.2 standard. If you need to care about the differences between Unicode
-versions, you probably already know to see U<http://unicode.org/versions/>.
+the 6.2 standard. See U<http://unicode.org/versions/>.
 
 =end tip
+
+To avoid most Unicode problems, always decode to and from the appropriate
+encoding at the inputs and outputs of your program.
 
 =head3 Unicode in Your Filehandles
 
@@ -321,14 +317,12 @@ X<builtins; C<open>>
 X<IO layers>
 
 When you tell Perl that a specific filehandle (L<files>) should handle data
-with a specific Unicode encoding, Perl will use something called an I<IO layer>
-to map between octets and characters. The I<mode> operand of the C<open>
-builtin allows you to specify an IO layer by name. For example, the C<:utf8>
-layer decodes UTF-8 data:
+with a specific Unicode encoding, Perl will use an I<IO layer> to convert
+between octets and characters. The I<mode> operand of the C<open> builtin
+allows you to request an IO layer by name. For example, the C<:utf8> layer
+decodes UTF-8 data:
 
 =begin programlisting
-
-    use autodie;
 
     open my $fh, '<:utf8', $textfile;
 
@@ -339,8 +333,7 @@ layer decodes UTF-8 data:
 X<C<binmode>>
 X<builtins; C<binmode>>
 
-If you have an existing filehandle to which you need to apply an IO layer,
-modify it with C<binmode>:
+Use C<binmode> to apply an IO layer to an existing filehandle:
 
 =begin programlisting
 
@@ -469,12 +462,10 @@ Unicode characters, Perl will encode the string using UTF-8, because Latin-1
 cannot represent the entire set of Unicode characters--Latin-1 is a subset of
 UTF-8.
 
-This asymmetry can lead to Unicode strings encoded as UTF-8 for output and
-decoded as Latin-1 when input.
-
-Worse yet, when the text contains only English characters with no accents, the
-bug stays hidden, because both encodings have the same representation for every
-character.
+The asymmetry between encodings and octets can lead to Unicode strings encoded
+as UTF-8 for output and decoded as Latin-1 from input. Worse yet, when the text
+contains only English characters with no accents, the bug stays hidden, because
+both encodings use the same representation for every character.
 
 =begin programlisting
 

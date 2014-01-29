@@ -99,8 +99,8 @@ X<POD; C<podchecker>>
 X<POD; C<Pod::Webserver>>
 X<CPAN; C<Pod::Webserver>>
 
-Perl's documentation system is I<POD>, or I<Plain Old Documentation>.
-C<perldoc perlpod> describes how POD works. Other POD tools include
-C<podchecker>, which validates the structure of POD documents, and the
-C<Pod::Webserver> CPAN module, which displays local POD as HTML through a
-minimal web server.
+Perl uses a documentation format called I<POD>, which is short for I<Plain Old
+Documentation>, or I<POD>. C<perldoc perlpod> describes how POD works. Other
+POD tools include C<podchecker>, which validates the structure of POD
+documents, and the C<Pod::Webserver> CPAN module, which displays local POD as
+HTML through a minimal web server.

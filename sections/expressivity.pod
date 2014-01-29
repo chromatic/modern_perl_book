@@ -28,7 +28,7 @@ you as you design your code, but the choice is always yours. Express yourself,
 but be mindful of readability and maintainability, especially for those who
 come after you.
 
-Learning Perl is like learning a new spoken language. You'll learn a few words,
+Learning Perl is like learning any spoken language. You'll learn a few words,
 then string together sentences, and then enjoy simple conversations. Mastery
 comes from practice of both reading and writing code. You don't have to
 understand every detail of Perl to be productive, but the principles in this

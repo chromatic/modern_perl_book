@@ -72,9 +72,9 @@ X<Best Practical>
 
 Best Practical Solutions (U<http://bestpractical.com/>) maintains an
 installation of their popular request tracking system, RT, for CPAN authors as
-well as Perl development. Every CPAN distribution has its own RT queue, linked
-from C<search.cpan.org> and available on U<http://rt.cpan.org/>.  Perl's RT
-queues is available at U<http://rt.perl.org/>.
+well as Perl development. Every CPAN distribution has its own RT queue on
+U<http://rt.cpan.org/>. Perl itself has a ticket queue at
+U<http://rt.perl.org/>.
 
 X<Perl 5 Porters>
 X<p5p>

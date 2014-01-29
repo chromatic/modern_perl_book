@@ -80,15 +80,12 @@ Combined with the block form of a C<package> declaration, you can write:
 
 =begin programlisting
 
-    package Pinball::Wizard v1969.3.7
-    {
-        ...
-    }
+    package Pinball::Wizard v1969.3.7 { ... }
 
 =end programlisting
 
-This syntax is not very common in real code yet. You're more likely to see the
-pre-5.14 version written as:
+This syntax is still rare, though. You're more likely to see the pre-5.14
+version:
 
 =begin programlisting
 

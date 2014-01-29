@@ -475,16 +475,14 @@ feature of Perl's memory management.
 Z<reference_counts>
 X<references; reference counting>
 
+X<lexicals; lifecycle>
+
 Perl uses a memory management technique known as I<reference counting>.  Every
 Perl value has an attached counter. Perl increases this counter every time
 something takes a reference to the value, whether implicitly or explicitly.
 Perl decreases that counter every time a reference goes away. When the counter
-reaches zero, Perl knows it can safely recycle that value.
-
-X<lexicals; lifecycle>
-
-How does Perl know when it can safely release the memory for a variable? How
-does Perl know when it's safe to close the file opened in this inner scope:
+reaches zero, Perl knows it can safely recycle that value. Consider the
+filehandle opened in this inner scope:
 
 =begin programlisting
 

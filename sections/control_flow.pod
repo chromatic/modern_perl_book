@@ -521,19 +521,14 @@ This aliasing also works with the block style C<for> loop:
 
 =end programlisting
 
-You cannot use aliasing to modify I<constant> values, however:
+You cannot use aliasing to modify I<constant> values, however. Perl will
+produce an exception about modification of read-only values.
 
 =begin programlisting
 
-    for (qw( Huex Dewex Louid ))
-    {
-        $_++;
-        say;
-    }
+    $_++ and say for qw( Huex Dewex Louid );
 
 =end programlisting
-
-Instead Perl will produce an exception about modification of read-only values.
 
 You may occasionally see the use of C<for> with a single scalar variable:
 
@@ -747,10 +742,6 @@ filehandle:
 
 =begin programlisting
 
-    use autodie 'open';
-
-    open my $fh, '<', $file;
-
     while (<$fh>)
     {
         # remove newlines
@@ -838,13 +829,12 @@ You may nest loops within other loops:
 When you do this, declare your iteration variables! The potential for confusion
 with the topic variable and its scope is too great otherwise.
 
-A common mistake with nesting C<foreach> and C<while> loops is that it is easy
-to exhaust a filehandle with a C<while> loop:
+Novices commonly exhaust filehandles accidentally while nesting C<foreach> and
+C<while> loops:
 
 =begin programlisting
 
     use autodie 'open';
-
     open my $fh, '<', $some_file;
 
     for my $prefix (@prefixes)
@@ -861,17 +851,11 @@ to exhaust a filehandle with a C<while> loop:
 Opening the filehandle outside of the C<for> loop leaves the file position
 unchanged between each iteration of the C<for> loop. On its second iteration,
 the C<while> loop will have nothing to read and will not iterate. You can solve
-this problem in many ways; re-open the file inside the C<for> loop (simple to
-understand, but not always a good use of system resources), slurp the entire
-file into memory (which may not work if the file is large), or C<seek> the
-filehandle back to the beginning of the file for each iteration (an often
-overlooked option):
+this problem in many ways; re-open the file inside the C<for> loop (wasteful
+but simple), slurp the entire file into memory (works best with small files),
+or C<seek> the filehandle back to the beginning of the file for each iteration:
 
 =begin programlisting
-
-    use autodie 'open';
-
-    open my $fh, '<', $some_file;
 
     for my $prefix (@prefixes)
     {
@@ -1021,19 +1005,17 @@ Z<switch_statements>
 
 X<builtins; C<given>>
 
-Perl 5.10 introduced a new construct named C<given>. It was a nice idea, but it
-didn't work out the way anyone hoped. The intent was to create a Perlish
-C<switch> statement. C<given> is still experimental, but it's less buggy in
-5.18 than it was in any previous version of Perl. That's a nice way of saying
-"don't use it unless you know what you're doing."
+Perl 5.10 introduced a new construct named C<given> as a Perlish C<switch>
+statement. It didn't quite work out; C<given> is still experimental, but it's
+less buggy in 5.18 than it was in any previous version of Perl. That's a nice
+way of saying "don't use it unless you know what you're doing."
 
 X<builtins; C<when>>
 
-If you need a switch statement, consider using C<for>'s aliasing behavior with
-the C<when> statement. A C<when> statement matches the topic variable (C<$_>)
-against expressions using smart match (L<smart_match>) semantics. To write the
-Rock, Paper, ScissorsN<Adding Spock and Lizard is an exercise for the reader.>
-game:
+If you need a switch statement, use C<for> to alias the topic variable (C<$_>)
+and C<when> to match it against simple expressions with smart match
+(L<smart_match>) semantics. To write the Rock, Paper, ScissorsN<Adding Spock
+and Lizard is an exercise for the reader.> game:
 
 =begin programlisting
 

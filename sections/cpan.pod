@@ -42,8 +42,8 @@ respectively).
 X<search.cpan.org>
 X<metacpan.org>
 
-The CPAN itself is merely a mirroring service. Authors upload distributions and
-the CPAN sends them to mirror sites, from which CPAN clients download,
+The CPAN itself is merely a mirroring service. Authors upload distributions
+which get sent to various mirror sites from which CPAN clients download,
 configure, build, test, and install them. This simplicity has served Perl well,
 by enabling the contributions of thousands of volunteers. In particular,
 community standards have evolved to identify the attributes and characteristics
