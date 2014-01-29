@@ -154,7 +154,10 @@ deprecated constructs:
 With proper discipline, this can produce very robust code--but be cautious.
 Many warnings come from runtime conditions. If your test suite fails to
 identify all of the warnings you might encounter, your program may exit from
-uncaught runtime exceptions.
+uncaught runtime exceptions. Keep in mind that newer versions of Perl may add
+new warnings and that custom warnings will also be fatal
+(L<registering_warnings>). If you enable fatal warnings, do so only in code
+that you control and never in library code you expect other people to use.
 
 =head2 Catching Warnings
 
