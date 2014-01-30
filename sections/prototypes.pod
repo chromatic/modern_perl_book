@@ -4,7 +4,7 @@ Z<prototypes>
 
 X<prototypes>
 
-A I<prototype> is a piece metadata attached to a function or variable. A
+A I<prototype> is a piece of metadata attached to a function or variable. A
 function prototype changes how Perl's parser understands it.
 
 X<builtins; C<push>>
@@ -35,8 +35,9 @@ include it for the full declaration--but there's no reason to do so.
 X<builtins; C<prototype>>
 
 The builtin C<prototype> takes the name of a function and returns a string
-representing its prototype. Use the C<CORE::> form to see the prototype of a
-builtin:
+representing its prototype.
+
+To see the prototype of a builtin, use the C<CORE::> form of the builtin's name as the operand to C<prototype>:
 
 =begin screen
 
@@ -129,8 +130,14 @@ incoming arguments:
 =end programlisting
 
 To debug this, users of C<mypush> must know both that a prototype exists, and
-the limitations of the array prototype. Worse yet, these are the I<simple>
-errors prototypes can cause.
+the limitations of the array prototype.
+
+=begin tip Debugging Prototype Errors
+
+If you think this error message is inscrutable, wait until you see the
+I<complicated> prototype errors.
+
+=end tip
 
 =head2 Good Uses of Prototypes
 

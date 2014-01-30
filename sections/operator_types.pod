@@ -245,8 +245,7 @@ evaluated in list context with a scalar as its first operand, it produces a
 string consisting of the string value of its first operand concatenated to
 itself the number of times specified by its second operand.
 
-In scalar context, the operator always produces a concatenated string repeated
-appropriately. For example:
+In scalar context, the operator repeats and concatenates a string:
 
 =begin programlisting
 
@@ -280,8 +279,7 @@ The infix I<range> operator (C<..>) produces a list of items in list context:
 
 =end programlisting
 
-It can produce simple, incrementing ranges (both as integers or strings), but
-it cannot intuit patterns or more complex ranges.
+It can I<only> produce simple, incrementing ranges of integers or strings.
 
 X<operators; flip-flop>
 X<flip-flop>

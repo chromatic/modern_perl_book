@@ -36,11 +36,11 @@ A constructor is a method which creates and blesses a reference. By convention,
 constructors have the name C<new()>, but this is not a requirement.
 Constructors are also almost always I<class methods>.
 
-C<bless> takes two arguments, a reference and a class name. It evaluates to the
-reference. The reference may be to an empty hash or array or a scalar
-containing an undefined value. The class does not have to exist yet.  You may
-even use C<bless> outside of a constructor or a class (though all but the
-simplest programs should use real constructors). A constructor can be as simple
+C<bless> takes two operands, a reference and a class name, and evaluates to the
+reference. The reference may be any valid reference, empty or not. The class
+does not have to exist yet. You may even use C<bless> outside of a constructor
+or a classN<... but you're violating encapsulation to expose the details of
+object construction outside of a constructor.>. A constructor can be as simple
 as:
 
 =begin programlisting
@@ -275,15 +275,23 @@ team to use Moose in full yet, you can work around some of the problems of
 blessed references with discipline.
 
 X<C<Class::Accessor>>
+X<CPAN; C<Role::Tiny>>
 
 =over 4
+
+=item * Do not mix functions and methods in the same class.
+
+=item * Use a single F<.pm> file for each class, unless the class is a small,
+self-contained helper used from a single place.
+
+=item * Follow standards of vanilla Perl OO, such as naming constructors
+C<new()> and using C<$self> as the invocant name in your documentation.
 
 =item * Use accessor methods pervasively, even within methods in your class.  A
 module such as C<Class::Accessor> helps to avoid repetitive boilerplate.
 
-=item * Avoid C<AUTOLOAD()> where possible. If you I<must> use it, use forward
-declarations of your functions (L<functions>) to help Perl know which
-C<AUTOLOAD()> will provide the method implementation.
+=item * Avoid C<AUTOLOAD()> where possible. If you I<must> use it, use function
+forward declarations (L<functions>) to avoid ambiguity.
 
 =item * Expect that someone, somewhere will eventually need to subclass (or
 delegate to or reimplement the interface of) your classes. Make it easier for
@@ -291,9 +299,6 @@ them by not assuming details of the internals of your code, by using the
 two-argument form of C<bless>, and by breaking your classes into the smallest
 responsible units of code.
 
-=item * Do not mix functions and methods in the same class.
-
-=item * Use a single F<.pm> file for each class, unless the class is a small,
-self-contained helper used from a single place.
+=item * Use helper modules such as C<Role::Tiny> to allow better use and reuse.
 
 =back

@@ -312,15 +312,14 @@ C<Alabama>, C<Belgium>, and C<Bethlehem> long before it reaches the answer of
 C<loam>. Not only are those words too long, but the matches start in the middle
 of the words.
 
-It's important to know how the regex engine handles greedy matches--but it's
-equally as important to know what kind of matches you do and don't want.
-
 =head1 Regex Anchors
 
 X<regex; anchors>
 X<anchors; start of string>
 X<C<\A>; start of string regex metacharacter>
 
+It's important to know how the regex engine handles greedy matches--but it's
+equally as important to know what kind of matches you do and don't want.
 I<Regex anchors> force the regex engine to start or end a match at a fixed
 position. The I<start of string anchor> (C<\A>) dictates that any match must
 start at the very beginning of the string:
@@ -351,11 +350,11 @@ X<C<^>; start of string after newline regex metacharacter>
 X<C<$>; end of string before newline regex metacharacter>
 
 You will often see the C<^> and C<$> assertions used to match the start and end
-of strings, but that's not exactly what they do. C<^> does match the start of
-the string, but in certain circumstances it can match just after a newline
-within the string. Similarly, C<$> does match the end of the string (just
-before a newline, if it exists), but it can match just before a newline in the
-middle of the string. Usually you want C<\A> and C<\z> instead.
+of strings. C<^> I<does> match the start of the string, but in certain
+circumstances it can match just after a newline within the string. Similarly,
+C<$> I<does> match the end of the string (just before a newline, if it exists),
+but it can match just before a newline in the middle of the string. C<\A> and
+C<\z> are more specific and, thus, more useful.
 
 X<word boundary metacharacter>
 X<C<\b>; word boundary regex metacharacter>
@@ -526,13 +525,9 @@ Use the caret (C<^>) as the first element of the character class to mean
 
 =end programlisting
 
-=begin tip Metacharacters in Character Classes
-
 Use a caret anywhere but the first position to make it a member of the
 character class. To include a hyphen in a negated character class, place it
 after the caret or at the end of the class, or escape it.
-
-=end tip
 
 =head1 Capturing
 
@@ -699,7 +694,7 @@ X<regex; alternation>
 X<C<|>; alternation regex metacharacter>
 
 Some regexes need to match either one thing or another. The I<alternation>
-metacharacter (C<|>) expresses this intent:
+metacharacter (C<|>) indicates that either possibility may match.
 
 =begin programlisting
 
@@ -711,9 +706,13 @@ metacharacter (C<|>) expresses this intent:
 
 =end programlisting
 
-The alternation metacharacter indicates that either preceding fragment may
-match. Keep in mind that alternation has a lower precedence (L<precedence>)
-than even atoms:
+While it's easy to interpret C<rice|beans> as meaning C<ric>, followed by
+either C<e> or C<b>, followed by C<eans>, alternations always include the
+I<entire> fragment to the nearest regex delimiter, whether the start or end of
+the pattern, an enclosing parenthesis, another alternation character, or a
+square bracket.
+
+Alternation has a lower precedence (L<precedence>) than even atoms:
 
 =begin programlisting
 
@@ -722,12 +721,6 @@ than even atoms:
     unlike( 'ricb',  qr/rice|beans/, 'Found hybrid' );
 
 =end programlisting
-
-While it's easy to interpret C<rice|beans> as meaning C<ric>, followed by
-either C<e> or C<b>, followed by C<eans>, alternations always include the
-I<entire> fragment to the nearest regex delimiter, whether the start or end of
-the pattern, an enclosing parenthesis, another alternation character, or a
-square bracket.
 
 X<regex; C<()>>
 X<C<()>; capturing regex metacharacters>
@@ -791,9 +784,9 @@ characters instead of treating the asterisks as greedy quantifiers.
 =begin tip Regex Security
 
 Be cautious when processing regular expressions from untrusted user input. A
-malicious regex master can craft a denial-of-service attack against your
-program. Because the regex engine may backtrack to make greedy matches work,
-you can write regexes that will take years to match input strings.
+malicious regex master can craft a regular expression which may take I<years>
+to match input strings, creating a denial-of-service attack against your
+program.
 
 =end tip
 
@@ -830,13 +823,12 @@ I<zero-width negative look-ahead assertion>:
 
 =end programlisting
 
-The construct C<(?!...)> matches the phrase C<cat> only if the phrase
-C<astrophe> does not immediately follow.
-
 X<regex; zero-width positive look-ahead assertion>
 X<C<(?=...)>; zero-width positive look-ahead regex assertion>
 
-The I<zero-width positive look-ahead assertion>:
+The construct C<(?!...)> matches the phrase C<cat> only if the phrase
+C<astrophe> does not immediately follow. The I<zero-width positive look-ahead
+assertion>:
 
 =begin programlisting
 

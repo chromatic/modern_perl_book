@@ -166,8 +166,8 @@ X<warnings; catching>
 
 If you're willing to work for it, you can catch warnings as you would
 exceptions. The C<%SIG> variableN<See C<perldoc perlvar>.> contains handlers
-for out-of-band signals raised by Perl or your operating system. To catch a
-warning, assign a function reference to C<$SIG{__WARN__}>:
+for out-of-band signals raised by Perl or your operating system. Assign a
+function reference to C<$SIG{__WARN__}> to catch a warning:
 
 =begin programlisting
 

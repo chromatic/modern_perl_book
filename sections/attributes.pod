@@ -10,8 +10,6 @@ Attribute declaration syntax is awkward, and using attributes effectively is
 more art than science. Most programs never use them, but when used well they
 offer clarity and maintenance benefits.
 
-=head2 Using Attributes
-
 A simple attribute is a colon-preceded identifier attached to a declaration:
 
 =begin programlisting
@@ -29,10 +27,13 @@ the appropriate handlers do not exist, Perl will throw a compile-time
 exception.
 
 X<CPAN; C<Test::Class>>
+X<Catalyst>
+X<CPAN; C<Catalyst>>
 
 Attributes may include a list of parameters. Perl treats these parameters as
-lists of constant strings. Yes, strings. The C<Test::Class> module from the
-CPAN uses such parametric arguments to good effect:
+lists of constant strings. The C<Test::Class> module from the CPAN uses such
+parametric arguments to good effectN<See the Catalyst web framework for
+another, different, example.>:
 
 =begin programlisting
 
@@ -56,14 +57,6 @@ other classes. This separates the idea of what this class must do from how
 other classes do their work. Otherwise a test class might have only one method
 named C<setup> and one named C<teardown> and would have to do everything there,
 then call the parent methods, and so on.
-
-=begin tip Practical Attributes
-
-X<Catalyst>
-
-The Catalyst web framework also uses attributes to determine the visibility and behavior of methods within web applications.
-
-=end tip
 
 =head2 Drawbacks of Attributes
 

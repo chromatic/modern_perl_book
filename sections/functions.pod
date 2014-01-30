@@ -46,8 +46,8 @@ While these parentheses are not strictly necessary for these examples--even
 with C<strict> enabled--they provide clarity to human readers as well as Perl's
 parser. When in doubt, leave them in.
 
-Function arguments can be arbitrary expressions, including variables and
-expressions:
+Function arguments can be arbitrary expressions--including variables and
+function calls:
 
 =begin programlisting
 
@@ -117,14 +117,9 @@ use list assignment, but some code will access individual elements by index:
 
 =end programlisting
 
-You may also C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>.
-
-=begin tip The Implicit Them
-
-Remember that the array builtins use C<@_> as the default operand I<within
-functions>, so that C<my $name = shift;> works. Take advantage of this idiom.
-
-=end tip
+You may also C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>. Remember
+that the array builtins use C<@_> as the default operand I<within functions>,
+so that C<my $name = shift;> works. Take advantage of this idiom.
 
 Assigning a scalar parameter from C<@_> requires C<shift>, indexed access to
 C<@_>, or lvalue list context parentheses. Otherwise, Perl will happily
@@ -146,14 +141,9 @@ C<shift>. Compare:
 
 =begin programlisting
 
-    sub calculate_value_shifty
-    {
-        # multiple shifts
-        my $left_value  = shift;
-        my $operation   = shift;
-        my $right_value = shift;
-        ...
-    }
+    my $left_value  = shift;
+    my $operation   = shift;
+    my $right_value = shift;
 
 =end programlisting
 
@@ -161,13 +151,12 @@ C<shift>. Compare:
 
 =begin programlisting
 
-    sub calculate_value_assigny
-    {
-        B<my ($left_value, $operation, $right_value) = @_;>
-        ...
-    }
+    my ($left_value, $operation, $right_value) = @_;
 
 =end programlisting
+
+The latter is simpler to read and is even slightly more efficient (though its
+improved readability is much more important).
 
 Occasionally it's necessary to extract parameters from C<@_> and pass the rest
 to another function:
@@ -194,12 +183,14 @@ X<CPAN; C<Function::Parameters>>
 X<CPAN; C<Method::Signatures>>
 X<CPAN; C<MooseX::Method::Signatures>>
 X<CPAN; C<Method::Signatures::Simple>>
+X<CPAN; C<Moops>>
 
 Several CPAN distributions extend Perl's parameter handling with additional
 syntax and options. C<signatures> and C<Method::Signatures> are powerful.
 C<Method::Signatures::Simple> is basic, but useful.
 C<MooseX::Method::Signatures> works very well with Moose (L<moose>).
-C<Function::Parameters> is worth exploring.
+C<Function::Parameters> is worth exploring. C<Moops> goes much further to add
+OO syntax, but bundles good function signatures as well.
 
 =end tip
 
@@ -331,18 +322,14 @@ function within another namespace by prefixing its name:
 
 =begin programlisting
 
-    sub B<Extensions::Math::>add {
-        ...
-    }
+    sub B<Extensions::Math::>add { ... }
 
 =end programlisting
 
 This will declare the function and create the namespace as necessary. Remember
-that Perl packages are open for modification at any pointN<Yes, even while your
-program is running.>. You may only declare one function of the same name per
-namespace. Otherwise Perl will warn you about subroutine redefinition.  Disable
-this warning with C<no warnings 'redefine'> if you're certain this is what you
-intend.
+that Perl packages are open for modification at any point--even while your
+program is running. If you declare multiple functions with the same name in a
+single namespace, Perl will issue a warning.
 
 You can refer to other functions within a namespace with their short names. Use
 a fully-qualified name to invoke a function in another namespace:
@@ -503,12 +490,15 @@ correct:
 
 =end programlisting
 
+This validation reports any parameter count error from the point of view of its
+caller, thanks to the use of C<croak>.
+
 X<CPAN; C<Params::Validate>>
 X<CPAN; C<MooseX::Method::Signatures>>
 
 Type checking is more difficult, because of Perl's operator-oriented type
-conversions (L<context_philosophy>). The CPAN module C<Params::Validate> offers
-more strictness, as do some of the function signature modules such as
+conversions (L<context_philosophy>). If you want additional safety of function
+parameters, see CPAN modules such as C<Params::Validate> or
 C<MooseX::Method::Signatures>.
 
 =head1 Advanced Functions
@@ -617,8 +607,7 @@ values of the lexical variables is separate from the function itself, you can
 have multiple calls to a function active at the same time. A function can even
 call itself, or I<recur>.
 
-To make the previous test pass, write a function named C<elem_exists()> which
-knows how to halve the list and call itself:
+To make the previous test pass, write the recursive function C<elem_exists()>:
 
 =begin programlisting
 
@@ -652,10 +641,10 @@ knows how to halve the list and call itself:
 
 =end programlisting
 
-If you've never seen this before, it may take some time to understand. Keep in
-mind that the arguments to the function will be different every time it gets
-called (otherwise it would never terminate; it would continue recursing until
-it crashes). That's why the termination condition is so important.
+Keep in mind that the arguments to the function will be I<different> for every
+call, otherwise the function would always behave the same way (it would
+continue recursing until the program crashes).That's why the termination
+condition is so important.
 
 Every recursive program can be written without recursionN<See the free book
 I<Higher Order Perl> at U<http://hop.perl.plover.com/>.>, but this
@@ -683,8 +672,6 @@ invocation are safe and separate:
         my ($item, @array) = @_;
 
         B<cluck "[$item] (@array)";>
-
-        # other code follows
         ...
     }
 
@@ -698,11 +685,9 @@ X<recursion; guard conditions>
 One I<drawback> of recursion is that you must get your return conditions
 correct, lest your function call itself an infinite number of times.
 C<elem_exists()> function has several C<return> statements for this reason.
-
 Perl offers a helpful C<Deep recursion on subroutine> warning when it suspects
 runaway recursion. The limit of 100 recursive calls is arbitrary, but often
-useful. Disable this warning with C<no warnings 'recursion'> in the scope of
-the recursive call.
+useful. Disable this warning with C<no warnings 'recursion'>.
 
 Because each call to a function requires a new call frame and lexical storage
 space, highly-recursive code can use more memory than iterative code. I<Tail
@@ -813,5 +798,4 @@ non-number (the test description, which it cannot convert into a number) with
 the element in the array.
 
 While extraneous parentheses can hamper readability, thoughtful use of
-parentheses can clarify code and make subtle bugs unlikely. As you improve your
-understanding of Perl, look for ways to write clear and unambiguous code.
+parentheses can clarify code and make subtle bugs unlikely.

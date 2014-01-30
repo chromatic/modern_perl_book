@@ -6,7 +6,123 @@ X<C<UNIVERSAL>>
 
 Perl's builtin C<UNIVERSAL> package is the ancestor of all other packages--in
 the object-oriented sense (L<moose>). C<UNIVERSAL> provides a few methods for
-its children to inherit or override.
+its children to use, inherit, or override.
+
+=head2 The VERSION() Method
+
+X<C<UNIVERSAL::VERSION>>
+X<C<VERSION()>>
+
+The C<VERSION()> method returns the value of the C<$VERSION> variable of the
+invoking package or class. If you provide a version number as an optional
+parameter, the method will throw an exception if the queried C<$VERSION> is not
+equal to or greater than the parameter.
+
+Given a C<HowlerMonkey> module of version C<1.23>:
+
+=begin programlisting
+
+    my $hm = HowlerMonkey->new;
+
+    say HowlerMonkey->VERSION;    # prints 1.23
+    say $hm->VERSION;             # prints 1.23
+    say $hm->VERSION( 0.0  );     # prints 1.23
+    say $hm->VERSION( 1.23 );     # prints 1.23
+    say $hm->VERSION( 2.0  );     # exception!
+
+=end programlisting
+
+There's little reason to override C<VERSION()>.
+
+=head2 The DOES() Method
+
+X<C<UNIVERSAL::DOES>>
+X<C<DOES()>>
+
+The C<DOES()> method supports the use of roles (L<roles>) in programs. Pass it
+an invocant and the name of a role, and the method will return true if the
+appropriate class somehow does that role--whether through inheritance,
+delegation, composition, role application, or any other mechanism.
+
+The default implementation of C<DOES()> falls back to C<isa()>, because
+inheritance is one mechanism by which a class may do a role. Given a
+C<Cappuchin>:
+
+=begin programlisting
+
+    say Cappuchin->DOES( 'Monkey'       );  # prints 1
+    say $cappy->DOES(    'Monkey'       );  # prints 1
+    say Cappuchin->DOES( 'Invertebrate' );  # prints 0
+
+=end programlisting
+
+Override C<DOES()> if you manually consume a role or otherwise somehow provide
+allomorphic equivalence.
+
+=head2 The can() Method
+
+X<C<UNIVERSAL::can>>
+X<C<can()>>
+
+The C<can()> method takes a string containing the name of a method. It returns
+a reference to the function which implements that method, if it exists.
+Otherwise, it returns a false value. You may call this on a class, an object,
+or the name of a package. In the latter case, it returns a reference to a
+function, not a methodN<... not that you can tell the difference, given only a
+reference.>.
+
+Given a class named C<SpiderMonkey> with a method named C<screech>, get a
+reference to the method with:
+
+=begin programlisting
+
+    if (my $meth = SpiderMonkey->can( 'screech' )) {...}
+
+=end programlisting
+
+This technique leads to the pattern of checking for a method's existence before
+dispatching to it:
+
+=begin programlisting
+
+    if (my $meth = $sm->can( 'screech' )
+    {
+        # method; not a function
+        $sm->$meth();
+    }
+
+=end programlisting
+
+X<builtins; C<require>>
+X<CPAN; C<UNIVERSAL::require>>
+
+Use C<can()> to test if a package implements a specific function or method:
+
+=begin programlisting
+
+    use Class::Load;
+
+    die "Couldn't load $module!"
+        unless load_class( $module );
+
+    if (my $register = $module->can( 'register' ))
+    {
+        # function; not a method
+        $register->();
+    }
+
+=end programlisting
+
+=begin tip C<Module::Pluggable>
+
+X<CPAN; C<Class::Load>>
+X<CPAN; C<Module::Pluggable>>
+
+The CPAN module C<Class::Load> simplifies the work of loading classes by name.
+Similarly, C<Module::Pluggable> takes most of the work out of building and
+managing plugin systems. Get to know both distributions.
+
+=end tip
 
 =head2 The isa() Method
 
@@ -49,18 +165,6 @@ objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN) or with
 code that does not use roles (L<roles>). Be aware that any class which I<does>
 override C<isa()> generally has a good reason for doing so.
 
-=head2 The can() Method
-
-X<C<UNIVERSAL::can>>
-X<C<can()>>
-
-The C<can()> method takes a string containing the name of a method. It returns
-a reference to the function which implements that method, if it exists.
-Otherwise, it returns a false value. You may call this on a class, an object,
-or the name of a package. In the latter case, it returns a reference to a
-function, not a methodN<... not that you can tell the difference, given only a
-reference.>.
-
 =begin tip Does a Class Exist?
 
 While both C<UNIVERSAL::isa()> and C<UNIVERSAL::can()> are methods
@@ -71,101 +175,6 @@ class of the name C<$classname>. That class may not be usable, but it does
 exist.
 
 =end tip
-
-Given a class named C<SpiderMonkey> with a method named C<screech>, get a
-reference to the method with:
-
-=begin programlisting
-
-    if (my $meth = SpiderMonkey->can( 'screech' )) {...}
-
-    if (my $meth = $sm->can( 'screech' )
-    {
-        # method; not a function
-        $sm->$meth();
-    }
-
-=end programlisting
-
-X<builtins; C<require>>
-X<CPAN; C<UNIVERSAL::require>>
-
-Use C<can()> to test if a package implements a specific function or method:
-
-=begin programlisting
-
-    use Class::Load;
-
-    die "Couldn't load $module!"
-        unless load_class( $module );
-
-    if (my $register = $module->can( 'register' ))
-    {
-        # function; not a method
-        $register->();
-    }
-
-=end programlisting
-
-=begin tip C<Module::Pluggable>
-
-X<CPAN; C<Class::Load>>
-X<CPAN; C<Module::Pluggable>>
-
-The CPAN module C<Class::Load> simplifies the work of loading classes by name.
-Similarly, C<Module::Pluggable> takes most of the work out of building and
-managing plugin systems. Get to know both distributions.
-
-=end tip
-
-=head2 The VERSION() Method
-
-X<C<UNIVERSAL::VERSION>>
-X<C<VERSION()>>
-
-The C<VERSION()> method returns the value of the C<$VERSION> variable of the
-invoking package or class. If you provide a version number as an optional
-parameter, the method will throw an exception if the queried C<$VERSION> is not
-equal to or greater than the parameter.
-
-Given a C<HowlerMonkey> module of version C<1.23>:
-
-=begin programlisting
-
-    say HowlerMonkey->VERSION;    # prints 1.23
-    say $hm->VERSION;             # prints 1.23
-    say $hm->VERSION( 0.0  );     # prints 1.23
-    say $hm->VERSION( 1.23 );     # prints 1.23
-    say $hm->VERSION( 2.0  );     # exception!
-
-=end programlisting
-
-There's little reason to override C<VERSION()>.
-
-=head2 The DOES() Method
-
-X<C<UNIVERSAL::DOES>>
-X<C<DOES()>>
-
-The C<DOES()> method supports the use of roles (L<roles>) in programs. Pass it
-an invocant and the name of a role, and the method will return true if the
-appropriate class somehow does that role--whether through inheritance,
-delegation, composition, role application, or any other mechanism.
-
-The default implementation of C<DOES()> falls back to C<isa()>, because
-inheritance is one mechanism by which a class may do a role. Given a
-C<Cappuchin>:
-
-=begin programlisting
-
-    say Cappuchin->DOES( 'Monkey'       );  # prints 1
-    say $cappy->DOES(    'Monkey'       );  # prints 1
-    say Cappuchin->DOES( 'Invertebrate' );  # prints 0
-
-=end programlisting
-
-Override C<DOES()> if you manually provide a role or provide other allomorphic
-behavior.
 
 =head2 Extending UNIVERSAL
 

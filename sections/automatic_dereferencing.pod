@@ -32,11 +32,10 @@ X<builtins; C<each>>
 
 The same goes for the array operators C<pop>, C<shift>, C<unshift>, C<splice>,
 C<keys>, C<values>, and C<each> and the hash operators C<keys>, C<values>, and
-C<each>.
-
-If the reference provided is not of the proper type--if it does not dereference
-properly--Perl will throw an exception. While this may seem more dangerous than
-explicitly dereferencing references directly, it is in fact the same behavior:
+C<each>. If the reference provided is not of the proper type--if it does not
+dereference properly--Perl will throw an exception. While this may seem more
+dangerous than explicitly dereferencing references directly, it is in fact the
+same behavior:
 
 =begin programlisting
 

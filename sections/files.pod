@@ -108,20 +108,20 @@ You can even create filehandles which read from or write to plain Perl scalars, 
 
 =end programlisting
 
-=begin tip Remember C<autodie>?
-
-All examples in this section have C<use autodie;> enabled, and so can safely
-elide error handling. If you choose not to use C<autodie>, remember to check
-the return values of all system calls to handle errors appropriately.
-
-=end tip
-
 X<builtins; C<sysopen>>
 
 C<perldoc perlopentut> explains in detail more exotic uses of C<open>,
 including its ability to launch and control other processes, as well as the use
 of C<sysopen> for finer-grained control over input and output.  C<perldoc
 perlfaq5> includes working code for many common IO tasks.
+
+=begin tip Remember C<autodie>?
+
+Assume all of the examples in this section have C<use autodie;> enabled, and so
+can safely elide error handling. If you choose not to use C<autodie>, remember
+to check the return values of all system calls to handle errors appropriately.
+
+=end tip
 
 =head3 Unicode, IO Layers, and File Modes
 

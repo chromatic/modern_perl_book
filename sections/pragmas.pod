@@ -27,7 +27,6 @@ effective within a scope as well:
             use strict;
             my $lexical = 'available here';
             # $lexical B<is> visible; strict B<is> in effect
-            ...
         }
         # $lexical again invisible; strict B<not> in effect
     }
@@ -45,7 +44,6 @@ effects within inner scopes:
     {
         # inner scope, but strict still in effect
         my $inner = 'another lexical';
-        ...
     }
 
 =end programlisting
@@ -78,8 +76,7 @@ protection of C<strict> when you need to do something symbolic:
 
 =begin programlisting
 
-    use Modern::Perl;
-    # or use strict;
+    use Modern::Perl; # or use strict;
 
     {
         no strict 'refs';

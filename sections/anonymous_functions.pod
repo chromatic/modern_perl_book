@@ -68,11 +68,9 @@ named function, such as to declare the dispatch table's functions in place:
 
 =begin tip Defensive Dispatch
 
-This dispatch table offers some degree of security; only those functions mapped
-within the table are available for users to call. If your dispatch function
-blindly assumed that the string given as the name of the operator corresponded
-directly to the name of a function to call, a malicious user could conceivably
-call any function in any other namespace by passing
+Only those functions within this dispatch table are available for users to
+call. If your dispatch function used a user-provided string as the literal name
+of functions, a malicious user could call any function anywhere by passing
 C<'Internal::Functions::malicious_function'>.
 
 =end tip
@@ -103,9 +101,8 @@ X<anonymous functions; names>
 
 X<CPAN; C<Sub::Identify>>
 
-Given a reference to a function, you can determine whether the function is
-named or anonymous with introspectionN<... or C<sub_name> from the CPAN module
-C<Sub::Identify>.>:
+Use introspectionN<See also C<sub_name> from the CPAN module
+C<Sub::Identify>.>: to determine whether a function is named or anonymous:
 
 =begin programlisting
 

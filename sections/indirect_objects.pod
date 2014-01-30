@@ -33,7 +33,7 @@ example, the verb (the method) precedes the noun to which it refers (the
 object). This is fine in spoken languages, but it introduces parsing
 ambiguities in Perl.
 
-Because the method's name is a bareword (L<barewords>), the parser use several
+Because the method's name is a bareword (L<barewords>), the parser uses several
 heuristics to figure out the proper interpretation of this code. While these
 heuristics are well-tested and I<almost> always correct, their failure modes
 are confusing. Things get worse when you pass arguments to a constructor:
@@ -49,7 +49,9 @@ In this example, the I<name> of the class looks like a function call. Perl
 I<can> disambiguate many of these cases, but its heuristics depend on which
 package names the parser has seen, which barewords it has already resolved (and
 how it resolved them), and the I<names> of functions already declared in the
-current package.
+current package. For an exhaustive list of these conditions, you have to read
+the source code of Perl's parser--not something the average Perl programmer
+wants to do.
 
 Imagine running afoul of a prototyped function (L<prototypes>) with a name
 which just happens to conflict somehow with the name of a class or a method

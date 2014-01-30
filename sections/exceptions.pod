@@ -17,7 +17,8 @@ control flow mechanism designed to raise and handle errors.
 Z<throwing_exceptions>
 
 Suppose you want to write a log file. If you can't open the file, something has
-gone wrong. Use C<die> to throw an exception:
+gone wrong. Use C<die> to throw an exceptionN<... or let C<autodie>
+(L<autodie>) add it for you, in this case.>:
 
 =begin programlisting
 
@@ -193,7 +194,7 @@ X<C<Try::Tiny>>
 
 Perl 5.14 fixed some of these issues. They occur rarely, but they're often
 difficult to diagnose and to fix. The C<Try::Tiny> CPAN distribution improves
-the safety of exception handling I<and> the syntaxN<C<Try::Tiny> helped inspire
+the safety of exception handling I<and> the syntaxN<C<Try::Tiny> inspired
 improvements to Perl 5.14's exception handling.>.
 
 C<Try::Tiny> is easy to use:

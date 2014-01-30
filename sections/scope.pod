@@ -70,7 +70,9 @@ X<lexical shadowing>
 X<scope; lexical shadowing>
 
 Declaring a lexical in an inner scope with the same name as a lexical in an
-outer scope hides, or I<shadows>, the outer lexical within the inner scope:
+outer scope hides, or I<shadows>, the outer lexical within the inner scope.
+
+For example:
 
 =begin programlisting
 
@@ -85,9 +87,9 @@ outer scope hides, or I<shadows>, the outer lexical within the inner scope:
 
 =end programlisting
 
-This toy example is obviously silly, but in longer code with larger scopes,
-this shadowing behavior is often desirable--it's easier to understand code when
-the scope of a lexical variable is no more than a couple of dozen lines.
+In longer code with larger scopes, this shadowing behavior is often
+desirable--it's easier to understand code when the scope of a lexical variable
+is no more than a couple of dozen lines.
 
 =begin tip Name Collisions
 

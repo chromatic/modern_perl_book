@@ -57,8 +57,8 @@ X<builtins; C<tied>>
 Tying functions resemble constructors: C<TIESCALAR>, C<TIEARRAY()>,
 C<TIEHASH()>, or C<TIEHANDLE()> for scalars, arrays, hashes, and filehandles
 respectively. Each function returns a new object which represents the tied
-variable. Both the C<tie> and C<tied> builtins return this object. Most people
-use C<tied> in a boolean context, however.
+variable. Both C<tie> and C<tied> return this object, though most people use
+C<tied> in a boolean context.
 
 =head2 Implementing Tied Variables
 
@@ -93,8 +93,6 @@ Here's a class which logs all reads from and writes to a scalar:
             return $$self;
         }
     }
-
-    1;
 
 =end programlisting
 

@@ -125,13 +125,11 @@ Installing into symbol tables is reasonably easy, if ugly:
 
 =begin programlisting
 
-    {
-        my ($get, $set) = generate_accessors( 'pie' );
+    my ($get, $set) = generate_accessors( 'pie' );
 
-        no strict 'refs';
-        *{ 'get_pie' } = $get;
-        *{ 'set_pie' } = $set;
-    }
+    no strict 'refs';
+    *{ 'get_pie' } = $get;
+    *{ 'set_pie' } = $set;
 
 =end programlisting
 
@@ -147,15 +145,6 @@ functions, and methods. Assigning a reference to a symbol table entry installs
 or replaces that entry. To promote an anonymous function to a method, store
 that function's reference in the symbol table.
 
-=begin tip Symbol Tables Simplified
-
-X<CPAN; C<Package::Stash>>
-
-Use the CPAN module C<Package::Stash> instead of manipulating symbol tables
-yourself.
-
-=end tip
-
 X<C<strict> pragma>
 X<pragmas; C<strict>>
 
@@ -166,26 +155,22 @@ generate in a single line:
 
 =begin programlisting
 
-    {
-        no strict 'refs';
+    no strict 'refs';
 
-        *{ $methname } = sub {
-            # subtle bug: strict refs disabled here too
-        };
-    }
+    *{ $methname } = sub {
+        # subtle bug: strict refs disabled here too
+    };
 
 =end programlisting
 
 This example disables strictures for the outer block I<as well as the body of
 the function itself>. Only the assignment violates strict reference checking,
-so disable strictures for that operation alone. In other words:
+so disable strictures for that operation alone:
 
 =begin programlisting
 
     {
-        my $sub = sub {
-            # strict refs still enabled here
-        };
+        my $sub = sub { ... };
 
         no strict 'refs';
         *{ $methname } = $sub;
@@ -209,6 +194,15 @@ the contents of a variable, you can assign to the relevant symbol directly:
 Assigning directly to the glob does not violate strictures, but mentioning each
 glob only once I<does> produce a "used only once" warning you can disable with
 the C<warnings> pragma.
+
+=begin tip Symbol Tables Simplified
+
+X<CPAN; C<Package::Stash>>
+
+Use the CPAN module C<Package::Stash> instead of manipulating symbol tables
+yourself.
+
+=end tip
 
 =head2 Compile-time Manipulation
 
@@ -280,11 +274,8 @@ name with a scope) and lexical I<assignment>. The former happens during
 compilation, while the latter occurs at the point of execution. This code has a
 subtle bug:
 
-X<CPAN; C<UNIVERSAL::require>>
-
 =begin programlisting
 
-    # adds a require() method to UNIVERSAL
     use UNIVERSAL::require;
 
     # buggy; do not use
@@ -300,7 +291,8 @@ X<CPAN; C<UNIVERSAL::require>>
 
 ... because the C<BEGIN> block will execute I<before> the assignment of the
 string value to C<$wanted_package> occurs. The result will be an exception from
-attempting to invoke the C<require()> method on an undefined value.
+attempting to invoke the C<require()> methodN<C<UNIVERSAL::require> adds a
+C<require()> method to C<UNIVERSAL>.> on an undefined value.
 
 =head2 Class::MOP
 

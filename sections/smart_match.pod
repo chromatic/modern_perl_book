@@ -50,7 +50,6 @@ These examples are deliberately simple, because smart match can be confusing:
     my $z = '10 little endians';
     say 'Equal numeric-ishally' if $x ~~ $z;
 
-    # regular expression match
     my $needle = qr/needle/;
 
     say 'Pattern match' if 'needle' ~~ $needle;

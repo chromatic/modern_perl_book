@@ -9,11 +9,24 @@ little clunky, and it exposes I<how> an object system works. You can build
 great things on top of it, but you or someone else will have to build a lot of
 code to get what some other languages provide for free.
 
-I<Moose> is a complete object system for PerlN<See C<perldoc Moose::Manual>.>
-Moose offers both a simpler way to use an object system as well as advanced
-features of languages such as Smalltalk and Common Lisp. Moose objects work
-with plain vanilla Perl. Moose is a great way to write object oriented code in
-Perl.
+I<Moose> is a complete object system for Perl. It's a complete distribution
+available from the CPAN--not a part of the core language, but worth installing
+and using regardless. Moose offers both a simpler way to use an object system
+as well as advanced features of languages such as Smalltalk and Common Lisp.
+
+Moose objects work with plain vanilla Perl. Within your programs, you can mix
+and match objects written with Perl's default object system and Moose. Of
+course, you have to write a lot more code to get what Moose provides for you.
+
+X<CPAN; C<Moose>>
+X<CPAN; C<Moose::Manual>>
+
+=begin tip Moose Documentation
+
+See C<Moose::Manual> on the CPAN for comprehensive Moose documentation.
+
+=end tip
+
 
 =head2 Classes
 
@@ -45,8 +58,7 @@ a class. Create objects (or I<instances>) of the C<Cat> class with the syntax:
 
 =end programlisting
 
-Just as an arrow dereferences a reference, an arrow calls a method on an object
-or class.
+Just as an arrow dereferences a reference, this arrow calls a method on C<Cat>.
 
 =head2 Methods
 
@@ -71,18 +83,8 @@ When you call a method on an object, that object is the invocant:
 
 =end programlisting
 
-X<dispatch>
-X<method dispatch>
-X<OO; dispatch>
-X<OO; method dispatch>
-
-A method call always involves a I<dispatch> strategy. This strategy controls
-how Perl selects the appropriate method. This may seem obvious, given how
-simple the C<Cat> class is, but much of the power of OO comes from method
-dispatch.
-
-When invoked, a method's first argument is its invocant. Idiomatic Perl uses
-C<$self> as its name. Suppose a C<Cat> can C<meow()>:
+A method's first argument is its invocant (C<$self>, by convention). Suppose a
+C<Cat> can C<meow()>:
 
 =begin programlisting
 
@@ -158,15 +160,13 @@ class:
 
 =end programlisting
 
-In English, that reads "C<Cat> objects have a C<name> attribute. It's
-read-only, and is a string."
-
-Using Moose makes the C<has()> function available. C<has()> declares an
-attribute. The first argument, C<'name'> here, is the attribute's name. The C<<
-is => 'ro' >> pair of arguments declares that this attribute is C<r>ead
-C<o>nly, so you cannot modify the attribute's value after you've set it.
-Finally, the C<< isa => 'Str' >> pair declares that the value of this attribute
-can only be a C<str>ing.
+Moose exports the C<has()> function for you to use to declare an attribute. In
+English, this code reads "C<Cat> objects have a C<name> attribute. It's
+read-only, and is a string." The first argument, C<'name'>, is the attribute's
+name. The C<< is => 'ro' >> pair of arguments declares that this attribute is
+C<r>ead C<o>nly, so you cannot modify the attribute's value after you've set
+it.  Finally, the C<< isa => 'Str' >> pair declares that the value of this
+attribute can only be a C<str>ing.
 
 X<methods; accessor>
 X<OO; accessor methods>
@@ -744,6 +744,16 @@ X<objects; inheritance>
 X<objects; multiple inheritance>
 X<MRO>
 
+X<dispatch>
+X<method dispatch>
+X<OO; dispatch>
+X<OO; method dispatch>
+
+A method call always involves a I<dispatch> strategy. This strategy controls
+how Perl selects the appropriate method. This may seem obvious, given how
+simple the C<Cat> class is, but much of the power of OO comes from method
+dispatch.
+
 I<Method dispatch order> (or I<method resolution order> or I<MRO>) is obvious
 for single-parent classes. Look in the object's class, then its parent, and so
 on until you find the method or run out of parents. Classes which inherit from
@@ -824,14 +834,8 @@ overridden method:
 This subclass adds a warning when trying to light or extinguish a light source
 that already has the current state. The C<super()> function dispatches to the
 nearest parent's implementation of the current method, per the normal Perl
-method resolution order.
-
-=begin tip Powered by Moose
-
-Moose's method modifiers can do similar things--and more. See C<perldoc
-Moose::Manual::MethodModifiers>.
-
-=end tip
+method resolution order. (See C<perldoc Moose::Manual::MethodModifiers> for
+more dispatch options.)
 
 =head3 Inheritance and isa()
 

@@ -27,7 +27,8 @@ Now add a function called C<AUTOLOAD()>:
 
 When you run the program now, nothing obvious will happen. Perl will call a
 function named C<AUTOLOAD()> in a package--if it exists--whenever normal
-dispatch fails. Change the C<AUTOLOAD()> to emit a message:
+dispatch fails. Change the C<AUTOLOAD()> to emit a message to demonstrate that
+it gets called:
 
 =begin programlisting
 
@@ -35,15 +36,11 @@ dispatch fails. Change the C<AUTOLOAD()> to emit a message:
 
 =end programlisting
 
-... to demonstrate that it gets called.
-
-=head2 Basic Features of AUTOLOAD
-
 X<C<$AUTOLOAD>>
 
 The C<AUTOLOAD()> function receives the arguments passed to the undefined
-function in C<@_> as usual. The I<name> of the undefined function is available
-in the package global C<$AUTOLOAD>. Manipulate these arguments as you like:
+function in C<@_> and the fully-qualified I<name> of the undefined function in
+the package global C<$AUTOLOAD> (here, C<main::bake_pie>):
 
 =begin programlisting
 
@@ -58,10 +55,7 @@ in the package global C<$AUTOLOAD>. Manipulate these arguments as you like:
 
 =end programlisting
 
-The C<our> declaration (L<our>) constrains the scope of C<$AUTOLOAD> to the
-function body. This variable contains the fully-qualified name of the undefined
-function (in this case, C<main::bake_pie>). Extract the method name with a
-regular expression (L<regex>):
+Extract the method name with a regular expression (L<regex>):
 
 =begin programlisting
 
@@ -106,7 +100,7 @@ former. A logging proxy can help with debugging:
 
     package Proxy::Log;
 
-    # constructor defined but not shown
+    # constructor blesses reference to a scalar
 
     sub AUTOLOAD
     {
@@ -137,15 +131,8 @@ them:
 
     sub AUTOLOAD
     {
-        B<my ($name) = our $AUTOLOAD =~ /::(\w+)$/;>
-
-        my $method = sub
-        {
-            Log::method_call( $name, @_ );
-
-            my $self = shift;
-            return $$self->$name( @_ );
-        }
+        my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
+        my $method = sub { ... };
 
         B<no strict 'refs';>
         B<*{ $AUTOLOAD } = $method;>
@@ -162,10 +149,9 @@ method directly and returns the result.
 
 Though this approach is cleaner and almost always more transparent than
 handling the behavior directly in C<AUTOLOAD()>, the code I<called> by
-C<AUTOLOAD()> may detect that dispatch has gone through C<AUTOLOAD()>.  In
-short, C<caller()> will reflect the double-dispatch of both techniques shown so
-far. While it may violate encapsulation to care that this occurs, leaking the
-details of I<how> an object provides a method may also violate encapsulation.
+C<AUTOLOAD()> may see C<AUTOLOAD()> in its C<caller()> list. While it may
+violate encapsulation to care that this occurs, leaking the details of I<how>
+an object provides a method may also violate encapsulation.
 
 X<tailcalls>
 X<C<goto>; tailcall>
@@ -177,7 +163,7 @@ of C<AUTOLOAD()> with a call to the destination method:
 
     sub AUTOLOAD
     {
-        B<my ($name) = our $AUTOLOAD =~ /::(\w+)$/;>
+        my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
         my $method = sub { ... }
 
         no strict 'refs';

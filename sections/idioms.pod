@@ -369,7 +369,7 @@ Suppose your function takes exactly two arguments. You I<could> write:
     {
         if (@_ != 2)
         {
-            croak 'Grooming requires two monkeys!';
+            croak 'Can only groom two monkeys!';
         }
         ...
     }
@@ -381,16 +381,7 @@ the check and deserve to be at the I<start> of the expression:
 
 =begin programlisting
 
-    croak 'Grooming requires two monkeys!' if @_ != 2;
-
-=end programlisting
-
-... which may read more simply as:
-
-=begin programlisting
-
-    croak 'Grooming requires two monkeys!'
-        unless @_ == 2;
+    croak 'Can only groom two monkeys!' unless @_ == 2;
 
 =end programlisting
 

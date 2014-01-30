@@ -140,16 +140,6 @@ No matter how cautiously you code, barewords still produce ambiguous code. You
 can avoid the worst abuses, but you will encounter several types of barewords
 in legacy code.
 
-=head3 Bareword function calls
-
-X<barewords; function calls>
-X<C<B::Deparse>>
-
-Code written without C<strict 'subs'> may use bareword function names. Adding
-parentheses will make the code pass strictures. Use C<perl -MO=Deparse,-p> (see
-C<perldoc B::Deparse>) to discover how Perl parses them, then parenthesize
-accordingly.
-
 =head3 Bareword hash values
 
 X<barewords; hash values>
@@ -170,6 +160,16 @@ Some old code may not take pains to quote the I<values> of hash pairs:
 When neither the C<Floyd()> nor C<Annette()> functions exist, Perl will
 interpret these barewords as strings. C<strict 'subs'> will produce an error in
 this situation.
+
+=head3 Bareword function calls
+
+X<barewords; function calls>
+X<C<B::Deparse>>
+
+Code written without C<strict 'subs'> may use bareword function names. Adding
+parentheses will make the code pass strictures. Use C<perl -MO=Deparse,-p> (see
+C<perldoc B::Deparse>) to discover how Perl parses them, then parenthesize
+accordingly.
 
 =head3 Bareword filehandles
 

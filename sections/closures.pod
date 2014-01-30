@@ -20,8 +20,6 @@ You've probably already created and used closures without realizing it:
 
 =begin programlisting
 
-    #!/usr/bin/perl
-
     use Modern::Perl '2014';
 
     my $filename = shift @ARGV;
@@ -52,9 +50,9 @@ invoked, will return the next item in the iteration:
         }
     }
 
-    my $cousins = make_iterator(
-        qw( Rick Alex Kaycee Eric Corey Mandy Christine Alex2 )
-    );
+    my $cousins = make_iterator(qw(
+        Rick Alex Kaycee Eric Corey Mandy Christine Alex
+    ));
 
     say $cousins->() for 1 .. 6;
 
@@ -71,9 +69,9 @@ for each invocation:
 
 =begin programlisting
 
-    my $aunts = make_iterator(
-        qw( Carole Phyllis Wendy Sylvia Monica Lupe )
-    );
+    my $aunts = make_iterator(qw(
+        Carole Phyllis Wendy Sylvia Monica Lupe
+    ));
 
     say $cousins->();
     say $aunts->();
@@ -150,9 +148,8 @@ cache and lazily create the elements you need:
 =end programlisting
 
 Every call to the function returned by C<gen_fib()> takes one argument, the
-I<n>th element of the Fibonacci series. The function generates all preceding
-values in the series as necessary, caches them, and returns the requested
-element--even delaying computation until absolutely necessary.
+I<n>th element of the Fibonacci series. The function generates and caches all
+preceding values in the series as necessary, and returns the requested element.
 
 Here's where closures and first class functions get interesting. This code does
 two things; there's a pattern specific to caching intertwined with the numeric
@@ -177,25 +174,11 @@ calculated or cached value) to a function C<gen_caching_closure()>?
         };
     }
 
-=end programlisting
-
-=begin tip Fold, Apply, and Filter
-
-The builtins C<map>, C<grep>, and C<sort> are themselves higher-order
-functions.
-
-=end tip
-
-Now C<gen_fib()> can become:
-
-=begin programlisting
-
     sub gen_fib
     {
         my @fibs = (0, 1, 1);
 
-        return gen_caching_closure(
-            sub
+        return B<gen_caching_closure>( sub
             {
                 my ($item, $fibs) = @_;
 
@@ -204,8 +187,7 @@ Now C<gen_fib()> can become:
                     $fibs->[$calc] = $fibs->[$calc - 2]
                                    + $fibs->[$calc - 1];
                 }
-            },
-            @fibs
+            }B<, @fibs>
         );
     }
 
@@ -216,6 +198,13 @@ separate the cache initialization behavior from the calculation of the next
 number in the Fibonacci series. Customizing the behavior of code--in this case,
 C<gen_caching_closure()>--by passing in a function allows tremendous
 flexibility and can clean up your code.
+
+=begin tip Fold, Apply, and Filter
+
+The builtins C<map>, C<grep>, and C<sort> are themselves higher-order
+functions.
+
+=end tip
 
 =head2 Closures and Partial Application
 
@@ -245,10 +234,10 @@ arguments that never change.
 
 X<partial application>
 
-A technique called I<partial application> allows you to bind I<some> of the
-arguments to a function now so that you can provide the others later. Wrap the
-function you intend to call in a closure and pass the bound arguments. Consider
-that small ice cream cart:
+I<Partial application> allows you to bind I<some> of the arguments to a
+function now so that you can provide the others later. Wrap the function you
+intend to call in a closure and pass the bound arguments. For your ice cream
+cart:
 
 =begin programlisting
 
@@ -264,11 +253,11 @@ that small ice cream cart:
 
 X<CPAN; C<Sub::Install>>
 
-Now whenever you process an order, instead of calling C<make_sundae()>
-directly, invoke the function reference in C<$make_cart_sundae> and pass only
-the interesting arguments. You'll never forget the invariants or pass them
-incorrectly. You can even use C<Sub::Install> from the CPAN to import
-C<$make_cart_sundae> function into another namespace.
+Now whenever you process an order, invoke the function reference in
+C<$make_cart_sundae> and pass only the interesting arguments. You'll never
+forget the invariants or pass them incorrectly. You can even use
+C<Sub::Install> from the CPAN to import C<$make_cart_sundae> function into
+another namespace.
 
 X<I<Higher Order Perl>>
 

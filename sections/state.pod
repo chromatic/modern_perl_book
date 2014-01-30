@@ -2,9 +2,8 @@
 
 Z<state>
 
-Closures (L<closures>) take advantage of lexical scope (L<scope>) to control
-access to lexical variables. Outside of a closure, you can't manipulate the
-lexical. Inside the closure, you can. Even named functions can do this:
+Closures (L<closures>) use lexical scope (L<scope>) to control access to
+lexical variables--even with named functions:
 
 =begin programlisting
 
@@ -23,13 +22,10 @@ lexical. Inside the closure, you can. Even named functions can do this:
 
 =end programlisting
 
-The encapsulation of functions to toggle the safety allows all three functions
-to share state without exposing the lexical variable directly to external code.
-This idiom works well for cases where external code should be able to change
-internal state, but it's clunkier when only one function needs to manage that
-state.
-
-Suppose every hundredth person at your ice cream parlor gets free sprinkles:
+All three functions encapsulate that shared state without exposing the lexical
+variable directly to external code. This idiom works well for cases where
+multiple functions access that lexical, but it's clunky when only one function
+does. Suppose every hundredth ice cream parlor customer gets free sprinkles:
 
 =begin programlisting
 
@@ -38,11 +34,9 @@ Suppose every hundredth person at your ice cream parlor gets free sprinkles:
     sub serve_customer
     {
         $cust_count++;
-
         my $order = shift;
 
         add_sprinkles($order) if $cust_count % 100 == 0;
-
         ...
     }
 
@@ -51,9 +45,9 @@ Suppose every hundredth person at your ice cream parlor gets free sprinkles:
 X<state>
 X<builtins; C<state>>
 
-This approach I<works>, but creating a new lexical scope for a single function
-is a little bit noisy. The C<state> builtin allows you to declare a lexically
-scoped variable with a value that persists between invocations:
+This approach I<works>, but creating a new outer lexical scope for a single
+function is a little bit noisy. The C<state> builtin allows you to declare a
+lexically scoped variable with a value that persists between invocations:
 
 =begin programlisting
 
@@ -113,7 +107,7 @@ you encounter it:
     sub inadvertent_state
     {
         # my $counter  = 1 if 0; # DEPRECATED; don't use
-        state $counter = 1;      # use instead
+        state $counter = 1;      # prefer
 
         ...
     }
