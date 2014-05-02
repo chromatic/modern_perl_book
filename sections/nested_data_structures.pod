@@ -124,13 +124,13 @@ Sometimes a temporary variable provides more clarity:
 
 X<aliasing>
 
-... or use C<for>'s implicit aliasing to avoid the use of an
-intermediate reference:
+... or use C<for>'s implicit aliasing to avoid the use of an intermediate
+reference (though note the lack of C<my>):
 
 =begin programlisting
 
-    my ($entree, $side) = @{ $_ }{qw( entree side )}
-                          for $meals{breakfast};
+    ($entree, $side) = @{ $_ }{qw( entree side )}
+                       for $meals{breakfast};
 
 =end programlisting
 
