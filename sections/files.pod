@@ -133,7 +133,7 @@ you're going to read a file written in the UTF-8 encoding:
 
 =begin programlisting
 
-    open my $in_fh,  '>:encoding(UTF-8)', $infile;
+    open my $in_fh,  '<:encoding(UTF-8)', $infile;
 
 =end programlisting
 
@@ -141,7 +141,7 @@ you're going to read a file written in the UTF-8 encoding:
 
 =begin programlisting
 
-    open my $out_fh, '<:encoding(UTF-8)', $outfile;
+    open my $out_fh, '>:encoding(UTF-8)', $outfile;
 
 =end programlisting
 
