@@ -527,7 +527,7 @@ produce another Unicode string.
 
 If both strings are octet sequences, Perl will concatenate them into a new
 octet sequence. If both values are octets of the same encoding--both Latin-1,
-for example, the concatenation will work correctly. If the octets do not share
+for example--the concatenation will work correctly. If the octets do not share
 an encoding--for example, a concatenation appending UTF-8 data to Latin-1
 data--then the resulting sequence of octets makes sense in I<neither> encoding.
 This could happen if the user entered a name as UTF-8 data and the greeting
