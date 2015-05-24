@@ -4,7 +4,7 @@ Z<moose>
 
 X<moose>
 
-Perl's default object system is but minimal but flexible. Its syntax is a
+Perl's default object system is minimal but flexible. Its syntax is a
 little clunky, and it exposes I<how> an object system works. You can build
 great things on top of it, but you or someone else will have to build a lot of
 code to get what some other languages provide for free.
