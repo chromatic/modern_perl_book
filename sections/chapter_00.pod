@@ -2,40 +2,43 @@
 
 =head0 *Preface
 
-I<Modern Perl> is one way to describe the way the world's most effective Perl
-programmers work. They use language idioms. They take advantage of the CPAN.
-They show good taste and craft to write powerful, maintainable, scalable,
-concise, and effective code. You can learn these skills too!
+Larry Wall released the first version of Perl in 1987. The language grew from
+its niche as a tool for system administrators who needed something more
+powerful than shell scripting and easier to use than C programming into a
+general-purpose programming language. Perl has a solid history of pragmatism
+and, in recent years, a disciplined approach to enhancement and backwards
+compatibility.
 
-Perl first appeared in 1987 as a simple tool for system administration. Though
-it began by declaring and occupying a comfortable niche between shell scripting
-and C programming, it has become a powerful, general-purpose language family.
-Perl has a solid history of pragmatism and a bright future of polish and
-enhancement.
+Over Perl's long history--Perl 5 has been continually refined over the past
+twenty years--our understanding of what makes great Perl programs has changed.
+While you can write productive programs which never take advantage of all the
+language has to offer, the global Perl community has invented, borrowed,
+enhanced, and polished ideas and made them available to anyone willing to learn
+them.
 
-Over Perl's long history--especially the 19 years of Perl 5--our understanding
-of what makes great Perl programs has changed. While you can write productive
-programs which never take advantage of all the language has to offer, the
-global Perl community has invented, borrowed, enhanced, and polished ideas and
-made them available to anyone willing to learn them.
+I<Modern Perl> is a mindset. It's a fresh approach to writing great software
+with the Perl programming language. It's how effective Perl programmers write
+powerful, maintainable, scalable, concise, and excellent code. It takes
+advantage of Perl's extensive library of free software (the CPAN) and language
+features designed to multiply your productivity.
 
 =head1 Running Modern Perl
 
-The C<Modern::Perl> module from the CPAN (L<cpan>) asks Perl to warn of dubious
-constructs and typos and will enable new features introduced in modern Perl
-releases. Unless otherwise mentioned, code snippets always assume the basic
-skeleton of a program:
+The C<Modern::Perl> module from the CPAN (L<cpan>) allows Perl to warn you of
+typos and other potential problems. It also enables new features introduced in
+modern Perl releases. Unless otherwise mentioned, all of the code snippets in
+this book assume you've started with this basic program skeleton:
 
 =begin programlisting
 
     #!/usr/bin/env perl
 
-    use Modern::Perl '2013';
+    use Modern::Perl '2015';
     use autodie;
 
 =end programlisting
 
-... which is equivalent to:
+If you don't have C<Modern::Perl> installed, you could write instead:
 
 =begin programlisting
 
@@ -48,7 +51,7 @@ skeleton of a program:
 =end programlisting
 
 Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
-(L<testing>). These programs follow the pattern:
+(L<testing>). The skeleton for these examples is:
 
 =begin programlisting
 
@@ -63,32 +66,32 @@ Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
 
 =end programlisting
 
-At the time of writing, the current stable Perl release family is Perl 5.18.
-If you're using an older version of Perl, you may not be able to run all of the
+At the time of writing, the current stable major Perl release is Perl 5.22. If
+you're using an older version of Perl, you may not be able to run all of the
 examples in this book unmodified. The examples in this book work best with Perl
-5.14.0 or newer, though we recommend at least Perl 5.16. While the term "Modern
-Perl" can refer to any version of Perl from 5.10.1, several features added in
-newer versions are essential to modern development.
+5.16.0 or newer, though we recommend at least Perl 5.20. While the term "Modern
+Perl" has traditionally referred to any version of Perl from 5.10.1, the
+language has improved dramatically over the past several years.
 
 X<Strawberry Perl>
 X<ActivePerl>
 X<perlbrew>
 X<CPAN; C<App::perlbrew>>
 
-If you have no Perl installed (or if you have an old version installed), you
-can install a newer release yourself. Windows users, download Strawberry Perl
-from U<http://www.strawberryperl.com/> or ActivePerl from
+Though Perl comes preinstalled on many operating systems, you may need to
+install a more modern version. Windows users, download Strawberry Perl from
+U<http://www.strawberryperl.com/> or ActivePerl from
 U<http://www.activestate.com/activeperl>. Users of other operating systems with
 Perl already installed (and a C compiler and the other development tools),
 start by installing the CPAN module C<App::perlbrew>N<See
 U<http://search.cpan.org/perldoc?App::perlbrew> for installation
 instructions.>.
 
-C<perlbrew> allows you to install and manage multiple versions of Perl. This
-allows you to switch between versions as well as to install Perl and CPAN
-modules in your home directory without affecting the system's version.  If
-you've ever had to beg your system administrator for permission to install
-software, you know how much easier your life can be now.
+C<perlbrew> manages multiple Perl installations, so that you can switch between
+versions for testing and deployment. You can also install CPAN modules in your
+home directory without affecting the system installation. If you've ever had to
+beg a system administrator for permission to install software, you'll
+appreciate this.
 
 =head1 Credits
 
