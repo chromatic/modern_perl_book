@@ -247,10 +247,10 @@ operator:
 
 =begin programlisting
 
-    cmp_ok( 100, $cur_balance, '<=',
+    cmp_ok( 100, '<=', $cur_balance,
            'I should have at least $100' );
 
-    cmp_ok( $monkey, $ape, '==',
+    cmp_ok( $monkey, '==', $ape,
            'Simian numifications should agree' );
 
 =end programlisting
