@@ -205,7 +205,7 @@ C<while()> loop:
 X<builtins; C<eof>>
 
 In scalar context, C<readline> reads a single line of the file and returns it,
-or C<undef>< if it's reached the end of file (C<eof()>). Each iteration in this
+or C<undef> if it's reached the end of file (C<eof()>). Each iteration in this
 example returns the next line or C<undef>. This C<while> idiom explicitly
 checks the definedness of the variable used for iteration, such that only the
 end of file condition ends the loop. In other words, this is shorthand for:
