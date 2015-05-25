@@ -4,27 +4,24 @@ Z<context_philosophy>
 
 X<context>
 
-In spoken languages, the meaning of a word or phrase may depend on how you use
-it; the local I<context> helps clarify the intent. For example, the
-inappropriate pluralization of "Please give me one hamburgers!"N<The
-pluralization of the noun differs from the amount.> sounds wrong, just as the
-incorrect gender of "la gato"N<The article is feminine, but the noun is
-masculine.> makes native speakers chuckle. Other words do double duty; one
-sheep is a sheep just as two sheep are also sheep.
+In spoken languages, the meaning of a word or phrase depends on how you use it;
+the local I<context> of other grammatical constructs helps clarify the intent.
+For example, the inappropriate pluralization of "Please give me one
+hamburgers!"N<The pluralization of the noun differs from the amount.> sounds
+wrong, just as the incorrect gender of "la gato"N<The article is feminine, but
+the noun is masculine.> makes native speakers chuckle. Some words do double
+duty; one sheep is a sheep just as two sheep are also sheep and you program a
+program.
 
-Context in Perl is similar. It describes the I<amount> as well as the I<kind>
-of data to use. Perl will do what you mean to do to data if you choose the
-appropriate context for that data.
+Perl uses context to express how to treat a piece of data. This governs the
+I<amount> of data as well as the I<kind> of data. For example, several Perl
+operations produce different behaviors when you expect zero, one, or many
+results. A specific construct in Perl may do something different if you write
+"Do this, but I don't care about any results" compared to "Do this and give me
+multiple results." Other operations allow you to specify whether you expect to
+work with numeric, textual, or true or false data.
 
-For example, several Perl operations produce different behaviors when you
-expect zero, one, or many results. A specific construct in Perl may do
-something different if you write "Do this, but I don't care about any results"
-compared to "Do this and give me multiple results." Other operations allow you
-to specify whether you expect to work with numeric data, textual data, or true
-or false data.
-
-Context can be tricky if you try to write or read Perl code as a series of
-single steps in isolation. That's not how Perl works! Every expression is part
+You must keep context in mind when you read Perl code. Every expression is part
 of a larger context. You may find yourself slapping your forehead after a long
 debugging session when you discover that your assumptions about context were
 incorrect. If instead you're aware of context, your code will be more
@@ -37,26 +34,26 @@ Z<amount_context>
 X<context; amount>
 X<amount context>
 
-I<Amount context> governs I<how many> items you expect from an
-operation. The English language's subject-verb number agreement is a close
-parallel. Even without knowing the formal description of this linguistic
-principle, you probably understand the error in the sentence "Perl are a fun
-language"N<In terms of amount context, you could say that the verb "are"
-expects multiple nouns.>. In Perl, the number of items you request determines
-how many you get.
+I<Amount context> governs I<how many> items you expect an operation to produce.
+Think of subject-verb number agreement in English. Even without knowing the
+formal description of this principle, you probably understand the error in the
+sentence "Perl are a fun language"N<In terms of amount context, you could say
+that the verb "are" expects a plural noun or noun phrase.>. In Perl, the number
+of items you request influences how many you receive.
 
 X<void context>
 X<context; void>
 
 Suppose the function (L<functions>) called C<find_chores()> sorts your
-household todo list in order of task priority. The number of chores you expect
-to read from your list determines what exactly the function will do. If you
-expect nothing, you're just pretending to be busy. If you expect one task, you
-have something to do for the next fifteen minutes. If you have a burst of
-energy on a free weekend, you could get all of the chores.
+household todo list in order of priority. The number of chores you expect to
+read from your list influences what the function produces. If you expect
+nothing, you're just pretending to be busy. If you expect one task, you have
+something to do for the next fifteen minutes. If you have a burst of energy on
+a free weekend, you could get all of your chores.
 
-When you call a function on its own and never use its return value, you've used
-I<void context>:
+Why does context matter? A context-aware function can examine its calling
+context and decide how much work it must do. When you call a function and never
+use its return value, you've used I<void context>:
 
 =begin programlisting
 
@@ -94,8 +91,8 @@ list, or using it in a list, evaluates the function in I<list context>:
 
 The parentheses in the second line of the previous example group the two
 variable declarations (L<lexical_scope>) into a single unit so that assignment
-assigns to both of the variables. Note that a single-item list is still a list,
-however. You could also correctly write:
+assigns to both of the variables. A single-item list is still a list, though.
+You could also correctly write:
 
 =begin programlisting
 
@@ -103,10 +100,10 @@ however. You could also correctly write:
 
 =end programlisting
 
-.... in which case the parentheses give a hint to the Perl parser that you
-intend list context for the assignment even though you assign only one element
-of a list. This is subtle, but now that you know about it, the difference of
-amount context between these two statements should be obvious:
+.... in which case the parentheses tell Perl parser that you intend list
+context for the single variable C<$single_element>. This is subtle, but now
+that you know about it, the difference of amount context between these two
+statements should be obvious:
 
 =begin programlisting
 
@@ -115,9 +112,9 @@ amount context between these two statements should be obvious:
 
 =end programlisting
 
-Evaluating a function or expression--except for assignment--in list context can
-produce confusion. Lists propagate list context to the expressions they
-contain. Both of these calls to C<find_chores()> occur in list context:
+Lists propagate list context to the expressions they contain. This often
+confuses novices until they understand it. Both of these calls to
+C<find_chores()> occur in list context:
 
 =begin programlisting
 
@@ -133,9 +130,8 @@ contain. Both of these calls to C<find_chores()> occur in list context:
 
 X<builtins; C<scalar>>
 
-The latter example often surprises novice programmers, as initializing a hash
-(L<hashes>) with a list of values imposes list context on C<find_chores>. Use
-the C<scalar> operator to impose scalar context:
+Yes, initializing a hash (L<hashes>) with a list of values imposes list context
+on C<find_chores>. Use the C<scalar> operator to impose scalar context:
 
 =begin programlisting
 
@@ -147,10 +143,10 @@ the C<scalar> operator to impose scalar context:
 
 =end programlisting
 
-Why does context matter? A context-aware function can examine its calling
-context and decide how much work it must do. In void context, C<find_chores()>
-may legitimately do nothing. In scalar context, it can find only the most
-important task. In list context, it must sort and return the entire list.
+Again, context can help you determine how much work a function should do. In
+void context, C<find_chores()> may legitimately do nothing. In scalar context,
+it can find only the most important task. In list context, it must sort and
+return the entire list.
 
 =head2 Numeric, String, and Boolean Context
 
@@ -159,18 +155,17 @@ Z<value_contexts>
 X<value context>
 X<context; value>
 
-Perl's other context--I<value context>--governs how Perl interprets a piece of
-data. You've probably already noticed that Perl can figure out if you have a
-number or a string and convert data between the two forms. In exchange for not
-having to declare (or at least track) explicitly what I<type> of data a
-variable contains or a function produces, Perl's value contexts provide hints
-about how to treat that data.
+Perl's other context--I<value context>--influences how Perl interprets a piece
+of data. Perl can figure out if you have a number or a string and convert data
+between the two types. In exchange for not having to declare explicitly what
+I<type> of data a variable contains or a function produces, Perl's value
+contexts provide hints about how to treat that data.
 
 X<builtins; C<eq>>
 
-Perl will coerce values to specific proper types (L<coercion>), depending on
-the operators you use. For example, the C<eq> operator tests that strings
-contain the same information I<as strings>:
+Perl will coerce values to specific proper types (L<coercion>) depending on the
+operators you use. For example, the C<eq> operator tests that two values
+contain equivalent string values:
 
 =begin programlisting
 
@@ -195,10 +190,10 @@ X<context; numeric>
 
 X<builtins; C<==>>
 
-Where the C<eq> operator treats its operands as strings by enforcing I<string
-context> on them, the C<==> operator imposes I<numeric context>. In numeric
+The C<eq> operator treats its operands as strings by enforcing I<string
+context> on them, but the C<==> operator imposes I<numeric context>. In numeric
 context, both strings evaluate to C<0> (L<numeric_coercion>). Be sure to use
-the proper operator for the type of context you want.
+the proper operator for your desired value context.
 
 X<boolean context>
 X<context; boolean>
@@ -209,10 +204,10 @@ operators in boolean context.
 
 X<context; explicit>
 
-In rare circumstances, you may need to force an explicit context where no
-appropriately typed operator exists. To force a numeric context, add zero to a
-variable. To force a string context, concatenate a variable with the empty
-string. To force a boolean context, double up the negation operator:
+In rare circumstances, you may not be able to use the appropriate operator to
+enforce value context. To force a numeric context, add zero to a variable. To
+force a string context, concatenate a variable with the empty string. To force
+a boolean context, double up the negation operator:
 
 =begin programlisting
 

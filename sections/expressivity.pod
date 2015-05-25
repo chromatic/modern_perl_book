@@ -5,65 +5,64 @@ Z<expressivity>
 X<Wall, Larry>
 X<Larry Wall>
 
-Larry Wall studied linguistics and human languages. Then he designed Perl.
-Unlike other languages designed around a mathematical notion, Perl takes into
-account how people communicate. In return, you get the freedom to decide how to
-arrange your programs to meet your needs. You may write simple, straightforward
-code or combine many small pieces into larger programs. You may select from
-multiple design paradigms, and you may eschew or embrace advanced features.
-
-Where other languages claim that there should be only one best way to solve any
-problem, Perl allows I<you> to decide what's most readable, most useful, most
-appealing, or most fun.
-
-X<TIMTOWTDI>
-X<Tim Toady>
-
-Perl hackers have a slogan for this: I<TIMTOWTDI>, pronounced "Tim Toady", or
-"There's more than one way to do it!"
-
-Though this expressivity allows master craftworkers to create amazing programs,
-it also allows the unwary to make messes. Experience and good taste will guide
-you as you design your code, but the choice is always yours. Express yourself,
-but be mindful of readability and maintainability, especially for those who
-come after you.
+Before Larry Wall created Perl, he studied linguistics. Unlike other
+programming languages designed around a mathematical notion, Perl's design
+emulates how people communicate with people. This gives you the freedom to
+write programs depending on your current needs. You may write simple,
+straightforward code or combine many small pieces into larger programs. You may
+select from multiple design paradigms, and you may eschew or embrace advanced
+features.
 
 Learning Perl is like learning any spoken language. You'll learn a few words,
 then string together sentences, and then enjoy simple conversations. Mastery
 comes from practice of both reading and writing code. You don't have to
 understand every detail of Perl to be productive, but the principles in this
-chapter are vital to your growth as a programmer.
+chapter are essential to your growth as a programmer.
+
+Other languages may claim that there should be only one best way to solve any
+problem. Perl allows I<you> to decide what's most readable, most useful, most
+appealing, or most fun.
+
+X<TIMTOWTDI>
+X<Tim Toady>
+
+Perl hackers call this I<TIMTOWTDI>, pronounced "Tim Toady", or "There's more
+than one way to do it!"
+
+This expressivity allows master craftworkers to create amazing programs but
+also allows the unwary to make messes. You'll develop your own sense of good
+taste with experience. Express yourself, but be mindful of readability and
+maintainability, especially for those who come after you.
 
 Perl novices often find certain syntactic constructs opaque. These idioms
-(L<idioms>) offer great (if subtle) power in the hands of experienced
-programmers, but it's okay to avoid them until you're comfortable with them.
+(L<idioms>) offer great (if subtle) power to experienced programmers, but it's
+okay to avoid them until you're comfortable with them.
 
 As another design goal, Perl tries to avoid surprising experienced (Perl)
-programmers.  For example, adding two variables (C<$first_num + $second_num>)
-is obviously a numeric operation (L<numeric_operators>); the addition operator
-must treat both as numeric values to produce a numeric result. No matter the
-contents of C<$first_num> and C<$second_num>, Perl will coerce them to numeric
-values (L<numeric_coercion>). You've expressed your intent to treat them as
-numbers by using a numeric operator. Perl happily does so.
+programmers. For example, adding two variables (C<$first_num + $second_num>) is
+obviously a numeric operation (L<numeric_operators>). You've expressed your
+intent to treat the values of those variables as numbers by using a numeric
+operator. Perl happily does so. No matter the contents of C<$first_num> and
+C<$second_num>, Perl will coerce them to numeric values (L<numeric_coercion>).
 
 X<DWIM>
 X<principle of least astonishment>
 
 Perl adepts often call this principle I<DWIM>, or I<do what I mean>. You could
-just as well say that Perl follows the I<principle of least astonishment>.
-Given a cursory understanding of Perl (especially context;
-L<context_philosophy>), it should be possible to understand the intent of an
-unfamiliar Perl expression. You will develop this skill as you learn Perl.
+just as well call this the I<principle of least astonishment>. Given a cursory
+understanding of Perl (especially context; L<context_philosophy>), it should be
+possible to understand the intent of an unfamiliar Perl expression. You will
+develop this skill as you learn Perl.
 
 X<baby Perl>
 
 Perl's expressivity allows novices to write useful programs without having to
 understand the entire language. This is by design! Experienced developers often
-call the results I<baby Perl>. This is a term of endearment, because everyone
-begins as a novice. Through practice and learning from more experienced
-programmers, you will understand and adopt more powerful idioms and techniques.
-It's okay for you to write simple code that you understand. Keep practicing and
-you'll become a native speaker.
+call the results I<baby Perl> as a term of endearment. Everyone begins as a
+novice. Through practice and learning from more experienced programmers, you
+will understand and adopt more powerful idioms and techniques. It's okay for
+you to write simple code that you understand. Keep practicing and you'll become
+a native speaker.
 
 An experienced Perl hacker might triple a list of numbers with:
 
@@ -79,8 +78,7 @@ An experienced Perl hacker might triple a list of numbers with:
 
     my @tripled;
 
-    for my $num (@numbers)
-    {
+    for my $num (@numbers) {
         push @tripled, $num * 3;
     }
 
@@ -92,19 +90,18 @@ An experienced Perl hacker might triple a list of numbers with:
 
     my @tripled;
 
-    for (my $i = 0; $i < scalar @numbers; $i++)
-    {
+    for (my $i = 0; $i < scalar @numbers; $i++) {
         $tripled[$i] = $numbers[$i] * 3;
     }
 
 =end programlisting
 
-Every program does the same thing, but each uses Perl in a different way.
+Every program gets the same result. Each uses Perl in a different way.
 
 As you get more comfortable with Perl, you can let the language do more for
 you. With experience, you can focus on I<what> you want to do rather than
-I<how> to do it. Even so, Perl will happily run baby Perl just as well as
-expert Perl. You can design and refine your programs for clarity, expressivity,
-reuse, and maintainability, in part or in whole. Take advantage of this
-flexibility and pragmatism: it's far better to accomplish your task effectively
-now than to write a conceptually pure and beautiful program next year.
+I<how> to do it. Perl doesn't care if you write baby or expert code. Design and
+refine your programs for clarity, expressivity, reuse, and maintainability, in
+part or in whole. Take advantage of this flexibility and pragmatism: it's far
+better to accomplish your task effectively now than to write a conceptually
+pure and beautiful program next year.

@@ -2,9 +2,10 @@
 
 Z<implicit_ideas>
 
-Programmers who understand Perl's linguistic shortcuts can glance at code and
-instantly understand its most important characteristics. Besides context, Perl
-has default variables--the programming equivalent of pronouns.
+Perl code can seem dense at first, but it's full of linguistic shortcuts. These
+allow experienced programmers to glance at code and understand its important
+implications. Context is one shortcut. Another is default variables--the
+programming equivalent of pronouns.
 
 =head2 The Default Scalar Variable
 
@@ -15,10 +16,10 @@ X<default variables; C<$_>>
 X<< variables; C<$_> >>
 X<< C<$_>; default scalar variable >>
 
-The I<default scalar variable> (also called the I<topic variable>), C<$_>, is
-most notable in its I<absence>: many of Perl's builtin operations work on the
-contents of C<$_> in the absence of an explicit variable. You can still use
-C<$_> as the variable, but it's often unnecessary.
+The I<default scalar variable> (or I<topic variable>), C<$_>, is most notable
+in its I<absence>: many of Perl's builtin operations work on the contents of
+C<$_> in the absence of an explicit variable. You can still type C<$_> if it
+makes your code clearer to you, but it's often unnecessary.
 
 X<builtins; C<chomp>>
 X<builtins; C<chr>>
@@ -42,10 +43,10 @@ precise details of its behavior.>:
 
 =end programlisting
 
-C<$_> has the same function in Perl as the pronoun I<it> in English. Without an
-explicit variable, C<chomp> removes the trailing newline sequence from C<$_>.
-Perl understands what you mean when you say "C<chomp>"; Perl will always chomp
-I<it>. These two lines of code are equivalent:
+C<$_> behaves the same way in Perl as the pronoun I<it> does in English.
+Without an explicit variable, C<chomp> removes the trailing newline sequence
+from C<$_>. When you write "C<chomp;>", Perl will always chomp I<it>. These two
+lines of code are equivalent:
 
 =begin programlisting
 
@@ -57,8 +58,7 @@ I<it>. These two lines of code are equivalent:
 X<builtins; C<say>>
 X<builtins; C<print>>
 
-Similarly, C<say> and C<print> operate on C<$_> in the absence of other
-arguments:
+C<say> and C<print> also operate on C<$_> in the absence of other arguments:
 
 =begin programlisting
 
@@ -89,14 +89,13 @@ substitute, and transliterate:
 X<builtins; C<for>>
 
 Perl's looping directives (L<looping_directives>) default to using C<$_> as the
-iteration variable. Consider C<for> iterating over a list:
+iteration variable, whether C<for> iterating over a list:
 
 =begin programlisting
 
     say "#B<$_>" for 1 .. 10;
 
-    for (1 .. 10)
-    {
+    for (1 .. 10) {
         say "#B<$_>";
     }
 
@@ -104,12 +103,11 @@ iteration variable. Consider C<for> iterating over a list:
 
 X<builtins; C<while>>
 
-... or C<while>:
+... or C<while> waiting for an expression to evaluate to false:
 
 =begin programlisting
 
-    while (<STDIN>)
-    {
+    while (<STDIN>) {
         chomp;
         say scalar reverse;
     }
@@ -123,7 +121,7 @@ X<builtins; C<map>>
 =begin programlisting
 
     my @squares = map { B<$_> * B<$_> } 1 .. 10;
-    say for @squares;
+    say for @squares; # note the postfix for
 
 =end programlisting
 
@@ -133,22 +131,21 @@ X<builtins; C<grep>>
 
 =begin programlisting
 
-    say 'Brunch time!'
+    say 'Brunch is possible!'
         if grep { /pancake mix/ } @pantry;
 
 =end programlisting
 
-As English gets confusing when you have too many pronouns and antecedents, so
-does Perl when you mix explicit and implicit uses of C<$_>. If you use it in
-multiple places, one piece of code may silently override the value expected by
-another piece of code. For example, if one function uses C<$_> and you call it
+Just as English gets confusing when you have too many pronouns and antecedents,
+so does Perl when you mix explicit and implicit uses of C<$_>. In general,
+there's only one C<$_>. If you use it in multiple places, one operator's C<$_>
+may override another's. For example, if one function uses C<$_> and you call it
 from another function which uses C<$_>, the callee may clobber the caller's
 value:
 
 =begin programlisting
 
-    while (<STDIN>)
-    {
+    while (<STDIN>) {
         chomp;
 
         # BAD EXAMPLE
@@ -160,43 +157,28 @@ value:
 =end programlisting
 
 If C<calculate_value()> or any other function changed C<$_>, that change would
-persist through that iteration of the loop. As of Perl 5.10, you can declare
-C<$_> as a lexical variable (L<lexical_scope>) with C<my> to prevent clobbering
-an existing instance of C<$_>:
+persist through that iteration of the loop. Using a named lexical is safer and
+may be clearer:
 
 =begin programlisting
 
-    while (my $_ = <STDIN>)
-    {
+    while (my $line = <STDIN>) {
         ...
     }
 
 =end programlisting
 
-Unfortunately, this construct has a few edge cases related to how existing
-functions behave when they expect C<$_> to be a global variable. As of Perl
-5.18, the Perl 5 Porters consider this feature experimental. Use it with
-caution. Besides, using a named lexical may be even clearer:
-
-=begin programlisting
-
-    while (my $line = <STDIN>)
-    {
-        ...
-    }
-
-=end programlisting
-
-Use C<$_> as you would the word "it" in formal writing: sparingly, in small and well-defined scopes.
+Use C<$_> as you would the word "it" in formal writing: sparingly, in small and
+well-defined scopes.
 
 =begin tip The C<...> Operator
 
 X<builtins; C<...>>
 
-Perl 5.12 introduced the triple-dot (C<...>) operator as a placeholder for code
-you intend to fill in later. Perl will parse it as a complete statement, but
-will throw an exception that you're trying to run unimplemented code if you try
-to run it. See C<perldoc perlop> for more details.
+The triple-dot (C<...>) operator is a placeholder for code you intend to fill
+in later. Perl will parse it as a complete statement, but will throw an
+exception that you're trying to run unimplemented code if you try to run it.
+See C<perldoc perlop> for more details.
 
 =end tip
 
@@ -210,20 +192,18 @@ X<variables; C<@_>>
 X<C<@_>>
 
 Perl also provides two implicit array variables. Perl passes arguments to
-functions (L<functions>) in an array named C<@_>. Array manipulation operations
-(L<arrays>) inside functions operate on this array by default. These two
-snippets of code are equivalent:
+functions (L<functions>) in an array named C<@_>. Array operations (L<arrays>)
+inside functions use this array by default. These two snippets of code are
+equivalent:
 
 =begin programlisting
 
-    sub foo
-    {
+    sub foo {
         my $arg = shift;
         ...
     }
 
-    sub foo_explicit_args
-    {
+    sub foo_explicit_args {
         my $arg = shift @_;
         ...
     }
@@ -234,18 +214,18 @@ X<builtins; C<shift>>
 X<builtins; C<pop>>
 
 Just as C<$_> corresponds to the pronoun I<it>, C<@_> corresponds to the
-pronouns I<they> and I<them>. I<Unlike> C<$_>, Perl automatically localizes
-C<@_> for you when you call other functions. The builtins C<shift> and C<pop>
-operate on C<@_>, if provided no explicit operands.
+pronouns I<they> and I<them>. I<Unlike> C<$_>, each function has a separate
+copy of C<@_>. The builtins C<shift> and C<pop> operate on C<@_>, if provided
+no explicit operands.
 
 X<default variables; C<@ARGV>>
 X<variables; C<@ARGV>>
 X<C<@ARGV>>
 
 Outside of all functions, the default array variable C<@ARGV> contains the
-command-line arguments to the program. Perl's array operations (including
-C<shift> and C<pop>) operate on C<@ARGV> implicitly outside of functions. You
-cannot use C<@_> when you mean C<@ARGV>.
+command-line arguments provided to the program. Perl's array operations
+(including C<shift> and C<pop>) operate on C<@ARGV> implicitly outside of
+functions. You cannot use C<@_> when you mean C<@ARGV>.
 
 =begin tip C<readline>
 
@@ -253,11 +233,10 @@ X<builtins; C<readline>>
 X<builtins; C<glob>>
 
 Perl's C<< <$fh> >> operator is the same as the C<readline> builtin.
-C<readline $fh> does the same thing as C<< <$fh> >>. As of Perl 5.10, a bare
-C<readline> behaves just like C<< <> >>, so you can now use C<readline>
-everywhere. For historic reasons, C<< <> >> is still more common, but consider
-using C<readline> as a more readable alternative. (What's more readable, C<glob
-'*.html'> to C<< <*.html> >>? The same idea applies.)
+C<readline $fh> does the same thing as C<< <$fh> >>. A bare C<readline> behaves
+just like C<< <> >>. For historic reasons, C<< <> >> is still more common, but
+consider using C<readline> as a more readable alternative. (What's more
+readable, C<glob '*.html'> to C<< <*.html> >>? The same idea applies.)
 
 =end tip
 
@@ -265,19 +244,29 @@ X<null filehandle>
 
 C<ARGV> has one special case. If you read from the null filehandle C<< <> >>,
 Perl will treat every element in C<@ARGV> as the I<name> of a file to open for
-reading. (If C<@ARGV> is empty, Perl will read from standard input.) This
-implicit C<@ARGV> behavior is useful for writing short programs, such as a
-command-line filter which reverses its input:
+reading. (If C<@ARGV> is empty, Perl will read from standard input; see
+L<filehandle>.) This implicit C<@ARGV> behavior is useful for writing short
+programs, such as a command-line filter which reverses its input:
 
 =begin programlisting
 
-    while (<>)
-    {
+    while (<>) {
         chomp;
         say scalar reverse;
     }
 
 =end programlisting
+
+=begin tip
+
+X<builtins; C<<< <<>>  >>> >
+
+Perl 5.22 made this expression a little safer with the C<<< <<>> >>> operator.
+If a filename provided contains a special punctuation symbol like C<|filename>
+or C<filename|>, Perl would do something special with it. The double-diamond
+operator avoids this behavior.
+
+=end tip
 
 Why C<scalar>? C<say> imposes list context on its operands. C<reverse> passes
 its context on to its operands, treating them as a list in list context and a
@@ -295,5 +284,5 @@ If you run it with a list of files:
 
 ... the result will be one long stream of output.  Without any arguments, you
 can provide your own standard input by piping in from another program or typing
-directly. That's a lot of flexibility in a small program, but Perl's only
+directly. That's a lot of flexibility in a small program--and you're only
 getting started.
