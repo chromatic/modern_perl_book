@@ -297,16 +297,21 @@ X<C<$\>>
 X<global variables; C<$\>>
 
 Both C<print> and C<say> take a list of operands. Perl uses the magic global
-C<$,> as the separator between list values. Perl also uses any value of C<$\>
-as the final argument to C<print> or C<say>. Thus these two lines of code
-produce the same result:
+C<$,> as the separator between list values. Perl uses any value of C<$\> as the
+final argument to C<print>N<... but always uses C<\n> as an implicit final
+argument to C<say>.>. Remember that C<$\> is C<undef> by default. Thus these
+two print examples produce the same result:
 
 =begin programlisting
 
     my @princes = qw( Corwin Eric Random ... );
+    local $\    = "\n\n";
 
+    # prints a list of princes, followed by two newlines
     print @princes;
-    print join( $,, @princes ) . $\;
+
+    local $\    = '';
+    print join( $,, @princes ) . "\n\n";
 
 =end programlisting
 
