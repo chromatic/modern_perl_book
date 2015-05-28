@@ -1,20 +1,18 @@
 =head0 Perl and Its Community
 
-Perl's greatest accomplishment is the huge amount of reusable libraries
-developed for it. Where Perl 4 had forks to connect to databases such as Oracle
-and Sybase, for example, Perl now has a real extension mechanism. Larry wanted
-people to create and maintain their own extensions without fragmenting Perl
-into thousands of incompatible pidgins--and it worked.
+Perl's greatest accomplishment is the huge amount of reusable libraries it has
+available.  Larry Wall explicitly encouraged the Perl community to create and
+maintain their own extensions to solve every problem imaginable without
+fragmenting the language into incompatible pidgins. It worked.
 
 That technical accomplishment was almost as important as the growth of a
 community around Perl. I<People> write libraries. I<People> build on the work
 of other people. I<People> make a community worth joining and preserving and
 expanding.
 
-The Perl community is strong and healthy. It welcomes willing participants at
-all levels, from novices to core developers. Take advantage of the knowledge
-and experience of countless other Perl programmers, and you'll become a better
-programmer.
+The Perl community welcomes willing participants at all levels, from novices to
+core developers. Take advantage of the knowledge and experience and code of
+countless other programmers, and you'll become a better programmer.
 
 L<cpan>
 

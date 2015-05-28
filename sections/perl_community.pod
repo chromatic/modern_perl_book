@@ -5,20 +5,14 @@ Z<perl_community>
 X<perl.org>
 X<websites; perl.org>
 
-Perl's homepage at U<http://www.perl.org/> links to Perl documentation, source
-code, tutorials, mailing lists, and several important community projects. If
-you're new to Perl, the Perl beginners mailing list is a friendly place to ask
-novice questions and get accurate and helpful answers. See
+Perl's homepage at U<http://www.perl.org/> links to documentation, source code,
+tutorials, mailing lists, and several important community projects. If you're
+new to Perl, the Perl beginners mailing list is a friendly place to ask novice
+questions and get accurate and helpful answers. See
 U<http://learn.perl.org/faq/beginners.html>.
 
 The home of Perl development is U<http://dev.perl.org/>, which links to
 relevant resources for Perl's core development.
-
-X<perl.com>
-X<websites; perl.com>
-
-Perl.com publishes articles and tutorials about Perl and its culture. Its
-archives reach back into the 20th century. See U<http://www.perl.com/>.
 
 X<cpan.org>
 X<websites; cpan.org>
@@ -26,10 +20,8 @@ X<MetaCPAN>
 X<websites; MetaCPAN>
 
 The CPAN's (L<cpan>) central location is U<http://www.cpan.org/>, though
-experienced users spend more time on U<http://search.cpan.org/>. This central
-software distribution hub of reusable, free Perl code is an essential part of
-the Perl community. MetaCPAN (U<https://metacpan.org/>) is a recent alternative
-front end to the CPAN.
+experienced users spend more time on U<http://search.cpan.org/> and
+U<https://metacpan.org/>. Get used to browsing here for freely available libraries.
 
 X<PerlMonks>
 X<websites; PerlMonks>
@@ -139,13 +131,9 @@ X<IRC; #perl-help>
 X<IRC; #perl>
 
 When Perl mongers can't meet in person, many collaborate and chat online
-through the textual chat system known as IRC. Many of the most popular and
-useful Perl projects have their own IRC channels, such as I<#moose> and
-I<#catalyst>.
-
-The main server for Perl community is C<irc://irc.perl.org/>. Notable channels
-include I<#perl-help>, for general assistance on Perl programming, and
-I<#perl-qa>, devoted to testing and other quality issues. Be aware that the
-channel I<#perl> is a general purpose channel for discussing whatever its
-participants want to discussN<... and, as such, it's not primarily a
-helpdesk.>.
+through the textual chat system known as IRC. The main server for Perl
+community is C<irc://irc.perl.org/>. Be aware that the channel I<#perl> is a
+general purpose channel for discussing whatever its participants want to
+discuss. Direct questions to I<#perl-help> instead. Many of the most popular
+and useful Perl projects have their own IRC channels, such as I<#moose> and
+I<#catalyst>; you can find mention of these channels in project documentation.
