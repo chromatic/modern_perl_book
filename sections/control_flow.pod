@@ -17,8 +17,8 @@ the beginning (the first line of the file executed) and continues to the end:
 
 X<control flow directives>
 
-Perl's I<control flow directives> change the order of execution--that is, what
-happens next in the program.
+Perl's I<control flow directives> change the order of what happens next in the
+program.
 
 =head2 Branching Directives
 
@@ -38,32 +38,28 @@ multiple expressions into a unit which evaluates to a single boolean value:
 
 =begin programlisting
 
-    if ($name eq 'Bob')
-    {
+    if ($name eq 'Bob') {
         say 'Hello, Bob!';
         found_bob();
     }
 
 =end programlisting
 
-While the block form requires parentheses around its condition, the postfix
-form does not.
-
-The conditional expression may consist of multiple subexpressions, as long as
-it evaluates to something which can be coerced to a boolean value:
+The conditional expression may consist of multiple subexpressions which will be
+coerced to a boolean value:
 
 =begin programlisting
 
-    if ($name eq 'Bob' && not greeted_bob())
-    {
+    if ($name eq 'Bob' && not greeted_bob()) {
         say 'Hello, Bob!';
         found_bob();
     }
 
 =end programlisting
 
-In the postfix form, adding parentheses can clarify the intent of the code at
-the expense of visual cleanliness:
+The block form requires parentheses around its condition, but the postfix form
+does not. In the postfix form, adding parentheses can clarify the intent of the
+code at the expense of visual cleanliness:
 
 =begin programlisting
 
@@ -87,8 +83,7 @@ due to its potential for confusion:
 
 =begin programlisting
 
-    unless (is_leap_year() and is_full_moon())
-    {
+    unless (is_leap_year() and is_full_moon()) {
         frolic();
         gambol();
     }
@@ -100,8 +95,7 @@ validation in functions (L<postfix_parameter_validation>):
 
 =begin programlisting
 
-    sub frolic
-    {
+    sub frolic {
         # do nothing without parameters
         return unless @_;
 
@@ -113,18 +107,16 @@ validation in functions (L<postfix_parameter_validation>):
 X<control flow directives; C<else>>
 
 The block forms of C<if> and C<unless> both support the C<else> directive,
-which provides code to run when the conditional expression does not evaluate to
-the appropriate true or false value:
+which provides a block to execute when the conditional expression does not
+evaluate to the appropriate value:
 
 =begin programlisting
 
-    if ($name eq 'Bob')
-    {
+    if ($name eq 'Bob') {
         say 'Hi, Bob!';
         greet_user();
     }
-    else
-    {
+    else {
         say "I don't know you.";
         shun_user();
     }
@@ -136,13 +128,11 @@ of each other:
 
 =begin programlisting
 
-    unless ($name eq 'Bob')
-    {
+    unless ($name eq 'Bob') {
         say "I don't know you.";
         shun_user();
     }
-    else
-    {
+    else {
         say 'Hi, Bob!';
         greet_user();
     }
@@ -158,13 +148,11 @@ conditional operators:
 
 =begin programlisting
 
-    if ($name B<ne> 'Bob')
-    {
+    if ($name B<ne> 'Bob') {
         say "I don't know you.";
         shun_user();
     }
-    else
-    {
+    else {
         say 'Hi, Bob!';
         greet_user();
     }
@@ -176,45 +164,43 @@ be difficult to read.
 
 X<control flow directives; C<elsif>>
 
-If you have lots of conditions to check--and if they're mutually exclusive--use
-one or more C<elsif> directives:
+If you multiple and mutually exclusive conditions to check, use one or more
+C<elsif> directives:
 
 =begin programlisting
 
-    if ($name eq 'Bob')
-    {
+    if ($name eq 'Robert') {
         say 'Hi, Bob!';
         greet_user();
     }
-    elsif ($name eq 'Jim')
-    {
+    elsif ($name eq 'James') {
         say 'Hi, Jim!';
         greet_user();
     }
-    else
-    {
+    elsif ($name eq 'Armando') {
+        say 'Hi, Mando!';
+        greet_user();
+    }
+    else {
         say "You're not my uncle.";
         shun_user();
     }
 
 =end programlisting
 
-An C<unless> chain may also use an C<elsif> blockN<Good luck deciphering
-that!>. There is no C<elseunless>.
+An C<unless> chain may also use an C<elsif> block, but good luck deciphering that.
 
-Writing C<else if> is a syntax errorN<Larry prefers C<elsif> for aesthetic
-reasons, as well the prior art of the Ada programming language.>:
+Perl supports neither C<elseunless> nor C<else if>. Larry prefers C<elsif> for
+aesthetic reasons, as well the prior art of the Ada programming language:
 
 =begin programlisting
 
-    if ($name eq 'Rick')
-    {
+    if ($name eq 'Rick') {
         say 'Hi, cousin!';
     }
 
     # warning; syntax error
-    else if ($name eq 'Kristen')
-    {
+    else if ($name eq 'Kristen') {
         say 'Hi, cousin-in-law!';
     }
 
@@ -236,15 +222,15 @@ evaluates to one of two alternatives:
 
 =end programlisting
 
-The conditional expression precedes the question mark character (C<?>) and the
+The conditional expression precedes the question mark character (C<?>). The
 colon character (C<:>) separates the alternatives. The alternatives are
 expressions of arbitrary complexity--including other ternary conditional
-expressions.
+expressions, though consider clarity over concision.
 
 =begin sidebar
 
-An interesting, though obscure, idiom is to use the ternary conditional to
-select between alternative I<variables>, not only values:
+An interesting, though obscure, idiom uses the ternary conditional to select
+between alternative I<variables>, not only values:
 
 =begin programlisting
 
@@ -252,8 +238,6 @@ select between alternative I<variables>, not only values:
         Player->new;
 
 =end programlisting
-
-Again, weigh the benefits of clarity versus the benefits of conciseness.
 
 =end sidebar
 
@@ -270,8 +254,8 @@ example:
 
 =begin programlisting
 
-    say 'Both true!' if ok( 1, 'subexpression one' )
-                     && ok( 1, 'subexpression two' );
+    say 'Both true!' if ok 1, 'subexpression one'
+                     && ok 1, 'subexpression two';
 
     done_testing();
 
@@ -295,8 +279,8 @@ subexpressions, as the entire expression could not succeed:
 
 =begin programlisting
 
-    say 'Both true!' if ok( 0, 'subexpression one' )
-                     && ok( 1, 'subexpression two' );
+    say 'Both true!' if ok 0, 'subexpression one'
+                     && ok 1, 'subexpression two';
 
 =end programlisting
 
@@ -314,8 +298,8 @@ operations:
 
 =begin programlisting
 
-    say 'Either true!' if ok( 1, 'subexpression one' )
-                       || ok( 1, 'subexpression two' );
+    say 'Either true!' if ok 1, 'subexpression one'
+                       || ok 1, 'subexpression two';
 
 =end programlisting
 
@@ -328,7 +312,7 @@ This example prints:
 
 =end screen
 
-With the success of the first subexpression, Perl can avoid evaluating the
+Given the success of the first subexpression, Perl can avoid evaluating the
 second subexpression. If the first subexpression were false, the result of
 evaluating the second subexpression would dictate the result of evaluating the
 entire expression.
@@ -357,11 +341,11 @@ operator--all evaluate an expression in boolean context
 and C<!=> all produce boolean results when evaluated, Perl coerces the results
 of other expressions--including variables and values--into boolean forms.
 
-Perl has no single true value nor a single false value. Any number which
+Perl has neither a single true value nor a single false value. Any number which
 evaluates to 0 is false. This includes C<0>, C<0.0>, C<0e0>, C<0x0>, and so on.
 The empty string (C<''>) and C<'0'> evaluate to a false value, but the strings
 C<'0.0'>, C<'0e0'>, and so on do not. The idiom C<'0 but true'> evaluates to 0
-in numeric context but true in boolean context, thanks to its string contents.
+in numeric context--but true in boolean context due to its string contents.
 
 Both the empty list and C<undef> evaluate to a false value. Empty arrays and
 hashes return the number 0 in scalar context, so they evaluate to a false value
@@ -394,8 +378,8 @@ executes a statement or block until it has exhausted that list:
 
 =begin programlisting
 
-    foreach (1 .. 10)
-    {
+    # square the first ten positive integers
+    foreach (1 .. 10) {
         say "$_ * $_ = ", $_ * $_;
     }
 
@@ -429,16 +413,15 @@ A C<for> loop may use a named variable instead of the topic:
 
 =begin programlisting
 
-    for my $i (1 .. 10)
-    {
+    for my $i (1 .. 10) {
         say "$i * $i = ", $i * $i;
     }
 
 =end programlisting
 
-When a C<for> loop uses an iterator variable, the variable scope is I<within>
-the loop. Perl will set this lexical to the value of each item in the
-iteration. Perl will not modify the topic variable (C<$_>). If you have
+When a C<for> loop uses an iterator variable, the variable is scoped to the
+block I<within> the loop. Perl will set this lexical to the value of each item
+in the iteration. Perl will not modify the topic variable (C<$_>). If you have
 declared a lexical C<$i> in an outer scope, its value will persist outside the
 loop:
 
@@ -446,29 +429,26 @@ loop:
 
     my $i = 'cow';
 
-    for my $i (1 .. 10)
-    {
+    for my $i (1 .. 10) {
         say "$i * $i = ", $i * $i;
     }
 
-    is( $i, 'cow', 'Value preserved in outer scope' );
+    is $i, 'cow', 'Value preserved in outer scope';
 
 =end programlisting
 
 This localization occurs even if you do not redeclare the iteration variable as
-a lexicalN<... but I<do> declare your iteration variables as lexicals to reduce
-their scope.>:
+a lexical, but keep the habit of declaring iteration values as lexicals:
 
 =begin programlisting
 
     my $i = 'horse';
 
-    for $i (1 .. 10)
-    {
+    for $i (1 .. 10) {
         say "$i * $i = ", $i * $i;
     }
 
-    is( $i, 'horse', 'Value preserved in outer scope' );
+    is $i, 'horse', 'Value preserved in outer scope';
 
 =end programlisting
 
@@ -481,8 +461,8 @@ X<aliasing>
 X<aliasing; iteration>
 
 The C<for> loop I<aliases> the iterator variable to the values in the iteration
-such that any modifications to the value of the iterator modifies the iterated
-value in place:
+such that any modifications to the value of the iterator modifies the value in
+place:
 
 =begin programlisting
 
@@ -490,12 +470,12 @@ value in place:
 
     $_ **= 2 for @nums;
 
-    is( $nums[0], 1, '1 * 1 is 1' );
-    is( $nums[1], 4, '2 * 2 is 4' );
+    is $nums[0], 1, '1 * 1 is 1';
+    is $nums[1], 4, '2 * 2 is 4';
 
     ...
 
-    is( $nums[9], 100, '10 * 10 is 100' );
+    is $nums[9], 100, '10 * 10 is 100';
 
 =end programlisting
 
@@ -503,8 +483,7 @@ This aliasing also works with the block style C<for> loop:
 
 =begin programlisting
 
-    for my $num (@nums)
-    {
+    for my $num (@nums) {
         $num **= 2;
     }
 
@@ -514,8 +493,7 @@ This aliasing also works with the block style C<for> loop:
 
 =begin programlisting
 
-    for (@nums)
-    {
+    for (@nums) {
         $_ **= 2;
     }
 
@@ -534,8 +512,7 @@ You may occasionally see the use of C<for> with a single scalar variable:
 
 =begin programlisting
 
-    for ($user_input)
-    {
+    for ($user_input) {
         s/\A\s+//;      # trim leading whitespace
         s/\s+\z//;      # trim trailing whitespace
 
@@ -545,7 +522,7 @@ You may occasionally see the use of C<for> with a single scalar variable:
 =end programlisting
 
 This idiom (L<idioms>) uses the iteration operator for its side effect of
-aliasing C<$_>. Usually it's clearer to operate on the named variable itself.
+aliasing C<$_>, though it's clearer to operate on the named variable itself.
 
 =head2 Iteration and Scoping
 
@@ -559,26 +536,23 @@ some time debugging the effects:
 
 =begin programlisting
 
-    for (@values)
-    {
+    for (@values) {
         topic_mangler();
     }
 
-    sub topic_mangler
-    {
+    sub topic_mangler {
         s/foo/bar/;
     }
 
 =end programlisting
 
-Yes, the substitution in C<topic_mangler()> will modify elements of C<@values>
-in place. If you I<must> use C<$_> rather than a named variable, use the topic
+The substitution in C<topic_mangler()> will modify elements of C<@values> in
+place. If you I<must> use C<$_> rather than a named variable, use the topic
 aliasing behavior of C<for>:
 
 =begin programlisting
 
-    sub topic_mangler
-    {
+    sub topic_mangler {
         # was $_ = shift;
         B<for (shift)>
         {
@@ -601,8 +575,7 @@ The C-style I<for loop> requires you to manage the conditions of iteration:
 
 =begin programlisting
 
-    for (my $i = 0; $i <= 10; $i += 2)
-    {
+    for (my $i = 0; $i <= 10; $i += 2) {
         say "$i * $i = ", $i * $i;
     }
 
@@ -618,12 +591,11 @@ outside of the loop construct:
 
     my $i = 'pig';
 
-    for ($i = 0; $i <= 10; $i += 2)
-    {
+    for ($i = 0; $i <= 10; $i += 2) {
         say "$i * $i = ", $i * $i;
     }
 
-    isnt( $i, 'pig', '$i overwritten with a number' );
+    isnt $i, 'pig', '$i overwritten with a number';
 
 =end programlisting
 
@@ -645,8 +617,7 @@ stops. The final subexpression executes after each iteration of the loop body.
 
         # iteration ending subexpression
         say 'Incrementing ' . $i++
-    )
-    {
+    ) {
         say "$i * $i = ", $i * $i;
     }
 
@@ -669,7 +640,7 @@ All three subexpressions are optional. One infinite C<for> loop is:
 X<loops; C<while>>
 
 A I<while> loop continues until the loop conditional expression evaluates to a
-boolean false value. An idiomatic infinite loop is:
+false value. An idiomatic infinite loop is:
 
 =begin programlisting
 
@@ -684,8 +655,7 @@ context to a non-zero value and iteration will continue:
 
 =begin programlisting
 
-    while (@values)
-    {
+    while (@values) {
         say $values[0];
     }
 
@@ -698,8 +668,7 @@ C<@values> array by modifying the array within each iteration:
 
 =begin programlisting
 
-    while (@values)
-    {
+    while (@values) {
         my $value = shift @values;
         say $value;
     }
@@ -711,16 +680,15 @@ has some subtleties related to the truthiness of each value.
 
 =begin programlisting
 
-    while (my $value = shift @values)
-    {
+    while (my $value = shift @values) {
         say $value;
     }
 
 =end programlisting
 
-This loop will exit as soon as it reaches an element that evaluates to a false
-value, not necessarily when it has exhausted the array. That may be the desired
-behavior, but it probably deserves a comment to explain why.
+This loop will exit as soon as I<the assignment expression> used as the
+conditional expression evaluates to a false value. If that's what you intend,
+add a comment to the code.
 
 X<loops; C<until>>
 
@@ -730,8 +698,7 @@ value:
 
 =begin programlisting
 
-    until ($finished_running)
-    {
+    until ($finished_running) {
         ...
     }
 
@@ -742,8 +709,7 @@ filehandle:
 
 =begin programlisting
 
-    while (<$fh>)
-    {
+    while (<$fh>) {
         # remove newlines
         chomp;
         ...
@@ -755,8 +721,7 @@ Perl interprets this C<while> loop as if you had written:
 
 =begin programlisting
 
-    while (B<defined($_> = <$fh>B<)>)
-    {
+    while (B<defined($_> = <$fh>B<)>) {
         # remove newlines
         chomp;
         ...
@@ -796,8 +761,7 @@ Use a C<do> block to group several expressions into a single unit:
 
 =begin programlisting
 
-    do
-    {
+    do {
         say 'What is your name?';
         my $name = <>;
         chomp $name;
@@ -809,7 +773,7 @@ Use a C<do> block to group several expressions into a single unit:
 A C<do> block parses as a single expression which may contain several
 expressions. Unlike the C<while> loop's block form, the C<do> block with a
 postfix C<while> or C<until> will execute its body I<at least> once. This
-construct is less common than the other loop forms, but no less powerful.
+construct is less common than the other loop forms, but very powerful.
 
 =head2 Loops within Loops
 
@@ -819,14 +783,13 @@ You may nest loops within other loops:
 
 =begin programlisting
 
-    for my $suit (@suits)
-    {
+    for my $suit (@suits) {
         for my $values (@card_values) { ... }
     }
 
 =end programlisting
 
-When you do this, declare your iteration variables! The potential for confusion
+Note the value of declaring iteration variables! The potential for confusion
 with the topic variable and its scope is too great otherwise.
 
 Novices commonly exhaust filehandles accidentally while nesting C<foreach> and
@@ -837,11 +800,10 @@ C<while> loops:
     use autodie 'open';
     open my $fh, '<', $some_file;
 
-    for my $prefix (@prefixes)
-    {
+    for my $prefix (@prefixes) {
+
         # DO NOT USE; buggy code
-        while (<$fh>)
-        {
+        while (<$fh>) {
             say $prefix, $_;
         }
     }
@@ -850,17 +812,16 @@ C<while> loops:
 
 Opening the filehandle outside of the C<for> loop leaves the file position
 unchanged between each iteration of the C<for> loop. On its second iteration,
-the C<while> loop will have nothing to read and will not iterate. You can solve
-this problem in many ways; re-open the file inside the C<for> loop (wasteful
-but simple), slurp the entire file into memory (works best with small files),
-or C<seek> the filehandle back to the beginning of the file for each iteration:
+the C<while> loop will have nothing to read (the C<readline> will return a
+false value). You can solve this problem in many ways; re-open the file inside
+the C<for> loop (wasteful but simple), slurp the entire file into memory (works
+best with small files), or C<seek> the filehandle back to the beginning of the
+file for each iteration:
 
 =begin programlisting
 
-    for my $prefix (@prefixes)
-    {
-        while (<$fh>)
-        {
+    for my $prefix (@prefixes) {
+        while (<$fh>) {
             say $prefix, $_;
         }
 
@@ -873,20 +834,19 @@ or C<seek> the filehandle back to the beginning of the file for each iteration:
 
 X<loops; control>
 
-Sometimes you need to break out of a loop before you have exhausted the
-iteration conditions. Perl's standard control mechanisms--exceptions and
-C<return>--work, but you may also use I<loop control> statements.
+Sometimes you must break out of a loop before you have exhausted the iteration
+conditions. Perl's standard control mechanisms--exceptions and C<return>--work,
+but you may also use I<loop control> statements.
 
 X<loops; C<next>>
 
 The I<next> statement restarts the loop at its next iteration. Use it when
-you've done all you need to in the current iteration. To loop over lines in a
-file and skip everything that starts with the comment character C<#>:
+you've done everything you need to in the current iteration. To loop over lines
+in a file and skip everything that starts with the comment character C<#>:
 
 =begin programlisting
 
-    while (<$fh>)
-    {
+    while (<$fh>) {
         B<next> if /\A#/;
         ...
     }
@@ -909,8 +869,7 @@ once you've seen the ending token, write:
 
 =begin programlisting
 
-    while (<$fh>)
-    {
+    while (<$fh>) {
         next if /\A#/;
         B<last> if /\A__END__/
         ...
@@ -928,8 +887,7 @@ parser that joins lines which end with a backslash:
 
 =begin programlisting
 
-    while (my $line = <$fh>)
-    {
+    while (my $line = <$fh>) {
         chomp $line;
 
         # match backslash at the end of a line
@@ -947,20 +905,18 @@ parser that joins lines which end with a backslash:
 
 X<loops; labels>
 
-Using loop control statements in nested loops can be confusing. If you cannot
-avoid nested loops--by extracting inner loops into named functions--use a
-I<loop label> to clarify:
+Nested loops can be confusing, especially with loop control statements. If you
+cannot extract inner loops into named functions, use I<loop labels> to clarify
+your intent:
 
 =begin programlisting
 
-    LINE:
-    while (<$fh>)
-    {
+    B<LINE:>
+    while (<$fh>) {
         chomp;
 
-        PREFIX:
-        for my $prefix (@prefixes)
-        {
+        B<PREFIX:>
+        for my $prefix (@prefixes) {
             next LINE unless $prefix;
             say "$prefix: $_";
             # next PREFIX is implicit here
@@ -975,21 +931,19 @@ X<loops; C<continue>>
 
 The C<continue> construct behaves like the third subexpression of a C<for>
 loop; Perl executes any continue block before subsequent iterations of a loop,
-whether due to normal loop repetition or premature re-iteration from
-C<next>N<The Perl equivalent to C's C<continue> is C<next>.>. You may use it
-with a C<while>, C<until>, C<when>, or C<for> loop. Examples of C<continue> are
-rare, but it's useful any time you want to guarantee that something occurs with
-every iteration of the loop, regardless of how that iteration ends:
+whether due to normal loop repetition or premature re-iteration from C<next>.
+You may use it with a C<while>, C<until>, C<when>, or C<for> loop. Examples of
+C<continue> are rare, but it's useful any time you want to guarantee that
+something occurs with every iteration of the loop, regardless of how that
+iteration ends:
 
 =begin programlisting
 
-    while ($i < 10 )
-    {
+    while ($i < 10 ) {
         next unless $i % 2;
         say $i;
     }
-    B<continue>
-    {
+    B<continue> {
         say 'Continuing...';
         $i++;
     }
@@ -1006,36 +960,31 @@ Z<switch_statements>
 X<builtins; C<given>>
 
 Perl 5.10 introduced a new construct named C<given> as a Perlish C<switch>
-statement. It didn't quite work out; C<given> is still experimental, but it's
-less buggy in 5.18 than it was in any previous version of Perl. That's a nice
-way of saying "don't use it unless you know what you're doing."
+statement. It didn't quite work out; C<given> is still experimental, if less
+buggy in newer releases. Avoid it unless you know exactly what you're doing.
 
 X<builtins; C<when>>
 
 If you need a switch statement, use C<for> to alias the topic variable (C<$_>)
 and C<when> to match it against simple expressions with smart match
-(L<smart_match>) semantics. To write the Rock, Paper, ScissorsN<Adding Spock
-and Lizard is an exercise for the reader.> game:
+(L<smart_match>) semantics. To write the Rock, Paper, Scissors game:
 
 =begin programlisting
 
     my @options  = ( \&rock, \&paper, \&scissors );
     my $confused = "I don't understand your move.";
 
-    do
-    {
+    do {
         say "Rock, Paper, Scissors!  Pick one: ";
         chomp( my $user = <STDIN> );
         my $computer_match = $options[ rand @options ];
         $computer_match->( lc( $user ) );
     } until (eof);
 
-    sub rock
-    {
+    sub rock {
         print "I chose rock.  ";
 
-        for (shift)
-        {
+        for (shift) {
             when (/paper/)    { say 'You win!' };
             when (/rock/)     { say 'We tie!'  };
             when (/scissors/) { say 'I win!'   };
@@ -1043,12 +992,10 @@ and Lizard is an exercise for the reader.> game:
         }
     }
 
-    sub paper
-    {
+    sub paper {
         print "I chose paper.  ";
 
-        for (shift)
-        {
+        for (shift) {
             when (/paper/)    { say 'We tie!'  };
             when (/rock/)     { say 'I win!'   };
             when (/scissors/) { say 'You win!' };
@@ -1056,12 +1003,10 @@ and Lizard is an exercise for the reader.> game:
         }
     }
 
-    sub scissors
-    {
+    sub scissors {
         print "I chose scissors.  ";
 
-        for (shift)
-        {
+        for (shift) {
             when (/paper/)    { say 'I win!'   };
             when (/rock/)     { say 'You win!' };
             when (/scissors/) { say 'We tie!'  };
@@ -1072,15 +1017,7 @@ and Lizard is an exercise for the reader.> game:
 =end programlisting
 
 Perl executes the C<default> rule when none of the other conditions match.
-
-=begin tip Simplified Dispatch with Multimethods
-
-X<CPAN; C<MooseX::MultiMethods>>
-
-The CPAN module C<MooseX::MultiMethods> provides another technique to simplify
-this code.
-
-=end tip
+Adding Spock and Lizard is left as an exercise for the reader.
 
 =head2 Tailcalls
 
@@ -1093,8 +1030,7 @@ function's return value:
 
 =begin programlisting
 
-    sub log_and_greet_person
-    {
+    sub log_and_greet_person {
         my $name = shift;
         log( "Greeting $name" );
 
@@ -1124,8 +1060,7 @@ C<goto>", but it works:
 
 =begin programlisting
 
-    sub log_and_greet_person
-    {
+    sub log_and_greet_person {
         B<my ($name) = @_;>
         log( "Greeting $name" );
 
@@ -1141,8 +1076,8 @@ Second, this form of function call passes the contents of C<@_> implicitly to
 the called function. You may modify C<@_> to change the passed arguments if you
 desire.
 
-This technique is relatively rare; it's most useful when you want to hijack
-control flow to get out of the way of other functions inspecting C<caller>
-(such as when you're implementing special logging or some sort of debugging
-feature), or when using an algorithm which requires a lot of recursion.
-Remember it if you need it, but feel free not to use it.
+This technique is most useful when you want to hijack control flow to get out
+of the way of other functions inspecting C<caller> (such as when you're
+implementing special logging or some sort of debugging feature), or when using
+an algorithm which requires a lot of recursion. Remember it if you need it, but
+feel free not to use it.

@@ -5,18 +5,19 @@ Z<values>
 X<variables>
 X<values>
 
-As you gain experience, you'll discover that the structure of your programs
-will depend on the way you model your data with variables.
+New programmers spend a lot of time thinking about I<what> their programs must
+do. Mature programmers spend their time designing a model for the data their
+programs must understand.
 
-Variables allow the abstract manipulation of data while the values they hold
-make programs concrete and useful. The more accurate your values, the better
-your programs. These values are your aunt's name and address, the distance
-between your office and a golf course on the moon, or the weight of all of the
-cookies you've eaten in the past year. Within your program, the rules regarding
-the format of that data are often strict.
+Variables allow you to manipulate data in the abstract. The values held in
+variables make programs concrete and useful. These values are your aunt's name
+and address, the distance between your office and a golf course on the moon, or
+the sum of the masses of all of the cookies you've eaten in the past year.
+Within your program, the rules regarding the format of that data are often
+strict.
 
-Effective programs need effective (simple, fast, efficient, easy to use) ways
-of representing their data.
+Effective programs need effective (simple, fast, efficient, easy) ways to
+represent their data.
 
 =head2 Strings
 
@@ -29,9 +30,8 @@ when you give it meaning.
 
 X<strings; delimiters>
 
-To represent a literal string in your program, surround it with a pair of
-quoting characters. The most common I<string delimiters> are single and double
-quotes:
+A literal string appears in your program surrounded by a pair of quoting
+characters. The most common I<string delimiters> are single and double quotes:
 
 =begin programlisting
 
@@ -44,7 +44,7 @@ X<strings; single-quoted>
 
 Characters in a I<single-quoted string> are exactly and only ever what they
 appear to be, with two exceptions. To include a single quote inside a
-single-quoted string, escaping it with a leading backslash:
+single-quoted string, you must escape it with a leading backslash:
 
 =begin programlisting
 
@@ -53,9 +53,9 @@ single-quoted string, escaping it with a leading backslash:
 
 =end programlisting
 
-If you want a backslash at the I<end> of the string, you'll have to escape it
-as well, to avoid making Perl think you're trying to escape the closing
-delimiterN<Programming language design is full of corner cases like this.>:
+To include a backslash at the I<end> of a string, escape it with another
+leading backslash. Otherwise Perl will think you're trying to escape the
+closing delimiter:
 
 =begin programlisting
 
@@ -70,15 +70,15 @@ escape the second:
 
 =begin programlisting
 
-    is('Modern B<\> Perl', 'Modern B<\\> Perl',
-        'single quotes backslash escaping');
+    is 'Modern B<\> Perl', 'Modern B<\\> Perl',
+       'single quotes backslash escaping';
 
 =end programlisting
 
 X<strings; double-quoted>
 
-A I<double-quoted string> gives you more options. For example, you may encode
-otherwise invisible whitespace characters in the string:
+A I<double-quoted string> gives you more options, such as encoding otherwise
+invisible whitespace characters in the string:
 
 =begin programlisting
 
@@ -90,11 +90,11 @@ otherwise invisible whitespace characters in the string:
 
 =end programlisting
 
-This demonstrates a useful principle: there are multiple possible
-representations of the same string. You can include a tab within a string by
-typing the C<\t> escape sequence or by hitting the Tab key on your keyboard.
-Within Perl's purview, both strings behave the same way, even though the
-representation of the string may differ in the source code.
+You may have inferred from this that you can represent the same logical string
+in multiple ways. You can include a tab within a string by typing the C<\t>
+escape sequence or by hitting the Tab key on your keyboard. Both strings look
+and behave the same to Perl, even though the representation of the string may
+differ in the source code.
 
 A string declaration may cross (and include) newlines, so these two
 declarations are equivalent:
@@ -108,16 +108,15 @@ declarations are equivalent:
 
 =end programlisting
 
-With that said, the escape sequences are often much easier to read than their
-literal equivalents.
+... but the escape sequences are easier for humans to read.
 
 X<concatenation>
 X<strings; concatenation>
 X<operators; C<.>>
 
-As you manipulate and modify strings, Perl will change their sizes as
-appropriate; these strings have variable lengths. For example, you can combine
-multiple strings into a larger string with the I<concatenation> operator C<.>:
+Perl strings have variable--not fixed--lengths. Perl will change their sizes
+for you as you modify and manipulate them. Use the I<concatenation> operator
+C<.> to combine multiple strings together:
 
 =begin programlisting
 
@@ -125,15 +124,15 @@ multiple strings into a larger string with the I<concatenation> operator C<.>:
 
 =end programlisting
 
-... though this is effectively the same as if you'd initialized the string all
-at once.
+... though concatenating three literal strings like this is ultimate the same
+to Perl as writing a single string.
 
 X<interpolation>
 X<strings; interpolation>
 
-You may also I<interpolate> the value of a scalar variable or the values of an
-array within a double-quoted string, such that the I<current> contents of the
-variable become part of the string as if you'd concatenated them:
+When you I<interpolate> the value of a scalar variable or the values of an
+array within a double-quoted string, the I<current> contents of the variable
+become part of the string as if you'd concatenated them:
 
 =begin programlisting
 
@@ -151,7 +150,7 @@ with a leading backslash:
 
 =begin programlisting
 
-    my $quote = "\"Ouch,\", he cried.  \"That I<hurt>!\"";
+    my $quote = "\"Ouch,\", he cried. \"That I<hurt>!\"";
 
 =end programlisting
 
@@ -161,18 +160,18 @@ X<operators; C<q>>
 X<C<qq>; double quoting operator>
 X<operators; C<qq>>
 
-When repeated backslashing becomes unwieldy, use a I<quoting operator>, which
-allows you to choose an alternate string delimiter. The C<q> operator indicates
-single quoting (no interpolation), while the C<qq> operator provides double
-quoting behavior (interpolation). The character immediately following the
-operator determines the characters used to delimit the strings. If the
-character is the opening character of a balanced pair--such as opening and
-closing braces--the closing character will be the final delimiter. Otherwise,
-the character itself will be both the starting and ending delimiter.
+Repeated backslashing sometimes becomes unwieldy. A I<quoting operator> allows
+you to choose an alternate string delimiter. The C<q> operator indicates single
+quoting (no interpolation), while the C<qq> operator provides double quoting
+behavior (interpolation). The character immediately following the operator
+determines the characters used as delimiters. If the character is the opening
+character of a balanced pair--such as opening and closing braces--the closing
+character will be the final delimiter. Otherwise, the character itself will be
+both the starting and ending delimiter.
 
 =begin programlisting
 
-    my $quote     = B<qq{>"Ouch", he said.  "That I<hurt>!"B<}>;
+    my $quote     = B<qq{>"Ouch", he said. "That I<hurt>!"B<}>;
     my $reminder  =  B<q^>Don't escape the single quote!B<^>;
     my $complaint =  B<q{>It's too early to be awake.B<}>;
 
@@ -181,8 +180,7 @@ the character itself will be both the starting and ending delimiter.
 X<heredocs>
 X<strings; heredocs>
 
-When declaring a complex string with a series of embedded escapes is tedious,
-use the I<heredoc> syntax to assign multiple lines to a string:
+Use the I<heredoc> syntax to assign multiple lines to a string:
 
 =begin programlisting
 
@@ -197,11 +195,10 @@ use the I<heredoc> syntax to assign multiple lines to a string:
 
 =end programlisting
 
-The C<< <<'END_BLURB' >> syntax has three parts. The double angle-brackets
-introduce the heredoc. The quotes determine whether the heredoc follows single-
-or double-quoted behavior. (The default behavior is double-quoted.)
-C<END_BLURB> is an arbitrary identifier which the Perl parser uses as the
-ending delimiter.
+This syntax has three parts. The double angle-brackets introduce the heredoc.
+The quotes determine whether the heredoc follows single- or double-quoted
+behavior; double-quoted behavior is the default. C<END_BLURB> is an arbitrary
+identifier, chosen by the programmer, used as the ending delimiter.
 
 Regardless of the indentation of the heredoc declaration itself, the ending
 delimiter must I<start> at the beginning of the line:
@@ -228,7 +225,7 @@ If the identifier I<begins> with whitespace, that same whitespace must be
 present before the ending delimiter--that is, C<<< <<' END_HEREDOC'>> >>> needs
 a leading space before C<END_HEREDOC>. Yet if you indent the identifier, Perl
 will I<not> remove equivalent whitespace from the start of each line of the
-heredoc. Yes, that's less than ideal.
+heredoc. Keep that design wart in mind; it'll eventually surprise you.
 
 =end sidebar
 
@@ -239,10 +236,10 @@ Using a string in a non-string context will induce coercion (L<coercion>).
 Z<unicode>
 X<Unicode>
 
-I<Unicode> is a system for representing the characters of the world's written
-languages. While most English text uses a character set of only 127 characters
-(which requires seven bits of storage and fits nicely into eight-bit bytes),
-it's naE<iuml>ve to believe that you won't someday need an umlaut.
+I<Unicode> is a system used to represent the characters of the world's written
+languages. Most English text uses a character set of only 127 characters (which
+requires seven bits of storage and fits nicely into eight-bit bytes), but it's
+naE<iuml>ve to believe that you won't someday need an umlaut.
 
 Perl strings can represent either of two separate but related data types:
 
@@ -259,7 +256,7 @@ Unicode character set.
 
 X<octet>
 
-Binary data is a sequence of I<octets>--8 bit numbers, each of which can
+Binary data in a sequence of I<octets>--8 bit numbers, each of which can
 represent a number between 0 and 255.
 
 =back
@@ -281,8 +278,8 @@ characters.
 However, because of how your operating system represents data on disk or from
 users or over the network--as sequences of octets--Perl can't know if the data
 you read is an image file or a text document or anything else. By default, Perl
-treats all incoming data as sequences of octets. It's up to you to add a
-specific meaning to that data.
+treats all incoming data as sequences of octets. It's up to you to give that
+data meaning.
 
 =head3 Character Encodings
 
@@ -296,19 +293,20 @@ A Unicode string is a sequence of octets which represents a sequence of
 characters. A I<Unicode encoding> maps octet sequences to characters. Some
 encodings, such as UTF-8, can encode all of the characters in the Unicode
 character set. Other encodings represent only a subset of Unicode characters.
-For example, ASCII encodes plain English text with no accented characters,
-while Latin-1 can represent text in most languages which use the Latin
-alphabet.
+For example, ASCII encodes plain English text (no accented characters allowed),
+while Latin-1 can represent text in most languages which use the Latin alphabet
+(umlauts, grave and circumflex accents, et cetera).
 
 =begin tip An Evolving Standard
 
-Perl 5.14 supports the Unicode 6.0 standard, 5.16 the 6.1 standard, and 5.18
-the 6.2 standard. See U<http://unicode.org/versions/>.
+Perl 5.16 supports the Unicode 6.1 standard, 5.18 the 6.2 standard, 5.20 the
+6.3 standard, and 5.22 the 7.0 standard. See U<http://unicode.org/versions/>.
 
 =end tip
 
 To avoid most Unicode problems, always decode to and from the appropriate
-encoding at the inputs and outputs of your program.
+encoding at the inputs and outputs of your program. Read that sentence again.
+Memorize it. You'll be glad of it later.
 
 =head3 Unicode in Your Filehandles
 
@@ -316,11 +314,11 @@ X<C<open>>
 X<builtins; C<open>>
 X<IO layers>
 
-When you tell Perl that a specific filehandle (L<files>) should handle data
-with a specific Unicode encoding, Perl will use an I<IO layer> to convert
-between octets and characters. The I<mode> operand of the C<open> builtin
-allows you to request an IO layer by name. For example, the C<:utf8> layer
-decodes UTF-8 data:
+When you tell Perl that a specific filehandle (L<files>) should interpret data
+via specific Unicode encoding, Perl will use an I<IO layer> to convert between
+octets and characters. The I<mode> operand of the C<open> builtin allows you to
+request an IO layer by name. For example, the C<:utf8> layer decodes UTF-8
+data:
 
 =begin programlisting
 
@@ -345,17 +343,18 @@ Use C<binmode> to apply an IO layer to an existing filehandle:
 
 =end programlisting
 
-Without the C<utf8> mode, printing certain Unicode strings to a filehandle will
-result in a warning (C<Wide character in %s>), because files contain octets,
-not Unicode characters.
+If you want to write Unicode to files, you must specify the desired encoding.
+Otherwise, Perl will warn you when you print Unicode characters that don't look
+like octets; this is what C<Wide character in %s> means.
 
 X<C<utf8::all>>
 
 =begin tip Enable UTF-8 Everywhere
 
-The C<utf8::all> module enables UTF-8 IO layers on all filehandles throughout
-your program and enables all sorts of other Unicode features. It's very handy,
-but it's no substitute for (eventually) figuring out what your program needs.
+Use the C<utf8::all> module to add the UTF-8 IO layer to all filehandles
+throughout your program. The module also enables all sorts of other Unicode
+features. It's very handy, but it's a blunt instrument and no substitute for
+understanding what your program needs to do.
 
 =end tip
 
@@ -365,10 +364,9 @@ X<C<Encode>>
 X<C<decode()>>
 X<C<encode()>>
 
-The core module C<Encode> provides a function named C<decode()> to convert a
-scalar containing octets to Perl's internal version of Unicode strings. The
-corresponding C<encode()> function converts from Perl's internal encoding to
-the desired encoding:
+The core module C<Encode>'s C<decode()> function converts a sequence of octets
+to Perl's internal Unicode representation. The corresponding C<encode()>
+function converts from Perl's internal encoding to the desired encoding:
 
 =begin programlisting
 
@@ -378,9 +376,9 @@ the desired encoding:
 =end programlisting
 
 To handle Unicode properly, you must always I<decode> incoming data via a known
-encoding and I<encode> outgoing data to a known encoding. Yes, this means you
-have to know what kind of data you expect to give and receive, but you should
-know this anyway. Being specific will help you avoid all kinds of trouble.
+encoding and I<encode> outgoing data to a known encoding. Again, you must know
+what kind of data you expect to consume and to produce. Being specific will
+help you avoid all kinds of trouble.
 
 =head3 Unicode in Your Programs
 
@@ -388,10 +386,10 @@ X<pragmas; C<utf8>>
 X<C<utf8> pragma>
 X<encoding>
 
-You may include Unicode characters in your programs in three ways. The easiest
-is to use the C<utf8> pragma (L<pragmas>), which tells the Perl parser to
-interpret the rest of the source code file with the UTF-8 encoding. This allows
-you to use Unicode characters in strings and identifiers:
+The easiest way to use Unicode characters in your source code us with the
+C<utf8> pragma (L<pragmas>), which tells the Perl parser to decode the rest of
+the file as UTF-8 characters. This allows you to use Unicode characters in
+strings and identifiers:
 
 =begin programlisting
 
@@ -404,13 +402,13 @@ you to use Unicode characters in strings and identifiers:
 =end programlisting
 
 To I<write> this code, your text editor must understand UTF-8 and you must save
-the file with the appropriate encodingN<Again, any two programs which
-communicate with Unicode data must agree on the encoding of that data.>.
+the file with the appropriate encoding. Again, any two programs which
+communicate with Unicode data must agree on the encoding of that data.
 
 X<strings; C<\x{}>>
 X<C<\x{}>; escape sequence for character encodings>
 
-Within double-quoted strings, you may use the Unicode escape sequence to
+Within double-quoted strings, you may also use a Unicode escape sequence to
 represent character encodings. The syntax C<\x{}> represents a single
 character; place the hex form of the character's Unicode numberN<See
 U<http://unicode.org/charts/> for an exhaustive list.> within the curly
@@ -427,9 +425,9 @@ X<pragmas; C<charnames>>
 X<strings; C<\N{}>>
 X<C<\N{}>; escape sequence for named character encodings>
 
-Some Unicode characters have names, and these names are often clearer to read
-than their numbers even though they're much longer. Use the C<charnames> pragma
-to enable them and the C<\N{}> escape to refer to them:
+Some Unicode characters have names, which make them easier for other
+programmers to read. Use the C<charnames> pragma to enable named characters via
+the C<\N{}> escape syntax:
 
 =begin programlisting
 
@@ -449,23 +447,26 @@ anywhere else you may legitimately use a string or a character.
 
 =head3 Implicit Conversion
 
-Most Unicode problems in Perl arise from the fact that a string could be either
-a sequence of octets or a sequence of characters. Perl allows you to combine
-these types through the use of implicit conversions. When these conversions are
-wrong, they're rarely I<obviously> wrong and they're often I<spectacularly>
-wrong in ways that are difficult to debug.
+Most Unicode problems in Perl arise from the fact that a string could be
+I<either> a sequence of octets I<or> a sequence of characters. Perl allows you
+to combine these types through the use of implicit conversions. When these
+conversions are wrong, they're rarely I<obviously> wrong but they're also often
+I<spectacularly> wrong in ways that are difficult to debug.
 
 When Perl concatenates a sequence of octets with a sequence of Unicode
 characters, it implicitly decodes the octet sequence using the Latin-1
 encoding. The resulting string will contain Unicode characters. When you print
 Unicode characters, Perl will encode the string using UTF-8, because Latin-1
-cannot represent the entire set of Unicode characters--Latin-1 is a subset of
-UTF-8.
+cannot represent the entire set of Unicode characters--because Latin-1 is a
+subset of UTF-8.
 
 The asymmetry between encodings and octets can lead to Unicode strings encoded
 as UTF-8 for output and decoded as Latin-1 from input. Worse yet, when the text
 contains only English characters with no accents, the bug stays hidden, because
 both encodings use the same representation for every character.
+
+You don't have to understand all of this right now; just know that this
+behavior happens and that it's not what you want.
 
 =begin programlisting
 
@@ -474,10 +475,9 @@ both encodings use the same representation for every character.
 
 =end programlisting
 
-If C<$name> contains an English name such as I<Alice> you will never notice any
-problem, because the Latin-1 representation is the same as the UTF-8
-representation. If C<$name> contains a name such as I<JosE<eacute>>, C<$name>
-can contain several possible values:
+If C<$name> contains I<Alice>, you will never notice any problem: because the
+Latin-1 representation is the same as the UTF-8 representation. If C<$name>
+contains I<JosE<eacute>>, C<$name> can contain several possible values:
 
 =over 4
 
@@ -518,8 +518,8 @@ octets.
 
 The string literal contains octets.
 
-=item * It is a non-ASCII string literal with the C<utf8> or C<encoding> pragma
-in effect and contains Unicode characters.
+=item * It is a non-ASCII string literal (the C<utf8> or C<encoding> pragma is
+in effect) and contains Unicode characters.
 
 =begin programlisting
 
@@ -533,10 +533,10 @@ in effect and contains Unicode characters.
 If both C<$hello> and C<$name> are Unicode strings, the concatenation will
 produce another Unicode string.
 
-If both strings are octet streams, Perl will concatenate them into a new octet
-string. If both values are octets of the same encoding--both Latin-1, for
-example, the concatenation will work correctly. If the octets do not share an
-encoding--for example, a concatenation appending UTF-8 data to Latin-1
+If both strings are octet sequences, Perl will concatenate them into a new
+octet sequence. If both values are octets of the same encoding--both Latin-1,
+for example, the concatenation will work correctly. If the octets do not share
+an encoding--for example, a concatenation appending UTF-8 data to Latin-1
 data--then the resulting sequence of octets makes sense in I<neither> encoding.
 This could happen if the user entered a name as UTF-8 data and the greeting
 were a Latin-1 string literal, but the program decoded neither.
@@ -549,8 +549,8 @@ into five Unicode characters to form I<JosE<Atilde>E<copy>> (I<sic>) instead of
 I<JosE<eacute>> because the UTF-8 data means something else when decoded as
 Latin-1 data.
 
-If your head is spinning, you're not alone. Always decode on input and encode
-on output.
+Again, you don't have to follow all of the details here if you remember this:
+always decode on input and encode on output.
 
 X<perl.com>
 
@@ -567,10 +567,9 @@ U<http://www.perl.com/pub/2012/04/perlunicook-standard-preamble.html>.
 X<C<unicode_strings>>
 X<pragmas; C<feature>>
 
-Perl 5.12 added a feature, C<unicode_strings>, which enables Unicode semantics
-for all string operations within its scope. Perl 5.14 improved this feature and
-Perl 5.16 completed it. If you work with Unicode in Perl, you need to use at
-least Perl 5.14 and, ideally, Perl 5.18.
+If you work with Unicode in Perl, use at least Perl 5.18 (and ideally the
+latest version). See also the C<feature> pragma for information on the
+C<unicode_strings> feature.
 
 =end sidebar
 
@@ -593,6 +592,9 @@ hexadecimal forms:
     my $octal     = B<0>52;
     my $hex       = B<0x>20;
 
+    # only in Perl 5.22
+    my $hex_float = B<0x>1.0p-3;
+
 =end programlisting
 
 X<numbers; representation prefixes>
@@ -612,14 +614,17 @@ X<underscore>
 Even though you can write floating-point values explicitly with perfect
 accuracy, Perl--like most programming languages--represents them internally in
 a binary format. This representation is sometimes imprecise in specific ways;
-consult C<perldoc perlnumber> for more details.
+consult C<perldoc perlnumber> for more details. Perl 5.22 allows you to use a
+hexadecimal representation of floating point values, so as to keep maximum
+precision. See "Scalar value constructors" in C<perldoc perldata> for more
+information.
 
 =end tip
 
-You may I<not> use commas to separate thousands in numeric literals, lest the
-parser interpret the commas as the comma operator. Instead, use underscores
-within the number. The parser will treat them as invisible characters. Thus all
-of these are equivalent, though the second might be the most readable:
+You may I<not> use commas to separate thousands in numeric literals, as the
+parser will interpret them as the comma operator. Instead, use underscores.
+These three examples are equivalent, though the second might be the most
+readable:
 
 =begin programlisting
 
@@ -633,10 +638,10 @@ X<C<Scalar::Util>>
 X<C<looks_like_number()>>
 
 Because of coercion (L<coercion>), Perl programmers rarely have to worry about
-converting data from outside the program to numbers. Perl will treat anything
-which looks like a number I<as> a number when evaluated in a numeric context.
-In the rare circumstances where I<you> need to know if something looks like a
-number without evaluating it in a numeric context, use the C<looks_like_number>
+converting incoming data to numbers. Perl will treat anything which looks like
+a number I<as> a number when evaluated in a numeric context. In the rare
+circumstances where I<you> need to know if something looks like a number
+without evaluating it in a numeric context, use the C<looks_like_number>
 function from the core module C<Scalar::Util>. This function returns a true
 value if Perl will consider the given argument numeric.
 
@@ -684,7 +689,7 @@ string context--such as interpolating it into a string:
 X<builtins; C<defined>>
 
 The C<defined> builtin returns a true value if its operand evaluates to a
-defined value (that is, anything other than C<undef>):
+defined value (anything other than C<undef>):
 
 =begin programlisting
 
@@ -703,9 +708,9 @@ X<C<()>; empty list>
 When used on the right-hand side of an assignment, the C<()> construct
 represents an empty list. In scalar context, this evaluates to C<undef>. In
 list context, it is an empty list. When used on the left-hand side of an
-assignment, the C<()> construct imposes list context. Why would you ever do
-this? To count the number of elements returned from an expression in list
-context without using a temporary variable, use the idiom (L<idioms>):
+assignment, the C<()> construct imposes list context. Hence this idiom
+(L<idioms>) to count the number of elements returned from an expression in list
+context without using a temporary variable:
 
 =begin programlisting
 
@@ -722,8 +727,8 @@ that assignment takes place in scalar context, which evaluates to the number of
 items on the right hand side of the assignment. As a result, C<$count> contains
 the number of elements in the list returned from C<get_clown_hats()>.
 
-Sound complicated? It can confuse new programmers, but with practice, you'll
-see how Perl's fundamental design features fit together.
+This idiom often confuses new programmers, but with practice, you'll understand
+how Perl's fundamental design features fit together.
 
 =head2 Lists
 
@@ -754,16 +759,16 @@ verbatim in source code as values:
 
 =end programlisting
 
-Parentheses do not I<create> lists. The comma operator creates lists. Where
-present, the parentheses in these examples group expressions to change their
+Parentheses do not I<create> lists. The comma operator creates lists. The
+parentheses in these examples merely group expressions to change their
 I<precedence> (L<precedence>).
 
 X<operators; range>
 X<operators; C<..>>
 X<C<..>; range operator>
 
-Use the range operator to create lists of literals in a compact formN<See?
-Lists but no parentheses!>:
+As an example of lists without parens, use the range operator to create lists
+of literals in a compact form:
 
 =begin programlisting
 
@@ -776,12 +781,12 @@ X<operators; C<qw()>>
 X<C<qw()>; quote words operator>
 
 Use the C<qw()> operator to split a literal string on whitespace to produce a
-list of stringsN<< Parentheses, but you could use any delimiter, such as
-C<qw!!>. >>:
+list of strings. As this is a quoting operator, you may choose any delimiters
+you like:
 
 =begin programlisting
 
-    my @stooges = qw( Larry Curly Moe Shemp Joey Kenny );
+    my @stooges = qw! Larry Curly Moe Shemp Joey Kenny !;
 
 =end programlisting
 
@@ -796,11 +801,11 @@ is often a mistake.
 Lists can (and often do) occur as the results of expressions, but these lists
 do not appear literally in source code.
 
-Lists and arrays are not interchangeable in Perl. You may store a list in an
-array and you may coerce an array to a list, but lists and arrays are separate
-concepts. Lists are values. Arrays are containers. For example, indexing into a
-list always occurs in list context. Indexing into an array can occur in scalar
-context (for a single element) or list context (for a slice):
+Lists and arrays are not interchangeable in Perl. Lists are values. Arrays are
+containers. You may store a list in an array and you may coerce an array to a
+list, but they are separate entities. For example, indexing into a list always
+occurs in list context. Indexing into an array can occur in scalar context (for
+a single element) or list context (for a slice):
 
 =begin programlisting
 

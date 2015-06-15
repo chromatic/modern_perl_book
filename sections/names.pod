@@ -5,12 +5,12 @@ Z<names>
 X<names>
 X<identifiers>
 
-I<Names> (or I<identifiers>) are everywhere in Perl programs: you get to choose
-them for variables, functions, packages, classes, and even filehandles. Valid
-Perl names all begin with a letter or an underscore and may optionally include
-any combination of letters, numbers, and underscores. When the C<utf8> pragma
+I<Names> (or I<identifiers>) are everywhere in Perl programs: you choose them
+for variables, functions, packages, classes, and even filehandles. Valid Perl
+names all begin with a letter or an underscore and may optionally include any
+combination of letters, numbers, and underscores. When the C<utf8> pragma
 (L<unicode>) is in effect, you may use any UTF-8 word characters in
-identifiers. All of these are valid Perl identifiers:
+identifiers. These are valid Perl identifiers:
 
 =begin programlisting
 
@@ -38,17 +38,17 @@ These are invalid Perl identifiers:
 
 X<symbolic lookups>
 
-I<Names exist primarily for the benefit of the programmer>. These rules apply
+I<Names exist primarily for your benefit as a programmer>. These rules apply
 only to literal names which appear in your source code, such as C<sub
-fetch_pie> or C<my $waffleiron>. Only Perl's parser enforces the rules about
-identifier names. Perl allows you to refer to entities with names generated at
-runtime or provided as input to a program. These I<symbolic lookups> provide
-flexibility at the expense of safety.
+fetch_pie> or C<my $waffleiron>.
 
-In particular, invoking functions or methods indirectly or looking up symbols
-in a namespace lets you bypass Perl's parser. Symbolic lookups can produce
-confusing code. As Mark Jason Dominus recommends so
-effectivelyN<U<http://perl.plover.com/varvarname.html>>, prefer a hash
+Only Perl's parser enforces the rules about identifier names. You may also
+refer to entities with names generated at runtime or provided as input to a
+program. These I<symbolic lookups> provide flexibility at the expense of
+safety. Invoking functions or methods indirectly or looking up symbols in a
+namespace lets you bypass Perl's parser. Symbolic lookups can produce confusing
+code. As Mark Jason Dominus
+recommendsN<U<http://perl.plover.com/varvarname.html>>, prefer a hash
 (L<hashes>) or nested data structure (L<nested_data_structures>) over variables
 named, for example, C<$recipe1>, C<$recipe2>, and so on.
 
@@ -77,9 +77,8 @@ variables> (L<hashes>) use the percent sign (C<%>):
 
 =end programlisting
 
-Sigils allow you to separate variables into different namespaces. It's
-possible--though confusing--to declare multiple variables of the same name with
-different types:
+Sigils separate variables into different namespaces. It's possible--though
+confusing--to declare multiple variables of the same name with different types:
 
 =begin programlisting
 
@@ -87,15 +86,15 @@ different types:
 
 =end programlisting
 
-Though Perl won't get confused, people reading this code will.
+Perl won't get confused, though humans will.
 
 X<variant sigils>
 
-The sigil of a variable can change depending on what you do with it; the term
-for this is I<variant sigils>. As context determines how many items you expect
-from an operation or what type of data you expect to get, so the sigil governs
-how you manipulate the data of a variable. For example, you must use the scalar
-sigil (C<$>) to access a single element of an array or a hash:
+The sigil of a variable changes depending on its use; this change is called
+I<variant sigils>. As context determines how many items you expect from an
+operation or what type of data you expect to get, so the sigil governs how you
+manipulate the data of a variable. For example, use the scalar sigil (C<$>) to
+access a single element of an array or a hash:
 
 =begin programlisting
 
@@ -118,8 +117,8 @@ I<rvalue> (the value assigned; on the I<r>ight side of the C<=> character).
 X<slices>
 
 Similarly, accessing multiple elements of a hash or an array--an operation
-known as I<slicing>--uses the at symbol (C<@>) and imposes list contextN<...
-even if the list itself has zero or one elements>:
+known as I<slicing>--uses the at symbol (C<@>) and imposes list context--even
+if the list itself has zero or one elements:
 
 =begin programlisting
 
@@ -131,42 +130,40 @@ even if the list itself has zero or one elements>:
 
 =end programlisting
 
-The most reliable way to determine the type of a variable--scalar, array, or
-hash--is to examine the operations performed on it. Scalars support all basic
-operations, such as string, numeric, and boolean manipulations. Arrays support
-indexed access through square brackets. Hashes support keyed access through
-curly brackets.
+Given Perl's variant sigils, the most reliable way to determine the type of a
+variable--scalar, array, or hash--is to observe the operations performed on it.
+Arrays support indexed access through square brackets. Hashes support keyed
+access through curly brackets. Scalars have neither.
 
 =head2 Namespaces
 
 X<fully-qualified name>
 X<namespaces>
 
-Perl provides a mechanism to group similar functions and variables into their
-own unique named spaces--I<namespaces> (L<packages>). A namespace is collection
-of symbols grouped under a globally unique name. Perl allows multi-level
-namespaces, with names joined by double colons (C<::>), where
+Perl allows you to collect similar functions and variables into their own
+unique named spaces--I<namespaces> (L<packages>). A namespace is collection of
+symbols grouped under a globally unique name. Perl allows multi-level
+namespaces, with names joined by double colons (C<::>).
 C<DessertShop::IceCream> refers to a logical collection of related variables
 and functions, such as C<scoop()> and C<pour_hot_fudge()>.
 
 Within a namespace, you may use the short name of its members. Outside of the
-namespace, you must refer to a member by its I<fully-qualified name>.  Within
+namespace, you must refer to a member by its I<fully-qualified name>. Within
 C<DessertShop::IceCream>, C<add_sprinkles()> refers to the same function as
 does C<DessertShop::IceCream::add_sprinkles()> outside of the namespace.
 
-While standard naming rules apply to package names, user-defined packages all
-start with uppercase letters by convention. The Perl core reserves lowercase
-package names for core pragmas (L<pragmas>), such as C<strict> and C<warnings>.
-This is a policy enforced primarily by community guidelines.
+Standard identifier rules apply to package names. By convention, the Perl core
+reserves lowercase package names for core pragmas (L<pragmas>), such as
+C<strict> and C<warnings>. User-defined packages all start with uppercase
+letters. This is a policy enforced primarily by community guidelines.
 
 All namespaces in Perl are globally visible. When Perl looks up a symbol in
 C<DessertShop::IceCream::Freezer>, it looks in the C<main::> symbol table for a
-symbol representing the C<DessertShop::> namespace, then in that namespace for
-the C<IceCream::> namespace, and so on.  Yet C<Freezer::> is visible from
-outside of the C<IceCream::> namespace. Namespaces are all globally accessible.
-The nesting of the former within the latter is only a storage mechanism, and
-implies nothing further about relationships between parent and child or sibling
-packages.
+symbol representing the C<DessertShop::> namespace, in that namespace for the
+C<IceCream::> namespace, and so on. Yet C<Freezer::> is visible from outside of
+the C<IceCream::> namespace. The nesting of the former within the latter is
+only a storage mechanism; it implies nothing about relationships between parent
+and child or sibling packages.
 
-Only a programmer can make I<logical> relationships between entities
+Only you as a programmer can make I<logical> relationships between entities
 obvious--by choosing good names and organizing them well.

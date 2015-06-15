@@ -18,7 +18,7 @@ dollar-sign (C<$>) sigil (L<sigils>).
 
 Scalar values and scalar context have a deep connection; assigning to a scalar
 imposes scalar context. Using the scalar sigil with an aggregate variable
-imposes scalar context to access a single element of the hash or array.
+accesses a single element of the hash or array in scalar context.
 
 =end tip
 
@@ -127,7 +127,7 @@ X<numbers; false>
 Scalars do not contain a separate slot for boolean values. In boolean context,
 the empty strings (C<''>) and C<'0'> evaluate to false values. All other
 strings evaluate to true values. In boolean context, numbers which evaluate to
-zero (C<0>, C<0.0>, and C<0e0>) evaluate to false values. All other numbers are
+zero (C<0>, C<0.0>, and C<0e0>) evaluate to false values. All other numbers
 evaluate to true values.
 
 =begin tip What is Truth?
@@ -140,4 +140,4 @@ number and what really is a number.
 
 X<C<undef>>
 
-One other value is always a false value: C<undef>.
+C<undef> is always a false value.

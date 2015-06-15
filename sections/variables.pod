@@ -4,12 +4,11 @@ Z<variables>
 X<variable>
 
 A I<variable> in Perl is a storage location for a value (L<values>). While a
-trivial program can manipulate values directly, most programs work with
-variables to simplify the logic of the code. A variable represents values; it's
-easier to explain the Pythagorean theorem in terms of the variables C<a>, C<b>,
-and C<c> than by intuiting its principle by producing a long list of valid
-values. This concept may seem basic, but to program effectively, you must learn
-the art of balancing the generic and reusable with the specific.
+trivial program may manipulate values directly, most programs work with
+variables. Think of this like algebra: you manipulate symbols to describe
+formulas. It's easier to explain the Pythagorean theorem in terms of the
+variables C<a>, C<b>, and C<c> than by intuiting its principle by producing a
+long list of valid values.
 
 =head2 Variable Scopes
 
@@ -19,12 +18,12 @@ X<variables; scope>
 X<scope>
 X<builtins; C<package>>
 
-Variables are available within your program depending on their scope
-(L<scope>). Most of the variables you will encounter have lexical scope
-(L<lexical_scope>), or scope governed by the syntax of the program as written.
-Most lexical scopes are either the contents of blocks delimited by curly braces
+Your ability to access a variable within your program depends on the variable's
+scope (L<scope>). Most variables in modern Perl programs have a lexical scope
+(L<lexical_scope>) governed by the syntax of the program as written.  Most
+lexical scopes are either the contents of blocks delimited by curly braces
 (C<{> and C<}>) or entire files. I<Files> themselves provide their own lexical
-scopes, such that the C<package> declaration on its own does not create a new
+scopes, such that a C<package> declaration on its own does not create a new
 scope:
 
 =begin programlisting
@@ -42,24 +41,22 @@ scope:
 
 X<builtins; C<package>; BLOCK>
 
-You may also provide a block to the C<package> declarationN<As of 5.14.>.
-Because this introduces a new block, it also provides a new lexical scope:
+You may also provide a block to the C<package> declaration. Because this
+introduces a new block, it also provides a new lexical scope:
 
 =begin programlisting
 
-    package Store::Toy
-    {
+    package Store::Toy {
         my $discount = 0.10;
     }
 
-    package Store::Music
-    {
-        # $discount not available
+    package Store::Music {
+        # $discount not visible
     }
 
     package Store::BoardGame;
 
-    # $discount still not available
+    # $discount still not visible
 
 =end programlisting
 
@@ -75,16 +72,15 @@ scalar, array, or hash. The sigil used when I<accessing> a variable varies
 depending on what you do to the variable. For example, you declare an array as
 C<@values>. Access the first element--a single value--of the array with
 C<$values[0]>. Access a list of values from the array with C<@values[ @indices
-]>. As you might expect, the sigil you use determines amount context in an
-lvalue situation:
+]>. The sigil you use determines amount context in an lvalue situation:
 
     # imposes lvalue context on some_function()
-    @values[ @indexes ] = some_function()
+    @values[ @indexes ] = some_function();
 
 ... or gets coerced in an rvalue situation:
 
     # list evaluated to final element in scalar context
-    my $element = @values[ @indices ]
+    my $element = @values[ @indices ];
 
 =head2 Anonymous Variables
 
@@ -93,8 +89,8 @@ X<variables; anonymous>
 
 Perl variables do not I<require> names. Names exist to help you, the
 programmer, keep track of an C<$apple>, C<@barrels>, or C<%cookie_recipes>.
-Variables created I<without> literal names in your source code are I<anonymous>
-variables. The only way to access anonymous variables is by reference
+Variables created I<without> literal names in your source code are
+I<anonymous>. The only way to access anonymous variables is by reference
 (L<references>).
 
 =head2 Variables, Types, and Coercion
@@ -112,17 +108,17 @@ stores that value. Perl's type system deals with I<value types> and I<container
 types>. While a variable's I<container type>--scalar, array, or hash--cannot
 change, Perl is flexible about a variable's value type. You may store a string
 in a variable in one line, append to that variable a number on the next, and
-reassign a reference to a function (L<function_references>) on the thirdN<...
-but you'll confuse yourself if you do all of that.>.
+reassign a reference to a function (L<function_references>) on the third,
+though this is a great way to confuse yourself.
 
 Performing an operation on a variable which imposes a specific value type may
-cause coercion (L<coercion>) from the variable's existing value type.
+cause coercion (L<coercion>) of the variable's existing value type.
 
 For example, the documented way to determine the number of entries in an array
 is to evaluate that array in scalar context (L<context_philosophy>). Because a
-scalar variable can only ever contain a scalar, assigning an array to a scalar
-imposes scalar context on the operation, and an array evaluated in scalar
-context produces the number of elements in the array:
+scalar variable can only ever contain a scalar, assigning an array (the rvalue)
+to a scalar (the lvalue) imposes scalar context on the operation, and an array
+evaluated in scalar context produces the number of elements in the array:
 
 =begin programlisting
 
