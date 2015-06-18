@@ -7,8 +7,7 @@ what happens when you pass values to functions:
 
 =begin programlisting
 
-    sub reverse_greeting
-    {
+    sub reverse_greeting {
         my $name = reverse shift;
         return "Hello, $name!";
     }
@@ -30,14 +29,16 @@ lots of extra defensive code.
 
 Sometimes it's useful to modify values in place. If you want to pass a hash
 full of data to a function to modify it, creating and returning a new hash for
-each change could be tedious (to say nothing of inefficient).
+each change could be tedious and inefficient, at least without some amazing
+compiler magic.
 
 X<references>
 
 Perl provides a mechanism by which to refer to a value without making a copy.
 Any changes made to that I<reference> will update the value in place, such that
-I<all> references to that value see the modified value. A reference is a
-first-class scalar data type which refers to another first-class data type.
+I<all> references to that value will refer to the modified value. A reference
+is a first-class scalar data type which refers to another first-class data
+type.
 
 =head2 Scalar References
 
@@ -69,8 +70,7 @@ dereferencing:
 
 =begin programlisting
 
-    sub reverse_in_place
-    {
+    sub reverse_in_place {
         my $name_ref = shift;
         B<$$name_ref>   = reverse B<$$name_ref>;
     }
@@ -86,14 +86,12 @@ The double scalar sigil (C<$$>) dereferences a scalar reference.
 X<references; aliases>
 X<aliases>
 
-While in C<@_>, parameters behave as I<aliases> to caller variablesN<Remember
-that C<for> loops produce a similar aliasing behavior
-(L<iteration_and_aliasing>).>, so you can modify them in place:
+Parameters in C<@_> behave as I<aliases> to caller variables
+(L<iteration_and_aliasing>), so you can modify them in place:
 
 =begin programlisting
 
-    sub reverse_value_in_place
-    {
+    sub reverse_value_in_place {
         $_[0] = reverse $_[0];
     }
 
@@ -104,12 +102,12 @@ that C<for> loops produce a similar aliasing behavior
 =end programlisting
 
 You usually don't want to modify values this way--callers rarely expect it, for
-example. Assigning parameters to lexicals within your functions removes this
-aliasing behavior.
+example. Assigning parameters to lexicals within your functions makes copies of
+the values in C<@_> and avoids this aliasing behavior.
 
 =begin tip Saving Memory with References
 
-Modifying a value in place, or returning a reference to a scalar can save
+Modifying a value in place or returning a reference to a scalar can save
 memory. Because Perl copies values on assignment, you could end up with
 multiple copies of a large string. Passing around references means that Perl
 will only copy the references--a far cheaper operation. Before you modify your
@@ -124,8 +122,7 @@ clarifies and other times it obscures:
 
 =begin programlisting
 
-    sub reverse_in_place
-    {
+    sub reverse_in_place {
         my $name_ref   = shift;
         B<${ $name_ref }> = reverse B<${ $name_ref }>;
     }
@@ -134,16 +131,17 @@ clarifies and other times it obscures:
 
 If you forget to dereference a scalar reference, Perl will likely coerce the
 reference into a string value of the form C<SCALAR(0x93339e8)> or a numeric
-value like C<0x93339e8>. This value indicates the type of reference (in this
-case, C<SCALAR>) and the location in memory of the referenceN<... not that that
-is useful for anything beyond distinguishing between references.>.
+value such as C<0x93339e8>. This value indicates the type of reference (in this
+case, C<SCALAR>) and the location in memory of the reference (because that's an
+unambiguous design choice, not because you can do anything with the memory
+location itself).
 
 =begin tip References Aren't Pointers
 
 Perl does not offer native access to memory locations. The address of the
 reference is a value used as an identifier. Unlike pointers in a language such
 as C, you cannot modify the address of a reference or treat it as an address
-into memory. These addresses are only I<mostly> unique because Perl may reuse
+into memory. These addresses are I<mostly> unique because Perl may reuse
 storage locations as it reclaims unused memory.
 
 =end tip
@@ -193,7 +191,7 @@ context):
 X<<< C<< -E<gt> >>; dereferencing arrow >>>
 X<<< operators; C<< -E<gt> >> >>>
 
-Access individual elements by using the dereferencing arrow (C<< -> >>):
+Access individual elements with the dereferencing arrow (C<< -> >>):
 
 =begin programlisting
 
@@ -228,8 +226,8 @@ readability.
 X<references; anonymous arrays>
 X<arrays; anonymous>
 
-To create an anonymous array--without using a declared array--surround a list
-of values or a list-producing expression with square brackets:
+To create an anonymous array, surround a list-producing expression with square
+brackets:
 
 =begin programlisting
 
@@ -302,12 +300,11 @@ sigil C<%>:
 =end programlisting
 
 Access individual values of the hash (to store, delete, check the existence of,
-or retrieve) by using the dereferencing arrow or double sigils:
+or retrieve) by using the dereferencing arrow or double scalar sigils:
 
 =begin programlisting
 
-    sub translate_to_spanish
-    {
+    sub translate_to_spanish {
         my $color = shift;
         return B<< $colors_ref->{$color} >>;
         # or return B<< $$colors_ref{$color} >>;
@@ -356,10 +353,10 @@ X<functions; references>
 X<references; functions>
 X<functions; first-class>
 
-Perl supports I<first-class functions> in that a function is a data type just
-as is an array or hash. In other words, Perl supports I<function references>.
-This enables many advanced features (L<closures>). Create a function reference
-by using the reference operator and the function sigil (C<&>) on the name of a
+Perl supports I<first-class functions>; a function is a data type just as is an
+array or hash. In other words, Perl supports I<function references>. This
+enables many advanced features (L<closures>). Create a function reference by
+using the reference operator and the function sigil (C<&>) on the name of a
 function:
 
 =begin programlisting
@@ -388,9 +385,9 @@ Create anonymous functions with the bare C<sub> keyword:
 X<builtins; C<sub>>
 
 The use of the C<sub> builtin I<without> a name compiles the function but does
-not install it in the current namespace. The only way to access this function
-is via the reference returned from C<sub>. Invoke the function reference with
-the dereferencing arrow:
+not register it with the current namespace. The only way to access this
+function is via the reference returned from C<sub>. Invoke the function
+reference with the dereferencing arrow:
 
 =begin programlisting
 
@@ -437,9 +434,9 @@ X<references; filehandles>
 X<C<IO::File>>
 X<C<IO::Handle>>
 
-When you use C<open>'s (and C<opendir>'s) lexical filehandle form, you deal
-with filehandle references. Internally, these filehandles are objects of the
-class C<IO::File>. You can call methods on them directly:
+The lexical filehandle form of C<open> and C<opendir> operate on filehandle
+references. Internally, these filehandles are objects of the class C<IO::File>.
+You can call methods on them directly:
 
 =begin programlisting
 
@@ -460,15 +457,13 @@ Old code might C<use IO::Handle;>. Older code may take references to typeglobs:
 
 =end programlisting
 
-This idiom predates lexical filehandlesN<Introduced with Perl 5.6.0 in March
-2000, so this code is stuck in the previous millennium.>. You may still use the
-reference operator on typeglobs to take references to package-global
-filehandles such as C<STDIN>, C<STDOUT>, C<STDERR>, or C<DATA>--but these are
-all global names anyhow.
+This idiom predates the lexical filehandles introduced by Perl 5.6 in March
+2000.  You may still use the reference operator on typeglobs to take references
+to package-global filehandles such as C<STDIN>, C<STDOUT>, C<STDERR>, or
+C<DATA>--but these are all global names anyhow.
 
-Prefer lexical filehandles when possible. With the benefit of explicit scoping,
-lexical filehandles allow you to manage the lifespan of filehandles as a
-feature of Perl's memory management.
+As lexical filehandles respect explicit scoping, they allow you to manage the
+lifespan of filehandles as a feature of Perl's memory management.
 
 =head2 Reference Counts
 
@@ -477,11 +472,11 @@ X<references; reference counting>
 
 X<lexicals; lifecycle>
 
-Perl uses a memory management technique known as I<reference counting>.  Every
-Perl value has an attached counter. Perl increases this counter every time
-something takes a reference to the value, whether implicitly or explicitly.
-Perl decreases that counter every time a reference goes away. When the counter
-reaches zero, Perl knows it can safely recycle that value. Consider the
+Perl uses a memory management technique known as I<reference counting>. Every
+Perl value has a counter attached to it, internally. Perl increases this
+counter every time something takes a reference to the value, whether implicitly
+or explicitly. Perl decreases that counter every time a reference goes away.
+When the counter reaches zero, Perl can safely recycle that value. Consider the
 filehandle opened in this inner scope:
 
 =begin programlisting
@@ -502,8 +497,9 @@ the source code mention it, but there's only one variable, the one named
 C<$fh>.) C<$fh> is only in scope in the block. Its value never leaves the
 block. When execution reaches the end of the block, Perl recycles the variable
 C<$fh> and decreases the reference count of the filehandle referred to by
-C<$fh>. The filehandle's reference count reaches zero, so Perl recycles it to
-reclaim memory, and calls C<close()> implicitly.
+C<$fh>. The filehandle's reference count reaches zero, so Perl destroys the
+filehandle to reclaim memory.  As part of the process, it calls C<close()> on
+the filehandle implicitly.
 
 You don't have to understand the details of how all of this works. You only
 need to understand that your actions in taking references and passing them

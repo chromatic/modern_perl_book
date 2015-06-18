@@ -4,14 +4,15 @@ Z<packages>
 X<packages>
 X<namespaces>
 
-A Perl I<namespace> associates and encapsulates various named entities within a
-named category. It's like your family name or a brand name. Unlike a real-world
-name, a namespace implies no direct relationship between entities. Such
-relationships may exist, but they do not have to.
+A Perl I<namespace> associates and encapsulates various named entities. It's
+like your family name or a brand name. Unlike a real-world name, a namespace
+implies no direct relationship between entities. Such relationships may exist,
+but they are not required to.
 
 A I<package> in Perl is a collection of code in a single namespace. The
 distinction is subtle: the package represents the source code and the namespace
-represents the entity created when Perl parses that code.
+represents the internal data structure Perl uses to collect and group that
+code.
 
 X<builtins; C<package>>
 
@@ -33,14 +34,14 @@ All global variables and functions declared or referred to after the package
 declaration refer to symbols within the C<MyCode> namespace. You can refer to
 the C<@boxes> variable from the C<main> namespace only by its I<fully
 qualified> name of C<@MyCode::boxes>. A fully qualified name includes a
-complete package name, so you can call the C<add_box()> function only by
+complete package name, so that you can call the C<add_box()> function by
 C<MyCode::add_box()>.
 
 X<scope; packages>
 
 The scope of a package continues until the next C<package> declaration or the
-end of the file, whichever comes first. With C<package>, you may provide a
-block which explicitly delineates the scope of the declaration:
+end of the file, whichever comes first. You may also provide a block with
+C<package> to delineate the scope of the declaration:
 
 =begin programlisting
 
@@ -60,9 +61,9 @@ X<C<$VERSION>>
 
 Besides a name, a package has a version and three implicit methods, C<import()>
 (L<importing>), C<unimport()>, and C<VERSION()>. C<VERSION()> returns the
-package's version number. This number is a series of numbers contained in a
-package global named C<$VERSION>. By rough convention, versions are a series of
-integers separated by dots, as in C<1.23> or C<1.1.10>.
+package's version. This is a series of numbers contained in a package global
+named C<$VERSION>. By rough convention, versions are a series of dot-separated
+integers such as C<1.23> or C<1.1.10>.
 
 X<version numbers>
 
@@ -84,8 +85,7 @@ Combined with the block form of a C<package> declaration, you can write:
 
 =end programlisting
 
-This syntax is still rare, though. You're more likely to see the pre-5.14
-version:
+You're more likely to see the older version of this code, written as:
 
 =begin programlisting
 
@@ -99,8 +99,7 @@ X<C<UNIVERSAL>>
 X<C<VERSION()>>
 
 Every package inherits a C<VERSION()> method from the C<UNIVERSAL> base class.
-You may override C<VERSION()>, though there are few reasons to do so. This
-method returns the value of C<$VERSION>:
+This method returns the value of C<$VERSION>:
 
 =begin programlisting
 
@@ -117,19 +116,20 @@ argument:
     # require at least 2.1
     Some::Plugin->VERSION( 2.1 );
 
-    die "Your plugin $version is too old"
-        unless $version > 2;
+    die "Your plugin $version is too old" unless $version > 2;
 
 =end programlisting
+
+You may override C<VERSION()>, though there are few reasons to do so.
 
 =head2 Packages and Namespaces
 
 X<namespaces>
 X<packages; namespaces>
 
-Every C<package> declaration creates a new namespace, if necessary, and causes
-the parser to put all subsequent package global symbols (global variables and
-functions) into that namespace.
+Every C<package> declaration creates a new namespace, if necessary. After Perl
+parses that declaration, it will store all subsequent package global symbols
+(global variables and functions) in that namespace.
 
 X<namespaces; open>
 
@@ -154,7 +154,7 @@ at any point, either with a new package declaration:
 
 =end programlisting
 
-... or by fully qualifying function names at the point of declaration:
+... or by declaring functions with fully qualified names:
 
 
 =begin programlisting
@@ -167,15 +167,15 @@ at any point, either with a new package declaration:
 =end programlisting
 
 You can add to a package at any point during compilation or runtime, regardless
-of the current file, though building up a package from multiple separate
-declarations (in multiple files!) can make code difficult to spelunk.
+of the current file, though building up a package from multiple declarations in
+multiple can make code difficult to spelunk.
 
 X<namespaces; multi-level>
 
 Namespaces can have as many levels as your organizational scheme requires,
-though namespaces are not hierarchical. The only relationship between packages
-is semantic, not technical. Many projects and businesses create their own
-top-level namespaces. This reduces the possibility of global conflicts and
+though namespaces are not hierarchical. The only relationship between separate
+packages is semantic, not technical. Many projects and businesses create their
+own top-level namespaces. This reduces the possibility of global conflicts and
 helps to organize code on disk. For example:
 
 =over 4

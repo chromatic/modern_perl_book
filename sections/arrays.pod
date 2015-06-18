@@ -6,10 +6,10 @@ X<arrays>
 X<C<@> sigil>
 X<sigils; C<@>>
 
-Perl I<arrays> are I<first-class> data structures--the language supports them
-as a built-in data type--which store zero or more scalars. You can access
-individual members of the array by integer indexes, and you can add or remove
-elements at will. Arrays grow or shrink as you manipulate them.
+Perl's I<array> data type is a language-supported aggregate which can store
+zero or more scalars. You can access individual members of the array by integer
+indexes, and you can add or remove elements at will. Arrays grow or shrink as
+you manipulate them.
 
 The C<@> sigil denotes an array. To declare an array:
 
@@ -26,7 +26,7 @@ X<C<$>; sigil>
 X<sigils; C<$>>
 
 Use the scalar sigil to I<access> an individual element of an array.
-C<$cats[0]> is an unambiguous use of the C<@cats> array, because postfix
+C<$cats[0]> refers unambiguously to the C<@cats> array, because postfix
 (L<fixity>) square brackets (C<[]>) always mean indexed access to an array.
 
 The first element of an array is at the zeroth index:
@@ -77,10 +77,10 @@ unwieldy C<$#cats> syntax:
 
 =end programlisting
 
-When you care more about the relative position of an element in the array, use
-a negative array index. The last element of an array is available at the index
-C<-1>. The second to last element of the array is available at index C<-2>, and
-so on:
+Most of the time you care more about the relative position of an array element.
+Use a negative array index to refer to elements from the end. The last element
+of an array is available at the index C<-1>. The second to last element of the
+array is available at index C<-2>, and so on:
 
 =begin programlisting
 
@@ -111,10 +111,10 @@ Assign to individual positions in an array directly by index:
 
 =end programlisting
 
-If you assign to an index beyond the array's current bound, Perl will extend
-the array to account for the new size and will fill in all intermediary
-positions with C<undef>. After the first assignment, the array will contain
-C<undef> at positions 0, 1, and 2 and C<Jack> at position 3.
+If you assign to an index beyond the array's current bounds, Perl will extend
+the array for you. As you might expect, all intermediary positions with then
+contain C<undef>. After the first assignment, the array will contain C<undef>
+at positions 0, 1, and 2 and C<Jack> at position 3.
 
 As an assignment shortcut, initialize an array from a list:
 
@@ -128,10 +128,9 @@ As an assignment shortcut, initialize an array from a list:
 parentheses, this would assign C<Daisy> as the first and only element of the
 array, due to operator precedence (L<precedence>). C<Petunia>, C<Tuxedo>, and
 all of the other cats would be evaluated in void context and Perl would
-complainN<So would the cats, Petunia especially.>.
+complain. (So would all the other cats, especially Petunia.)
 
-You may assign any expression which produces a list in list context to an
-array:
+You may assign any expression which produces a list to an array:
 
 =begin programlisting
 
@@ -160,7 +159,8 @@ something to mark a list, Perl and readers of the code would get confused.
 =begin tip Arrays Start Empty
 
 C<my @items = ();> is a longer and noisier version of C<my @items>.
-Freshly-declared arrays start out empty.
+Freshly-declared arrays start out empty. Not "full of C<undef>" empty. Really
+empty.
 
 =end tip
 
@@ -168,7 +168,7 @@ Freshly-declared arrays start out empty.
 
 Sometimes an array is more convenient as an ordered, mutable collection of
 items than as a mapping of indices to values. Perl provides several operations
-to manipulate array elements without using indices.
+to manipulate array elements.
 
 X<arrays; C<push>>
 X<arrays; C<pop>>
@@ -223,19 +223,16 @@ the start of an array, respectively:
 
 C<unshift> prepends a list of elements to the start of the array and returns
 the new number of elements in the array. C<shift> removes and returns the first
-element of the array.
-
-Few programs use the return values of C<push> and C<unshift>.
+element of the array. Almost no one uses these return values.
 
 X<arrays; C<splice>>
 X<builtins; C<splice>>
 
 The C<splice> operator removes and replaces elements from an array given an
 offset, a length of a list slice, and replacement elements. Both replacing and
-removing are optional; you may omit either behavior. The C<perlfunc>
-description of C<splice> demonstrates its equivalences with C<push>, C<pop>,
-C<shift>, and C<unshift>. One effective use is removal of two elements from an
-array:
+removing are optional; you may omit either. The C<perlfunc> description of
+C<splice> demonstrates its equivalences with C<push>, C<pop>, C<shift>, and
+C<unshift>. One effective use is removal of two elements from an array:
 
 =begin programlisting
 
@@ -254,10 +251,8 @@ The C<each> operator allows you to iterate over an array by index and value:
 
 =begin programlisting
 
-    while (my ($index, $value) = each @bookshelf)
-    {
-        say "#$index: $value";
-        ...
+    while (my ($position, $title) = each @bookshelf) {
+        say "#$position: $title";
     }
 
 =end programlisting
@@ -271,9 +266,9 @@ X<slices; array>
 X<C<@>; sigil>
 X<sigils; C<@>>
 
-The I<array slice> construct allows you to access elements of an array in list
-context. Unlike scalar access of an array element, this indexing operation
-takes a list of zero or more indices and uses the array sigil (C<@>):
+An I<array slice> allows you to access elements of an array in list context.
+Unlike scalar access of an array element, this indexing operation takes a list
+of zero or more indices and uses the array sigil (C<@>):
 
 =begin programlisting
 
@@ -337,8 +332,7 @@ normal function, they will flatten into a single list:
 
     take_pets_to_vet( @cats, @dogs );
 
-    sub take_pets_to_vet
-    {
+    sub take_pets_to_vet {
         # BUGGY: do not use!
         my (@cats, @dogs) = @_;
         ...
@@ -349,11 +343,11 @@ normal function, they will flatten into a single list:
 Within the function, C<@_> will contain nine elements, not two, because list
 assignment to arrays is I<greedy>. An array will consume as many elements from
 the list as possible. After the assignment, C<@cats> will contain I<every>
-argument passed to the function. C<@dogs> will be emptyN<... but Rosie thinks
-she's a cat, so it's not all bad.>.
+argument passed to the function. C<@dogs> will be empty, and woe to anyone who
+treats Rodney as a cat.
 
-This flattening behavior sometimes confuses novices who attempt to create
-nested arrays:
+This flattening behavior sometimes confuses people who attempt to create nested
+arrays:
 
 =begin programlisting
 
@@ -374,8 +368,9 @@ nested arrays:
 
 =end programlisting
 
-... because parentheses merely group expressions. They do not I<create> lists.
-To avoid this flattening behavior, use array references (L<array_references>).
+... because, again, parentheses merely group expressions. They do not I<create>
+lists. To avoid this flattening behavior, use array references
+(L<array_references>).
 
 =head2 Array Interpolation
 
@@ -384,7 +379,7 @@ X<interpolation; arrays>
 X<C<$">>
 X<C<$LIST_SEPARATOR>>
 
-Arrays interpolate in strings as lists of the stringifications of each item
+Arrays interpolate in strings as lists of the stringification of each item
 separated by the current value of the magic global C<$">. The default value of
 this variable is a single space. Its F<English.pm> mnemonic is
 C<$LIST_SEPARATOR>. Thus:
@@ -398,7 +393,8 @@ C<$LIST_SEPARATOR>. Thus:
 
 =end programlisting
 
-Localize C<$"> with a delimiter to ease your debuggingN<Credit goes to Mark Jason Dominus for this technique.>:
+Per Mark Jason Dominus, localize C<$"> with a delimiter to improve your
+debugging:
 
 =begin programlisting
 

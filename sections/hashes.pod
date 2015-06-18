@@ -4,16 +4,16 @@ Z<hashes>
 
 X<hashes>
 
-A I<hash> is a first-class Perl data structure which associates string keys
-with scalar values. Just as the name of a variable corresponds to something
-which holds a value, so does a hash key refer to something which contains a
-value. Think of a hash like a contact list: use the names of your friends to
-look up their phone numbers. Other languages call hashes I<tables>,
-I<associative arrays>, I<dictionaries>, or I<maps>.
+A I<hash> is an aggregate data structure which associates string keys with
+scalar values. Just as the name of a variable corresponds to something which
+holds a value, so a hash key refers to something which contains a value. Think
+of a hash like a contact list: use the names of your friends to look up their
+birthdays. Other languages call hashes I<tables>, I<associative arrays>,
+I<dictionaries>, and I<maps>.
 
 Hashes have two important properties: they store one scalar per unique key and
 they provide no specific ordering of keys. Keep that latter property in mind.
-Though it has always been true in Perl, it's very, very true in Perl 5.18.
+Though it has always been true in Perl, it's very, very true in modern Perl.
 
 =head2 Declaring Hashes
 
@@ -110,8 +110,8 @@ coercion.
 
 =end notetip
 
-Assign an empty list to empty a hashN<You may occasionally see C<undef
-%hash>, but that's a little ugly.>:
+You may occasionally see C<undef %hash>, but that's a little ugly. Assign an
+empty list to empty a hash:
 
 =begin programlisting
 
@@ -123,7 +123,7 @@ Assign an empty list to empty a hashN<You may occasionally see C<undef
 
 X<hashes; values>
 
-To access an individual hash value, use a key (a I<keyed access> operation):to
+To access an individual hash value, use the I<keyed access> syntax:
 
 =begin programlisting
 
@@ -155,7 +155,7 @@ automatically according to the same rules as fat commas:
 
 Novices often always quote string literal hash keys, but experienced developers
 elide the quotes whenever possible. If you code this way, you can use the rare
-presence of quotes to indicate that you're doing something different.
+presence of quotes to indicate that you're doing something special on purpose.
 
 =end tip
 
@@ -163,14 +163,12 @@ Even Perl builtins get the autoquoting treatment:
 
 =begin programlisting
 
-    my %addresses =
-    (
+    my %addresses = (
         Leonardo => '1123 Fib Place',
         Utako    => 'Cantor Hotel, Room 1',
     );
 
-    sub get_address_from_name
-    {
+    sub get_address_from_name {
         return $addresses{B<+>shift};
     }
 
@@ -194,14 +192,13 @@ an arbitrary expression--not only a function call--as the key of a hash:
 =end programlisting
 
 Hash keys can only be strings. Anything that evaluates to a string is an
-acceptable hash key. Perl will go so far as to coerce (L<coercion>) any
-non-string into a string. For example, if you use an object as a hash key,
+acceptable hash key. Perl will go so far as to coerce (L<coercion>) an
+expression into a string. For example, if you use an object as a hash key,
 you'll get the stringified version of that object instead of the object itself:
 
 =begin programlisting
 
-    for my $isbn (@isbns)
-    {
+    for my $isbn (@isbns) {
         my $book = Book->fetch_by_isbn( $isbn );
 
         # unlikely to do what you want
@@ -220,16 +217,13 @@ contains the given key:
 
 =begin programlisting
 
-    my %addresses =
-    (
+    my %addresses = (
         Leonardo => '1123 Fib Place',
         Utako    => 'Cantor Hotel, Room 1',
     );
 
-    say "Have Leonardo's address"
-        if exists $addresses{Leonardo};
-    say "Have Warnie's address"
-        if exists $addresses{Warnie};
+    say "Have Leonardo's address" if exists $addresses{Leonardo};
+    say "Have Warnie's address"   if exists $addresses{Warnie};
 
 =end programlisting
 
@@ -240,10 +234,9 @@ may exist with a value even if that value evaluates to a boolean false
 
 =begin programlisting
 
-    my  %false_key_value = ( 0 => '' );
-    ok( %false_key_value,
-         'hash containing false key & value
-          should evaluate to a true value' );
+    my %false_key_value = ( 0 => '' );
+    ok %false_key_value,
+       'hash containing false key & value should evaluate to a true value';
 
 =end programlisting
 
@@ -270,14 +263,12 @@ X<hashes; C<keys>>
 X<builtins; C<keys>>
 
 Hashes are aggregate variables, but their pairwise nature is unique. Perl
-allows you to iterate over the keys of a hash, over the values of a hash, or
-over pairs of keys and values. The C<keys> operator produces a list of hash
-keys:
+allows you to iterate over a hash's keys, its values, or pairs of its keys and
+values. The C<keys> operator produces a list of hash keys:
 
 =begin programlisting
 
-    for my $addressee (keys %addresses)
-    {
+    for my $addressee (keys %addresses) {
         say "Found an address for $addressee!";
     }
 
@@ -290,8 +281,7 @@ The C<values> operator produces a list of hash values:
 
 =begin programlisting
 
-    for my $address (values %addresses)
-    {
+    for my $address (values %addresses) {
         say "Someone lives at $address";
     }
 
@@ -300,46 +290,44 @@ The C<values> operator produces a list of hash values:
 X<hashes; C<each>>
 X<builtins; C<each>>
 
-The C<each> operator produces a list of two-element lists of the key and the
-value:
+The C<each> operator produces a list of two-element key/value lists:
 
 =begin programlisting
 
-    while (my ($addressee, $address) = each %addresses)
-    {
+    while (my ($addressee, $address) = each %addresses) {
         say "$addressee lives at $address";
     }
 
 =end programlisting
 
-Unlike arrays, there is no obvious ordering to these lists. The ordering
-depends on the internal implementation of the hash, the particular version of
-Perl you are using, the size of the hash, and a random factor. Even so, the
-order of hash items is consistent between C<keys>, C<values>, and C<each>.
-Modifying the hash may change the order, but you can rely on that order if the
-hash remains the same. However, even if two hashes have the I<same> keys and
-values, you cannot rely on the iteration order between those hashes being the
-same. They may have been constructed differently or have had elements removed.
-In Perl 5.18, even if they were constructed the same way, you cannot depend on
-the same iteration order between them.
+Unlike arrays, hash elements have no obvious ordering. The ordering depends on
+the internal implementation of the hash, the particular version of Perl you are
+using, the size of the hash, and a random factor. Even so, the order of hash
+items is consistent between C<keys>, C<values>, and C<each>. Modifying the hash
+may change the order, but you can rely on that order if the hash remains the
+same. However, even if two hashes have the I<same> keys and values, you cannot
+rely on the iteration order between those hashes being the same. They may have
+been constructed differently or have had elements removed. Since Perl 5.18,
+even if you build two hashes in the same way, you cannot depend on the same
+iteration order between them.
+
+Read the previous paragraph again. You'll be glad you did.
 
 Each hash has only a I<single> iterator for the C<each> operator. You cannot
 reliably iterate over a hash with C<each> more than once; if you begin a new
 iteration while another is in progress, the former will end prematurely and the
-latter will begin partway through the hash. During such iteration, beware not
-to call any function which may itself try to iterate over the hash with
-C<each>.
+latter will begin partway through the iteration. Beware not to call any
+function which may itself try to iterate over the hash with C<each>.
 
-In practice this occurs rarely. Reset a hash's iterator with C<keys> or
-C<values> in void context when you need it:
+This is rarely a problem, but it's not fun to debug. Reset a hash's iterator
+with C<keys> or C<values> in void context:
 
 =begin programlisting
 
     # reset hash iterator
     keys %addresses;
 
-    while (my ($addressee, $address) = each %addresses)
-    {
+    while (my ($addressee, $address) = each %addresses) {
         ...
     }
 
@@ -355,7 +343,7 @@ operation. To initialize multiple elements of a hash at once:
 
 =begin programlisting
 
-    # %cats already contains elements
+    my %cats;
     @cats{qw( Jack Brad Mars Grumpy )} = (1) x 4;
 
 =end programlisting
@@ -364,12 +352,11 @@ This is equivalent to the initialization:
 
 =begin programlisting
 
-    my %cats = map { $_ => 1 }
-               qw( Jack Brad Mars Grumpy );
+    my %cats = map { $_ => 1 } qw( Jack Brad Mars Grumpy );
 
 =end programlisting
 
-... except that the hash slice initialization does not I<replace> the existing
+Note however that the hash slice assignment can also add to the existing
 contents of the hash.
 
 X<C<@>; sigil>
@@ -393,18 +380,17 @@ Hash slices make it easy to merge two hashes:
     my %addresses        = ( ... );
     my %canada_addresses = ( ... );
 
-    @addresses{ keys   %canada_addresses }
-              = values %canada_addresses;
+    @addresses{ keys %canada_addresses } = values %canada_addresses;
 
 =end programlisting
 
 This is equivalent to looping over the contents of C<%canada_addresses>
 manually, but is much shorter. Note that this relies on the iteration order of
 the hash remaining consistent between C<keys> and C<values>. Perl guarantees
-this, but only because these operations occur on the same hash and because
-nothing modifies the hash between the C<keys> and C<values> operations.
+this, but only because these operations occur on the same hash with no
+modifications to that hash between the C<keys> and C<values> operations.
 
-What if the same key occurs in both hashes?  The hash slice approach always
+What if the same key occurs in both hashes? The hash slice approach always
 I<overwrites> existing key/value pairs in C<%addresses>. If you want other
 behavior, looping is more appropriate.
 
@@ -420,15 +406,13 @@ both would themselves evaluate to boolean false values.
     use Test::More;
 
     my %empty;
-    ok( ! %empty, 'empty hash should evaluate false' );
+    ok ! %empty, 'empty hash should evaluate false';
 
     my %false_key = ( 0 => 'true value' );
-    ok( %false_key, 'hash containing false key
-                     should evaluate to true' );
+    ok %false_key, 'hash containing false key should evaluate to true';
 
     my %false_value = ( 'true key' => 0 );
-    ok( %false_value, 'hash containing false value
-                       should evaluate to true' );
+    ok %false_value, 'hash containing false value should evaluate to true';
 
     done_testing();
 
@@ -436,8 +420,8 @@ both would themselves evaluate to boolean false values.
 
 In scalar context, a hash evaluates to a string which represents the ratio of
 full buckets in the hash--internal details about the hash implementation that
-you can safely ignore. (In a boolean scalar context, this ratio evaluates to a
-false value, so remember I<that> instead of the ratio details.)
+you can safely ignore. In a boolean scalar context, this ratio evaluates to a
+false value, so remember I<that> instead of the ratio details.
 
 In list context, a hash evaluates to a list of key/value pairs similar to the
 list produced by the C<each> operator. However, you I<cannot> iterate over this
@@ -447,8 +431,7 @@ will never terminate:
 =begin programlisting
 
     # infinite loop for non-empty hashes
-    while (my ($key, $value) = %hash)
-    {
+    while (my ($key, $value) = %hash) {
         ...
     }
 
@@ -465,7 +448,7 @@ X<hashes; finding uniques>
 
 Because each key exists only once in a hash, assigning the same key to a hash
 multiple times stores only the most recent value associated with that key. This
-behavior has advantages! For example, to find unique elements of a listlist :
+behavior has advantages! For example, to find unique elements of a list:
 
 =begin programlisting
 
@@ -480,15 +463,13 @@ idiom is the cheapest way to perform set operations with a hash.
 
 X<hashes; counting items>
 
-Hashes are also useful for counting elements, such as IP addresses in a log
-file:
+Hashes are useful for counting elements, such as IP addresses in a log file:
 
 =begin programlisting
 
     my %ip_addresses;
 
-    while (my $line = <$logfile>)
-    {
+    while (my $line = <$logfile>) {
         chomp $line;
         my ($ip, $resource) = analyze_line( $line );
         $ip_addresses{$ip}++;
@@ -514,8 +495,7 @@ expensive operation with little overhead:
     {
         my %user_cache;
 
-        sub fetch_user
-        {
+        sub fetch_user {
             my $id = shift;
             $user_cache{$id} //= create_user($id);
             return $user_cache{$id};
@@ -529,21 +509,17 @@ X<C<//>; infix operator>
 X<operators; C<//>>
 X<operators; defined-or>
 
-This I<orcish maneuver>N<Or-cache, if you like puns spelled out.> returns the
-value from the hash, if it exists. Otherwise, it calculates, caches, and
-returns the value. The defined-or assignment operator (C<//=>) evaluates its
-left operand. If that operand is not defined, the operator assigns to the
-lvalue the value of its right operand. In other words, if there's no value in
-the hash for the given key, this function will call C<create_user()> with the
-key and update the hash.
+This I<orcish maneuver> (or-cache) returns the value from the hash, if it
+exists. Otherwise, it calculates, caches, and returns the value. The defined-or
+assignment operator (C<//=>) evaluates its left operand. If that operand is not
+defined, the operator assigns to the lvalue the value of its right operand. In
+other words, if there's no value in the hash for the given key, this function
+will call C<create_user()> with the key and update the hash.
 
-Perl 5.10 introduced the defined-or and defined-or assignment operators. Prior
-to 5.10, most code used the boolean-or assignment operator (C<||=>) for this
-purpose. Unfortunately, some valid values evaluate to a false value in boolean
-context, so evaluating the I<definedness> of values is almost always more
-accurate. This lazy orcish maneuver tests for the definedness of the cached
-value, not truthiness. You may still see code with the pre-5.10 behavior. When
-you do, consider whether the defined-or operator makes more sense.
+You may see older code which uses the boolean-or assignment operator (C<||=>)
+for this purpose. Remember though that some valid values evaluate as false in a
+boolean context. The defined-or operator usually makes more sense, as it tests
+for definedness instead of truthiness.
 
 X<hashes; named parameters>
 
@@ -553,8 +529,7 @@ function arguments:
 
 =begin programlisting
 
-    sub make_sundae
-    {
+    sub make_sundae {
         my %parameters = @_;
         ...
     }
@@ -568,8 +543,7 @@ This approach allows you to set default values:
 
 =begin programlisting
 
-    sub make_sundae
-    {
+    sub make_sundae {
         my %parameters           = @_;
         B<$parameters{flavor}    //= 'Vanilla';>
         B<$parameters{topping}   //= 'fudge';>
@@ -584,10 +558,8 @@ precedence over earlier assignments:
 
 =begin programlisting
 
-    sub make_sundae
-    {
-        my %parameters =
-        (
+    sub make_sundae {
+        my %parameters = (
             B<< flavor    => 'Vanilla', >>
             B<< topping   => 'fudge', >>
             B<< sprinkles => 100, >>
@@ -622,5 +594,5 @@ C<unlock_value()>) and make or unmake the entire hash read-only with
 C<lock_hash()> and C<unlock_hash()>.
 
 This is lax security; anyone can use the appropriate unlocking functions to
-work around the locking. Yet it does protect against typos and other accidental
-behavior.
+work around the locking. Yet it does protect against typos and other unintended
+accidents.

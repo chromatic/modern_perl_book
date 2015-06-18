@@ -6,14 +6,14 @@ X<DWIM>
 X<dwimmery>
 X<coercion>
 
-Throughout its lifetime, a Perl variable may contain values of different
-types--strings, integers, rational numbers, and more. Rather than attaching
-type information to variables, Perl relies on the context provided by operators
+Throughout the lifetime of a Perl variable, it may contain values of different
+types--strings, integers, rational numbers, and more. Instead of attaching type
+information to variables, Perl relies on the context provided by operators
 (L<value_contexts>) to determine how to handle values. By design, Perl attempts
-to do what you meanN<Called I<DWIM> for I<do what I mean> or I<dwimmery>.>,
-though you must be specific about your intentions. If you treat a variable
-which happens to contain a number as a string, Perl will do its best to
-I<coerce> that number into a string.
+to do what you mean--you may hear this referred to as I<DWIM> for I<do what I
+mean> or I<dwimmery>.>--though you must be specific about your intentions. If
+you treat a value as a string, Perl will do its best to I<coerce> that value
+into a string.
 
 =head2 Boolean Coercion
 
@@ -29,8 +29,8 @@ but true'>)--evaluate as true values.
 
 When a scalar has I<both> string and numeric components (L<dualvars>), Perl
 prefers to check the string component for boolean truth. C<'0 but true'>
-evaluates to zero numerically, but it is not an empty string, and so it
-evaluates to a true value in boolean context.
+evaluates to zero numerically, but it is not an empty string, so it evaluates
+to a true value in boolean context.
 
 =head2 String Coercion
 
@@ -40,8 +40,8 @@ X<stringification>
 String coercion occurs when using string operators such as comparisons (C<eq>
 and C<cmp>), concatenation, C<split>, C<substr>, and regular expressions, as
 well as when using a value or an expression as a hash key. The undefined value
-stringifies to an empty string, but produces a "use of uninitialized value"
-warning. Numbers I<stringify> to strings containing their values, so the value
+stringifies to an empty string but produces a "use of uninitialized value"
+warning. Numbers I<stringify> to strings containing their values; the value
 C<10> stringifies to the string C<10>. You can even C<split> a number into
 individual digits with:
 
@@ -61,7 +61,7 @@ Numeric coercion occurs when using numeric comparison operators (such as C<==>
 and C<< <=> >>), when performing mathematic operations, and when using a value
 or expression as an array or list index. The undefined value I<numifies> to
 zero and produces a "Use of uninitialized value" warning. Strings which do not
-begin with numeric portions also numify to zero and produce an "Argument isn't
+begin with numeric portions numify to zero and produce an "Argument isn't
 numeric" warning. Strings which begin with characters allowed in numeric
 literals numify to those values and produce no warnings, such that C<10 leptons
 leaping> numifies to C<10> and C<6.022e23 moles marauding> numifies to
@@ -71,8 +71,7 @@ X<C<Scalar::Util>>
 X<C<Scalar::Util>; C<looks_like_number>>
 
 The core module C<Scalar::Util> contains a C<looks_like_number()> function
-which uses the same parsing rules as the Perl grammar to extract a number from
-a string.
+which uses the same rules as the Perl parser to extract a number from a string.
 
 =begin tip Mathematicians Rejoice
 
@@ -114,18 +113,18 @@ Z<cached_coercions>
 X<coercion; cached>
 
 Perl's internal representation of values stores both string and numeric values.
-Stringifying a numeric value does not I<replace> the numeric value.  Instead,
-it I<adds> a stringified value to the internal representation, which then
-contains I<both> components. Similarly, numifying a string value populates the
-numeric component while leaving the string component untouched.
+Stringifying a numeric value does not I<replace> the numeric value. Instead, it
+I<adds> a stringified value to the internal representation, which then contains
+I<both> components. Similarly, numifying a string value populates the numeric
+component while leaving the string component untouched.
 
 Certain Perl operations prefer to use one component of a value over
 another--boolean checks prefer strings, for example. If a value has a cached
 representation in a form you do not expect, relying on an implicit conversion
 may produce surprising results. You almost never need to be explicit about what
-you expectN<Your author can recall doing so twice in fifteen years of
-programming Perl.>, but knowing that this caching occurs may someday help you
-diagnose an odd situation.
+you expect. Your author can recall doing so twice in two decades. Even so,
+knowing that this caching occurs may someday help you diagnose an odd
+situation.
 
 =head2 Dualvars
 
