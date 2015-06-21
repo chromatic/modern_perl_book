@@ -164,8 +164,8 @@ be difficult to read.
 
 X<control flow directives; C<elsif>>
 
-If you multiple and mutually exclusive conditions to check, use one or more
-C<elsif> directives:
+Use one or more C<elsif> directives to check multiple and mutually exclusive
+conditions:
 
 =begin programlisting
 
