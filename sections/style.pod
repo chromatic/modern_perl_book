@@ -18,11 +18,9 @@ in the way of fixing a bug or adding an enhancement correctly?
 To write maintainable software, you need experience solving real problems, an
 understanding of the idioms and techniques and style of your programming
 language, and good taste. You can develop all of these by concentrating on a
-few principles:
+few principles.
 
-=over 4
-
-=item * I<Remove duplication.> Bugs lurk in sections of repeated and similar
+I<Remove duplication.> Bugs lurk in sections of repeated and similar
 code--when you fix a bug in one piece of code, did you fix it in others? When
 you update one section, did you update the others?
 
@@ -31,13 +29,13 @@ objects, and roles to extract duplicate code into distinct components which
 accurately model the domain of the problem. The best designs allow you to add
 features by I<removing> code.
 
-=item * I<Name entities well.> Your code tells a story. Every name you choose
+I<Name entities well.> Your code tells a story. Every name you choose
 for a variable, function, module, and class allows you to clarify or obfuscate
 your intent. Choose your names carefully. If you're having trouble choosing
 good names, you may need to rethink your design or study your problem in more
 detail.
 
-=item * I<Avoid unnecessary cleverness.> Concise code is good, when it reveals
+I<Avoid unnecessary cleverness.> Concise code is good, when it reveals
 the intention of the code. Clever code hides your intent behind flashy tricks.
 Perl allows you to write the right code at the right time. Choose the most
 obvious solution when possible. Experience and good taste will guide you.
@@ -45,7 +43,7 @@ obvious solution when possible. Experience and good taste will guide you.
 Some problems require clever solutions. When this happens, encapsulate this
 code behind a simple interface and document your cleverness.
 
-=item * I<Embrace simplicity.> If everything else is equal, a simpler program
+I<Embrace simplicity.> If everything else is equal, a simpler program
 is easier to maintain than its more complex workalike. Simplicity means knowing
 what's most important and doing just that.
 
@@ -56,8 +54,6 @@ Simple code can use advanced features. Simple code can use CPAN modules, and
 many of them. Simple code may require work to understand. Yet simple code
 solves problems effectively, without I<unnecessary> work.
 
-=back
-
 =head1 Writing Idiomatic Perl
 
 X<idioms>
@@ -67,12 +63,10 @@ want to write. C programmers often write C-style Perl, just as Java programmers
 write Java-style Perl. Effective Perl programmers write Perlish Perl, embracing
 the language's idioms.
 
-=over 4
-
-=item * I<Understand community wisdom.> Perl programmers often debate
-techniques and idioms fiercely. Perl programmers also often share their work,
-and not just on the CPAN. Pay attention, and gain enlightenment on the
-tradeoffs between various ideals and styles.
+I<Understand community wisdom.> Perl programmers often debate techniques and
+idioms fiercely. Perl programmers also often share their work, and not just on
+the CPAN. Pay attention, and gain enlightenment on the tradeoffs between
+various ideals and styles.
 
 CPAN developers, Perl Mongers, and mailing list participants have hard-won
 experience solving problems in myriad ways. Talk to them. Read their code. Ask
@@ -84,47 +78,43 @@ X<CPAN; C<CPAN::Mini>>
 X<CPAN; C<Carton>>
 X<CPAN; C<Pinto>>
 
-=item * I<Follow community norms.> Perl is a community of toolsmiths. We solve
-broad problems, including static code analysis (C<Perl::Critic>), reformatting
+I<Follow community norms.> Perl is a community of toolsmiths. We solve broad
+problems, including static code analysis (C<Perl::Critic>), reformatting
 (C<Perl::Tidy>), and private distribution systems (C<CPAN::Mini>, C<Carton>,
 C<Pinto>). Take advantage of the CPAN infrastructure; follow the CPAN model of
 writing, documenting, packaging, testing, and distributing your code.
 
-=item * I<Read code.> Join a mailing list such as Perl Beginners
+I<Read code.> Join a mailing list such as Perl Beginners
 (U<http://learn.perl.org/faq/beginners.html>), browse PerlMonks
 (U<http://perlmonks.org/>), and otherwise immerse yourself in the
 communityN<See U<http://www.perl.org/community.html>.>. Read code and try to
 answer questions--even if you never post them, this is a great opportunity to
 learn.
 
-=back
-
 =head1 Writing Effective Perl
 
 X<efficacy>
 
 Writing maintainable code means designing maintainable code.  Good design comes
-from good habits:
+from good habits.
 
-=over 4
-
-=item * I<Write testable code.> Writing an effective test suite exercises the
+I<Write testable code.> Writing an effective test suite exercises the
 same design skills as writing effective code. Code is code. Good tests also
 give you the confidence to modify a program while keeping it running correctly.
 
-=item * I<Modularize.> Enforce encapsulation and abstraction boundaries. Find
+I<Modularize.> Enforce encapsulation and abstraction boundaries. Find
 the right interfaces between components. Name things well and put them where
 they belong. Modularity forces you to think about patterns and abstractions in
 your code to understand how everything fits together. Find the pieces that
 don't fit well. Improve them until they do.
 
-=item * I<Follow sensible coding standards.> Effective guidelines discuss error
+I<Follow sensible coding standards.> Effective guidelines discuss error
 handling, security, encapsulation, API design, project layout, and other facets
 of maintainable code. Excellent guidelines help developers communicate with
 each other with code. Your job is to solve problems with code. Let your code
 speak clearly.
 
-=item * I<Exploit the CPAN.> Perl programmers solve problems. Then we share
+I<Exploit the CPAN.> Perl programmers solve problems. Then we share
 those solutions. The CPAN is a force multiplier; search it first for a solution
 or partial solution to your problem. Invest time in research to find full or
 partial solutions you can reuse. It will pay off.
@@ -135,5 +125,3 @@ powerful and effective when we reuse code.
 
 When you're ready--when you create something new or fix something old in a
 reusable way--share your code. Join us. We solve problems.
-
-=back

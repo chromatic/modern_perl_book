@@ -104,9 +104,7 @@ X<C<$INPUT_RECORD_SEPARATOR>>
 X<global variables; C<$INPUT_RECORD_SEPARATOR>>
 X<C<readline>>
 
-=over 4
-
-=item * C<$/> (or C<$INPUT_RECORD_SEPARATOR> from the C<English> pragma) is a
+C<$/> (or C<$INPUT_RECORD_SEPARATOR> from the C<English> pragma) is a
 string of zero or more characters which denotes the end of a record when
 reading input a line at a time. By default, this is your platform-specific
 newline character sequence. If you undefine this value, Perl will attempt to
@@ -121,7 +119,7 @@ X<global variables; C<$.>>
 X<C<$INPUT_LINE_NUMBER>>
 X<global variables; C<$INPUT_LINE_NUMBER>>
 
-=item * C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of records read from
+C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of records read from
 the most recently-accessed filehandle. You can read from this variable, but
 writing to it has no effect. Localizing this variable will localize the
 filehandle to which it refers.
@@ -131,7 +129,7 @@ X<global variables; C<$|>>
 X<C<$OUTPUT_AUTOFLUSH>>
 X<global variables; C<$OUTPUT_AUTOFLUSH>>
 
-=item * C<$|> (C<$OUTPUT_AUTOFLUSH>) governs whether Perl will flush everything
+C<$|> (C<$OUTPUT_AUTOFLUSH>) governs whether Perl will flush everything
 written to the currently selected filehandle immediately or only when Perl's
 buffer is full. Unbuffered output is useful when writing to a pipe or socket or
 terminal which should not block waiting for input. This variable will coerce
@@ -140,14 +138,14 @@ any values assigned to it to boolean values.
 X<C<@ARGV>>
 X<global variables; C<@ARGV>>
 
-=item * C<@ARGV> contains the command-line arguments passed to the program.
+C<@ARGV> contains the command-line arguments passed to the program.
 
 X<C<$!>>
 X<global variables; C<$!>>
 X<C<$ERRNO>>
 X<global variables; C<$ERRNO>>
 
-=item * C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result
+C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result
 of the I<most recent> system call. In numeric context, this corresponds to C's
 C<errno> value, where anything other than zero indicates an error. In string
 context, this evaluates to the appropriate system error string. Localize this
@@ -162,13 +160,13 @@ X<global variables; C<$">>
 X<C<$LIST_SEPARATOR>>
 X<global variables; C<$LIST_SEPARATOR>>
 
-=item * C<$"> (C<$LIST_SEPARATOR>) is a string used to separate array and list
+C<$"> (C<$LIST_SEPARATOR>) is a string used to separate array and list
 elements interpolated into a string.
 
 X<C<%+>>
 X<global variables; C<%+>>
 
-=item * C<%+> contains named captures from successful regular expression
+C<%+> contains named captures from successful regular expression
 matches (L<named_captures>).
 
 X<C<$@>>
@@ -176,7 +174,7 @@ X<global variables; C<$@>>
 X<C<$EVAL_ERROR>>
 X<global variables; C<$EVAL_ERROR>>
 
-=item * C<$@> (C<$EVAL_ERROR>) contains the value thrown from the most recent
+C<$@> (C<$EVAL_ERROR>) contains the value thrown from the most recent
 exception (L<catching_exceptions>).
 
 X<C<$0>>
@@ -184,7 +182,7 @@ X<global variables; C<$0>>
 X<C<$PROGRAM_NAME>>
 X<global variables; C<$PROGRAM_NAME>>
 
-=item * C<$0> (C<$PROGRAM_NAME>) contains the name of the program currently
+C<$0> (C<$PROGRAM_NAME>) contains the name of the program currently
 executing. You may modify this value on some Unix-like platforms to change the
 name of the program as it appears to other programs on the system, such as
 C<ps> or C<top>.
@@ -194,7 +192,7 @@ X<global variables; C<$$>>
 X<C<$PID>>
 X<global variables; C<$PID>>
 
-=item * C<$$> (C<$PID>) contains the process id of the currently running
+C<$$> (C<$PID>) contains the process id of the currently running
 instance of the program, as the operating system understands it. This will vary
 between C<fork()>ed programs and I<may> vary between threads in the same
 program.
@@ -202,19 +200,17 @@ program.
 X<C<@INC>>
 X<global variables; C<@INC>>
 
-=item * C<@INC> holds a list of filesystem paths in which Perl will look for
+C<@INC> holds a list of filesystem paths in which Perl will look for
 files to load with C<use> or C<require>. See C<perldoc -f require> for other
 items this array can contain.
 
 X<C<%SIG>>
 X<global variables; C<%SIG>>
 
-=item * C<%SIG> maps OS and low-level Perl signals to function references used
+C<%SIG> maps OS and low-level Perl signals to function references used
 to handle those signals. Trap the standard Ctrl-C interrupt by catching the
 C<INT> signal, for example. See C<perldoc perlipc> for more information about
 signals and signal handling.
-
-=back
 
 =head2 Alternatives to Super Globals
 

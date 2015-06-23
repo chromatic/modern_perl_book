@@ -45,57 +45,23 @@ exception, with the reason for failure in the C<$!> magic variable.
 You may open files for writing, appending, reading and writing, and more. Some
 of the most important file modes are:
 
-=begin table File Modes
+=over 4
 
-Z<file_modes_table>
+=item * C<< < >>, which opens a file for reading.
 
-=headrow
-
-=cell B<Symbols>
-
-=cell B<Explanation>
-
-=bodyrows
-
-=row
-
-=cell C<< < >>
-
-=cell Open for reading
-
-=row
-
-=cell C<< > >>
-
-=cell Open for writing, clobbering existing contents if the file exists and
+=item * C<< > >>, which open for writing, clobbering existing contents if the file exists and
 creating a new file otherwise.
 
-=row
+=item * C<<< >> >>>, which opens a file for writing, appending to any existing
+contents and creating a new file otherwise.
 
-=cell C<<< >> >>>
+=item * C<< +< >>, which opens a file for both reading and writing.
 
-=cell Open for writing, appending to any existing contents and creating a new
-file otherwise.
+=item * C<< -| >>, which opens a pipe to an external process for reading.
 
-=row
+=item * C<< |- >>, which opens a pipe to an external process for writing.
 
-=cell C<< +< >>
-
-=cell Open for both reading and writing.
-
-=row
-
-=cell C<< -| >>
-
-=cell Open a pipe to an external process for reading.
-
-=row
-
-=cell C<< |- >>
-
-=cell Open a pipe to an external process for writing.
-
-=end table
+=back
 
 You can even create filehandles which read from or write to plain Perl scalars, using any existing file mode:
 
@@ -576,7 +542,7 @@ X<operators; C<-e>>
 
 The C<-e> operator has a single operand, the name of a file or a file or
 directory handle. If the file exists, the expression will evaluate to a true
-value. C<perldoc -f -X> lists all other file tests; the most popular are:
+value. C<perldoc -f -X> lists all other file tests.
 
 X<C<-d>; directory test operator>
 X<C<-f>; file test operator>
@@ -587,21 +553,11 @@ X<operators; C<-f>>
 X<operators; C<-r>>
 X<operators; C<-s>>
 
-=over 4
-
-=item C<-f>, which returns a true value if its operand is a plain file
-
-=item C<-d>, which returns a true value if its operand is a directory
-
-=item C<-r>, which returns a true value if the file permissions of its operand
-permit reading by the current user
-
-=item C<-s>, which returns a true value if its operand is a non-empty file
-
-=back
-
-Look up the documentation for any of these operators with C<perldoc -f -r>, for
-example.
+C<-f> returns a true value if its operand is a plain file. C<-d> returns a true
+value if its operand is a directory.  C<-r> returns a true value if the file
+permissions of its operand permit reading by the current user.  C<-s> returns a
+true value if its operand is a non-empty file. Look up the documentation for
+any of these operators with C<perldoc -f -r>, for example.
 
 X<builtins; C<rename>>
 

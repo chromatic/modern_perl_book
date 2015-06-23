@@ -51,8 +51,6 @@ wrong. Without a mechanism like C<done_testing()>, how would you I<know>?
 Admittedly this example code is too simple to fail, but code that's too simple
 to fail fails far more often than you want.
 
-=begin sidebar
-
 X<testing; plan>
 X<C<plan()>>
 
@@ -74,8 +72,6 @@ The C<tests> argument to C<Test::More> sets the test plan for the program. This
 is a safety net. If fewer than four tests ran, something went wrong.  If more
 than four tests ran, something went wrong. C<done_testing()> is easier, but
 sometimes an exact count can be useful.
-
-=end sidebar
 
 =head2 Running Tests
 
@@ -159,8 +155,6 @@ With those two changes, C<prove> now displays:
 
 =end screen
 
-=begin sidebar
-
 See C<perldoc prove> for other test options, such as running tests in parallel
 (C<-j>), automatically adding F<lib/> to Perl's include path (C<-l>),
 recursively running all test files found under F<t/> (C<-r t>), and running
@@ -170,9 +164,11 @@ X<C<proveall>>
 X<testing; C<proveall> alias>
 The bash shell alias C<proveall> may prove useful:
 
+=begin programlisting
+
     alias proveall='prove -j9 --state=slow,save -lr t'
 
-=end sidebar
+=end programlisting
 
 =head2 Better Comparisons
 

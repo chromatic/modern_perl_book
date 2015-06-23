@@ -12,7 +12,7 @@ C<perldoc> can display the core docs as well as the documentation of every Perl
 module you have installed--whether a core module or one installed from the
 Comprehensive Perl Archive Network (CPAN).
 
-=begin sidebar
+=begin sidebar CPAN Documentation
 
 X<CPAN>
 X<metacpan>

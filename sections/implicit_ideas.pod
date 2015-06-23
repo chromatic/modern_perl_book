@@ -257,7 +257,7 @@ programs, such as a command-line filter which reverses its input:
 
 =end programlisting
 
-=begin tip
+=begin tip The Double Open Operator
 
 X<builtins; C<<< <<>>  >>> >
 

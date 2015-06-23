@@ -219,7 +219,7 @@ delimiter must I<start> at the beginning of the line:
 
 =end programlisting
 
-=begin sidebar
+=begin sidebar Heredocs and Indentation
 
 If the identifier I<begins> with whitespace, that same whitespace must be
 present before the ending delimiter--that is, C<<< <<' END_HEREDOC'>> >>> needs
@@ -499,34 +499,13 @@ The string literal has several possible scenarios:
 
 =over 4
 
-=item * It is an ASCII string literal and contains octets.
-
-=begin programlisting
-
-    my $hello = "Hello, ";
-
-=end programlisting
+=item * It is an ASCII string literal and contains octets: C<my $hello = "Hello, ";>
 
 =item * It is a Latin-1 string literal with no explicit encoding and contains
-octets.
-
-=begin programlisting
-
-    my $hello = "E<iexcl>Hola, ";
-
-=end programlisting
-
-The string literal contains octets.
+octets: C<my $hello = "E<iexcl>Hola, ";>
 
 =item * It is a non-ASCII string literal (the C<utf8> or C<encoding> pragma is
-in effect) and contains Unicode characters.
-
-=begin programlisting
-
-    use utf8;
-    my $hello = "KuirabE<aacute>, ";
-
-=end programlisting
+in effect) and contains Unicode characters: C<my $hello = "KuirabE<aacute>, ";>
 
 =back
 
@@ -562,7 +541,7 @@ U<http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by
 and his "Perl Unicode Cookbook" series on Perl.com
 U<http://www.perl.com/pub/2012/04/perlunicook-standard-preamble.html>.
 
-=begin sidebar
+=begin sidebar Unicode Strings
 
 X<C<unicode_strings>>
 X<pragmas; C<feature>>

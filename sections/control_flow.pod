@@ -227,7 +227,7 @@ colon character (C<:>) separates the alternatives. The alternatives are
 expressions of arbitrary complexity--including other ternary conditional
 expressions, though consider clarity over concision.
 
-=begin sidebar
+=begin sidebar Lvalues and the Ternary Conditional
 
 An interesting, though obscure, idiom uses the ternary conditional to select
 between alternative I<variables>, not only values:

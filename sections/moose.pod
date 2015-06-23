@@ -184,8 +184,6 @@ you to pass a C<name> parameter to C<Cat>'s constructor:
 
 =end programlisting
 
-=begin sidebar
-
 Moose's documentation uses parentheses to separate attribute names and
 characteristics:
 
@@ -220,8 +218,6 @@ Moose's approach works nicely for complex declarations:
 
 ... while this book prefers a low-punctuation approach for simple declarations.
 Choose the style which offers you the most clarity.
-
-=end sidebar
 
 X<attributes; untyped>
 

@@ -127,10 +127,14 @@ C<Sub::Identify>.>: to determine whether a function is named or anonymous:
 
 The result may be surprising:
 
+=begin screen
+
     Called from ShowCaller::B<main>
              in ShowCaller:anoncaller.pl:20
     Called from ShowCaller::B<__ANON__>
              in ShowCaller:anoncaller.pl:17
+
+=end screen
 
 X<CPAN; C<Sub::Name>>
 
@@ -157,10 +161,14 @@ to anonymous functions:
 
 This program produces:
 
+=begin screen
+
     __ANON__
     pseudo-anonymous
     pseudo-anonymous
     __ANON__
+
+=end screen
 
 Be aware that both references refer to the same underlying anonymous function.
 Using C<subname()> on one reference to a function will modify that anonymous

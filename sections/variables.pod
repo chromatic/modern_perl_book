@@ -74,13 +74,21 @@ C<@values>. Access the first element--a single value--of the array with
 C<$values[0]>. Access a list of values from the array with C<@values[ @indices
 ]>. The sigil you use determines amount context in an lvalue situation:
 
+=begin programlisting
+
     # imposes lvalue context on some_function()
     @values[ @indexes ] = some_function();
 
+=end programlisting
+
 ... or gets coerced in an rvalue situation:
+
+=begin programlisting
 
     # list evaluated to final element in scalar context
     my $element = @values[ @indices ];
+
+=end programlisting
 
 =head2 Anonymous Variables
 

@@ -855,7 +855,7 @@ start with C<cat>:
 =end programlisting
 
 The zero-width assertion consumes none of the source string, leaving the
-anchored fragment <.*\Z> to match. Otherwise, the capture would only capture
+anchored fragment C<.*\Z> to match. Otherwise, the capture would only capture
 the C<cat> portion of the source string.
 
 X<C<(?<!...)>; zero-width negative look-behind regex assertion>

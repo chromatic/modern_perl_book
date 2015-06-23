@@ -63,6 +63,11 @@ packaging tools should understand the distribution.
 The Perl core includes several tools to manage distributions:
 
 X<C<CPAN>>
+X<C<Module::Build>>
+X<C<ExtUtils::MakeMaker>>
+X<C<Test::More>>
+X<C<TAP::Harness>>
+X<C<prove>>
 
 =over 4
 
@@ -70,24 +75,15 @@ X<C<CPAN>>
 installs distributions from the public CPAN, you can also use your ownpoint them to your own
 repository instead of or in addition to the public repository.
 
-X<C<Module::Build>>
-
 =item * C<Module::Build> is a pure-Perl tool suite for configuring, building,
 installing, and testing distributions. It works with F<Build.PL> files.
-
-X<C<ExtUtils::MakeMaker>>
 
 =item * C<ExtUtils::MakeMaker> is a legacy tool which C<Module::Build> intends
 to replace. It is still in wide use, though it is in maintenance mode and
 receives only critical bug fixes. It works with F<Makefile.PL> files.
 
-X<C<Test::More>>
-
 =item * C<Test::More> (L<testing>) is the basic and most widely used testing
 module used to write automated tests for Perl software.
-
-X<C<TAP::Harness>>
-X<C<prove>>
 
 =item * C<TAP::Harness> and C<prove> (L<running_tests>) run tests and interpret
 and report their results.
@@ -100,43 +96,38 @@ developer:
 X<CPAN; C<App::cpanminus>>
 X<cpanminus>
 X<cpanm>
+X<CPAN; C<App::perlbrew>>
+X<perlbrew>
+X<CPAN; C<CPAN::Mini>>
+X<CPAN; C<cpanmini>>
+X<CPAN; C<Dist::Zilla>>
+X<CPAN; C<Module::Build>>
+X<C<ExtUtils::MakeMaker>>
+X<CPAN; C<Test::Reporter>>
+X<carton>
+X<Pinto>
 
 =over 4
 
 =item * C<App::cpanminus> is a configuration-free CPAN client. It handles the
 most common cases, uses little memory, and works quickly.
 
-X<CPAN; C<App::perlbrew>>
-X<perlbrew>
-
 =item * C<App::perlbrew> helps you to manage multiple installations of Perl.
 Install new versions of Perl for testing or production, or to isolate
 applications and their dependencies.
-
-X<CPAN; C<CPAN::Mini>>
-X<CPAN; C<cpanmini>>
 
 =item * C<CPAN::Mini> and the C<cpanmini> command allow you to create your own
 (private) mirror of the public CPAN.  You can inject your own distributions
 into this repository and manage which versions of the public modules are
 available in your organization.
 
-X<CPAN; C<Dist::Zilla>>
-X<CPAN; C<Module::Build>>
-X<C<ExtUtils::MakeMaker>>
-
 =item * C<Dist::Zilla> automates away common distribution tasks. While it
 uses either C<Module::Build> or C<ExtUtils::MakeMaker>, it can replace I<your>
 use of them directly. See U<http://dzil.org/> for an interactive tutorial.
 
-X<CPAN; C<Test::Reporter>>
-
 =item * C<Test::Reporter> allows you to report the results of running the
 automated test suites of distributions you install, giving their authors more
 data on any failures.
-
-X<carton>
-X<Pinto>
 
 =item * Carton and Pinto are two newer projects which help manage and install
 code's dependencies. Neither is in widespread use yet, but they're both under

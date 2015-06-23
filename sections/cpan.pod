@@ -98,7 +98,7 @@ Eric Wilhelm's tutorial on configuring
 CPAN.pmN<U<http://learnperl.scratchcomputing.com/tutorials/configuration/>>
 includes a great troubleshooting section.
 
-=begin sidebar
+=begin sidebar CPAN Requirements
 
 Even though the CPAN client is a core module for the Perl distribution, you
 will need to install standard development tools such as a C<make> utility and

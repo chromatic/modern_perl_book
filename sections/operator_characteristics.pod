@@ -53,26 +53,21 @@ associative, such that C<2 ** 3 ** 4> evaluates C<3 ** 4> first, then raises
 C<2> to the 81st power. As usual, grouping with parentheses will let you change
 the order of evaluation.
 
-If you memorize only the precedence and associativity of the common
-mathematical operators, you'll be fine. Simplify your code and you won't have
-to memorize other associativities.
-
-=begin sidebar
-
 X<C<B::Deparse>>
 X<precedence; disambiguation>
 X<associativity; disambiguation>
 
-The core C<B::Deparse> module is an invaluable debugging tool. Run C<perl
--MO=Deparse,-p> on a snippet of code to see exactly how Perl handles operator
-precedence and associativity. The C<-p> flag adds extra grouping parentheses
-which often clarify evaluation order.
+If you memorize only the precedence and associativity of the common
+mathematical operators, you'll be fine. Simplify your code and you won't have
+to memorize other associativities. If you can't simplify your code (or if
+you're maintaining code and trying to understand it), use the core
+C<B::Deparse> module to see exactly how Perl handles operator precedence and
+associativity.
 
-Beware that Perl's optimizer will simplify mathematical operations using
-constant values. To work around this, use named variables instead, as in C<$x
-** $y ** $z>.
-
-=end sidebar
+Run C<perl -MO=Deparse,-p> on a snippet of code The C<-p> flag adds extra
+grouping parentheses which often clarify evaluation order. Beware that Perl's
+optimizer will simplify mathematical operations using constant values. To work
+around this, use named variables instead, as in C<$x ** $y ** $z>.
 
 =head2 Arity
 
@@ -86,7 +81,7 @@ X<binary>
 X<trinary>
 X<listary>
 
-The I<arity> of an operator is the number of operands on which it operates.  A
+The I<arity> of an operator is the number of operands on which it operates. A
 I<nullary> operator operates on zero operands. A I<unary> operator operates on
 one operand. A I<binary> operator operates on two operands. A I<trinary>
 operator operates on three operands. A I<listary> operator operates on a list
@@ -106,8 +101,8 @@ usually help, beware of the parsing complexity of:
 
 =begin programlisting
 
-    # probably buggy code
-    say ( 1 + 2 + 3 ) * 4;
+  # probably buggy code
+  say ( 1 + 2 + 3 ) * 4;
 
 =end programlisting
 
@@ -149,10 +144,8 @@ X<C<|=>; infix operator>
 X<C<||=>; infix operator>
 X<C<//=>; infix operator>
 
-=over 4
-
-=item * I<Infix> operators appear between their operands. Most mathematical
-operators are infix operators, such as the multiplication operator in C<$length
+I<Infix> operators appear between their operands. Most mathematical operators
+are infix operators, such as the multiplication operator in C<$length
 * $width>.
 
 X<C<\>; prefix operator>
@@ -164,8 +157,8 @@ X<C<->; prefix operator>
 X<C<!>; prefix operator>
 X<C<!!>; prefix operator>
 
-=item * I<Prefix> operators precede their operands. I<Postfix> operators follow
-their operands. These operators tend to be unary, such as mathematic negation
+I<Prefix> operators precede their operands. I<Postfix> operators follow their
+operands. These operators tend to be unary, such as mathematic negation
 (C<-$x>), boolean negation (C<!$y>), and postfix increment (C<$z++>).
 
 X<C<()>; circumfix operator>
@@ -176,14 +169,12 @@ X<C<``>; circumfix operator>
 X<C<''>; circumfix operator>
 X<C<"">; circumfix operator>
 
-=item * I<Circumfix> operators surround their operands, as with the anonymous
-hash constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
+I<Circumfix> operators surround their operands, as with the anonymous hash
+constructor (C<{ ... }>) and quoting operators (C<qq[ ... ]>).
 
 X<C<()>; postcircumfix operator>
 X<C<{}>; postcircumfix operator>
 X<C<[]>; postcircumfix operator>
 
-=item * I<Postcircumfix> operators follow certain operands and surround others,
-as seen in hash and array element access (C<$hash{$x}> and C<$array[$y]>).
-
-=back
+I<Postcircumfix> operators follow certain operands and surround others, as seen
+in hash and array element access (C<$hash{$x}> and C<$array[$y]>).
