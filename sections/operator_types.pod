@@ -2,7 +2,7 @@
 
 Z<operator_types>
 
-Perl operators provide value contexts (L<value_contexts>) to their operands.
+Perl's operators provide value contexts (L<value_contexts>) to their operands.
 To choose the appropriate operator, you must know the values of the operands
 you provide as well as the value you expect to receive.
 
@@ -40,9 +40,9 @@ X<operators; C<-->>
 X<C<-->; numeric operator>
 
 Numeric operators impose numeric contexts on their operands. These operators
-are the standard arithmetic operators such as addition (C<+>), subtraction
-(C<->), multiplication (C<*>), division (C</>), exponentiation (C<**>), and
-modulo (C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
+are the standard arithmetic operators of addition (C<+>), subtraction (C<->),
+multiplication (C<*>), division (C</>), exponentiation (C<**>), and modulo
+(C<%>), their in-place variants (C<+=>, C<-=>, C<*=>, C</=>, C<**=>, and
 C<%=>), and both postfix and prefix auto-decrement (C<-->).
 
 The auto-increment operator has special string behavior
@@ -131,9 +131,9 @@ X<defined-or; logical operator>
 X<short-circuiting>
 
 Logical operators impose a boolean context on their operands. These operators
-are C<&&>, C<and>, C<||>, and C<or>. All are infix and all exhibit
+are C<&&>, C<and>, C<||>, and C<or>. These infix operators all exhibit
 I<short-circuiting> behavior (L<short_circuiting>). The word forms have lower
-precedence than their punctuation forms.
+precedence than the punctuation forms.
 
 The defined-or operator, C<//>, tests the I<definedness> of its operand. Unlike
 C<||> which tests the I<truth> of its operand, C<//> evaluates to a true value
@@ -142,8 +142,7 @@ especially useful for setting default parameter values:
 
 =begin programlisting
 
-    sub name_pet
-    {
+    sub name_pet {
         my $name = shift // 'Fluffy';
         ...
     }
@@ -195,10 +194,9 @@ X<<< C<< E<lt>E<lt>= >>; bitwise operator >>>
 X<<< C<< E<gt>E<gt>= >>; bitwise operator >>>
 
 Bitwise operators treat their operands numerically at the bit level. These
-operations are uncommon. They consist of left shift (C<< << >>), right shift
-(C<< >> >>), bitwise and (C<&>), bitwise or (C<|>), and bitwise xor (C<^>), as
-well as their in-place variants (C<< <<= >>, C<< >>= >>, C<&=>, C<|=>, and
-C<^=>).
+uncommon operators are left shift (C<< << >>), right shift (C<< >> >>), bitwise
+and (C<&>), bitwise or (C<|>), and bitwise xor (C<^>), as well as their
+in-place variants (C<< <<= >>, C<< >>= >>, C<&=>, C<|=>, and C<^=>).
 
 =head2 Special Operators
 
@@ -211,7 +209,7 @@ X<C<++>; auto-increment operator>
 
 The auto-increment operator has special behavior. When used on a value with a
 numeric component (L<cached_coercions>), the operator increments that numeric
-component. If the value is obviously a string (and has no numeric component),
+component. If the value is obviously a string (if it has no numeric component),
 the operator increments the value's string component such that C<a> becomes
 C<b>, C<zz> becomes C<aaa>, and C<a9> becomes C<b0>.
 
@@ -222,15 +220,15 @@ C<b>, C<zz> becomes C<aaa>, and C<a9> becomes C<b0>.
 
     $num++;
     $str++;
-    is( $num,   2, 'numeric autoincrement' );
-    is( $str, 'b', 'string autoincrement'  );
+    is $num,   2, 'numeric autoincrement';
+    is $str, 'b', 'string autoincrement';
 
     no warnings 'numeric';
     $num += $str;
     $str++;
 
-    is( $num, 2, 'numeric addition with $str'    );
-    is( $str, 1, '... gives $str a numeric part' );
+    is $num, 2, 'numeric addition with $str';
+    is $str, 1, '... gives $str a numeric part';
 
 =end programlisting
 
@@ -239,9 +237,9 @@ X<operators; C<x>>
 X<C<x>; repetition operator>
 
 The repetition operator (C<x>) is an infix operator with complex behavior. When
-evaluated in list context with a list as its first operand, it evaluates to
+evaluated in list context I<with a list as its first operand>, it evaluates to
 that list repeated the number of times specified by its second operand. When
-evaluated in list context with a scalar as its first operand, it produces a
+evaluated in list context I<with a scalar as its first operand>, it produces a
 string consisting of the string value of its first operand concatenated to
 itself the number of times specified by its second operand.
 
@@ -253,16 +251,14 @@ In scalar context, the operator repeats and concatenates a string:
     my $calendar     =  'nights'  x 1001;
     my $cal_length   =  length $calendar;
 
-    is( @scheherazade, 1001, 'list repeated' );
-    is( $cal_length,   1001 * length 'nights',
-                       'word repeated' );
+    is @scheherazade, 1001, 'list repeated';
+    is $cal_length,   1001 * length 'nights', 'word repeated';
 
     my @schenolist   =  'nights'  x 1001;
     my $calscalar    = ('nights') x 1001;
 
-    is( @schenolist, 1, 'no lvalue list' );
-    is( length $calscalar,
-        1001 * length 'nights', 'word still repeated' );
+    is @schenolist, 1, 'no lvalue list';
+    is length $calscalar, 1001 * length 'nights', 'word still repeated';
 
 =end programlisting
 
@@ -285,7 +281,7 @@ X<operators; flip-flop>
 X<flip-flop>
 X<C<..>; flip-flop operator>
 
-In boolean context, the range operator becomes the I<flip-flop> operator. This
+In boolean context, the range operator performs a I<flip-flop> operation. This
 operator produces a false value until its left operand is true. That value
 stays true until the right operand is true, after which the value is false
 again until the left operand is true again. Imagine parsing the text of a
@@ -293,8 +289,7 @@ formal letter with:
 
 =begin programlisting
 
-    while (/Hello, $user/ .. /Sincerely,/)
-    {
+    while (/Hello, $user/ .. /Sincerely,/) {
         say "> $_";
     }
 
@@ -311,8 +306,8 @@ evaluates its left operand then returns the value produced by evaluating its
 right operand. In list context, it evaluates both operands in left-to-right
 order.
 
-The fat comma operator (C<< => >>) also automatically quotes any bareword used
-as its left operand (L<hashes>).
+The fat comma operator (C<< => >>) also quotes any bareword used as its left
+operand (L<hashes>).
 
 X<operators; triple-dot>
 X<operators; whatever>

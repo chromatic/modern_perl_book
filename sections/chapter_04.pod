@@ -4,13 +4,13 @@ Z<operators>
 X<operators>
 X<operands>
 
-Some people call Perl an "operator-oriented language". To understand a Perl
-program, you must understand how its operators interact with their operands.
+Some people call Perl an "operator-oriented language". A Perl I<operator> is a
+series of one or more symbols used as part of the syntax of a language. Each
+operator operates on zero or more I<operands>. Think of an operator as a
+special sort of function the parser understands and its operands as arguments.
 
-A Perl I<operator> is a series of one or more symbols used as part of the
-syntax of a language. Each operator operates on zero or more I<operands>. Think
-of an operator as a special sort of function the parser understands and its
-operands as arguments.
+You've seen how Perl manages context through its operators. To understand Perl
+fully, you must understand how operators interact with their operands.
 
 L<operator_characteristics>
 

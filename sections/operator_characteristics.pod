@@ -8,10 +8,10 @@ behavior: the number of operands on which it operates, its relationship to
 other operators, the contexts it enforces, and the syntax it provides.
 
 C<perldoc perlop> and C<perldoc perlsyn> provide voluminous information about
-Perl's operators, but the documentation assumes you're already familiar with a
-few essential computer science concepts. These ideas sound complicated, but
-they use complex names for ideas you already understand, even if you've never
-thought about them. If you can do elementary math in your head, you'll do fine.
+Perl's operators, but the docs assume you're already familiar with a few
+essential computer science concepts. Fortunately, you'll recognize these ideas
+from written language and elementary mathematics, even if you've never heard
+their complicated names before.
 
 =head2 Precedence
 
@@ -19,20 +19,22 @@ Z<precedence>
 X<precedence>
 
 The I<precedence> of an operator governs when Perl should evaluate it in an
-expression. Evaluation order proceeds from highest to lowest precedence.
-Remember basic math? Multiply and divide before you add and subtract. That's
-precedence. Because the precedence of multiplication is higher than the
-precedence of addition, in Perl C<7 + 7 * 10> evaluates to C<77>, not C<140>.
+expression. Perl evaluates the operator with the highest precedence first, then
+the next highest, all the way to the lowest precedence. Remember basic math?
+Multiply and divide before you add and subtract. That's precedence. Because the
+precedence of multiplication is higher than the precedence of addition, in Perl
+C<7 + 7 * 10> evaluates to C<77>, not C<140>.
 
-To force the evaluation of some operators before others, group their
-subexpressions in parentheses. In C<(7 + 7) * 10>, grouping the addition into a
-single unit forces its evaluation before the multiplication. The result is
+Use grouping parentheses to force the evaluation of some operators before
+others. In C<(7 + 7) * 10>, grouping the addition into a single unit forces its
+evaluation before the multiplication--though Perl wants to perform the
+multiplication first, it has to evaluate the grouped subexpression into a
+single value as the multiplication operator's left operand. The result is
 C<140>.
 
 C<perldoc perlop> contains a table of precedence. Skim it a few times, but
 don't bother memorizing it (almost no one does). Spend your time simplifying
-your code where you can and then adding clarifying parentheses where you need
-them.
+your code where you can. Then add parentheses where they clarify.
 
 In cases where two operators have the same precedence, other factors such as
 associativity (L<associativity>) and fixity (L<fixity>) break the tie.
@@ -48,10 +50,10 @@ X<right associativity>
 
 The I<associativity> of an operator governs whether it evaluates from left to
 right or right to left. Addition is left associative, such that C<2 + 3 + 4>
-evaluates C<2 + 3> first, then adds C<4> to the result. Exponentiation is right
-associative, such that C<2 ** 3 ** 4> evaluates C<3 ** 4> first, then raises
-C<2> to the 81st power. As usual, grouping with parentheses will let you change
-the order of evaluation.
+evaluates C<2 + 3> first, then adds C<4> to the result, not that order of
+evaluation matters. Exponentiation is right associative, such that C<2 ** 3 **
+4> evaluates C<3 ** 4> first, then raises C<2> to the 81st power. Use
+parentheses if you write code like this.
 
 X<C<B::Deparse>>
 X<precedence; disambiguation>
@@ -66,8 +68,9 @@ associativity.
 
 Run C<perl -MO=Deparse,-p> on a snippet of code The C<-p> flag adds extra
 grouping parentheses which often clarify evaluation order. Beware that Perl's
-optimizer will simplify mathematical operations using constant values. To work
-around this, use named variables instead, as in C<$x ** $y ** $z>.
+optimizer will simplify mathematical operations using constant values. If you
+really need to deparse a complex expression, use named variables instead of
+constant values, as in C<$x ** $y ** $z>.
 
 =head2 Arity
 
@@ -85,15 +88,20 @@ The I<arity> of an operator is the number of operands on which it operates. A
 I<nullary> operator operates on zero operands. A I<unary> operator operates on
 one operand. A I<binary> operator operates on two operands. A I<trinary>
 operator operates on three operands. A I<listary> operator operates on a list
-of operands.
+of zero or more operands.
 
-The arithmetic operators are binary operators and are usually left associative.
-C<2 + 3 - 4> evaluates C<2 + 3> first; addition and subtraction have the same
-precedence, but they're left associative and binary, so the proper evaluation
-order applies the leftmost operator (C<+>) to the leftmost two operands (C<2>
-and C<3>) with the leftmost operator (C<+>), then applies the rightmost
-operator (C<->) to the result of the first operation and the rightmost operand
-(C<4>).
+Arithmetic operators are binary operators and are usually left associative.
+This has implications for tie-breaking evaluation order of operands with the
+same precedence. For example, C<2 + 3 - 4> evaluates C<2 + 3> first. Addition
+and subtraction have the same precedence, but they're left associative and
+binary, so the proper evaluation order applies the leftmost operator (C<+>) to
+the leftmost two operands (C<2> and C<3>) with the leftmost operator (C<+>),
+then applies the rightmost operator (C<->) to the result of the first operation
+and the rightmost operand (C<4>).
+
+=head2 Fixity
+
+Z<fixity>
 
 Perl novices often find confusion between the interaction of listary
 operators--especially function calls--and nested expressions. Where parentheses
@@ -101,20 +109,16 @@ usually help, beware of the parsing complexity of:
 
 =begin programlisting
 
-  # probably buggy code
-  say ( 1 + 2 + 3 ) * 4;
+ # probably buggy code
+ say ( 1 + 2 + 3 ) * 4;
 
 =end programlisting
 
 ... which prints the value C<6> and (probably) evaluates as a whole to C<4>
 (the return value of C<say> multiplied by C<4>). Perl's parser happily
-interprets the parentheses as postcircumfix (L<fixity>) operators denoting the
-arguments to C<say>, not circumfix parentheses grouping an expression to change
-precedence.
+interprets the parentheses as postcircumfix operators denoting the arguments to
+C<say>, not circumfix parentheses grouping an expression to change precedence.
 
-=head2 Fixity
-
-Z<fixity>
 X<fixity>
 X<operators; fixity>
 X<infix>
@@ -128,8 +132,7 @@ X<fixity; circumfix>
 X<postcircumfix>
 X<fixity; postcircumfix>
 
-An operator's I<fixity>N<Don't memorize all of these words. Just remember what
-they mean.> is its position relative to its operands:
+An operator's I<fixity> is its position relative to its operands:
 
 X<C<.>; infix operator>
 X<C<.=>; infix operator>
