@@ -9,8 +9,9 @@ of these functions governs the control flow of the program. A function may have
 a name. It may consume incoming information. It may produce outgoing
 information.
 
-Functions are a prime mechanism for abstraction, encapsulation, and re-use in
-Perl.
+Functions are a prime mechanism for organizing code into similar groups,
+identifying individual pieces by name, and providing reusable units of
+behavior.
 
 L<functions>
 

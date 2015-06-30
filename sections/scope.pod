@@ -5,10 +5,10 @@ Z<scope>
 X<scope>
 X<encapsulation>
 
-I<Scope> in Perl refers to the lifespan and visibility of named entities.
 Everything with a name in Perl (a variable, a function, a filehandle, a class)
-has a scope. Scoping helps to enforce I<encapsulation>--keeping related
-concepts together and preventing their details from leaking.
+has a scope. This I<scope> governs the lifespan and visibility of these
+entities. Scoping helps to enforce I<encapsulation>--keeping related concepts
+together and preventing their details from leaking.
 
 =head2 Lexical Scope
 
@@ -17,9 +17,9 @@ Z<lexical_scope>
 X<lexical scope>
 X<scope; lexical>
 
-I<Lexical scope> is the scope visible to you as you I<read> a program.  A block
-delimited by curly braces creates a new scope, whether a bare block, the block
-of a loop construct, the block of a C<sub> declaration, an C<eval> block, a
+I<Lexical scope> is the scope apparent to the readers of a program. Any block
+delimited by curly braces creates a new scope: a bare block, the block of a
+loop construct, the block of a C<sub> declaration, an C<eval> block, a
 C<package> block, or any other non-quoting block. The Perl compiler resolves
 this scope during compilation.
 
@@ -39,8 +39,7 @@ sibling or outer scopes:
         # inner lexical scope
         my $battery_level;
 
-        sub tidy_room
-        {
+        sub tidy_room {
             # further inner lexical scope
             my $timer;
 
@@ -51,8 +50,7 @@ sibling or outer scopes:
             } while (@_);
 
             # sibling inner lexical scope
-            for (@_)
-            {
+            for (@_) {
                 # separate innermost scope
                 my $polish_cloth;
                 ...
@@ -70,9 +68,8 @@ X<lexical shadowing>
 X<scope; lexical shadowing>
 
 Declaring a lexical in an inner scope with the same name as a lexical in an
-outer scope hides, or I<shadows>, the outer lexical within the inner scope.
-
-For example:
+outer scope hides, or I<shadows>, the outer lexical within the inner scope. For
+example:
 
 =begin programlisting
 
@@ -87,37 +84,30 @@ For example:
 
 =end programlisting
 
-In longer code with larger scopes, this shadowing behavior is often
-desirable--it's easier to understand code when the scope of a lexical variable
-is no more than a couple of dozen lines.
+The silly lexical shadowing example program prints C<Edward> and then C<Jacob>
+(don't worry; they're family members, not vampires) because the lexical in the
+nested scope hides the lexical in the outer scope. Shadowing a lexical is a
+feature of encapsulation. Declaring multiple variables with the same name and
+type I<in the same lexical scope> produces a warning message.
 
-=begin tip Name Collisions
-
-Lexical shadowing can happen by accident. Limit the scope of variables and the
-nesting of scopes to lessen your risk.
-
-=end tip
-
-The silly lexical shadowing example program prints C<Edward> and then
-C<Jacob>N<Family members, not vampires.> because the lexical in the nested
-scope hides the lexical in the outer scope. Shadowing a lexical is a feature of
-encapsulation. Declaring multiple variables with the same name and type I<in
-the same lexical scope> produces a warning message.
+In real code with larger scopes, this shadowing behavior is often
+desirable--it's easier to understand code when a lexical is in scope only for a
+couple of dozen lines. Lexical shadowing I<can> happen by accident, though.
+Limit the scope of variables and the nesting of scopes to lessen your risk.
 
 Some lexical declarations have subtleties, such as a lexical variable used as
-the iterator variable of a C<for> loop. Its declaration comes outside of the
-block, but its scope is that I<within> the loop block:
+the iterator variable of a C<for> loop. Its declaration occurs I<outside> of
+the block, but its scope is that I<within> the loop block:
 
 =begin programlisting
 
     my $cat = 'Brad';
 
-    for my $cat (qw( Jack Daisy Petunia Tuxedo Choco ))
-    {
-        say "Iterator cat is $cat";
+    for my $cat (qw( Jack Daisy Petunia Tuxedo Choco )) {
+        say "Inner cat is $cat";
     }
 
-    say "Static cat is $cat";
+    say "Outer cat is $cat";
 
 =end programlisting
 
@@ -131,12 +121,12 @@ X<builtins; C<our>>
 X<packages; scope>
 X<scope; packages>
 
-Within given scope, declare an alias to a package variable with the C<our>
+Within a scope you may declare an alias to a package variable with the C<our>
 builtin. Like C<my>, C<our> enforces lexical scoping of the alias. The
 fully-qualified name is available everywhere, but the lexical alias is visible
 only within its scope.
 
-C<our> is most useful with package global variables like C<$VERSION> and
+C<our> is most useful with package global variables such as C<$VERSION> and
 C<$AUTOLOAD>. You get a little bit of typo detection (declaring a package
 global with C<our> satisfies the C<strict> pragma's C<vars> rule), but you
 still have to deal with a global variable.
@@ -151,29 +141,26 @@ X<scope; dynamic>
 Dynamic scope resembles lexical scope in its visibility rules, but instead of
 looking outward in compile-time scopes, lookup traverses backwards through all
 of the function calls you've made to reach the current code. Dynamic scope
-applies only to global and package global variables (because lexicals aren't
-visible outside their scopes), and is easiest to understand with an example.
-While a package global variable may be I<visible> within all scopes, its
-I<value> may change depending on C<local>ization and assignment:
+applies only to global and package global variables (as lexicals aren't visible
+outside their scopes). While a package global variable may be I<visible> within
+all scopes, its I<value> may change depending on C<local>ization and
+assignment:
 
 =begin programlisting
 
     our $scope;
 
-    sub inner
-    {
+    sub inner {
         say $scope;
     }
 
-    sub main
-    {
+    sub main {
         say $scope;
         local $scope = 'main() scope';
         middle();
     }
 
-    sub middle
-    {
+    sub middle {
         say $scope;
         inner();
     }
@@ -202,18 +189,18 @@ X<lexicals; pads>
 X<lexpads>
 X<symbol tables>
 
-Perl uses different visibility rules and storage mechanisms for package
-variables and lexical variables. Every scope which contains lexical variables
-uses a data structure called a I<lexical pad> or I<lexpad> to store the values
-for its enclosed lexical variables. Every time control flow enters one of these
-scopes, Perl creates another lexpad to contain the values of the lexical
-variables for that particular call. This makes functions work correctly,
-especially in recursive calls (L<recursion>).
+Perl also uses different storage mechanisms for package variables and lexical
+variables. Every scope which contains lexical variables uses a data structure
+called a I<lexical pad> or I<lexpad> to store the values for its enclosed
+lexical variables. Every time control flow enters one of these scopes, Perl
+creates another lexpad to contain the values of the lexical variables for that
+particular call. This makes functions work correctly, especially recursive
+functions (L<recursion>).
 
 Each package has a single I<symbol table> which holds package variables and
 well as named functions. Importing (L<importing>) works by inspecting and
-manipulating this symbol table. So does C<local>. You may only C<local>ize
-global and package global variables--never lexical variables.
+manipulating this symbol table. So does C<local>. This is why you may only
+C<local>ize global and package global variables--never lexical variables.
 
 X<C<$/>>
 X<magic variables; C<$/>>
@@ -243,14 +230,12 @@ X<C<state>>
 X<builtins; C<state>>
 X<scope; state>
 
-Perl 5.10 added a new scope to support the C<state> builtin. State scope
-resembles lexical scope in terms of visibility, but adds a one-time
+Perl's C<state> keyword allows you to declare a lexical which has a one-time
 initialization as well as value persistence:
 
 =begin programlisting
 
-    sub counter
-    {
+    sub counter {
         B<state> $count = 1;
         return $count++;
     }
@@ -261,17 +246,16 @@ initialization as well as value persistence:
 
 =end programlisting
 
-On the first call to C<counter>, Perl performs its single initialization of
-C<$count>. On subsequent calls, C<$count> retains its previous value. This
-program prints C<1>, C<2>, and C<3>. Change C<state> to C<my> and the program
-will print C<1>, C<1>, and C<1>.
+On the first call to C<counter>, Perl initializes C<$count>. On subsequent
+calls, C<$count> retains its previous value. This program prints C<1>, C<2>,
+and C<3>. Change C<state> to C<my> and the program will print C<1>, C<1>, and
+C<1>.
 
 You may use an expression to set a C<state> variable's initial value:
 
 =begin programlisting
 
-    sub counter
-    {
+    sub counter {
         state $count = shift;
         return $count++;
     }
@@ -292,8 +276,7 @@ but be sure to understand its initialization behavior if you use it:
 
 =begin programlisting
 
-    sub counter
-    {
+    sub counter {
         state $count = shift;
         say 'Second arg is: ', shift;
         return $count++;
@@ -313,8 +296,7 @@ guard against it with:
 
 =begin programlisting
 
-    sub counter
-    {
+    sub counter {
         my ($initial_value, $text) = @_;
 
         state $count = $initial_value;

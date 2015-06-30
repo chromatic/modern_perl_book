@@ -4,11 +4,12 @@ Z<closures>
 X<functions; higher order>
 X<higher order functions>
 
-Every time control flow enters a function, that function gets a new environment
-representing that invocation's lexical scope (L<scope>). That applies equally
-well to anonymous functions (L<anonymous_functions>). The implication is
-powerful. The computer science term I<higher order functions> refers to
-functions which manipulate other functions. Closures show off this power.
+The computer science term I<higher order functions> refers to functions which
+manipulate other functions. Every time control flow enters a function, that
+function gets a new environment representing that invocation's lexical scope
+(L<scope>). That applies equally well to anonymous functions
+(L<anonymous_functions>). The implication is powerful, and closures show off
+this power.
 
 =head2 Creating Closures
 
@@ -20,7 +21,7 @@ You've probably already created and used closures without realizing it:
 
 =begin programlisting
 
-    use Modern::Perl '2014';
+    use Modern::Perl '2015';
 
     my $filename = shift @ARGV;
 
@@ -38,13 +39,11 @@ invoked, will return the next item in the iteration:
 
 =begin programlisting
 
-    sub make_iterator
-    {
+    sub make_iterator {
         my @items = @_;
         my $count = 0;
 
-        return sub
-        {
+        return sub {
             return if $count == @items;
             return $items[ $count++ ];
         }
@@ -60,7 +59,7 @@ invoked, will return the next item in the iteration:
 
 Even though C<make_iterator()> has returned, the anonymous function stored in
 C<$cousins> has closed over the values of these variables I<as they existed
-within> the invocation of C<make_iterator()>. Their values persist
+within> the invocation of C<make_iterator()>--and their values persist
 (L<reference_counts>).
 
 Because invoking C<make_iterator()> creates a separate lexical environment, the
@@ -79,11 +78,10 @@ for each invocation:
 =end programlisting
 
 Because C<make_iterator()> does not return these lexicals by value or by
-reference, no other Perl code besides the closure can access them. They're
-encapsulated as effectively as any other lexical is, although any code which
-shares a lexical environment can access these values. This idiom provides
-better encapsulation of what would otherwise be a file or package global
-variable:
+reference, only the closure can access them. They're encapsulated as
+effectively as any other lexical is, although any code which shares a lexical
+environment can access these values. This idiom provides better encapsulation
+of what would otherwise be a file or package global variable:
 
 =begin programlisting
 
@@ -96,10 +94,10 @@ variable:
 
 =end programlisting
 
-Be aware that you cannot I<nest> named functions. Named functions have package
-global scope. Any lexical variables shared between nested functions will go
-unshared when the outer function destroys its first lexical environmentN<If
-that's confusing to you, imagine the implementation.>.
+Named functions have package global scope, thus you cannot I<nest> named
+functions.  Any lexical variables shared between nested functions will go
+unshared when the outer function destroys its first lexical environment. Perl
+will warn you when this happens.
 
 =begin tip Invasion of Privacy
 
@@ -115,24 +113,20 @@ who uses it gets to fix any bugs that result.
 Iterating over a fixed-sized list with a closure is interesting, but closures
 can do much more, such as iterating over a list which is too expensive to
 calculate or too large to maintain in memory all at once. Consider a function
-to create the Fibonacci series as you need its elementsN<Why? To check your
-Haskell homework.>. Instead of recalculating the series recursively, use a
-cache and lazily create the elements you need:
+to create the Fibonacci series as you need its elements (probably so you can
+check the output of your Haskell homework). Instead of recalculating the series
+recursively, use a cache and lazily create the elements you need:
 
 =begin programlisting
 
-    sub gen_fib
-    {
+    sub gen_fib {
         my @fibs = (0, 1);
 
-        return sub
-        {
+        return sub {
             my $item = shift;
 
-            if ($item >= @fibs)
-            {
-                for my $calc (@fibs .. $item)
-                {
+            if ($item >= @fibs) {
+                for my $calc (@fibs .. $item) {
                     $fibs[$calc] = $fibs[$calc - 2]
                                  + $fibs[$calc - 1];
                 }
@@ -159,31 +153,25 @@ calculated or cached value) to a function C<gen_caching_closure()>?
 
 =begin programlisting
 
-    sub gen_caching_closure
-    {
+    sub gen_caching_closure {
         my ($calc_element, @cache) = @_;
 
-        return sub
-        {
+        return sub {
             my $item = shift;
 
-            $calc_element->($item, \@cache)
-                unless $item < @cache;
+            $calc_element->($item, \@cache) unless $item < @cache;
 
             return $cache[$item];
         };
     }
 
-    sub gen_fib
-    {
+    sub gen_fib {
         my @fibs = (0, 1, 1);
 
-        return B<gen_caching_closure>( sub
-            {
+        return B<gen_caching_closure>( sub {
                 my ($item, $fibs) = @_;
 
-                for my $calc ((@$fibs - 1) .. $item)
-                {
+                for my $calc ((@$fibs - 1) .. $item) {
                     $fibs->[$calc] = $fibs->[$calc - 2]
                                    + $fibs->[$calc - 1];
                 }
@@ -215,8 +203,7 @@ function which takes several parameters:
 
 =begin programlisting
 
-    sub make_sundae
-    {
+    sub make_sundae {
         my %args      = @_;
 
         my $ice_cream = get_ice_cream( $args{ice_cream} );
@@ -241,8 +228,7 @@ cart:
 
 =begin programlisting
 
-    my $make_cart_sundae = sub
-    {
+    my $make_cart_sundae = sub {
         return make_sundae( @_,
             ice_cream => 'French Vanilla',
             banana    => 'Cavendish',

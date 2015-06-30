@@ -44,8 +44,7 @@ the package global C<$AUTOLOAD> (here, C<main::bake_pie>):
 
 =begin programlisting
 
-    sub AUTOLOAD
-    {
+    sub AUTOLOAD {
         B<our $AUTOLOAD;>
 
         # pretty-print the arguments
@@ -59,8 +58,7 @@ Extract the method name with a regular expression (L<regex>):
 
 =begin programlisting
 
-    sub AUTOLOAD
-    {
+    sub AUTOLOAD {
         B<my ($name) = our $AUTOLOAD =~ /::(\w+)$/;>
 
         # pretty-print the arguments
@@ -93,8 +91,8 @@ X<OO; proxying>
 X<proxying>
 
 A common pattern in OO programming (L<moose>) is to I<delegate> or I<proxy>
-certain methods in one object to another object somehow available to the
-former. A logging proxy can help with debugging:
+certain methods from one object to another. A logging proxy can help with
+debugging:
 
 =begin programlisting
 
@@ -102,8 +100,7 @@ former. A logging proxy can help with debugging:
 
     # constructor blesses reference to a scalar
 
-    sub AUTOLOAD
-    {
+    sub AUTOLOAD {
         my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
         Log::method_call( $name, @_ );
 
@@ -113,7 +110,7 @@ former. A logging proxy can help with debugging:
 
 =end programlisting
 
-This C<AUTOLOAD()> extracts the name of the undefined method.  Then it
+This C<AUTOLOAD()> extracts the name of the undefined method. Then it
 dereferences the proxied object from a blessed scalar reference, logs the
 method call, then invokes that method on the proxied object with the provided
 parameters.
@@ -129,8 +126,7 @@ them:
 
 =begin programlisting
 
-    sub AUTOLOAD
-    {
+    sub AUTOLOAD {
         my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
         my $method = sub { ... };
 
@@ -161,8 +157,7 @@ of C<AUTOLOAD()> with a call to the destination method:
 
 =begin programlisting
 
-    sub AUTOLOAD
-    {
+    sub AUTOLOAD {
         my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
         my $method = sub { ... }
 
@@ -175,7 +170,7 @@ of C<AUTOLOAD()> with a call to the destination method:
 
 This has the same effect as invoking C<$method> directly, except that
 C<AUTOLOAD()> will no longer appear in the list of calls available from
-C<caller()>, so it looks like the generated method was simply called directly.
+C<caller()>, so it looks like normal method dispatch occurred.
 
 =head2 Drawbacks of AUTOLOAD
 
@@ -202,8 +197,8 @@ C<AUTOLOAD()> with the C<subs> pragma:
 
 =begin tip Now You See Them
 
-Forward declarations are useful only in the two rare cases of attributes and
-autoloading (L<autoload>).
+Forward declarations are useful only in the two rare cases of attributes
+(L<attributes>) and autoloading (L<autoload>).
 
 =end tip
 
@@ -213,8 +208,7 @@ sometimes works better:
 
 =begin programlisting
 
-    sub can
-    {
+    sub can {
         my ($self, $method) = @_;
 
         # use results of parent can()
@@ -229,8 +223,7 @@ sometimes works better:
         return *{ $method } = $meth_ref;
     }
 
-    sub AUTOLOAD
-    {
+    sub AUTOLOAD {
         my ($self) = @_;
         my ($name) = our $AUTOLOAD =~ /::(\w+)$/;>
 
@@ -265,8 +258,7 @@ error:
 
 =begin screen
 
-  Use of inherited AUTOLOAD for non-method
-      I<slam_door>() is deprecated
+  Use of inherited AUTOLOAD for non-method I<slam_door>() is deprecated
 
 =end screen
 

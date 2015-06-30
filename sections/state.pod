@@ -13,8 +13,7 @@ lexical variables--even with named functions:
         sub enable_safety  { $safety = 1 }
         sub disable_safety { $safety = 0 }
 
-        sub do_something_awesome
-        {
+        sub do_something_awesome {
             return if $safety;
             ...
         }
@@ -23,7 +22,7 @@ lexical variables--even with named functions:
 =end programlisting
 
 All three functions encapsulate that shared state without exposing the lexical
-variable directly to external code. This idiom works well for cases where
+variable outside of their shared scope. This idiom works well for cases where
 multiple functions access that lexical, but it's clunky when only one function
 does. Suppose every hundredth ice cream parlor customer gets free sprinkles:
 
@@ -31,8 +30,7 @@ does. Suppose every hundredth ice cream parlor customer gets free sprinkles:
 
     my $cust_count = 0;
 
-    sub serve_customer
-    {
+    sub serve_customer {
         $cust_count++;
         my $order = shift;
 
@@ -51,8 +49,7 @@ lexically scoped variable with a value that persists between invocations:
 
 =begin programlisting
 
-    sub serve_customer
-    {
+    sub serve_customer {
         B<state $cust_count = 0;>
         $cust_count++;
 
@@ -65,21 +62,12 @@ lexically scoped variable with a value that persists between invocations:
 
 =end programlisting
 
-X<C<feature>>
-X<C<feature>; C<state>>
-
-You must enable this feature explicitly by using a module such as
-C<Modern::Perl>, the C<feature> pragma (L<pragmas>), or requiring the features
-of at least Perl 5.10 (C<use 5.010;>, C<use 5.012;>, and so on).
-
 C<state> also works within anonymous functions:
 
 =begin programlisting
 
-    sub make_counter
-    {
-        return sub
-        {
+    sub make_counter {
+        return sub {
              B<state $count = 0;>
              return $count++;
          }
@@ -96,16 +84,15 @@ scope by abusing a quirk of implementation. Using a postfix conditional which
 evaluates to false with a C<my> declaration avoided I<reinitializing> a lexical
 variable to C<undef> or its initialized value.
 
-In modern versions of Perl, any use of a postfix conditional expression
-modifying a lexical variable declaration produces a deprecation warning. It's
-too easy to write inadvertently buggy code with this technique; use C<state>
-instead where available, or a true closure otherwise. Rewrite this idiom when
-you encounter it:
+Now any use of a postfix conditional expression modifying a lexical variable
+declaration produces a deprecation warning. It's too easy to write
+inadvertently buggy code with this technique; use C<state> instead where
+available, or a true closure otherwise. Rewrite this idiom when you encounter
+it:
 
 =begin programlisting
 
-    sub inadvertent_state
-    {
+    sub inadvertent_state {
         # my $counter  = 1 if 0; # DEPRECATED; don't use
         state $counter = 1;      # prefer
 
