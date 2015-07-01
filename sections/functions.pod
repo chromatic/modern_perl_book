@@ -184,6 +184,16 @@ C<Method::Signatures> require this.)
 
 =end programlisting
 
+Better yet, you can do both at once with the C<experimental> pragma
+
+=begin programlisting
+
+    use  experimental 'signatures';
+    
+=end programlisting
+
+which is both shorter and clearer--- a win-win!
+
 With that disclaimer in place, you can now write:
 
 =begin programlisting
