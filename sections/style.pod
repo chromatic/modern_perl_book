@@ -85,9 +85,8 @@ C<Pinto>). Take advantage of the CPAN infrastructure; follow the CPAN model of
 writing, documenting, packaging, testing, and distributing your code.
 
 I<Read code.> Join a mailing list such as Perl Beginners
-(U<http://learn.perl.org/faq/beginners.html>), browse PerlMonks
-(U<http://perlmonks.org/>), and otherwise immerse yourself in the
-communityN<See U<http://www.perl.org/community.html>.>. Read code and try to
+(U<http://learn.perl.org/faq/beginners.html>) and otherwise immerse yourself in
+the communityN<U<http://www.perl.org/community.html>>. Read code and try to
 answer questions--even if you never post them, this is a great opportunity to
 learn.
 
