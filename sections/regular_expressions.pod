@@ -23,7 +23,7 @@ The match operator (C<m//>, abbreviated C<//>) identifies a regular
 expression--in this example, C<hat>. This pattern is I<not> a word. Instead it
 means "the C<h> character, followed by the C<a> character, followed by the C<t>
 character." Each character in the pattern is an indivisible element (an
-I<atom>). An atom matches or it doesn't.
+I<atom>). An atom either matches or it doesn't.
 
 X<operators; C<=~>>
 X<C<=~>; regex bind>
@@ -31,10 +31,11 @@ X<operators; C<!~>>
 X<C<!~>; negated regex bind>
 
 The regex binding operator (C<=~>) is an infix operator (L<fixity>) which
-applies the regex of its second operand to a string as its first operand. When
-evaluated in scalar context, a match evaluates to a true value if it succeeds.
-The negated form of the binding operator (C<!~>) evaluates to a true value
-I<unless> the match succeeds.
+applies the regex of its second operand to a string provided as its first
+operand. When evaluated in scalar context, a match evaluates to a boolean value
+representing the success or failure of the match. The negated form of the
+binding operator (C<!~>) evaluates to a true value I<unless> the match
+succeeds.
 
 =begin tip Remember C<index>!
 
@@ -42,8 +43,8 @@ X<builtins; C<index>>
 
 The C<index> builtin can also search for a literal substring within a string.
 Using a regex engine for that is like flying an autonomous combat drone to the
-corner store to buy cheese--but Perl lets you write code as it seems most clear
-to you.
+corner store to buy cheese--but Perl lets you write code however you find it
+clear.
 
 =end tip
 
@@ -52,11 +53,10 @@ X<operators; C<s///>>
 
 The substitution operator, C<s///>, is in one sense a circumfix operator
 (L<fixity>) with two operands. Its first operand (the part between the first
-and second delimiters) is a regular expression to match when used with the
-regex binding operator. The second operand (the part between the second and
-third delimiters) is a substring used to replace the matched portion of the
-string operand used with the regex binding operator. For example, to cure pesky
-summer allergies:
+and second delimiters) is a regular expression. The second operand (the part
+between the second and third delimiters) is a substring used to replace the
+matched portion of the string operand used with the regex binding operator. For
+example, to cure pesky summer allergies:
 
 =begin programlisting
 
@@ -73,8 +73,8 @@ X<C<qr//>; compile regex operator>
 X<regex; C<qr//>>
 X<regex; first-class>
 
-The C<qr//> operator creates first-class regexes. Use them as the operand
-of the match operator or the first operand of the substitution operator:
+The C<qr//> operator creates first-class regexes you can store in variables.
+Use these regexes as operands to the match and substitution operators:
 
 =begin programlisting
 
@@ -93,8 +93,7 @@ of the match operator or the first operand of the substitution operator:
     say 'Found a hat in a field!'
         if $name =~ /B<$hat$field>/;
 
-    like( $name, qr/B<$hat$field>/,
-                   'Found a hat in a field!' );
+    like $name, qr/B<$hat$field>/, 'Found a hat in a field!';
 
 =end programlisting
 
@@ -114,42 +113,42 @@ X<regex; quantifiers>
 X<regex; zero or one quantifier>
 X<C<?>; zero or one regex quantifier>
 
-Regular expressions get more powerful through the use of I<regex quantifiers>.
-These metacharacters govern how often a regex component may appear in a
-matching string. The simplest quantifier is the I<zero or one quantifier>, or
-C<?>:
+Matching literal expressions is good, but I<regex quantifiers> make regexes
+more powerful. These metacharacters govern how often a regex component may
+appear in a matching string. The simplest quantifier is the I<zero or one
+quantifier>, or C<?>:
 
 =begin programlisting
 
     my $cat_or_ct = qr/caB<?>t/;
 
-    like( 'cat', $cat_or_ct, "'cat' matches /ca?t/" );
-    like( 'ct',  $cat_or_ct, "'ct' matches /ca?t/"  );
+    like 'cat', $cat_or_ct, "'cat' matches /ca?t/";
+    like 'ct',  $cat_or_ct, "'ct' matches /ca?t/";
 
 =end programlisting
 
 Any atom in a regular expression followed by the C<?> character means "match
-zero or one of this atom." This regular expression matches if zero or one C<a>
-characters immediately follow a C<c> character I<and> immediately precede a
-C<t> character. This regex matches both the literal substrings C<cat> and
-C<ct>.
+zero or one instance(s) of this atom." This regular expression matches if zero
+or one C<a> characters immediately follow a C<c> character I<and> immediately
+precede a C<t> character. This regex matches both the literal substrings C<cat>
+and C<ct>.
 
 X<regex; one or more quantifier>
 X<C<+>; one or more regex quantifier>
 
-The I<one or more quantifier>, or C<+>, matches at least one of the quantified
+The I<one or more quantifier>, or C<+>, matches at least one instance of its
 atom:
 
 =begin programlisting
 
     my $some_a = qr/caB<+>t/;
 
-    like( 'cat',    $some_a, "'cat' matches /ca+t/" );
-    like( 'caat',   $some_a, "'caat' matches/"      );
-    like( 'caaat',  $some_a, "'caaat' matches"      );
-    like( 'caaaat', $some_a, "'caaaat' matches"     );
+    like 'cat',    $some_a, "'cat' matches /ca+t/";
+    like 'caat',   $some_a, "'caat' matches/";
+    like 'caaat',  $some_a, "'caaat' matches";
+    like 'caaaat', $some_a, "'caaaat' matches";
 
-    unlike( 'ct',   $some_a, "'ct' does not match"  );
+    unlike 'ct',   $some_a, "'ct' does not match";
 
 =end programlisting
 
@@ -166,18 +165,18 @@ quantified atom:
 
     my $any_a = qr/caB<*>t/;
 
-    like( 'cat',    $any_a, "'cat' matches /ca*t/" );
-    like( 'caat',   $any_a, "'caat' matches"       );
-    like( 'caaat',  $any_a, "'caaat' matches"      );
-    like( 'caaaat', $any_a, "'caaaat' matches"     );
-    like( 'ct',     $any_a, "'ct' matches"         );
+    like 'cat',    $any_a, "'cat' matches /ca*t/";
+    like 'caat',   $any_a, "'caat' matches";
+    like 'caaat',  $any_a, "'caaat' matches";
+    like 'caaaat', $any_a, "'caaaat' matches";
+    like 'ct',     $any_a, "'ct' matches";
 
 =end programlisting
 
 As silly as this seems, it allows you to specify optional components of a
 regex. Use it sparingly, though: it's a blunt and expensive tool. I<Most>
 regular expressions benefit from using the C<?> and C<+> quantifiers far more
-than C<*>. Precision of intent often improves clarity.
+than C<*>. Be precise about your intent to clarify your code.
 
 X<numeric quantifiers>
 X<C<{}>; regex numeric quantifier>
@@ -190,7 +189,7 @@ means that a match must occur exactly I<n> times.
     # equivalent to qr/cat/;
     my $only_one_a = qr/caB<{1}>t/;
 
-    like( 'cat', $only_one_a, "'cat' matches /ca{1}t/" );
+    like 'cat', $only_one_a, "'cat' matches /ca{1}t/";
 
 =end programlisting
 
@@ -201,10 +200,10 @@ C<{n,}> matches an atom I<at least> I<n> times:
     # equivalent to qr/ca+t/;
     my $some_a = qr/caB<{1,}>t/;
 
-    like( 'cat',    $some_a, "'cat' matches /ca{1,}t/" );
-    like( 'caat',   $some_a, "'caat' matches"          );
-    like( 'caaat',  $some_a, "'caaat' matches"         );
-    like( 'caaaat', $some_a, "'caaaat' matches"        );
+    like 'cat',    $some_a, "'cat' matches /ca{1,}t/";
+    like 'caat',   $some_a, "'caat' matches";
+    like 'caaat',  $some_a, "'caaat' matches";
+    like 'caaaat', $some_a, "'caaaat' matches";
 
 =end programlisting
 
@@ -215,16 +214,16 @@ more than I<m> times:
 
     my $few_a = qr/caB<{1,3}>t/;
 
-    like( 'cat',    $few_a, "'cat' matches /ca{1,3}t/" );
-    like( 'caat',   $few_a, "'caat' matches"           );
-    like( 'caaat',  $few_a, "'caaat' matches"          );
+    like 'cat',    $few_a, "'cat' matches /ca{1,3}t/";
+    like 'caat',   $few_a, "'caat' matches";
+    like 'caaat',  $few_a, "'caaat' matches";
 
-    unlike( 'caaaat', $few_a, "'caaaat' doesn't match" );
+    unlike 'caaaat', $few_a, "'caaaat' doesn't match";
 
 =end programlisting
 
 You may express the symbolic quantifiers in terms of the numeric quantifiers,
-but the symbolic quantifiers are shorter and get used more often.
+but the symbolic quantifiers are shorter and more common.
 
 =head1 Greediness
 
@@ -232,7 +231,7 @@ X<greedy quantifiers>
 X<quantifiers; greedy>
 
 The C<+> and C<*> quantifiers are I<greedy>: they try to match as much of the
-input string as possible. This is particularly pernicious. Consider a
+input string as possible. This can be particularly pernicious. Consider a
 naE<iuml>ve use of the "zero or more non-newline characters" pattern of C<.*>:
 
 =begin programlisting
@@ -240,11 +239,9 @@ naE<iuml>ve use of the "zero or more non-newline characters" pattern of C<.*>:
     # a poor regex
     my $hot_meal = qr/hot.*meal/;
 
-    say 'Found a hot meal!'
-        if 'I have a hot meal' =~ $hot_meal;
+    say 'Found a hot meal!' if 'I have a hot meal' =~ $hot_meal;
 
-    say 'Found a hot meal!'
-         if 'one-shot, piecemeal work!' =~ $hot_meal;
+    say 'Found a hot meal!' if 'one-shot, piecemeal work!' =~ $hot_meal;
 
 =end programlisting
 
@@ -271,8 +268,7 @@ potential match for this token combination is zero characters:
 
 =begin programlisting
 
-    say 'Found a hot meal'
-    if 'ilikeahotmeal' =~ /$minimal_greedy/;
+    say 'Found a hot meal' if 'ilikeahotmeal' =~ /$minimal_greedy/;
 
 =end programlisting
 
@@ -284,17 +280,17 @@ Use C<+?> to match one or more items non-greedily:
 
     my $minimal_greedy_plus = qr/hot.+?meal/;
 
-    unlike( 'ilikeahotmeal',   $minimal_greedy_plus );
+    unlike 'ilikeahotmeal',   $minimal_greedy_plus;
 
-    like( 'i like a hot meal', $minimal_greedy_plus );
+    like 'i like a hot meal', $minimal_greedy_plus;
 
 =end programlisting
 
 X<C<??>; non-greedy zero or one regex quantifier>
 
 The C<?> quantifier modifier applies to the C<?> (zero or one matches)
-quantifier as well as the range quantifiers. It always causes the regex to
-match as little of the input as possible.
+quantifier as well as the range quantifiers. It causes the regex to match as
+little of the input as possible.
 
 Regexes are powerful, but they're not always the best way to solve a problem.
 This is doubly true for the greedy patterns C<.+> and C<.*>. A crossword puzzle
@@ -307,10 +303,10 @@ invalid candidates with the pattern:
 
 =end programlisting
 
-If she runs this against all of the words in a dictionary, it'll match
-C<Alabama>, C<Belgium>, and C<Bethlehem> long before it reaches the answer of
-C<loam>. Not only are those words too long, but the matches start in the middle
-of the words.
+If you run this against all of the words in a dictionary, it'll match
+C<Alabama>, C<Belgium>, and C<Bethlehem> long before it reaches C<loam>, the
+real answer. Not only are those words too long, but the matched portions occur
+everywhere in the word, not just at the start.
 
 =head1 Regex Anchors
 
@@ -319,10 +315,10 @@ X<anchors; start of string>
 X<C<\A>; start of string regex metacharacter>
 
 It's important to know how the regex engine handles greedy matches--but it's
-equally as important to know what kind of matches you do and don't want.
-I<Regex anchors> force the regex engine to start or end a match at a fixed
-position. The I<start of string anchor> (C<\A>) dictates that any match must
-start at the very beginning of the string:
+equally as important to know what kind of matches you want. I<Regex anchors>
+force the regex engine to start or end a match at a fixed position. The I<start
+of string anchor> (C<\A>) dictates that any match must start at the beginning
+of the string:
 
 =begin programlisting
 
@@ -334,8 +330,8 @@ start at the very beginning of the string:
 X<anchors; end of string>
 X<C<\z>; end of string regex metacharacter>
 
-The I<end of line string anchor> (C<\z>) requires that a match end at the very
-end of the string.
+The I<end of line string anchor> (C<\z>) requires that a match end at the end
+of the string.
 
 =begin programlisting
 
@@ -351,10 +347,11 @@ X<C<$>; end of string before newline regex metacharacter>
 
 You will often see the C<^> and C<$> assertions used to match the start and end
 of strings. C<^> I<does> match the start of the string, but in certain
-circumstances it can match just after a newline within the string. Similarly,
-C<$> I<does> match the end of the string (just before a newline, if it exists),
-but it can match just before a newline in the middle of the string. C<\A> and
-C<\z> are more specific and, thus, more useful.
+circumstances it can match the invisible point just after a newline within the
+string. Similarly, C<$> I<does> match the end of the string (just before a
+newline, if it exists), but it can match the invisible point just before a
+newline in the middle of the string. C<\A> and C<\z> are more specific and,
+thus, more useful.
 
 X<word boundary metacharacter>
 X<C<\b>; word boundary regex metacharacter>
@@ -370,6 +367,20 @@ regex to find C<loam> while prohibiting C<Belgium>:
 
 =end programlisting
 
+X<Unicode word boundary metacharacter>
+X<C<\b{wb}>; word boundary regex metacharacter>
+
+This anchor has one flaw which may or may not trip you; it doesn't understand
+punctuation such as the apostrophe. Fortunately, Perl 5.22 added the I<Unicode
+word boundary metacharacter> C<\b{wb}>, which I<does> understand contractions:
+
+=begin programlisting
+
+    say "Panic"    if     "Don't Panic" =~ /Don\b/;
+    say "No Panic" unless "Don't Panic" =~ /Don\b{wb}/;
+
+=end programlisting
+
 =head1 Metacharacters
 
 X<regex; metacharacters>
@@ -380,7 +391,8 @@ Perl interprets several characters in regular expressions as I<metacharacters>,
 characters represent something other than their literal interpretation. You've
 seen a few metacharacters already (C<\b>, C<.>, and C<?>, for example).
 Metacharacters give regex wielders power far beyond mere substring matches. The
-regex engine treats all metacharacters as atoms.
+regex engine treats all metacharacters as atoms. See C<perldoc perlrebackslash>
+for far more detail about metacharacters.
 
 X<regex; C<.>>
 X<C<.>; anything but newline regex metacharacter>
@@ -392,8 +404,7 @@ always more than one way to get the right answer:
 
 =begin programlisting
 
-    for my $word (@words)
-    {
+    for my $word (@words) {
         next unless length( $word ) == 4;
         next unless $word =~ /lB<..>m/;
         say "Possibility: $word";
@@ -407,7 +418,7 @@ X<C<\w>; alphanumeric regex metacharacter>
 If the potential matches in C<@words> are more than the simplest English words,
 you will get false positives. C<.> also matches punctuation characters,
 whitespace, and numbers. Be specific! The C<\w> metacharacter represents all
-alphanumeric characters (L<unicode>) and the underscore:
+Unicode alphanumeric characters (L<unicode>) and the underscore:
 
 =begin programlisting
 
@@ -418,11 +429,11 @@ alphanumeric characters (L<unicode>) and the underscore:
 X<regex; C<\d>>
 X<C<\d>; digit regex metacharacter>
 
-The C<\d> metacharacter matches digits (also in the Unicode sense):
+The C<\d> metacharacter matches Unicode digits:
 
 =begin programlisting
 
-    # not a robust phone number matcher
+    # use Regexp::English for a robust phone number regex
     next unless $number =~ /B<\d>{3}-B<\d>{3}-B<\d>{4}/;
     say "I have your number: $number";
 
@@ -455,7 +466,7 @@ X<C<\W>; non-alphanumeric regex metacharacter>
 These metacharacters have negated forms. Use C<\W> to match any character
 I<except> a word character. Use C<\D> to match a non-digit character. Use C<\S>
 to match anything but whitespace. Use C<\B> to match anywhere except a word
-boundary.
+boundary and C<\B{wb}> to match anywhere except a Unicode word boundary.
 
 =end tip
 
@@ -465,10 +476,9 @@ Z<character_classes>
 X<character classes>
 X<C<[]>; character class regex metacharacters>
 
-When none of those metacharacters is specific enough, you can make your own
-group of characters into I<character class> by enclosing them in square
-brackets. A character class allows you to treat a group of alternatives as a
-single atom.
+When none of those metacharacters is specific enough, group multiple characters
+into a I<character class> by enclosing them in square brackets. A character
+class allows you to treat a group of alternatives as a single atom.
 
 =begin programlisting
 
@@ -497,7 +507,7 @@ characters in a class, such as this C<$ascii_letters_only> regex:
 
 =end programlisting
 
-To include the hyphen as a member of the class, use it at the start or end of
+To include the hyphen as a member of the class, place it at the start or end of
 the class:
 
 =begin programlisting
@@ -510,7 +520,7 @@ the class:
 
 =begin programlisting
 
-    my $line_characters = qr/[|=\-_]/;
+    my $line_characters = qr/[|=B<\>-_]/;
 
 =end programlisting
 
@@ -527,7 +537,7 @@ Use the caret (C<^>) as the first element of the character class to mean
 
 Use a caret anywhere but the first position to make it a member of the
 character class. To include a hyphen in a negated character class, place it
-after the caret or at the end of the class, or escape it.
+after the caret or at the end of the class--or escape it.
 
 =head1 Capturing
 
@@ -545,10 +555,10 @@ later use. To extract an American telephone number of the form C<(202)
 
 =end programlisting
 
-Note especially the escaping of the parentheses within C<$area_code>.
-Parentheses are special in Perl regular expressions. They group atoms into
-larger units and also capture portions of matching strings. To match literal
-parentheses, escape them with backslashes as seen in C<$area_code>.
+Note the escaped parentheses within C<$area_code>. Parentheses are special in
+Perl regular expressions. They group atoms into larger units and capture
+portions of matching strings. To match literal parentheses, escape them with
+backslashes as seen in C<$area_code>.
 
 =head2 Named Captures
 
@@ -557,21 +567,19 @@ X<regex; captures>
 X<regex; named captures>
 X<<< C<< (?<>) >>; regex named capture >>>
 
-Perl 5.10 added I<named captures>, which allow you to capture portions of
-matches from applying a regular expression and access them later. For example,
-when extracting a phone number from contact information:
+I<Named captures> allow you to capture portions of matches from applying a
+regular expression and access them later. For example, when extracting a phone
+number from contact information:
 
 =begin programlisting
 
-    if ($contact_info =~ /(?<phone>$phone_number)/)
-    {
+    if ($contact_info =~ /(?<phone>$phone_number)/) {
         say "Found a number $+{phone}";
     }
 
 =end programlisting
 
-Regexes tend to look like punctuation soup until you can group various portions
-together as chunks. Named capture syntax has the form:
+Named capture syntax has the form:
 
 =begin programlisting
 
@@ -584,7 +592,7 @@ X<global variables; C<%+>>
 
 Parentheses enclose the capture. The C<< ?< name > >> construct immediately
 follows the opening parenthesis and provides a name for this particular
-capture.  The remainder of the capture is a regular expression.
+capture. The remainder of the capture is a regular expression.
 
 When a match against the enclosing pattern succeeds, Perl updates the magic
 variable C<%+>. In this hash, the key is the name of the capture and the value
@@ -595,12 +603,11 @@ is the portion of the string which matched the capture.
 X<regex; numbered captures>
 X<regex; captures>
 
-Perl has supported I<numbered captures> for ages:
+Perl also supports I<numbered captures>:
 
 =begin programlisting
 
-    if ($contact_info =~ /($phone_number)/)
-    {
+    if ($contact_info =~ /($phone_number)/) {
         say "Found a number $1";
     }
 
@@ -613,24 +620,23 @@ X<C<$2>; regex metacharacter>
 
 This form of capture provides no identifying name and does nothing to C<%+>.
 Instead, Perl stores the captured substring in a series of magic variables.
-The I<first> matching capture that Perl finds goes into C<$1>, the second into
-C<$2>, and so on. Capture counts start at the I<opening> parenthesis of the
-capture. Thus the first left parenthesis begins the capture into C<$1>, the
-second into C<$2>, and so on.
+The I<first> matching capture goes into C<$1>, the second into C<$2>, and so
+on. Capture counts start at the I<opening> parenthesis of the capture. Thus the
+first left parenthesis begins the capture into C<$1>, the second into C<$2>,
+and so on.
 
 While the syntax for named captures is longer than for numbered captures, it
-provides additional clarity. Counting left parentheses is tedious work, and
-combining regexes which each contain numbered captures is difficult.  Named
+provides additional clarity. Counting left parentheses is tedious, and
+combining regexes which each contain numbered captures is difficult. Named
 captures improve regex maintainability--though name collisions are possible,
 they're relatively infrequent. Minimize the risk by using named captures only
-in top-level regexes.
+in top-level regexes, rather than in smaller regexes composed into larger.
 
 In list context, a regex match returns a list of captured substrings:
 
 =begin programlisting
 
-    if (my ($number) = $contact_info =~ /($phone_number)/)
-    {
+    if (my ($number) = $contact_info =~ /($phone_number)/) {
         say "Found a number $number";
     }
 
@@ -659,8 +665,8 @@ them to any regex element:
     my $pork  = qr/pork/;
     my $beans = qr/beans/;
 
-    like( 'pork and beans', qr/\A$pork?.*?$beans/,
-         'maybe pork, definitely beans' );
+    like 'pork and beans', qr/\A$pork?.*?$beans/,
+         'maybe pork, definitely beans';
 
 =end programlisting
 
@@ -670,10 +676,10 @@ If you expand the regex manually, the results may surprise you:
 
     my $pork_and_beans = qr/\Apork?.*beans/;
 
-    like( 'pork and beans', qr/$pork_and_beans/,
-        'maybe pork, definitely beans' );
-    like( 'por and beans', qr/$pork_and_beans/,
-         'wait... no phylloquinone here!' );
+    like 'pork and beans', qr/$pork_and_beans/,
+         'maybe pork, definitely beans';
+    like 'por and beans', qr/$pork_and_beans/,
+         'wait... no phylloquinone here!';
 
 =end programlisting
 
@@ -685,8 +691,8 @@ Sometimes specificity helps pattern accuracy:
     my $and   = qr/and/;
     my $beans = qr/beans/;
 
-    like( 'pork and beans', qr/\A$pork? $and? $beans/,
-        'maybe pork, maybe and, definitely beans' );
+    like 'pork and beans', qr/\A$pork? $and? $beans/,
+         'maybe pork, maybe and, definitely beans';
 
 =end programlisting
 
@@ -701,8 +707,8 @@ metacharacter (C<|>) indicates that either possibility may match.
     my $rice  = qr/rice/;
     my $beans = qr/beans/;
 
-    like( 'rice',  qr/$rice|$beans/, 'Found rice'  );
-    like( 'beans', qr/$rice|$beans/, 'Found beans' );
+    like 'rice',  qr/$rice|$beans/, 'Found rice';
+    like 'beans', qr/$rice|$beans/, 'Found beans';
 
 =end programlisting
 
@@ -716,9 +722,9 @@ Alternation has a lower precedence (L<precedence>) than even atoms:
 
 =begin programlisting
 
-    like(   'rice',  qr/rice|beans/, 'Found rice'   );
-    like(   'beans', qr/rice|beans/, 'Found beans'  );
-    unlike( 'ricb',  qr/rice|beans/, 'Found hybrid' );
+    like   'rice',  qr/rice|beans/, 'Found rice';
+    like   'beans', qr/rice|beans/, 'Found beans';
+    unlike 'ricb',  qr/rice|beans/, 'Found hybrid';
 
 =end programlisting
 
@@ -757,8 +763,9 @@ parenthesis and C<\]> refers to a single right square bracket. C<\.> refers to
 a literal period character instead of the "match anything but an explicit
 newline character" atom.
 
-You will likely need to escape the alternation metacharacter (C<|>) as well as
-the end of line metacharacter (C<$>) and the quantifiers (C<+>, C<?>, C<*>).
+Remember to escape the alternation metacharacter (C<|>) as well as the end of
+line metacharacter (C<$>) and the quantifiers (C<+>, C<?>, C<*>) if you want to
+match their symbols literally.
 
 X<C<\Q>; disable metacharacters regex metacharacter>
 X<C<\E>; reenable metacharacters regex metacharacter>
@@ -766,7 +773,7 @@ X<regex; disabling metacharacters>
 
 The I<metacharacter disabling characters> (C<\Q> and C<\E>) disable
 metacharacter interpretation within their boundaries. This is especially useful
-when taking match text from a source you don't control:
+when you don't control the source of match text:
 
 =begin programlisting
 
@@ -794,10 +801,10 @@ program.
 
 X<regex; assertions>
 
-Regex anchors such as C<\A>, C<\b>, C<\B>, and C<\Z> are a form of I<regex
-assertion>, which requires that the string meet some condition. These
-assertions do not match individual characters within the string. No matter what
-the string contains, the regex C<qr/\A/> will I<always> match..
+Regex anchors such as C<\A>, C<\b>, C<\B>, and C<\Z> are I<regex assertions>.
+These assertions do not match individual characters within the string. Instead
+they match specific conditions of the string. For example, no matter what the
+string contains, the regex C<qr/\A/> will I<always> match.
 
 X<regex; zero-width assertion>
 
@@ -809,13 +816,16 @@ cat on its own, you might use a word boundary assertion:
 
     my $just_a_cat = qr/cat\b/;
 
+    # or
+    my $just_a_cat = qr/cat\b{wb}/;
+
 =end programlisting
 
 X<regex; zero-width negative look-ahead assertion>
 X<C<(?!...)>; zero-width negative look-ahead regex assertion>
 
-... but if you want to find a non-disastrous feline, you might use a
-I<zero-width negative look-ahead assertion>:
+... but to find a non-disastrous feline, you could use a I<zero-width negative
+look-ahead assertion>:
 
 =begin programlisting
 
@@ -845,8 +855,7 @@ start with C<cat>:
 
     my $disastrous_feline = qr/cat(?!astrophe)/;
 
-    while (<$words>)
-    {
+    while (<$words>) {
         chomp;
         next unless /\A(?<cat>$disastrous_feline.*)\Z/;
         say "Found a non-catastrophe '$+{cat}'";
@@ -854,7 +863,7 @@ start with C<cat>:
 
 =end programlisting
 
-The zero-width assertion consumes none of the source string, leaving the
+The zero-width assertion consumes none of the source string, which leaves the
 anchored fragment C<.*\Z> to match. Otherwise, the capture would only capture
 the C<cat> portion of the source string.
 
@@ -863,9 +872,9 @@ X<C<(?<=...)>; zero-width positive look-behind regex assertion>
 X<regex; zero-width positive look-behind assertion>
 X<regex; zero-width negative look-behind assertion>
 
-To assert that your feline never occurs at the start of a line, you might use a
+To assert that your feline never occurs at the start of a line, use a
 I<zero-width negative look-behind assertion>. These assertions must have fixed
-sizes. You may not use quantifiers:
+sizes, and thus you may not use quantifiers:
 
 =begin programlisting
 
@@ -889,16 +898,15 @@ can be useful when combining a global regex match with the C<\G> modifier.
 X<C<\K>; keep regex assertion>
 X<regex; keep assertion>
 
-A newer feature of Perl regexes is the I<keep> assertion C<\K>. This zero-width
-positive look-behind assertion I<can> have a variable length:
+Perl also includes the I<keep> assertion C<\K>. This zero-width positive
+look-behind assertion I<can> have a variable length:
 
 =begin programlisting
 
     my $spacey_cat = qr/\s+\Kcat/;
 
-    like( 'my cat has been to space', $spacey_cat );
-    like( 'my  cat  has  been  to  doublespace',
-         $spacey_cat );
+    like 'my cat has been to space', $spacey_cat;
+    like 'my  cat  has  been  to  doublespace', $spacey_cat;
 
 =end programlisting
 
@@ -910,13 +918,12 @@ a pattern. It lets you match a pattern but remove only a portion of it:
     my $exclamation = 'This is a catastrophe!';
     $exclamation    =~ s/cat\K\w+!/./;
 
-    like( $exclamation, qr/\bcat\./,
-                          "That wasn't so bad!" );
+    like $exclamation, qr/\bcat\./, "That wasn't so bad!";
 
 =end programlisting
 
-Everything up until the C<\K> assertion matches, but only the portion of the
-match after the assertion gets substituted away.
+Everything until the C<\K> assertion matches, but only the portion of the match
+I<after> the assertion will be substituted away.
 
 =head1 Regex Modifiers
 
@@ -931,17 +938,17 @@ operators. For example, to enable case-insensitive matching:
 
 =begin programlisting
 
-    my $pet = 'CaMeLiA';
+    my $pet = 'ELLie';
 
-    like( $pet, qr/Camelia/,  'Nice butterfly!'  );
-    like( $pet, qr/Camelia/i, 'shift key br0ken' );
+    like $pet, qr/Ellie/,  'Nice puppy!';
+    like $pet, qr/Ellie/i, 'shift key br0ken';
 
 =end programlisting
 
-The first C<like()> will fail, because the strings contain different letters.
+The first C<like()> will fail because the strings contain different letters.
 The second C<like()> will pass, because the C</i> modifier causes the regex to
-ignore case distinctions. C<M> and C<m> are equivalent in the second regex due
-to the modifier.
+ignore case distinctions. C<L> and C<l> are effectively equivalent in the
+second regex due to the modifier.
 
 X<regex; embedded modifiers>
 
@@ -954,8 +961,8 @@ You may also embed regex modifiers within a pattern:
 =end programlisting
 
 The C<(?i)> syntax enables case-insensitive matching only for its enclosing
-group. In this case, that's the named capture. You may use multiple modifiers
-with this form. Disable specific modifiers by preceding them with the minus
+group--in this case, the named capture. You may use multiple modifiers with
+this form. Disable specific modifiers by preceding them with the minus
 character (C<->):
 
 =begin programlisting
@@ -995,15 +1002,15 @@ the original:
 =begin programlisting
 
     my $status     = 'I am hungry for pie.';
+
     my $newstatus  = $status =~ s/pie/cake/r;
-    my $statuscopy = $status
-                   =~ s/liver and onions/bratwurst/r;
+    my $statuscopy = $status =~ s/liver and onions/bratwurst/r;
 
-    is( $status, 'I am hungry for pie.',
-        'original string should be unmodified' );
+    is $status, 'I am hungry for pie.',
+       'original string should be unmodified';
 
-    like( $newstatus,    qr/cake/,      'cake wanted' );
-    unlike( $statuscopy, qr/bratwurst/, 'wurst not'   );
+    like   $newstatus,  qr/cake/,      'cake wanted';
+    unlike $statuscopy, qr/bratwurst/, 'wurst not want not';
 
 =end programlisting
 
@@ -1066,25 +1073,24 @@ full of American telephone numbers in logical chunks, you might write:
 
 =begin programlisting
 
-    while ($contents =~ /\G(\w{3})(\w{3})(\w{4})/g)
-    {
+    while ($contents =~ /\G(\w{3})(\w{3})(\w{4})/g) {
         push @numbers, "($1) $2-$3";
     }
 
 =end programlisting
 
-Be aware that the C<\G> anchor will begin at the last point in the string where
-the previous iteration of the match occurred. If the previous match ended with
-a greedy match such as C<.*>, the next match will have less available string to
-match. Lookahead assertions can also help.
+Be aware that the C<\G> anchor will begin at the I<last> point in the string
+where the previous iteration of the match occurred. If the previous match ended
+with a greedy match such as C<.*>, the next match will have less available
+string to match. Lookahead assertions can also help.
 
 X<C</e>; substitution evaluation regex modifier>
 X<regex; C</e> modifier>
 X<regex; substitution evaluation>
 
 The C</e> modifier allows you to write arbitrary code on the right side of a
-substitution operation. If the match succeeds, the regex engine will run the
-code, using its return value as the substitution value. The earlier global
+substitution operation. If the match succeeds, the regex engine will use the
+return value of that code as the substitution value. The earlier global
 substitution example could be simpler with code like:
 
 =begin programlisting

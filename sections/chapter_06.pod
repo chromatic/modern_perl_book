@@ -6,17 +6,27 @@ X<regular expressions>
 X<regex>
 X<regex; engine>
 
-Much of Perl's text processing power comes from its use of I<regular
-expressions>. A regular expression (also I<regex> or I<regexp>) is a I<pattern>
-which describes characteristics of a piece of text. A I<regular expression
+Perl's sometimes called the Practical Extraction and Reporting Language. You've
+seen how control flow, operators, and data structures make Perl practical and
+you can imagine how to create reports. What's the Extraction part mean? Perl's
+good at text processing, in part due to regular expressions.
+
+A regular expression (also I<regex> or I<regexp>) is a I<pattern> which
+describes characteristics of a piece of text--to extract an address, replace a
+misspelling, even to scrape stock prices off of a website to help you figure
+out what to do with your investment account. Perl's I<regular expression
 engine> applies these patterns to match or to replace portions of text.
 
 While mastering regular expressions is a daunting pursuit, a little knowledge
-will give you great power. Perl's core regex documentation includes a tutorial
-(C<perldoc perlretut>), a reference guide (C<perldoc perlreref>), and full
-documentation (C<perldoc perlre>). Jeffrey Friedl's book I<Mastering Regular
-Expressions> explains the theory and the mechanics of how regular expressions
-work.
+will give you great power. You'll build up your knowledge over time, with
+practice, as you add more and more features to your toolkit.
+
+While this chapter gives an overview of the most important regex features, it's
+not exhaustive. Perl's documentation includes a tutorial (C<perldoc
+perlretut>), a reference guide (C<perldoc perlreref>), and full documentation
+(C<perldoc perlre>). If you're interested in the theory, Jeffrey Friedl's book
+I<Mastering Regular Expressions> explains the computer science and the
+mechanics of how regular expressions work.
 
 L<regular_expressions>
 

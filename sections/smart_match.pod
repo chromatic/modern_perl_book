@@ -12,12 +12,12 @@ The smart match operator, C<~~>, compares two operands and returns a true value
 if they match. The type of comparison depends on the type of both operands.
 C<given> (L<switch_statements>) performs an implicit smart match.
 
-As of Perl 5.18, this feature is experimental. The details of the current
-design are complex and unwieldy, and no proposal for simplifying things has
-gained enough popular support to warrant a complete overhaul. The more complex
-your operands, the more likely you are to receive confusing results. Avoid
-comparing objects and stick to simple operations between two scalars or one
-scalar and one aggregate for the best results.
+This feature is experimental. The details of the current design are complex and
+unwieldy, and no proposal for simplifying things has gained enough popular
+support to warrant the feature's overhaul. The more complex your operands, the
+more likely you are to receive confusing results. Avoid comparing objects and
+stick to simple operations between two scalars or one scalar and one aggregate
+for the best results.
 
 X<operators; C<~~>>
 X<C<~~>; smart match operator>
@@ -26,7 +26,9 @@ The smart match operator is an infix operator:
 
 =begin programlisting
 
-    say 'They match (somehow)' if $loperand ~~ $roperand;
+    use experimental 'smartmatch';
+
+    say 'They match (somehow)' if $l_operand ~~ $r_operand;
 
 =end programlisting
 
@@ -44,6 +46,8 @@ These examples are deliberately simple, because smart match can be confusing:
 
 =begin programlisting
 
+    use experimental 'smartmatch';
+
     my ($x, $y) = (10, 20);
     say 'Not equal numerically' unless $x ~~ $y;
 
@@ -52,25 +56,17 @@ These examples are deliberately simple, because smart match can be confusing:
 
     my $needle = qr/needle/;
 
-    say 'Pattern match' if 'needle' ~~ $needle;
+    say 'Pattern match'                     if 'needle'  ~~ $needle;
+    say 'Grep through array'                if @haystack ~~ $needle;
+    say 'Grep through hash keys'            if %hayhash  ~~ $needle;
+    say 'Grep through array'                if $needle   ~~ @haystack;
 
-    say 'Grep through array' if @haystack ~~ $needle;
+    say 'Array elements exist as hash keys' if %hayhash  ~~ @haystack;
+    say 'Smart match elements'              if @straw    ~~ @haystack;
+    say 'Grep through hash keys'            if $needle   ~~ %hayhash;
+    say 'Array elements exist as hash keys' if @haystack ~~ %hayhash;
 
-    say 'Grep through hash keys' if %hayhash ~~ $needle;
-
-    say 'Grep through array' if $needle ~~ @haystack;
-
-    say 'Array elements exist as hash keys'
-        if %hayhash    ~~ @haystack;
-
-    say 'Smart match elements' if @straw ~~ @haystack;
-
-    say 'Grep through hash keys' if $needle ~~ %hayhash;
-
-    say 'Array elements exist as hash keys'
-        if @haystack  ~~ %hayhash;
-
-    say 'Hash keys identical' if %hayhash ~~ %haymap;
+    say 'Hash keys identical'               if %hayhash  ~~ %haymap;
 
 =end programlisting
 
@@ -84,4 +80,4 @@ Smart match works even if one operand is a I<reference> to the given data type:
 
 It's difficult to recommend the use of smart match except in the simplest
 circumstances, but it can be useful when you have a literal string or number to
-match against a variable, as in the case of smart match.
+match against a variable.
