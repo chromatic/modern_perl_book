@@ -173,14 +173,12 @@ assignment when accessing multiple parameters.
 
 Perl 5.20 added built-in function signatures as an experimental feature.
 "Experimental" means that they may change or even go away in future releases of
-Perl, so you need to write two lines of code to enable them to signal that you
-accept the possibility of rewriting code. (Neither C<Kavorka> nor
-C<Method::Signatures> require this.)
+Perl, so you need to enable them to signal that you accept the possibility of
+rewriting code. (Neither C<Kavorka> nor C<Method::Signatures> require this.)
 
 =begin programlisting
 
-    use feature 'signatures';
-    no warnings 'experimental::signatures';
+    use experimental 'signatures';
 
 =end programlisting
 
@@ -256,10 +254,9 @@ in future versions of Perl increases, however. See C<perldoc perlsub>'s
 X<CPAN; C<Method::Signatures>>
 X<CPAN; C<Kavorka>>
 
-These experimental signatures aren't your only options. Several CPAN
-distributions extend Perl's parameter handling with additional syntax and
-options. C<Method::Signatures> works as far back as Perl 5.8. C<Kavorka> works
-with Perl 5.14 and newer.
+Signatures aren't your only options. Several CPAN distributions extend Perl's
+parameter handling with additional syntax and options. C<Method::Signatures>
+works as far back as Perl 5.8. C<Kavorka> works with Perl 5.14 and newer.
 
 =begin tip Should You Use Signatures?
 
