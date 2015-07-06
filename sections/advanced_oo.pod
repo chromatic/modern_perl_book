@@ -82,8 +82,8 @@ U<http://weblog.raganwald.com/2008/04/is-strictly-equivalent-to.html>.>.
 
 =head2 Subtypes and Coercions
 
-Z<subtypes>
-Z<coercions>
+Z<subtypes_and_coercions>
+
 X<types>
 X<subtypes>
 X<coercion>

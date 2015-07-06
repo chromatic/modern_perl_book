@@ -54,7 +54,7 @@ the package global C<$AUTOLOAD> (here, C<main::bake_pie>):
 
 =end programlisting
 
-Extract the method name with a regular expression (L<regex>):
+Extract the method name with a regular expression (L<chp.regex>):
 
 =begin programlisting
 

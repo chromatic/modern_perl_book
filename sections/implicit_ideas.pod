@@ -71,7 +71,7 @@ X<C<s///>; substitution operator>
 X<C<m//>; match operator>
 X<C<tr//>; transliteration operator>
 
-Perl's regular expression facilities (L<regex>) default to C<$_> to match,
+Perl's regular expression facilities (L<chp.regex>) default to C<$_> to match,
 substitute, and transliterate:
 
 =begin programlisting

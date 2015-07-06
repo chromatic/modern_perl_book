@@ -1,6 +1,7 @@
 =head1 Nested Data Structures
 
 Z<nested_data_structures>
+
 X<data structures>
 X<nested data structures>
 
@@ -137,6 +138,7 @@ to use Perl's various data structures.
 =head2 Autovivification
 
 Z<autovivification>
+
 X<autovivification>
 
 When you attempt to write to a component of a nested data structure, Perl will

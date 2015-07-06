@@ -344,6 +344,7 @@ With experimental function signatures, you could write:
 =head2 Slurping
 
 Z<parameter_slurping>
+
 X<parameters; slurping>
 
 List assignment with an aggregate is always greedy, so assigning to C<%pets>
@@ -491,6 +492,7 @@ Of course, C<strict> is a pragma (L<pragmas>), so it has other effects.
 =head1 Reporting Errors
 
 Z<reporting_errors>
+
 X<builtins; C<caller>>
 
 Almost every function is called by another function. Use the C<caller> builtin
@@ -626,6 +628,7 @@ interfaces.
 =head2 Recursion
 
 Z<recursion>
+
 X<recursion>
 X<call frame>
 X<functions; call frame>
@@ -739,6 +742,7 @@ invocation are safe and separate:
 =head2 Tail Calls
 
 Z<tail_calls>
+
 X<recursion; guard conditions>
 
 One I<drawback> of recursion is that it's easy to write a function which calls

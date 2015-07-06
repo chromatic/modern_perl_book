@@ -468,6 +468,7 @@ lifespan of filehandles as a feature of Perl's memory management.
 =head2 Reference Counts
 
 Z<reference_counts>
+
 X<references; reference counting>
 
 X<lexicals; lifecycle>

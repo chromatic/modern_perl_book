@@ -1,6 +1,7 @@
 =head1 Variables
 
 Z<variables>
+
 X<variable>
 
 A I<variable> in Perl is a storage location for a value (L<values>). While a

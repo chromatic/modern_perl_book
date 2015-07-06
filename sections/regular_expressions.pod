@@ -473,6 +473,7 @@ boundary and C<\B{wb}> to match anywhere except a Unicode word boundary.
 =head1 Character Classes
 
 Z<character_classes>
+
 X<character classes>
 X<C<[]>; character class regex metacharacters>
 
@@ -563,6 +564,7 @@ backslashes as seen in C<$area_code>.
 =head2 Named Captures
 
 Z<named_captures>
+
 X<regex; captures>
 X<regex; named captures>
 X<<< C<< (?<>) >>; regex named capture >>>

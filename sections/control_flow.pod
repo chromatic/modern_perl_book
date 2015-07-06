@@ -244,6 +244,7 @@ between alternative I<variables>, not only values:
 =head3 Short Circuiting
 
 Z<short_circuiting>
+
 X<short-circuiting>
 
 Perl exhibits I<short-circuiting> behavior when it encounters complex
@@ -1022,6 +1023,7 @@ Adding Spock and Lizard is left as an exercise for the reader.
 =head2 Tailcalls
 
 Z<tailcalls>
+
 X<tailcalls>
 
 A I<tailcall> occurs when the last expression within a function is a call to

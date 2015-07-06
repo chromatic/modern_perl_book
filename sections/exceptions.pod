@@ -1,6 +1,7 @@
 =head1 Exceptions
 
 Z<exceptions>
+
 X<exceptions>
 
 Good programmers anticipate the unexpected. Files that should exist won't. A

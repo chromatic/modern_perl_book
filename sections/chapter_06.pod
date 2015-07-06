@@ -1,6 +1,6 @@
 =head0 Regular Expressions and Matching
 
-Z<regex>
+Z<chp.regex>
 
 X<regular expressions>
 X<regex>

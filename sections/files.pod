@@ -9,6 +9,7 @@ administrators has produced a language well suited for text processing.
 =head2 Input and Output
 
 Z<filehandle>
+
 X<filehandles>
 X<filehandles; C<STDIN>>
 X<filehandles; C<STDERR>>
@@ -308,6 +309,7 @@ As usual, C<autodie> handles these checks for you:
 =head3 Special File Handling Variables
 
 Z<file_handling_variables>
+
 X<C<$.>>
 X<global variables; C<$.>>
 

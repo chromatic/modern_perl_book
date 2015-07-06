@@ -4,11 +4,11 @@ Z<missing_defaults>
 
 Perl's language design process has always tried to combine practicality with
 expandability, but it was as impossible to predict the future in 1994 as it is
-in 2014. Perl 5 expanded the language and made the CPAN possible, but it also
+in 2015. Perl 5 expanded the language and made the CPAN possible, but it also
 retained backwards compatibility with most Perl 1 code written as far back as
 1987.
 
-The best Perl code of 2014 is very different from the best Perl code of 1994 or
+The best Perl code of 2015 is very different from the best Perl code of 1994 or
 the best Perl code of 1987.
 
 X<CPAN; C<Task::Kensho>>
@@ -85,6 +85,7 @@ methods on lexical filehandles.
 =head2 The autodie Pragma
 
 Z<autodie>
+
 X<C<autodie> pragma>
 X<pragmas; C<autodie>>
 
@@ -110,6 +111,7 @@ autodie> for more information.
 =head2 Perl Version Numbers
 
 Z<version_numbers>
+
 X<CPAN; C<Perl::MinimumVersion>>
 
 If you encounter a piece of Perl code without knowing when it was written or

@@ -1,6 +1,7 @@
 =head1 Packages
 
 Z<packages>
+
 X<packages>
 X<namespaces>
 

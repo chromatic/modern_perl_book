@@ -117,6 +117,7 @@ enables closures (L<closures>).
 =head2 Our Scope
 
 Z<our>
+
 X<builtins; C<our>>
 X<packages; scope>
 X<scope; packages>

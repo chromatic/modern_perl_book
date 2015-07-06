@@ -18,6 +18,7 @@ into a string.
 =head2 Boolean Coercion
 
 Z<boolean_coercion>
+
 X<coercion; boolean>
 X<truthiness>
 
@@ -33,6 +34,8 @@ evaluates to zero numerically, but it is not an empty string, so it evaluates
 to a true value in boolean context.
 
 =head2 String Coercion
+
+Z<string_coercion>
 
 X<coercion; string>
 X<stringification>
@@ -54,6 +57,7 @@ individual digits with:
 =head2 Numeric Coercion
 
 Z<numeric_coercion>
+
 X<coercion; numeric>
 X<numification>
 

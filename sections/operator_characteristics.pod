@@ -1,6 +1,7 @@
 =head1 Operator Characteristics
 
 Z<operator_characteristics>
+
 X<operators; characteristics>
 
 Every operator possesses several important characteristics which govern its
@@ -16,6 +17,7 @@ their complicated names before.
 =head2 Precedence
 
 Z<precedence>
+
 X<precedence>
 
 The I<precedence> of an operator governs when Perl should evaluate it in an
@@ -42,6 +44,7 @@ associativity (L<associativity>) and fixity (L<fixity>) break the tie.
 =head2 Associativity
 
 Z<associativity>
+
 X<associativity>
 X<associativity; left>
 X<left associativity>

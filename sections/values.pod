@@ -234,6 +234,7 @@ Using a string in a non-string context will induce coercion (L<coercion>).
 =head2 Unicode and Strings
 
 Z<unicode>
+
 X<Unicode>
 
 I<Unicode> is a system used to represent the characters of the world's written
@@ -271,9 +272,9 @@ character representation. Forget that you ever heard of bytes.
 
 Unicode strings and binary strings look superficially similar. Each has a
 C<length()>. Each supports standard string operations such as concatenation,
-splicing, and regular expression processing (L<regex>). Any string which is not
-purely binary data is textual data, and thus should be a sequence of Unicode
-characters.
+splicing, and regular expression processing (L<chp.regex>). Any string which is
+not purely binary data is textual data, and thus should be a sequence of
+Unicode characters.
 
 However, because of how your operating system represents data on disk or from
 users or over the network--as sequences of octets--Perl can't know if the data

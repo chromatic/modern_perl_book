@@ -465,6 +465,7 @@ Sometimes it's useful to know I<what> an object does and what that I<means>.
 =head2 Roles
 
 Z<roles>
+
 X<roles>
 
 A I<role> is a named collection of behavior and stateN<See the P6 design

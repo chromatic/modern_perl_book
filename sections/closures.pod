@@ -1,6 +1,7 @@
 =head1 Closures
 
 Z<closures>
+
 X<functions; higher order>
 X<higher order functions>
 
