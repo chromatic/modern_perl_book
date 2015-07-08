@@ -16,15 +16,15 @@ X<C<$self>>
 X<variables; C<$self>>
 X<objects; invocant>
 X<methods; invocant>
-X<CPAN; C<MooseX::Method::Signatures>>
+X<CPAN; C<Moops>>
 
 Perl's object system (L<moose>) treats the invocant of a method as a mundane
 parameter. Regardless of whether you invoke a class or an instance method, the
 first element of C<@_> is always the invocant. By convention, most Perl code
 uses C<$class> as the name of the class method invocant and C<$self> for the
 name of the object invocant. This convention is strong enough that useful
-extensions such as C<MooseX::Method::Signatures> assume you will use C<$self>
-as the name of object invocants.
+extensions such as C<Moops> assume you will use C<$self> as the name of object
+invocants.
 
 =head2 Named Parameters
 

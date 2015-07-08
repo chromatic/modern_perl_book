@@ -7,15 +7,15 @@ X<introspection>
 
 I<Reflection> (or I<introspection>) is the process of asking a program about
 itself as it runs. By treating code as data you can manage code in the same way
-that you manage data. This is a principle behind code generation
+that you manage data. That sounds like a truism, but it's an important insight
+into modern programming. It's also a principle behind code generation
 (L<code_generation>).
 
 X<CPAN; C<Class::MOP>>
 
 Moose's C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for
-object systems. If you use Moose, its metaprogramming system will help you. If
-not, several other Perl idioms help you inspect and manipulate running
-programs.
+object systems. Several other Perl idioms help you inspect and manipulate
+running programs.
 
 =head2 Checking that a Module Has Loaded
 
@@ -29,8 +29,7 @@ module. In other words, loading C<Modern::Perl> effectively does:
 
 =begin programlisting
 
-    $INC{'Modern/Perl.pm'} =
-        '.../lib/site_perl/5.12.1/Modern/Perl.pm';
+    $INC{'Modern/Perl.pm'} = '.../lib/site_perl/5.22.1/Modern/Perl.pm';
 
 =end programlisting
 
@@ -40,8 +39,7 @@ canonical file form and test for that key's existence within C<%INC>:
 
 =begin programlisting
 
-    sub module_loaded
-    {
+    sub module_loaded {
         (my $modname = shift) =~ s!::!/!g;
         return exists $INC{ $modname . '.pm' };
     }
@@ -67,8 +65,9 @@ for you without making you manipulate C<%INC>.
 To check that a package exists somewhere in your program--if some code
 somewhere has executed a C<package> directive with a given name--check that the
 package inherits from C<UNIVERSAL>. Anything which extends C<UNIVERSAL> must
-somehow provide the C<can()> method. If no such package exists, Perl will throw
-an exception about an invalid invocant, so wrap this call in an C<eval> block:
+somehow provide the C<can()> method (whether by inheriting it from C<UNIVERSAL>
+or overriding it). If no such package exists, Perl will throw an exception
+about an invalid invocant, so wrap this call in an C<eval> block:
 
 =begin programlisting
 
@@ -143,8 +142,8 @@ X<typeglobs>
 
 A I<symbol table> is a special type of hash where the keys are the names of
 package global symbols and the values are typeglobs. A I<typeglob> is an
-internal data structure which can contain any or all of a scalar, an array, a
-hash, a filehandle, and a function.
+internal data structure which can contain a scalar, an array, a hash, a
+filehandle, and a function--any or all at once.
 
 Access a symbol table as a hash by appending double-colons to the name of the
 package. For example, the symbol table for the C<MonkeyGrinder> package is
@@ -158,6 +157,5 @@ core have modified the details of what typeglobs store and when and why.
 X<CPAN; C<Package::Stash>>
 
 See the "Symbol Tables" section in C<perldoc perlmod> for more details, then
-prefer the other techniques in this section for reflection. If you really must
-manipulate symbol tables and typeglobs, consider using the C<Package::Stash>
-CPAN module instead.
+consider the other techniques explained earlier instead.  If you really need to
+manipulate symbol tables and typeglobs, use the C<Package::Stash> CPAN module.

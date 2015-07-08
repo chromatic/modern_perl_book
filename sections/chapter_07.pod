@@ -1,10 +1,10 @@
 =head0 Objects
 
-When you design a program, you have to approach it from many levels. At the
-bottom, you have specific details about the problem you're solving. At the top
-levels, you have to organize the code so it makes sense. Our only hope to
-manage this complexity is to exploit abstraction (treating similar things
-similarly) and encapsulation (grouping related details together).
+Every large program has several levels of design. At the bottom, you have
+specific details about the problem you're solving. At the top levels, you have
+to organize the code so it makes sense. Our only hope to manage this complexity
+is to exploit I<abstraction> (treating similar things similarly) and
+I<encapsulation> (grouping related details together).
 
 X<OO>
 X<objects>
@@ -12,9 +12,10 @@ X<OO; classes>
 X<classes>
 
 Functions alone are insufficient for large problems. Several techniques group
-functions into units of related behaviors. One popular technique is I<object
-orientation> (OO), or I<object oriented programming> (OOP), where programs work
-with I<objects>--discrete, unique entities with their own identities.
+functions into units of related behaviors; you've already seen higher-order
+functions. Another popular technique is I<object orientation> (OO), or I<object
+oriented programming> (OOP), where programs work with I<objects>--discrete,
+unique entities with their own identities.
 
 L<moose>
 
