@@ -5,29 +5,28 @@ Z<exceptions>
 X<exceptions>
 
 Good programmers anticipate the unexpected. Files that should exist won't. A
-huge disk that will never fill up will. The always-up network goes down. The
-unbreakable database breaks. Exceptions happen. Robust software must handle
-them. If you can recover, great! If you can't, log the relevant information and
-retry.
+huge disk that should never fill up will. The network that never goes down
+stops responding. The unbreakable database crashes and eats a table.
+
+The unexpected happens.
 
 Perl handles exceptional conditions through I<exceptions>: a dynamically-scoped
-control flow mechanism designed to raise and handle errors.
+control flow mechanism designed to raise and handle errors. Robust software
+must handle them. If you can recover, great! If you can't, log the relevant
+information and retry.
 
 =head2 Throwing Exceptions
 
 Z<throwing_exceptions>
 
 Suppose you want to write a log file. If you can't open the file, something has
-gone wrong. Use C<die> to throw an exceptionN<... or let C<autodie>
-(L<autodie>) add it for you, in this case.>:
+gone wrong. Use C<die> to throw an exception (or see L<autodie>):
 
 =begin programlisting
 
-    sub open_log_file
-    {
+    sub open_log_file {
         my $name = shift;
-        open my $fh, '>>', $name
-            B<or die "Can't open logging file '$name': $!";>
+        open my $fh, '>>', $name B<or die "Can't open log to '$name': $!";>
         return $fh;
     }
 
@@ -41,9 +40,10 @@ X<C<$@>>
 X<exceptions; C<$@>>
 
 C<die()> sets the global variable C<$@> to its operand and immediately exits
-the current function I<without returning anything>. This thrown exception will
-continue up the call stack (L<controlled_execution>) until something catches
-it. If nothing catches the exception, the program will exit with an error.
+the current function I<without returning anything>. This is known as throwing
+an exception. A thrown exception will continue up the call stack
+(L<controlled_execution>) until something catches it. If nothing catches the
+exception, the program will exit with an error.
 
 Exception handling uses the same dynamic scope (L<dynamic_scope>) as C<local>
 symbols.
@@ -54,12 +54,11 @@ Z<catching_exceptions>
 
 X<exceptions; catching>
 
-Sometimes allowing an exception to end the program is useful. A program run as
-a timed process might throw an exception when the error logs have filled,
-causing an SMS to go out to administrators. Yet not all exceptions should be
-fatal. Your program might need to recover from some exceptions. Other
-exceptions might only give you a chance to save your user's work and exit
-cleanly.
+Sometimes allowing an exception to end the program is useful. A program run
+from a timed process might throw an exception when the error logs are full,
+causing an SMS to go out to administrators. Other exceptions might not be
+fatal--your program might be able to recover from one. Another might give you a
+chance to save the user's work and exit cleanly.
 
 X<builtins; C<eval>>
 X<C<eval>; block>
@@ -74,7 +73,7 @@ Use the block form of the C<eval> operator to catch an exception:
 =end programlisting
 
 If the file open succeeds, C<$fh> will contain the filehandle. If it fails,
-C<$fh> will remain undefined, and program flow will continue.
+C<$fh> will remain undefined and program flow will continue.
 
 The block argument to C<eval> introduces a new scope, both lexical and dynamic.
 If C<open_log_file()> called other functions and something eventually threw an
@@ -110,10 +109,8 @@ to see whether you can handle the exception:
 
 =begin programlisting
 
-    if (my $exception = $@)
-    {
-        die $exception
-            unless $exception =~ /^Can't open logging/;
+    if (my $exception = $@) {
+        die $exception unless $exception =~ /^Can't open logging/;
         $fh = log_to_syslog();
     }
 
@@ -134,37 +131,37 @@ easier than parsing data out of a string. Catch these exceptions as you would
 any other exception.
 
 X<exceptions; custom classes with C<Exception::Class>>
-X<C<Exception::Class>>
+X<CPAN; C<Exception::Class>>
 
 The CPAN distribution C<Exception::Class> makes creating and using exception
 objects easy:
 
 =begin programlisting
 
-    package Zoo::Exceptions
-    {
+    package Zoo::Exceptions {
         use Exception::Class
             'Zoo::AnimalEscaped',
             'Zoo::HandlerEscaped';
     }
 
-    sub cage_open
-    {
+    sub cage_open {
         my $self = shift;
-        Zoo::AnimalEscaped->throw
-            unless $self->contains_animal;
+
+        Zoo::AnimalEscaped->throw unless $self->contains_animal;
         ...
     }
 
-    sub breakroom_open
-    {
+    sub breakroom_open {
         my $self = shift;
-        Zoo::HandlerEscaped->throw
-            unless $self->contains_handler;
+        Zoo::HandlerEscaped->throw unless $self->contains_handler;
         ...
     }
 
 =end programlisting
+
+X<CPAN; C<Throwable::Error>>
+
+Another fine option is C<Throwable::Error>.
 
 =head2 Exception Caveats
 
@@ -172,12 +169,13 @@ Z<exception_caveats>
 
 X<exceptions; caveats>
 
-Though throwing exceptions is relatively simple, catching them is less so.
-Using C<$@> correctly requires you to navigate several subtle risks:
+Though throwing exceptions is simple, catching them is less so. Using C<$@>
+correctly requires you to navigate several subtle risks:
 
 =over 4
 
-=item * UnC<local>ized uses further down the dynamic scope may modify C<$@>
+=item * UnC<local>ized uses in the same or a nested dynamic scope may modify
+C<$@>
 
 =item * C<$@> may contain an object which returns a false value in boolean
 context
@@ -193,12 +191,9 @@ change C<$@>
 X<exceptions; handling safely with C<Try::Tiny>>
 X<C<Try::Tiny>>
 
-Perl 5.14 fixed some of these issues. They occur rarely, but they're often
-difficult to diagnose and to fix. The C<Try::Tiny> CPAN distribution improves
-the safety of exception handling I<and> the syntaxN<C<Try::Tiny> inspired
-improvements to Perl 5.14's exception handling.>.
-
-C<Try::Tiny> is easy to use:
+Modern Perl has fixed some of these issues. Though they rarely occur, they're
+difficult to diagnose.  The C<Try::Tiny> CPAN distribution improves the safety
+of exception handling I<and> the syntax:
 
 =begin programlisting
 
@@ -244,5 +239,5 @@ most interesting are:
 
 X<C<autodie>>
 
-Of course you can also catch exceptions produced by C<autodie> (L<autodie>) and
-any lexical warnings promoted to exceptions (L<registering_warnings>).
+You can also catch exceptions produced by C<autodie> (L<autodie>) and any
+lexical warnings promoted to exceptions (L<registering_warnings>).

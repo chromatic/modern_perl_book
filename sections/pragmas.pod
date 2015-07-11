@@ -5,10 +5,10 @@ Z<pragmas>
 X<pragmas>
 X<modules; pragmas>
 
-Most Perl modules which provide new functions or define classes (L<moose>).
-Others, such as C<strict> or C<warnings>, influence the behavior of the
-language itself. This second class of module is a I<pragma>. By convention,
-pragmas have lower-case names to differentiate them from other modules.
+Most Perl modules provide new functions or define classes (L<moose>). Others,
+such as C<strict> or C<warnings>, influence the behavior of the language
+itself. This second type of module is a I<pragma>. By convention, pragma names
+are written in lower-case to differentiate them from other modules.
 
 =head2 Pragmas and Scope
 
@@ -52,17 +52,17 @@ effects within inner scopes:
 
 X<pragmas; enabling>
 
-C<use> a pragma as you would any other module. Pragmas take arguments, such as
-a minimum version number to use or a list of arguments to change the pragma's
-behavior:
+C<use> a pragma as you would any other module. Pragmas may take arguments, such
+as a minimum version number to use or a list of arguments to change their
+behaviors:
 
 =begin programlisting
 
     # require variable declarations, prohibit barewords
     use strict qw( subs vars );
 
-    # rely on the semantics of the 2012 book
-    use Modern::Perl '2012';
+    # rely on the semantics of the 2014 book
+    use Modern::Perl '2014';
 
 =end programlisting
 
@@ -71,8 +71,8 @@ X<builtins; C<no>>
 
 Sometimes you need to I<disable> all or part of those effects within a further
 nested lexical scope. The C<no> builtin performs an unimport (L<importing>),
-which undoes the effects of a well-behaved pragma. For example, to disable the
-protection of C<strict> when you need to do something symbolic:
+which reverses some or all effects of a well-behaved pragma. For example, to
+disable the protection of C<strict> when you need to do something symbolic:
 
 =begin programlisting
 
@@ -92,6 +92,7 @@ X<pragmas; useful core pragmas>
 Perl includes several useful core pragmas.
 
 X<pragmas; C<strict>>
+X<CPAN; C<Const::Fast>>
 
 =over 4
 
@@ -105,8 +106,8 @@ unintended, and awkward behaviors.
 
 X<pragmas; C<utf8>>
 
-=item * the C<utf8> pragma tells the parser to use the UTF-8 encoding to
-understand the source code of the current file.
+=item * the C<utf8> pragma tells Perl's parser to understand the source code of
+the current file with the UTF-8 encoding.
 
 X<pragmas; C<autodie>>
 
@@ -126,9 +127,14 @@ as C<$VERSION> or C<@ISA> (L<blessed_references>).
 X<pragmas; C<feature>>
 
 =item * the C<feature> pragma allows you to enable and disable newer features
-of Perl individually. Where C<use 5.14;> enables all of the Perl 5.14 features
-and the C<strict> pragma, C<use feature ':5.14';> does the same.  This pragma
-is more useful to I<disable> individual features in a lexical scope.
+of Perl individually. Where C<use 5.18;> enables all of the Perl 5.18 features
+and the C<strict> pragma, C<use feature ':5.18';> does the same. This pragma is
+more useful to I<disable> individual features in a lexical scope.
+
+X<pragmas; C<experimental>>
+
+=item * the C<experimental> pragma enables or disables experimental features such as
+signatures (L<function_signatures>) or postfix dereferencing.
 
 X<pragmas; C<less>>
 

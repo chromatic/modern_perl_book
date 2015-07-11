@@ -1,16 +1,18 @@
 =head0 Style and Efficacy
 
-Quality matters. Programs have bugs. Programs need maintenance and expansion.
-Programs have multiple programmers.
-
 To program well, we must find the balance between getting the job done now and
-making our lives easier in the future.  We must balance time, resources, and
-quality. The craft of programming demands that we do that to the best of our
-ability.
+doing the job right. We must balance time, resources, and quality. Programs
+have bugs. Programs need maintenance and expansion. Programs have multiple
+programmers. A beautiful program that never delivers value is worthless, but an
+awful program that cannot be maintained is a risk waiting to happen.
 
-To write Perl well, we must understand the language. We must also cultivate a
-sense of good taste for the language and the design of programs.  The only way
-to do so is to practice maintaining code and reading and writing great code.
+Skilled programmers understand their constraints and write the right code.
+
+To write Perl well, you must understand the language. You must also cultivate a
+sense of good taste for the language and the design of programs. The only way
+to do so is to practice--not just writing code, but maintaining and reading
+good code.
+
 This path has no shortcuts, but it does have guideposts.
 
 L<style>

@@ -171,6 +171,8 @@ assignment when accessing multiple parameters.
 
 =head2 Real Function Signatures
 
+Z<function_signatures>
+
 Perl 5.20 added built-in function signatures as an experimental feature.
 "Experimental" means that they may change or even go away in future releases of
 Perl, so you need to enable them to signal that you accept the possibility of
