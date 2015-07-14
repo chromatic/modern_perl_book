@@ -6,8 +6,6 @@ Some Perl features can help you write secure programs. These tools are no
 substitute for careful thought and planning, but they I<reward> caution and
 understanding and can help you avoid subtle mistakes.
 
-=head2 Using Taint Mode
-
 X<taint>
 
 I<Taint mode> (or I<taint>) is a sticky piece of metadata attached to all data
@@ -15,6 +13,8 @@ which comes from outside of your program. Any data derived from tainted data is
 also tainted. You may use tainted data within your program, but if you use it
 to affect the outside world--if you use it insecurely--Perl will throw a fatal
 exception.
+
+=head2 Using Taint Mode
 
 C<perldoc perlsec> explains taint mode in copious detail.
 
@@ -27,7 +27,7 @@ If you use this argument on the C<#!> line of a program, you must run the
 program directly. If you run it as C<perl mytaintedappl.pl> and neglect the
 C<-T> flag, Perl will exit with an exception--by the time Perl encounters the
 flag on the C<#!> line, it's missed its opportunity to taint the environment
-data which makes up C<%ENV>, for example.
+data in C<%ENV>, for example.
 
 =head2 Sources of Taint
 
@@ -46,8 +46,7 @@ its argument is tainted:
 
 =begin programlisting
 
-    die 'Oh no! Tainted data!'
-        if Scalar::Util::tainted( $suspicious_value );
+    die 'Oh no! Tainted data!' if Scalar::Util::tainted( $sketchy_data );
 
 =end programlisting
 
@@ -57,15 +56,12 @@ X<taint; untainting>
 X<untainting>
 
 To remove taint, you must extract known-good portions of the data with a
-regular expression capture. That captured data will be untainted.
-
-For example, if your user input consists of a US telephone number, you can
-untaint it with:
+regular expression capture. That captured data will be untainted. For example,
+if your user input consists of a US telephone number, you can untaint it with:
 
 =begin programlisting
 
-    die 'Number still tainted!'
-        unless $number =~ /(\(/d{3}\) \d{3}-\d{4})/;
+    die 'Number still tainted!' unless $number =~ /(\(/d{3}\) \d{3}-\d{4})/;
 
     my $safe_number = $1;
 
@@ -82,12 +78,12 @@ entire contents of a variable--but in that case, why use taint?
 
 X<taint; removing sources of>
 
-The superglobal C<%ENV> represents environment variables for the system.  This
-data is tainted because forces outside of the program's control can manipulate
-values there. Any environment variable which modifies how Perl or the shell
-finds files and directories is an attack vector. A taint-sensitive program
-should delete several keys from C<%ENV> and set C<$ENV{PATH}> to a specific and
-well-secured path:
+The superglobal C<%ENV> represents the environment variables of the system
+where you're running your program. This data is tainted because forces outside
+of the program's control can manipulate values there. Any environment variable
+which modifies how Perl or the shell finds files and directories is an attack
+vector. A taint-sensitive program should delete several keys from C<%ENV> and
+set C<$ENV{PATH}> to a specific and well-secured path:
 
 =begin programlisting
 
@@ -98,9 +94,9 @@ well-secured path:
 
 If you do not set C<$ENV{PATH}> appropriately, you will receive messages about
 its insecurity. If this environment variable contained the current working
-directory, or if it contained relative directories, or if the directories
-specified had world-writable permissions, a clever attacker could hijack system
-calls to perpetrate mischief.
+directory, or if it contained relative directories, or if the directories could
+be modified by anyone else on the system, a clever attacker could perpetrate
+mischief.
 
 For similar reasons, C<@INC> does not contain the current working directory
 under taint mode. Perl will also ignore the C<PERL5LIB> and C<PERLLIB>
@@ -110,15 +106,15 @@ add library directories to the program.
 =head2 Taint Gotchas
 
 Taint mode is all or nothing. It's either on or off. This sometimes leads
-people to use permissive patterns to untaint data, and gives the illusion of
-security. In that case, taint is busywork which provides no real security.
-Review your untainting rules carefully.
+people to use permissive patterns to untaint data and, thus,  gives the
+illusion of security. In that case, taint is busywork which provides no real
+security. Review your untainting rules carefully.
 
 X<C<-t>; enable baby taint command-line argument>
 X<command-line arguments; C<-t>>
 
 Unfortunately, not all modules handle tainted data appropriately. This is a bug
-which CPAN authors should take seriously. If you have to make legacy code
+which CPAN authors should take more seriously. If you have to make legacy code
 taint-safe, consider the use of the C<-t> flag, which enables taint mode but
 reduces taint violations from exceptions to warnings. This is not a substitute
 for full taint mode, but it allows you to secure existing programs without the

@@ -2,9 +2,9 @@
 
 Z<files>
 
-Most programs must interact with the real world somehow, mostly by reading,
-writing, and otherwise manipulating files. Perl's origin as a tool for system
-administrators has produced a language well suited for text processing.
+Most programs interact with the real world mostly by reading, writing, and
+otherwise manipulating files. Perl began as a tool for system administrators
+and is still a language well suited for text processing.
 
 =head2 Input and Output
 
@@ -19,28 +19,27 @@ X<C<STDERR>>
 X<C<STDOUT>>
 
 A I<filehandle> represents the current state of one specific channel of input
-or output. Every Perl program has three standard filehandles available,
-C<STDIN> (the input to the program), C<STDOUT> (the output from the program),
-and C<STDERR> (the error output from the program). By default, everything you
-C<print> or C<say> goes to C<STDOUT>, while errors and warnings goes to
+or output. Every Perl program starts with three standard filehandles, C<STDIN>
+(the input to the program), C<STDOUT> (the output from the program), and
+C<STDERR> (the error output from the program). By default, everything you
+C<print> or C<say> goes to C<STDOUT>, while errors and warnings go to
 C<STDERR>. This separation of output allows you to redirect useful output and
 errors to two different places--an output file and error logs, for example.
 
 X<builtins; C<open>>
 
-Use the C<open> builtin to get a filehandle. To open a file for reading:
+Use the C<open> builtin to initialize a filehandle. To open a file for reading:
 
 =begin programlisting
 
-    open my $fh, '<', 'filename'
-        or die "Cannot read '$filename': $!\n";
+    open my $fh, '<', 'filename' or die "Cannot read '$filename': $!\n";
 
 =end programlisting
 
-The first operand is a lexical which will contain the resulting filehandle. The
-second operand is the I<file mode>, which determines the type of the filehandle
-operation (reading, writing, or appending, for example). The final operand is
-the name of the file. If the C<open> fails, the C<die> clause will throw an
+The first operand is a lexical which will contain the filehandle. The second
+operand is the I<file mode>, which determines the type of file operation
+(reading, writing, appending, et cetera). The final operand is the name of the
+file on which to operate. If the C<open> fails, the C<die> clause will throw an
 exception, with the reason for failure in the C<$!> magic variable.
 
 You may open files for writing, appending, reading and writing, and more. Some
@@ -64,7 +63,8 @@ contents and creating a new file otherwise.
 
 =back
 
-You can even create filehandles which read from or write to plain Perl scalars, using any existing file mode:
+You may also create filehandles which read from or write to plain Perl scalars,
+using any existing file mode:
 
 =begin programlisting
 
@@ -79,14 +79,14 @@ X<builtins; C<sysopen>>
 
 C<perldoc perlopentut> explains in detail more exotic uses of C<open>,
 including its ability to launch and control other processes, as well as the use
-of C<sysopen> for finer-grained control over input and output.  C<perldoc
+of C<sysopen> for finer-grained control over input and output. C<perldoc
 perlfaq5> includes working code for many common IO tasks.
 
 =begin tip Remember C<autodie>?
 
-Assume all of the examples in this section have C<use autodie;> enabled, and so
-can safely elide error handling. If you choose not to use C<autodie>, remember
-to check the return values of all system calls to handle errors appropriately.
+Assume the examples in this section have C<use autodie;> enabled so as to elide
+explicit error handling. If you choose not to use C<autodie>, check the return
+values of I<all> system calls to handle errors appropriately.
 
 =end tip
 
@@ -95,8 +95,8 @@ to check the return values of all system calls to handle errors appropriately.
 X<IO layers>
 
 In addition to the file mode, you may add an I<IO encoding layer> which allows
-Perl to encode to or decode from a Unicode encoding. For example, if you know
-you're going to read a file written in the UTF-8 encoding:
+Perl to encode to or decode from a Unicode encoding. For example, to read a
+file written in the UTF-8 encoding:
 
 =begin programlisting
 
@@ -119,15 +119,14 @@ mode with the name of the file to open:
 
 =begin programlisting
 
-    open my $fh, B<< "> $some_file" >>
-        or die "Cannot write to '$some_file': $!\n";
+    open my $fh, B<< "> $file" >> or die "Cannot write to '$file': $!\n";
 
 =end programlisting
 
 Perl must extract the file mode from the filename. That's a risk; anytime Perl
-has to guess at what you mean, it may guess incorrectly. Worse, if
-C<$some_file> came from untrusted user input, you have a potential security
-problem, as any unexpected characters could change how your program behaves.
+has to guess at what you mean, it may guess incorrectly. Worse, if C<$file>
+came from untrusted user input, you have a potential security problem, as any
+unexpected characters could change how your program behaves.
 
 The three-argument C<open()> is a safer replacement for this code.
 
@@ -137,13 +136,13 @@ X<C<DATA>>
 X<C<__DATA__>>
 X<C<__END__>>
 
-The special package global C<DATA> filehandle represents the current file. When
-Perl finishes compiling the file, it leaves C<DATA> open and pointing to the
-end of the compilation unit I<if> the file has a C<__DATA__> or C<__END__>
-section. Any text which occurs after that token is available for reading from
-C<DATA>. The entire file is available if you use C<seek> to rewind the
-filehandle. This is useful for short, self-contained programs. See C<perldoc
-perldata> for more details.
+The special package global C<DATA> filehandle represents the current file of
+source code. When Perl finishes compiling a file, it leaves C<DATA> open and
+pointing to the end of the compilation unit I<if> the file has a C<__DATA__> or
+C<__END__> section. Any text which occurs after that token is available for
+reading from C<DATA>. The entire file is available if you use C<seek> to rewind
+the filehandle. This is useful for short, self-contained programs. See
+C<perldoc perldata> for more details.
 
 =end tip
 
@@ -161,8 +160,7 @@ C<while()> loop:
 
     open my $fh, '<', 'some_file';
 
-    while (<$fh>)
-    {
+    while (<$fh>) {
         chomp;
         say "Read a line '$_'";
     }
@@ -172,17 +170,17 @@ C<while()> loop:
 X<builtins; C<eof>>
 
 In scalar context, C<readline> reads a single line of the file and returns it,
-or C<undef> if it's reached the end of file (C<eof()>). Each iteration in this
-example returns the next line or C<undef>. This C<while> idiom explicitly
-checks the definedness of the variable used for iteration, such that only the
-end of file condition ends the loop. In other words, this is shorthand for:
+or C<undef> if it's reached the end of file (test that condition with the
+C<eof> builtin). Each iteration in this example returns the next line or
+C<undef>. This C<while> idiom explicitly checks the I<definedness> of the
+variable used for iteration, so only the end of file condition will end the
+loop. This idiom is equivalent to:
 
 =begin programlisting
 
     open my $fh, '<', 'some_file';
 
-    while (defined($_ = <$fh>))
-    {
+    while (defined($_ = <$fh>)) {
         chomp;
         say "Read a line '$_'";
         last if eof $fh;
@@ -192,7 +190,7 @@ end of file condition ends the loop. In other words, this is shorthand for:
 
 =begin tip Why use C<while> and not C<for>?
 
-C<for> imposes list context on its operand. In the case of C<readline>, Perl
+C<for> imposes list context on its operands. When in list context, C<readline>
 will read the I<entire> file before processing I<any> of it. C<while> performs
 iteration and reads a line at a time. When memory use is a concern, use
 C<while>.
@@ -212,8 +210,7 @@ The cleanest way to read a file line-by-line in Perl is:
 
     open my $fh, '<', $filename;
 
-    while (my $line = <$fh>)
-    {
+    while (my $line = <$fh>) {
         chomp $line;
         ...
     }
@@ -222,11 +219,11 @@ The cleanest way to read a file line-by-line in Perl is:
 
 X<builtins; C<binmode>>
 
-Perl accesses files in text mode by default. If you're reading I<binary> data,
-such as a media file or a compressed file--use C<binmode> before performing any
-IO. This will force Perl to treat the file data as pure data, without modifying
-it in any wayN<Modifications include translating C<\n> into the
-platform-specific newline sequence.>. While Unix-like platforms may not always
+Perl assumes that files contain text by default. If you're reading I<binary>
+data--a media file or a compressed file, for example--use C<binmode> before
+performing any IO. This will force Perl to treat the file data as pure data,
+without modifying it in any way, such as translating C<\n> into the
+platform-specific newline sequence. While Unix-like platforms may not always
 I<need> C<binmode>, portable programs play it safe (L<unicode>).
 
 =head3 Writing to Files
@@ -234,7 +231,7 @@ I<need> C<binmode>, portable programs play it safe (L<unicode>).
 X<builtins; C<print>>
 X<builtins; C<say>>
 
-Given a filehandle open for output, C<print> or C<say> to it:
+Given a filehandle open for output, C<print> or C<say> to write to the file:
 
 =begin programlisting
 
@@ -245,7 +242,7 @@ Given a filehandle open for output, C<print> or C<say> to it:
 
 =end programlisting
 
-Note the lack of comma between the filehandle and the subsequent operand.
+Note the lack of comma between the filehandle and the next operand.
 
 =begin tip Filehandle Disambiguation
 
@@ -253,7 +250,8 @@ X<Conway, Damian>
 
 Damian Conway's I<Perl Best Practices> recommends enclosing the filehandle in
 curly braces as a habit. This is necessary to disambiguate parsing of a
-filehandle contained in an aggregate variable, and it won't hurt anything in
+filehandle contained in anything other than a plain scalar--a filehandle in an
+array or hash or returned from an object method--and it won't hurt anything in
 the simpler cases.
 
 =end tip
@@ -265,9 +263,9 @@ X<global variables; C<$\>>
 
 Both C<print> and C<say> take a list of operands. Perl uses the magic global
 C<$,> as the separator between list values. Perl uses any value of C<$\> as the
-final argument to C<print>N<... but always uses C<\n> as an implicit final
-argument to C<say>.>. Remember that C<$\> is C<undef> by default. Thus these
-two print examples produce the same result:
+final argument to C<print> ( but always uses C<\n> as an implicit final
+argument to C<say>). Remember that C<$\> is C<undef> by default. These two
+examples produce the same result:
 
 =begin programlisting
 
@@ -322,13 +320,12 @@ X<global variables; C<$/>>
 C<readline> uses the current contents of C<$/> as the line-ending sequence.
 The value of this variable defaults to the most appropriate line-ending
 character sequence for text files on your current platform. The word I<line> is
-a misnomer, however. You can set C<$/> to contain any sequence of
-charactersN<... but, sadly, not a regular expression. Maybe by 5.22.> This is
-useful for highly-structured data in which you want to read a I<record> at a
-time.
+a misnomer, however. C<$/> can contain any sequence of characters (but I<not> a
+regular expression). This is useful for highly-structured data in which you
+want to read a I<record> at a time.
 
 Given a file with records separated by two blank lines, set C<$/> to C<\n\n> to
-read a record at a time. C<chomp> on a record read from the file will remove
+read a record at a time. Use C<chomp> on a record read from the file to remove
 the double-newline sequence.
 
 X<C<$|>>
@@ -351,8 +348,7 @@ buffering strategy.
 
 Files default to a fully-buffered strategy. C<STDOUT> when connected to an
 active terminal--but I<not> another program--uses a line-buffered strategy,
-where Perl will flush C<STDOUT> every time it encounters a newline in the
-output.
+where Perl flushes C<STDOUT> every time it encounters a newline in the output.
 
 =end tip
 
@@ -360,31 +356,24 @@ X<C<autoflush()>>
 X<C<IO::File>; C<autoflush()>>
 
 Instead of cluttering your code with a global variable, use the C<autoflush()>
-method on a lexical filehandle:
+method to change the buffering behavior of a lexical filehandle:
 
 =begin programlisting
 
     open my $fh, '>', 'pecan.log';
     $fh->autoflush( 1 );
 
-    ...
-
 =end programlisting
 
 X<C<IO::File>>
-X<C<FileHandle>>
-
-As of Perl 5.14, you can use any method provided by C<IO::File> on a
-filehandle. You do not need to load C<IO::File> explicitly. In Perl 5.12, you
-must load C<IO::File> yourself.
-
 X<C<IO::File>; C<input_line_number()>>
 X<C<IO::File>; C<input_record_separator()>>
 X<C<IO::Handle>>
 X<C<IO::Seekable>; C<seek()>>
 
-C<IO::File>'s C<input_line_number()> and C<input_record_separator()> methods do
-the job of C<$.> and C<$/> on individual filehandles. See the documentation for
+You can call any method provided by C<IO::File> on a filehandle. For example,
+the C<input_line_number()> and C<input_record_separator()> methods do the job
+of C<$.> and C<$/> on individual filehandles. See the documentation for
 C<IO::File>, C<IO::Handle>, and C<IO::Seekable>.
 
 =head2 Directories and Paths
@@ -392,8 +381,8 @@ C<IO::File>, C<IO::Handle>, and C<IO::Seekable>.
 X<builtins; C<opendir>>
 
 Working with directories is similar to working with files, except that you
-cannot I<write> to directoriesN<Instead, you save and move and rename and
-remove files.>. Open a directory handle with the C<opendir> builtin:
+cannot I<write> to directories. Open a directory handle with the C<opendir>
+builtin:
 
 =begin programlisting
 
@@ -404,14 +393,13 @@ remove files.>. Open a directory handle with the C<opendir> builtin:
 X<builtins; C<readdir>>
 
 The C<readdir> builtin reads from a directory. As with C<readline>, you may
-iterate over the contents of directories one at a time or you may assign them
-to an array in one swoop:
+iterate over the contents of directories one entry at a time or you may assign
+everything to an array in one swoop:
 
 =begin programlisting
 
     # iteration
-    while (my $file = readdir $dirh)
-    {
+    while (my $file = readdir $dirh) {
         ...
     }
 
@@ -420,16 +408,13 @@ to an array in one swoop:
 
 =end programlisting
 
-Perl 5.12 added a feature where C<readdir> in a C<while> sets C<$_>:
+In a C<while> loop, C<readdir> sets C<$_>:
 
 =begin programlisting
 
-    use 5.012;
-
     opendir my $dirh, 'tasks/circus/';
 
-    while (readdir $dirh)
-    {
+    while (readdir $dirh) {
         next if /^\./;
         say "Found a task $_!";
     }
@@ -448,16 +433,16 @@ respectively.
 X<files; relative paths>
 X<files; absolute paths>
 
-The names returned from C<readdir> are I<relative> to the directory itself.  In
-other words, if the F<tasks/> directory contains three files named F<eat>,
+The names returned from C<readdir> are I<relative> to the directory itself.
+(Remember that an I<absolute> path is a path fully qualified to its
+filesystem.) If the F<tasks/> directory contains three files named F<eat>,
 F<drink>, and F<be_monkey>, C<readdir> will return C<eat>, C<drink>, and
-C<be_monkey> and I<not> F<tasks/eat>, F<tasks/drink>, and F<task/be_monkey>.
-In contrast, an I<absolute> path is a path fully qualified to its filesystem.
+C<be_monkey> instead of F<tasks/eat>, F<tasks/drink>, and F<task/be_monkey>.
 
 X<builtins; C<closedir>>
 
-Close a directory handle by letting it go out of scope or with the C<closedir>
-builtin.
+Close a directory handle with the C<closedir> builtin or by letting it go out
+of scope.
 
 =head3 Manipulating Paths
 
@@ -504,8 +489,7 @@ You can even open filehandles to directories and files:
 =begin programlisting
 
     my $dir_fh    = $dir->open;
-    my $robots_fh = $robot_list->open( 'r' )
-                        or die "Open failed: $!";
+    my $robots_fh = $robot_list->open( 'r' ) or die "Open failed: $!";
 
 =end programlisting
 
@@ -542,9 +526,9 @@ X<operators; C<-e>>
 
 =end programlisting
 
-The C<-e> operator has a single operand, the name of a file or a file or
-directory handle. If the file exists, the expression will evaluate to a true
-value. C<perldoc -f -X> lists all other file tests.
+The C<-e> operator has a single operand, either the name of a file or handle to
+a file or directory. If the file or directory exists, the expression will
+evaluate to a true value. C<perldoc -f -X> lists all other file tests.
 
 X<C<-d>; directory test operator>
 X<C<-f>; file test operator>
@@ -557,7 +541,7 @@ X<operators; C<-s>>
 
 C<-f> returns a true value if its operand is a plain file. C<-d> returns a true
 value if its operand is a directory.  C<-r> returns a true value if the file
-permissions of its operand permit reading by the current user.  C<-s> returns a
+permissions of its operand permit reading by the current user. C<-s> returns a
 true value if its operand is a non-empty file. Look up the documentation for
 any of these operators with C<perldoc -f -r>, for example.
 
@@ -589,12 +573,8 @@ remove one or more files. (The C<delete> builtin deletes an element from a
 hash, not a file from the filesystem.) These functions and builtins all return
 true values on success and set C<$!> on error.
 
-=begin tip Better than C<File::Spec>
-
-C<Path::Class> provides convenience methods to check certain file attributes as
-well as to remove files completely and portably.
-
-=end tip
+C<Path::Class> also provides convenience methods to remove files completely and
+portably as well as to check certain file attributes.
 
 X<builtins; C<chdir>>
 X<C<Cwd>>
@@ -606,10 +586,9 @@ C<cwd()> function returns the name of the current working directory. The
 builtin C<chdir> attempts to change the current working directory. Working from
 the correct directory is essential to working with files with relative paths.
 
+X<CPAN; C<File::chdir>>
 X<CPAN; C<File::pushd>>
 
-=begin tip Switching Directories
-
-If you love the command-line tools C<pushd> and C<popd>, try C<File::pushd>.
-
-=end tip
+The CPAN module C<File::chdir> makes manipulating the current working directory
+easier.  If you're a fan of the command line and use C<pushd> and C<popd>, see
+also C<File::pushd>.

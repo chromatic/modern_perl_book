@@ -2,14 +2,13 @@
 
 Z<writing_real_programs>
 
-A book can teach you to write small programs to solve example problems. You can
-learn a lot of syntax that way.
+You can learn a lot of syntax from a book by writing small programs to solve
+the example problems. Writing good code to solve real problems takes more
+discipline and understanding. You must learn to I<manage> code. How do you know
+that it works? How do you organize it? What makes it robust in the face of
+errors? What makes code clean? Clear? Maintainable?
 
-To write real programs to solve real problems, you must learn to I<manage> code
-written in your language. How do you organize code? How do you know that it
-works? How can you make it robust in the face of errors? What makes code
-concise, clear, and maintainable? Modern Perl helps you answer all of those
-questions.
+Modern Perl helps you answer all those questions.
 
 L<testing>
 

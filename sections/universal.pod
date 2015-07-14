@@ -4,9 +4,9 @@ Z<universal>
 
 X<C<UNIVERSAL>>
 
-Perl's builtin C<UNIVERSAL> package is the ancestor of all other packages--in
-the object-oriented sense (L<moose>). C<UNIVERSAL> provides a few methods for
-its children to use, inherit, or override.
+Perl's builtin C<UNIVERSAL> package is the ancestor of all other packages--it's
+the ultimate parent class in the object-oriented sense (L<moose>). C<UNIVERSAL>
+provides a few methods for its children to use, inherit, or override.
 
 =head2 The VERSION() Method
 
@@ -41,8 +41,8 @@ X<C<DOES()>>
 
 The C<DOES()> method supports the use of roles (L<roles>) in programs. Pass it
 an invocant and the name of a role, and the method will return true if the
-appropriate class somehow does that role--whether through inheritance,
-delegation, composition, role application, or any other mechanism.
+appropriate class somehow does that role through inheritance, delegation,
+composition, role application, or any other mechanism.
 
 The default implementation of C<DOES()> falls back to C<isa()>, because
 inheritance is one mechanism by which a class may do a role. Given a
@@ -64,12 +64,9 @@ allomorphic equivalence.
 X<C<UNIVERSAL::can>>
 X<C<can()>>
 
-The C<can()> method takes a string containing the name of a method. It returns
-a reference to the function which implements that method, if it exists.
-Otherwise, it returns a false value. You may call this on a class, an object,
-or the name of a package. In the latter case, it returns a reference to a
-function, not a methodN<... not that you can tell the difference, given only a
-reference.>.
+The C<can()> method takes a string containing the name of a method or function.
+It returns a function reference, if it exists. Otherwise, it returns a false
+value. You may call this on a class, an object, or the name of a package.
 
 Given a class named C<SpiderMonkey> with a method named C<screech>, get a
 reference to the method with:
@@ -85,8 +82,7 @@ dispatching to it:
 
 =begin programlisting
 
-    if (my $meth = $sm->can( 'screech' )
-    {
+    if (my $meth = $sm->can( 'screech' ) {
         # method; not a function
         $sm->$meth();
     }
@@ -102,11 +98,9 @@ Use C<can()> to test if a package implements a specific function or method:
 
     use Class::Load;
 
-    die "Couldn't load $module!"
-        unless load_class( $module );
+    die "Couldn't load $module!" unless load_class( $module );
 
-    if (my $register = $module->can( 'register' ))
-    {
+    if (my $register = $module->can( 'register' )) {
         # function; not a method
         $register->();
     }
@@ -119,8 +113,8 @@ X<CPAN; C<Class::Load>>
 X<CPAN; C<Module::Pluggable>>
 
 The CPAN module C<Class::Load> simplifies the work of loading classes by name.
-Similarly, C<Module::Pluggable> takes most of the work out of building and
-managing plugin systems. Get to know both distributions.
+C<Module::Pluggable> makes it easier to build and manage plugin systems. Get to
+know both distributions.
 
 =end tip
 
@@ -161,8 +155,8 @@ X<CPAN; C<Test::MockObject>>
 X<CPAN; C<Test::MockModule>>
 
 Any class may override C<isa()>. This can be useful when working with mock
-objects (see C<Test::MockObject> and C<Test::MockModule> on the CPAN) or with
-code that does not use roles (L<roles>). Be aware that any class which I<does>
+objects (C<Test::MockObject> and C<Test::MockModule>, for example) or with code
+that does not use roles (L<roles>). Be aware that any class which I<does>
 override C<isa()> generally has a good reason for doing so.
 
 =begin tip Does a Class Exist?
@@ -178,10 +172,10 @@ exist.
 
 =head2 Extending UNIVERSAL
 
-It's tempting to store other methods in C<UNIVERSAL> to make it available to
+It's tempting to store other methods in C<UNIVERSAL> to make them available to
 all other classes and objects in Perl. Avoid this temptation; this global
 behavior can have subtle side effects, especially in code you didn't write and
-don't maintain, because it is unconstrained.
+don't maintain.
 
 X<CPAN; C<UNIVERSAL::ref>>
 X<CPAN; C<UNIVERSAL::isa>>
@@ -196,5 +190,5 @@ help you debug anti-polymorphism bugs (L<method_sub_equivalence>).
 C<Perl::Critic> can detect those and other problems.
 
 Outside of very carefully controlled code and very specific, very pragmatic
-situations, there's no reason to put code in C<UNIVERSAL> directly. There are
-almost always much better design alternatives.
+situations, there's no reason to put code in C<UNIVERSAL> directly, especially
+given the other design alternatives.

@@ -9,19 +9,13 @@ Perl is not a pervasively object oriented language. Its core data types
 control the behavior of your own classes and objects, especially when they
 undergo coercion or contextual evaluation. This is I<overloading>.
 
-Overloading is subtle but powerful. An interesting example is overloading how
-an object behaves in boolean context. In boolean context, an object will
-evaluate to a true value, unless you overload boolification.
+Overloading is subtle but powerful. Consider how an object behaves in boolean
+context. In boolean context, an object will evaluate to a true value, unless
+you overload boolification. Why would you do this? Suppose you're using the
+Null Object patternN<U<http://www.c2.com/cgi/wiki?NullObject>> to make your own
+objects appear false in boolean context.
 
-=begin tip Overloading Boolean Context
-
-Why overload boolean context? Suppose you're using the Null Object pattern
-(U<http://www.c2.com/cgi/wiki?NullObject>) to make your own objects appear
-false in boolean context.
-
-=end tip
-
-You can overload what the object does for almost every operation or coercion:
+You can overload an object's behavior for almost every operation or coercion:
 stringification, numification, boolification, iteration, invocation, array
 access, hash access, arithmetic operations, comparison operations, smart match,
 bitwise operations, and even assignment. Stringification, numification, and
@@ -35,15 +29,14 @@ X<overloading; string>
 X<C<overload> pragma>
 X<pragmas; C<overload>>
 
-The C<overload> pragma associates functions with overloadable operations.
-Passing argument pairs, where the key is the name of a type of overload and the
-value is a function reference. A C<Null> class which overloads boolean
+The C<overload> pragma associates functions with overloadable operations.  Pass
+the pragma argument pairs, where the key is the name of a type of overload and
+the value is a function reference. A C<Null> class which overloads boolean
 evaluation so that it always evaluates to a false value might resemble:
 
 =begin programlisting
 
-    package Null
-    {
+    package Null {
         use overload 'bool' => sub { 0 };
 
         ...
@@ -55,8 +48,7 @@ It's easy to add a stringification:
 
 =begin programlisting
 
-    package Null
-    {
+    package Null {
         use overload
             'bool' => sub { 0 },
             B<< '""'   => sub { '(null)' }; >>
@@ -73,12 +65,11 @@ source code of the implementation.
 C<perldoc overload> attempts to explain this in the sections labeled I<Calling
 Conventions for Binary Operations> and I<MAGIC AUTOGENERATION>, but the easiest
 solution is to overload numification (keyed by C<'0+'>) and tell C<overload> to
-use the provided overloads as fallbacks where possible:
+use the provided overloads as fallbacks:
 
 =begin programlisting
 
-    package Null
-    {
+    package Null {
         use overload
             'bool'   => sub { 0 },
             '""'     => sub { '(null)' },
@@ -88,9 +79,9 @@ use the provided overloads as fallbacks where possible:
 
 =end programlisting
 
-Setting C<fallback> to a true value lets Perl use any other defined overloads
-to compose the requested operation when possible. If that's not possible, Perl
-will act as if there were no overloads in effect. This is often what you want.
+Setting C<fallback> to a true value gives Perl the option to use any other
+defined overloads to perform an operation. If that's not possible, Perl will
+act as if there were no overloads in effect. This is often what you want.
 
 Without C<fallback>, Perl will only use the specific overloadings you have
 provided. If someone tries to perform an operation you have not overloaded,
@@ -101,48 +92,57 @@ Perl will throw an exception.
 X<overloading; inheritance>
 
 Subclasses inherit overloadings from their ancestors. They may override this
-behavior in one of two ways. If the parent class uses overloading as shown,
-with function references provided directly, a child class I<must> override the
-parent's overloaded behavior by using C<overload> directly.
+behavior in one of two ways. If the parent class defines overloadings in terms
+of function references, a child class must do the same to override its parent's
+behavior.
 
-If you're writing a parent class, use the I<name> of a method rather than a
-function reference. That'll allow child classes to prove their own overloadings
-by overriding the named methods:
+The alternative is to define overloadings in terms of method I<name>.  This
+allows child classes to customize their behavior by overriding those methods:
 
 =begin programlisting
 
-    package Null
-    {
+    package Null {
         use overload
             'bool'   => 'get_bool',
             '""'     => 'get_string',
             '0+'     => 'get_num',
             fallback => 1;
+
+        sub get_bool { 0 }
     }
 
 =end programlisting
 
 Any child class can do something different for boolification by overriding
-C<get_bool()>, for example.
+C<get_bool()>:
+
+=begin programlisting
+
+    package Null::ButTrue {
+        use parent 'Null';
+
+        sub get_bool { 1 }
+    }
+
+=end programlisting
 
 =head2 Uses of Overloading
 
 X<CPAN; C<IO::All>>
 
 Overloading may seem like a tempting tool to use to produce symbolic shortcuts
-for new operations, but it's rare for a good reason. The C<IO::All> CPAN
-distribution pushes this idea to its limit. In return, you get a simple and
-elegant API. Yet for every brilliant API refined through the appropriate use of
-overloading, a dozen more messes congeal. Sometimes the best code eschews
-cleverness in favor of simplicity.
+for new operations. The C<IO::All> CPAN distribution pushes this idea to its
+limit to produce a simple and elegant API. Yet for every brilliant API refined
+through the appropriate use of overloading, a dozen more messes congeal.
+Sometimes the best code eschews cleverness in favor of simplicity.
 
 Overriding addition, multiplication, and even concatenation on a C<Matrix>
-class makes sense, only because the existing notation for those operations is
+class makes sense because the existing notation for those operations is
 pervasive. A new problem domain without that established notation is a poor
 candidate for overloading, as is a problem domain where you have to squint to
 make Perl's existing operators match a different notation.
 
 Damian Conway's I<Perl Best Practices> suggests one other use for overloading:
-to prevent the accidental abuse of objects.  For example, overloading
+to prevent the accidental abuse of objects. For example, overloading
 numification to C<croak()> for objects which have no reasonable single numeric
 representation can help you find and fix real bugs.
