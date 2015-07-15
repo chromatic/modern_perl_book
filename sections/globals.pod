@@ -5,12 +5,12 @@ Z<globals>
 X<super globals>
 X<variables; super global>
 
-Perl provides several I<super global variables> that are truly global, not
-scoped to a package or file. Unfortunately, their global availability means
-that any direct or indirect modifications may have effects on other parts of
-the program--and they're terse. Experienced Perl hackers have memorized some of
-them. Few people have memorized all of them. Only a handful are ever useful.
-C<perldoc perlvar> contains the exhaustive list of these variables.
+Perl provides several I<super global variables>. They're not scoped to a
+package or file. They're really, truly global. Unfortunately, any direct or
+indirect modifications of these variables may change the behavior of other
+parts of the program. Experienced Perl hackers have memorized some of them. Few
+people have memorized all of them--they're terse. Only a handful are regularly
+useful. C<perldoc perlvar> contains the exhaustive list of these variables.
 
 =head2 Managing Super Globals
 
@@ -18,12 +18,12 @@ X<super globals; managing>
 X<builtins; C<local>>
 
 As Perl evolves, it moves more global behavior into lexical behavior, so that
-you can avoid many of these globals. When you can't avoid them, use C<local> in
+you can avoid many of these globals. When you must use them, use C<local> in
 the smallest possible scope to constrain any modifications. You are still
-susceptible to any changes code you I<call> makes to those globals, but you
-reduce the likelihood of surprising code I<outside> of your scope. As the easy
-file slurping idiom (L<easy_file_slurping>) demonstrates, C<local> is often the
-right approach:
+susceptible to any changes made to these variables from code you I<call>, but
+you reduce the likelihood of surprising code I<outside> of your scope. As the
+easy file slurping idiom (L<easy_file_slurping>) demonstrates, C<local> is
+often the right approach:
 
 =begin programlisting
 
@@ -33,8 +33,7 @@ right approach:
 
 The effect of C<local>izing C<$/> lasts only through the end of the block.
 There is a low chance that any Perl code will run as a result of reading lines
-from the filehandleN<A tied filehandle (L<tie>) is one of the few
-possibilities.> and change the value of C<$/> within the C<do> block.
+from the filehandle and change the value of C<$/> within the C<do> block.
 
 Not all cases of using super globals are this easy to guard, but this often
 works.
@@ -45,8 +44,8 @@ X<exceptions; C<$@>>
 
 Other times you need to I<read> the value of a super global and hope that no
 other code has modified it. Catching exceptions with an C<eval> block is
-susceptible at least one race condition where C<DESTROY()> methods invoked on
-lexicals that have gone out of scope may reset C<$@>:
+susceptible to at least one race condition where C<DESTROY()> methods invoked
+on lexicals that have gone out of scope may reset C<$@>:
 
 =begin programlisting
 
@@ -70,7 +69,7 @@ globals. Import them into a namespace with:
 
 =begin programlisting
 
-    use English '-no_match_vars';
+    use English '-no_match_vars'; # unnecessary in 5.20 and 5.22
 
 =end programlisting
 
@@ -84,19 +83,19 @@ X<global variables; C<$`>>
 X<C<$'>>
 X<global variables; C<$'>>
 
-Three regex-related super globals (C<$&>, C<$`>, and C<$'>) impose a global
-performance penalty for I<all> regular expressions within a program. If you
-forget the C<-no_match_vars> import, your program will suffer the penalty even
-if you don't explicitly read from those variables. Modern Perl programs can use
-the C<@-> variable instead of them.
+Three regex-related super globals (C<$&>, C<$`>, and C<$'>) used to impose a
+global performance penalty for I<all> regular expressions within a program.
+This has been fixed in Perl 5.20. If you forget the C<-no_match_vars> import,
+your program will suffer the penalty even if you don't explicitly read from
+those variables. Modern Perl programs can use the C<@-> variable instead of
+them.
 
 =head2 Useful Super Globals
 
 X<super globals; useful>
 
-Most modern Perl programs can get by with using only a couple of the super
-globals. You're most likely to encounter only a few of these variables in real
-programs.
+Most programs can get by with using only a couple of the super globals. You're
+most likely to encounter only a few of these variables.
 
 X<C<$/>>
 X<global variables; C<$/>>
@@ -104,15 +103,15 @@ X<C<$INPUT_RECORD_SEPARATOR>>
 X<global variables; C<$INPUT_RECORD_SEPARATOR>>
 X<C<readline>>
 
-C<$/> (or C<$INPUT_RECORD_SEPARATOR> from the C<English> pragma) is a
-string of zero or more characters which denotes the end of a record when
-reading input a line at a time. By default, this is your platform-specific
-newline character sequence. If you undefine this value, Perl will attempt to
-read the entire file into memory. If you set this value to a I<reference> to an
-integer, Perl will try to read that many I<bytes> per record (so beware of
-Unicode concerns). If you set this value to an empty string (C<''>), Perl will
-read in a paragraph at a time, where a paragraph is a chunk of text followed by
-an arbitrary number of newlines.
+C<$/> (or C<$INPUT_RECORD_SEPARATOR> from the C<English> pragma) is a string of
+zero or more characters which denotes the end of a record when reading input a
+record at a time. By default, this is your platform-specific newline character
+sequence. If you undefine this value, Perl will attempt to read the entire file
+into memory. If you set this value to a I<reference> to an integer, Perl will
+try to read that many I<bytes> per record (so beware of Unicode concerns). If
+you set this value to an empty string (C<''>), Perl will read in a paragraph at
+a time, where a paragraph is a chunk of text followed by an arbitrary number of
+newlines.
 
 X<C<$.>>
 X<global variables; C<$.>>
@@ -122,7 +121,7 @@ X<global variables; C<$INPUT_LINE_NUMBER>>
 C<$.> (C<$INPUT_LINE_NUMBER>) contains the number of records read from
 the most recently-accessed filehandle. You can read from this variable, but
 writing to it has no effect. Localizing this variable will localize the
-filehandle to which it refers.
+filehandle to which it refers. Yes, that's confusing.
 
 X<C<$|>>
 X<global variables; C<$|>>
@@ -145,22 +144,21 @@ X<global variables; C<$!>>
 X<C<$ERRNO>>
 X<global variables; C<$ERRNO>>
 
-C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result
-of the I<most recent> system call. In numeric context, this corresponds to C's
+C<$!> (C<$ERRNO>) is a dualvar (L<dualvars>) which contains the result of the
+I<most recent> system call. In numeric context, this corresponds to C's
 C<errno> value, where anything other than zero indicates an error. In string
 context, this evaluates to the appropriate system error string. Localize this
 variable before making a system call (implicitly or explicitly) to avoid
-overwriting the appropriate value for other code elsewhere. Perl's internals
-make system calls sometimes, so the value of this variable can change out from
-under you. Copy it I<immediately> after causing a system call to get accurate
-results.
+overwriting the C<errno> value for other code elsewhere. Perl's internals make
+system calls sometimes, so the value of this variable can change out from under
+you. Copy it I<immediately> after causing a system call for accurate results.
 
 X<C<$">>
 X<global variables; C<$">>
 X<C<$LIST_SEPARATOR>>
 X<global variables; C<$LIST_SEPARATOR>>
 
-C<$"> (C<$LIST_SEPARATOR>) is a string used to separate array and list
+C<$"> (C<$LIST_SEPARATOR>) contains the string used to separate array and list
 elements interpolated into a string.
 
 X<C<%+>>
@@ -192,10 +190,9 @@ X<global variables; C<$$>>
 X<C<$PID>>
 X<global variables; C<$PID>>
 
-C<$$> (C<$PID>) contains the process id of the currently running
-instance of the program, as the operating system understands it. This will vary
-between C<fork()>ed programs and I<may> vary between threads in the same
-program.
+C<$$> (C<$PID>) contains the process id of the currently running instance of
+the program as the operating system understands it. This will vary between
+C<fork()>ed programs and I<may> vary between threads in the same program.
 
 X<C<@INC>>
 X<global variables; C<@INC>>

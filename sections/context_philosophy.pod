@@ -120,8 +120,7 @@ C<find_chores()> occur in list context:
 
     process_list_of_results( find_chores() );
 
-    my %results =
-    (
+    my %results = (
         cheap_operation     => $cheap_results,
         expensive_operation => find_chores(), # OOPS!
     );
@@ -135,8 +134,7 @@ on C<find_chores>. Use the C<scalar> operator to impose scalar context:
 
 =begin programlisting
 
-    my %results =
-    (
+    my %results = (
         cheap_operation     => $cheap_results,
         expensive_operation => B<scalar> find_chores(),
     );

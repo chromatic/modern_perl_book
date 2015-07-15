@@ -1,9 +1,9 @@
 =head0 Perl Beyond Syntax
 
-Baby Perl can solve a lot of your problems, but it will only take you so far.
-Effective programmers understand how Perl's features interact and combine. This
-fluent Perl takes advantage of the language's natural patterns and idioms. The
-result of Perlish thinking is concise, powerful, and useful code.
+"Simple" means different things to different programmers. Effective programmers
+understand how Perl's features interact and combine. Their fluent code takes
+advantage of language patterns and idioms. The result of this Perlish thinking
+is concise, powerful, and useful code--and it's simple when you understand it.
 
 L<idioms>
 

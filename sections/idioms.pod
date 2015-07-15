@@ -4,11 +4,11 @@ Z<idioms>
 
 Every language has common patterns of expression, or I<idioms>. The earth
 revolves, but we speak of the sun rising or setting. We brag about clever hacks
-and cringe at nasty hacks as we sling code.
+but cringe at nasty hacks and code smells.
 
-Perl idioms are language features or design techniques. They're mannerisms and
-mechanisms that give your code a Perlish accent. You don't have to use them,
-but they play to Perl's strengths.
+Perl has idioms; they're both language features and design techniques. They're
+mannerisms and mechanisms that give your code a Perlish accent. You don't have
+to use them to get your job done, but they play to Perl's strengths.
 
 =head2 The Object as C<$self>
 
@@ -34,8 +34,8 @@ X<CPAN; C<signatures>>
 X<CPAN; C<MooseX::MultiMethods>>
 
 Perl loves lists. Lists are a fundamental element of Perl. List flattening and
-binding lets you chain together multiple expressions to manipulate data in many
-ways to produce the results you want.
+binding lets you chain together multiple expressions to manipulate data in
+every way possible.
 
 While Perl's argument passing simplicity (everything flattens into C<@_>) is
 occasionally too simple, assigning from C<@_> in list context allows you to
@@ -53,16 +53,14 @@ turns an ordinary list into an obvious list of pairs of arguments:
 
 =end programlisting
 
-Within the function, code unpacks these parameters into a hash and treats that
-hash as if it were a single argument:
+Unpacks these parameters into a hash and treat that hash as if it were a single
+argument:
 
 =begin programlisting
 
-    sub make_ice_cream_sundae
-    {
+    sub make_ice_cream_sundae {
         B<my %args    = @_;>
         my $dessert = get_ice_cream( $args{ice_cream} );
-
         ...
     }
 
@@ -71,9 +69,8 @@ hash as if it were a single argument:
 =begin tip Hash or Hash Ref?
 
 I<Perl Best Practices> suggests passing hash references instead. This allows
-Perl to perform caller-side validation of the hash reference. In other words,
-if you pass the wrong number of arguments, you'll get an error where you
-I<call> the function.
+Perl to perform caller-side validation of the hash reference. If you pass the
+wrong number of arguments, you'll get an error where you I<call> the function.
 
 =end tip
 
@@ -83,11 +80,9 @@ hash:
 
 =begin programlisting
 
-    sub import
-    {
+    sub import {
         B<my ($class, %args)  = @_;>
         my $calling_package = caller();
-
         ...
     }
 
@@ -103,17 +98,15 @@ X<C<sort>; Schwartzian transform>
 X<builtins; C<map>>
 X<builtins; C<sort>>
 
-The I<Schwartzian transform> is an elegant demonstration of Perl's pervasive
-list handling as an idiom borrowed from Lisp. Suppose you have a Perl hash
-which associates the names of your co-workers with their phone extensions:
+The I<Schwartzian transform> is an elegant demonstration of the pervasive list
+handling idiom borrowed from Lisp. Suppose you have a Perl hash which
+associates the names of your co-workers with their phone extensions:
 
 =begin programlisting
 
-    my %extensions =
-    (
+    my %extensions = (
         '000' => 'Damian',
         '002' => 'Wesley',
-        '012' => 'LaMarcus',
         '042' => 'Robin',
         '088' => 'Nic',
     );
@@ -123,8 +116,8 @@ which associates the names of your co-workers with their phone extensions:
 =begin tip Hash Key Quoting Rules
 
 Fat comma hash key quoting only works on things that look like barewords. With
-the leading zero, these keys look like octal numbers. Almost everyone makes
-this mistake.
+the leading zero, these keys look like octal numbers. Everyone makes this
+mistake at least once.
 
 =end tip
 
@@ -139,23 +132,21 @@ not its keys. Getting the values sorted correctly is easy:
 
 ... but you need an extra step to preserve the association of names and
 extensions, hence the Schwartzian transform. First, convert the hash into a
-list of data structures which is easy to sort--in this case, two-element
+list of data structures which will be easier to sort--in this case, two-element
 anonymous arrays:
 
 =begin programlisting
 
-    my @pairs = map  { [ $_, $extensions{$_} ] }
-                keys %extensions;
+    my @pairs = map  { [ B<$_, $extensions{$_}> ] } keys %extensions;
 
 =end programlisting
 
-C<sort> takes the list of anonymous arrays and compares their second elements
+C<sort> takes this list of anonymous arrays and compares their second elements
 (the names) as strings:
 
 =begin programlisting
 
-    my @sorted_pairs = sort { $a->[1] cmp $b->[1] }
-                            @pairs;
+    my @sorted_pairs = sort { $a->[1] cmp $b->[1] } @pairs;
 
 =end programlisting
 
@@ -163,13 +154,13 @@ X<C<$a>>
 X<C<$b>>
 X<builtins; C<sort>>
 
-The block provided to C<sort> takes its arguments in two package-scoped
-(L<scope>) variables: C<$a> and C<$b>N<See C<perldoc -f sort> for an extensive
-discussion of the implications of this scoping.>. The C<sort> block takes its
+The block provided to C<sort> receives arguments in two package-scoped
+(L<scope>) variables: C<$a> and C<$b>. (See C<perldoc -f sort> for an extensive
+discussion of the implications of this scoping.) The C<sort> block takes its
 arguments two at a time. The first becomes the contents of C<$a> and the second
-the contents of C<$b>. If C<$a> should come before C<$b> in the results, the
+the contents of C<$b>. If C<$a> should sort ahead of C<$b> in the results, the
 block must return -1. If both values sort to the same position, the block must
-return 0. Finally, if C<$a> should come after C<$b> in the results, the block
+return 0. Finally, if C<$a> should sort after C<$b> in the results, the block
 should return 1. Any other return values are errors.
 
 =begin tip Know Your Data
@@ -188,8 +179,7 @@ the data structure to a more usable form:
 
 =begin programlisting
 
-    my @formatted_exts = map { "$_->[1], ext. $_->[0]" }
-                             @sorted_pairs;
+    my @formatted_exts = map { "$_->[1], ext. $_->[0]" } @sorted_pairs;
 
 =end programlisting
 
@@ -201,8 +191,8 @@ the data structure to a more usable form:
 
 =end programlisting
 
-The Schwartzian transformation uses Perl's pervasive list processing to get rid
-of the temporary variables:
+The Schwartzian transformation chains all of these expressions together to
+elide those temporary variables:
 
 =begin programlisting
 
@@ -210,24 +200,23 @@ of the temporary variables:
         map  { " $_->[1], ext. $_->[0]"          }
         sort {   $a->[1] cmp   $b->[1]           }
         map  { [ $_      =>    $extensions{$_} ] }
-            keys %extensions;
+        keys %extensions;
 
 =end programlisting
 
-Read the expression from right to left, in the order of evaluation. For each
-key in the extensions hash, make a two-item anonymous array containing the key
-and the value from the hash. Sort that list of anonymous arrays by their second
-elements, the values from the hash. Format a string of output from those sorted
-arrays.
+Read the expression from right to left, in evaluation order. For each key in
+the extensions hash, make a two-item anonymous array containing the key and the
+value. Sort that list of anonymous arrays by their second elements, the hash
+values. Format a string of output from those sorted arrays.
 
 The Schwartzian transform pipeline of C<map>-C<sort>-C<map> transforms a data
 structure into another form easier for sorting and then transforms it back into
-another form.
+the first from--or another form.
 
 While this sorting example is simple, consider the case of calculating a
 cryptographic hash for a large file. The Schwartzian transform is especially
 useful because it effectively caches any expensive calculations by performing
-them once in the rightmost C<map>.
+them once in the first-executed C<map>.
 
 =head2 Easy File Slurping
 
@@ -254,7 +243,7 @@ files into a scalar in a single expression:
 
 C<$/> is the input record separator. C<local>izing it sets its value to
 C<undef>, pending assignment. As the value of the separator is undefined, Perl
-happily reads the entire contents of the filehandle in one swoop.  Because a
+happily reads the entire contents of the filehandle in one swoop. Because a
 C<do> block evaluates to the value of the last expression evaluated within the
 block, this evaluates to the data read from the filehandle: the contents of the
 file. At the end of the expression, C<$/> has reverted to its previous state
@@ -263,26 +252,26 @@ and C<$file> contains the contents of the file.
 The second example avoids a second copy of the string containing the file's
 contents; it's not as pretty, but it uses the least amount of memory.
 
-=begin tip C<File::Slurp>
+=begin tip C<File::Slurper>
 
-X<CPAN; C<File::Slurp>>
+X<CPAN; C<File::Slurper>>
 
 This useful example is admittedly maddening for people who don't understand
-both C<local> and scoping. The C<File::Slurp> module from the CPAN is a worthy
-(and often faster) alternative.
+both C<local> and scoping. The C<File::Slurper> module from the CPAN is a
+worthy (and often faster) alternative.
 
 =end tip
 
 =head2 Handling Main
 
-Perl requires no special syntax for creating closures (L<closures>). You can
-close over a lexical variable inadvertently. Many programs commonly set up
-several file-scoped lexical variables before handing off processing to other
-functions. It's tempting to use these variables directly, rather than passing
-values to and returning values from functions, especially as programs grow.
-Unfortunately, these programs may come to rely on subtleties of what happens
-when during Perl's compilation process--a variable you I<thought> would be
-initialized to a specific value may not get initialized until much later.
+Many programs commonly set up several file-scoped lexical variables before
+handing off processing to other functions. It's tempting to use these variables
+directly, rather than passing values to and returning values from functions,
+especially as programs grow.  Unfortunately, these programs may come to rely on
+subtleties of what happens when during Perl's compilation process--a variable
+you I<thought> would be initialized to a specific value may not get initialized
+until much later. Remember that Perl requires no special syntax for creating
+closures (L<closures>)--you can close over a lexical variable inadvertently.
 
 To avoid this, wrap the main code of your program in a single function,
 C<main()>. Encapsulate your variables to their proper scopes. Then add a single
@@ -295,8 +284,6 @@ pragmas you need:
 
     use Modern::Perl;
 
-    ...
-
     B<exit main( @ARGV );>
 
     sub main {
@@ -306,10 +293,12 @@ pragmas you need:
         return 0;
     }
 
+    sub other_functions { ... }
+
 =end programlisting
 
 Calling C<main()> I<before> anything else in the program forces you to be
-explicit about initialization and order of compilation. Calling C<exit> with
+explicit about initialization and compilation order. Calling C<exit> with
 C<main()>'s return value prevents any other bare code from running.
 
 =head2 Controlled Execution
@@ -318,15 +307,15 @@ Z<controlled_execution>
 
 The effective difference between a program and a module is in its intended use.
 Users invoke programs directly, while programs load modules after execution has
-already begun. Yet a module and a program are both Perl code.  Making a module
-executable is easy. So is making a program behave as a module (useful for
-testing parts of an existing program without formally making a module). All you
-need to do is to discover I<how> Perl began to execute a piece of code.
+already begun. Yet both modules and programs are merely Perl code. Making a
+module executable is easy. So is making a program behave as a module (useful
+for testing parts of an existing program without formally making a module). All
+you need to do is to discover I<how> Perl began to execute a piece of code.
 
 X<builtins; C<caller>>
 
-C<caller>'s single optional argument is the number of call frames
-(L<recursion>) which to report. C<caller(0)> reports information about the
+C<caller>'s single optional argument governs the number of call frames
+(L<recursion>) to look back through. C<caller(0)> reports information about the
 current call frame. To allow a module to run correctly as a program I<or> a
 module, put all executable code in functions, add a C<main()> function, and
 write a single line at the start of the module:
@@ -365,10 +354,8 @@ Suppose your function takes exactly two arguments. You I<could> write:
 
     use Carp 'croak';
 
-    sub groom_monkeys
-    {
-        if (@_ != 2)
-        {
+    sub groom_monkeys {
+        if (@_ != 2) {
             croak 'Can only groom two monkeys!';
         }
         ...
@@ -387,7 +374,8 @@ the check and deserve to be at the I<start> of the expression:
 
 This early return technique--especially with postfix conditionals--can simplify
 the rest of the code. Each such assertion is effectively a single row in a
-truth table.
+truth table. Alternately, function signatures (L<function_signatures>) of some
+kind will handle this case for you.
 
 =head2 Regex En Passant
 
@@ -404,10 +392,10 @@ Many Perl idioms rely on the fact that expressions evaluate to values:
 
 =end programlisting
 
-While that code is obviously clunky, it demonstrates how to use the value of
-one expression in another expression. This isn't a new idea; you've likely used
-the return value of a function in a list or as an argument to another function
-before. You may not have realized its implications.
+That clunky code demonstrates how to use the value of one expression in another
+expression. This isn't a new idea; you've likely used the return value of a
+function in a list or as an argument to another function before. You may not
+have realized its implications.
 
 X<regex; capture>
 
@@ -432,17 +420,17 @@ account, you could write:
 
 =end programlisting
 
-=begin tip /r in Perl 5.14
+=begin tip Non-Destructive Substitutions
 
-Perl 5.14 added the non-destructive substitution modifier C</r>, so that you
-can write C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
+Newer code can use the non-destructive substitution modifier C</r>:
+C<my $normalized_name = $name =~ tr/A-Za-z//dcB<r>;>.
 
 =end tip
 
 First, assign the value of C<$name> to C<$normalized_name>. The parentheses
-affect the precedence so that assignment happens first. The assignment
-expression evaluates to the I<variable> C<$normalized_name>. That variable
-becomes the first operand to the transliteration operator.
+change precedence so that assignment happens first. The assignment expression
+evaluates to the I<variable> C<$normalized_name>. That variable becomes the
+first operand to the transliteration operator.
 
 This technique works on other in-place modification operators:
 
@@ -468,11 +456,11 @@ both operands as strings. Use the addition operator and Perl will treat both
 operands as numeric.
 
 Occasionally you have to give Perl a hint about what you mean with a I<unary
-coercion> to force the evaluation of a value a specific way.
+coercion> to force a specific evaluation of a value.
 
 X<unary conversions; numeric>
 
-To ensure that Perl treats a value as numeric, add zero:
+Add zero to treat a value as numeric:
 
 =begin programlisting
 
@@ -482,7 +470,7 @@ To ensure that Perl treats a value as numeric, add zero:
 
 X<unary conversions; boolean>
 
-To ensure that Perl treats a value as a boolean, double negate it:
+Double negate a value to treat it as a boolean:
 
 =begin programlisting
 
@@ -492,8 +480,7 @@ To ensure that Perl treats a value as a boolean, double negate it:
 
 X<unary conversions; string>
 
-To ensure that Perl treats a value as a string, concatenate it with the empty
-string:
+Concatenate a value with the empty string to treat it as a string:
 
 =begin programlisting
 
@@ -501,6 +488,6 @@ string:
 
 =end programlisting
 
-Though the need for these coercions is vanishingly rare, you should understand
-these idioms if you encounter them. While it may look like it would be safe to
-remove a "useless" C<+ 0> from an expression, doing so may well break the code.
+The need for these coercions is vanishingly rare, but it happens. While it may
+look like it would be safe to remove a "useless" C<+ 0> from an expression,
+doing so may well break the code.
