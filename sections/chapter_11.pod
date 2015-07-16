@@ -1,9 +1,14 @@
 =head0 What to Avoid
 
-Perl isn't perfect. Some features are difficult to use correctly and others
-seemed great but don't work all that well. A few features combine with others
-in strange ways with weird edge cases. Knowing Perl's rough edges will help you
-avoid them, when possible, and avoid rough edges when you must use them.
+Perl is a malleable language. You can write programs in whichever creative,
+maintainable, obfuscated, or bizarre fashion you prefer. Good programmers write
+code that they want to maintain, but Perl won't decide for you what I<you>
+consider maintainable.
+
+Perl isn't perfect. Some features are difficult to use correctly. Others seem
+great but don't work all that well. Some have strange edge cases. Knowing what
+to avoid in Perl--and when to avoid it--will help you write robust code that
+survives the twin tests of time and real users.
 
 L<barewords>
 

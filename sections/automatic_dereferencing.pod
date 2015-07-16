@@ -21,6 +21,13 @@ Given an expression which returns an array reference, you can do the same:
 
 =end programlisting
 
+=begin tip The Autoderef Experiment
+
+After Perl 5.18, you must enable this feature with C<use experimental
+'autoderef';>. That should be a sign to tread carefully here.
+
+=end tip
+
 X<builtins; C<push>>
 X<builtins; C<pop>>
 X<builtins; C<shift>>

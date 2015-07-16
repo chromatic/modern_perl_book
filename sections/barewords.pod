@@ -2,11 +2,6 @@
 
 Z<barewords>
 
-Perl is a malleable language. You can write programs in whichever creative,
-maintainable, obfuscated, or bizarre fashion you prefer. Good programmers write
-code that they want to maintain, but Perl won't decide for you what I<you>
-consider maintainable.
-
 X<barewords>
 X<C<strict> pragma>
 X<pragmas; C<strict>>
@@ -34,8 +29,8 @@ them as string keys; C<pinball> in C<$games{pinball}> is obviously a string.
 
 Occasionally this interpretation is not what you want, especially when you
 intend to I<evaluate> a builtin or a function to produce the hash key. To make
-these cases clear, pass arguments to the function or use parentheses, or
-prepend a unary plus to force the evaluation of the builtin:
+these cases clear, pass arguments to the function, use parentheses, or prepend
+a unary plus to force the evaluation of the builtin:
 
 =begin programlisting
 
@@ -48,12 +43,14 @@ prepend a unary plus to force the evaluation of the builtin:
     # the function returns the key
     my $value = $items{B<myshift( @_ )>}
 
-    # unary plus uses the builtin shift
+    # unary plus indicates the builtin shift
     my $value = $items{B<+>shift};
 
 =end programlisting
 
 =head3 Bareword package names
+
+Z<bareword_package_names>
 
 X<packages; bareword names>
 
@@ -62,11 +59,11 @@ names have initial capitals and functions do not, you'll rarely encounter
 naming collisions. Even still, Perl must determine how to parse C<<
 Package->method >>. Does it mean "call a function named C<Package()> and call
 C<method()> on its return value?" or "Call a method named C<method()> in the
-C<Package> namespace?" The answer depends on the code you've already compiled.
+C<Package> namespace?" The answer depends on the code Perl has already compiled
+when it encounters that method call.
 
 Force the parser to treat C<Package> as a package name by appending the package
-separator (C<::>)N<Even among people who understand why this works, very few
-people do it.> or make it a literal string:
+separator (C<::>) or make it a literal string:
 
 =begin programlisting
 
@@ -79,7 +76,15 @@ people do it.> or make it a literal string:
     # a slightly less ugly class method
     B<'>PackageB<'>->method;
 
+    # package separator
+    my $q = Plack::Request::->new;
+
+    # unambiguously a string literal
+    my $q = 'Plack::Request'->new;
+
 =end programlisting
+
+Almost no real code does this, but it's unambiguous, so be able to read it.
 
 =head3 Bareword named code blocks
 
@@ -149,8 +154,7 @@ Some old code may not take pains to quote the I<values> of hash pairs:
 =begin programlisting
 
     # poor style; do not use
-    my %parents =
-    (
+    my %parents = (
         mother => Annette,
         father => Floyd,
     );
@@ -186,10 +190,10 @@ X<barewords; sort functions>
 X<C<sort>>
 X<builtins; C<sort>>
 
-Finally, the second operand of the C<sort> builtin can be the I<name> of a
-function to use for sorting. While this is rarely ambiguous to the parser, it
-can confuse I<human> readers. The alternative of providing a function reference
-in a scalar is little better:
+The second operand of the C<sort> builtin can be the I<name> of a function to
+use for sorting. While this is rarely ambiguous to the parser, it can confuse
+I<human> readers. The alternative of providing a function reference in a scalar
+is little better:
 
 =begin programlisting
 

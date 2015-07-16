@@ -2,14 +2,15 @@
 
 Z<indirect_objects>
 
-Perl has no operator C<new>. A constructor is anything which returns an object.
-By convention, constructors are class methods named C<new()>, but you can name
-these methods (or even use I<functions>). Several old Perl OO tutorials promote
-the use of C++ and Java-style constructor calls:
+Perl is not a pure object-oriented language. It has no operator C<new>; a
+constructor is anything which returns an object. By convention, constructors
+are class methods named C<new()>, but you can name these methods anything you
+want, or even use I<functions>. Several old Perl OO tutorials promote the use
+of C++ and Java-style constructor calls:
 
 =begin programlisting
 
-    my $q = B<new> CGI; # DO NOT USE
+    my $q = B<new> Alces; # DO NOT USE
 
 =end programlisting
 
@@ -17,11 +18,11 @@ the use of C++ and Java-style constructor calls:
 
 =begin programlisting
 
-    my $q = CGI->new;
+    my $q = Alces->new;
 
 =end programlisting
 
-These syntaxes produce equivalent behavior, except when they don't.
+These examples produce equivalent behavior, except when they don't.
 
 =head2 Bareword Indirect Invocations
 
@@ -29,9 +30,9 @@ X<indirect object notation>
 X<dative notation>
 
 In the indirect object form (more precisely, the I<dative> case) of the first
-example, the verb (the method) precedes the noun to which it refers (the
-object). This is fine in spoken languages, but it introduces parsing
-ambiguities in Perl.
+example, the method precedes the invocant. This is fine in spoken languages
+where verbs and nouns are more obvious, but it introduces parsing ambiguities
+in Perl.
 
 Because the method's name is a bareword (L<barewords>), the parser uses several
 heuristics to figure out the proper interpretation of this code. While these
@@ -40,24 +41,25 @@ are confusing. Things get worse when you pass arguments to a constructor:
 
 =begin programlisting
 
-    # DO NOT USE
-    my $obj = new Class( arg => $value );
+    my $obj = new Class( arg => $value ); # DO NOT USE
 
 =end programlisting
 
-In this example, the I<name> of the class looks like a function call. Perl
-I<can> disambiguate many of these cases, but its heuristics depend on which
-package names the parser has seen, which barewords it has already resolved (and
-how it resolved them), and the I<names> of functions already declared in the
-current package. For an exhaustive list of these conditions, you have to read
-the source code of Perl's parser--not something the average Perl programmer
-wants to do.
+In this example, the I<name> of the class looks like a function call. Perl can
+and does often get this right, but its heuristics depend on which package names
+the parser has seen, which barewords it has already resolved, how it resolved
+those barewords, and the I<names> of functions already declared in the current
+package. For an exhaustive list of these conditions, you have to read the
+source code of Perl's parser--not something the average Perl programmer wants
+to do (see C<intuit_method> in F<toke.c>, if you're really curious--but feel
+free to forget this suggestion ever existed).
 
 Imagine running afoul of a prototyped function (L<prototypes>) with a name
 which just happens to conflict somehow with the name of a class or a method
-called indirectly. This is rareN<It's happened to your author when using the
-C<JSON> module.>, but so unpleasant to debug that it's worth avoiding indirect
-invocations.
+called indirectly, such as a poorly-named C<JSON()> method in the same file
+where the C<JSON> module is used, to pick an example that actually happened.
+This is rare, but it's very unpleasant to debug. Avoid indirect invocations
+instead.
 
 =head2 Indirect Notation Scalar Limitations
 
@@ -67,7 +69,7 @@ aggregate variable I<seems> obvious, but it is not:
 
 =begin programlisting
 
-    # DOES NOT WORK AS WRITTEN
+    # DOES NOT WORK
     say $config->{output} 'Fun diagnostic message!';
 
 =end programlisting
@@ -110,34 +112,19 @@ class name as a call to the function, as:
 
     sub Plack::Request;
 
-    # you wrote Plack::Reuqest->new, but Perl saw
+    # you wrote Plack::Request->new, but Perl saw
     my $q = Plack::Request()->new;
 
 =end programlisting
 
-While this happens rarely, you can disambiguate classnames by appending the
-package separator (C<::>) or by explicitly marking class names as string
-literals:
-
-=begin programlisting
-
-    # package separator
-    my $q = Plack::Request::->new;
-
-    # unambiguously a string literal
-    my $q = 'Plack::Request'->new;
-
-=end programlisting
-
-Almost no one ever does this.
+Disambiguate this syntax as usual (L<bareword_package_names>).
 
 X<C<IO::File>>
 
 For the limited case of filehandle operations, the dative use is so prevalent
 that you can use the indirect invocation approach if you surround your intended
-invocant with curly brackets. If you're using Perl 5.14 or newer (or if you
-load C<IO::File> or C<IO::Handle>), you can use methods on lexical
-filehandlesN<Almost no one does this for C<print> and C<say>.>.
+invocant with curly brackets. You I<can> use methods on lexical filehandles,
+though almost no one ever does this for C<print> and C<say>.
 
 X<CPAN; C<Perl::Critic>>
 X<CPAN; C<Perl::Critic::Policy::Dynamic::NoIndirect>>

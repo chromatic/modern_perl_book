@@ -4,8 +4,8 @@ Z<method_sub_equivalence>
 
 X<builtins; C<sub>>
 
-Perl's object system is deliberately minimal (L<blessed_references>). Because a
-class is a package, Perl does not distinguish between a function and a method
+Perl's object system is deliberately minimal (L<blessed_references>). A class
+is a package, and Perl does not distinguish between a function and a method
 stored in a package. The same builtin, C<sub>, declares both. Perl will happily
 dispatch to a function called as a method. Likewise, you can invoke a method as
 if it were a function--fully-qualified, exported, or as a reference--if you
@@ -19,16 +19,16 @@ Consider a class with several methods:
 
 =begin programlisting
 
-    package Order;
+    package Order {
 
-    use List::Util 'sum';
+        use List::Util 'sum';
 
-    ...
+        sub calculate_price {
+            my $self = shift;
+            return sum( 0, $self->get_items );
+        }
 
-    sub calculate_price
-    {
-        my $self = shift;
-        return sum( 0, $self->get_items );
+        ...
     }
 
 =end programlisting
@@ -46,13 +46,13 @@ seem equivalent:
 =end programlisting
 
 Though in this simple case, they produce the same output, the latter violates
-object encapsulation by avoiding method lookup.
+object encapsulation by bypassing method lookup.
 
 X<methods; avoid calling as functions>
 
 If C<$o> were instead a subclass or allomorph (L<roles>) of C<Order> which
-overrode C<calculate_price()>, bypassing method dispatch would call the wrong
-method. Any change to the implementation of C<calculate_price()>, such as a
+overrode C<calculate_price()>, that example has just called the wrong method.
+Any change to the implementation of C<calculate_price()>, such as a
 modification of inheritance or delegation through C<AUTOLOAD()>--might break
 calling code.
 
@@ -70,7 +70,7 @@ reference?
 
 =end programlisting
 
-There are two possibilities.  The first is to discard the return value of the
+There are two possibilities. The first is to discard the return value of the
 C<can()> method:
 
 =begin programlisting
@@ -83,8 +83,7 @@ The second is to use the reference itself with method invocation syntax:
 
 =begin programlisting
 
-    if (my $meth_ref = $o->can( 'apply_discount' ))
-    {
+    if (my $meth_ref = $o->can( 'apply_discount' )) {
         $o->B<$meth_ref>();
     }
 
@@ -107,17 +106,16 @@ reference, the reference may no longer refer to the most appropriate method. If
 the C<Order> class has changed such that C<Order::apply_discount> is no longer
 the right method to call, the reference in C<$meth_ref> will not have updated.
 
-When you use this invocation form, limit the scope of the references.
+That's an unlikely circumstance, but limit the scope of a method reference when
+you use this invocation form just in case.
 
 =head2 Callee-side
 
 X<methods; avoid calling as functions>
 X<functions; avoid calling as methods>
 
-Because Perl makes no distinction between functions and methods at the point of
-declaration and because it's I<possible> (however inadvisable) to invoke a
-given function as a function or a method, it's possible to write a function
-callable as either.
+Because it's I<possible> (however inadvisable) to invoke a given function as a
+function or a method, it's possible to write a function callable as either.
 
 The C<CGI> module has these two-faced functions. Every one of them must apply
 several heuristics to determine whether the first argument is an invocant. This

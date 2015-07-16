@@ -12,9 +12,9 @@ X<builtins; C<tie>>
 X<C<Tie::File>>
 
 The C<tie> builtin originally allowed you to use disk space instead of RAM for
-hashes and arrays, so that Perl could use data larger than available memory.
-The core module C<Tie::File> allows you to do this, in effect treating files as
-if they were arrays.
+hashes and arrays, so that Perl could use data too large to fit in available
+memory. The core module C<Tie::File> allows you to do this, in effect treating
+files as if they were arrays.
 
 X<C<Tie::StdScalar>>
 X<C<Tie::StdArray>>
@@ -46,7 +46,7 @@ To tie a variable:
 
 =end programlisting
 
-The first argument is the variable to tie. The second is the name of the class
+The first operand is the variable to tie. The second is the name of the class
 into which to tie it. C<@args> is an optional list of arguments required for
 the tying function. In the case of C<Tie::File>, C<@args> should contain a
 valid filename.
@@ -63,31 +63,27 @@ C<tied> in a boolean context.
 =head2 Implementing Tied Variables
 
 To implement the class of a tied variable, inherit from a core module such as
-C<Tie::StdScalar>N<C<Tie::StdScalar> lacks its own F<.pm> file, so write C<use
-Tie::Scalar;>.>, then override the specific methods for the operations you want
-to change.  In the case of a tied scalar, these are likely C<FETCH> and
-C<STORE>, possibly C<TIESCALAR()>, and probably not C<DESTROY()>.
+C<Tie::StdScalar>, 
+Then
+override the specific methods for the operations you want to change. In the
+case of a tied scalar, these are likely C<FETCH> and C<STORE>, possibly
+C<TIESCALAR()>, and probably not C<DESTROY()>.
 
 Here's a class which logs all reads from and writes to a scalar:
 
 =begin programlisting
 
-    package Tie::Scalar::Logged
-    {
-        use Modern::Perl;
-
+    package Tie::Scalar::Logged {
         use Tie::Scalar;
         use parent -norequire => 'Tie::StdScalar';
 
-        sub STORE
-        {
+        sub STORE {
             my ($self, $value) = @_;
             Logger->log("Storing <$value> (was [$$self])", 1);
             $$self = $value;
         }
 
-        sub FETCH
-        {
+        sub FETCH {
             my $self = shift;
             Logger->log("Retrieving <$$self>", 1);
             return $$self;
@@ -100,8 +96,8 @@ Assume that the C<Logger> class method C<log()> takes a string and the number
 of frames up the call stack of which to report the location.
 
 Within the C<STORE()> and C<FETCH()> methods, C<$self> works as a blessed
-scalar. Assigning to that scalar reference changes the value of the scalar and
-reading from it returns its value.
+scalar. Assigning to that scalar reference changes the value of the scalar.
+Reading from it returns its value.
 
 Similarly, the methods of C<Tie::StdArray> and C<Tie::StdHash> act on blessed
 array and hash references, respectively. Again, C<perldoc perltie> explains the
@@ -112,7 +108,8 @@ once.
 
 The C<-norequire> option prevents the C<parent> pragma from attempting to load
 a file for C<Tie::StdScalar>, as that module is part of the file
-F<Tie/Scalar.pm>. This is messy but necessary.
+F<Tie/Scalar.pm>. That's right, there's no F<.pm> file for C<Tie::StdScalar>.
+Isn't this fun?
 
 =end tip
 
@@ -120,8 +117,8 @@ F<Tie/Scalar.pm>. This is messy but necessary.
 
 Tied variables seem like fun opportunities for cleverness, but they can produce
 confusing interfaces. Unless you have a very good reason for making objects
-behave as if they were builtin data types, avoid creating your own ties.
-C<tie>d variables are often much slower than builtin data types.
+behave as if they were builtin data types, avoid creating your own ties without
+good reason. C<tie>d variables are also much slower than builtin data types.
 
 With that said, tied variables can help you debug tricky code (use the logged
 scalar to help you understand I<where> a value changes) or to make certain
