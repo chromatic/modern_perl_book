@@ -69,19 +69,6 @@ expose debugging information to users.
 
 =end tip
 
-=head2 C<IO::File> and C<IO::Handle>
-
-X<C<IO::File>>
-X<C<IO::Handle>>
-
-Before Perl 5.14, lexical filehandles were objects of the C<IO::Handle> class,
-but you had to load C<IO::Handle> explicitly before you could call methods on
-them. As of Perl 5.14, lexical filehandles are instances of C<IO::File> and
-Perl loads it for you.
-
-Add C<use IO::Handle;> to code running on Perl 5.12 or earlier if you call
-methods on lexical filehandles.
-
 =head2 The autodie Pragma
 
 Z<autodie>
@@ -105,8 +92,12 @@ The C<autodie> pragma changes this for you. If you write:
 ... an unsuccessful C<open()> call will throw an exception. Given that the most
 appropriate approach to a failed system call is throwing an exception, this
 pragma can remove a lot of boilerplate code and allow you the peace of mind of
-knowing that you haven't forgotten to check a return value. See C<perldoc
-autodie> for more information.
+knowing that you haven't forgotten to check a return value.
+
+One caveat of C<autodie> is that it can be a sledgehammer when you need a
+finishing hammer; if you only need a couple of system calls checked for you,
+you can limit its imports accordingly. See C<perldoc autodie> for more
+information.
 
 =head2 Perl Version Numbers
 
@@ -123,17 +114,17 @@ C<CPAN::MinimumVersion> from the CPAN.
 
 There's no requirement for you to add the minimum required Perl version number
 to all new code you write, but it I<can> clarify your intentions. For example,
-if you've tested your code with Perl 5.12 and use only features present in Perl
-5.12, write:
+if you've tested your code with Perl 5.18 and use only features present in Perl
+5.18, write:
 
 =begin programlisting
 
-    use 5.012;
+    use 5.018;
 
 =end programlisting
 
 ... and you'll document your intent. You'll also make it easier for tools to
 identify the particular features of Perl you may or may not use in this code.
 If someone comes along later and proves that the code works just fine on Perl
-5.10, you can change the version number--and you'll do so based on practical
+5.14, you can change the version number--and you'll do so based on practical
 evidence.
