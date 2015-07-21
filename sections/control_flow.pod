@@ -895,7 +895,6 @@ parser that joins lines which end with a backslash:
         if ($line =~ s{\\$}{})
         {
             $line .= <$fh>;
-            chomp $line;
             B<redo;>
         }
 
