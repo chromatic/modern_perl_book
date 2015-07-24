@@ -411,9 +411,8 @@ X<C<\x{}>; escape sequence for character encodings>
 
 Within double-quoted strings, you may also use a Unicode escape sequence to
 represent character encodings. The syntax C<\x{}> represents a single
-character; place the hex form of the character's Unicode numberN<See
-U<http://unicode.org/charts/> for an exhaustive list.> within the curly
-brackets:
+character; place the hex form of the character's Unicode
+numberN<U<http://unicode.org/charts/>> within the curly brackets:
 
 =begin programlisting
 
@@ -535,12 +534,12 @@ always decode on input and encode on output.
 X<perl.com>
 
 See C<perldoc perluniintro> for a far more detailed explanation of Unicode,
-encodings, and how to manage incoming and outgoing data in a Unicode worldN<For
+encodings, and how to manage incoming and outgoing data in a Unicode world. For
 I<far> more detail about managing Unicode effectively throughout your programs,
-see Tom Christiansen's answer to "Why does Modern Perl avoid UTF-8 by default?"
-U<http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default/6163129#6163129>>
-and his "Perl Unicode Cookbook" series on Perl.com
-U<http://www.perl.com/pub/2012/04/perlunicook-standard-preamble.html>.
+see Tom Christiansen's answer to "Why does Modern Perl avoid UTF-8 by
+default?"N<U<http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default/6163129#6163129>>
+and his "Perl Unicode Cookbook"
+seriesN<U<http://www.perl.com/pub/2012/04/perlunicook-standard-preamble.html>>.
 
 =begin sidebar Unicode Strings
 

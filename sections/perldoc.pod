@@ -6,8 +6,8 @@ X<perldoc>
 
 Perl respects your time; Perl culture values documentation. The language ships
 with thousands of pages of core documentation. The C<perldoc> utility is part
-of every complete Perl installationN<Your OS may provide this as an additional
-package; install C<perl-doc> on Debian or Ubuntu GNU/Linux, for example.>.
+of every complete Perl installation. Your OS may provide this as an additional
+package; install C<perl-doc> on Debian or Ubuntu GNU/Linux, for example.
 C<perldoc> can display the core docs as well as the documentation of every Perl
 module you have installed--whether a core module or one installed from the
 Comprehensive Perl Archive Network (CPAN).

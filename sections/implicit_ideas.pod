@@ -32,8 +32,8 @@ X<builtins; C<uc>>
 Many of Perl's scalar operators (including C<chr>, C<ord>, C<lc>, C<length>,
 C<reverse>, and C<uc>) work on the default scalar variable if you do not
 provide an alternative. For example, the C<chomp> builtin removes any trailing
-newline sequence from its operandN<See C<perldoc -f chomp> and C<$/> for more
-precise details of its behavior.>:
+newline sequence (technically the contents of C<$/>; see C<perldoc -f chomp>)
+from its operand:
 
 =begin programlisting
 

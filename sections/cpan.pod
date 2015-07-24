@@ -102,8 +102,8 @@ includes a great troubleshooting section.
 
 Even though the CPAN client is a core module for the Perl distribution, you
 will need to install standard development tools such as a C<make> utility and
-possibly a C compiler. Windows users, see Strawberry Perl
-(U<http://strawberryperl.com/>) and Strawberry Perl Professional. Mac OS X
+possibly a C compiler. Windows users, see Strawberry
+PerlN<U<http://strawberryperl.com/>> and Strawberry Perl Professional. Mac OS X
 users must install XCode. Unix and Unix-like users often have these tools
 available (though Debian and Ubuntu users should install C<build-essential>).
 

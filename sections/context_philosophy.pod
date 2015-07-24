@@ -7,9 +7,9 @@ X<context>
 In spoken languages, the meaning of a word or phrase depends on how you use it;
 the local I<context> of other grammatical constructs helps clarify the intent.
 For example, the inappropriate pluralization of "Please give me one
-hamburgers!"N<The pluralization of the noun differs from the amount.> sounds
-wrong, just as the incorrect gender of "la gato"N<The article is feminine, but
-the noun is masculine.> makes native speakers chuckle. Some words do double
+hamburgers!" sounds wrong (the pluralization of the noun differs from the
+amount), just as the incorrect gender of "la gato" (the article is feminine,
+but the noun is masculine) makes native speakers chuckle. Some words do double
 duty; one sheep is a sheep just as two sheep are also sheep and you program a
 program.
 
@@ -37,8 +37,8 @@ X<amount context>
 I<Amount context> governs I<how many> items you expect an operation to produce.
 Think of subject-verb number agreement in English. Even without knowing the
 formal description of this principle, you probably understand the error in the
-sentence "Perl are a fun language"N<In terms of amount context, you could say
-that the verb "are" expects a plural noun or noun phrase.>. In Perl, the number
+sentence "Perl are a fun language." (In terms of amount context, you could say
+that the verb "are" expects a plural noun or noun phrase.) In Perl, the number
 of items you request influences how many you receive.
 
 X<void context>

@@ -80,10 +80,10 @@ X<Github>
 X<gitpan>
 X<websites; gitpan>
 
-Many Perl hackers use Github (U<http://github.com/>) to host their
-projectsN<...  including the sources of this book at
-U<http://github.com/chromatic/modern_perl_book/>>. See especially Gitpan
-(U<http://github.com/gitpan/>), which hosts Git repositories chronicling the
+Many Perl hackers use GithubN<U<http://github.com/>> to host their projects,
+including including the sources of this
+bookN<U<http://github.com/chromatic/modern_perl_book/>>. See especially Gitpan
+N<U<http://github.com/gitpan/>>, which hosts Git repositories chronicling the
 complete history of every distribution on the CPAN.
 
 =begin tip A Local Git Mirror

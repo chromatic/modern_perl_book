@@ -83,9 +83,8 @@ install a more modern version. Windows users, download Strawberry Perl from
 U<http://www.strawberryperl.com/> or ActivePerl from
 U<http://www.activestate.com/activeperl>. Users of other operating systems with
 Perl already installed (and a C compiler and the other development tools),
-start by installing the CPAN module C<App::perlbrew>N<See
-U<http://search.cpan.org/perldoc?App::perlbrew> for installation
-instructions.>.
+start by installing the CPAN module
+C<App::perlbrew>N<U<http://search.cpan.org/perldoc?App::perlbrew>>.
 
 C<perlbrew> manages multiple Perl installations, so that you can switch between
 versions for testing and deployment. You can also install CPAN modules in your
