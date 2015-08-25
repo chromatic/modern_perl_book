@@ -206,14 +206,48 @@ have:
 
     use Data::Dumper;
 
+    my $complex_structure = {
+        numbers => [ 1 .. 3 ];
+        letters => [ 'a' .. 'c' ],
+        objects => {
+            breakfast => $continental,
+            lunch     => $late_tea,
+            dinner    => $banquet,
+        },
+    };
+
     print Dumper( $my_complex_structure );
 
 =end programlisting
 
+... which might produce something like:
+
+=begin screen
+
+    $VAR1 = {
+        'numbers' => [
+                      1,
+                      2,
+                      3
+                     ],
+        'letters' => [
+                      'a',
+                      'b',
+                      'c'
+                     ],
+        'meals' => {
+            'dinner' => bless({...}, 'Dinner'),
+            'lunch' => bless({...}, 'Lunch'),
+            'breakfast' => bless({...}, 'Breakfast'),
+        },
+    };
+
+=end screen
+
 Use this when you need to figure out what a data structure contains, what you
-should access, and what you accessed instead. C<Data::Dumper> can dump objects
-as well as function references (if you set C<$Data::Dumper::Deparse> to a true
-value).
+should access, and what you accessed instead. As the elided example alludes,
+C<Data::Dumper> can dump objects as well as function references (if you set
+C<$Data::Dumper::Deparse> to a true value).
 
 X<C<YAML::XS>>
 X<C<JSON>>

@@ -28,9 +28,9 @@ These are invalid Perl identifiers:
 
 =begin programlisting
 
-    my $invalid name;
-    my @3;
-    my %~flags;
+    my $invalid name; # space is invalid
+    my @3;            # cannot start with number
+    my %~flags;       # symbols invalid in name
 
     package a-lisp-style-name;
 
@@ -141,8 +141,8 @@ X<fully-qualified name>
 X<namespaces>
 
 Perl allows you to collect similar functions and variables into their own
-unique named spaces--I<namespaces> (L<packages>). A namespace is collection of
-symbols grouped under a globally unique name. Perl allows multi-level
+unique named spaces--I<namespaces> (L<packages>). A namespace is a collection
+of symbols grouped under a globally unique name. Perl allows multi-level
 namespaces, with names joined by double colons (C<::>).
 C<DessertShop::IceCream> refers to a logical collection of related variables
 and functions, such as C<scoop()> and C<pour_hot_fudge()>.

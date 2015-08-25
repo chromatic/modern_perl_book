@@ -176,7 +176,7 @@ Z<function_signatures>
 Perl 5.20 added built-in function signatures as an experimental feature.
 "Experimental" means that they may change or even go away in future releases of
 Perl, so you need to enable them to signal that you accept the possibility of
-rewriting code. (Neither C<Kavorka> nor C<Method::Signatures> require this.)
+rewriting code.
 
 =begin programlisting
 
@@ -199,9 +199,9 @@ With that disclaimer in place, you can now write:
 =begin programlisting
 
     sub greet_one {
-        B<<die "Too many arguments for subroutine" if @_ < 1;>>
-        B<<die "Too few arguments for subroutine" if @_ > 1;>>
-        B<my $name = shift;>
+        die "Too many arguments for subroutine" if @_ < 1;
+        die "Too few arguments for subroutine" if @_ > 1;
+        my $name = shift;
         say "Hello, $name!";
     }
 
@@ -497,11 +497,10 @@ Z<reporting_errors>
 
 X<builtins; C<caller>>
 
-Almost every function is called by another function. Use the C<caller> builtin
-to inspect a function's calling context. When passed no arguments, C<caller>
-returns a list containing the name of the calling package, the name of the file
-containing the call, and the line number of the file on which the call
-occurred:
+Use the C<caller> builtin to inspect a function's calling context. When passed
+no arguments, C<caller> returns a list containing the name of the calling
+package, the name of the file containing the call, and the line number of the
+file on which the call occurred:
 
 =begin programlisting
 
@@ -575,7 +574,7 @@ X<CPAN; C<Params::Validate>>
 
 Type checking is more difficult, because of Perl's operator-oriented type
 conversions (L<context_philosophy>). If you want additional safety of function
-parameters, see CPAN modules such as C<Params::Validate> or C<Kavorka>.
+parameters, see CPAN modules such as C<Params::Validate>.
 
 =head1 Advanced Functions
 

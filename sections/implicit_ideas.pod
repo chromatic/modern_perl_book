@@ -63,7 +63,7 @@ C<say> and C<print> also operate on C<$_> in the absence of other arguments:
 =begin programlisting
 
     print;  # prints $_ to the current filehandle
-    say;    # prints "$_\n" to the current filehandle
+    say;    # prints $_ and a newline to the current filehandle
 
 =end programlisting
 

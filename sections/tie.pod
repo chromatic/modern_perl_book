@@ -11,10 +11,11 @@ translates to a specific method call on an object.
 X<builtins; C<tie>>
 X<C<Tie::File>>
 
-The C<tie> builtin originally allowed you to use disk space instead of RAM for
-hashes and arrays, so that Perl could use data too large to fit in available
-memory. The core module C<Tie::File> allows you to do this, in effect treating
-files as if they were arrays.
+For example, the C<tie> builtin allows core C<Tie::File> module to treat files
+as if they were arrays of records, letting you C<push> and C<pop> and C<shift>
+as you see fit. (C<tie> was intended to use file-backed stores for hashes and
+arrays, so that Perl could use data too large to fit in available memory. RAM
+was more expensive 20 years ago.)
 
 X<C<Tie::StdScalar>>
 X<C<Tie::StdArray>>

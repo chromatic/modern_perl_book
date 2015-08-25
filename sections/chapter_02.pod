@@ -11,8 +11,8 @@ of other people. I<People> make a community worth joining and preserving and
 expanding.
 
 The Perl community welcomes willing participants at all levels, from novices to
-core developers. Take advantage of the knowledge and experience and code of
-countless other programmers, and you'll become a better programmer.
+the developers of Perl itself. Take advantage of the knowledge and experience
+and code of countless other programmers, and you'll become a better programmer.
 
 L<cpan>
 

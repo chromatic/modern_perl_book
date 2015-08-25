@@ -24,9 +24,9 @@ represent their data.
 X<strings>
 
 A I<string> is a piece of textual or binary data with no particular formatting
-or contents. It could be your name, the contents of an image file, or the
-source code of the program itself. A string has meaning in the program only
-when you give it meaning.
+or contents. It could be your name, an image read from disk, or the source code
+of the program itself. A string has meaning in the program only when you give
+it meaning.
 
 X<strings; delimiters>
 
@@ -70,10 +70,21 @@ escape the second:
 
 =begin programlisting
 
+    use Test::More;
+
     is 'Modern B<\> Perl', 'Modern B<\\> Perl',
        'single quotes backslash escaping';
 
+    done_testing();
+
 =end programlisting
+
+=begin tip
+
+This example uses C<Test::More> to prove the assertion that Perl considers
+these two lines equivalent. See L<testing> for details on how that works.
+
+=end tip
 
 X<strings; double-quoted>
 
@@ -264,9 +275,11 @@ represent a number between 0 and 255.
 
 =begin tip Words Matter
 
-Why I<octet> and not I<byte>? Assuming that one character fits in one byte will
-cause you no end of Unicode grief. Separate the idea of memory storage from
-character representation. Forget that you ever heard of bytes.
+Why I<octet> and not I<byte>? An octet is unambiguously eight bits. A byte can
+be fewer or more bits, depending on esoteric hardware. Assuming that one
+character fits in one byte will cause you no end of Unicode grief. Separate the
+idea of memory storage from character representation. Forget that you ever
+heard of bytes.
 
 =end tip
 
@@ -581,7 +594,7 @@ X<C<0b>>
 X<C<0>>
 X<C<0x>>
 
-The emboldened characters are the numeric prefixes for binary, octal, and hex
+The numeric prefixes C<0b>, C<0>, and C<0x> specify binary, octal, and hex
 notation respectively. Be aware that a leading zero on an integer I<always>
 indicates octal mode.
 
@@ -629,6 +642,19 @@ X<C<Regexp::Common>>
 The C<Regexp::Common> module from the CPAN provides several well-tested regular
 expressions to identify more specific I<types> of numeric values such as whole
 numbers, integers, and floating-point values.
+
+X<C<Math::BigInt>>
+X<C<Math::BigFloat>>
+
+=begin tip Numeric Size Limits
+
+What's the maximum size of a value you can represent in Perl? It depends;
+you're probably using a 64-bit build, so the largest integer is C<(2**31) - 1>
+and the smallest is C<-(2**31)>--though see C<perldoc perlnumber> for more
+thorough details. Use C<Math::BigInt> and C<Math::BigFloat> to handle with
+larger or smaller or more precise numbers.
+
+=end tip
 
 =head2 Undef
 

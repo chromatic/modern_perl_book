@@ -220,6 +220,16 @@ evaluates to one of two alternatives:
                     ? 'afternoon'
                     : 'morning';
 
+    # equivalent to
+    my $time_suffix;
+
+    if (after_noon(time)) {
+        $time_suffix = 'afternoon';
+    }
+    else {
+        $time_suffix = 'morning';
+    }
+
 =end programlisting
 
 The conditional expression precedes the question mark character (C<?>). The

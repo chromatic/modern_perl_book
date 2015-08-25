@@ -16,11 +16,16 @@ language has to offer, the global Perl community has invented, borrowed,
 enhanced, and polished ideas and made them available to anyone willing to learn
 them.
 
-I<Modern Perl> is a mindset. It's a fresh approach to writing great software
-with the Perl programming language. It's how effective Perl programmers write
+I<Modern Perl> is a mindset. It's an approach to writing great software with
+the Perl programming language. It's how effective Perl programmers write
 powerful, maintainable, scalable, concise, and excellent code. It takes
 advantage of Perl's extensive library of free software (the CPAN) and language
 features designed to multiply your productivity.
+
+You'll benefit most from this book if you have some experience with Perl or
+another programming language already. If you're comfortable writing and
+executing programs (and happy to consult the documentation when it's
+mentioned), you'll get the most from this book.
 
 =head1 Running Modern Perl
 

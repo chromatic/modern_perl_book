@@ -104,16 +104,10 @@ C<$authors> is still useful as a reference, but C<$stringy_ref> is a string
 with no connection to the reference and C<$numeric_ref> is a number with no
 connection to the reference.
 
-X<C<Scalar::Util>>
-X<dualvars>
-X<C<dualvar()>>
-
 To allow coercion without data loss, Perl scalars can contain both numeric and
 string components. The internal data structure which represents a scalar in
 Perl has a numeric slot and a string slot. Accessing a string in a numeric
-context produces a scalar with both string and numeric values. The C<dualvar()>
-function within the core C<Scalar::Util> module allows you to manipulate both
-values directly within a single scalar.
+context produces a scalar with both string and numeric values.
 
 X<boolean>
 X<scalars; boolean values>

@@ -6,7 +6,8 @@ X<perl.org>
 X<websites; perl.org>
 
 Perl's homepage at U<http://www.perl.org/> links to documentation, source code,
-tutorials, mailing lists, and several important community projects. If you're
+tutorials, mailing lists, and several important community projects, such as the
+Perl.org Online library (U<https://www.perl.org/books/library.html>). If you're
 new to Perl, the Perl beginners mailing list is a friendly place to ask novice
 questions and get accurate and helpful answers. See
 U<http://learn.perl.org/faq/beginners.html>.
@@ -46,9 +47,9 @@ X<websites; Perl Buzz>
 X<Perl Weekly>
 X<websites; Perl Weekly>
 
-Perl Buzz (U<http://perlbuzz.com/>) collects and republishes some of the most
-interesting and useful Perl news on a regular basis. Perl Weekly
-(U<http://perlweekly.com/>) offers a weekly take on news from the Perl world.
+Perl Weekly (U<http://perlweekly.com/>) offers a weekly take on news from the
+Perl world. @perlbuzz (U<https://twitter.com/perlbuzz>) regularly tweets new
+Perl links.
 
 =head1 Development Sites
 
@@ -68,20 +69,17 @@ The Perl 5 Porters (or I<p5p>) mailing list is the focal point of the
 development of Perl. See
 U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
 
-X<TPF>
 X<The Perl Foundation>
-X<TPF; wiki>
-X<websites; TPF wiki>
 
-The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all
-things Perl. See U<http://www.perlfoundation.org/perl5>.
+The Perl Foundation (U<http://www.perlfoundation.org/>) exists to support
+the development and promotion of Perl and its community.
 
 X<Github>
 X<gitpan>
 X<websites; gitpan>
 
 Many Perl hackers use GithubN<U<http://github.com/>> to host their projects,
-including including the sources of this
+including the sources of this
 bookN<U<http://github.com/chromatic/modern_perl_book/>>. See especially Gitpan
 N<U<http://github.com/gitpan/>>, which hosts Git repositories chronicling the
 complete history of every distribution on the CPAN.

@@ -399,8 +399,8 @@ reference with the dereferencing arrow:
 =begin tip Perl 4 Function Calls
 
 An alternate invocation syntax for function references uses the function sigil
-(C<&>) instead of the dereferencing arrow. Avoid this syntax; it has subtle
-implications for parsing and argument passing.
+(C<&>) instead of the dereferencing arrow. Avoid this C<&$cupcake_ref> syntax;
+it has subtle implications for parsing and argument passing.
 
 =end tip
 

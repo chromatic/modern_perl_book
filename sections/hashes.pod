@@ -207,6 +207,12 @@ you'll get the stringified version of that object instead of the object itself:
 
 =end programlisting
 
+That stringified hash will look something like C<Book=HASH(0x222d148)>. C<Book>
+refers to the class name. C<HASH> identifies the object as a blessed reference.
+C<0x22d148> is a number used to identify the object (more precisely: it's the
+location of the data structure representing the hash in memory, so it's neither
+quite random nor unique).
+
 =head2 Hash Key Existence
 
 X<builtins; C<exists>>

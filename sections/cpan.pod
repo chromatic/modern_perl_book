@@ -151,6 +151,5 @@ distributions for individual users or applications without affecting the system
 as a whole. See U<https://metacpan.org/pod/local::lib> and
 U<https://metacpan.org/pod/App::local::lib::helper> for more details.
 
-All three projects tend to assume a Unix-like environment (such
-as a GNU/Linux distribution or even Mac OS X). Windows users, see the Padre
-all-in-one download (U<http://padre.perlide.org/download.html>).
+All three projects tend to assume a Unix-like environment. Windows users, see
+the Padre all-in-one download (U<http://padre.perlide.org/download.html>).
