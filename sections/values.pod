@@ -79,7 +79,7 @@ escape the second:
 
 =end programlisting
 
-=begin tip
+=begin tip Testing Examples
 
 This example uses C<Test::More> to prove the assertion that Perl considers
 these two lines equivalent. See L<testing> for details on how that works.
