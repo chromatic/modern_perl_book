@@ -1,9 +1,10 @@
-=head0 What's Missing
+=head0 Next Steps with Perl
 
-Perl isn't perfect, but it is malleable on purpose, because no single
-configuration is ideal for every programmer and every purpose. Some useful
-behaviors are available as core libraries. More are available from the CPAN.
-Effective Perl programmers take full advantage of the options available to
-them.
+Perl isn't perfect, but it is malleable--because no single configuration is
+ideal for every programmer and every purpose. Some useful behaviors are
+available as core libraries. More are available from the CPAN. Effective Perl
+programmers take full advantage of the options available to them.
 
 L<missing_defaults>
+
+L<next_steps>

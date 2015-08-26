@@ -1,4 +1,4 @@
-=head1 Missing Defaults
+=head1 Useful Core Modules
 
 Z<missing_defaults>
 
@@ -9,17 +9,7 @@ retained backwards compatibility with most Perl 1 code written as far back as
 1987.
 
 The best Perl code of 2015 is very different from the best Perl code of 1994 or
-the best Perl code of 1987.
-
-X<CPAN; C<Task::Kensho>>
-
-Although Perl includes an extensive core library, it's not comprehensive. Many
-of the best modules are available outside of the core, from the CPAN (L<cpan>).
-The C<Task::Kensho> meta-distribution includes several other distributions
-which represent the best the CPAN has to offer. When you need to solve a
-problem, look there first.
-
-There are still plenty of gems in the core, however.
+the best Perl code of 1987, and part of that is due to its core library.
 
 =head2 The strict Pragma
 

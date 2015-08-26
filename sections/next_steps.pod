@@ -1,0 +1,71 @@
+=head1 What's Next?
+
+Z<next_steps>
+
+X<CPAN; C<Task::Kensho>>
+
+Although Perl includes an extensive core library, it's not comprehensive. Many
+of the best modules are available outside of the core, from the CPAN (L<cpan>).
+The C<Task::Kensho> meta-distribution includes several other distributions
+which represent the best the CPAN has to offer. When you need to solve a
+problem, look there first.
+
+The CPAN has plenty of other gems, though. For example, if you want to:
+
+=over 4
+
+=item * I<Access a database via SQL>, use the C<DBI> module
+
+=item * I<Embed a lightweight, single-file database>, use the C<DBD::SQLite> module
+
+=item * I<Manage your database schemas>, use C<Sqitch>
+
+=item * I<Represent database entities as objects>, use C<DBIx::Class>
+
+=item * I<Perform basic web programming>, use C<Plack>
+
+=item * I<Use a powerful web framework>, use C<Mojolicious>, C<Dancer>, or C<Catalyst>
+
+=item * I<Process structured data files>, use C<Text::CSV>
+
+=item * I<Manage module installations for applications>, use C<Carton>
+
+=item * I<Manipulate numeric data>, use C<PDL>
+
+=item * I<Manipulate images>, use C<Imager>
+
+=item * I<Access shared libraries>, use C<FFI::Platypus>
+
+=item * I<Extract data from XML files>, use C<XML::Rabbit>
+
+=item * I<Keep your code tidy>, use C<Perl::Tidy>
+
+=item * I<Watch for problems beyond strictures and warnings>, use C<Perl::Critic>
+
+=back
+
+... and the list goes on. Skim the CPAN recent uploads
+pageN<U<http://search.cpan.org/recent>> frequently to see what's new and what's
+updated.
+
+=head2 Thinking in Perl
+
+As with programming or any other creative endeavor, learning Perl never stops.
+While "Modern Perl" loosely describes how the world's best programmers tend to
+write and think about their code and projects, it's an ever-evolving
+profession. What's great in 2015 might not have been imagined even five years
+ago.
+
+You now have the chance to shape the present and future of Perl. You understand
+how the language works and where to find more information about it. Some of
+that is learning from the global Perl community. Some of that is perusing the
+documentation of the core and the modules you use. Some of that is practice:
+discovering what works for you and your problems and your teams.
+
+Perl's not perfect (though it gets a little bit better, year after year,
+release after release). It can be a little messy, though the problems to solve
+are a little messy. Now you have a flexible, malleable tool designed to help
+you solve those problems and then get out of the way. It's up to you to use it
+well.
+
+As a wise person once said, "May you do good things with Perl."
