@@ -88,7 +88,7 @@ process id. Depending on your shell, you may have to quote the variable
 appropriately.
 
 The C<-l> option shows the I<path> to the file containing the documentation. (A
-module may have a separate F<.pod> file in addition to its F<.pm> file.>)
+module may have a separate F<.pod> file in addition to its F<.pm> file.)
 
 The C<-m> option displays the entire I<contents> of the module, code and all,
 without any special formatting.

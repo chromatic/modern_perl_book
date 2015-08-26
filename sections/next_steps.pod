@@ -26,7 +26,7 @@ The CPAN has plenty of other gems, though. For example, if you want to:
 
 =item * I<Use a powerful web framework>, use C<Mojolicious>, C<Dancer>, or C<Catalyst>
 
-=item * I<Process structured data files>, use C<Text::CSV>
+=item * I<Process structured data files>, use C<Text::CSV_XS> (or C<Text::CSV>)
 
 =item * I<Manage module installations for applications>, use C<Carton>
 

@@ -64,13 +64,18 @@ will understand and adopt more powerful idioms and techniques. It's okay for
 you to write simple code that you understand. Keep practicing and you'll become
 a native speaker.
 
-An experienced Perl hacker might triple a list of numbers with:
+A novice Perl hacker might triple a list of numbers with:
 
 =begin programlisting
 
-    my @tripled = map { $_ * 3 } @numbers;
+    my @tripled;
+
+    for (my $i = 0; $i < scalar @numbers; $i++) {
+        $tripled[$i] = $numbers[$i] * 3;
+    }
 
 =end programlisting
+
 
 ... and a Perl adept might write:
 
@@ -84,15 +89,11 @@ An experienced Perl hacker might triple a list of numbers with:
 
 =end programlisting
 
-... while a novice might try:
+... while an experienced Perl hacker could write:
 
 =begin programlisting
 
-    my @tripled;
-
-    for (my $i = 0; $i < scalar @numbers; $i++) {
-        $tripled[$i] = $numbers[$i] * 3;
-    }
+    my @tripled = map { $_ * 3 } @numbers;
 
 =end programlisting
 
