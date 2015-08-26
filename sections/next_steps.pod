@@ -50,22 +50,20 @@ updated.
 
 =head2 Thinking in Perl
 
-As with programming or any other creative endeavor, learning Perl never stops.
-While "Modern Perl" loosely describes how the world's best programmers tend to
-write and think about their code and projects, it's an ever-evolving
-profession. What's great in 2015 might not have been imagined even five years
-ago.
+As is true of any creative endeavor, learning Perl never stops. While "Modern
+Perl" describes how the best Perl programmers approach their craft, their
+techniques and tools always evolve. What's great in 2015 and 2016 might not
+have been imagined even five years ago--and the greatness of 2020 and beyond
+might be mere inklings in the mind of an enterprising Perl hacker right now.
 
-You now have the chance to shape the present and future of Perl. You understand
-how the language works and where to find more information about it. Some of
-that is learning from the global Perl community. Some of that is perusing the
-documentation of the core and the modules you use. Some of that is practice:
-discovering what works for you and your problems and your teams.
+Now you have the chance to shape that future. It's up to you to continue
+discovering how to make Perl work for you and how to make Perl better, whether
+learning from the global Perl community, perusing the documentation of the core
+and CPAN modules, and by careful practice, discovering what works for you and
+what helps you write the right code.
 
-Perl's not perfect (though it gets a little bit better, year after year,
-release after release). It can be a little messy, though the problems to solve
-are a little messy. Now you have a flexible, malleable tool designed to help
-you solve those problems and then get out of the way. It's up to you to use it
-well.
+Perl's not perfect (though it improves, year after year, release after
+release). It can be as clean or as messy as you need it to be, depending on the
+problems you have to solve. It's up to you to use it well.
 
 As a wise person once said, "May you do good things with Perl."
