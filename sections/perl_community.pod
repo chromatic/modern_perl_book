@@ -37,7 +37,7 @@ X<websites; Planet Perl>
 X<websites; Planet Perl Iron Man>
 
 Other sites aggregate the musings of Perl hackers, including
-U<http://perlsphere.net/>, U<http://planet.perl.org/>, and
+U<http://perlsphere.net/>, U<http://PerlTricks.com/>, and
 U<http://ironman.enlightenedperl.org/>. The latter is part of an initiative
 from the Enlightened Perl Organization (U<http://enlightenedperl.org/>) to
 increase the amount and improve the quality of Perl publishing on the web.
