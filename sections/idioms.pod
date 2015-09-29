@@ -53,8 +53,8 @@ turns an ordinary list into an obvious list of pairs of arguments:
 
 =end programlisting
 
-Unpacks these parameters into a hash and treat that hash as if it were a single
-argument:
+You can unpack these parameters into a hash and treat that hash as if it were
+a single argument:
 
 =begin programlisting
 

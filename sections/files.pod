@@ -475,7 +475,7 @@ C<file()> function to create an object representing a file:
 
 =end programlisting
 
-You can get File objects from directories and vice versa:
+You can get file objects from directories and vice versa:
 
 =begin programlisting
 

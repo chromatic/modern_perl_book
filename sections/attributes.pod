@@ -3,7 +3,7 @@
 Z<attributes>
 
 Named entities in Perl--variables and functions--can have additional metadata
-attached in the form of I<attributes>. These are form arbitrary names and
+attached in the form of I<attributes>. These attributes are arbitrary names and
 values used with certain types of metaprogramming (L<code_generation>).
 
 Attribute declaration syntax is awkward, and using attributes effectively is

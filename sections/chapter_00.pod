@@ -101,7 +101,9 @@ appreciate this.
 
 This book would not have been possible without questions, comments,
 suggestions, advice, wisdom, and encouragement from many, many people. In
-particular, the author and editor thank:
+particular, the author thanks this edition's tech reviewers Andy Lester, Sean
+Lindsay, and Mohsen Jokar as well as Michael Swaine, editor of this edition.
+Contributors to this and previous editions include:
 
 L<credits>
 

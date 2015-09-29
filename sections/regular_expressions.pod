@@ -438,8 +438,8 @@ The C<\d> metacharacter matches Unicode digits:
 
 =end programlisting
 
-C<Regexp::English>
-C<CPAN; C<Regexp::English>>
+X<Regexp::English>
+X<CPAN; C<Regexp::English>>
 
 ... though in this case, the C<Regexp::English> module has a much better phone
 number regex already written for you.

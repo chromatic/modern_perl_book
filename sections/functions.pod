@@ -112,9 +112,9 @@ use list assignment, but you may also access individual elements by index:
 
 =end programlisting
 
-You may also C<unshift>, C<push>, C<pop>, C<splice>, and slice C<@_>. Remember
-that the array builtins use C<@_> as the default operand I<within functions>,
-so that C<my $name = shift;> works. Take advantage of this idiom.
+You may also C<unshift>, C<push>, C<pop>, C<splice>, and use slices of C<@_>.
+Remember that the array builtins use C<@_> as the default operand I<within
+functions>, so that C<my $name = shift;> works. Take advantage of this idiom.
 
 To access a single scalar parameter from C<@_>, use C<shift>, an index of
 C<@_>, or lvalue list context parentheses. Otherwise, Perl will happily
@@ -541,10 +541,10 @@ X<C<Carp>>
 X<C<Carp>; C<croak()>>
 X<C<Carp>; C<carp()>>
 
-The standard C<Carp> module uses C<caller> to report errors and throwing
-warnings in functions. When used in place of C<die> in library code, C<croak()>
-throws an exception from the point of view of its caller. C<carp()> reports a
-warning from the file and line number of its caller (L<producing_warnings>).
+The standard C<Carp> module uses C<caller> to enhance error and warning
+messages. When used in place of C<die> in library code, C<croak()> throws an
+exception from the point of view of its caller. C<carp()> reports a warning
+from the file and line number of its caller (L<producing_warnings>).
 
 Use C<caller> (or C<Carp>) when validating parameters or preconditions of a
 function to indicate that whatever called the function did so erroneously.

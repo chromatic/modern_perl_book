@@ -21,7 +21,9 @@ understanding of the idioms and techniques and style of your programming
 language, and good taste. You can develop all of these by concentrating on a
 few principles.
 
-I<Remove duplication.> Bugs lurk in sections of repeated and similar code--when
+=over 4
+
+=item * I<Remove duplication.> Bugs lurk in sections of repeated and similar code--when
 you fix a bug in one piece of code, did you fix it in others? When you updated
 one section, did you update the others?
 
@@ -30,13 +32,13 @@ objects, and roles to extract duplicate code into distinct components which
 accurately model the domain of the problem. The best designs sometimes allow
 you to add features by I<removing> code.
 
-I<Name entities well.> Your code tells a story. Every name you choose for a
+=item * I<Name entities well.> Your code tells a story. Every name you choose for a
 variable, function, module, class, and role allows you to clarify or obfuscate
 your intent. Choose your names carefully. If you're having trouble choosing
 good names, you may need to rethink your design or study your problem in more
 detail.
 
-I<Avoid unnecessary cleverness.> Concise code is good, when it reveals the
+=item * I<Avoid unnecessary cleverness.> Concise code is good, when it reveals the
 intention of the code. Clever code hides your intent behind flashy tricks.
 Perl allows you to write the right code at the right time. Choose the most
 obvious solution when possible. Experience and good taste will guide you.
@@ -44,9 +46,11 @@ obvious solution when possible. Experience and good taste will guide you.
 Some problems require clever solutions. When this happens, encapsulate this
 code behind a simple interface and document your cleverness.
 
-I<Embrace simplicity.> If everything else is equal, a simpler program is easier
+=item * I<Embrace simplicity.> If everything else is equal, a simpler program is easier
 to maintain than a complex program. Simplicity means knowing what's most
 important and doing just that.
+
+=back
 
 Sometimes you need powerful, robust code. Sometimes you need a one-liner.
 Simplicity means building only what you need. This is no excuse to avoid error
@@ -64,33 +68,37 @@ want to write. C programmers often write C-style Perl, just as Java programmers
 write Java-style Perl and Lisp programmers write Lispy Perl. Effective Perl
 programmers write Perlish Perl by embracing the language's idioms.
 
-I<Understand community wisdom.> Perl programmers often debate techniques and
-idioms fiercely. Perl programmers also often share their work, and not just on
-the CPAN. Pay attention; there's not always one and only one best way to do
-things. The interesting discussions happen about the tradeoffs between various
-ideals and styles.
-
-CPAN developers, Perl Mongers, and mailing list participants have hard-won
-experience solving problems in myriad ways. Talk to them. Read their code. Ask
-questions. Learn from them and let them guide--and learn from--you.
-
 X<CPAN; C<Perl::Critic>>
 X<CPAN; C<Perl::Tidy>>
 X<CPAN; C<CPAN::Mini>>
 X<CPAN; C<Carton>>
 X<CPAN; C<Pinto>>
 
-I<Follow community norms.> Perl is a community of toolsmiths who solve broad
+=over 4
+
+=item * I<Understand community wisdom.> Perl programmers often debate techniques and
+idioms fiercely. Perl programmers also often share their work, and not just on
+the CPAN. Pay attention; there's not always one and only one best way to do
+things. The interesting discussions happen about the tradeoffs between various
+ideals and styles.
+
+=item * I<Follow community norms.> Perl is a community of toolsmiths who solve broad
 problems, including static code analysis (C<Perl::Critic>), reformatting
 (C<Perl::Tidy>), and private distribution systems (C<CPAN::Mini>, C<Carton>,
 C<Pinto>). Take advantage of the CPAN infrastructure; follow the CPAN model of
 writing, documenting, packaging, testing, and distributing your code.
 
-I<Read code.> Join a mailing list such as Perl Beginners
+=item * I<Read code.> Join a mailing list such as Perl Beginners
 (U<http://learn.perl.org/faq/beginners.html>) and otherwise immerse yourself in
 the communityN<U<http://www.perl.org/community.html>>. Read code and try to
 answer questions--even if you never post your answers, writing code to solve
 one problem every work day will teach you an enormous amount very quickly.
+
+=back
+
+CPAN developers, Perl Mongers, and mailing list participants have hard-won
+experience solving problems in myriad ways. Talk to them. Read their code. Ask
+questions. Learn from them and let them guide--and learn from--you.
 
 =head1 Writing Effective Perl
 
@@ -99,27 +107,31 @@ X<efficacy>
 Writing maintainable code means designing maintainable code. Good design comes
 from good habits.
 
-I<Write testable code.> Writing an effective test suite (L<testing>) exercises
+=over 4
+
+=item * I<Write testable code.> Writing an effective test suite (L<testing>) exercises
 the same design skills as writing effective code. Code is code. Good tests also
 give you the confidence to modify a program while keeping it running correctly.
 
-I<Modularize.> Enforce encapsulation and abstraction boundaries. Find the right
+=item * I<Modularize.> Enforce encapsulation and abstraction boundaries. Find the right
 interfaces between components. Name things well and put them where they belong.
 Modularity forces you to think about similarities and differences and points of
 communication where your design fits together. Find the pieces that don't fit
 well. Revise your design until they do fit.
 
-I<Follow sensible coding standards.> Effective guidelines discuss error
+=item * I<Follow sensible coding standards.> Effective guidelines discuss error
 handling, security, encapsulation, API design, project layout, and other facets
 of maintainable code. Excellent guidelines help developers communicate with
 each other with code. If you look at a new project and nothing surprises you,
 that's great! Your job is to solve problems with code. Let your code--and the
 infrastructure around it--speak clearly.
 
-I<Exploit the CPAN.> Perl programmers solve problems, then share those
+=item * I<Exploit the CPAN.> Perl programmers solve problems, then share those
 solutions. The CPAN is a force multiplier; search it first for a solution or
 partial solution to your problem. Invest time in research to find full or
 partial solutions you can reuse. It will pay off.
+
+=back
 
 If you find a bug, report it. Patch it, if possible. Submit a failing test
 case. Fix a typo. Ask for a feature. Say "Thank you!" Then, when you're ready,

@@ -216,9 +216,9 @@ function which takes several parameters:
 =end programlisting
 
 Myriad customization possibilities might work very well in a full-sized ice
-cream store, but for a drive-through ice cream cart where you only serve French
-vanilla ice cream on Cavendish bananas, every call to C<make_sundae()> passes
-arguments that never change.
+cream store, but for an ice cream cart where you only serve French vanilla ice
+cream on Cavendish bananas, every call to C<make_sundae()> passes arguments
+that never change.
 
 X<partial application>
 

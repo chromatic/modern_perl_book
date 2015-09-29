@@ -57,10 +57,9 @@ X<RT>
 X<Best Practical>
 
 Best Practical Solutions (U<http://bestpractical.com/>) maintains an
-installation of their popular request tracking system, RT, for CPAN authors as
-well as Perl development. Every CPAN distribution has its own RT queue on
-U<http://rt.cpan.org/>. Perl itself has a ticket queue at
-U<http://rt.perl.org/>.
+installation of RT, its popular request-tracking system, for Perl development.
+Perl's queue is U<http://rt.perl.org/>. Every CPAN distribution has its own
+queue on U<http://rt.cpan.org/>.
 
 X<Perl 5 Porters>
 X<p5p>
@@ -104,9 +103,6 @@ The Perl community holds countless conferences, workshops, seminars, and
 meetings. In particular, the community-run YAPC--Yet Another Perl
 Conference--is a successful, local, low-cost conference model held on multiple
 continents. See U<http://yapc.org/>.
-
-The Perl Foundation wiki lists other events at
-U<http://www.perlfoundation.org/perl5/index.cgi?perl_events>.
 
 X<Perl Mongers>
 

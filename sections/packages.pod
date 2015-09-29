@@ -169,7 +169,7 @@ at any point, either with a new package declaration:
 
 You can add to a package at any point during compilation or runtime, regardless
 of the current file, though building up a package from multiple declarations in
-multiple can make code difficult to spelunk.
+multiple files can make code difficult to spelunk.
 
 X<namespaces; multi-level>
 

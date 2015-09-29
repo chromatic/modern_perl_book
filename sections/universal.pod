@@ -18,7 +18,8 @@ invoking package or class. If you provide a version number as an optional
 parameter, the method will throw an exception if the queried C<$VERSION> is not
 equal to or greater than the parameter.
 
-Given a C<HowlerMonkey> module of version C<1.23>:
+Given a C<HowlerMonkey> module of version C<1.23>, its C<VERSION()> method
+behaves as:
 
 =begin programlisting
 
@@ -46,7 +47,7 @@ composition, role application, or any other mechanism.
 
 The default implementation of C<DOES()> falls back to C<isa()>, because
 inheritance is one mechanism by which a class may do a role. Given a
-C<Cappuchin>:
+C<Cappuchin>, its C<DOES()> method behaves as:
 
 =begin programlisting
 
@@ -136,7 +137,7 @@ a true value if its invocant is or derives from the named class, or if the
 invocant is a blessed reference to the given type.
 
 Given an object C<$pepper> (a hash reference blessed into the C<Monkey> class,
-which inherits from the C<Mammal> class):
+which inherits from the C<Mammal> class), its C<isa()> method behaves as:
 
 =begin programlisting
 
