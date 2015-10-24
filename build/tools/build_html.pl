@@ -13,16 +13,25 @@ local *Text::Wrap::wrap;
 my @chapters = get_chapter_list();
 my $anchors  = get_anchors(@chapters);
 
+# start position of a link in the scratchpad
+my $link_pos;
+
+sub Pod::PseudoPod::HTML::start_L
+{
+    my $self = shift;
+    $link_pos = length($self->{scratch});
+}
+
 sub Pod::PseudoPod::HTML::end_L
 {
     my $self = shift;
-    if ($self->{scratch} =~ s/\b(\w+)$//)
-    {
-        my $link = $1;
-        die "Unknown link $link\n" unless exists $anchors->{$link};
-        $self->{scratch} .= '<a href="' . $anchors->{$link}[0] . "#$link\">"
-                                        . $anchors->{$link}[1] . '</a>';
-    }
+    my $link = substr($self->{scratch}, $link_pos);
+
+    die "Unknown link $link\n" unless exists $anchors->{$link};
+
+    substr($self->{scratch}, $link_pos, length($link),
+             '<a href="' . $anchors->{$link}[0] . "#$link\">"
+                         . $anchors->{$link}[1] . '</a>');
 }
 
 for my $chapter (@chapters)
