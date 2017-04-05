@@ -135,8 +135,8 @@ C<.> to combine multiple strings together:
 
 =end programlisting
 
-... though concatenating three literal strings like this is ultimate the same
-to Perl as writing a single string.
+... though concatenating three literal strings like this is ultimately the
+same to Perl as writing a single string.
 
 X<interpolation>
 X<strings; interpolation>
