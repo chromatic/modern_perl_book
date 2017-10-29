@@ -650,7 +650,7 @@ X<C<Math::BigFloat>>
 
 What's the maximum size of a value you can represent in Perl? It depends;
 you're probably using a 64-bit build, so the largest integer is C<(2**31) - 1>
-and the smallest is C<-(2**31)>--though see C<perldoc perlnumber> for more
+and the smallest is C<-(2**31)>, though see C<perldoc perlnumber> for more
 thorough details. Use C<Math::BigInt> and C<Math::BigFloat> to handle with
 larger or smaller or more precise numbers.
 
