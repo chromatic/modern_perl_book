@@ -199,8 +199,8 @@ With that disclaimer in place, you can now write:
 =begin programlisting
 
     sub greet_one {
-        die "Too many arguments for subroutine" if @_ < 1;
-        die "Too few arguments for subroutine" if @_ > 1;
+        die "Too few arguments for subroutine" if @_ < 1;
+        die "Too many arguments for subroutine" if @_ > 1;
         my $name = shift;
         say "Hello, $name!";
     }
