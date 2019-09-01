@@ -111,9 +111,9 @@ X<testing; running tests>
 
 This is easy enough to read, but it's only four assertions. A real program may
 have thousands of assertions. In most cases, you want to know either that
-everything passed or the specifics of any failures. The core module The program
-C<prove>--built on the core module C<TAP::Harness>-- runs tests, interprets
-TAP, and displays only the most pertinent information:
+everything passed or the specifics of any failures. The program C<prove>--built
+on the core module C<TAP::Harness>-- runs tests, interprets TAP, and displays
+only the most pertinent information:
 
 =begin screen
 
