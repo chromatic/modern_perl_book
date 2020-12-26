@@ -458,7 +458,7 @@ Old code might C<use IO::Handle;>. Older code may take references to typeglobs:
 =end programlisting
 
 This idiom predates the lexical filehandles introduced by Perl 5.6 in March
-2000.  You may still use the reference operator on typeglobs to take references
+2000. You may still use the reference operator on typeglobs to take references
 to package-global filehandles such as C<STDIN>, C<STDOUT>, C<STDERR>, or
 C<DATA>--but these are all global names anyhow.
 
@@ -499,7 +499,7 @@ C<$fh>.) C<$fh> is only in scope in the block. Its value never leaves the
 block. When execution reaches the end of the block, Perl recycles the variable
 C<$fh> and decreases the reference count of the filehandle referred to by
 C<$fh>. The filehandle's reference count reaches zero, so Perl destroys the
-filehandle to reclaim memory.  As part of the process, it calls C<close()> on
+filehandle to reclaim memory. As part of the process, it calls C<close()> on
 the filehandle implicitly.
 
 You don't have to understand the details of how all of this works. You only
@@ -528,3 +528,122 @@ This is only necessary in a few cases, but explicit cloning helps avoid nasty
 surprises for the calling code. If you use nested data structures or other
 complex references, consider the use of the core module C<Storable> and its
 C<dclone> (I<deep cloning>) function.
+
+=head2 Postfix Dereferencing
+
+X<dereferencing; postfix>
+X<postfix dereferencing>
+
+Perl 5.20 introduced and Perl 5.24 stabilized a feature called I<postfix
+dereferencing>. Instead of using prefix or circumfix dereferencing notation,
+you can dereference a complex expression with a syntax that reads from left to
+right.
+
+For example, if you have an array reference, you can dereference the array with
+an array splat notation (C<@*>):
+
+=begin programlisting
+
+    my $recipients = [qw(
+        Mother
+        Father
+        Partner
+        Nephew
+        Niece
+        Neighbor
+    )];
+
+    for my $recipient ($recipients->B<@*>) {
+        say "Need to find a gift for $recipient";
+    }
+
+=end programlisting
+
+This simple example has little benefit in concision, but it's more useful with
+complex structures:
+
+=begin programlisting
+
+    my %recipients = (
+        mandatory => [qw(
+            Partner
+            Nephew
+            Niece
+        )],
+        optional => [qw(
+            Mother
+            Father
+        )],
+        mmmmmmaybe => [qw(
+            Neighbor
+        )],
+    );
+
+    for my $recipient ($recipients{optional}->@*) {
+        say "Probably should find a gift for $recipient";
+    }
+
+=end programlisting
+
+... or with references returned from function or method calls:
+
+=begin programlisting
+
+    say "Have $200 to spend on " . join ', ',
+        get_recipients_for_budget({ usd => 200 })->@*;
+
+=end programlisting
+
+This operation imposes scalar context on the function or method.
+
+Hashes use a similar notation, with the C<%*> hash sigil and splat:
+
+=begin programlisting
+
+    my $holiday_starts = {
+        Hannukah  => '2020-12-10',
+        Christmas => '2020-12-25',
+        Kwanzaa   => '2020-12-26',
+    };
+
+    while (my ($holiday, $start_date) = each $holiday_starts->B<%*>) {
+        ...
+    }
+
+=end programlisting
+
+Again, you can dereference the return value of a function or method call in the
+same fashion:
+
+=begin programlisting
+
+    while (my ($holiday, $start_date) = each holiday_start_dates_for(2020)->%*) {
+        ...
+    }
+
+=end programlisting
+
+This postfix dereferencing syntax allows both array and hash slices:
+
+=begin programlisting
+
+    my @pto_holidays     = $holiday_starts->B<@{qw( Hannukah Kwanzaa )}>;
+    my @first_recipients = $recipients->B<@[0 .. 3]>;
+
+=end programlisting
+
+Scalars use the notation C<< ->$* >>:
+
+=begin programlisting
+
+    my $not_a_constant = \"variable";
+    say $not_a_constant->B<$*>;
+
+=end programlisting
+
+This also works with functions or methods as you expect, but it provides no slice form.
+
+You may find it consistent to use only prefix, circumfix, or postfix
+dereferencing in a section of code.
+
+For more information, consult the "Postfix Dereference Syntax" section of C<perldoc perlref>.
