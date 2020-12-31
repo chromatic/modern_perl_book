@@ -19,8 +19,8 @@ X<metacpan>
 
 U<http://perldoc.perl.org/> hosts recent versions of the Perl documentation.
 CPAN indexes at U<http://search.cpan.org/> and U<http://metacpan.org/> provide
-documentation for all CPAN modules. Other distributions such as ActivePerl and
-Strawberry Perl provide local documentation in HTML formats.
+documentation for all CPAN modules. Other distributions such as ActiveState's
+Perl and Strawberry Perl provide local documentation in HTML formats.
 
 =end sidebar
 

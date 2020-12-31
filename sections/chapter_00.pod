@@ -71,10 +71,10 @@ Some examples use testing functions such as C<ok()>, C<like()>, and C<is()>
 
 =end programlisting
 
-At the time of writing, the current stable major Perl release is Perl 5.22. If
+At the time of writing, the current stable major Perl release is Perl 5.32. If
 you're using an older version of Perl, you may not be able to run all of the
 examples in this book unmodified. The examples in this book work best with Perl
-5.16.0 or newer, though we recommend at least Perl 5.20. While the term "Modern
+5.16.0 or newer, though we recommend at least Perl 5.26. While the term "Modern
 Perl" has traditionally referred to any version of Perl from 5.10.1, the
 language has improved dramatically over the past several years.
 
@@ -83,13 +83,26 @@ X<ActivePerl>
 X<perlbrew>
 X<CPAN; C<App::perlbrew>>
 
-Though Perl comes preinstalled on many operating systems, you may need to
+Though Perl comes pre-installed on many operating systems, you may need to
 install a more modern version. Windows users, download Strawberry Perl from
 U<http://www.strawberryperl.com/> or ActivePerl from
-U<http://www.activestate.com/activeperl>. Users of other operating systems with
-Perl already installed (and a C compiler and the other development tools),
-start by installing the CPAN module
+U<https://platform.activestate.com/featured-projects>. Users of other operating
+systems with Perl already installed (and a C compiler and the other development
+tools), start by installing the CPAN module
 C<App::perlbrew>N<U<http://search.cpan.org/perldoc?App::perlbrew>>.
+
+=begin sidebar All-in-One Modern Perl 5.32 Installation
+
+As of 2020, ActiveState has a one-liner installation for Perl 5.32 and all of
+the CPAN distributions mentioned in this book.
+
+Windows users, see the instructions at U<https://platform.activestate.com/chromatic/ModernPerl4e-5.32-Windows/>.
+
+Linux users, see the instructions at U<https://platform.activestate.com/chromatic/ModernPerl4e-5.32-Linux/>.
+
+Mac users, stay tuned.
+
+=end sidebar
 
 C<perlbrew> manages multiple Perl installations, so that you can switch between
 versions for testing and deployment. You can also install CPAN modules in your

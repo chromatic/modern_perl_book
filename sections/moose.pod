@@ -827,10 +827,9 @@ in return. Moose objects can extend and work with objects from the vanilla Perl
 system.
 
 While Moose is not a part of the Perl core, its popularity ensures that it's
-available on many OS distributions. Perl distributions such as Strawberry Perl
-and ActivePerl also include it. Even though Moose is a CPAN module and not a
-core library, its cleanliness and simplicity make it essential to modern Perl
-programming.
+available on many OS distributions, including Strawberry Perl and ActivePerl.
+Even though Moose is a CPAN module and not a core library, its cleanliness and
+simplicity make it essential to modern Perl programming.
 
 X<metaprogramming>
 X<Moose; MOP>
