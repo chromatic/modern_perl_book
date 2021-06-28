@@ -285,7 +285,7 @@ heard of bytes.
 
 Unicode strings and binary strings look superficially similar. Each has a
 C<length()>. Each supports standard string operations such as concatenation,
-splicing, and regular expression processing (L<chp.regex>). Any string which is
+splicing, and regular expression processing (L<regex>). Any string which is
 not purely binary data is textual data, and thus should be a sequence of
 Unicode characters.
 
