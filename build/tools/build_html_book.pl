@@ -11,6 +11,10 @@ sub main {
 
     my ($cmd, $opt, @args) = $app->get_command( 'buildhtml' );
 
+    for my $build_path ( 'build/chapters', 'build/html' ) {
+        path($build_path)->mkpath;
+    }
+
     for my $command (qw( buildcredits buildchapters ), $cmd ) {
         $app->execute_command( $app->plugin_for( $command ), $opt, @args );
     }
