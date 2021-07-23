@@ -1,0 +1,22 @@
+project: https://platform.activestate.com/chromatic/ModernPerl4e-5.34-Linux?branch=main&commitID=aff573b8-824b-4844-a29e-7b0f0fc979e3
+
+scripts:
+  - name: activationMessage
+    language: perl
+    value: |
+        print <<~EOT;
+            You are now in an activated state, which is like a virtual environment to work
+            in that doesn't affect the rest of your system. To leave, run `exit`.
+
+            What's next?
+            - To learn more about what you can do, run → `state run modern-perl-book [chapter-number]`
+        EOT
+        exec( $^X, $ENV{ACTIVESTATE_ACTIVATED} . '/build/tools/build_html_book.pl' );
+  - name: modern-perl-book
+    description: Open the Modern Perl book in your web browser. With no arguments provided, opens the table of contents. Otherwise pass the chapter number (0, 1, ... 15) to read that chapter.
+    language: perl
+    value: |
+        exec( $^X, $ENV{ACTIVESTATE_ACTIVATED} . '/build/tools/open_browser.pl', @ARGV );
+events:
+  - name: ACTIVATE
+    value: activationMessage
